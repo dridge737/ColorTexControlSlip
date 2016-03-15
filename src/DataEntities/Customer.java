@@ -23,7 +23,7 @@ public class Customer {
     /**
      * @param customerId the Customer_id to set
      */
-    public void setCustomeIid(int customerId) {
+    public void setCustomerId(int customerId) {
         this.customerId = customerId;
     }
     

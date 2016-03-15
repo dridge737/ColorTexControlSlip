@@ -15,11 +15,12 @@ public class ColorTexControlSlip {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Customer newCustomer = new Customer();
-        newCustomer.setCustomerName("Eldridge");
+        Customer customer = new Customer();
+        customer.setCustomerName("EldridgePanget");
+        customer.setCustomerId(1);
         
         CustomerHandler handler = new CustomerHandler();
-        handler.AddNewCustomer(newCustomer);
+        handler.DeleteCustomer(customer.getCustomerId());
     }
     
 }
