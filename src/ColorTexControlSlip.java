@@ -16,7 +16,6 @@ public class ColorTexControlSlip {
      */
     public static void main(String[] args) {
         Customer newCustomer = new Customer();
-        newCustomer.setCustomeIid(1);
         newCustomer.setCustomerName("Eldridge");
         
         CustomerHandler handler = new CustomerHandler();
