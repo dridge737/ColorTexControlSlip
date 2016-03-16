@@ -5,6 +5,7 @@
  */
 package Database;
 
+import DataEntities.Color;
 import DataEntities.Customer;
 import Database.DBConnection;
 import java.awt.Image;
@@ -87,14 +88,13 @@ public class ColorTextControlSlipRepository {
     
     public boolean AddCustomer(Customer newCustomer) 
     {
-        
         DBConnection db = new DBConnection();
         Connection conn = null;
         PreparedStatement preparedStmt = null;
         boolean added = false;
         try {
             conn = db.getConnection();
-            String query = "INSERT INTO customer (name_customer) VALUES (?)";
+            String query = "INSERT INTO customer (Name) VALUES (?)";
 
             preparedStmt = conn.prepareStatement(query);
             preparedStmt.setString(1, newCustomer.getCustomerName().toUpperCase());
@@ -119,7 +119,7 @@ public class ColorTextControlSlipRepository {
         try
         {
             conn = db.getConnection();
-            String query = "UPDATE Customer SET name_customer = ? WHERE id_customer = ?";
+            String query = "UPDATE Customer SET Name = ? WHERE ID = ?";
 
             preparedStmt = conn.prepareStatement(query);
             preparedStmt.setString(1, customer.getCustomerName().toUpperCase());
@@ -144,11 +144,89 @@ public class ColorTextControlSlipRepository {
         try
         {
             conn = db.getConnection();
-            String query = "Delete From Customer Where id_customer = ?";
+            String query = "DELETE FROM customer WHERE ID = ?";
 
             preparedStmt = conn.prepareStatement(query);
             preparedStmt.setInt(1, customerId);
             preparedStmt.execute();
+            isSuccessful = true;
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, preparedStmt);
+        return isSuccessful;
+    }
+/*********************************************************************************************/
+/******************************* FOR COLOR ***************************************************/    
+    /**
+     * 
+     * @param newColor
+     * @return 
+     */
+    public boolean AddColor(Color newColor) {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean added = false;
+        try {
+            conn = db.getConnection();
+            String query = "INSERT INTO Color (Name) VALUES (?)";
+
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setString(1, newColor.getColorName().toUpperCase());
+            preparedStmt.executeUpdate();
+            
+            added = true;
+        } 
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, preparedStmt);
+        return added;
+    }
+
+    public boolean UpdateColorByColorId(Color thisColor) 
+    {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean isSuccessful = false;
+        try
+        {
+            conn = db.getConnection();
+            String query = "UPDATE color SET Name = ? WHERE ID = ?";
+
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setString(1, thisColor.getColorName().toUpperCase());
+            preparedStmt.setInt(2, thisColor.getColorId());
+            preparedStmt.executeUpdate();
+            isSuccessful = true;
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, preparedStmt);
+        return isSuccessful;
+    }
+
+    public boolean DeleteColorByColorId(int ColorId) {
+    
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean isSuccessful = false;
+        try
+        {
+            conn = db.getConnection();
+            String query = "DELETE FROM color WHERE ID = ?";
+
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setInt(1, ColorId);
+            preparedStmt.executeUpdate();
             isSuccessful = true;
         }
         catch (SQLException ex) {
