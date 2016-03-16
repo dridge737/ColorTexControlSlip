@@ -28,4 +28,31 @@ public class CustomerHandler {
         }
     }
     
+    public void UpdateCustomer(Customer customer)
+    {
+        boolean isSuccessful = false;
+        
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        
+        isSuccessful = repo.UpdateCustomerByCustomerId(customer);
+        
+        if(isSuccessful == false)
+        {
+            //enter validation 
+        }
+    }
+    
+     public void DeleteCustomer(int customerId)
+    {
+        boolean isSuccessful = false;
+        
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        
+        isSuccessful = repo.DeleteCustomerByCustomerId(customerId);
+        
+        if(isSuccessful == false)
+        {
+            //enter validation 
+        }
+    }
 }

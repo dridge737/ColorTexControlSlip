@@ -85,7 +85,8 @@ public class ColorTextControlSlipRepository {
         }
     }
     
-    public boolean AddCustomer(Customer newCustomer) {
+    public boolean AddCustomer(Customer newCustomer) 
+    {
         
         DBConnection db = new DBConnection();
         Connection conn = null;
@@ -107,6 +108,55 @@ public class ColorTextControlSlipRepository {
         
         this.closeConn(conn, preparedStmt);
         return added;
+    }
+    
+    public boolean UpdateCustomerByCustomerId(Customer customer)
+    {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean isSuccessful = false;
+        try
+        {
+            conn = db.getConnection();
+            String query = "UPDATE Customer SET name_customer = ? WHERE id_customer = ?";
+
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setString(1, customer.getCustomerName().toUpperCase());
+            preparedStmt.setInt(2, customer.getCustomerId());
+            preparedStmt.execute();
+            isSuccessful = true;
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, preparedStmt);
+        return isSuccessful;
+    }
+    
+    public boolean DeleteCustomerByCustomerId(int customerId)
+    {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean isSuccessful = false;
+        try
+        {
+            conn = db.getConnection();
+            String query = "Delete From Customer Where id_customer = ?";
+
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setInt(1, customerId);
+            preparedStmt.execute();
+            isSuccessful = true;
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, preparedStmt);
+        return isSuccessful;
     }
     
 }
