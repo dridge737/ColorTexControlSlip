@@ -237,4 +237,45 @@ public class ColorTextControlSlipRepository {
         return isSuccessful;
     }
     
+    public void CheckIfColorExists(String ColorName)
+    {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean isSuccessful = false;
+        
+        
+    }
+               
+    public int GetColorIDFromName(String ColorName)
+    {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int ColorID = -1;
+        
+        try{
+            conn = db.getConnection();
+            ps = conn.prepareStatement("SELECT ID "
+                                 + "FROM color "
+                                 + "WHERE Name = ? ");
+            
+            ps.setString(1, ColorName);
+            
+            rs = ps.executeQuery();
+            if(rs.first())
+            {
+                ColorID = rs.getInt("ID");
+            }
+            
+        }
+        catch(SQLException ex){
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.closeConn(conn, ps, rs);
+        return ColorID;
+        
+    }
+    
 }

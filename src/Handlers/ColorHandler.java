@@ -41,7 +41,7 @@ public class ColorHandler {
         }
     }
     
-     public void DeleteColor(int ColorId)
+    public void DeleteColor(int ColorId)
     {
         boolean isSuccessful = false;
         
@@ -53,5 +53,13 @@ public class ColorHandler {
         {
             //enter validation 
         }
+    }
+     
+    public int GetColorIDFromColorName(String ColorName)
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+         
+         return repo.GetColorIDFromName(ColorName);
+         
     }
 }
