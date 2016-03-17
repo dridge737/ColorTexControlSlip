@@ -58,8 +58,18 @@ public class ColorHandler {
     public int GetColorIDFromColorName(String ColorName)
     {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
-         
-         return repo.GetColorIDFromName(ColorName);
-         
+        return repo.GetColorIDFromColorName(ColorName);
+    }
+    
+    public String GetColorNameFromColorID(int ColorID)
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        return repo.GetColorNameFromColorID(ColorID);
+    }
+    
+    public boolean CheckIfColorNameExists(String ColorName)
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        return repo.CheckIfColorNameExists(ColorName);
     }
 }

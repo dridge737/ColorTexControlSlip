@@ -24,9 +24,11 @@ public class ColorTexControlSlip {
                 */
         
         Color thisColor = new Color();
+        thisColor.setColorName("Hello");
         
         ColorHandler colHandler = new ColorHandler();
-        thisColor.setColorId(colHandler.GetColorIDFromColorName("Hello"));
+        colHandler.AddNewColor(thisColor);
+        boolean itExist = colHandler.CheckIfColorNameExists("Hello");
     }
     
 }

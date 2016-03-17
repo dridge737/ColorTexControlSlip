@@ -247,14 +247,13 @@ public class ColorTextControlSlipRepository {
         
     }
                
-    public int GetColorIDFromName(String ColorName)
+    public int GetColorIDFromColorName(String ColorName)
     {
         DBConnection db = new DBConnection();
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         int ColorID = -1;
-        
         try{
             conn = db.getConnection();
             ps = conn.prepareStatement("SELECT ID "
@@ -268,14 +267,103 @@ public class ColorTextControlSlipRepository {
             {
                 ColorID = rs.getInt("ID");
             }
-            
         }
         catch(SQLException ex){
             Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.closeConn(conn, ps, rs);
         return ColorID;
+    }
+    
+    public String GetColorNameFromColorID(int ColorID)
+    {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String ColorName = "";
+        try{
+            conn = db.getConnection();
+            ps = conn.prepareStatement("SELECT Name"
+                                 + "FROM color "
+                                 + "WHERE ID = ? ");
+            
+            ps.setInt(1, ColorID);
+            
+            rs = ps.executeQuery();
+            if(rs.first())
+            {
+                ColorName = rs.getString("ID");
+            }
+        }
+        catch(SQLException ex){
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.closeConn(conn, ps, rs);
+        return ColorName;
+    }
+    public int check_if_customer_exists(String customer_name)
+    {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int checkTest = 0;
+        try 
+        {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT EXISTS "
+                    + " (SELECT id_customer "
+                    + " FROM customer WHERE "
+                    + " customer_name = ?) "
+                    + " AS 'CheckTest'");
+
+            int item = 1;
+            ps.setString(item++, customer_name);
+            rs = ps.executeQuery();
+            if(rs.first())
+                checkTest = rs.getInt("CheckTest");
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
+        this.closeConn(conn, ps, rs);
+        return checkTest;
+    }
+    public boolean CheckIfColorNameExists(String ColorName)
+    {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        boolean itExists = false;
+        int checkTest = 0;
+        try 
+        {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT EXISTS "
+                    + " (SELECT ID "
+                    + " FROM Color WHERE "
+                    + " Name = ?) "
+                    + " AS 'CheckTest'");
+
+            int item = 1;
+            ps.setString(item++, ColorName);
+            rs = ps.executeQuery();
+            
+            if(rs.first())
+                checkTest = rs.getInt("CheckTest");
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, ps, rs);
+        if(checkTest == 1)
+            itExists = true;
+        
+        return itExists;
     }
     
 }
