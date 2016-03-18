@@ -470,4 +470,137 @@ public class ColorTextControlSlipRepository {
         this.closeConn(conn, ps, rs);
         return Name;
     }
+/************************************************************************************************/
+/******************************* FOR CHEMICAL ***************************************************/
+    
+    public boolean AddChemical(Chemical newChemical) {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean added = false;
+        try {
+            conn = db.getConnection();
+            String query = "INSERT INTO chemical (Name) VALUES (?)";
+
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setString(1, newChemical.getChemicalName().toUpperCase());
+            preparedStmt.executeUpdate();
+            
+            added = true;
+        } 
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, preparedStmt);
+        return added;
+    }
+
+    public boolean UpdateChemicalByChemicalID(Chemical thisChemical) 
+    {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean isSuccessful = false;
+        try
+        {
+            conn = db.getConnection();
+            String query = "UPDATE chemical SET Name = ?, Cost = ? WHERE ID = ?";
+
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setString(1, thisChemical.getChemicalName().toUpperCase());
+            preparedStmt.setFloat(2, thisChemical.getCost());
+            preparedStmt.setInt(3, thisChemical.getChemicalId());
+            preparedStmt.executeUpdate();
+            isSuccessful = true;
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, preparedStmt);
+        return isSuccessful;
+    }
+
+    public boolean DeleteChemicalByChemicalID(int ChemicalId) {
+    
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean isSuccessful = false;
+        try
+        {
+            conn = db.getConnection();
+            String query = "DELETE FROM chemical WHERE ID = ?";
+
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setInt(1, ChemicalId);
+            preparedStmt.executeUpdate();
+            isSuccessful = true;
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, preparedStmt);
+        return isSuccessful;
+    }
+    
+              
+    public int GetChemicalIDFromChemicalName(String Name)
+    {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int DesignID = -1;
+        try{
+            conn = db.getConnection();
+            ps = conn.prepareStatement("SELECT ID "
+                                 + "FROM chemical "
+                                 + "WHERE Name = ? ");
+            
+            ps.setString(1, Name);
+            
+            rs = ps.executeQuery();
+            if(rs.first())
+            {
+                DesignID = rs.getInt("ID");
+            }
+        }
+        catch(SQLException ex){
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.closeConn(conn, ps, rs);
+        return DesignID;
+    }
+    
+    public String GetChemicalNameFromChemicalID(int ID)
+    {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String Name = "";
+        try{
+            conn = db.getConnection();
+            ps = conn.prepareStatement("SELECT Name"
+                                 + "FROM chemical "
+                                 + "WHERE ID = ? ");
+            
+            ps.setInt(1, ID);
+            
+            rs = ps.executeQuery();
+            if(rs.first())
+            {
+                Name = rs.getString("ID");
+            }
+        }
+        catch(SQLException ex){
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.closeConn(conn, ps, rs);
+        return Name;
+    }
+    
 }
