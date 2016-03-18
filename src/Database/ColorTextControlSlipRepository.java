@@ -413,4 +413,61 @@ public class ColorTextControlSlipRepository {
         this.closeConn(conn, preparedStmt);
         return isSuccessful;
     }
+    
+              
+    public int GetDesignIDFromDesignName(String Name)
+    {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int DesignID = -1;
+        try{
+            conn = db.getConnection();
+            ps = conn.prepareStatement("SELECT ID "
+                                 + "FROM design "
+                                 + "WHERE Name = ? ");
+            
+            ps.setString(1, Name);
+            
+            rs = ps.executeQuery();
+            if(rs.first())
+            {
+                DesignID = rs.getInt("ID");
+            }
+        }
+        catch(SQLException ex){
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.closeConn(conn, ps, rs);
+        return DesignID;
+    }
+    
+    public String GetDesignNameFromDesignID(int ID)
+    {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String Name = "";
+        try{
+            conn = db.getConnection();
+            ps = conn.prepareStatement("SELECT Name"
+                                 + "FROM design "
+                                 + "WHERE ID = ? ");
+            
+            ps.setInt(1, ID);
+            
+            rs = ps.executeQuery();
+            if(rs.first())
+            {
+                Name = rs.getString("ID");
+            }
+        }
+        catch(SQLException ex){
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.closeConn(conn, ps, rs);
+        return Name;
+    }
 }
