@@ -5,8 +5,9 @@
  */
 package Database;
 
-import DataEntities.Color;
-import DataEntities.Customer;
+//import DataEntities.Color;
+//import DataEntities.Customer;
+import DataEntities.*;
 import Database.DBConnection;
 import java.awt.Image;
 import java.io.File;
@@ -302,35 +303,7 @@ public class ColorTextControlSlipRepository {
         this.closeConn(conn, ps, rs);
         return ColorName;
     }
-    public int check_if_customer_exists(String customer_name)
-    {
-        DBConnection dbc = new DBConnection();
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        int checkTest = 0;
-        try 
-        {
-            conn = dbc.getConnection();
-            ps = conn.prepareStatement("SELECT EXISTS "
-                    + " (SELECT id_customer "
-                    + " FROM customer WHERE "
-                    + " customer_name = ?) "
-                    + " AS 'CheckTest'");
-
-            int item = 1;
-            ps.setString(item++, customer_name);
-            rs = ps.executeQuery();
-            if(rs.first())
-                checkTest = rs.getInt("CheckTest");
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        this.closeConn(conn, ps, rs);
-        return checkTest;
-    }
+    
     public boolean CheckIfColorNameExists(String ColorName)
     {
         DBConnection dbc = new DBConnection();
@@ -365,5 +338,79 @@ public class ColorTextControlSlipRepository {
         
         return itExists;
     }
+
+/*********************************************************************************************/
+/******************************* FOR DESIGN ***************************************************/   
     
+    public boolean AddDesign(Design newDesign) {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean added = false;
+        try {
+            conn = db.getConnection();
+            String query = "INSERT INTO design (Name) VALUES (?)";
+
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setString(1, newDesign.getDesignName().toUpperCase());
+            preparedStmt.executeUpdate();
+            
+            added = true;
+        } 
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, preparedStmt);
+        return added;
+    }
+
+    public boolean UpdateDesignByDesignID(Design thisDesign) 
+    {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean isSuccessful = false;
+        try
+        {
+            conn = db.getConnection();
+            String query = "UPDATE design SET Name = ? WHERE ID = ?";
+
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setString(1, thisDesign.getDesignName().toUpperCase());
+            preparedStmt.setInt(2, thisDesign.getDesignId());
+            preparedStmt.executeUpdate();
+            isSuccessful = true;
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, preparedStmt);
+        return isSuccessful;
+    }
+
+    public boolean DeleteDesignByDesignID(int DesignId) {
+    
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean isSuccessful = false;
+        try
+        {
+            conn = db.getConnection();
+            String query = "DELETE FROM design WHERE ID = ?";
+
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setInt(1, DesignId);
+            preparedStmt.executeUpdate();
+            isSuccessful = true;
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, preparedStmt);
+        return isSuccessful;
+    }
 }
