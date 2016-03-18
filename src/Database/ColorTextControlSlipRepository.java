@@ -94,7 +94,7 @@ public class ColorTextControlSlipRepository {
         boolean added = false;
         try {
             conn = db.getConnection();
-            String query = "INSERT INTO customer (name_customer) VALUES (?)";
+            String query = "INSERT INTO customer (Name) VALUES (?)";
 
             preparedStmt = conn.prepareStatement(query);
             preparedStmt.setString(1, newCustomer.getCustomerName().toUpperCase());
@@ -119,7 +119,7 @@ public class ColorTextControlSlipRepository {
         try
         {
             conn = db.getConnection();
-            String query = "UPDATE Customer SET name_customer = ? WHERE id_customer = ?";
+            String query = "UPDATE Customer SET Name = ? WHERE ID = ?";
 
             preparedStmt = conn.prepareStatement(query);
             preparedStmt.setString(1, customer.getCustomerName().toUpperCase());
@@ -144,7 +144,7 @@ public class ColorTextControlSlipRepository {
         try
         {
             conn = db.getConnection();
-            String query = "Delete From Customer Where id_customer = ?";
+            String query = "DELETE FROM Customer Where ID = ?";
 
             preparedStmt = conn.prepareStatement(query);
             preparedStmt.setInt(1, customerId);
@@ -157,6 +157,36 @@ public class ColorTextControlSlipRepository {
         
         this.closeConn(conn, preparedStmt);
         return isSuccessful;
+    }
+    
+    public int CheckIfCustomerExists(String customerName)
+    {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int checkTest = 0;
+        try 
+        {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT EXISTS "
+                    + " (SELECT ID "
+                    + " FROM customer WHERE "
+                    + " NAME = ?) "
+                    + " AS 'CheckTest'");
+
+            int item = 1;
+            ps.setString(item++, customerName);
+            rs = ps.executeQuery();
+            if(rs.first())
+                checkTest = rs.getInt("CheckTest");
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, ps, rs);
+        return checkTest;
     }
     
 }

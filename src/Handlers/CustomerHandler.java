@@ -55,4 +55,18 @@ public class CustomerHandler {
             //enter validation 
         }
     }
+     
+     public boolean CheckIfCustomerExists(String customerName)
+     {
+         boolean isExisting = true;
+         
+         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        
+        if(repo.CheckIfCustomerExists(customerName) == 0)
+        {
+            isExisting = false;
+        }
+        
+        return isExisting;
+     }
 }
