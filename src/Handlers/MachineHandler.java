@@ -17,9 +17,11 @@ public class MachineHandler {
     {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         Machine machineDetails = new Machine();
-        
-        machineDetails = repo.GetMachineDetailsById(machineId);
-        
+                
+        if(repo.CheckIfMachineExists(machineId) == 0)
+        {
+            machineDetails = repo.GetMachineDetailsById(machineId);
+        }
         return machineDetails;
     }
     
@@ -29,7 +31,10 @@ public class MachineHandler {
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        isSuccessful = repo.AddMachine(newMachine);
+        if(repo.CheckIfMachineExists(newMachine.getMachineId()) == 0)
+        {
+            isSuccessful = repo.AddMachine(newMachine);
+        }
         
         if(isSuccessful == false)
         {
@@ -43,7 +48,10 @@ public class MachineHandler {
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        isSuccessful = repo.UpdateMachineByMachineId(machine);
+        if(repo.CheckIfMachineExists(machine.getMachineId()) == 0)
+        {
+            isSuccessful = repo.UpdateMachineByMachineId(machine);
+        }
         
         if(isSuccessful == false)
         {
@@ -57,7 +65,10 @@ public class MachineHandler {
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        isSuccessful = repo.DeleteMachineByMachineId(machineId);
+        if(repo.CheckIfMachineExists(machineId) == 0)
+        {
+            isSuccessful = repo.DeleteMachineByMachineId(machineId);
+        }
         
         if(isSuccessful == false)
         {
@@ -65,13 +76,13 @@ public class MachineHandler {
         }
     }
     
-    public boolean CheckIfMachineExists(String machineName)
+    public boolean CheckIfMachineExists(int machineId)
      {
          boolean isExisting = true;
          
          ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        if(repo.CheckIfMachineExists(machineName) == 0)
+        if(repo.CheckIfMachineExists(machineId) == 0)
         {
             isExisting = false;
         }
