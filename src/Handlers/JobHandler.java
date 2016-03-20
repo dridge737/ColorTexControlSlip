@@ -19,7 +19,7 @@ public class JobHandler {
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        isSuccessful = repo.addJobOrder(newJobOrder);
+    //    isSuccessful = repo.addJobOrder(newJobOrder);
         
         if(isSuccessful == false)
         {
@@ -33,7 +33,7 @@ public class JobHandler {
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        isSuccessful = repo.UpdateJobOrderByJobOrderID(thisJobOrder);
+    //    isSuccessful = repo.UpdateJobOrderByJobOrderID(thisJobOrder);
         
         if(isSuccessful == false)
         {
@@ -47,7 +47,7 @@ public class JobHandler {
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        isSuccessful = repo.DeleteJobOrderByJobOrderId(JobOrderId);
+    //    isSuccessful = repo.DeleteJobOrderByJobOrderId(JobOrderId);
         
         if(isSuccessful == false)
         {
