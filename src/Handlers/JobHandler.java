@@ -13,13 +13,13 @@ import Database.ColorTextControlSlipRepository;
  * @author Eldridge
  */
 public class JobHandler {
-    public void AddNewCustomer(JobOrder newJobOrder)
+    public void AddNewJobOrder(JobOrder newJobOrder)
     {
         boolean isSuccessful = false;
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-    //    isSuccessful = repo.addJobOrder(newJobOrder);
+        isSuccessful = repo.AddJobOrder(newJobOrder);
         
         if(isSuccessful == false)
         {
@@ -27,13 +27,13 @@ public class JobHandler {
         }
     }
     
-    public void UpdateCustomer(JobOrder thisJobOrder)
+    public void UpdateJobOrder(JobOrder thisJobOrder)
     {
         boolean isSuccessful = false;
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-    //    isSuccessful = repo.UpdateJobOrderByJobOrderID(thisJobOrder);
+        isSuccessful = repo.UpdateJobOrderByJobOrderID(thisJobOrder);
         
         if(isSuccessful == false)
         {
@@ -41,13 +41,13 @@ public class JobHandler {
         }
     }
     
-     public void DeleteCustomer(int JobOrderId)
+     public void DeleteJobOrder(int JobOrderId)
     {
         boolean isSuccessful = false;
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-    //    isSuccessful = repo.DeleteJobOrderByJobOrderId(JobOrderId);
+        isSuccessful = repo.DeleteJobOrderByJobOrderID(JobOrderId);
         
         if(isSuccessful == false)
         {

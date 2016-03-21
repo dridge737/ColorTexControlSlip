@@ -103,4 +103,18 @@ public class JobOrder {
     public void setCustomerID(int CustomerID) {
         this.CustomerID = CustomerID;
     }
+
+    /**
+     * @return the jobDate
+     */
+    public Date getJobDate() {
+        return jobDate;
+    }
+
+    /**
+     * @param jobDate the jobDate to set
+     */
+    public void setJobDate(Date jobDate) {
+        this.jobDate = jobDate;
+    }
 }

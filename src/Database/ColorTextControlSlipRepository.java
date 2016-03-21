@@ -603,4 +603,92 @@ public class ColorTextControlSlipRepository {
         return Name;
     }
     
+/************************************************************************************************/
+/******************************* FOR JOB ORDER ***************************************************/
+    
+    public boolean AddJobOrder(JobOrder newJobOrder) {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean added = false;
+        try {
+            conn = db.getConnection();
+            String query = "INSERT INTO JobOrder (DrNumber, MachineID, DesignID, ColorID, CustomerID, Date) VALUES (?, ?, ?, ?, ?, ?)";
+
+            preparedStmt = conn.prepareStatement(query);
+            int itemNumber = 1;
+            preparedStmt.setString(itemNumber++ , newJobOrder.getDrNumber().toUpperCase());
+            preparedStmt.setInt(itemNumber++ , newJobOrder.getMachineID());
+            preparedStmt.setInt(itemNumber++ , newJobOrder.getDesignID());
+            preparedStmt.setInt(itemNumber++ , newJobOrder.getColorID());
+            preparedStmt.setInt(itemNumber++ , newJobOrder.getCustomerID());
+            preparedStmt.setDate(itemNumber++ , newJobOrder.getJobDate());
+            preparedStmt.executeUpdate();
+            
+            added = true;
+        } 
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, preparedStmt);
+        return added;
+    }
+
+    public boolean UpdateJobOrderByJobOrderID(JobOrder thisJobOrder) 
+    {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean isSuccessful = false;
+        try
+        {
+            conn = db.getConnection();
+            String query = "UPDATE JobOrder SET DrNumber = ?, MachineID = ? , DesignID = ?, ColorID = ?, CustomerID = ?, Date = ? WHERE ID = ?";
+            
+            int itemNumber = 1;
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setString(itemNumber++, thisJobOrder.getDrNumber());
+            preparedStmt.setInt(itemNumber++, thisJobOrder.getMachineID());
+            preparedStmt.setInt(itemNumber++, thisJobOrder.getDesignID());
+            preparedStmt.setInt(itemNumber++, thisJobOrder.getColorID());
+            preparedStmt.setInt(itemNumber++, thisJobOrder.getCustomerID());
+            preparedStmt.setDate(itemNumber++, thisJobOrder.getJobDate());
+            preparedStmt.setInt(itemNumber++, thisJobOrder.getID());
+            
+            preparedStmt.executeUpdate();
+            isSuccessful = true;
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, preparedStmt);
+        return isSuccessful;
+    }
+
+    public boolean DeleteJobOrderByJobOrderID(int JobOrderId) {
+    
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean isSuccessful = false;
+        try
+        {
+            conn = db.getConnection();
+            String query = "DELETE FROM JobOrder WHERE ID = ?";
+
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setInt(1, JobOrderId);
+            preparedStmt.executeUpdate();
+            isSuccessful = true;
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, preparedStmt);
+        return isSuccessful;
+    }
+    
 }
