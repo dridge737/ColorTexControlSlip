@@ -690,5 +690,9 @@ public class ColorTextControlSlipRepository {
         this.closeConn(conn, preparedStmt);
         return isSuccessful;
     }
+
+/************************************************************************************************/
+/******************************* FOR Process ****************************************************/
+    
     
 }
