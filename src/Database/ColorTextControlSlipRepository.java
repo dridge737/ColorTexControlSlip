@@ -166,7 +166,7 @@ public class ColorTextControlSlipRepository {
      * @param newColor
      * @return 
      */
-    public boolean AddColor(Color newColor) {
+    public boolean AddColor(ChemicalColor newColor) {
         DBConnection db = new DBConnection();
         Connection conn = null;
         PreparedStatement preparedStmt = null;
@@ -189,7 +189,7 @@ public class ColorTextControlSlipRepository {
         return added;
     }
 
-    public boolean UpdateColorByColorId(Color thisColor) 
+    public boolean UpdateColorByColorId(ChemicalColor thisColor) 
     {
         DBConnection db = new DBConnection();
         Connection conn = null;
@@ -338,6 +338,34 @@ public class ColorTextControlSlipRepository {
         
         return itExists;
     }
+    
+    public ArrayList<String> GetAllColors()
+    {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ArrayList<String> ColorList = new ArrayList<>();
+        try
+        {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT Name FROM color ");
+            rs = ps.executeQuery();
+            
+            while(rs.next())
+            {
+                ColorList.add(rs.getString("Name"));
+            }
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, ps, rs);
+        return ColorList;
+    }
+    
+
 
 /*********************************************************************************************/
 /******************************* FOR DESIGN ***************************************************/   

@@ -1,3 +1,5 @@
+package Forms;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -22,13 +24,16 @@ public class ColorTexControlSlip {
         CustomerHandler handler = new CustomerHandler();
         handler.DeleteCustomer(customer.getCustomerId());
                 */
-        
-        Color thisColor = new Color();
+        /*
+        ChemicalColor thisColor = new ChemicalColor();
         thisColor.setColorName("Hello");
         
         ColorHandler colHandler = new ColorHandler();
         colHandler.AddNewColor(thisColor);
         boolean itExist = colHandler.CheckIfColorNameExists("Hello");
+                */
+        ColorForm newColorForm = new ColorForm();
+        newColorForm.setVisible(true);
     }
     
 }

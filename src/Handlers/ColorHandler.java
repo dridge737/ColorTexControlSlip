@@ -5,15 +5,17 @@
  */
 package Handlers;
 
-import DataEntities.Color;
+import DataEntities.ChemicalColor;
 import Database.ColorTextControlSlipRepository;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Eldridge
  */
 public class ColorHandler {
-    public void AddNewColor(Color newColor)
+    public boolean AddNewColor(ChemicalColor newColor)
     {
         boolean isSuccessful = false;
         
@@ -21,24 +23,17 @@ public class ColorHandler {
         
         isSuccessful = repo.AddColor(newColor);
         
-        if(isSuccessful == false)
-        {
-            //enter validation 
-        }
+        return isSuccessful;
     }
     
-    public void UpdateColor(Color thisColor)
+    public boolean UpdateColor(ChemicalColor thisColor)
     {
         boolean isSuccessful = false;
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
         isSuccessful = repo.UpdateColorByColorId(thisColor);
-        
-        if(isSuccessful == false)
-        {
-            //enter validation 
-        }
+        return isSuccessful;        
     }
     
     public void DeleteColor(int ColorId)
@@ -51,7 +46,7 @@ public class ColorHandler {
         
         if(isSuccessful == false)
         {
-            //enter validation 
+            
         }
     }
      
@@ -71,5 +66,11 @@ public class ColorHandler {
     {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         return repo.CheckIfColorNameExists(ColorName);
+    }
+    
+    public ArrayList<String> GetAllColor()
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        return repo.GetAllColors();
     }
 }

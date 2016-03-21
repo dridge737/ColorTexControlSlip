@@ -9,7 +9,7 @@ import java.util.ArrayList;
  *
  * @author Eldridge
  */
-public class Color {
+public class ChemicalColor {
     private int ColorId;
     private String ColorName;
     private ArrayList<String> ColorNameList = new ArrayList<String>();
