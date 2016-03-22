@@ -1027,5 +1027,87 @@ public class ColorTextControlSlipRepository {
 /************************************************************************************************/
 /******************************* FOR Process ****************************************************/
     
+    public boolean AddProcessOrder(ProcessOrder thisProcessOrder) 
+    {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean added = false;
+        try {
+            conn = db.getConnection();
+            String query = "INSERT INTO process_order (JobOrderID, Weight, VolH20, RollLoad, Roll) VALUES (?)";
+
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setInt(1, thisProcessOrder.getJobOrderID());
+            preparedStmt.setFloat(2, thisProcessOrder.getWeight());
+            preparedStmt.setFloat(3, thisProcessOrder.getVolumeH20());
+            preparedStmt.setFloat(4, thisProcessOrder.getRollLoad());
+            preparedStmt.setFloat(5, thisProcessOrder.getRoll());
+            
+            preparedStmt.executeUpdate();
+            
+            added = true;
+        } 
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, preparedStmt);
+        return added;
+    }
+
+    public boolean UpdateProcessOrderByProcessOrderId(ProcessOrder thisProcessOrder) 
+    {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean isSuccessful = false;
+        try
+        {
+            conn = db.getConnection();
+            String query = "UPDATE process_order SET JobOrderID = ? , Weight = ?, VolH20 = ?, RollLoad = ? , Roll = ? WHERE ID = ?";
+
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setInt(1, thisProcessOrder.getJobOrderID());
+            preparedStmt.setFloat(2, thisProcessOrder.getWeight());
+            preparedStmt.setFloat(3, thisProcessOrder.getVolumeH20());
+            preparedStmt.setFloat(4, thisProcessOrder.getRollLoad());
+            preparedStmt.setFloat(5, thisProcessOrder.getRoll());
+            preparedStmt.setInt(6, thisProcessOrder.getID());
+            preparedStmt.executeUpdate();
+            isSuccessful = true;
+            
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, preparedStmt);
+        return isSuccessful;
+    }
+
+    public boolean DeleteProcessOrderByProcessOrderId(int ProcessOrderID) {
+    
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean isSuccessful = false;
+        try
+        {
+            conn = db.getConnection();
+            String query = "DELETE FROM process_order WHERE ID = ?";
+
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setInt(1, ProcessOrderID);
+            preparedStmt.executeUpdate();
+            isSuccessful = true;
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, preparedStmt);
+        return isSuccessful;
+    }
     
 }

@@ -11,7 +11,7 @@ package DataEntities;
  */
 public class ProcessOrder {
     private int ID;
-    private String JobOrder;
+    private int JobOrderID;
     private float Weight;
     private float VolumeH20;
     private float RollLoad;
@@ -31,19 +31,6 @@ public class ProcessOrder {
         this.ID = ID;
     }
 
-    /**
-     * @return the JobOrder
-     */
-    public String getJobOrder() {
-        return JobOrder;
-    }
-
-    /**
-     * @param JobOrder the JobOrder to set
-     */
-    public void setJobOrder(String JobOrder) {
-        this.JobOrder = JobOrder;
-    }
 
     /**
      * @return the Weight
@@ -100,4 +87,20 @@ public class ProcessOrder {
     public void setRoll(float Roll) {
         this.Roll = Roll;
     }
+
+    /**
+     * @return the JobOrderID
+     */
+    public int getJobOrderID() {
+        return JobOrderID;
+    }
+
+    /**
+     * @param JobOrderID the JobOrderID to set
+     */
+    public void setJobOrderID(int JobOrderID) {
+        this.JobOrderID = JobOrderID;
+    }
+
+   
 }
