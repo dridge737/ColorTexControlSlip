@@ -4,73 +4,71 @@
  * and open the template in the editor.
  */
 package Handlers;
-
-import DataEntities.ChemicalColor;
+import DataEntities.ResinProgram;
 import Database.ColorTextControlSlipRepository;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 
 /**
  *
  * @author Eldridge
  */
-public class ColorHandler {
-    public boolean AddNewColor(ChemicalColor newColor)
+public class ResinHandler {
+     public boolean AddNewResinProgram(ResinProgram newResinProgram)
     {
         boolean isSuccessful = false;
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        isSuccessful = repo.AddColor(newColor);
+        isSuccessful = repo.AddResinProgram(newResinProgram);
         
         return isSuccessful;
     }
     
-    public boolean UpdateColor(ChemicalColor thisColor)
+    public boolean UpdateResinProgram(ResinProgram newResinProgram)
     {
         boolean isSuccessful = false;
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        isSuccessful = repo.UpdateColorByColorId(thisColor);
+        isSuccessful = repo.UpdateResinProgramByResinId(newResinProgram);
         return isSuccessful;        
     }
     
-    public void DeleteColor(int ColorId)
+    public void DeleteResinProgram(int ResinId)
     {
         boolean isSuccessful = false;
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        isSuccessful = repo.DeleteColorByColorId(ColorId);
+        isSuccessful = repo.DeleteResinProgramByResinProgramId(ResinId);
         
         if(isSuccessful == false)
         {
             
         }
     }
-     
-    public int GetColorIDFromColorName(String ColorName)
+    
+    public int GetResinProgramIDFromResinProgramName(String ResinName)
     {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
-        return repo.GetColorIDFromColorName(ColorName);
+        return repo.GetResinIDFromResinName(ResinName);
     }
     
-    public String GetColorNameFromColorID(int ColorID)
+    public String GetResinProgramNameFromResinProgramID(int ResinID)
     {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
-        return repo.GetColorNameFromColorID(ColorID);
+        return repo.GetResinNameFromResinID(ResinID);
     }
     
-    public boolean CheckIfColorNameExists(String ColorName)
+    public boolean CheckIfResinProgramNameExists(String ResinName)
     {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
-        return repo.CheckIfColorNameExists(ColorName);
+        return repo.CheckIfResinProgramNameExists(ResinName);
     }
     
-    public ArrayList<String> GetAllColor()
+    public ArrayList<String> GetAllResinProgram()
     {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
-        return repo.GetAllColors();
+        return repo.GetAllResinProgram();
     }
 }

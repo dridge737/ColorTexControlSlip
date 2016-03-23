@@ -5,53 +5,46 @@
  */
 package Handlers;
 
-import DataEntities.Chemical;
+import DataEntities.ProcessOrder;
 import Database.ColorTextControlSlipRepository;
 
 /**
  *
  * @author Eldridge
  */
-public class ChemicalHandler {
-     public void AddNewCustomer(Chemical newChemical)
+public class ProcessHandler {
+     public boolean AddNewResinProgram(ProcessOrder thisProcessOrder)
     {
         boolean isSuccessful = false;
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        isSuccessful = repo.AddChemical(newChemical);
+        isSuccessful = repo.AddProcessOrder(thisProcessOrder);
         
-        if(isSuccessful == false)
-        {
-            //enter validation 
-        }
+        return isSuccessful;
     }
     
-    public void UpdateCustomer(Chemical thisChemical)
+    public boolean UpdateResinProgram(ProcessOrder thisProcessOrder)
     {
         boolean isSuccessful = false;
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        isSuccessful = repo.UpdateChemicalByChemicalID(thisChemical);
-        
-        if(isSuccessful == false)
-        {
-            //enter validation 
-        }
+        isSuccessful = repo.UpdateProcessOrderByProcessOrderId(thisProcessOrder);
+        return isSuccessful;        
     }
     
-     public void DeleteCustomer(int ChemicalID)
+    public void DeleteResinProgram(int ProcessID)
     {
         boolean isSuccessful = false;
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        isSuccessful = repo.DeleteCustomerByCustomerId(ChemicalID);
+        isSuccessful = repo.DeleteProcessOrderByProcessOrderId(ProcessID);
         
         if(isSuccessful == false)
         {
-            //enter validation 
+            
         }
     }
 }

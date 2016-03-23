@@ -5,21 +5,21 @@
  */
 package Handlers;
 
-import DataEntities.Chemical;
+import DataEntities.JobOrder;
 import Database.ColorTextControlSlipRepository;
 
 /**
  *
  * @author Eldridge
  */
-public class ChemicalHandler {
-     public void AddNewCustomer(Chemical newChemical)
+public class JobHandler {
+    public void AddNewJobOrder(JobOrder newJobOrder)
     {
         boolean isSuccessful = false;
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        isSuccessful = repo.AddChemical(newChemical);
+        isSuccessful = repo.AddJobOrder(newJobOrder);
         
         if(isSuccessful == false)
         {
@@ -27,13 +27,13 @@ public class ChemicalHandler {
         }
     }
     
-    public void UpdateCustomer(Chemical thisChemical)
+    public void UpdateJobOrder(JobOrder thisJobOrder)
     {
         boolean isSuccessful = false;
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        isSuccessful = repo.UpdateChemicalByChemicalID(thisChemical);
+        isSuccessful = repo.UpdateJobOrderByJobOrderID(thisJobOrder);
         
         if(isSuccessful == false)
         {
@@ -41,13 +41,13 @@ public class ChemicalHandler {
         }
     }
     
-     public void DeleteCustomer(int ChemicalID)
+     public void DeleteJobOrder(int JobOrderId)
     {
         boolean isSuccessful = false;
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        isSuccessful = repo.DeleteCustomerByCustomerId(ChemicalID);
+        isSuccessful = repo.DeleteJobOrderByJobOrderID(JobOrderId);
         
         if(isSuccessful == false)
         {
