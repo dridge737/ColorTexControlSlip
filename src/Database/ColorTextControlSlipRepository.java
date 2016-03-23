@@ -518,6 +518,33 @@ public class ColorTextControlSlipRepository {
         this.closeConn(conn, ps, rs);
         return Name;
     }
+    
+    public ArrayList<String> GetAllDesign()
+    {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ArrayList<String> DesignList = new ArrayList<>();
+        try
+        {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT Name FROM design ");
+            rs = ps.executeQuery();
+            
+            while(rs.next())
+            {
+                DesignList.add(rs.getString("Name"));
+            }
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, ps, rs);
+        return DesignList;
+    }
+    
 /************************************************************************************************/
 /******************************* FOR CHEMICAL ***************************************************/
     
