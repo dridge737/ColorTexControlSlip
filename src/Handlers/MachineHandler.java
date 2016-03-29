@@ -25,7 +25,7 @@ public class MachineHandler {
         return machineDetails;
     }
     
-    public void AddNewCustomer(Machine newMachine)
+    public void AddNewMachine(Machine newMachine)
     {
         boolean isSuccessful = false;
         

@@ -12,8 +12,8 @@ import Database.ColorTextControlSlipRepository;
  *
  * @author Eldridge
  */
-public class ProcessHandler {
-     public boolean AddNewResinProgram(ProcessOrder thisProcessOrder)
+public class ProcessOrderHandler {
+     public boolean AddNewProcessOrder(ProcessOrder thisProcessOrder)
     {
         boolean isSuccessful = false;
         
@@ -24,7 +24,7 @@ public class ProcessHandler {
         return isSuccessful;
     }
     
-    public boolean UpdateResinProgram(ProcessOrder thisProcessOrder)
+    public boolean UpdateProcessOrder(ProcessOrder thisProcessOrder)
     {
         boolean isSuccessful = false;
         
@@ -34,7 +34,7 @@ public class ProcessHandler {
         return isSuccessful;        
     }
     
-    public void DeleteResinProgram(int ProcessID)
+    public void DeleteProcessOrder(int ProcessID)
     {
         boolean isSuccessful = false;
         

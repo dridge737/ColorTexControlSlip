@@ -13,7 +13,7 @@ import Database.ColorTextControlSlipRepository;
  * @author Eldridge
  */
 public class DesignHandler {
-     public void AddNewCustomer(Design newDesign)
+     public void AddNewDesign(Design newDesign)
     {
         boolean isSuccessful = false;
         
@@ -27,7 +27,7 @@ public class DesignHandler {
         }
     }
     
-    public void UpdateCustomer(Design thisDesign)
+    public void UpdateDesign(Design thisDesign)
     {
         boolean isSuccessful = false;
         
@@ -41,7 +41,7 @@ public class DesignHandler {
         }
     }
     
-     public void DeleteCustomer(int designID)
+     public void DeleteDesign(int designID)
     {
         boolean isSuccessful = false;
         

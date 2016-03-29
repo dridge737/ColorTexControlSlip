@@ -5,21 +5,21 @@
  */
 package Handlers;
 
-import DataEntities.Chemical;
+import DataEntities.ResinChemical;
 import Database.ColorTextControlSlipRepository;
 
 /**
  *
  * @author Eldridge
  */
-public class ChemicalHandler {
-     public void AddNewChemical(Chemical newChemical)
+public class ResinChemicalHandler {
+     public void AddNewResinChemical(ResinChemical newResinChemical)
     {
         boolean isSuccessful = false;
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        isSuccessful = repo.AddChemical(newChemical);
+        isSuccessful = repo.AddResinChemical(newResinChemical);
         
         if(isSuccessful == false)
         {
@@ -27,13 +27,13 @@ public class ChemicalHandler {
         }
     }
     
-    public void UpdateChemical(Chemical thisChemical)
+    public void UpdateResinChemical(ResinChemical thisResinChemical)
     {
         boolean isSuccessful = false;
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        isSuccessful = repo.UpdateChemicalByChemicalID(thisChemical);
+        isSuccessful = repo.UpdateResinChemicalByResinChemicalID(thisResinChemical);
         
         if(isSuccessful == false)
         {
@@ -41,13 +41,13 @@ public class ChemicalHandler {
         }
     }
     
-     public void DeleteChemical(int ChemicalID)
+     public void DeleteResinChemical(int ResinChemicalID)
     {
         boolean isSuccessful = false;
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        isSuccessful = repo.DeleteChemicalByChemicalID(ChemicalID);
+        isSuccessful = repo.DeleteResinChemicalByResinChemicalID(ResinChemicalID);
         
         if(isSuccessful == false)
         {

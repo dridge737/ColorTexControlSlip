@@ -12,7 +12,7 @@ import java.util.ArrayList;
  *
  * @author Eldridge
  */
-public class ResinHandler {
+public class ResinProgramHandler {
      public boolean AddNewResinProgram(ResinProgram newResinProgram)
     {
         boolean isSuccessful = false;

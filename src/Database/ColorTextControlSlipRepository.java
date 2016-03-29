@@ -733,6 +733,34 @@ public class ColorTextControlSlipRepository {
         this.closeConn(conn, ps, rs);
         return checkTest;
     }
+    
+    public ArrayList<String> GetAllChemicalName()
+    {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ArrayList<String> ChemicalList = new ArrayList<>();
+        try
+        {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT Name FROM chemical");
+            rs = ps.executeQuery();
+            
+            while(rs.next())
+            {
+                ChemicalList.add(rs.getString("Name"));
+            }
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, ps, rs);
+        return ChemicalList;
+    
+    }
+    
     //END CUSTOMER REPOSITORY METHODS
     
     //BEGIN MACHINE REPOSITORY METHODS
@@ -1012,34 +1040,6 @@ public class ColorTextControlSlipRepository {
         return checkTest;
     }
     //END DYEING PROGRAM REPO METHODS
-    public ArrayList<String> GetAllChemicalName()
-    {
-        DBConnection dbc = new DBConnection();
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        ArrayList<String> ChemicalList = new ArrayList<>();
-        try
-        {
-            conn = dbc.getConnection();
-            ps = conn.prepareStatement("SELECT Name FROM chemical");
-            rs = ps.executeQuery();
-            
-            while(rs.next())
-            {
-                ChemicalList.add(rs.getString("Name"));
-            }
-        }
-        catch (SQLException ex) {
-            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        this.closeConn(conn, ps, rs);
-        return ChemicalList;
-    
-    }
-    
-    
     
 /************************************************************************************************/
 /******************************* FOR JOB ORDER ***************************************************/
@@ -1386,7 +1386,7 @@ public class ColorTextControlSlipRepository {
     
 
 /************************************************************************************************/
-/******************************* FOR Process ****************************************************/
+/******************************* FOR Process Order ****************************************************/
     
     public boolean AddProcessOrder(ProcessOrder thisProcessOrder) 
     {
@@ -1396,7 +1396,7 @@ public class ColorTextControlSlipRepository {
         boolean added = false;
         try {
             conn = db.getConnection();
-            String query = "INSERT INTO process_order (JobOrderID, Weight, VolH20, RollLoad, Roll) VALUES (?)";
+            String query = "INSERT INTO process_order (JobOrderID, Weight, VolH20, RollLoad, Roll) VALUES (?, ?, ?, ?, ?)";
 
             preparedStmt = conn.prepareStatement(query);
             preparedStmt.setInt(1, thisProcessOrder.getJobOrderID());
@@ -1471,4 +1471,82 @@ public class ColorTextControlSlipRepository {
         return isSuccessful;
     }
     
+/************************************************************************************************/
+/******************************* FOR Resin Chemical ****************************************************/ 
+    
+    public boolean AddResinChemical(ResinChemical thisResinChemical) {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean added = false;
+        try {
+            conn = db.getConnection();
+            String query = "INSERT INTO resin_chemical (ChemicalID, ResinProgram, ValueGPL) VALUES (?, ?, ?)";
+
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setInt(1, thisResinChemical.getChemicalID() );
+            preparedStmt.setInt(2, thisResinChemical.getResinProgramID() );
+            preparedStmt.setFloat(3, thisResinChemical.getGPLValue() );
+            preparedStmt.executeUpdate();
+            
+            added = true;
+        } 
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, preparedStmt);
+        return added;
+    }
+
+    public boolean UpdateResinChemicalByResinChemicalID(ResinChemical thisResinChemical) 
+    {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean isSuccessful = false;
+        try
+        {
+            conn = db.getConnection();
+            String query = "UPDATE resin_chemical SET ChemicalID = ?, Resin Program = ?, ValueGPL = ?  WHERE ID = ?";
+
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setInt(1, thisResinChemical.getChemicalID());
+            preparedStmt.setInt(2, thisResinChemical.getResinProgramID());
+            preparedStmt.setFloat(3, thisResinChemical.getGPLValue() );
+            preparedStmt.setInt(4, thisResinChemical.getID());
+            preparedStmt.executeUpdate();
+            isSuccessful = true;
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, preparedStmt);
+        return isSuccessful;
+    }
+
+    public boolean DeleteResinChemicalByResinChemicalID(int ResinChemicalId) {
+    
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean isSuccessful = false;
+        try
+        {
+            conn = db.getConnection();
+            String query = "DELETE FROM resin_chemical WHERE ID = ?";
+
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setInt(1, ResinChemicalId);
+            preparedStmt.executeUpdate();
+            isSuccessful = true;
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, preparedStmt);
+        return isSuccessful;
+    }
 }
