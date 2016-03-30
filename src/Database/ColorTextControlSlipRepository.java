@@ -764,6 +764,32 @@ public class ColorTextControlSlipRepository {
     //END CUSTOMER REPOSITORY METHODS
     
     //BEGIN MACHINE REPOSITORY METHODS
+    public ArrayList<String> GetAllMachine()
+    {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ArrayList<String> MachineList = new ArrayList<>();
+        try
+        {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT Name FROM machine");
+            rs = ps.executeQuery();
+            
+            while(rs.next())
+            {
+                MachineList.add(rs.getString("Name"));
+            }
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, ps, rs);
+        return MachineList;
+    }
+    
     public boolean AddMachine(Machine newMachine) 
     {
         
@@ -1549,4 +1575,175 @@ public class ColorTextControlSlipRepository {
         this.closeConn(conn, preparedStmt);
         return isSuccessful;
     }
+    /******************************* FOR Resin Chemical: END ****************************************************/ 
+    
+    /******************************* FOR DyeingProcess: BEGIN ****************************************************/ 
+    public boolean AddDyeingProcess(DyeingProcess dyeingProcess) {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean added = false;
+        try {
+            conn = db.getConnection();
+            String query = "INSERT INTO dyeing_process (ID, DyeingProgramID, Name, Order) VALUES (?, ?, ?, ?)";
+
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setInt(1, dyeingProcess.getDyeingProcessId());
+            preparedStmt.setInt(2, dyeingProcess.getDyeingProgramId());
+            preparedStmt.setString(3, dyeingProcess.getDyeingProcessName());
+            preparedStmt.setString(4, dyeingProcess.getdyeingProcessOrder());
+            preparedStmt.execute();
+            
+            added = true;
+        } 
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, preparedStmt);
+        return added;
+    }
+
+    public boolean UpdateDyeingProcessByDyeingProcessID(DyeingProcess dyeingProcess) 
+    {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean isSuccessful = false;
+        try
+        {
+            conn = db.getConnection();
+            String query = "UPDATE dyeing_process SET DyeingProgramID = ?, Name = ?, Order = ?  WHERE ID = ?";
+
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setInt(1, dyeingProcess.getDyeingProcessId());
+            preparedStmt.setInt(2, dyeingProcess.getDyeingProgramId());
+            preparedStmt.setString(3, dyeingProcess.getDyeingProcessName());
+            preparedStmt.setString(4, dyeingProcess.getdyeingProcessOrder());
+            preparedStmt.executeUpdate();
+            isSuccessful = true;
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, preparedStmt);
+        return isSuccessful;
+    }
+
+    public boolean DeleteDyeingProcessByDyeingProcessID(int dyeingProcessID) {
+    
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean isSuccessful = false;
+        try
+        {
+            conn = db.getConnection();
+            String query = "DELETE FROM dyeing_process WHERE ID = ?";
+
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setInt(1, dyeingProcessID);
+            preparedStmt.execute();
+            isSuccessful = true;
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, preparedStmt);
+        return isSuccessful;
+    }
+    
+    public boolean CheckIfDyeingProcessExists(String dyeingProcessName)
+    {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        boolean itExists = false;
+        int checkTest = 0;
+        try 
+        {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT EXISTS "
+                    + " (SELECT ID "
+                    + " FROM dyeing_process WHERE "
+                    + " Name = ?) "
+                    + " AS 'CheckTest'");
+
+            int item = 1;
+            ps.setString(item++, dyeingProcessName);
+            rs = ps.executeQuery();
+            
+            if(rs.first())
+                checkTest = rs.getInt("CheckTest");
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, ps, rs);
+        if(checkTest == 1)
+            itExists = true;
+        
+        return itExists;
+    }
+    
+    public DyeingProcess GetDyeingProcessDetailsByDyeingProcessId(int dyeingProcessId)
+    {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        DyeingProcess dyeingProcess = new DyeingProcess();
+        try
+        {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT * FROM dyeing_process where ID = ? ");
+            ps.setInt(1, dyeingProcessId);           
+            rs = ps.executeQuery();
+            
+            dyeingProcess.setDyeingProcessId(rs.getInt("ID"));
+            dyeingProcess.setDyeingProcessName(rs.getString("Name"));
+            dyeingProcess.setDyeingProcessOrder(rs.getString("Order"));
+            dyeingProcess.setDyeingProgramId(rs.getInt("DyeingProgramID"));
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, ps, rs);
+        return dyeingProcess;
+    }
+    
+    public ArrayList<String> GetAllDyeingProcessByDyeingProgramId(int dyeingProgramId)
+    {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ArrayList<String> DyeingProcessList = new ArrayList<>();
+        try
+        {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT Name FROM dyeing_process where DyeingProgramID = ? ");
+            int item = 1;
+            ps.setInt(item++, dyeingProgramId);
+            rs = ps.executeQuery();
+            
+            while(rs.next())
+            {
+                DyeingProcessList.add(rs.getString("Name"));
+            }
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, ps, rs);
+        return DyeingProcessList;
+    }
+    /******************************* FOR DyeingProcess: END ****************************************************/ 
+    
 }
