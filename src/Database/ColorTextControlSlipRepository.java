@@ -1549,4 +1549,83 @@ public class ColorTextControlSlipRepository {
         this.closeConn(conn, preparedStmt);
         return isSuccessful;
     }
+    
+    /************************************************************************************************/
+/******************************* FOR Dyeing Chemical ****************************************************/ 
+    
+    public boolean AddDyeingChemical(ResinChemical thisResinChemical) {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean added = false;
+        try {
+            conn = db.getConnection();
+            String query = "INSERT INTO resin_chemical (ChemicalID, ResinProgram, ValueGPL) VALUES (?, ?, ?)";
+
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setInt(1, thisResinChemical.getChemicalID() );
+            preparedStmt.setInt(2, thisResinChemical.getResinProgramID() );
+            preparedStmt.setFloat(3, thisResinChemical.getGPLValue() );
+            preparedStmt.executeUpdate();
+            
+            added = true;
+        } 
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, preparedStmt);
+        return added;
+    }
+
+    public boolean UpdateDyeingChemicalByDyeingChemicalID(ResinChemical thisResinChemical) 
+    {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean isSuccessful = false;
+        try
+        {
+            conn = db.getConnection();
+            String query = "UPDATE dyeing_chemical SET ChemicalID = ?, Resin Program = ?, ValueGPL = ?  WHERE ID = ?";
+
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setInt(1, thisResinChemical.getChemicalID());
+            preparedStmt.setInt(2, thisResinChemical.getResinProgramID());
+            preparedStmt.setFloat(3, thisResinChemical.getGPLValue() );
+            preparedStmt.setInt(4, thisResinChemical.getID());
+            preparedStmt.executeUpdate();
+            isSuccessful = true;
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, preparedStmt);
+        return isSuccessful;
+    }
+
+    public boolean DeleteDyeingChemicalByDyeingChemicalID(int DyeingChemicalId) {
+    
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean isSuccessful = false;
+        try
+        {
+            conn = db.getConnection();
+            String query = "DELETE FROM dyeing_chemical WHERE ID = ?";
+
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setInt(1, DyeingChemicalId);
+            preparedStmt.executeUpdate();
+            isSuccessful = true;
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, preparedStmt);
+        return isSuccessful;
+    }
 }
