@@ -78,9 +78,10 @@ public class ColorForm extends javax.swing.JFrame {
         jPanel1.add(ColorHeader);
         ColorHeader.setBounds(20, 20, 360, 40);
 
-        DeleteButton.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        DeleteButton.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
         DeleteButton.setText("Delete");
-        DeleteButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        DeleteButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        DeleteButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         DeleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DeleteButtonActionPerformed(evt);
@@ -98,9 +99,10 @@ public class ColorForm extends javax.swing.JFrame {
         jPanel1.add(ColorLabel);
         ColorLabel.setBounds(10, 80, 400, 40);
 
-        AddButton.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        AddButton.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
         AddButton.setText("Add Color");
-        AddButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        AddButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        AddButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         AddButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AddButtonActionPerformed(evt);
@@ -162,9 +164,10 @@ public class ColorForm extends javax.swing.JFrame {
         jPanel1.add(ColorText);
         ColorText.setBounds(10, 330, 400, 30);
 
-        EditButton.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        EditButton.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
         EditButton.setText("Edit");
-        EditButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        EditButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        EditButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         EditButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EditButtonActionPerformed(evt);
@@ -173,9 +176,10 @@ public class ColorForm extends javax.swing.JFrame {
         jPanel1.add(EditButton);
         EditButton.setBounds(110, 390, 100, 50);
 
-        CloseButton.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        CloseButton.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
         CloseButton.setText("Close");
-        CloseButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        CloseButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        CloseButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         CloseButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CloseButtonActionPerformed(evt);
