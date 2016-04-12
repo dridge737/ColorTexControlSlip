@@ -1507,7 +1507,7 @@ public class ColorTextControlSlipRepository {
         boolean added = false;
         try {
             conn = db.getConnection();
-            String query = "INSERT INTO resin_chemical (ChemicalID, ResinProgram, ValueGPL) VALUES (?, ?, ?)";
+            String query = "INSERT INTO resin_chemical (ChemicalID, ResinProgramID, ValueGPL) VALUES (?, ?, ?)";
 
             preparedStmt = conn.prepareStatement(query);
             preparedStmt.setInt(1, thisResinChemical.getChemicalID() );
@@ -1534,7 +1534,7 @@ public class ColorTextControlSlipRepository {
         try
         {
             conn = db.getConnection();
-            String query = "UPDATE resin_chemical SET ChemicalID = ?, Resin Program = ?, ValueGPL = ?  WHERE ID = ?";
+            String query = "UPDATE resin_chemical SET ChemicalID = ?, ResinProgramID = ?, ValueGPL = ?  WHERE ID = ?";
 
             preparedStmt = conn.prepareStatement(query);
             preparedStmt.setInt(1, thisResinChemical.getChemicalID());
@@ -1750,19 +1750,20 @@ public class ColorTextControlSlipRepository {
     /************************************************************************************************/
 /******************************* FOR Dyeing Chemical ****************************************************/ 
     
-    public boolean AddDyeingChemical(ResinChemical thisResinChemical) {
+    public boolean AddDyeingChemical(DyeingChemical thisDyeingChemical) {
         DBConnection db = new DBConnection();
         Connection conn = null;
         PreparedStatement preparedStmt = null;
         boolean added = false;
         try {
             conn = db.getConnection();
-            String query = "INSERT INTO resin_chemical (ChemicalID, ResinProgram, ValueGPL) VALUES (?, ?, ?)";
+            String query = "INSERT INTO dyeing_chemical (ChemicalID, DyeingProcessID, Type, Value) VALUES (?, ?, ?, ?)";
 
             preparedStmt = conn.prepareStatement(query);
-            preparedStmt.setInt(1, thisResinChemical.getChemicalID() );
-            preparedStmt.setInt(2, thisResinChemical.getResinProgramID() );
-            preparedStmt.setFloat(3, thisResinChemical.getGPLValue() );
+            preparedStmt.setInt(1, thisDyeingChemical.getChemicalID() );
+            preparedStmt.setInt(2, thisDyeingChemical.getDyeingProcessID() );
+            preparedStmt.setString(3, thisDyeingChemical.getType());
+            preparedStmt.setFloat(4, thisDyeingChemical.getValue());
             preparedStmt.executeUpdate();
             
             added = true;
@@ -1775,7 +1776,7 @@ public class ColorTextControlSlipRepository {
         return added;
     }
 
-    public boolean UpdateDyeingChemicalByDyeingChemicalID(ResinChemical thisResinChemical) 
+    public boolean UpdateDyeingChemicalByDyeingChemicalID(DyeingChemical thisDyeingChemical) 
     {
         DBConnection db = new DBConnection();
         Connection conn = null;
@@ -1784,13 +1785,14 @@ public class ColorTextControlSlipRepository {
         try
         {
             conn = db.getConnection();
-            String query = "UPDATE dyeing_chemical SET ChemicalID = ?, Resin Program = ?, ValueGPL = ?  WHERE ID = ?";
+            String query = "UPDATE dyeing_chemical SET ChemicalID = ?, DyeingProcessID = ?, Type = ?, Value = ? WHERE ID = ?";
 
             preparedStmt = conn.prepareStatement(query);
-            preparedStmt.setInt(1, thisResinChemical.getChemicalID());
-            preparedStmt.setInt(2, thisResinChemical.getResinProgramID());
-            preparedStmt.setFloat(3, thisResinChemical.getGPLValue() );
-            preparedStmt.setInt(4, thisResinChemical.getID());
+            preparedStmt.setInt(1, thisDyeingChemical.getChemicalID());
+            preparedStmt.setInt(2, thisDyeingChemical.getDyeingProcessID());
+            preparedStmt.setString(3, thisDyeingChemical.getType() );
+            preparedStmt.setFloat(4, thisDyeingChemical.getValue());
+            preparedStmt.setInt(5, thisDyeingChemical.getID());
             preparedStmt.executeUpdate();
             isSuccessful = true;
         }
