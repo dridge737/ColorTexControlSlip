@@ -96,7 +96,7 @@ public class CustomerForm extends javax.swing.JFrame {
         jLabel7.setBounds(10, 80, 400, 40);
 
         add_button.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        add_button.setText("Add This");
+        add_button.setText("Add");
         add_button.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         add_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
