@@ -247,7 +247,8 @@ public class CustomerForm extends javax.swing.JFrame {
 
     public void reset_pigment_text()
     {
-        
+        this.CustomerText.setText("Name :");
+        CustomerText.setForeground(new Color(204,204,204));
     }
     
     private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
