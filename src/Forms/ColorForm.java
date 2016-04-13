@@ -209,6 +209,7 @@ public class ColorForm extends javax.swing.JFrame {
             //colortextile_class.pigment add_this_pig = new colortextile_class.pigment();
             thisColor.setColorName(this.ColorText.getText());
             ColorHandler thisColorHandler = new ColorHandler();
+            thisColor.setColorId(thisColorHandler.GetColorIDFromColorName(thisColor.getColorName()));
             if(AddButton.getText().equals("Save"))
             {
                if(this.thisColor.getColorId() != -1)
@@ -242,7 +243,7 @@ public class ColorForm extends javax.swing.JFrame {
             this.reset_pigment_text();
         }
         else
-        JOptionPane.showMessageDialog(null, "Please add a character/letter to the pigment name");
+        JOptionPane.showMessageDialog(null, "Please add a character/letter to the Color name");
         //JOptionPane.showMessageDialog(null,"Pakilagyan po ng letra ang ida-dagdag na pigment");
             
     }//GEN-LAST:event_AddButtonActionPerformed
@@ -261,9 +262,9 @@ public class ColorForm extends javax.swing.JFrame {
                   ,"Delete Pigment?", JOptionPane.YES_NO_OPTION);
             if(CloseorNoreply == JOptionPane.YES_OPTION)
             {
-                String pigment_name = this.ColorTable.getModel().getValueAt(this.ColorTable.getSelectedRow(), 0).toString();
-                thisColor.setColorName(pigment_name);
-                thisColor.setColorId(new ColorHandler().GetColorIDFromColorName(pigment_name));
+                String ColorName = this.ColorTable.getModel().getValueAt(this.ColorTable.getSelectedRow(), 0).toString();
+                thisColor.setColorName(ColorName);
+                thisColor.setColorId(new ColorHandler().GetColorIDFromColorName(ColorName));
                 new ColorHandler().DeleteColor(thisColor.getColorId());
                 this.get_updated_table();
             }

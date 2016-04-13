@@ -5,6 +5,8 @@
  */
 package Forms;
 
+import Handlers.CustomerHandler;
+import DataEntities.Customer;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -23,6 +25,7 @@ import javax.swing.table.TableRowSorter;
 public class CustomerForm extends javax.swing.JFrame {
 
     DefaultTableModel model = new DefaultTableModel();
+    Customer thisCustomer = new Customer();
     /**
      * Creates new form add_pigment_form
      */
@@ -51,15 +54,15 @@ public class CustomerForm extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
-        del_button = new javax.swing.JButton();
+        DeleteButton = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
-        add_button = new javax.swing.JButton();
+        AddButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        pigment_table = new javax.swing.JTable();
-        pig_text = new javax.swing.JTextField();
-        edit_but = new javax.swing.JButton();
-        close_but = new javax.swing.JButton();
+        CustomerTable = new javax.swing.JTable();
+        CustomerText = new javax.swing.JTextField();
+        EditButton = new javax.swing.JButton();
+        CloseButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Add Pigment");
@@ -75,16 +78,16 @@ public class CustomerForm extends javax.swing.JFrame {
         jPanel1.add(jLabel8);
         jLabel8.setBounds(20, 20, 360, 40);
 
-        del_button.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        del_button.setText("Delete");
-        del_button.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        del_button.addActionListener(new java.awt.event.ActionListener() {
+        DeleteButton.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        DeleteButton.setText("Delete");
+        DeleteButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        DeleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                del_buttonActionPerformed(evt);
+                DeleteButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(del_button);
-        del_button.setBounds(212, 390, 100, 50);
+        jPanel1.add(DeleteButton);
+        DeleteButton.setBounds(212, 390, 100, 50);
 
         jLabel7.setBackground(new java.awt.Color(255, 255, 255));
         jLabel7.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
@@ -95,22 +98,22 @@ public class CustomerForm extends javax.swing.JFrame {
         jPanel1.add(jLabel7);
         jLabel7.setBounds(10, 80, 400, 40);
 
-        add_button.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        add_button.setText("Add");
-        add_button.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        add_button.addActionListener(new java.awt.event.ActionListener() {
+        AddButton.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        AddButton.setText("Add");
+        AddButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        AddButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                add_buttonActionPerformed(evt);
+                AddButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(add_button);
-        add_button.setBounds(7, 390, 100, 50);
+        jPanel1.add(AddButton);
+        AddButton.setBounds(7, 390, 100, 50);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 3));
         jPanel2.setOpaque(false);
 
-        pigment_table.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        pigment_table.setModel(new javax.swing.table.DefaultTableModel(
+        CustomerTable.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        CustomerTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -121,10 +124,10 @@ public class CustomerForm extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        pigment_table.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        pigment_table.setRowHeight(20);
-        pigment_table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        jScrollPane1.setViewportView(pigment_table);
+        CustomerTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        CustomerTable.setRowHeight(20);
+        CustomerTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        jScrollPane1.setViewportView(CustomerTable);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -140,46 +143,46 @@ public class CustomerForm extends javax.swing.JFrame {
         jPanel1.add(jPanel2);
         jPanel2.setBounds(10, 117, 400, 200);
 
-        pig_text.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
-        pig_text.setForeground(new java.awt.Color(204, 204, 204));
-        pig_text.setText("Name :");
-        pig_text.addFocusListener(new java.awt.event.FocusAdapter() {
+        CustomerText.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
+        CustomerText.setForeground(new java.awt.Color(204, 204, 204));
+        CustomerText.setText("Name :");
+        CustomerText.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                pig_textFocusGained(evt);
+                CustomerTextFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                pig_textFocusLost(evt);
+                CustomerTextFocusLost(evt);
             }
         });
-        pig_text.addKeyListener(new java.awt.event.KeyAdapter() {
+        CustomerText.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                pig_textKeyReleased(evt);
+                CustomerTextKeyReleased(evt);
             }
         });
-        jPanel1.add(pig_text);
-        pig_text.setBounds(10, 330, 400, 30);
+        jPanel1.add(CustomerText);
+        CustomerText.setBounds(10, 330, 400, 30);
 
-        edit_but.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        edit_but.setText("Edit");
-        edit_but.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        edit_but.addActionListener(new java.awt.event.ActionListener() {
+        EditButton.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        EditButton.setText("Edit");
+        EditButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        EditButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edit_butActionPerformed(evt);
+                EditButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(edit_but);
-        edit_but.setBounds(110, 390, 100, 50);
+        jPanel1.add(EditButton);
+        EditButton.setBounds(110, 390, 100, 50);
 
-        close_but.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        close_but.setText("Close");
-        close_but.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        close_but.addActionListener(new java.awt.event.ActionListener() {
+        CloseButton.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        CloseButton.setText("Close");
+        CloseButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        CloseButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                close_butActionPerformed(evt);
+                CloseButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(close_but);
-        close_but.setBounds(315, 390, 100, 50);
+        jPanel1.add(CloseButton);
+        CloseButton.setBounds(315, 390, 100, 50);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -195,35 +198,92 @@ public class CustomerForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void add_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_buttonActionPerformed
+    private void AddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddButtonActionPerformed
         // TODO add your handling code here:
-       
-    }//GEN-LAST:event_add_buttonActionPerformed
+       if(CustomerText.getText().length()>0 && !CustomerText.getText().equals("Name :"))
+        {
+            //colortextile_class.pigment add_this_pig = new colortextile_class.pigment();
+            thisCustomer.setCustomerName(this.CustomerText.getText());
+            CustomerHandler thisCustomerHandler = new CustomerHandler();
+            //thisCustomer.setCustomerName(thisCustomerHandler.CheckIfCustomerExists(thisCustomer.getCustomerName()));
+            if(AddButton.getText().equals("Save"))
+            {
+               if(thisCustomer.getCustomerId() != -1)
+               {
+                   thisCustomerHandler.UpdateCustomer(thisCustomer);
+                   
+                   thisCustomer.setCustomerName("");
+                   thisCustomer.setCustomerId(-1);
+                   this.DeleteButton.setEnabled(true);
+                   this.EditButton.setText("Edit");
+                   AddButton.setText("Name :");
+               }
+            }
+            else
+            {
+                if(thisCustomerHandler.AddNewCustomer(thisCustomer)){
+                    JOptionPane.showMessageDialog(null, "Successfully added Customer : "+CustomerText.getText());
+                    //JOptionPane.showMessageDialog(null,"Matagumpay na naidagdag ang Pigment");
+                    this.dispose();
+                }
+                else if(CustomerText.getText() == "Name :")
+                {
+                    JOptionPane.showMessageDialog(null, "Please input a text.");
+                }
+                else
+                    JOptionPane.showMessageDialog(null, "Customer with the same name has already been added.");
+                    //JOptionPane.showMessageDialog(null,"Naidagdag na ang pigment na ito.");
+            }
+            
+            this.get_updated_table();
+            update_row_filter("");
+            this.reset_pigment_text();
+        }
+        else
+        JOptionPane.showMessageDialog(null, "Please add a character/letter to the name");
+        //JOptionPane.showMessageDialog(null,"Pakilagyan po ng letra ang ida-dagdag na pigment");
+        
+    }//GEN-LAST:event_AddButtonActionPerformed
 
     public void reset_pigment_text()
     {
         
     }
     
-    private void del_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_del_buttonActionPerformed
+    private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
         // TODO add your handling code here:
 
+        if(CustomerTable.getSelectedRowCount() > 0 )
+        {
+            int CloseorNoreply = JOptionPane.showConfirmDialog(null,"Delete this Pigment? "
+                  ,"Delete Pigment?", JOptionPane.YES_NO_OPTION);
+            if(CloseorNoreply == JOptionPane.YES_OPTION)
+            {
+                String CustomerName = this.CustomerTable.getModel().getValueAt(this.CustomerTable.getSelectedRow(), 0).toString();
+                thisCustomer.setCustomerName(CustomerName);
+                thisCustomer.setCustomerId(new CustomerHandler().GetCustomerIDFromCustomerName(CustomerName));
+                new CustomerHandler().DeleteCustomer(thisCustomer.getCustomerId());
+                this.get_updated_table();
+            }
+        }else
+        {
+            JOptionPane.showMessageDialog(null, "Please select an Item in the table to be edited");
+        }
         
-        
-    }//GEN-LAST:event_del_buttonActionPerformed
+    }//GEN-LAST:event_DeleteButtonActionPerformed
 
     private void get_updated_table()
     {
         model = getUpdatedPigmentTableModel();
-        this.pigment_table.setModel(model);
+        this.CustomerTable.setModel(model);
     }
     
     private void update_row_filter(String row_filter_text)
     {
         TableRowSorter<TableModel> rowSorter
-            = new TableRowSorter<>(this.pigment_table.getModel());
+            = new TableRowSorter<>(this.CustomerTable.getModel());
         
-        this.pigment_table.setRowSorter(rowSorter);
+        this.CustomerTable.setRowSorter(rowSorter);
         
         if (row_filter_text.trim().length() == 0) {
             rowSorter.setRowFilter(null);
@@ -232,44 +292,58 @@ public class CustomerForm extends javax.swing.JFrame {
         }
     }
     
-    private void pig_textKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pig_textKeyReleased
+    private void CustomerTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CustomerTextKeyReleased
         // TODO add your handling code here:
-        update_row_filter(this.pig_text.getText());
+        update_row_filter(this.CustomerText.getText());
         
-    }//GEN-LAST:event_pig_textKeyReleased
+    }//GEN-LAST:event_CustomerTextKeyReleased
 
-    private void pig_textFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pig_textFocusGained
+    private void CustomerTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_CustomerTextFocusGained
         // TODO add your handling code here:
-        if(pig_text.getText().equals("Pigment Name :"))
+        if(CustomerText.getText().equals("Name :"))
         {
-            pig_text.setText("");
-            pig_text.setForeground(Color.BLACK);
+            CustomerText.setText("");
+            CustomerText.setForeground(Color.BLACK);
         }
-    }//GEN-LAST:event_pig_textFocusGained
+    }//GEN-LAST:event_CustomerTextFocusGained
 
-    private void pig_textFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pig_textFocusLost
+    private void CustomerTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_CustomerTextFocusLost
         // TODO add your handling code here:
-        if(pig_text.getText().equals(""))
+        if(CustomerText.getText().equals(""))
             this.reset_pigment_text();
-    }//GEN-LAST:event_pig_textFocusLost
+    }//GEN-LAST:event_CustomerTextFocusLost
 
-    private void edit_butActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_butActionPerformed
+    private void EditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditButtonActionPerformed
         // TODO add your handling code here:
         
-        if(edit_but.getText().equals("Edit"))
+        if(EditButton.getText().equals("Edit"))
         {
-           
+          CustomerText.setForeground(Color.BLACK);
+          thisCustomer.setCustomerName(this.CustomerTable.getModel().getValueAt(this.CustomerTable.getSelectedRow(), 0).toString());
+          CustomerText.setText(thisCustomer.getCustomerName());
+          thisCustomer.setCustomerId(new CustomerHandler().GetCustomerIDFromCustomerName(thisCustomer.getCustomerName()));
+          model.removeRow(this.CustomerTable.getSelectedRow());
+          
+          this.EditButton.setText("Cancel");
+          this.AddButton.setText("Save");
+          this.DeleteButton.setEnabled(false);
         }
         else
         {
-            
+            model.addRow(new String[]{thisCustomer.getCustomerName()});
+            thisCustomer.setCustomerName("");
+            this.update_row_filter("");
+            EditButton.setText("Edit");
+            this.AddButton.setText("Name :");
+            this.DeleteButton.setEnabled(true);
+            this.reset_pigment_text();
         }
-    }//GEN-LAST:event_edit_butActionPerformed
+    }//GEN-LAST:event_EditButtonActionPerformed
 
-    private void close_butActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_close_butActionPerformed
+    private void CloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseButtonActionPerformed
         // TODO add your handling code here:
             this.dispose();
-    }//GEN-LAST:event_close_butActionPerformed
+    }//GEN-LAST:event_CloseButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -327,16 +401,16 @@ public class CustomerForm extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton add_button;
-    private javax.swing.JButton close_but;
-    private javax.swing.JButton del_button;
-    private javax.swing.JButton edit_but;
+    private javax.swing.JButton AddButton;
+    private javax.swing.JButton CloseButton;
+    private javax.swing.JTable CustomerTable;
+    private javax.swing.JTextField CustomerText;
+    private javax.swing.JButton DeleteButton;
+    private javax.swing.JButton EditButton;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField pig_text;
-    private javax.swing.JTable pigment_table;
     // End of variables declaration//GEN-END:variables
 }

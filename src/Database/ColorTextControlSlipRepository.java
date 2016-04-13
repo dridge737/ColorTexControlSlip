@@ -90,7 +90,7 @@ public class ColorTextControlSlipRepository {
 /*********************************************************************************************/
 /******************************* FOR CUSTOMER ***************************************************/  
     //BEGIN CUSTOMER REPOSITORY METHODS
-    public Customer GetCustomerDetailsById(int customerId) 
+    public String GetCustomerNameById(int CustomerId) 
     {
         DBConnection db = new DBConnection();
         Customer customerDetails = new Customer();
@@ -102,18 +102,49 @@ public class ColorTextControlSlipRepository {
             String query = "SELECT * FROM customer WHERE ID = ?";
               
             preparedStmt = conn.prepareStatement(query);
-            preparedStmt.setInt(1, customerId);
+            preparedStmt.setInt(1, CustomerId);
             resultSet = preparedStmt.executeQuery();
-            
-            customerDetails.setCustomerId(resultSet.getInt("ID"));
-            customerDetails.setCustomerName(resultSet.getString("Name"));
+            //customerDetails.setCustomerId(resultSet.getInt("ID"));
+            if(resultSet.first())
+            {
+                customerDetails.setCustomerName(resultSet.getString("Name"));
+            }
         } 
         catch (SQLException ex) {
             Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        this.closeConn(conn, preparedStmt);
-        return customerDetails;
+        this.closeConn(conn, preparedStmt, resultSet);
+        return customerDetails.getCustomerName();
+    }
+    
+    public int GetCustomerIdFromCustomerName(String CustomerName)
+    {
+        DBConnection db = new DBConnection();
+        int CustomerID = -1;
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        ResultSet resultSet = null;
+        
+         try {
+            conn = db.getConnection();
+            String query = "SELECT * FROM customer WHERE Name = ?";
+            
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setString(1, CustomerName);
+            resultSet = preparedStmt.executeQuery();
+            
+            if(resultSet.first())
+            {
+                CustomerID = resultSet.getInt("ID");
+            }
+            
+         }
+         catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         this.closeConn(conn, preparedStmt, resultSet);
+         return CustomerID;
     }
     
     public boolean AddCustomer(Customer newCustomer) 
@@ -189,7 +220,7 @@ public class ColorTextControlSlipRepository {
         return isSuccessful;
     }
     
-    public ArrayList<String> GetAllCustomers()
+    public ArrayList<String> GetAllCustomersName()
     {
         DBConnection dbc = new DBConnection();
         Connection conn = null;
