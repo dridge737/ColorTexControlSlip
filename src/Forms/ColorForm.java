@@ -277,7 +277,7 @@ public class ColorForm extends javax.swing.JFrame {
 
     private void get_updated_table()
     {
-        model = getUpdatedPigmentTableModel();
+        model = getUpdatedColorTableModel();
         this.ColorTable.setModel(model);
     }
     
@@ -392,15 +392,11 @@ public class ColorForm extends javax.swing.JFrame {
         });
     }
     
-    public DefaultTableModel getUpdatedPigmentTableModel() {      
+    public DefaultTableModel getUpdatedColorTableModel() {      
         
         DefaultTableModel model_original = new DefaultTableModel();
-        //model.addColumn("Pigment ID");
         model_original.addColumn("Color");
-        //model.addColumn("Stock");
-        //model.addColumn("Tingi");    
         
-       
         ArrayList<String> ColorList = new ColorHandler().GetAllColor();
         for(int x=0; x<ColorList.size(); x++)
         {

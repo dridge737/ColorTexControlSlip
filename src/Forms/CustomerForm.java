@@ -315,28 +315,30 @@ public class CustomerForm extends javax.swing.JFrame {
 
     private void EditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditButtonActionPerformed
         // TODO add your handling code here:
-        
-        if(EditButton.getText().equals("Edit"))
+        if(CustomerTable.getSelectedRowCount() > 0 )
         {
-          CustomerText.setForeground(Color.BLACK);
-          thisCustomer.setCustomerName(this.CustomerTable.getModel().getValueAt(this.CustomerTable.getSelectedRow(), 0).toString());
-          CustomerText.setText(thisCustomer.getCustomerName());
-          thisCustomer.setCustomerId(new CustomerHandler().GetCustomerIDFromCustomerName(thisCustomer.getCustomerName()));
-          model.removeRow(this.CustomerTable.getSelectedRow());
-          
-          this.EditButton.setText("Cancel");
-          this.AddButton.setText("Save");
-          this.DeleteButton.setEnabled(false);
-        }
-        else
-        {
-            model.addRow(new String[]{thisCustomer.getCustomerName()});
-            thisCustomer.setCustomerName("");
-            this.update_row_filter("");
-            EditButton.setText("Edit");
-            this.AddButton.setText("Name :");
-            this.DeleteButton.setEnabled(true);
-            this.reset_pigment_text();
+            if(EditButton.getText().equals("Edit"))
+            {
+                CustomerText.setForeground(Color.BLACK);
+                thisCustomer.setCustomerName(this.CustomerTable.getModel().getValueAt(this.CustomerTable.getSelectedRow(), 0).toString());
+                CustomerText.setText(thisCustomer.getCustomerName());
+                thisCustomer.setCustomerId(new CustomerHandler().GetCustomerIDFromCustomerName(thisCustomer.getCustomerName()));
+                model.removeRow(this.CustomerTable.getSelectedRow());
+               
+                this.EditButton.setText("Cancel");
+                this.AddButton.setText("Save");
+                this.DeleteButton.setEnabled(false);
+            }
+            else
+            {
+                model.addRow(new String[]{thisCustomer.getCustomerName()});
+                thisCustomer.setCustomerName("");
+                this.update_row_filter("");
+                EditButton.setText("Edit");
+                this.AddButton.setText("Name :");
+                this.DeleteButton.setEnabled(true);
+                this.reset_pigment_text();
+            }
         }
     }//GEN-LAST:event_EditButtonActionPerformed
 
@@ -386,13 +388,13 @@ public class CustomerForm extends javax.swing.JFrame {
     public DefaultTableModel getUpdatedPigmentTableModel() {      
         
         DefaultTableModel model_original = new DefaultTableModel();
-        //model.addColumn("Pigment ID");
         model_original.addColumn("Customer Name");
-        //model.addColumn("Stock");
-        //model.addColumn("Tingi");    
         
-        
-        
+         ArrayList<String> CustomerList = new CustomerHandler().GetAllCustomers();
+        for(int x=0; x<CustomerList.size(); x++)
+        {
+            model_original.addRow(new Object[]{CustomerList.get(x).toString()});
+        }
         //pigment_table.setTableHeader(null);
         
         return model_original;
