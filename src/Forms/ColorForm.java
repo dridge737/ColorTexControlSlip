@@ -27,16 +27,15 @@ public class ColorForm extends javax.swing.JFrame {
     DefaultTableModel model = new DefaultTableModel();
     ChemicalColor thisColor = new ChemicalColor();
     /**
-     * Creates new form add_pigment_form
+     * Creates new Color Form
      */
     public ColorForm() {
         initComponents();
-        this.set_to_center();
-        this.get_updated_table();
-        
+        this.SetToCenter();
+        this.GetUpdatedTable();
     }
 
-    public void set_to_center()
+    public void SetToCenter()
     {
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
@@ -206,7 +205,6 @@ public class ColorForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(ColorText.getText().length()>0 && !ColorText.getText().equals("Color :"))
         {
-            //colortextile_class.pigment add_this_pig = new colortextile_class.pigment();
             thisColor.setColorName(this.ColorText.getText());
             ColorHandler thisColorHandler = new ColorHandler();
             thisColor.setColorId(thisColorHandler.GetColorIDFromColorName(thisColor.getColorName()));
@@ -226,7 +224,6 @@ public class ColorForm extends javax.swing.JFrame {
             {
                 if(thisColorHandler.AddNewColor(thisColor)){
                     JOptionPane.showMessageDialog(null, "Successfully added Color : "+ColorText.getText());
-                    //JOptionPane.showMessageDialog(null,"Matagumpay na naidagdag ang Pigment");
                     this.dispose();
                 }
                 else if(ColorText.getText() == "Color :")
@@ -235,20 +232,18 @@ public class ColorForm extends javax.swing.JFrame {
                 }
                 else
                     JOptionPane.showMessageDialog(null, "Color with the same name has already been added.");
-                    //JOptionPane.showMessageDialog(null,"Naidagdag na ang pigment na ito.");
             }
             
-            this.get_updated_table();
-            update_row_filter("");
-            this.reset_pigment_text();
+            this.GetUpdatedTable();
+            UpdateRowFilter("");
+            this.ResetColorText();
         }
         else
         JOptionPane.showMessageDialog(null, "Please add a character/letter to the Color name");
-        //JOptionPane.showMessageDialog(null,"Pakilagyan po ng letra ang ida-dagdag na pigment");
             
     }//GEN-LAST:event_AddButtonActionPerformed
 
-    public void reset_pigment_text()
+    public void ResetColorText()
     {
         this.ColorText.setText("Color :");
         ColorText.setForeground(new Color(204,204,204));
@@ -258,15 +253,15 @@ public class ColorForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(ColorTable.getSelectedRowCount() > 0 )
         {
-            int CloseorNoreply = JOptionPane.showConfirmDialog(null,"Delete this Pigment? "
-                  ,"Delete Pigment?", JOptionPane.YES_NO_OPTION);
+            int CloseorNoreply = JOptionPane.showConfirmDialog(null,"Delete this Color? "
+                  ,"Delete Color?", JOptionPane.YES_NO_OPTION);
             if(CloseorNoreply == JOptionPane.YES_OPTION)
             {
                 String ColorName = this.ColorTable.getModel().getValueAt(this.ColorTable.getSelectedRow(), 0).toString();
                 thisColor.setColorName(ColorName);
                 thisColor.setColorId(new ColorHandler().GetColorIDFromColorName(ColorName));
                 new ColorHandler().DeleteColor(thisColor.getColorId());
-                this.get_updated_table();
+                this.GetUpdatedTable();
             }
         }else
         {
@@ -275,13 +270,13 @@ public class ColorForm extends javax.swing.JFrame {
         
     }//GEN-LAST:event_DeleteButtonActionPerformed
 
-    private void get_updated_table()
+    private void GetUpdatedTable()
     {
         model = getUpdatedColorTableModel();
         this.ColorTable.setModel(model);
     }
     
-    private void update_row_filter(String row_filter_text)
+    private void UpdateRowFilter(String row_filter_text)
     {
         TableRowSorter<TableModel> rowSorter
             = new TableRowSorter<>(this.ColorTable.getModel());
@@ -297,7 +292,7 @@ public class ColorForm extends javax.swing.JFrame {
     
     private void ColorTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ColorTextKeyReleased
         // TODO add your handling code here:
-        update_row_filter(this.ColorText.getText());
+        UpdateRowFilter(this.ColorText.getText());
         
     }//GEN-LAST:event_ColorTextKeyReleased
 
@@ -313,7 +308,7 @@ public class ColorForm extends javax.swing.JFrame {
     private void ColorTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ColorTextFocusLost
         // TODO add your handling code here:
         if(ColorText.getText().equals(""))
-            this.reset_pigment_text();
+            this.ResetColorText();
     }//GEN-LAST:event_ColorTextFocusLost
 
     private void EditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditButtonActionPerformed
@@ -336,11 +331,11 @@ public class ColorForm extends javax.swing.JFrame {
             {
                 model.addRow(new String[]{thisColor.getColorName()});
                 thisColor.setColorName("");
-                this.update_row_filter("");
+                this.UpdateRowFilter("");
                 EditButton.setText("Edit");
                 this.AddButton.setText("Add Color");
                 this.DeleteButton.setEnabled(true);
-                this.reset_pigment_text();
+                this.ResetColorText();
             }
         }
         else
@@ -402,9 +397,6 @@ public class ColorForm extends javax.swing.JFrame {
         {
             model_original.addRow(new Object[]{ColorList.get(x).toString()});
         }
-        
-        //pigment_table.setTableHeader(null);
-        
         return model_original;
     }
     

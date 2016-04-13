@@ -27,12 +27,12 @@ public class CustomerForm extends javax.swing.JFrame {
     DefaultTableModel model = new DefaultTableModel();
     Customer thisCustomer = new Customer();
     /**
-     * Creates new form add_pigment_form
+     * Creates new Customer Form
      */
     public CustomerForm() {
         initComponents();
         this.set_to_center();
-        this.get_updated_table();
+        this.GetUpdatedTable();
         
     }
 
@@ -223,7 +223,6 @@ public class CustomerForm extends javax.swing.JFrame {
             {
                 if(thisCustomerHandler.AddNewCustomer(thisCustomer)){
                     JOptionPane.showMessageDialog(null, "Successfully added Customer : "+CustomerText.getText());
-                    //JOptionPane.showMessageDialog(null,"Matagumpay na naidagdag ang Pigment");
                     this.dispose();
                 }
                 else if(CustomerText.getText() == "Name :")
@@ -232,20 +231,18 @@ public class CustomerForm extends javax.swing.JFrame {
                 }
                 else
                     JOptionPane.showMessageDialog(null, "Customer with the same name has already been added.");
-                    //JOptionPane.showMessageDialog(null,"Naidagdag na ang pigment na ito.");
             }
             
-            this.get_updated_table();
-            update_row_filter("");
-            this.reset_pigment_text();
+            this.GetUpdatedTable();
+            UpdateRowFilter("");
+            this.ResetCustomerText();
         }
         else
         JOptionPane.showMessageDialog(null, "Please add a character/letter to the name");
-        //JOptionPane.showMessageDialog(null,"Pakilagyan po ng letra ang ida-dagdag na pigment");
         
     }//GEN-LAST:event_AddButtonActionPerformed
 
-    public void reset_pigment_text()
+    public void ResetCustomerText()
     {
         this.CustomerText.setText("Name :");
         CustomerText.setForeground(new Color(204,204,204));
@@ -256,15 +253,15 @@ public class CustomerForm extends javax.swing.JFrame {
 
         if(CustomerTable.getSelectedRowCount() > 0 )
         {
-            int CloseorNoreply = JOptionPane.showConfirmDialog(null,"Delete this Pigment? "
-                  ,"Delete Pigment?", JOptionPane.YES_NO_OPTION);
+            int CloseorNoreply = JOptionPane.showConfirmDialog(null,"Delete this Customer? "
+                  ,"Delete Customer?", JOptionPane.YES_NO_OPTION);
             if(CloseorNoreply == JOptionPane.YES_OPTION)
             {
                 String CustomerName = this.CustomerTable.getModel().getValueAt(this.CustomerTable.getSelectedRow(), 0).toString();
                 thisCustomer.setCustomerName(CustomerName);
                 thisCustomer.setCustomerId(new CustomerHandler().GetCustomerIDFromCustomerName(CustomerName));
                 new CustomerHandler().DeleteCustomer(thisCustomer.getCustomerId());
-                this.get_updated_table();
+                this.GetUpdatedTable();
             }
         }else
         {
@@ -273,13 +270,13 @@ public class CustomerForm extends javax.swing.JFrame {
         
     }//GEN-LAST:event_DeleteButtonActionPerformed
 
-    private void get_updated_table()
+    private void GetUpdatedTable()
     {
-        model = getUpdatedPigmentTableModel();
+        model = getUpdatedCustomerTableModel();
         this.CustomerTable.setModel(model);
     }
     
-    private void update_row_filter(String row_filter_text)
+    private void UpdateRowFilter(String row_filter_text)
     {
         TableRowSorter<TableModel> rowSorter
             = new TableRowSorter<>(this.CustomerTable.getModel());
@@ -295,7 +292,7 @@ public class CustomerForm extends javax.swing.JFrame {
     
     private void CustomerTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CustomerTextKeyReleased
         // TODO add your handling code here:
-        update_row_filter(this.CustomerText.getText());
+        UpdateRowFilter(this.CustomerText.getText());
         
     }//GEN-LAST:event_CustomerTextKeyReleased
 
@@ -311,7 +308,7 @@ public class CustomerForm extends javax.swing.JFrame {
     private void CustomerTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_CustomerTextFocusLost
         // TODO add your handling code here:
         if(CustomerText.getText().equals(""))
-            this.reset_pigment_text();
+            this.ResetCustomerText();
     }//GEN-LAST:event_CustomerTextFocusLost
 
     private void EditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditButtonActionPerformed
@@ -334,11 +331,11 @@ public class CustomerForm extends javax.swing.JFrame {
             {
                 model.addRow(new String[]{thisCustomer.getCustomerName()});
                 thisCustomer.setCustomerName("");
-                this.update_row_filter("");
+                this.UpdateRowFilter("");
                 EditButton.setText("Edit");
                 this.AddButton.setText("Name :");
                 this.DeleteButton.setEnabled(true);
-                this.reset_pigment_text();
+                this.ResetCustomerText();
             }
         }
     }//GEN-LAST:event_EditButtonActionPerformed
@@ -386,7 +383,7 @@ public class CustomerForm extends javax.swing.JFrame {
         });
     }
     
-    public DefaultTableModel getUpdatedPigmentTableModel() {      
+    public DefaultTableModel getUpdatedCustomerTableModel() {      
         
         DefaultTableModel model_original = new DefaultTableModel();
         model_original.addColumn("Customer Name");
@@ -396,7 +393,6 @@ public class CustomerForm extends javax.swing.JFrame {
         {
             model_original.addRow(new Object[]{CustomerList.get(x).toString()});
         }
-        //pigment_table.setTableHeader(null);
         
         return model_original;
     }
