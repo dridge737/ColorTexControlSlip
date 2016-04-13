@@ -263,11 +263,11 @@ public class CustomerForm extends javax.swing.JFrame {
                 new CustomerHandler().DeleteCustomer(thisCustomer.getCustomerId());
                 this.GetUpdatedTable();
             }
-        }else
+        }
+        else
         {
             JOptionPane.showMessageDialog(null, "Please select an Item in the table to be edited");
         }
-        
     }//GEN-LAST:event_DeleteButtonActionPerformed
 
     private void GetUpdatedTable()
@@ -293,7 +293,6 @@ public class CustomerForm extends javax.swing.JFrame {
     private void CustomerTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CustomerTextKeyReleased
         // TODO add your handling code here:
         UpdateRowFilter(this.CustomerText.getText());
-        
     }//GEN-LAST:event_CustomerTextKeyReleased
 
     private void CustomerTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_CustomerTextFocusGained
@@ -397,8 +396,6 @@ public class CustomerForm extends javax.swing.JFrame {
         return model_original;
     }
     
-    
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddButton;
     private javax.swing.JButton CloseButton;
