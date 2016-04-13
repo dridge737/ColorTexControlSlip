@@ -207,7 +207,6 @@ public class ColorForm extends javax.swing.JFrame {
         {
             thisColor.setColorName(this.ColorText.getText());
             ColorHandler thisColorHandler = new ColorHandler();
-            thisColor.setColorId(thisColorHandler.GetColorIDFromColorName(thisColor.getColorName()));
             if(AddButton.getText().equals("Save"))
             {
                if(this.thisColor.getColorId() != -1)

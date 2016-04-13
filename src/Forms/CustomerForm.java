@@ -202,10 +202,9 @@ public class CustomerForm extends javax.swing.JFrame {
         // TODO add your handling code here:
        if(CustomerText.getText().length()>0 && !CustomerText.getText().equals("Name :"))
         {
-            //colortextile_class.pigment add_this_pig = new colortextile_class.pigment();
-            thisCustomer.setCustomerName(this.CustomerText.getText());
+           thisCustomer.setCustomerName(this.CustomerText.getText());
             CustomerHandler thisCustomerHandler = new CustomerHandler();
-            //thisCustomer.setCustomerName(thisCustomerHandler.CheckIfCustomerExists(thisCustomer.getCustomerName()));
+           
             if(AddButton.getText().equals("Save"))
             {
                if(thisCustomer.getCustomerId() != -1)
@@ -216,7 +215,7 @@ public class CustomerForm extends javax.swing.JFrame {
                    thisCustomer.setCustomerId(-1);
                    this.DeleteButton.setEnabled(true);
                    this.EditButton.setText("Edit");
-                   AddButton.setText("Name :");
+                   AddButton.setText("Add");
                }
             }
             else
@@ -332,7 +331,7 @@ public class CustomerForm extends javax.swing.JFrame {
                 thisCustomer.setCustomerName("");
                 this.UpdateRowFilter("");
                 EditButton.setText("Edit");
-                this.AddButton.setText("Name :");
+                this.AddButton.setText("Add");
                 this.DeleteButton.setEnabled(true);
                 this.ResetCustomerText();
             }
