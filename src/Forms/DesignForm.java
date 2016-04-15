@@ -5,8 +5,8 @@
  */
 package Forms;
 
-import DataEntities.ChemicalColor;
-import Handlers.ColorHandler;
+import DataEntities.Design;
+import Handlers.DesignHandler;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -22,14 +22,14 @@ import javax.swing.table.TableRowSorter;
  *
  * @author Eldridge
  */
-public class ColorForm extends javax.swing.JFrame {
+public class DesignForm extends javax.swing.JFrame {
 
     DefaultTableModel model = new DefaultTableModel();
-    ChemicalColor thisColor = new ChemicalColor();
+    Design thisDesign = new Design();
     /**
-     * Creates new Color Form
+     * Creates new Design Form
      */
-    public ColorForm() {
+    public DesignForm() {
         initComponents();
         this.SetToCenter();
         this.GetUpdatedTable();
@@ -52,14 +52,14 @@ public class ColorForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        ColorHeader = new javax.swing.JLabel();
+        DesignHeader = new javax.swing.JLabel();
         DeleteButton = new javax.swing.JButton();
-        ColorLabel = new javax.swing.JLabel();
+        DesignLabel = new javax.swing.JLabel();
         AddButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        ColorTable = new javax.swing.JTable();
-        ColorText = new javax.swing.JTextField();
+        DesignTable = new javax.swing.JTable();
+        DesignText = new javax.swing.JTextField();
         EditButton = new javax.swing.JButton();
         CloseButton = new javax.swing.JButton();
 
@@ -70,12 +70,12 @@ public class ColorForm extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setLayout(null);
 
-        ColorHeader.setBackground(new java.awt.Color(255, 255, 255));
-        ColorHeader.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
-        ColorHeader.setForeground(new java.awt.Color(255, 255, 255));
-        ColorHeader.setText("Color");
-        jPanel1.add(ColorHeader);
-        ColorHeader.setBounds(20, 20, 360, 40);
+        DesignHeader.setBackground(new java.awt.Color(255, 255, 255));
+        DesignHeader.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
+        DesignHeader.setForeground(new java.awt.Color(255, 255, 255));
+        DesignHeader.setText("Design");
+        jPanel1.add(DesignHeader);
+        DesignHeader.setBounds(20, 20, 360, 40);
 
         DeleteButton.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
         DeleteButton.setText("Delete");
@@ -89,17 +89,17 @@ public class ColorForm extends javax.swing.JFrame {
         jPanel1.add(DeleteButton);
         DeleteButton.setBounds(212, 390, 100, 50);
 
-        ColorLabel.setBackground(new java.awt.Color(255, 255, 255));
-        ColorLabel.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        ColorLabel.setForeground(new java.awt.Color(255, 255, 255));
-        ColorLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ColorLabel.setText("Color List");
-        ColorLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 3));
-        jPanel1.add(ColorLabel);
-        ColorLabel.setBounds(10, 80, 400, 40);
+        DesignLabel.setBackground(new java.awt.Color(255, 255, 255));
+        DesignLabel.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        DesignLabel.setForeground(new java.awt.Color(255, 255, 255));
+        DesignLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        DesignLabel.setText("Design List");
+        DesignLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 3));
+        jPanel1.add(DesignLabel);
+        DesignLabel.setBounds(10, 80, 400, 40);
 
         AddButton.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
-        AddButton.setText("Add Color");
+        AddButton.setText("Add Design");
         AddButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         AddButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         AddButton.addActionListener(new java.awt.event.ActionListener() {
@@ -113,8 +113,8 @@ public class ColorForm extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 3));
         jPanel2.setOpaque(false);
 
-        ColorTable.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        ColorTable.setModel(new javax.swing.table.DefaultTableModel(
+        DesignTable.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        DesignTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -125,10 +125,10 @@ public class ColorForm extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        ColorTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        ColorTable.setRowHeight(20);
-        ColorTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        jScrollPane1.setViewportView(ColorTable);
+        DesignTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        DesignTable.setRowHeight(20);
+        DesignTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        jScrollPane1.setViewportView(DesignTable);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -144,29 +144,24 @@ public class ColorForm extends javax.swing.JFrame {
         jPanel1.add(jPanel2);
         jPanel2.setBounds(10, 117, 400, 200);
 
-        ColorText.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
-        ColorText.setForeground(new java.awt.Color(204, 204, 204));
-        ColorText.setText("Color :");
-        ColorText.addFocusListener(new java.awt.event.FocusAdapter() {
+        DesignText.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
+        DesignText.setForeground(new java.awt.Color(204, 204, 204));
+        DesignText.setText("Name :");
+        DesignText.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                ColorTextFocusGained(evt);
+                DesignTextFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                ColorTextFocusLost(evt);
+                DesignTextFocusLost(evt);
             }
         });
-        ColorText.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ColorTextActionPerformed(evt);
-            }
-        });
-        ColorText.addKeyListener(new java.awt.event.KeyAdapter() {
+        DesignText.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                ColorTextKeyReleased(evt);
+                DesignTextKeyReleased(evt);
             }
         });
-        jPanel1.add(ColorText);
-        ColorText.setBounds(10, 330, 400, 30);
+        jPanel1.add(DesignText);
+        DesignText.setBounds(10, 330, 400, 30);
 
         EditButton.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
         EditButton.setText("Edit");
@@ -208,63 +203,64 @@ public class ColorForm extends javax.swing.JFrame {
 
     private void AddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddButtonActionPerformed
         // TODO add your handling code here:
-        if(ColorText.getText().length()>0 && !ColorText.getText().equals("Color :"))
+        if(DesignText.getText().length()>0 && !DesignText.getText().equals("Name :"))
         {
-            thisColor.setColorName(this.ColorText.getText());
-            ColorHandler thisColorHandler = new ColorHandler();
+            thisDesign.setDesignName(this.DesignText.getText());
+            DesignHandler thisDesignHandler = new DesignHandler();
+            thisDesign.setDesignId(thisDesignHandler.GetDesignIDFromName(thisDesign.getDesignName()));
             if(AddButton.getText().equals("Save"))
             {
-               if(this.thisColor.getColorId() != -1)
+               if(this.thisDesign.getDesignId()!= -1)
                {
-                   thisColorHandler.UpdateColor(thisColor); 
-                   thisColor.setColorName("");
-                   thisColor.setColorId(-1);
+                   thisDesignHandler.UpdateDesign(thisDesign); 
+                   thisDesign.setDesignName("");
+                   thisDesign.setDesignId(-1);
                    this.DeleteButton.setEnabled(true);
                    this.EditButton.setText("Edit");
-                   AddButton.setText("Add Color");
+                   AddButton.setText("Add");
                }
             }
             else
             {
-                if(thisColorHandler.AddNewColor(thisColor)){
-                    JOptionPane.showMessageDialog(null, "Successfully added Color : "+ColorText.getText());
+                if(thisDesignHandler.AddNewDesign(thisDesign)){
+                    JOptionPane.showMessageDialog(null, "Successfully added Design : "+DesignText.getText());
                     this.dispose();
                 }
-                else if(ColorText.getText() == "Color :")
+                else if(DesignText.getText() == "Name :")
                 {
                     JOptionPane.showMessageDialog(null, "Please input a text.");
                 }
                 else
-                    JOptionPane.showMessageDialog(null, "Color with the same name has already been added.");
+                    JOptionPane.showMessageDialog(null, "Design with the same name has already been added.");
             }
             
             this.GetUpdatedTable();
             UpdateRowFilter("");
-            this.ResetColorText();
+            this.ResetDesignText();
         }
         else
-        JOptionPane.showMessageDialog(null, "Please add a character/letter to the Color name");
+        JOptionPane.showMessageDialog(null, "Please add a character/letter to the Design name");
             
     }//GEN-LAST:event_AddButtonActionPerformed
 
-    public void ResetColorText()
+    public void ResetDesignText()
     {
-        this.ColorText.setText("Color :");
-        ColorText.setForeground(new Color(204,204,204));
+        this.DesignText.setText("Name :");
+        DesignText.setForeground(new Color(204,204,204));
     }
     
     private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
         // TODO add your handling code here:
-        if(ColorTable.getSelectedRowCount() > 0 )
+        if(DesignTable.getSelectedRowCount() > 0 )
         {
-            int CloseorNoreply = JOptionPane.showConfirmDialog(null,"Delete this Color? "
-                  ,"Delete Color?", JOptionPane.YES_NO_OPTION);
+            int CloseorNoreply = JOptionPane.showConfirmDialog(null,"Delete this Design? "
+                  ,"Delete Design?", JOptionPane.YES_NO_OPTION);
             if(CloseorNoreply == JOptionPane.YES_OPTION)
             {
-                String ColorName = this.ColorTable.getModel().getValueAt(this.ColorTable.getSelectedRow(), 0).toString();
-                thisColor.setColorName(ColorName);
-                thisColor.setColorId(new ColorHandler().GetColorIDFromColorName(ColorName));
-                new ColorHandler().DeleteColor(thisColor.getColorId());
+                String DesignName = this.DesignTable.getModel().getValueAt(this.DesignTable.getSelectedRow(), 0).toString();
+                thisDesign.setDesignName(DesignName);
+                thisDesign.setDesignId(new DesignHandler().GetDesignIDFromName(DesignName));
+                new DesignHandler().DeleteDesign(thisDesign.getDesignId());
                 this.GetUpdatedTable();
             }
         }else
@@ -276,16 +272,16 @@ public class ColorForm extends javax.swing.JFrame {
 
     private void GetUpdatedTable()
     {
-        model = getUpdatedColorTableModel();
-        this.ColorTable.setModel(model);
+        model = getUpdatedDesignTableModel();
+        this.DesignTable.setModel(model);
     }
     
     private void UpdateRowFilter(String row_filter_text)
     {
         TableRowSorter<TableModel> rowSorter
-            = new TableRowSorter<>(this.ColorTable.getModel());
+            = new TableRowSorter<>(this.DesignTable.getModel());
         
-        this.ColorTable.setRowSorter(rowSorter);
+        this.DesignTable.setRowSorter(rowSorter);
         
         if (row_filter_text.trim().length() == 0) {
             rowSorter.setRowFilter(null);
@@ -294,38 +290,38 @@ public class ColorForm extends javax.swing.JFrame {
         }
     }
     
-    private void ColorTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ColorTextKeyReleased
+    private void DesignTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DesignTextKeyReleased
         // TODO add your handling code here:
-        UpdateRowFilter(this.ColorText.getText());
+        UpdateRowFilter(this.DesignText.getText());
         
-    }//GEN-LAST:event_ColorTextKeyReleased
+    }//GEN-LAST:event_DesignTextKeyReleased
 
-    private void ColorTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ColorTextFocusGained
+    private void DesignTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_DesignTextFocusGained
         // TODO add your handling code here:
-        if(ColorText.getText().equals("Color :"))
+        if(DesignText.getText().equals("Name :"))
         {
-            ColorText.setText("");
-            ColorText.setForeground(Color.BLACK);
+            DesignText.setText("");
+            DesignText.setForeground(Color.BLACK);
         }
-    }//GEN-LAST:event_ColorTextFocusGained
+    }//GEN-LAST:event_DesignTextFocusGained
 
-    private void ColorTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ColorTextFocusLost
+    private void DesignTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_DesignTextFocusLost
         // TODO add your handling code here:
-        if(ColorText.getText().equals(""))
-            this.ResetColorText();
-    }//GEN-LAST:event_ColorTextFocusLost
+        if(DesignText.getText().equals(""))
+            this.ResetDesignText();
+    }//GEN-LAST:event_DesignTextFocusLost
 
     private void EditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditButtonActionPerformed
         // TODO add your handling code here:
-        if(ColorTable.getSelectedRowCount() > 0 )
+        if(DesignTable.getSelectedRowCount() > 0 )
         {
             if(EditButton.getText().equals("Edit"))
             {
-                ColorText.setForeground(Color.BLACK);
-                thisColor.setColorName(this.ColorTable.getModel().getValueAt(this.ColorTable.getSelectedRow(), 0).toString());
-                ColorText.setText(thisColor.getColorName());
-                thisColor.setColorId(new ColorHandler().GetColorIDFromColorName(thisColor.getColorName()));
-                model.removeRow(this.ColorTable.getSelectedRow());
+                DesignText.setForeground(Color.BLACK);
+                thisDesign.setDesignName(this.DesignTable.getModel().getValueAt(this.DesignTable.getSelectedRow(), 0).toString());
+                DesignText.setText(thisDesign.getDesignName());
+                thisDesign.setDesignId(new DesignHandler().GetDesignIDFromName(thisDesign.getDesignName()));
+                model.removeRow(this.DesignTable.getSelectedRow());
             
                 this.EditButton.setText("Cancel");
                 this.AddButton.setText("Save");
@@ -333,13 +329,13 @@ public class ColorForm extends javax.swing.JFrame {
             }
             else
             {
-                model.addRow(new String[]{thisColor.getColorName()});
-                thisColor.setColorName("");
+                model.addRow(new String[]{thisDesign.getDesignName()});
+                thisDesign.setDesignName("");
                 this.UpdateRowFilter("");
                 EditButton.setText("Edit");
-                this.AddButton.setText("Add Color");
+                this.AddButton.setText("Add");
                 this.DeleteButton.setEnabled(true);
-                this.ResetColorText();
+                this.ResetDesignText();
             }
         }
         else
@@ -352,10 +348,6 @@ public class ColorForm extends javax.swing.JFrame {
         // TODO add your handling code here:
             this.dispose();
     }//GEN-LAST:event_CloseButtonActionPerformed
-
-    private void ColorTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ColorTextActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ColorTextActionPerformed
 
     /**
      * @param args the command line arguments
@@ -374,14 +366,26 @@ public class ColorForm extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ColorForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DesignForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ColorForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DesignForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ColorForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DesignForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ColorForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DesignForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -390,20 +394,20 @@ public class ColorForm extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ColorForm().setVisible(true);
+                new DesignForm().setVisible(true);
             }
         });
     }
     
-    public DefaultTableModel getUpdatedColorTableModel() {      
+    public DefaultTableModel getUpdatedDesignTableModel() {      
         
         DefaultTableModel model_original = new DefaultTableModel();
-        model_original.addColumn("Color");
+        model_original.addColumn("Design Name");
         
-        ArrayList<String> ColorList = new ColorHandler().GetAllColor();
-        for(int x=0; x<ColorList.size(); x++)
+        ArrayList<String> DesignList = new DesignHandler().GetAllDesigns();
+        for(int x=0; x<DesignList.size(); x++)
         {
-            model_original.addRow(new Object[]{ColorList.get(x).toString()});
+            model_original.addRow(new Object[]{DesignList.get(x).toString()});
         }
         return model_original;
     }
@@ -413,11 +417,11 @@ public class ColorForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddButton;
     private javax.swing.JButton CloseButton;
-    private javax.swing.JLabel ColorHeader;
-    private javax.swing.JLabel ColorLabel;
-    private javax.swing.JTable ColorTable;
-    private javax.swing.JTextField ColorText;
     private javax.swing.JButton DeleteButton;
+    private javax.swing.JLabel DesignHeader;
+    private javax.swing.JLabel DesignLabel;
+    private javax.swing.JTable DesignTable;
+    private javax.swing.JTextField DesignText;
     private javax.swing.JButton EditButton;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

@@ -7,13 +7,15 @@ package Handlers;
 
 import DataEntities.Design;
 import Database.ColorTextControlSlipRepository;
+import java.util.ArrayList;
 
 /**
  *
  * @author Eldridge
  */
 public class DesignHandler {
-     public void AddNewDesign(Design newDesign)
+    
+    public boolean AddNewDesign(Design newDesign)
     {
         boolean isSuccessful = false;
         
@@ -21,10 +23,7 @@ public class DesignHandler {
         
         isSuccessful = repo.AddDesign(newDesign);
         
-        if(isSuccessful == false)
-        {
-            //enter validation 
-        }
+        return isSuccessful;
     }
     
     public void UpdateDesign(Design thisDesign)
@@ -41,7 +40,7 @@ public class DesignHandler {
         }
     }
     
-     public void DeleteDesign(int designID)
+    public void DeleteDesign(int designID)
     {
         boolean isSuccessful = false;
         
@@ -53,5 +52,26 @@ public class DesignHandler {
         {
             //enter validation 
         }
+    }
+    
+    public String GetDesignNameFromID(int DesignId)
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        
+        return repo.GetDesignNameFromDesignID(DesignId);
+    }
+    
+    public int GetDesignIDFromName(String DesignName)
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        
+        return repo.GetDesignIDFromDesignName(DesignName);
+    }
+    
+    public ArrayList<String> GetAllDesigns()
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        
+        return repo.GetAllDesign();
     }
 }

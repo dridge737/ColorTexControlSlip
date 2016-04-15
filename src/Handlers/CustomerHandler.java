@@ -7,6 +7,7 @@ package Handlers;
 
 import Database.ColorTextControlSlipRepository;
 import DataEntities.Customer;
+import java.util.ArrayList;
 
 /**
  *
@@ -14,7 +15,7 @@ import DataEntities.Customer;
  */
 public class CustomerHandler {
     
-    public void AddNewCustomer(Customer customer)
+    public boolean AddNewCustomer(Customer customer)
     {
         boolean isSuccessful = false;
         
@@ -22,10 +23,7 @@ public class CustomerHandler {
         
         isSuccessful = repo.AddCustomer(customer);
         
-        if(isSuccessful == false)
-        {
-            //enter validation 
-        }
+        return isSuccessful;
     }
     
     public void UpdateCustomer(Customer customer)
@@ -66,7 +64,26 @@ public class CustomerHandler {
         {
             isExisting = false;
         }
-        
         return isExisting;
+     }
+     
+     public ArrayList<String> GetAllCustomers()
+     {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        return repo.GetAllCustomersName();
+     }
+     
+     public String GetCustomerNameFromCustomerID(int customerId)
+     {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        
+        return repo.GetCustomerNameById(customerId);
+     }
+     
+     public int GetCustomerIDFromCustomerName(String customerName)
+     {
+         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+         
+         return repo.GetCustomerIdFromCustomerName(customerName);
      }
 }

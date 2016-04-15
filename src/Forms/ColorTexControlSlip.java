@@ -34,6 +34,9 @@ public class ColorTexControlSlip {
                 */
         ColorForm newColorForm = new ColorForm();
         newColorForm.setVisible(true);
+        
+        CustomerForm newCustForm = new CustomerForm();
+        newCustForm.setVisible(true);
     }
     
 }
