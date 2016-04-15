@@ -13,7 +13,7 @@ import Database.ColorTextControlSlipRepository;
  * @author Eldridge
  */
 public class ChemicalHandler {
-     public void AddNewChemical(Chemical newChemical)
+     public boolean AddNewChemical(Chemical newChemical)
     {
         boolean isSuccessful = false;
         
@@ -21,10 +21,7 @@ public class ChemicalHandler {
         
         isSuccessful = repo.AddChemical(newChemical);
         
-        if(isSuccessful == false)
-        {
-            //enter validation 
-        }
+        return isSuccessful;
     }
     
     public void UpdateChemical(Chemical thisChemical)
