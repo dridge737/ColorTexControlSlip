@@ -5,17 +5,34 @@
  */
 package Forms;
 
+import DataEntities.Machine;
+import Handlers.MachineHandler;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+import javax.swing.*;
+import javax.swing.table.*;
 /**
  *
  * @author Eldridge
  */
 public class AddMachine extends javax.swing.JFrame {
 
+    DefaultTableModel model = new DefaultTableModel();
+    Machine thisMachine = new Machine();
     /**
      * Creates new form AddMachine
      */
     public AddMachine() {
         initComponents();
+        this.get_updated_table();
     }
 
     /**
@@ -27,21 +44,321 @@ public class AddMachine extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        AddMachineButton = new javax.swing.JButton();
+        EditMachineButton = new javax.swing.JButton();
+        DeleteMachineButton = new javax.swing.JButton();
+        MachineName = new javax.swing.JTextField();
+        MachineMinimumVolume = new javax.swing.JTextField();
+        MachineMaximumVolume = new javax.swing.JTextField();
+        MachineMaximumCapacity = new javax.swing.JTextField();
+        MachineMinimumCapacity = new javax.swing.JTextField();
+        MachineTable = new javax.swing.JScrollPane();
+        MachineListTable = new javax.swing.JTable();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        AddMachineButton.setText("Add Machine");
+        AddMachineButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddMachineButtonActionPerformed(evt);
+            }
+        });
+
+        EditMachineButton.setText("Edit Machine");
+        EditMachineButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EditMachineButtonActionPerformed(evt);
+            }
+        });
+
+        DeleteMachineButton.setText("Delete Machine");
+        DeleteMachineButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteMachineButtonActionPerformed(evt);
+            }
+        });
+
+        MachineName.setText("Name");
+        MachineName.setToolTipText("");
+        MachineName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                MachineNameFocusGained(evt);
+            }
+        });
+        MachineName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MachineNameActionPerformed(evt);
+            }
+        });
+
+        MachineMinimumVolume.setText("Min Volume");
+        MachineMinimumVolume.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                MachineMinimumVolumeFocusGained(evt);
+            }
+        });
+        MachineMinimumVolume.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MachineMinimumVolumeActionPerformed(evt);
+            }
+        });
+
+        MachineMaximumVolume.setText("Max Volume");
+        MachineMaximumVolume.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                MachineMaximumVolumeFocusGained(evt);
+            }
+        });
+
+        MachineMaximumCapacity.setText("Max Capacity");
+        MachineMaximumCapacity.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                MachineMaximumCapacityFocusGained(evt);
+            }
+        });
+
+        MachineMinimumCapacity.setText("Min Capacity");
+        MachineMinimumCapacity.setToolTipText("");
+        MachineMinimumCapacity.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                MachineMinimumCapacityFocusGained(evt);
+            }
+        });
+        MachineMinimumCapacity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MachineMinimumCapacityActionPerformed(evt);
+            }
+        });
+
+        MachineListTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        MachineTable.setViewportView(MachineListTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(AddMachineButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(EditMachineButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(DeleteMachineButton)
+                        .addContainerGap(478, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(87, 87, 87)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(MachineMinimumVolume, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(MachineMaximumVolume, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(MachineName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(82, 82, 82)
+                                .addComponent(MachineMinimumCapacity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(MachineMaximumCapacity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(MachineTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(21, 21, 21))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(MachineName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(MachineMinimumVolume, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(MachineMaximumVolume, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(MachineMaximumCapacity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(MachineMinimumCapacity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(71, 71, 71))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(MachineTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(AddMachineButton)
+                    .addComponent(EditMachineButton)
+                    .addComponent(DeleteMachineButton))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void EditMachineButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditMachineButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_EditMachineButtonActionPerformed
+
+    private void AddMachineButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddMachineButtonActionPerformed
+        // TODO add your handling code here:
+         
+        Machine newMachineDetails = new Machine();
+        MachineHandler handler = new MachineHandler();
+        if(MachineName.getText().length() > 0 && MachineName.getText() != "Name")
+        {
+            newMachineDetails.setMachineName(MachineName.getText());
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Please input the machine's name");
+        }
+        
+        if(MachineMaximumCapacity.getText().matches("/^[a-zA-Z]+$/") == true)
+        {
+            //TODO numeric characters only validation message
+        }
+        else if(MachineMaximumCapacity.getText().length() <= 0)
+        {
+            //TODO please input machine name
+        }
+        else
+        {
+            newMachineDetails.setMaxCapacity(Integer.parseInt(MachineMaximumCapacity.getText()));
+        }
+        
+        if(MachineMinimumCapacity.getText().matches("/^[a-zA-Z]+$/") == true)
+        {
+            //TODO numeric characters only validation message
+        }
+        else if(MachineMinimumCapacity.getText().length() <= 0)
+        {
+            //TODO please input machine name
+        }
+        else
+        {
+            newMachineDetails.setMinCapacity(Integer.parseInt(MachineMinimumCapacity.getText()));
+        }
+        
+        if(MachineMaximumVolume.getText().matches("/^[a-zA-Z]+$/") == true)
+        {
+            //TODO numeric characters only validation message
+        }
+        else if(MachineMaximumVolume.getText().length() <= 0)
+        {
+            //TODO please input machine name
+        }
+        else
+        {
+            newMachineDetails.setMaxVolume(Integer.parseInt(MachineMaximumVolume.getText()));
+        }
+        
+        if(MachineMinimumVolume.getText().matches("/^[a-zA-Z]+$/") == true)
+        {
+            //TODO numeric characters only validation message
+        }
+        else if(MachineMinimumVolume.getText().length() <= 0)
+        {
+            //TODO please input machine name
+        }
+        else
+        {
+            newMachineDetails.setMinVolume(Integer.parseInt(MachineMinimumVolume.getText()));
+        }
+        
+        handler.AddNewMachine(newMachineDetails);
+        get_updated_table();
+    }//GEN-LAST:event_AddMachineButtonActionPerformed
+
+    private void MachineNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MachineNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MachineNameActionPerformed
+
+    private void MachineMinimumCapacityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MachineMinimumCapacityActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MachineMinimumCapacityActionPerformed
+
+    private void DeleteMachineButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteMachineButtonActionPerformed
+        // TODO add your handling code here:
+                
+        if(MachineListTable.getSelectedRowCount() > 0 )
+        {
+           MachineHandler handler = new MachineHandler();
+            int CloseorNoreply = JOptionPane.showConfirmDialog(null,"Delete this machine? "
+                  ,"Delete Machine?", JOptionPane.YES_NO_OPTION);
+            if(CloseorNoreply == JOptionPane.YES_OPTION)
+            {
+                String machineName = MachineListTable.getModel().getValueAt(MachineListTable.getSelectedRow(),0).toString();
+                thisMachine.setMachineName(machineName);
+                int machineId = handler.GetMachineIdByName(thisMachine.getMachineName());
+                thisMachine.setMachineId(machineId);
+                handler.DeleteMachineById(thisMachine.getMachineId());
+                this.get_updated_table();
+            }
+        }else
+        {
+            JOptionPane.showMessageDialog(null, "Please select an Item in the table to be deleted");
+        }
+    }//GEN-LAST:event_DeleteMachineButtonActionPerformed
+
+    private void MachineMinimumVolumeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MachineMinimumVolumeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MachineMinimumVolumeActionPerformed
+
+    private void MachineNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_MachineNameFocusGained
+        // TODO add your handling code here:
+        if(MachineName.getText().equals("Name"))
+        {
+            MachineName.setText("");
+            MachineName.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_MachineNameFocusGained
+
+    private void MachineMinimumVolumeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_MachineMinimumVolumeFocusGained
+        // TODO add your handling code here:
+        if(MachineMinimumVolume.getText().equals("Min Volume"))
+        {
+            MachineMinimumVolume.setText("");
+            MachineMinimumVolume.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_MachineMinimumVolumeFocusGained
+
+    private void MachineMaximumVolumeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_MachineMaximumVolumeFocusGained
+        // TODO add your handling code here:
+        if(MachineMaximumVolume.getText().equals("Max Volume"))
+        {
+            MachineMaximumVolume.setText("");
+            MachineMaximumVolume.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_MachineMaximumVolumeFocusGained
+
+    private void MachineMinimumCapacityFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_MachineMinimumCapacityFocusGained
+        // TODO add your handling code here:
+        if(MachineMinimumCapacity.getText().equals("Min Capacity"))
+        {
+            MachineMinimumCapacity.setText("");
+            MachineMinimumCapacity.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_MachineMinimumCapacityFocusGained
+
+    private void MachineMaximumCapacityFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_MachineMaximumCapacityFocusGained
+        // TODO add your handling code here:MachineMaximumCapacity
+        if(MachineMaximumCapacity.getText().equals("Max Capacity"))
+        {
+            MachineMaximumCapacity.setText("");
+            MachineMaximumCapacity.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_MachineMaximumCapacityFocusGained
 
     /**
      * @param args the command line arguments
@@ -77,7 +394,53 @@ public class AddMachine extends javax.swing.JFrame {
             }
         });
     }
+    
+    public DefaultTableModel GetAllMachines() {      
+        
+        DefaultTableModel model_original = new DefaultTableModel();
+        //model.addColumn("Pigment ID");
+        model_original.addColumn("ID");
+        model_original.addColumn("Name");
+        model_original.addColumn("Minimum Capacity");
+        model_original.addColumn("Maximum Capacity");
+        model_original.addColumn("Minimum Volume");
+        model_original.addColumn("Maximum Volume");
+        //model.addColumn("Stock");
+        //model.addColumn("Tingi");    
+        
+       
+        ArrayList<Machine> MachineList = new MachineHandler().GetAllMachines();
+        for(int x=0; x<MachineList.size(); x++)
+        {
+            model_original.addRow(new Object[]{MachineList.get(x).getMachineId(),
+                MachineList.get(x).getMachineName(), 
+                MachineList.get(x).getMinCapacity(), 
+                MachineList.get(x).getMaxCapacity(), 
+                MachineList.get(x).getMinVolume(), 
+                MachineList.get(x).getMaxVolume()});
+        }
+        
+        //pigment_table.setTableHeader(null);
+        
+        return model_original;
+    }
+    
+    private void get_updated_table()
+    {
+        model = GetAllMachines();
+        this.MachineListTable.setModel(model);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton AddMachineButton;
+    private javax.swing.JButton DeleteMachineButton;
+    private javax.swing.JButton EditMachineButton;
+    private javax.swing.JTable MachineListTable;
+    private javax.swing.JTextField MachineMaximumCapacity;
+    private javax.swing.JTextField MachineMaximumVolume;
+    private javax.swing.JTextField MachineMinimumCapacity;
+    private javax.swing.JTextField MachineMinimumVolume;
+    private javax.swing.JTextField MachineName;
+    private javax.swing.JScrollPane MachineTable;
     // End of variables declaration//GEN-END:variables
 }

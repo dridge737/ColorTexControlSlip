@@ -795,22 +795,31 @@ public class ColorTextControlSlipRepository {
     //END CUSTOMER REPOSITORY METHODS
     
     //BEGIN MACHINE REPOSITORY METHODS
-    public ArrayList<String> GetAllMachine()
+    public ArrayList<Machine> GetAllMachine()
     {
         DBConnection dbc = new DBConnection();
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        ArrayList<String> MachineList = new ArrayList<>();
+        ArrayList<Machine> MachineList = new ArrayList<>();
         try
         {
             conn = dbc.getConnection();
-            ps = conn.prepareStatement("SELECT Name FROM machine");
+            ps = conn.prepareStatement("SELECT * FROM machine");
             rs = ps.executeQuery();
             
             while(rs.next())
             {
-                MachineList.add(rs.getString("Name"));
+                Machine machine = new Machine();
+                
+                machine.setMachineId(rs.getInt("ID"));
+                machine.setMachineName(rs.getString("Name"));
+                machine.setMaxCapacity(rs.getInt("MaxCapacity"));
+                machine.setMinCapacity(rs.getInt("MinCapacity"));
+                machine.setMaxVolume(rs.getInt("MaxVolume"));
+                machine.setMinVolume(rs.getInt("MinVolume"));
+                
+                MachineList.add(machine);
             }
         }
         catch (SQLException ex) {
@@ -962,6 +971,32 @@ public class ColorTextControlSlipRepository {
         
         this.closeConn(conn, preparedStmt);
         return machineDetails;
+    }
+    
+    public int GetMachineIdByName(String machineName) 
+    {
+        DBConnection db = new DBConnection();
+        int machineId = -1;
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        ResultSet resultSet = null;
+        boolean added = false;
+        try {
+            conn = db.getConnection();
+            String query = "SELECT ID FROM machine WHERE Name = ?";
+              
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setString(1, machineName.toUpperCase());
+            resultSet = preparedStmt.executeQuery();
+            
+            machineId = resultSet.getInt("ID");
+        } 
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, preparedStmt);
+        return machineId;
     }
     //END MACHINE REPOSITORY METHODS
     

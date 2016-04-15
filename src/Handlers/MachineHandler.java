@@ -30,10 +30,10 @@ import javax.swing.table.DefaultTableModel;
  */
 public class MachineHandler {
     
-    public ArrayList<String> GetAllMachines()
+    public ArrayList<Machine> GetAllMachines()
     {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
-        ArrayList<String> machineList = new ArrayList<>();
+        ArrayList<Machine> machineList = new ArrayList<>();
         
         machineList = repo.GetAllMachine();
         
@@ -50,6 +50,16 @@ public class MachineHandler {
             machineDetails = repo.GetMachineDetailsById(machineId);
         }
         return machineDetails;
+    }
+    
+    public int GetMachineIdByName(String machineName)
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        int machineId = -1;
+        
+        machineId = repo.GetMachineIdByName(machineName);
+        
+        return machineId;
     }
     
     public void AddNewMachine(Machine newMachine)

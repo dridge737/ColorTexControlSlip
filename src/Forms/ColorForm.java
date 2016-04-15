@@ -155,6 +155,11 @@ public class ColorForm extends javax.swing.JFrame {
                 ColorTextFocusLost(evt);
             }
         });
+        ColorText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ColorTextActionPerformed(evt);
+            }
+        });
         ColorText.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 ColorTextKeyReleased(evt);
@@ -347,6 +352,10 @@ public class ColorForm extends javax.swing.JFrame {
         // TODO add your handling code here:
             this.dispose();
     }//GEN-LAST:event_CloseButtonActionPerformed
+
+    private void ColorTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ColorTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ColorTextActionPerformed
 
     /**
      * @param args the command line arguments
