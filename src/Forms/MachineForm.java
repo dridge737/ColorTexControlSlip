@@ -23,14 +23,14 @@ import javax.swing.table.*;
  *
  * @author Eldridge
  */
-public class AddMachine extends javax.swing.JFrame {
+public class MachineForm extends javax.swing.JFrame {
 
     DefaultTableModel model = new DefaultTableModel();
     Machine thisMachine = new Machine();
     /**
      * Creates new form AddMachine
      */
-    public AddMachine() {
+    public MachineForm() {
         initComponents();
         this.get_updated_table();
     }
@@ -208,13 +208,65 @@ public class AddMachine extends javax.swing.JFrame {
 
     private void EditMachineButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditMachineButtonActionPerformed
         // TODO add your handling code here:
+        boolean isSuccessful = false;
+        Machine newMachineDetails = new Machine();
+        MachineHandler handler = new MachineHandler();
+        
+        if(MachineListTable.getSelectedRowCount() > 0 && EditMachineButton.getText().equals("Edit Machine"))
+        {
+                MachineName.setForeground(Color.BLACK);
+                
+                thisMachine.setMachineName(this.MachineListTable.getModel().getValueAt(this.MachineListTable.getSelectedRow(), 0).toString());
+                thisMachine.setMaxCapacity(Integer.parseInt(this.MachineListTable.getModel().getValueAt(this.MachineListTable.getSelectedRow(), 2).toString()));
+                thisMachine.setMinCapacity(Integer.parseInt(this.MachineListTable.getModel().getValueAt(this.MachineListTable.getSelectedRow(), 1).toString()));
+                thisMachine.setMaxVolume(Integer.parseInt(this.MachineListTable.getModel().getValueAt(this.MachineListTable.getSelectedRow(), 4).toString()));
+                thisMachine.setMinVolume(Integer.parseInt(this.MachineListTable.getModel().getValueAt(this.MachineListTable.getSelectedRow(), 3).toString()));
+                thisMachine.setMachineId(handler.GetMachineIdByName(thisMachine.getMachineName()));        
+                
+                MachineName.setText(thisMachine.getMachineName());
+                MachineMinimumVolume.setText(String.valueOf(thisMachine.getMinVolume()));
+                MachineMaximumVolume.setText(String.valueOf(thisMachine.getMaxVolume()));
+                MachineMinimumCapacity.setText(String.valueOf(thisMachine.getMinCapacity()));
+                MachineMaximumCapacity.setText(String.valueOf(thisMachine.getMaxCapacity()));
+                
+                thisMachine.setMachineId(handler.GetMachineIdByName(thisMachine.getMachineName()));
+                model.removeRow(this.MachineListTable.getSelectedRow());
+            
+                this.EditMachineButton.setText("Cancel");
+                this.AddMachineButton.setText("Save");
+                this.DeleteMachineButton.setEnabled(false);
+        }            
+        else if(EditMachineButton.getText().equals("Cancel"))
+        {
+                model.addRow(new Object[]{
+                    thisMachine.getMachineName(),
+                    thisMachine.getMinCapacity(),
+                    thisMachine.getMaxCapacity(),                        
+                    thisMachine.getMinVolume(),
+                    thisMachine.getMaxVolume()
+                });
+                MachineName.setText("");
+                MachineMinimumVolume.setText("");
+                MachineMaximumVolume.setText("");
+                MachineMinimumCapacity.setText("");
+                MachineMaximumCapacity.setText("");
+                
+                this.EditMachineButton.setText("Edit Machine");
+                this.AddMachineButton.setText("Add Machine");
+                this.DeleteMachineButton.setEnabled(true);
+        }        
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Please select an Item in the table to be edited");
+        }
     }//GEN-LAST:event_EditMachineButtonActionPerformed
 
     private void AddMachineButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddMachineButtonActionPerformed
         // TODO add your handling code here:
-         
+        boolean isSuccessful = false;
         Machine newMachineDetails = new Machine();
         MachineHandler handler = new MachineHandler();
+        
         if(MachineName.getText().length() > 0 && MachineName.getText() != "Name")
         {
             newMachineDetails.setMachineName(MachineName.getText());
@@ -276,8 +328,30 @@ public class AddMachine extends javax.swing.JFrame {
             newMachineDetails.setMinVolume(Integer.parseInt(MachineMinimumVolume.getText()));
         }
         
-        handler.AddNewMachine(newMachineDetails);
-        get_updated_table();
+        if(AddMachineButton.getText().equals("Add Machine"))
+        {
+            isSuccessful = handler.AddNewMachine(newMachineDetails);
+        }
+        else if(AddMachineButton.getText().equals("Save"))      
+        {
+            newMachineDetails.setMachineId(thisMachine.getMachineId());
+            isSuccessful = handler.UpdateMachine(newMachineDetails);
+            
+            MachineName.setText("");
+                MachineMinimumVolume.setText("");
+                MachineMaximumVolume.setText("");
+                MachineMinimumCapacity.setText("");
+                MachineMaximumCapacity.setText("");
+            this.EditMachineButton.setText("Edit Machine");
+            this.AddMachineButton.setText("Add Machine");
+            this.DeleteMachineButton.setEnabled(true);
+        }
+        
+        if(isSuccessful)
+        {
+            JOptionPane.showMessageDialog(null, "Successfully saved Machine : "+newMachineDetails.getMachineName());
+            get_updated_table();
+        }        
     }//GEN-LAST:event_AddMachineButtonActionPerformed
 
     private void MachineNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MachineNameActionPerformed
@@ -300,7 +374,7 @@ public class AddMachine extends javax.swing.JFrame {
             {
                 String machineName = MachineListTable.getModel().getValueAt(MachineListTable.getSelectedRow(),0).toString();
                 thisMachine.setMachineName(machineName);
-                int machineId = handler.GetMachineIdByName(thisMachine.getMachineName());
+                int machineId = handler.GetMachineIdByName(machineName);
                 thisMachine.setMachineId(machineId);
                 handler.DeleteMachineById(thisMachine.getMachineId());
                 this.get_updated_table();
@@ -377,20 +451,21 @@ public class AddMachine extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddMachine.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MachineForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddMachine.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MachineForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddMachine.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MachineForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddMachine.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MachineForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AddMachine().setVisible(true);
+                new MachineForm().setVisible(true);
             }
         });
     }
@@ -399,7 +474,7 @@ public class AddMachine extends javax.swing.JFrame {
         
         DefaultTableModel model_original = new DefaultTableModel();
         //model.addColumn("Pigment ID");
-        model_original.addColumn("ID");
+        //model_original.addColumn("ID");
         model_original.addColumn("Name");
         model_original.addColumn("Minimum Capacity");
         model_original.addColumn("Maximum Capacity");
@@ -412,7 +487,7 @@ public class AddMachine extends javax.swing.JFrame {
         ArrayList<Machine> MachineList = new MachineHandler().GetAllMachines();
         for(int x=0; x<MachineList.size(); x++)
         {
-            model_original.addRow(new Object[]{MachineList.get(x).getMachineId(),
+            model_original.addRow(new Object[]{
                 MachineList.get(x).getMachineName(), 
                 MachineList.get(x).getMinCapacity(), 
                 MachineList.get(x).getMaxCapacity(), 

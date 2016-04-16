@@ -62,7 +62,7 @@ public class MachineHandler {
         return machineId;
     }
     
-    public void AddNewMachine(Machine newMachine)
+    public boolean AddNewMachine(Machine newMachine)
     {
         boolean isSuccessful = false;
         
@@ -77,15 +77,17 @@ public class MachineHandler {
         {
             //enter validation 
         }
+        
+        return isSuccessful;
     }
     
-    public void UpdateMachine(Machine machine)
+    public boolean UpdateMachine(Machine machine)
     {
         boolean isSuccessful = false;
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        if(repo.CheckIfMachineExists(machine.getMachineId()) == 0)
+        if(repo.CheckIfMachineExists(machine.getMachineId()) != 0)
         {
             isSuccessful = repo.UpdateMachineByMachineId(machine);
         }
@@ -94,15 +96,17 @@ public class MachineHandler {
         {
             //enter validation 
         }
+        
+        return isSuccessful;
     }
     
-    public void DeleteMachineById(int machineId)
+    public boolean DeleteMachineById(int machineId)
     {
         boolean isSuccessful = false;
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        if(repo.CheckIfMachineExists(machineId) == 0)
+        if(repo.CheckIfMachineExists(machineId) != 0)
         {
             isSuccessful = repo.DeleteMachineByMachineId(machineId);
         }
@@ -111,6 +115,8 @@ public class MachineHandler {
         {
             //enter validation 
         }
+        
+        return isSuccessful;
     }
     
     public boolean CheckIfMachineExists(int machineId)
