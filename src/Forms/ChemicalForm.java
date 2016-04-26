@@ -24,8 +24,9 @@ import javax.swing.table.TableRowSorter;
  */
 public class ChemicalForm extends javax.swing.JFrame {
 
-    DefaultTableModel model = new DefaultTableModel();
-    Chemical thisChemical = new Chemical();
+    private DefaultTableModel model = new DefaultTableModel();
+    private Chemical thisChemical = new Chemical();
+    private String defaultTextBoxString = "Name :";
     /**
      * Creates new Color Form
      */
@@ -225,7 +226,7 @@ public class ChemicalForm extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Successfully added Chemical : "+ChemicalText.getText());
                     this.dispose();
                 }
-                else if(ChemicalText.getText() == "Name :")
+                else if(ChemicalText.getText() == defaultTextBoxString)
                 {
                     JOptionPane.showMessageDialog(null, "Please input a text.");
                 }
@@ -244,7 +245,7 @@ public class ChemicalForm extends javax.swing.JFrame {
 
     public void ResetColorText()
     {
-        this.ChemicalText.setText("Name :");
+        this.ChemicalText.setText(defaultTextBoxString);
         ChemicalText.setForeground(new Color(204,204,204));
     }
     
@@ -258,8 +259,8 @@ public class ChemicalForm extends javax.swing.JFrame {
             {
                 String ChemicalName = this.ChemicalTable.getModel().getValueAt(this.ChemicalTable.getSelectedRow(), 0).toString();
                 thisChemical.setChemicalName(ChemicalName);
-                thisChemical.setChemicalId(new ChemicalHandler().GetColorIDFromColorName(ColorName));
-                new ColorHandler().DeleteColor(thisChemical.getColorId());
+                thisChemical.setChemicalId(new ChemicalHandler().GetChemicalIDFromChemicalName(ChemicalName));
+                new ChemicalHandler().DeleteChemical(thisChemical.getChemicalId());
                 this.GetUpdatedTable();
             }
         }else
@@ -297,7 +298,7 @@ public class ChemicalForm extends javax.swing.JFrame {
 
     private void ChemicalTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ChemicalTextFocusGained
         // TODO add your handling code here:
-        if(ChemicalText.getText().equals("Color :"))
+        if(ChemicalText.getText().equals(defaultTextBoxString))
         {
             ChemicalText.setText("");
             ChemicalText.setForeground(Color.BLACK);
@@ -317,9 +318,9 @@ public class ChemicalForm extends javax.swing.JFrame {
             if(EditButton.getText().equals("Edit"))
             {
                 ChemicalText.setForeground(Color.BLACK);
-                thisChemical.setColorName(this.ChemicalTable.getModel().getValueAt(this.ChemicalTable.getSelectedRow(), 0).toString());
-                ChemicalText.setText(thisChemical.getColorName());
-                thisChemical.setColorId(new ColorHandler().GetColorIDFromColorName(thisChemical.getColorName()));
+                thisChemical.setChemicalName(this.ChemicalTable.getModel().getValueAt(this.ChemicalTable.getSelectedRow(), 0).toString());
+                ChemicalText.setText(thisChemical.getChemicalName());
+                thisChemical.setChemicalId(new ChemicalHandler().GetChemicalIDFromChemicalName(thisChemical.getChemicalName()));
                 model.removeRow(this.ChemicalTable.getSelectedRow());
             
                 this.EditButton.setText("Cancel");
@@ -328,11 +329,11 @@ public class ChemicalForm extends javax.swing.JFrame {
             }
             else
             {
-                model.addRow(new String[]{thisChemical.getColorName()});
-                thisChemical.setColorName("");
+                model.addRow(new String[]{thisChemical.getChemicalName()});
+                thisChemical.setChemicalName("");
                 this.UpdateRowFilter("");
                 EditButton.setText("Edit");
-                this.AddButton.setText("Add Color");
+                this.AddButton.setText("Add");
                 this.DeleteButton.setEnabled(true);
                 this.ResetColorText();
             }
@@ -401,9 +402,9 @@ public class ChemicalForm extends javax.swing.JFrame {
     public DefaultTableModel getUpdatedColorTableModel() {      
         
         DefaultTableModel model_original = new DefaultTableModel();
-        model_original.addColumn("Color");
+        model_original.addColumn("Chemical");
         
-        ArrayList<String> ColorList = new ColorHandler().GetAllColor();
+        ArrayList<String> ColorList = new ChemicalHandler().GetAllChemical();
         for(int x=0; x<ColorList.size(); x++)
         {
             model_original.addRow(new Object[]{ColorList.get(x).toString()});
