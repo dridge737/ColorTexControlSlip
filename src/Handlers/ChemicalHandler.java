@@ -7,13 +7,14 @@ package Handlers;
 
 import DataEntities.Chemical;
 import Database.ColorTextControlSlipRepository;
+import java.util.ArrayList;
 
 /**
  *
  * @author Eldridge
  */
 public class ChemicalHandler {
-     public void AddNewChemical(Chemical newChemical)
+     public boolean AddNewChemical(Chemical newChemical)
     {
         boolean isSuccessful = false;
         
@@ -21,10 +22,7 @@ public class ChemicalHandler {
         
         isSuccessful = repo.AddChemical(newChemical);
         
-        if(isSuccessful == false)
-        {
-            //enter validation 
-        }
+        return isSuccessful;
     }
     
     public void UpdateChemical(Chemical thisChemical)
@@ -41,7 +39,7 @@ public class ChemicalHandler {
         }
     }
     
-     public void DeleteChemical(int ChemicalID)
+    public void DeleteChemical(int ChemicalID)
     {
         boolean isSuccessful = false;
         
@@ -54,4 +52,22 @@ public class ChemicalHandler {
             //enter validation 
         }
     }
+     
+    public int GetChemicalIDFromChemicalName(String ChemicalName)
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        return repo.GetChemicalIDFromChemicalName(ChemicalName);
+    }
+    
+    public String GetChemicalNameFromChemicalID(int ChemicalID)
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        return repo.GetChemicalNameFromChemicalID(ChemicalID);
+    }
+    
+    public ArrayList<String> GetAllChemical()
+     {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        return repo.GetAllChemicalName();
+     }
 }
