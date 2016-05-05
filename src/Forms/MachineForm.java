@@ -58,6 +58,7 @@ public class MachineForm extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        DeleteMachineButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -72,7 +73,7 @@ public class MachineForm extends javax.swing.JFrame {
                 AddMachineButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(AddMachineButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 510, 185, 46));
+        jPanel1.add(AddMachineButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 510, 185, 46));
 
         EditMachineButton.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         EditMachineButton.setText("Edit Machine");
@@ -81,7 +82,7 @@ public class MachineForm extends javax.swing.JFrame {
                 EditMachineButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(EditMachineButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(306, 510, 185, 46));
+        jPanel1.add(EditMachineButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 510, 185, 46));
 
         DeleteMachineButton.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         DeleteMachineButton.setText("Delete Machine");
@@ -90,7 +91,7 @@ public class MachineForm extends javax.swing.JFrame {
                 DeleteMachineButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(DeleteMachineButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(536, 510, 185, 46));
+        jPanel1.add(DeleteMachineButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 510, 185, 46));
 
         MachineName.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         MachineName.setText("Name");
@@ -110,7 +111,7 @@ public class MachineForm extends javax.swing.JFrame {
                 MachineNameKeyReleased(evt);
             }
         });
-        jPanel1.add(MachineName, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 300, 690, -1));
+        jPanel1.add(MachineName, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 300, 730, -1));
 
         MachineMinimumVolume.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         MachineMinimumVolume.setText("Min Volume");
@@ -173,7 +174,7 @@ public class MachineForm extends javax.swing.JFrame {
         ));
         MachineTable.setViewportView(MachineListTable);
 
-        jPanel1.add(MachineTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 73, 730, 212));
+        jPanel1.add(MachineTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 73, 760, 212));
 
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -185,17 +186,26 @@ public class MachineForm extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Volume");
         jLabel2.setOpaque(true);
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 420, 690, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 420, 730, -1));
 
         jLabel4.setBackground(new java.awt.Color(204, 204, 204));
         jLabel4.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Capacity");
         jLabel4.setOpaque(true);
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 340, 690, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 340, 730, -1));
+
+        DeleteMachineButton1.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        DeleteMachineButton1.setText("Delete Machine");
+        DeleteMachineButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteMachineButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(DeleteMachineButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 510, 185, 46));
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 793, 580);
+        jPanel1.setBounds(0, 0, 820, 580);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -463,6 +473,11 @@ public class MachineForm extends javax.swing.JFrame {
         UpdateRowFilter(this.MachineName.getText());
     }//GEN-LAST:event_MachineNameKeyReleased
 
+    private void DeleteMachineButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteMachineButton1ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_DeleteMachineButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -534,6 +549,7 @@ public class MachineForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddMachineButton;
     private javax.swing.JButton DeleteMachineButton;
+    private javax.swing.JButton DeleteMachineButton1;
     private javax.swing.JButton EditMachineButton;
     private javax.swing.JTable MachineListTable;
     private javax.swing.JTextField MachineMaximumCapacity;
