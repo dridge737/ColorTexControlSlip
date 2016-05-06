@@ -58,6 +58,7 @@ public class MachineForm extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        DeleteMachineButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -72,7 +73,7 @@ public class MachineForm extends javax.swing.JFrame {
                 AddMachineButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(AddMachineButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 510, 185, 46));
+        jPanel1.add(AddMachineButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 510, 185, 46));
 
         EditMachineButton.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         EditMachineButton.setText("Edit Machine");
@@ -81,7 +82,7 @@ public class MachineForm extends javax.swing.JFrame {
                 EditMachineButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(EditMachineButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(306, 510, 185, 46));
+        jPanel1.add(EditMachineButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 510, 185, 46));
 
         DeleteMachineButton.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         DeleteMachineButton.setText("Delete Machine");
@@ -90,39 +91,44 @@ public class MachineForm extends javax.swing.JFrame {
                 DeleteMachineButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(DeleteMachineButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(536, 510, 185, 46));
+        jPanel1.add(DeleteMachineButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 510, 185, 46));
 
         MachineName.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         MachineName.setText("Name");
         MachineName.setToolTipText("");
-        MachineName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MachineNameActionPerformed(evt);
-            }
-        });
         MachineName.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 MachineNameFocusGained(evt);
             }
         });
-        jPanel1.add(MachineName, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 300, 690, -1));
-
-        MachineMinimumVolume.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        MachineMinimumVolume.setText("Minimum");
-        MachineMinimumVolume.addActionListener(new java.awt.event.ActionListener() {
+        MachineName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MachineMinimumVolumeActionPerformed(evt);
+                MachineNameActionPerformed(evt);
             }
         });
+        MachineName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                MachineNameKeyReleased(evt);
+            }
+        });
+        jPanel1.add(MachineName, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 300, 730, -1));
+
+        MachineMinimumVolume.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        MachineMinimumVolume.setText("Min Volume");
         MachineMinimumVolume.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 MachineMinimumVolumeFocusGained(evt);
             }
         });
+        MachineMinimumVolume.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MachineMinimumVolumeActionPerformed(evt);
+            }
+        });
         jPanel1.add(MachineMinimumVolume, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 450, 260, 40));
 
         MachineMaximumVolume.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        MachineMaximumVolume.setText("Maximum");
+        MachineMaximumVolume.setText("Max Volume");
         MachineMaximumVolume.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 MachineMaximumVolumeFocusGained(evt);
@@ -131,7 +137,7 @@ public class MachineForm extends javax.swing.JFrame {
         jPanel1.add(MachineMaximumVolume, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 450, 260, 40));
 
         MachineMaximumCapacity.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        MachineMaximumCapacity.setText("Maximum Capacity");
+        MachineMaximumCapacity.setText("Max Capacity");
         MachineMaximumCapacity.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 MachineMaximumCapacityFocusGained(evt);
@@ -140,16 +146,16 @@ public class MachineForm extends javax.swing.JFrame {
         jPanel1.add(MachineMaximumCapacity, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 370, 260, 40));
 
         MachineMinimumCapacity.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        MachineMinimumCapacity.setText("Minimum Capacity");
+        MachineMinimumCapacity.setText("Min Capacity");
         MachineMinimumCapacity.setToolTipText("");
-        MachineMinimumCapacity.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MachineMinimumCapacityActionPerformed(evt);
-            }
-        });
         MachineMinimumCapacity.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 MachineMinimumCapacityFocusGained(evt);
+            }
+        });
+        MachineMinimumCapacity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MachineMinimumCapacityActionPerformed(evt);
             }
         });
         jPanel1.add(MachineMinimumCapacity, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 370, 260, 40));
@@ -168,7 +174,7 @@ public class MachineForm extends javax.swing.JFrame {
         ));
         MachineTable.setViewportView(MachineListTable);
 
-        jPanel1.add(MachineTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 73, 730, 212));
+        jPanel1.add(MachineTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 73, 760, 212));
 
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -180,17 +186,26 @@ public class MachineForm extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Volume");
         jLabel2.setOpaque(true);
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 420, 690, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 420, 730, -1));
 
         jLabel4.setBackground(new java.awt.Color(204, 204, 204));
         jLabel4.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Capacity");
         jLabel4.setOpaque(true);
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 340, 690, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 340, 730, -1));
+
+        DeleteMachineButton1.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        DeleteMachineButton1.setText("Delete Machine");
+        DeleteMachineButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteMachineButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(DeleteMachineButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 510, 185, 46));
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 793, 580);
+        jPanel1.setBounds(0, 0, 820, 580);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -246,6 +261,7 @@ public class MachineForm extends javax.swing.JFrame {
                 thisMachine.setMachineId(machineId);
                 handler.DeleteMachineById(thisMachine.getMachineId());
                 this.get_updated_table();
+                this.UpdateRowFilter("");
             }
         }else
         {
@@ -254,8 +270,101 @@ public class MachineForm extends javax.swing.JFrame {
     }//GEN-LAST:event_DeleteMachineButtonActionPerformed
 
     private void EditMachineButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditMachineButtonActionPerformed
-        // TODO add your handling code here:
+        
+            if(EditMachineButton.getText().equals("Edit Machine"))
+            {
+                if(MachineListTable.getSelectedRowCount() > 0 )
+                {
+                    MachineName.setForeground(Color.BLACK);
+                    MachineMinimumCapacity.setForeground(Color.BLACK);
+                    MachineMaximumCapacity.setForeground(Color.BLACK);
+                    MachineMinimumVolume.setForeground(Color.BLACK);
+                    MachineMaximumVolume.setForeground(Color.BLACK);
+
+                    thisMachine.setMachineName(this.MachineListTable.getModel().getValueAt(this.MachineListTable.getSelectedRow(), 0).toString());
+                    MachineName.setText(thisMachine.getMachineName());
+
+                    thisMachine.setMinCapacity(Integer.parseInt(this.MachineListTable.getModel().getValueAt(this.MachineListTable.getSelectedRow(), 1).toString()));
+                    MachineMinimumCapacity.setText(Integer.toString(thisMachine.getMinCapacity()));
+
+                    thisMachine.setMaxCapacity(Integer.parseInt(this.MachineListTable.getModel().getValueAt(this.MachineListTable.getSelectedRow(), 2).toString()));
+                    MachineMaximumCapacity.setText(Integer.toString(thisMachine.getMaxCapacity()));
+
+                    thisMachine.setMinVolume(Integer.parseInt(this.MachineListTable.getModel().getValueAt(this.MachineListTable.getSelectedRow(), 3).toString()));
+                    MachineMinimumVolume.setText(Integer.toString(thisMachine.getMinVolume()));
+
+                    thisMachine.setMaxVolume(Integer.parseInt(this.MachineListTable.getModel().getValueAt(this.MachineListTable.getSelectedRow(), 4).toString()));
+                    MachineMaximumVolume.setText(Integer.toString(thisMachine.getMaxVolume()));
+
+                    thisMachine.setMachineId(new MachineHandler().GetMachineIdByName(thisMachine.getMachineName()));
+                    model.removeRow(this.MachineListTable.getSelectedRow());
+
+                    this.EditMachineButton.setText("Cancel");
+                    this.AddMachineButton.setText("Save");
+                    this.DeleteMachineButton.setEnabled(false);
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Please select an Item in the table to be edited");     
+            }
+        }
+        else
+        {
+            model.addRow((new Object[]{
+                thisMachine.getMachineName(), 
+                thisMachine.getMinCapacity(), 
+                thisMachine.getMaxCapacity(), 
+                thisMachine.getMinVolume(), 
+                thisMachine.getMaxVolume()}));
+                
+                thisMachine.setMachineId(-1);
+                thisMachine.setMachineName("");
+                thisMachine.setMinCapacity(-1);
+                thisMachine.setMaxCapacity(-1);
+                thisMachine.setMinVolume(-1);
+                thisMachine.setMaxVolume(-1);
+                
+                this.UpdateRowFilter("");
+                
+                this.ResetColorText();
+        }
     }//GEN-LAST:event_EditMachineButtonActionPerformed
+    
+    private void ResetColorText()
+    {
+        EditMachineButton.setText("Edit Machine");
+        this.AddMachineButton.setText("Add Machine");
+        this.DeleteMachineButton.setEnabled(true);
+        
+        this.MachineName.setText("Name");
+        MachineName.setForeground(new Color(204,204,204));
+        
+        this.MachineMinimumCapacity.setText("Min Capacity");
+        MachineMinimumCapacity.setForeground(new Color(204,204,204));
+        
+        this.MachineMaximumCapacity.setText("Max Capacity");
+        MachineMaximumCapacity.setForeground(new Color(204,204,204));
+        
+        this.MachineMinimumVolume.setText("Min Volume");
+        MachineMinimumVolume.setForeground(new Color(204,204,204));
+        
+        this.MachineMaximumVolume.setText("Max Volume");
+        MachineMaximumVolume.setForeground(new Color(204,204,204));
+    }
+    
+    private void UpdateRowFilter(String row_filter_text)
+    {
+        TableRowSorter<TableModel> rowSorter
+            = new TableRowSorter<>(this.MachineListTable.getModel());
+        
+        this.MachineListTable.setRowSorter(rowSorter);
+        
+        if (row_filter_text.trim().length() == 0) {
+            rowSorter.setRowFilter(null);
+        } else {
+            rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + row_filter_text));        
+        }
+    }
 
     private void AddMachineButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddMachineButtonActionPerformed
         // TODO add your handling code here:
@@ -323,8 +432,18 @@ public class MachineForm extends javax.swing.JFrame {
             newMachineDetails.setMinVolume(Integer.parseInt(MachineMinimumVolume.getText()));
         }
 
-        handler.AddNewMachine(newMachineDetails);
+        if(AddMachineButton.getText() == "Add Machine")
+        {
+            handler.AddNewMachine(newMachineDetails);
+            
+        }
+        else
+        {
+            newMachineDetails.setMachineId(thisMachine.getMachineId());
+            handler.UpdateMachine(newMachineDetails);
+        }
         get_updated_table();
+        this.UpdateRowFilter("");
     }//GEN-LAST:event_AddMachineButtonActionPerformed
 
     private void MachineMinimumVolumeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_MachineMinimumVolumeFocusGained
@@ -348,6 +467,16 @@ public class MachineForm extends javax.swing.JFrame {
             MachineMaximumVolume.setForeground(Color.BLACK);
         }
     }//GEN-LAST:event_MachineMaximumVolumeFocusGained
+
+    private void MachineNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_MachineNameKeyReleased
+        // TODO add your handling code here:
+        UpdateRowFilter(this.MachineName.getText());
+    }//GEN-LAST:event_MachineNameKeyReleased
+
+    private void DeleteMachineButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteMachineButton1ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_DeleteMachineButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -388,21 +517,17 @@ public class MachineForm extends javax.swing.JFrame {
     public DefaultTableModel GetAllMachines() {      
         
         DefaultTableModel model_original = new DefaultTableModel();
-        //model.addColumn("Pigment ID");
-        model_original.addColumn("ID");
         model_original.addColumn("Name");
         model_original.addColumn("Minimum Capacity");
         model_original.addColumn("Maximum Capacity");
         model_original.addColumn("Minimum Volume");
         model_original.addColumn("Maximum Volume");
-        //model.addColumn("Stock");
-        //model.addColumn("Tingi");    
         
        
         ArrayList<Machine> MachineList = new MachineHandler().GetAllMachines();
         for(int x=0; x<MachineList.size(); x++)
         {
-            model_original.addRow(new Object[]{MachineList.get(x).getMachineId(),
+            model_original.addRow(new Object[]{
                 MachineList.get(x).getMachineName(), 
                 MachineList.get(x).getMinCapacity(), 
                 MachineList.get(x).getMaxCapacity(), 
@@ -411,7 +536,7 @@ public class MachineForm extends javax.swing.JFrame {
         }
         
         //pigment_table.setTableHeader(null);
-        
+        this.ResetColorText();
         return model_original;
     }
     
@@ -424,6 +549,7 @@ public class MachineForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddMachineButton;
     private javax.swing.JButton DeleteMachineButton;
+    private javax.swing.JButton DeleteMachineButton1;
     private javax.swing.JButton EditMachineButton;
     private javax.swing.JTable MachineListTable;
     private javax.swing.JTextField MachineMaximumCapacity;
