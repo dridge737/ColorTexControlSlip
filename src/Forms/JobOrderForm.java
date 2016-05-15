@@ -195,6 +195,11 @@ public class JobOrderForm extends javax.swing.JFrame {
                 WeightActionPerformed(evt);
             }
         });
+        Weight.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                WeightKeyReleased(evt);
+            }
+        });
 
         VolumeTextField.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
 
@@ -378,6 +383,12 @@ public class JobOrderForm extends javax.swing.JFrame {
             thisDesign.setDesignId(designId);
         }
     }//GEN-LAST:event_DesignDropDownListActionPerformed
+
+    private void WeightKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_WeightKeyReleased
+        String weight = Weight.getText().toString();
+        weight = weight.replaceAll("[^\\d.]", "");
+        Weight.setText(weight);
+    }//GEN-LAST:event_WeightKeyReleased
     
     private void computeForVolume()
     {
