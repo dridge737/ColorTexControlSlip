@@ -45,7 +45,7 @@ public class MachineHandler {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         Machine machineDetails = new Machine();
                 
-        if(repo.CheckIfMachineExists(machineId) == 0)
+        if(repo.CheckIfMachineExists(machineId) != 0)
         {
             machineDetails = repo.GetMachineDetailsById(machineId);
         }
