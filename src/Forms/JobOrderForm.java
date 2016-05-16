@@ -23,22 +23,34 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import java.awt.FlowLayout;
+import java.awt.event.*;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.text.Format;
+import java.util.Locale;
 
 /**
  *
  * @author imbuenyson
  */
 public class JobOrderForm extends javax.swing.JFrame {
-
+    Machine thisMachine = new Machine();
+    Design thisDesign = new Design();
+    Customer thisCustomer = new Customer();
+    ChemicalColor thisColor = new ChemicalColor();
     /**
      * Creates new form JobOrderForm
      */
     public JobOrderForm() {
         initComponents();
+        initTextFields();
         populateCustomerDropDown();
         populateDesignDropDown();
         populateColorDropDown();
         populateMachineDropDown();
+        populateLiquoRatioDropDown();
     }
 
     /**
@@ -52,9 +64,9 @@ public class JobOrderForm extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         ChemicalHeader = new javax.swing.JLabel();
-        CustomerDropDownList = new javax.swing.JComboBox<String>();
-        DesignDropDownList = new javax.swing.JComboBox<String>();
-        ColorDropDownList = new javax.swing.JComboBox<String>();
+        CustomerDropDownList = new javax.swing.JComboBox<>();
+        DesignDropDownList = new javax.swing.JComboBox<>();
+        ColorDropDownList = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -62,13 +74,15 @@ public class JobOrderForm extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         JobOrder = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
-        MachineDropDownList = new javax.swing.JComboBox<String>();
+        MachineDropDownList = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         Weight = new javax.swing.JTextField();
-        VolumeH20 = new javax.swing.JTextField();
+        VolumeTextField = new javax.swing.JTextField();
+        LiquoRatioDropDown = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        CreatedDate = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(665, 400));
@@ -83,7 +97,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         jPanel1.add(ChemicalHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 360, 40));
 
         CustomerDropDownList.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        CustomerDropDownList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Customer" }));
+        CustomerDropDownList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose Customer" }));
         CustomerDropDownList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CustomerDropDownListActionPerformed(evt);
@@ -92,11 +106,16 @@ public class JobOrderForm extends javax.swing.JFrame {
         jPanel1.add(CustomerDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(169, 99, -1, 30));
 
         DesignDropDownList.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        DesignDropDownList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Design" }));
+        DesignDropDownList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose Design" }));
+        DesignDropDownList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DesignDropDownListActionPerformed(evt);
+            }
+        });
         jPanel1.add(DesignDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(169, 147, 194, 30));
 
         ColorDropDownList.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        ColorDropDownList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Color" }));
+        ColorDropDownList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose Color" }));
         ColorDropDownList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ColorDropDownListActionPerformed(evt);
@@ -137,7 +156,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel6.setText("Date :");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 20, 125, 37));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 30, 125, 30));
 
         JobOrder.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jPanel1.add(JobOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(168, 251, 195, 30));
@@ -146,7 +165,12 @@ public class JobOrderForm extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Machine", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 18), new java.awt.Color(255, 255, 255))); // NOI18N
 
         MachineDropDownList.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        MachineDropDownList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Machine" }));
+        MachineDropDownList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose Machine" }));
+        MachineDropDownList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MachineDropDownListActionPerformed(evt);
+            }
+        });
 
         jLabel7.setBackground(new java.awt.Color(255, 255, 255));
         jLabel7.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
@@ -161,8 +185,30 @@ public class JobOrderForm extends javax.swing.JFrame {
         jLabel8.setText("Volume H20 :");
 
         Weight.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        Weight.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                WeightFocusLost(evt);
+            }
+        });
+        Weight.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                WeightActionPerformed(evt);
+            }
+        });
+        Weight.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                WeightKeyReleased(evt);
+            }
+        });
 
-        VolumeH20.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        VolumeTextField.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+
+        LiquoRatioDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Liquo Ratio" }));
+        LiquoRatioDropDown.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LiquoRatioDropDownActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -171,15 +217,17 @@ public class JobOrderForm extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(MachineDropDownList, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(MachineDropDownList, 0, 313, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Weight, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(LiquoRatioDropDown, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(VolumeH20))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Weight, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)))
+                        .addComponent(VolumeTextField)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -188,17 +236,19 @@ public class JobOrderForm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(MachineDropDownList, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(Weight, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7)
+                        .addComponent(Weight, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(LiquoRatioDropDown))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(VolumeH20, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addComponent(VolumeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(423, 99, -1, -1));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(423, 99, -1, 170));
 
         jButton1.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
         jButton1.setText("Next");
@@ -207,6 +257,9 @@ public class JobOrderForm extends javax.swing.JFrame {
         jButton2.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
         jButton2.setText("Cancel");
         jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(473, 443, 203, 50));
+
+        CreatedDate.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        jPanel1.add(CreatedDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 30, 176, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -223,13 +276,181 @@ public class JobOrderForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void CustomerDropDownListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CustomerDropDownListActionPerformed
-        // TODO add your handling code here:
+        Customer customerDetails = new Customer();
+        CustomerHandler handler = new CustomerHandler();
+        int customerId = -1;
+        String customerName = "";
+                
+        if(!CustomerDropDownList.getSelectedItem().toString().equals("Choose Customer"))
+        {
+            customerName = MachineDropDownList.getSelectedItem().toString();
+            thisCustomer.setCustomerName(customerName);
+        }        
+        
+        if(!customerName.equals(""))
+        {
+            customerId = handler.GetCustomerIDFromCustomerName(customerName);
+            thisCustomer.setCustomerId(customerId);
+        }      
     }//GEN-LAST:event_CustomerDropDownListActionPerformed
 
     private void ColorDropDownListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ColorDropDownListActionPerformed
-        // TODO add your handling code here:
+        ChemicalColor colorDetails = new ChemicalColor();
+        ColorHandler handler = new ColorHandler();
+        int colorId = -1;
+        String colorName = "";
+                
+        if(!ColorDropDownList.getSelectedItem().toString().equals("Choose Color"))
+        {
+            colorName = ColorDropDownList.getSelectedItem().toString();
+            thisColor.setColorName(colorName);
+        }        
+        
+        if(!colorName.equals(""))
+        {
+            colorId = handler.GetColorIDFromColorName(colorName);
+            thisCustomer.setCustomerId(colorId);
+        }
     }//GEN-LAST:event_ColorDropDownListActionPerformed
+
+    private void LiquoRatioDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LiquoRatioDropDownActionPerformed
+       String weight = Weight.getText().toString();    
+       String liquoRatio = LiquoRatioDropDown.getSelectedItem().toString();
+        if(!weight.equals("") && !liquoRatio.equals("Liquo Ratio"))
+        {
+            computeForVolume();
+        }        
+    }//GEN-LAST:event_LiquoRatioDropDownActionPerformed
+
+    private void WeightFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_WeightFocusLost
+        String weight = Weight.getText().toString();    
+       String liquoRatio = LiquoRatioDropDown.getSelectedItem().toString();
+        if(!weight.equals("") && !liquoRatio.equals("Liquo Ratio"))
+        {
+            computeForVolume();
+        }   
+    }//GEN-LAST:event_WeightFocusLost
+
+    private void MachineDropDownListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MachineDropDownListActionPerformed
+        
+        Machine machineDetails = new Machine();
+        MachineHandler handler = new MachineHandler();
+        int machineId = -1;
+        String machineName = "";
+                
+        if(!MachineDropDownList.getSelectedItem().toString().equals("Choose Machine"))
+        {
+            machineName = MachineDropDownList.getSelectedItem().toString();
+        }        
+        
+        if(!machineName.equals(""))
+        {
+            machineId = handler.GetMachineIdByName(machineName);
+        }
+        
+        if(machineId > -1)
+        {
+            machineDetails = handler.GetMachineDetailsById(machineId);
+        }              
+         
+        thisMachine.setMachineId(machineId);
+        thisMachine.setMachineName(machineDetails.getMachineName());
+        thisMachine.setMaxCapacity(machineDetails.getMaxCapacity());
+        thisMachine.setMaxVolume(machineDetails.getMaxVolume());
+        thisMachine.setMinCapacity(machineDetails.getMinCapacity());
+        thisMachine.setMinVolume(machineDetails.getMinVolume());
+    }//GEN-LAST:event_MachineDropDownListActionPerformed
+
+    private void WeightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WeightActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_WeightActionPerformed
+
+    private void DesignDropDownListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DesignDropDownListActionPerformed
+        Design designDetails = new Design();
+        DesignHandler handler = new DesignHandler();
+        int designId = -1;
+        String designName = "";
+                
+        if(!DesignDropDownList.getSelectedItem().toString().equals("Choose Design"))
+        {
+            designName = DesignDropDownList.getSelectedItem().toString();
+            thisDesign.setDesignName(designName);
+        }        
+        
+        if(!designName.equals(""))
+        {
+            designId = handler.GetDesignIDFromName(designName);
+            thisDesign.setDesignId(designId);
+        }
+    }//GEN-LAST:event_DesignDropDownListActionPerformed
+
+    private void WeightKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_WeightKeyReleased
+        String weight = Weight.getText().toString();
+        weight = weight.replaceAll("[^\\d.]", "");
+        Weight.setText(weight);
+    }//GEN-LAST:event_WeightKeyReleased
     
+    private void computeForVolume()
+    {
+        int weightMultiplier = 0;
+        double volume = 0;
+        
+        Object selected = LiquoRatioDropDown.getSelectedItem();
+        int weight = Integer.parseInt(Weight.getText().toString());
+        
+        if(selected.toString().equals("1:6"))
+        {
+            weightMultiplier = 6;
+        }
+        else if(selected.toString().equals("1:8"))
+        {
+            weightMultiplier = 8;
+        }
+        else if(selected.toString().equals("1:9"))
+        {
+            weightMultiplier = 9;
+        }
+        else if(selected.toString().equals("1:10"))
+        {
+            weightMultiplier = 10;
+        }
+        else if(selected.toString().equals("1:12"))
+        {
+            weightMultiplier = 12;
+        }
+        
+        volume = weight * weightMultiplier;
+        
+        VolumeTextField.setText(Double.toString(volume));
+    }
+    
+    private void populateLiquoRatioDropDown()
+    {
+        ArrayList<String> LiquoRatioList = new ArrayList<String>();
+        
+        LiquoRatioList.add("1:6");
+        LiquoRatioList.add("1:8");
+        LiquoRatioList.add("1:9");
+        LiquoRatioList.add("1:10");
+        LiquoRatioList.add("1:12");
+        
+        for(int x=0; x<LiquoRatioList.size(); x++)
+        {
+            LiquoRatioDropDown.addItem(LiquoRatioList.get(x));
+        }
+
+    }
+    
+    private void initTextFields(){
+        
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        Date date = new Date();
+        
+        VolumeTextField.setEditable(false);
+        CreatedDate.setEditable(false);
+        CreatedDate.setText(dateFormat.format(date).toString());
+        
+    }
     private void populateMachineDropDown(){
         ArrayList<Machine> MachineList = new MachineHandler().GetAllMachines();
         
@@ -239,6 +460,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                 MachineDropDownList.addItem(MachineList.get(x).getMachineName().toString());
             }
         }  
+        
     }
     
     private void populateColorDropDown(){
@@ -312,11 +534,13 @@ public class JobOrderForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ChemicalHeader;
     private javax.swing.JComboBox<String> ColorDropDownList;
+    private javax.swing.JTextField CreatedDate;
     private javax.swing.JComboBox<String> CustomerDropDownList;
     private javax.swing.JComboBox<String> DesignDropDownList;
     private javax.swing.JTextField JobOrder;
+    private javax.swing.JComboBox<String> LiquoRatioDropDown;
     private javax.swing.JComboBox<String> MachineDropDownList;
-    private javax.swing.JTextField VolumeH20;
+    private javax.swing.JTextField VolumeTextField;
     private javax.swing.JTextField Weight;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

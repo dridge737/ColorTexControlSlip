@@ -959,12 +959,15 @@ public class ColorTextControlSlipRepository {
             preparedStmt.setInt(1, machineId);
             resultSet = preparedStmt.executeQuery();
             
-            machineDetails.setMachineId(resultSet.getInt("ID"));
-            machineDetails.setMachineName(resultSet.getString("Name"));
-            machineDetails.setMaxCapacity(resultSet.getInt("MaxCapacity"));
-            machineDetails.setMinCapacity(resultSet.getInt("MinCapacity"));
-            machineDetails.setMaxVolume(resultSet.getInt("MaxVolume"));
-            machineDetails.setMinVolume(resultSet.getInt("MinVolume"));
+            if(resultSet.first())
+            {
+                machineDetails.setMachineId(resultSet.getInt("ID"));
+                machineDetails.setMachineName(resultSet.getString("Name"));
+                machineDetails.setMaxCapacity(resultSet.getInt("MaxCapacity"));
+                machineDetails.setMinCapacity(resultSet.getInt("MinCapacity"));
+                machineDetails.setMaxVolume(resultSet.getInt("MaxVolume"));
+                machineDetails.setMinVolume(resultSet.getInt("MinVolume"));
+            }
         } 
         catch (SQLException ex) {
             Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
