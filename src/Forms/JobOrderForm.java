@@ -64,9 +64,9 @@ public class JobOrderForm extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         ChemicalHeader = new javax.swing.JLabel();
-        CustomerDropDownList = new javax.swing.JComboBox<>();
-        DesignDropDownList = new javax.swing.JComboBox<>();
-        ColorDropDownList = new javax.swing.JComboBox<>();
+        CustomerDropDownList = new javax.swing.JComboBox<String>();
+        DesignDropDownList = new javax.swing.JComboBox<String>();
+        ColorDropDownList = new javax.swing.JComboBox<String>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -74,12 +74,12 @@ public class JobOrderForm extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         JobOrder = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
-        MachineDropDownList = new javax.swing.JComboBox<>();
+        MachineDropDownList = new javax.swing.JComboBox<String>();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         Weight = new javax.swing.JTextField();
         VolumeTextField = new javax.swing.JTextField();
-        LiquoRatioDropDown = new javax.swing.JComboBox<>();
+        LiquoRatioDropDown = new javax.swing.JComboBox<String>();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         CreatedDate = new javax.swing.JTextField();
@@ -97,7 +97,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         jPanel1.add(ChemicalHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 360, 40));
 
         CustomerDropDownList.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        CustomerDropDownList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose Customer" }));
+        CustomerDropDownList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Customer" }));
         CustomerDropDownList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CustomerDropDownListActionPerformed(evt);
@@ -106,7 +106,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         jPanel1.add(CustomerDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(169, 99, -1, 30));
 
         DesignDropDownList.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        DesignDropDownList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose Design" }));
+        DesignDropDownList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Design" }));
         DesignDropDownList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DesignDropDownListActionPerformed(evt);
@@ -115,7 +115,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         jPanel1.add(DesignDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(169, 147, 194, 30));
 
         ColorDropDownList.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        ColorDropDownList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose Color" }));
+        ColorDropDownList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Color" }));
         ColorDropDownList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ColorDropDownListActionPerformed(evt);
@@ -165,7 +165,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Machine", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 18), new java.awt.Color(255, 255, 255))); // NOI18N
 
         MachineDropDownList.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        MachineDropDownList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose Machine" }));
+        MachineDropDownList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Machine" }));
         MachineDropDownList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MachineDropDownListActionPerformed(evt);
@@ -203,7 +203,7 @@ public class JobOrderForm extends javax.swing.JFrame {
 
         VolumeTextField.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
 
-        LiquoRatioDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Liquo Ratio" }));
+        LiquoRatioDropDown.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Liquo Ratio" }));
         LiquoRatioDropDown.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 LiquoRatioDropDownActionPerformed(evt);
