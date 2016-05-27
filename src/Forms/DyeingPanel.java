@@ -9,12 +9,12 @@ package Forms;
  *
  * @author Eldridge
  */
-public class TrialPanel extends javax.swing.JPanel {
+public class DyeingPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form TrialPanel
      */
-    public TrialPanel() {
+    public DyeingPanel() {
         initComponents();
     }
 

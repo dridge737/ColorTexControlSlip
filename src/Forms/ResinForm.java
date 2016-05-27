@@ -52,7 +52,7 @@ public class ResinForm extends javax.swing.JFrame {
         int index = NumberOfTabs - 1;
         if (jTabbedPane1.getSelectedIndex() == index) { /* if click new tab */
             /* add new tab */
-            jTabbedPane1.add(new TrialPanel(), "Process " + String.valueOf(NumberOfTabs),
+            jTabbedPane1.add(new DyeingPanel(), "Process " + String.valueOf(NumberOfTabs),
                     index);
             /* set tab is custom tab */
             //jTabbedPane1.setTabComponentAt(index, new DemoCustomTab(this));
