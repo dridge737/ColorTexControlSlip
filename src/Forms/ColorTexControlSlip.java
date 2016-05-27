@@ -32,11 +32,16 @@ public class ColorTexControlSlip {
         colHandler.AddNewColor(thisColor);
         boolean itExist = colHandler.CheckIfColorNameExists("Hello");
                 */
+        /*
         ColorForm newColorForm = new ColorForm();
         newColorForm.setVisible(true);
         
         CustomerForm newCustForm = new CustomerForm();
         newCustForm.setVisible(true);
+        */
+        ResinForm newResinForm = new ResinForm();
+        newResinForm.setVisible(true);
+                
     }
     
 }
