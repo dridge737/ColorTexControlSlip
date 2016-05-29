@@ -35,9 +35,9 @@ public class ResinForm extends javax.swing.JFrame {
         InitializeChemicalTable();
         InitializeGPLandPercentColumn();
         /* add tab to add new tab when click */
-        jTabbedPane1.add(new JPanel(), "+", NumberOfTabs++);
+        subProcess.add(new JPanel(), "+", NumberOfTabs++);
  
-        jTabbedPane1.addChangeListener(changeListener);
+        subProcess.addChangeListener(changeListener);
     }
     
     ChangeListener changeListener = new ChangeListener() {
@@ -50,15 +50,15 @@ public class ResinForm extends javax.swing.JFrame {
     
      private void addNewTab() {
         int index = NumberOfTabs - 1;
-        if (jTabbedPane1.getSelectedIndex() == index) { /* if click new tab */
+        if (subProcess.getSelectedIndex() == index) { /* if click new tab */
             /* add new tab */
-            jTabbedPane1.add(new DyeingPanel(), "Process " + String.valueOf(NumberOfTabs),
+            subProcess.add(new DyeingPanel(), "Sub Process " + String.valueOf(NumberOfTabs),
                     index);
             /* set tab is custom tab */
             //jTabbedPane1.setTabComponentAt(index, new DemoCustomTab(this));
-            jTabbedPane1.removeChangeListener(changeListener);
-            jTabbedPane1.setSelectedIndex(index);
-            jTabbedPane1.addChangeListener(changeListener);
+            subProcess.removeChangeListener(changeListener);
+            subProcess.setSelectedIndex(index);
+            subProcess.addChangeListener(changeListener);
             NumberOfTabs++;
         }
     }
@@ -108,14 +108,18 @@ public class ResinForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        ChemicalHeader = new javax.swing.JLabel();
+        Process = new javax.swing.JTabbedPane();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        subProcess = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        ChemicalHeader = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -124,17 +128,28 @@ public class ResinForm extends javax.swing.JFrame {
         jPanel2.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTabbedPane1.setAutoscrolls(true);
-        jTabbedPane1.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        ChemicalHeader.setBackground(new java.awt.Color(255, 255, 255));
+        ChemicalHeader.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
+        ChemicalHeader.setForeground(new java.awt.Color(255, 255, 255));
+        ChemicalHeader.setText("Add Dyeing Program");
+        jPanel2.add(ChemicalHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 22, 360, 40));
+
+        Process.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+
+        jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        jLabel3.setText("Process Name :");
+
+        subProcess.setAutoscrolls(true);
+        subProcess.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        jLabel1.setText("Process Name :");
+        jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        jLabel1.setText("Sub Process Name :");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 15, -1, 32));
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(164, 15, 116, 32));
+        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 17, 116, 32));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chemicals", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 18))); // NOI18N
@@ -192,23 +207,45 @@ public class ResinForm extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 58, -1, -1));
 
-        jTabbedPane1.addTab("Process 1", jPanel1);
+        subProcess.addTab("Sub Process 1", jPanel1);
 
-        jPanel2.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(32, 80, 740, -1));
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(subProcess, javax.swing.GroupLayout.PREFERRED_SIZE, 725, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(10, 10, 10)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(subProcess, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
-        ChemicalHeader.setBackground(new java.awt.Color(255, 255, 255));
-        ChemicalHeader.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
-        ChemicalHeader.setForeground(new java.awt.Color(255, 255, 255));
-        ChemicalHeader.setText("Add Dyeing Program");
-        jPanel2.add(ChemicalHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 22, 360, 40));
+        Process.addTab("Process 1", jPanel4);
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 600));
+        jPanel2.add(Process, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 770, 530));
+        Process.getAccessibleContext().setAccessibleName("Process 1");
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 640));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -251,14 +288,18 @@ public class ResinForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ChemicalHeader;
+    private javax.swing.JTabbedPane Process;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTabbedPane subProcess;
     // End of variables declaration//GEN-END:variables
 }
 
