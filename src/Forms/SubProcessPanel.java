@@ -5,6 +5,12 @@
  */
 package Forms;
 
+import java.util.ArrayList;
+import javax.swing.DefaultCellEditor;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.table.TableColumn;
+
 /**
  *
  * @author Eldridge
@@ -16,6 +22,39 @@ public class SubProcessPanel extends javax.swing.JPanel {
      */
     public SubProcessPanel() {
         initComponents();
+        InitializeChemicalTable();
+        InitializeGPLandPercentColumn();
+    }
+    
+    public void InitializeChemicalTable()
+    {
+        JComboBox comboBox = new JComboBox();
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        ArrayList<String> AllChemical = new Handlers.ChemicalHandler().GetAllChemical();
+        for(String thisChemical : AllChemical)
+        {
+            model.addElement(thisChemical);
+        }
+        comboBox.setModel(model);
+        ComboBoxTableCellRenderer renderer = new ComboBoxTableCellRenderer();
+        renderer.setModel(model);
+        TableColumn col = jTable1.getColumnModel().getColumn(0);
+        col.setCellEditor(new DefaultCellEditor(comboBox));
+        //col.setCellRenderer(renderer);
+    }
+    
+     public void InitializeGPLandPercentColumn()
+    {
+        JComboBox comboBox = new JComboBox();
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        model.addElement("GPL");
+        model.addElement("%");
+        comboBox.setModel(model);
+        ComboBoxTableCellRenderer renderer = new ComboBoxTableCellRenderer();
+        renderer.setModel(model);
+        TableColumn col = jTable1.getColumnModel().getColumn(1);
+        col.setCellEditor(new DefaultCellEditor(comboBox));
+        //col.setCellRenderer(renderer);
     }
 
     /**
@@ -43,7 +82,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chemicals", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 18))); // NOI18N
-        jPanel3.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        jPanel3.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
 
         jTable1.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(

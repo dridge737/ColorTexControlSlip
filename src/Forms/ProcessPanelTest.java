@@ -17,31 +17,73 @@ import javax.swing.event.ChangeListener;
  *
  * @author Eldridge
  */
-public class ProcessPanel extends javax.swing.JPanel {
+public class ProcessPanelTest extends javax.swing.JPanel {
 
-    private int NumberOfTabs = 1;
-    private List<JTextField> subProcessName = new ArrayList<JTextField>();
+    private int NumberOfProcessTabs = 1;
+    private int NumberOfSubProcessTabs = 1;
+    private List<JTextField> ProcessNameList = new ArrayList<JTextField>();
+    private List<JTextField> subProcessNameList = new ArrayList<JTextField>();
     /**
      * Creates new form ProcessPanel
      */
-    public ProcessPanel() {
+    public ProcessPanelTest() {
         initComponents();
         /* add tab to add new tab when click */
-        subProcess.add(new JPanel(), "+", NumberOfTabs++);
- 
+        subProcess.add(new JPanel(), "+", NumberOfProcessTabs++);
         subProcess.addChangeListener(changeListener);
+        Process.add(new JPanel(), "+", NumberOfSubProcessTabs++);
+        Process.addChangeListener(changeListener2);
     }
     
     ChangeListener changeListener = new ChangeListener() {
         @Override
         public void stateChanged(ChangeEvent e) {
-            addNewTab();
+            addNewTabSubProcess();
         }
 
     };
     
-     private void addNewTab() {
-        int index = NumberOfTabs - 1;
+    ChangeListener changeListener2 = new ChangeListener() {
+        @Override
+        public void stateChanged(ChangeEvent e) {
+            addNewTabProcess();
+        }
+
+    };
+    
+    private void addNewTabProcess() {
+        int index = NumberOfProcessTabs - 1;
+        if (Process.getSelectedIndex() == index) { /* if click new tab */
+            /* add new tab */
+            JPanel this_panel = new ProcessPanel();
+            for (Component c : this_panel.getComponents()) {
+                if (c instanceof JTextField) {
+                    JTextField textField = ((JTextField)c);
+                    String name, contact;
+                    //if(textField.getName().startsWith("subProcess")) {
+                        // Name field
+                        this.ProcessNameList.add(textField);
+                    //} else {
+                        // Contact field
+                    //    contact = textField.getText();
+                    //}
+       // Validate and persist.
+
+                }
+            }
+            Process.add(this_panel, "Process " + String.valueOf(NumberOfProcessTabs),
+                    index);
+            /* set tab is custom tab */
+            //jTabbedPane1.setTabComponentAt(index, new DemoCustomTab(this));
+            Process.removeChangeListener(changeListener2);
+            Process.setSelectedIndex(index);
+            Process.addChangeListener(changeListener2);
+            NumberOfProcessTabs++;
+        }
+    }
+    
+     private void addNewTabSubProcess() {
+        int index = NumberOfSubProcessTabs - 1;
         if (subProcess.getSelectedIndex() == index) { /* if click new tab */
             /* add new tab */
             JPanel this_panel = new SubProcessPanel();
@@ -51,7 +93,7 @@ public class ProcessPanel extends javax.swing.JPanel {
                     String name, contact;
                     //if(textField.getName().startsWith("subProcess")) {
                         // Name field
-                        this.subProcessName.add(textField);
+                        this.subProcessNameList.add(textField);
                     //} else {
                         // Contact field
                     //    contact = textField.getText();
@@ -60,18 +102,37 @@ public class ProcessPanel extends javax.swing.JPanel {
 
                 }
             }
-            subProcess.add(this_panel, "Sub Process " + String.valueOf(NumberOfTabs),
+            subProcess.add(this_panel, "Sub Process " + String.valueOf(NumberOfSubProcessTabs),
                     index);
             /* set tab is custom tab */
             //jTabbedPane1.setTabComponentAt(index, new DemoCustomTab(this));
             subProcess.removeChangeListener(changeListener);
             subProcess.setSelectedIndex(index);
             subProcess.addChangeListener(changeListener);
-            NumberOfTabs++;
+            NumberOfSubProcessTabs++;
         }
     }
-    
 
+    /**
+     * @return the ProcessName
+     */
+    public List<JTextField> getProcessName() {
+        return ProcessNameList;
+    }
+
+    /**
+     * @param ProcessName the ProcessName to set
+     */
+    public void setProcessName(List<JTextField> ProcessName) {
+        this.ProcessNameList = ProcessName;
+    }
+     
+     
+    public JPanel AddPanel()
+    {
+        return null;
+    }
+     
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -81,20 +142,31 @@ public class ProcessPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel3 = new javax.swing.JLabel();
+        Process = new javax.swing.JTabbedPane();
+        jPanel2 = new javax.swing.JPanel();
         jTextField2 = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
         subProcess = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jPanel3 = new javax.swing.JPanel();
+        ChemicalPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setOpaque(false);
+
+        Process.setBackground(new java.awt.Color(255, 255, 255));
+        Process.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel2.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(155, 19, 116, 32));
 
         jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel3.setText("Process Name :");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 19, -1, 32));
 
         subProcess.setAutoscrolls(true);
         subProcess.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
@@ -108,9 +180,9 @@ public class ProcessPanel extends javax.swing.JPanel {
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 15, -1, 32));
         jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 17, 116, 32));
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chemicals", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 18))); // NOI18N
-        jPanel3.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        ChemicalPanel.setBackground(new java.awt.Color(255, 255, 255));
+        ChemicalPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chemicals", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 18))); // NOI18N
+        ChemicalPanel.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
 
         jTable1.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -151,59 +223,57 @@ public class ProcessPanel extends javax.swing.JPanel {
         jTable1.setRowHeight(25);
         jScrollPane1.setViewportView(jTable1);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout ChemicalPanelLayout = new javax.swing.GroupLayout(ChemicalPanel);
+        ChemicalPanel.setLayout(ChemicalPanelLayout);
+        ChemicalPanelLayout.setHorizontalGroup(
+            ChemicalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ChemicalPanelLayout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 651, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        ChemicalPanelLayout.setVerticalGroup(
+            ChemicalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ChemicalPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 58, -1, -1));
+        jPanel1.add(ChemicalPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 58, -1, -1));
 
         subProcess.addTab("Sub Process 1", jPanel1);
+
+        jPanel2.add(subProcess, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 69, 725, -1));
+
+        Process.addTab("Process 1", jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(subProcess, javax.swing.GroupLayout.PREFERRED_SIZE, 725, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(10, 10, 10)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(Process, javax.swing.GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(subProcess, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(Process, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 10, Short.MAX_VALUE))
         );
+
+        Process.getAccessibleContext().setAccessibleName("Process 1");
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel ChemicalPanel;
+    private javax.swing.JTabbedPane Process;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;

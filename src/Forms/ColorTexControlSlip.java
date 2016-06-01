@@ -39,7 +39,7 @@ public class ColorTexControlSlip {
         CustomerForm newCustForm = new CustomerForm();
         newCustForm.setVisible(true);
         */
-        ResinForm newResinForm = new ResinForm();
+        ResinFormTest newResinForm = new ResinFormTest();
         newResinForm.setVisible(true);
                 
     }
