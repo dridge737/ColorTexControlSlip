@@ -156,6 +156,8 @@ public class AddResinForm extends javax.swing.JFrame {
             }
         });
         jTable1.setRowHeight(25);
+        jTable1.setRowSelectionAllowed(false);
+        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
