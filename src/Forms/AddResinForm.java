@@ -111,7 +111,7 @@ public class AddResinForm extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Resin Process Name :");
         BgPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(52, 90, -1, 34));
-        BgPanel.add(processText, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 90, 140, 34));
+        BgPanel.add(processText, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 90, 180, 34));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Resin Chemicals", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 24), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -175,7 +175,7 @@ public class AddResinForm extends javax.swing.JFrame {
 
         BgPanel.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 145, -1, -1));
 
-        getContentPane().add(BgPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 590));
+        getContentPane().add(BgPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 590));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
