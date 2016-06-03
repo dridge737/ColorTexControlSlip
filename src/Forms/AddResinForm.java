@@ -5,6 +5,7 @@
  */
 package Forms;
 
+import Forms.HelpForm.ComboBoxTableCellRenderer;
 import java.awt.Component;
 import java.util.ArrayList;
 import javax.swing.DefaultCellEditor;
