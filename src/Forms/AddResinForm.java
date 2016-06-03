@@ -182,12 +182,8 @@ public class AddResinForm extends javax.swing.JFrame {
 
     private void CancelButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButActionPerformed
         // TODO add your handling code here:
-        
-        for (int i = 0; i < this.subProcessName.size(); i++) 
-        {
-            System.out.println("Component:" + subProcessName.get(i).getText().toString());
-        } 
-       
+        this.dispose();
+                
     }//GEN-LAST:event_CancelButActionPerformed
 
     private void SaveButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButActionPerformed
