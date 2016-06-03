@@ -6,6 +6,12 @@
 package Forms;
 
 import Forms.HelpForm.ComboBoxTableCellRenderer;
+import Handlers.ResinChemicalHandler;
+import Handlers.ResinProgramHandler;
+import Handlers.ChemicalHandler;
+import DataEntities.Chemical;
+import DataEntities.ResinChemical;
+import DataEntities.ResinProgram;
 import java.awt.Component;
 import java.util.ArrayList;
 import javax.swing.DefaultCellEditor;
@@ -24,6 +30,7 @@ import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.AbstractCellEditor;
+import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
@@ -35,7 +42,8 @@ public class AddResinForm extends javax.swing.JFrame {
 
     private int NumberOfTabs = 1;
     private List<JTextField> subProcessName = new ArrayList<JTextField>();
-    boolean changedFlag = false;
+    ArrayList<ResinChemical> resinChemicalList = new ArrayList<ResinChemical>();
+    ResinProgram resinProgram = new ResinProgram();
     /**
      * Creates new form ResinForm
      */
@@ -67,21 +75,14 @@ public class AddResinForm extends javax.swing.JFrame {
             public void tableChanged(TableModelEvent e) {
                 // If editing row is last row in table add one more row to table
                 if(jTable1.getEditingRow() == (jTable1.getRowCount()-1)){
-                    ((DefaultTableModel)jTable1.getModel()).addRow(new Object[]{});
-                }
-                
-                Object GPL = jTable1.getModel().getValueAt(jTable1.getEditingRow(), 1);
-                
-                if(GPL != null && changedFlag == false)
-                {
-                    if(!isNullOrWhitespace(jTable1.getModel().getValueAt(jTable1.getEditingRow(), 1).toString()))
+                    Object chemical = jTable1.getModel().getValueAt(jTable1.getEditingRow(), 0);
+                    Object gpl = jTable1.getModel().getValueAt(jTable1.getEditingRow(), 1);
+                    if(gpl != null && chemical != null)
                     {
-                        double ValueGPL = Integer.parseInt(jTable1.getModel().getValueAt(jTable1.getEditingRow(), 1).toString()) * 0.12;
-                        changedFlag = true;
-                        jTable1.getModel().setValueAt(ValueGPL, jTable1.getEditingRow(), 2);
-                    }  
+                        ((DefaultTableModel)jTable1.getModel()).addRow(new Object[]{});
+                    }
+                    
                 }
-                changedFlag = false;            
             }            
         });
     }
@@ -154,33 +155,33 @@ public class AddResinForm extends javax.swing.JFrame {
         jTable1.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Chemical", "GPL", "Quantity"
+                "Chemical", "GPL"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.String.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -225,10 +226,55 @@ public class AddResinForm extends javax.swing.JFrame {
 
     private void SaveButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButActionPerformed
         // TODO add your handling code here:
-        if(processText.getText().length()>0 && isNullOrWhitespace(processText.getText()))
+        ResinChemical resinChemical = new ResinChemical();
+        Chemical chemicalName = new Chemical();
+        ResinProgramHandler resinProgramHandler = new ResinProgramHandler();
+        ResinChemicalHandler resinChemicalHandler = new ResinChemicalHandler();
+        ChemicalHandler chemicalHandler = new ChemicalHandler();
+        int resinProgramId = -1;
+        int chemicalId = -1;
+        String asd = processText.getText();
+        if(processText.getText().length()>0 && !isNullOrWhitespace(processText.getText()))
         {
-            
+            resinProgram.setName(processText.getText());
+            resinProgramHandler.AddNewResinProgram(resinProgram);
+            resinProgramId = resinProgramHandler.GetResinProgramIDFromResinProgramName(resinProgram.getName());
         }
+        
+        if(resinProgramId != -1)
+        {
+            for (int i = 0; i < jTable1.getRowCount() - 1; i++) {
+                Object chemicalForResinProgram = jTable1.getModel().getValueAt(i, 0);
+                Object gpl = jTable1.getModel().getValueAt(i, 1);
+
+                if(chemicalForResinProgram != null)
+                {
+                   chemicalId = chemicalHandler.GetChemicalIDFromChemicalName(chemicalForResinProgram.toString());
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "Please enter a name for the resin program.");
+                }
+
+                if(chemicalForResinProgram != null && gpl != null)
+                {
+                    resinChemical.setResinProgramID(resinProgramId);
+                    resinChemical.setChemicalID(chemicalId);
+                    resinChemical.setGPLValue(Float.parseFloat(gpl.toString()));
+
+                    resinChemicalHandler.AddNewResinChemical(resinChemical);
+                }     
+                else if((chemicalForResinProgram == null && gpl != null) || (chemicalForResinProgram != null && gpl == null))
+                {
+                    JOptionPane.showMessageDialog(null, "Please complete data for all rows.");
+                }
+             }   
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Something went wrong.");
+        }
+            
     }//GEN-LAST:event_SaveButActionPerformed
 
     /**
@@ -282,7 +328,8 @@ public class AddResinForm extends javax.swing.JFrame {
         int length = s.length();
         if (length > 0) {
             for (int i = 0; i < length; i++) {
-                if (!Character.isWhitespace(s.charAt(i))) {
+                char c = s.charAt(i);
+                if (!Character.isWhitespace(c)) {
                     return false;
                 }
             }
