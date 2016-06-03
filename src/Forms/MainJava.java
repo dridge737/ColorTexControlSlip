@@ -11,7 +11,7 @@ import Handlers.*;
  *
  * @author imbuenyson
  */
-public class ColorTexControlSlip {
+public class MainJava {
 
     /**
      * @param args the command line arguments
@@ -39,9 +39,12 @@ public class ColorTexControlSlip {
         CustomerForm newCustForm = new CustomerForm();
         newCustForm.setVisible(true);
         */
-        ResinFormTest newResinForm = new ResinFormTest();
+        //TestResinForm newResinForm = new TestResinForm();
+        //newResinForm.setVisible(true);
+        
+        AddResinForm newResinForm = new AddResinForm();
         newResinForm.setVisible(true);
-                
+        
     }
     
 }

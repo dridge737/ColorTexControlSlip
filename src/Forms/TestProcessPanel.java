@@ -17,7 +17,7 @@ import javax.swing.event.ChangeListener;
  *
  * @author Eldridge
  */
-public class ProcessPanelTest extends javax.swing.JPanel {
+public class TestProcessPanel extends javax.swing.JPanel {
 
     private int NumberOfProcessTabs = 1;
     private int NumberOfSubProcessTabs = 1;
@@ -26,7 +26,7 @@ public class ProcessPanelTest extends javax.swing.JPanel {
     /**
      * Creates new form ProcessPanel
      */
-    public ProcessPanelTest() {
+    public TestProcessPanel() {
         initComponents();
         /* add tab to add new tab when click */
         subProcess.add(new JPanel(), "+", NumberOfProcessTabs++);

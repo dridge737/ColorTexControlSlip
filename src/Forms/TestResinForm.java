@@ -26,16 +26,16 @@ import javax.swing.event.ChangeListener;
  *
  * @author Eldridge
  */
-public class ResinFormTest extends javax.swing.JFrame {
+public class TestResinForm extends javax.swing.JFrame {
 
     private int NumberOfTabs = 1;
     private List<JTextField> subProcessName = new ArrayList<JTextField>();
     /**
      * Creates new form ResinForm
      */
-    public ResinFormTest() {
+    public TestResinForm() {
         initComponents();
-        JPanel ThisPanel = new ProcessPanelTest();
+        JPanel ThisPanel = new TestProcessPanel();
         this.jPanel2.add(ThisPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 80, 780, 550));
         this.jPanel2.validate();
      
@@ -106,14 +106,18 @@ public class ResinFormTest extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ResinFormTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TestResinForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ResinFormTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TestResinForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ResinFormTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TestResinForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ResinFormTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TestResinForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -122,7 +126,7 @@ public class ResinFormTest extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ResinFormTest().setVisible(true);
+                new TestResinForm().setVisible(true);
             }
         });
     }
