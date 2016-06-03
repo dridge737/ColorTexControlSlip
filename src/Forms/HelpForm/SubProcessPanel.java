@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JTable;
 import javax.swing.table.TableColumn;
 
 /**
@@ -38,7 +39,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
         //col.setCellRenderer(renderer);
     }
     
-     public void InitializeGPLandPercentColumn()
+     private void InitializeGPLandPercentColumn()
     {
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         model.addElement("GPL");
@@ -50,15 +51,24 @@ public class SubProcessPanel extends javax.swing.JPanel {
         //col.setCellRenderer(renderer);
     }
      
-     public void InitializeColumns(DefaultComboBoxModel model , int column)
+     private void InitializeColumns(DefaultComboBoxModel model , int column)
      {
         JComboBox comboBox = new JComboBox();
         comboBox.setModel(model);
         ComboBoxTableCellRenderer renderer = new ComboBoxTableCellRenderer();
         renderer.setModel(model);
-        TableColumn col = jTable1.getColumnModel().getColumn(column);
+        TableColumn col = ChemicalsTable.getColumnModel().getColumn(column);
         col.setCellEditor(new DefaultCellEditor(comboBox));
-         
+     }
+     
+     public String GetSubProcessText()
+     {
+         return this.SubProcessNameText.getText();
+     }
+     
+     public JTable GetChemicalTable()
+     {
+         return this.ChemicalsTable;
      }
 
     /**
@@ -71,10 +81,10 @@ public class SubProcessPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        SubProcessNameText = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        ChemicalsTable = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -82,14 +92,14 @@ public class SubProcessPanel extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         jLabel1.setText("Sub Process Name :");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 15, -1, 32));
-        add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 17, 116, 32));
+        add(SubProcessNameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 17, 116, 32));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chemicals", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 18))); // NOI18N
         jPanel3.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
 
-        jTable1.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        ChemicalsTable.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        ChemicalsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -124,8 +134,8 @@ public class SubProcessPanel extends javax.swing.JPanel {
                 return types [columnIndex];
             }
         });
-        jTable1.setRowHeight(25);
-        jScrollPane1.setViewportView(jTable1);
+        ChemicalsTable.setRowHeight(25);
+        jScrollPane1.setViewportView(ChemicalsTable);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -149,10 +159,10 @@ public class SubProcessPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable ChemicalsTable;
+    private javax.swing.JTextField SubProcessNameText;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

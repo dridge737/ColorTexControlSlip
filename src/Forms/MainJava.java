@@ -6,6 +6,7 @@ package Forms;
  * and open the template in the editor.
  */
 import DataEntities.*;
+import Forms.HelpForm.TestFrame;
 import Handlers.*;
 /**
  *
@@ -42,9 +43,11 @@ public class MainJava {
         //TestResinForm newResinForm = new TestResinForm();
         //newResinForm.setVisible(true);
         
-        AddResinForm newResinForm = new AddResinForm();
-        newResinForm.setVisible(true);
+        //AddResinForm newResinForm = new AddResinForm();
+        //newResinForm.setVisible(true);
         
+        TestFrame TestThisFrame = new TestFrame();
+        TestThisFrame.setVisible(true);
     }
     
 }

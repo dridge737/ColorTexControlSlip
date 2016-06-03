@@ -30,6 +30,7 @@ public class ProcessPanel extends javax.swing.JPanel {
         subProcess.add(new JPanel(), "+", NumberOfTabs++);
  
         subProcess.addChangeListener(changeListener);
+        
     }
     
     ChangeListener changeListener = new ChangeListener() {
@@ -70,6 +71,11 @@ public class ProcessPanel extends javax.swing.JPanel {
             NumberOfTabs++;
         }
     }
+     
+     public void runtime()
+     {
+         SubProcessPanel thisPanel = (SubProcessPanel) this.subProcess.getTabComponentAt(0);
+     }
     
 
     /**
