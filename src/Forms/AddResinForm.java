@@ -173,7 +173,7 @@ public class AddResinForm extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE))
         );
 
-        BgPanel.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, -1, -1));
+        BgPanel.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 145, -1, -1));
 
         getContentPane().add(BgPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 590));
 
