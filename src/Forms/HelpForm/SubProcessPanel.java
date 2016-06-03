@@ -28,34 +28,38 @@ public class SubProcessPanel extends javax.swing.JPanel {
     
     public void InitializeChemicalTable()
     {
-        JComboBox comboBox = new JComboBox();
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         ArrayList<String> AllChemical = new Handlers.ChemicalHandler().GetAllChemical();
         for(String thisChemical : AllChemical)
         {
             model.addElement(thisChemical);
         }
-        comboBox.setModel(model);
-        ComboBoxTableCellRenderer renderer = new ComboBoxTableCellRenderer();
-        renderer.setModel(model);
-        TableColumn col = jTable1.getColumnModel().getColumn(0);
-        col.setCellEditor(new DefaultCellEditor(comboBox));
+        InitializeColumns(model, 0);
         //col.setCellRenderer(renderer);
     }
     
      public void InitializeGPLandPercentColumn()
     {
-        JComboBox comboBox = new JComboBox();
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         model.addElement("GPL");
         model.addElement("%");
+        ComboBoxTableCellRenderer renderer = new ComboBoxTableCellRenderer();
+        renderer.setModel(model);
+        
+        InitializeColumns(model, 1);
+        //col.setCellRenderer(renderer);
+    }
+     
+     public void InitializeColumns(DefaultComboBoxModel model , int column)
+     {
+        JComboBox comboBox = new JComboBox();
         comboBox.setModel(model);
         ComboBoxTableCellRenderer renderer = new ComboBoxTableCellRenderer();
         renderer.setModel(model);
-        TableColumn col = jTable1.getColumnModel().getColumn(1);
+        TableColumn col = jTable1.getColumnModel().getColumn(column);
         col.setCellEditor(new DefaultCellEditor(comboBox));
-        //col.setCellRenderer(renderer);
-    }
+         
+     }
 
     /**
      * This method is called from within the constructor to initialize the form.
