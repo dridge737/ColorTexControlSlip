@@ -1462,7 +1462,7 @@ public class ColorTextControlSlipRepository {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        ArrayList<String> ColorList = new ArrayList<>();
+        ArrayList<String> ResinList = new ArrayList<>();
         try
         {
             conn = dbc.getConnection();
@@ -1471,7 +1471,7 @@ public class ColorTextControlSlipRepository {
             
             while(rs.next())
             {
-                ColorList.add(rs.getString("Name"));
+                ResinList.add(rs.getString("Name"));
             }
         }
         catch (SQLException ex) {
@@ -1479,7 +1479,7 @@ public class ColorTextControlSlipRepository {
         }
         
         this.closeConn(conn, ps, rs);
-        return ColorList;
+        return ResinList;
     }
     
     
@@ -1899,5 +1899,31 @@ public class ColorTextControlSlipRepository {
         
         this.closeConn(conn, preparedStmt);
         return isSuccessful;
+    }
+    
+    public ArrayList<String> GetAllDyeingProgram()
+    {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ArrayList<String> DyeingList = new ArrayList<>();
+        try
+        {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT Name FROM dyeing_program ");
+            rs = ps.executeQuery();
+            
+            while(rs.next())
+            {
+                DyeingList.add(rs.getString("Name"));
+            }
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, ps, rs);
+        return DyeingList;
     }
 }

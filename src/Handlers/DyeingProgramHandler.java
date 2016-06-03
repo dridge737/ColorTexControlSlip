@@ -7,6 +7,7 @@ package Handlers;
 
 import DataEntities.DyeingProgram;
 import Database.ColorTextControlSlipRepository;
+import java.util.ArrayList;
 /**
  *
  * @author imbuenyson
@@ -73,5 +74,11 @@ public class DyeingProgramHandler {
         {
             //enter validation 
         }
+    }
+    
+    public ArrayList<String> GetAllDyeingProgram()
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        return repo.GetAllDyeingProgram();
     }
 }
