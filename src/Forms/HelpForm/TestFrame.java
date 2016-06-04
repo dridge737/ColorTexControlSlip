@@ -19,11 +19,7 @@ public class TestFrame extends javax.swing.JFrame {
      */
     public TestFrame() {
         initComponents();
-        Container c = this.rootPane;
-        
-        ProcessPanel thisPanel = new ProcessPanel();
-        c.add(new JTextField());
-        c.validate();
+       
     }
 
     /**

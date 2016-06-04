@@ -18,6 +18,7 @@ import DataEntities.Chemical;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -26,22 +27,67 @@ import javax.swing.event.ChangeListener;
  *
  * @author Eldridge
  */
-public class TestResinForm extends javax.swing.JFrame {
+public class NewDyeingForm extends javax.swing.JFrame {
 
     private int NumberOfTabs = 1;
-    private List<JTextField> subProcessName = new ArrayList<JTextField>();
+    private List<SubProcessPanel> subProcessPanels = new ArrayList<SubProcessPanel>();
     JPanel ThisPanel = new TestProcessPanel();
+    private int NumberOfProcessTabs = 0;
+    //private int NumberOfSubProcessTabs = 1;
+    private List<JTextField> ProcessNameList = new ArrayList<JTextField>();
+    private List<JTextField> subProcessNameList = new ArrayList<JTextField>();
     /**
      * Creates new form ResinForm
      */
-    public TestResinForm() {
+    public NewDyeingForm() {
         initComponents();
-        
-        this.jPanel2.add(ThisPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 80, 780, 550));
-        this.jPanel2.validate();
+        Process.add(new ProcessPanel(), "Process 1", NumberOfProcessTabs++);
+        Process.add(new JPanel(), "+", NumberOfProcessTabs++);
+        Process.addChangeListener(changeListener);
+        //this.jPanel2.add(ThisPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 80, 780, 550));
+        //this.jPanel2.validate();
      
     }
     
+    ChangeListener changeListener = new ChangeListener() {
+        @Override
+        public void stateChanged(ChangeEvent e) {
+            addNewTabProcess();
+        }
+
+    };
+    
+    private void addNewTabProcess() {
+        
+        int index = NumberOfProcessTabs - 1;
+        if (Process.getSelectedIndex() == index) { /* if click new tab */
+            /* add new tab */
+            JPanel this_panel = new ProcessPanel();
+            for (Component c : this_panel.getComponents()) {
+                if (c instanceof JTextField) {
+                    JTextField textField = ((JTextField)c);
+                    String name, contact;
+                    //if(textField.getName().startsWith("subProcess")) {
+                        // Name field
+                        this.ProcessNameList.add(textField);
+                    //} else {
+                        // Contact field
+                    //    contact = textField.getText();
+                    //}
+       // Validate and persist.
+
+                }
+            }
+            Process.add(this_panel, "Process " + String.valueOf(NumberOfProcessTabs),
+                    index);
+            /* set tab is custom tab */
+            //jTabbedPane1.setTabComponentAt(index, new DemoCustomTab(this));
+            Process.removeChangeListener(changeListener);
+            Process.setSelectedIndex(index);
+            Process.addChangeListener(changeListener);
+            NumberOfProcessTabs++;
+        }
+    }
     
     
     
@@ -59,6 +105,7 @@ public class TestResinForm extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         ChemicalHeader = new javax.swing.JLabel();
         SaveBut = new javax.swing.JButton();
+        Process = new javax.swing.JTabbedPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -82,6 +129,10 @@ public class TestResinForm extends javax.swing.JFrame {
         });
         jPanel2.add(SaveBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 640, -1, -1));
 
+        Process.setBackground(new java.awt.Color(255, 255, 255));
+        Process.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        jPanel2.add(Process, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 770, 540));
+
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 690));
 
         pack();
@@ -90,6 +141,25 @@ public class TestResinForm extends javax.swing.JFrame {
     private void SaveButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButActionPerformed
         // TODO add your handling code here:
         //this.jPanel2.getComp
+        
+        Component[] this_pane = this.Process.getComponents();
+            for (Component c : this_pane) {
+                System.out.println(c.getClass());
+                if (c instanceof ProcessPanel) {
+                    ProcessPanel ThisProcessPanel = ((ProcessPanel)c);
+                    Component[] ProcessPanel = ThisProcessPanel.getComponents();
+                    for (Component d : ProcessPanel) {
+                    System.out.println(d.getClass());
+                            if (d instanceof JTextField) {
+                                JTextField textField = ((JTextField)d);
+                                System.out.println(textField.getText());
+                            }
+                    //ThisProcessPanel.GetSubProcessText();
+                    System.out.println("Entered");
+                    }
+                    ThisProcessPanel.GetSubProcessText();
+                }
+            }
     }//GEN-LAST:event_SaveButActionPerformed
 
     /**
@@ -109,14 +179,38 @@ public class TestResinForm extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TestResinForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewDyeingForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TestResinForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewDyeingForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TestResinForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewDyeingForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TestResinForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewDyeingForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -129,13 +223,14 @@ public class TestResinForm extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TestResinForm().setVisible(true);
+                new NewDyeingForm().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ChemicalHeader;
+    private javax.swing.JTabbedPane Process;
     private javax.swing.JButton SaveBut;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables

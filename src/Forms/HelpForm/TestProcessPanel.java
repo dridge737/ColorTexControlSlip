@@ -19,31 +19,24 @@ import javax.swing.event.ChangeListener;
  */
 public class TestProcessPanel extends javax.swing.JPanel {
 
-    private int NumberOfProcessTabs = 1;
-    private int NumberOfSubProcessTabs = 1;
+    private int NumberOfProcessTabs = 0;
+    //private int NumberOfSubProcessTabs = 1;
     private List<JTextField> ProcessNameList = new ArrayList<JTextField>();
     private List<JTextField> subProcessNameList = new ArrayList<JTextField>();
     /**
-     * Creates new form ProcessPanel
+     * Creates new form ProcessPanelBackup1
      */
     public TestProcessPanel() {
         initComponents();
         /* add tab to add new tab when click */
-        subProcess.add(new JPanel(), "+", NumberOfProcessTabs++);
-        subProcess.addChangeListener(changeListener);
-        Process.add(new JPanel(), "+", NumberOfSubProcessTabs++);
-        Process.addChangeListener(changeListener2);
+        //subProcess.add(new JPanel(), "+", NumberOfProcessTabs++);
+        //subProcess.addChangeListener(changeListener);
+        Process.add(new ProcessPanel(), "Process 1", NumberOfProcessTabs++);
+        Process.add(new JPanel(), "+", NumberOfProcessTabs++);
+        Process.addChangeListener(changeListener);
     }
     
     ChangeListener changeListener = new ChangeListener() {
-        @Override
-        public void stateChanged(ChangeEvent e) {
-            addNewTabSubProcess();
-        }
-
-    };
-    
-    ChangeListener changeListener2 = new ChangeListener() {
         @Override
         public void stateChanged(ChangeEvent e) {
             addNewTabProcess();
@@ -52,6 +45,7 @@ public class TestProcessPanel extends javax.swing.JPanel {
     };
     
     private void addNewTabProcess() {
+        
         int index = NumberOfProcessTabs - 1;
         if (Process.getSelectedIndex() == index) { /* if click new tab */
             /* add new tab */
@@ -75,17 +69,17 @@ public class TestProcessPanel extends javax.swing.JPanel {
                     index);
             /* set tab is custom tab */
             //jTabbedPane1.setTabComponentAt(index, new DemoCustomTab(this));
-            Process.removeChangeListener(changeListener2);
+            Process.removeChangeListener(changeListener);
             Process.setSelectedIndex(index);
-            Process.addChangeListener(changeListener2);
+            Process.addChangeListener(changeListener);
             NumberOfProcessTabs++;
         }
     }
-    
+    /*
      private void addNewTabSubProcess() {
         int index = NumberOfSubProcessTabs - 1;
-        if (subProcess.getSelectedIndex() == index) { /* if click new tab */
-            /* add new tab */
+        if (subProcess.getSelectedIndex() == index) { // if click new tab 
+            // add new tab 
             JPanel this_panel = new SubProcessPanel();
             for (Component c : this_panel.getComponents()) {
                 if (c instanceof JTextField) {
@@ -98,13 +92,13 @@ public class TestProcessPanel extends javax.swing.JPanel {
                         // Contact field
                     //    contact = textField.getText();
                     //}
-       // Validate and persist.
+       // Validate and persist
 
                 }
             }
             subProcess.add(this_panel, "Sub Process " + String.valueOf(NumberOfSubProcessTabs),
                     index);
-            /* set tab is custom tab */
+            // set tab is custom tab
             //jTabbedPane1.setTabComponentAt(index, new DemoCustomTab(this));
             subProcess.removeChangeListener(changeListener);
             subProcess.setSelectedIndex(index);
@@ -112,6 +106,7 @@ public class TestProcessPanel extends javax.swing.JPanel {
             NumberOfSubProcessTabs++;
         }
     }
+*/
 
     /**
      * @return the ProcessName
@@ -127,11 +122,11 @@ public class TestProcessPanel extends javax.swing.JPanel {
         this.ProcessNameList = ProcessName;
     }
      
-     
-    public JPanel AddPanel()
+    public void getData()
     {
-        return null;
+        
     }
+     
      
     /**
      * This method is called from within the constructor to initialize the form.
@@ -143,109 +138,12 @@ public class TestProcessPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         Process = new javax.swing.JTabbedPane();
-        jPanel2 = new javax.swing.JPanel();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        subProcess = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        ChemicalPanel = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setOpaque(false);
 
         Process.setBackground(new java.awt.Color(255, 255, 255));
         Process.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel2.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(155, 19, 116, 32));
-
-        jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        jLabel3.setText("Process Name :");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 19, -1, 32));
-
-        subProcess.setAutoscrolls(true);
-        subProcess.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        jLabel1.setText("Sub Process Name :");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 15, -1, 32));
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 17, 116, 32));
-
-        ChemicalPanel.setBackground(new java.awt.Color(255, 255, 255));
-        ChemicalPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chemicals", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 18))); // NOI18N
-        ChemicalPanel.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-
-        jTable1.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Chemical", "Type", "Value", "Quantity"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jTable1.setRowHeight(25);
-        jScrollPane1.setViewportView(jTable1);
-
-        javax.swing.GroupLayout ChemicalPanelLayout = new javax.swing.GroupLayout(ChemicalPanel);
-        ChemicalPanel.setLayout(ChemicalPanelLayout);
-        ChemicalPanelLayout.setHorizontalGroup(
-            ChemicalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ChemicalPanelLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 651, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        ChemicalPanelLayout.setVerticalGroup(
-            ChemicalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ChemicalPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE))
-        );
-
-        jPanel1.add(ChemicalPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 58, -1, -1));
-
-        subProcess.addTab("Sub Process 1", jPanel1);
-
-        jPanel2.add(subProcess, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 69, 725, -1));
-
-        Process.addTab("Process 1", jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -268,16 +166,6 @@ public class TestProcessPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel ChemicalPanel;
     private javax.swing.JTabbedPane Process;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTabbedPane subProcess;
     // End of variables declaration//GEN-END:variables
 }
