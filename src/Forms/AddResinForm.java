@@ -12,24 +12,14 @@ import Handlers.ChemicalHandler;
 import DataEntities.Chemical;
 import DataEntities.ResinChemical;
 import DataEntities.ResinProgram;
-import java.awt.Component;
 import java.util.ArrayList;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
-import javax.swing.table.AbstractTableModel;
 import DataEntities.Chemical;
-import java.util.List;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.AbstractCellEditor;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -40,8 +30,6 @@ import javax.swing.event.TableModelListener;
  */
 public class AddResinForm extends javax.swing.JFrame {
 
-    private int NumberOfTabs = 1;
-    private List<JTextField> subProcessName = new ArrayList<JTextField>();
     ArrayList<ResinChemical> resinChemicalList = new ArrayList<ResinChemical>();
     ResinProgram resinProgram = new ResinProgram();
     /**
@@ -64,24 +52,23 @@ public class AddResinForm extends javax.swing.JFrame {
         comboBox.setModel(model);
         ComboBoxTableCellRenderer renderer = new ComboBoxTableCellRenderer();
         renderer.setModel(model);
-        TableColumn col = jTable1.getColumnModel().getColumn(0);
+        TableColumn col = ChemicalTable.getColumnModel().getColumn(0);
         
         col.setCellEditor(new DefaultCellEditor(comboBox));
         
-        DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+        DefaultTableModel dtm = (DefaultTableModel) ChemicalTable.getModel();
         dtm.setRowCount(1);
         
-        jTable1.getModel().addTableModelListener(new TableModelListener() {
+        ChemicalTable.getModel().addTableModelListener(new TableModelListener() {
             public void tableChanged(TableModelEvent e) {
                 // If editing row is last row in table add one more row to table
-                if(jTable1.getEditingRow() == (jTable1.getRowCount()-1)){
-                    Object chemical = jTable1.getModel().getValueAt(jTable1.getEditingRow(), 0);
-                    Object gpl = jTable1.getModel().getValueAt(jTable1.getEditingRow(), 1);
+                if(ChemicalTable.getEditingRow() == (ChemicalTable.getRowCount()-1)){
+                    Object chemical = ChemicalTable.getModel().getValueAt(ChemicalTable.getEditingRow(), 0);
+                    Object gpl = ChemicalTable.getModel().getValueAt(ChemicalTable.getEditingRow(), 1);
                     if(gpl != null && chemical != null)
                     {
-                        ((DefaultTableModel)jTable1.getModel()).addRow(new Object[]{});
+                        ((DefaultTableModel)ChemicalTable.getModel()).addRow(new Object[]{});
                     }
-                    
                 }
             }            
         });
@@ -105,9 +92,9 @@ public class AddResinForm extends javax.swing.JFrame {
         processText = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        ChemicalTable = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         BgPanel.setBackground(new java.awt.Color(102, 102, 102));
@@ -127,7 +114,7 @@ public class AddResinForm extends javax.swing.JFrame {
                 SaveButActionPerformed(evt);
             }
         });
-        BgPanel.add(SaveBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 500, 240, 40));
+        BgPanel.add(SaveBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 500, 240, 40));
 
         CancelBut.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         CancelBut.setText("Cancel");
@@ -136,7 +123,7 @@ public class AddResinForm extends javax.swing.JFrame {
                 CancelButActionPerformed(evt);
             }
         });
-        BgPanel.add(CancelBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 500, 240, 40));
+        BgPanel.add(CancelBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(415, 500, 240, 40));
         CancelBut.getAccessibleContext().setAccessibleName("Add");
 
         jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
@@ -152,8 +139,8 @@ public class AddResinForm extends javax.swing.JFrame {
         jPanel3.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jPanel3.setOpaque(false);
 
-        jTable1.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        ChemicalTable.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        ChemicalTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -188,11 +175,11 @@ public class AddResinForm extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jTable1.setOpaque(false);
-        jTable1.setRowHeight(25);
-        jTable1.setRowSelectionAllowed(false);
-        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane1.setViewportView(jTable1);
+        ChemicalTable.setOpaque(false);
+        ChemicalTable.setRowHeight(25);
+        ChemicalTable.setRowSelectionAllowed(false);
+        ChemicalTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane1.setViewportView(ChemicalTable);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -221,7 +208,6 @@ public class AddResinForm extends javax.swing.JFrame {
     private void CancelButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButActionPerformed
         // TODO add your handling code here:
         this.dispose();
-                
     }//GEN-LAST:event_CancelButActionPerformed
 
     private void SaveButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButActionPerformed
@@ -243,9 +229,9 @@ public class AddResinForm extends javax.swing.JFrame {
         
         if(resinProgramId != -1)
         {
-            for (int i = 0; i < jTable1.getRowCount() - 1; i++) {
-                Object chemicalForResinProgram = jTable1.getModel().getValueAt(i, 0);
-                Object gpl = jTable1.getModel().getValueAt(i, 1);
+            for (int i = 0; i < ChemicalTable.getRowCount() - 1; i++) {
+                Object chemicalForResinProgram = ChemicalTable.getModel().getValueAt(i, 0);
+                Object gpl = ChemicalTable.getModel().getValueAt(i, 1);
 
                 if(chemicalForResinProgram != null)
                 {
@@ -341,11 +327,11 @@ public class AddResinForm extends javax.swing.JFrame {
     private javax.swing.JPanel BgPanel;
     private javax.swing.JButton CancelBut;
     private javax.swing.JLabel ChemicalHeader;
+    private javax.swing.JTable ChemicalTable;
     private javax.swing.JButton SaveBut;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField processText;
     // End of variables declaration//GEN-END:variables
 }

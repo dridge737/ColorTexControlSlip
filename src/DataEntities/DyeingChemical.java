@@ -15,6 +15,7 @@ public class DyeingChemical {
     private int ChemicalID;
     private String Type;
     private float Value;
+    private int Order;
 
     /**
      * @return the ID
@@ -84,6 +85,20 @@ public class DyeingChemical {
      */
     public void setValue(float Value) {
         this.Value = Value;
+    }
+
+    /**
+     * @return the Order
+     */
+    public int getOrder() {
+        return Order;
+    }
+
+    /**
+     * @param Order the Order to set
+     */
+    public void setOrder(int Order) {
+        this.Order = Order;
     }
     
 }

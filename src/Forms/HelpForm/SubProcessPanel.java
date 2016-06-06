@@ -5,7 +5,14 @@
  */
 package Forms.HelpForm;
 
+import DataEntities.Chemical;
+import DataEntities.DyeingChemical;
+import DataEntities.DyeingProcess;
+import Handlers.ChemicalHandler;
+import Handlers.DyeingChemicalHandler;
+import Handlers.DyeingProcessHandler;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -84,11 +91,65 @@ public class SubProcessPanel extends javax.swing.JPanel {
          return this.ChemicalsTable;
      }
      
-     public void AddChemicals()
+     public void AddSubProcess(int DyeingProgramID, String Order)
      {
+         if(this.SubProcessText.isVisible())
+        {
+            if(SubProcessText.getText().length()> 0)
+            {
+                DyeingProcess ThisDyeingProcess = new DyeingProcess();
+                DyeingProcessHandler ThisDyeingProcessHandler = new DyeingProcessHandler();
+                
+                ThisDyeingProcess.setDyeingProgramId(DyeingProgramID);
+                ThisDyeingProcess.setDyeingProcessName(this.SubProcessText.getText());
+                ThisDyeingProcess.setDyeingProcessOrder(Order);
+                
+                ThisDyeingProcessHandler.AddDyeingProcess(ThisDyeingProcess);
+            }
+        }
+     }
+     
+     public void AddChemicals(int DyeingProcessID)
+     {
+        //IF there is more than one sub-process
          
+        Chemical ThisChemical  = new Chemical();
+        DyeingChemical ThisDyeingChemical = new DyeingChemical();
+        ChemicalHandler ChemicalHandler = new ChemicalHandler();
+        DyeingChemicalHandler DyeingChemicalHandler = new DyeingChemicalHandler();
+        int Order = 1;
+        
+        for (int i = 0; i < ChemicalsTable.getRowCount() - 1; i++) {
+            
+            String Chemical = ChemicalsTable.getModel().getValueAt(i, 0).toString();
+            String Type = ChemicalsTable.getModel().getValueAt(i, 1).toString();
+            String Value = ChemicalsTable.getModel().getValueAt(i, 1).toString();
+            if(Chemical.length() > 0 && Type.length() > 0 && !checkText2(Value))
+            {
+                ThisChemical.setChemicalName(Chemical);
+                ThisChemical.setChemicalId(ChemicalHandler.GetChemicalIDFromChemicalName(ThisChemical.getChemicalName()));
+                
+                ThisDyeingChemical.setChemicalID(ThisChemical.getChemicalId());
+                ThisDyeingChemical.setDyeingProcessID(DyeingProcessID);
+                ThisDyeingChemical.setType(Type);
+                ThisDyeingChemical.setValue(Float.parseFloat(Value));
+                ThisDyeingChemical.setOrder(Order++);
+                DyeingChemicalHandler.AddNewDyeingChemical(ThisDyeingChemical);
+            }
+        }
      }
 
+     public boolean checkText2(String this_text)
+    {
+        if(this_text.isEmpty())
+            return true;
+        String regex = "[^0-9]";
+        Pattern p = Pattern.compile(regex);
+        this_text = this_text.replaceFirst("[.]", "");
+        
+        return p.matcher(this_text).find();
+    }
+     
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
