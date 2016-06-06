@@ -112,7 +112,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
      
      public void AddSubProcess(int DyeingProgramID, String Order)
      {
-         if(this.SubProcessText.isVisible())
+        if(this.SubProcessText.isVisible())
         {
             if(SubProcessText.getText().length()> 0)
             {
@@ -124,6 +124,10 @@ public class SubProcessPanel extends javax.swing.JPanel {
                 ThisDyeingProcess.setDyeingProcessOrder(Order);
                 
                 ThisDyeingProcessHandler.AddDyeingProcess(ThisDyeingProcess);
+                ThisDyeingProcess.setDyeingProcessId(   
+                        ThisDyeingProcessHandler.GetDyeingProcessIdByDetails(
+                                ThisDyeingProcess));
+                AddChemicals(ThisDyeingProcess.getDyeingProcessId());
             }
         }
      }

@@ -115,32 +115,47 @@ public class ProcessPanel extends javax.swing.JPanel {
              
              ThisDyeingProcessHandler.AddDyeingProcess(ThisDyeingProcess);
              int ProcessID = ThisDyeingProcessHandler.GetDyeingProcessIdByDetails(ThisDyeingProcess);
-             
              ThisDyeingProcess.setDyeingProcessId(ProcessID);
-             processThisSubProcessPanel(DyeingProgramID);
+            
+             
+             if(NumberOfTabs > 2)
+             {
+                 AddThisSubProcessPanel(ThisDyeingProcess.getDyeingProcessId(),TabIndex);
+             }
+             else
+                 AddChemicalFromSubProcessPanel(ThisDyeingProcess.getDyeingProcessId());
+         }
+         
+     }
+     
+     public void AddThisSubProcessPanel(int DyeingProgramID, int TabIndex)
+     {
+         Component[] this_pane = this.subProcess.getComponents();
+         int subProcessNumber = 1;
+         for (Component c : this_pane)
+         {
+             if (c instanceof SubProcessPanel)
+             {
+                  SubProcessPanel ThisProcessPanel = ((SubProcessPanel)c);
+                  String parsedOrder = Integer.toString(TabIndex) + ConvertToLetters(subProcessNumber);
+                  subProcessNumber++;
+                  ThisProcessPanel.AddSubProcess(DyeingProgramID, parsedOrder);
+             }
          }
      }
      
-     public void processThisSubProcessPanel(int DyeingProgramID){
+     public void AddChemicalFromSubProcessPanel(int DyeingProcessID)
+     {
          Component[] this_pane = this.subProcess.getComponents();
-         int subProcessNumber = 1;
-         
-            for (Component c : this_pane) {
-                 if (c instanceof SubProcessPanel) {
-                     SubProcessPanel ThisProcessPanel = ((SubProcessPanel)c);
-                     if(( NumberOfTabs - 1 ) == 1 ){
-                         ThisProcessPanel.AddSubProcess(DyeingProgramID, TOOL_TIP_TEXT_KEY);
-                         ThisProcessPanel.AddChemicals(DyeingProgramID);
-                     }
-                     else
-                     {
-                         
-                         String parsedOrder = Integer.toString(NumberOfTabs) + ConvertToLetters(subProcessNumber);
-                         subProcessNumber++;
-                         ThisProcessPanel.AddSubProcess(DyeingProgramID, parsedOrder);
-                     }
-                 }
-            }
+         for (Component c : this_pane)
+         {
+             if (c instanceof SubProcessPanel)
+             {
+                 SubProcessPanel ThisProcessPanel = ((SubProcessPanel)c);
+                 //ThisProcessPanel.AddSubProcess(DyeingProgramID, TOOL_TIP_TEXT_KEY);
+                 ThisProcessPanel.AddChemicals(DyeingProcessID);
+             }
+         }
      }
      
      public char ConvertToLetters(int number)
