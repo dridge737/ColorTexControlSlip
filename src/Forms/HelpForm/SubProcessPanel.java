@@ -110,6 +110,11 @@ public class SubProcessPanel extends javax.swing.JPanel {
          return this.ChemicalsTable;
      }
      
+     /**
+      * Used to add Sub Process in case there are more process below the parent process
+      * @param DyeingProgramID ID of the dyeing program that is used
+      * @param Order Order String includes a number and a letter after
+      */
      public void AddSubProcess(int DyeingProgramID, String Order)
      {
         if(this.SubProcessText.isVisible())
@@ -119,20 +124,26 @@ public class SubProcessPanel extends javax.swing.JPanel {
                 DyeingProcess ThisDyeingProcess = new DyeingProcess();
                 DyeingProcessHandler ThisDyeingProcessHandler = new DyeingProcessHandler();
                 
+                //SET All Dyeing Process Columns ID, NAME , ORDER
                 ThisDyeingProcess.setDyeingProgramId(DyeingProgramID);
                 ThisDyeingProcess.setDyeingProcessName(this.SubProcessText.getText());
                 ThisDyeingProcess.setDyeingProcessOrder(Order);
                 
+                //USE Handler To Add Dyeing Process
                 ThisDyeingProcessHandler.AddDyeingProcess(ThisDyeingProcess);
                 ThisDyeingProcess.setDyeingProcessId(   
                         ThisDyeingProcessHandler.GetDyeingProcessIdByDetails(
                                 ThisDyeingProcess));
+                //Add Chemicals After Adding Dyeing Process
                 AddChemicals(ThisDyeingProcess.getDyeingProcessId());
             }
         }
      }
      
-     
+     /**
+      * Add to Dyeing Chemicals Table using previously added Dyeing Process row
+      * @param DyeingProcessID ID from Dyeing Process Table
+      */
      public void AddChemicals(int DyeingProcessID)
      {
         //IF there is more than one sub-process
@@ -163,6 +174,11 @@ public class SubProcessPanel extends javax.swing.JPanel {
         }
      }
 
+     /**
+      * Checks if text is a valid int or float variable
+      * @param this_text String to be checked
+      * @return true if String is either empty or text is not a valid int or float variable
+      */
      public boolean CheckText(String this_text)
     {
         if(this_text.isEmpty())
