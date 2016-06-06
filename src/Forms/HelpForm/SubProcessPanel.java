@@ -17,6 +17,9 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
 /**
@@ -32,7 +35,23 @@ public class SubProcessPanel extends javax.swing.JPanel {
         initComponents();
         InitializeChemicalTable();
         InitializeGPLandPercentColumn();
+        ChemicalsTable.getModel().addTableModelListener(newTableListener);
     }
+    TableModelListener newTableListener = new TableModelListener() {
+        public void tableChanged(TableModelEvent e) {
+                // If editing row is last row in table add one more row to table
+                if(ChemicalsTable.getEditingRow() == (ChemicalsTable.getRowCount()-1)){
+                    Object chemical = ChemicalsTable.getModel().getValueAt(ChemicalsTable.getEditingRow(), 0);
+                    Object gpl = ChemicalsTable.getModel().getValueAt(ChemicalsTable.getEditingRow(), 1);
+                    Object value = ChemicalsTable.getModel().getValueAt(ChemicalsTable.getEditingRow(), 2);
+                    Object quantity = ChemicalsTable.getModel().getValueAt(ChemicalsTable.getEditingRow(), 3);
+                    if(gpl != null && chemical != null && value != null && quantity != null)
+                    {
+                        ((DefaultTableModel)ChemicalsTable.getModel()).addRow(new Object[]{});
+                    }
+                }
+            }
+    };
     
     public void HideText()
     {
@@ -109,6 +128,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
         }
      }
      
+     
      public void AddChemicals(int DyeingProcessID)
      {
         //IF there is more than one sub-process
@@ -124,7 +144,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
             String Chemical = ChemicalsTable.getModel().getValueAt(i, 0).toString();
             String Type = ChemicalsTable.getModel().getValueAt(i, 1).toString();
             String Value = ChemicalsTable.getModel().getValueAt(i, 1).toString();
-            if(Chemical.length() > 0 && Type.length() > 0 && !checkText2(Value))
+            if(Chemical.length() > 0 && Type.length() > 0 && !CheckText(Value))
             {
                 ThisChemical.setChemicalName(Chemical);
                 ThisChemical.setChemicalId(ChemicalHandler.GetChemicalIDFromChemicalName(ThisChemical.getChemicalName()));
@@ -139,7 +159,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
         }
      }
 
-     public boolean checkText2(String this_text)
+     public boolean CheckText(String this_text)
     {
         if(this_text.isEmpty())
             return true;
@@ -177,25 +197,6 @@ public class SubProcessPanel extends javax.swing.JPanel {
         ChemicalsTable.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         ChemicalsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
                 {null, null, null, null}
             },
             new String [] {

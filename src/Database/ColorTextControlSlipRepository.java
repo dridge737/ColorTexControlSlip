@@ -1109,6 +1109,34 @@ public class ColorTextControlSlipRepository {
         return dyeingProgramDetails;
     }
     
+    public int GetDyeingProgramIDFromName(String DyeingProgramName)
+    {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int DyeingProgramID = -1;
+        try{
+            conn = db.getConnection();
+            ps = conn.prepareStatement("SELECT ID "
+                                 + " FROM dyeing_program "
+                                 + " WHERE Name = ? ");
+            
+            ps.setString(1, DyeingProgramName);
+            
+            rs = ps.executeQuery();
+            if(rs.first())
+            {
+                DyeingProgramID = rs.getInt("ID");
+            }
+        }
+        catch(SQLException ex){
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.closeConn(conn, ps, rs);
+        return DyeingProgramID;
+    }
+    
     public int CheckIfDyeingProgramExists(int dyeingProgramId)
     {
         DBConnection dbc = new DBConnection();
@@ -1816,6 +1844,37 @@ public class ColorTextControlSlipRepository {
         
         this.closeConn(conn, ps, rs);
         return DyeingProcessList;
+    }
+    
+    public int GetDyeingProcessIDFromDyeingProcessDetails(DyeingProcess ThisDyeingProcess)
+    {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int ProcessID = -1;
+        try{
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT ID "
+                                 + " FROM dyeing_process "
+                                 + " WHERE Name = ?, Order = ?, DyeingProgramID ");
+            
+            ps.setString(1, ThisDyeingProcess.getDyeingProcessName());
+            ps.setString(2, ThisDyeingProcess.getdyeingProcessOrder());
+            ps.setInt(3, ThisDyeingProcess.getDyeingProgramId());
+            
+            rs = ps.executeQuery();
+            if(rs.first())
+            {
+                ProcessID = rs.getInt("ID");
+            }
+            
+        }
+        catch(SQLException ex){
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.closeConn(conn, ps, rs);
+        return ProcessID;
     }
     /******************************* FOR DyeingProcess: END ****************************************************/ 
     

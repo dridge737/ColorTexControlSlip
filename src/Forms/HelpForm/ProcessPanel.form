@@ -26,9 +26,9 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="subProcess" alignment="0" min="-2" pref="725" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                      <Component id="jTextField2" min="-2" pref="116" max="-2" attributes="0"/>
+                      <Component id="ProcessLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                      <Component id="ProcessText" min="-2" pref="180" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
@@ -40,8 +40,8 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabel3" alignment="0" min="-2" pref="32" max="-2" attributes="0"/>
-                  <Component id="jTextField2" alignment="0" min="-2" pref="32" max="-2" attributes="0"/>
+                  <Component id="ProcessLabel" alignment="0" min="-2" pref="32" max="-2" attributes="0"/>
+                  <Component id="ProcessText" alignment="0" min="-2" pref="32" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="subProcess" pref="421" max="32767" attributes="0"/>
@@ -51,7 +51,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="jLabel3">
+    <Component class="javax.swing.JLabel" name="ProcessLabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Century Gothic" size="18" style="0"/>
@@ -59,7 +59,7 @@
         <Property name="text" type="java.lang.String" value="Process Name :"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField2">
+    <Component class="javax.swing.JTextField" name="ProcessText">
     </Component>
     <Container class="javax.swing.JTabbedPane" name="subProcess">
       <Properties>

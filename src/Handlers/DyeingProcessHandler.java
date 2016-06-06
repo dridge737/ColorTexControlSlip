@@ -26,6 +26,12 @@ public class DyeingProcessHandler {
         return dyeingProcessDetails;
     }
     
+    public int GetDyeingProcessIdByDetails(DyeingProcess thisDyeingProcess)
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        return repo.GetDyeingProcessIDFromDyeingProcessDetails(thisDyeingProcess);
+    }
+    
     public ArrayList<String> GetAllDyeingProcessNamesByDyeingProgramId(int dyeingProgramId)
     {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
@@ -49,10 +55,9 @@ public class DyeingProcessHandler {
             isSuccessful = repo.AddDyeingProcess(newDyeingProcess);
         }
         
-        if(isSuccessful == false)
-        {
-            //enter validation 
-        }
+        //if(isSuccessful == false)
+        //enter validation 
+        
     }
     
     public void UpdateDyeingProcess(DyeingProcess dyeingProcess)

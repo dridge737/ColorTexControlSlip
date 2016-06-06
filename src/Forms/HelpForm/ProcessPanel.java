@@ -5,6 +5,8 @@
  */
 package Forms.HelpForm;
 
+import DataEntities.DyeingProcess;
+import Handlers.DyeingProcessHandler;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +20,6 @@ import javax.swing.event.ChangeListener;
  * @author Eldridge
  */
 public class ProcessPanel extends javax.swing.JPanel {
-
     private int NumberOfTabs = 0;
     private List<JTextField> subProcessName = new ArrayList<JTextField>();
     /**
@@ -26,17 +27,18 @@ public class ProcessPanel extends javax.swing.JPanel {
      */
     public ProcessPanel() {
         initComponents();
-        /* add tab to add new tab when click */
-        /* add new tab */
+        /* add new Sub Process tab */
         addSubProcessPanel();
-        
-        
     }
     public void addSubProcessPanel()
     {
+        //Add Initial panel
         SubProcessPanel this_panel = new SubProcessPanel();
         this_panel.HideText();
+        
         subProcess.add(this_panel, "Sub Process 1", NumberOfTabs++);
+        
+        //Add The Add Tab /* add tab to add new tab when click */
         subProcess.add(new JPanel(), "+", NumberOfTabs++);
         subProcess.addChangeListener(changeListener);
     }
@@ -73,7 +75,6 @@ public class ProcessPanel extends javax.swing.JPanel {
         if (subProcess.getSelectedIndex() == index) { /* if click new tab */
             /* add new tab */
             SubProcessPanel this_panel = new SubProcessPanel();
-            //this_panel.showText();
             //Show Subprocess Text if there is more than one sub process
             if(NumberOfTabs < 3)
                ShowTextOnFirstTab();
@@ -101,6 +102,116 @@ public class ProcessPanel extends javax.swing.JPanel {
             }
      }
      
+     public void AddDyeingProcess(int DyeingProgramID , int TabIndex)
+     {
+         if(ProcessText.getText().length()> 0)
+         {
+             DyeingProcess ThisDyeingProcess = new DyeingProcess();
+             DyeingProcessHandler ThisDyeingProcessHandler = new DyeingProcessHandler();
+             
+             ThisDyeingProcess.setDyeingProgramId(DyeingProgramID);
+             ThisDyeingProcess.setDyeingProcessName(this.ProcessText.getText());
+             ThisDyeingProcess.setDyeingProcessOrder(Integer.toString(TabIndex));
+             
+             ThisDyeingProcessHandler.AddDyeingProcess(ThisDyeingProcess);
+             int ProcessID = ThisDyeingProcessHandler.GetDyeingProcessIdByDetails(ThisDyeingProcess);
+             
+             ThisDyeingProcess.setDyeingProcessId(ProcessID);
+             processThisSubProcessPanel(DyeingProgramID);
+         }
+     }
+     
+     public void processThisSubProcessPanel(int DyeingProgramID){
+         Component[] this_pane = this.subProcess.getComponents();
+         int subProcessNumber = 1;
+         
+            for (Component c : this_pane) {
+                 if (c instanceof SubProcessPanel) {
+                     SubProcessPanel ThisProcessPanel = ((SubProcessPanel)c);
+                     if(( NumberOfTabs - 1 ) == 1 ){
+                         ThisProcessPanel.AddSubProcess(DyeingProgramID, TOOL_TIP_TEXT_KEY);
+                         ThisProcessPanel.AddChemicals(DyeingProgramID);
+                     }
+                     else
+                     {
+                         
+                         String parsedOrder = Integer.toString(NumberOfTabs) + ConvertToLetters(subProcessNumber);
+                         subProcessNumber++;
+                         ThisProcessPanel.AddSubProcess(DyeingProgramID, parsedOrder);
+                     }
+                 }
+            }
+     }
+     
+     public char ConvertToLetters(int number)
+     {
+         char letter;
+         switch(number){
+             case 1:
+                 letter = 'a';
+                 break;
+             case 2:
+                 letter = 'b';
+                 break;    
+             case 3:
+                 letter = 'c';
+                 break; 
+             case 4:
+                 letter = 'd';
+                 break; 
+             case 5:
+                 letter = 'e';
+                 break; 
+             case 6:
+                 letter = 'f';
+                 break; 
+             case 7:
+                 letter = 'g';
+                 break; 
+             case 8:
+                 letter = 'h';
+                 break; 
+             case 9:
+                 letter = 'i';
+                 break; 
+             case 10:
+                 letter = 'j';
+                 break; 
+             case 11:
+                 letter = 'k';
+                 break; 
+             case 12:
+                 letter = 'l';
+                 break; 
+             case 13:
+                 letter = 'm';
+                 break; 
+             case 14:
+                 letter = 'n';
+                 break; 
+             case 15:
+                 letter = 'o';
+                 break; 
+             case 16:
+                 letter = 'p';
+                 break; 
+             case 17:
+                 letter = 'q';
+                 break; 
+             case 18:
+                 letter = 'r';
+                 break; 
+             case 19:
+                 letter = 's';
+                 break; 
+             default:
+                 letter = 'z';
+                 break;
+                     
+         }
+         return letter;
+     }
+     
      public void GetSubProcessText()
      {
          Component[] this_pane = this.subProcess.getComponents();
@@ -116,7 +227,7 @@ public class ProcessPanel extends javax.swing.JPanel {
 
      }
      
-     public void AddDyeingProcess(int TabIndex)
+     public void AddDyeingChemical()
      {
          
      }
@@ -131,14 +242,14 @@ public class ProcessPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        ProcessLabel = new javax.swing.JLabel();
+        ProcessText = new javax.swing.JTextField();
         subProcess = new javax.swing.JTabbedPane();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        jLabel3.setText("Process Name :");
+        ProcessLabel.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        ProcessLabel.setText("Process Name :");
 
         subProcess.setAutoscrolls(true);
         subProcess.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
@@ -152,9 +263,9 @@ public class ProcessPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(subProcess, javax.swing.GroupLayout.PREFERRED_SIZE, 725, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
+                        .addComponent(ProcessLabel)
                         .addGap(10, 10, 10)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(ProcessText, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -162,8 +273,8 @@ public class ProcessPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ProcessLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ProcessText, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(subProcess, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
                 .addContainerGap())
@@ -172,8 +283,8 @@ public class ProcessPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JLabel ProcessLabel;
+    private javax.swing.JTextField ProcessText;
     private javax.swing.JTabbedPane subProcess;
     // End of variables declaration//GEN-END:variables
 }

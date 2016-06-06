@@ -56,8 +56,8 @@ public class AddResinForm extends javax.swing.JFrame {
         
         col.setCellEditor(new DefaultCellEditor(comboBox));
         
-        DefaultTableModel dtm = (DefaultTableModel) ChemicalTable.getModel();
-        dtm.setRowCount(1);
+        //DefaultTableModel dtm = (DefaultTableModel) ChemicalTable.getModel();
+        //dtm.setRowCount(1);
         
         ChemicalTable.getModel().addTableModelListener(new TableModelListener() {
             public void tableChanged(TableModelEvent e) {
@@ -142,25 +142,6 @@ public class AddResinForm extends javax.swing.JFrame {
         ChemicalTable.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         ChemicalTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
                 {null, null}
             },
             new String [] {

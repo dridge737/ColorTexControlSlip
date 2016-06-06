@@ -182,7 +182,7 @@
                       <Font name="Century Gothic" size="20" style="0"/>
                     </Property>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="2" rowCount="20">
+                      <Table columnCount="2" rowCount="1">
                         <Column editable="true" title="Chemical" type="java.lang.String"/>
                         <Column editable="true" title="GPL" type="java.lang.Object"/>
                       </Table>
