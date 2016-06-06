@@ -42,11 +42,9 @@ public class ProcessPanel extends javax.swing.JPanel {
 
     };
     
-     private void addNewTab() {
-        int index = NumberOfTabs - 1;
-        if (subProcess.getSelectedIndex() == index) { /* if click new tab */
-            /* add new tab */
-            JPanel this_panel = new SubProcessPanel();
+    private void addComponent()
+    {
+        JPanel this_panel = new SubProcessPanel();
             for (Component c : this_panel.getComponents()) {
                 if (c instanceof JTextField) {
                     JTextField textField = ((JTextField)c);
@@ -62,6 +60,12 @@ public class ProcessPanel extends javax.swing.JPanel {
 
                 }
             }
+    }
+     private void addNewTab() {
+        int index = NumberOfTabs - 1;
+        if (subProcess.getSelectedIndex() == index) { /* if click new tab */
+            /* add new tab */
+            JPanel this_panel = new SubProcessPanel();
             subProcess.add(this_panel, "Sub Process " + String.valueOf(NumberOfTabs),
                     index);
             /* set tab is custom tab */
@@ -83,9 +87,15 @@ public class ProcessPanel extends javax.swing.JPanel {
                     SubProcessPanel ThisProcessPanel = ((SubProcessPanel)c);
                     ThisProcessPanel.GetSubProcessText();
                     System.out.println(ThisProcessPanel.GetSubProcessText());
+                    System.out.println(ThisProcessPanel.GetChemicalTable().toString());
                 }
             }
 
+     }
+     
+     public void AddDyeingProcess(int TabIndex)
+     {
+         
      }
     
 

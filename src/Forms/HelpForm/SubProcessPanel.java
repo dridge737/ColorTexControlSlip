@@ -82,7 +82,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         SubProcessNameText = new javax.swing.JTextField();
-        jPanel3 = new javax.swing.JPanel();
+        ChemPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         ChemicalsTable = new javax.swing.JTable();
 
@@ -94,9 +94,9 @@ public class SubProcessPanel extends javax.swing.JPanel {
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 15, -1, 32));
         add(SubProcessNameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 17, 116, 32));
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chemicals", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 18))); // NOI18N
-        jPanel3.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        ChemPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        ChemPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chemicals", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 16))); // NOI18N
+        ChemPanel1.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
 
         ChemicalsTable.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         ChemicalsTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -137,32 +137,32 @@ public class SubProcessPanel extends javax.swing.JPanel {
         ChemicalsTable.setRowHeight(25);
         jScrollPane1.setViewportView(ChemicalsTable);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout ChemPanel1Layout = new javax.swing.GroupLayout(ChemPanel1);
+        ChemPanel1.setLayout(ChemPanel1Layout);
+        ChemPanel1Layout.setHorizontalGroup(
+            ChemPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ChemPanel1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 651, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        ChemPanel1Layout.setVerticalGroup(
+            ChemPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ChemPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 58, -1, -1));
+        add(ChemPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 58, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel ChemPanel1;
     private javax.swing.JTable ChemicalsTable;
     private javax.swing.JTextField SubProcessNameText;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
