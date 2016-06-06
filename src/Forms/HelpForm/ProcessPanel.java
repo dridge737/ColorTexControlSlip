@@ -27,11 +27,18 @@ public class ProcessPanel extends javax.swing.JPanel {
     public ProcessPanel() {
         initComponents();
         /* add tab to add new tab when click */
-        subProcess.add(new SubProcessPanel(), "Sub Process 1", NumberOfTabs++);
+        /* add new tab */
+        addSubProcessPanel();
+        
+        
+    }
+    public void addSubProcessPanel()
+    {
+        SubProcessPanel this_panel = new SubProcessPanel();
+        this_panel.HideText();
+        subProcess.add(this_panel, "Sub Process 1", NumberOfTabs++);
         subProcess.add(new JPanel(), "+", NumberOfTabs++);
         subProcess.addChangeListener(changeListener);
-        
-        
     }
     
     ChangeListener changeListener = new ChangeListener() {
@@ -65,7 +72,12 @@ public class ProcessPanel extends javax.swing.JPanel {
         int index = NumberOfTabs - 1;
         if (subProcess.getSelectedIndex() == index) { /* if click new tab */
             /* add new tab */
-            JPanel this_panel = new SubProcessPanel();
+            SubProcessPanel this_panel = new SubProcessPanel();
+            //this_panel.showText();
+            //Show Subprocess Text if there is more than one sub process
+            if(NumberOfTabs < 3)
+               ShowTextOnFirstTab();
+            
             subProcess.add(this_panel, "Sub Process " + String.valueOf(NumberOfTabs),
                     index);
             /* set tab is custom tab */
@@ -77,6 +89,17 @@ public class ProcessPanel extends javax.swing.JPanel {
             
         }
     }
+     
+     private void ShowTextOnFirstTab()
+     {
+         Component[] this_pane = this.subProcess.getComponents();
+            for (Component c : this_pane) {
+                if (c instanceof SubProcessPanel) {
+                    SubProcessPanel ThisProcessPanel = ((SubProcessPanel)c);
+                    ThisProcessPanel.showText();
+                }
+            }
+     }
      
      public void GetSubProcessText()
      {

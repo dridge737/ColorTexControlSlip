@@ -27,6 +27,19 @@ public class SubProcessPanel extends javax.swing.JPanel {
         InitializeGPLandPercentColumn();
     }
     
+    public void HideText()
+    {
+        this.SubProcessLabel.setVisible(false);
+        this.SubProcessText.setVisible(false);
+        //this.ChemPanel1.setLocation(1, 1);
+    }
+    
+    public void showText()
+    {
+        this.SubProcessLabel.setVisible(true);
+        this.SubProcessText.setVisible(true);
+    }
+    
     public void InitializeChemicalTable()
     {
         DefaultComboBoxModel model = new DefaultComboBoxModel();
@@ -63,12 +76,17 @@ public class SubProcessPanel extends javax.swing.JPanel {
      
      public String GetSubProcessText()
      {
-         return this.SubProcessNameText.getText();
+         return this.SubProcessText.getText();
      }
      
      public JTable GetChemicalTable()
      {
          return this.ChemicalsTable;
+     }
+     
+     public void AddChemicals()
+     {
+         
      }
 
     /**
@@ -80,19 +98,16 @@ public class SubProcessPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        SubProcessNameText = new javax.swing.JTextField();
+        SubProcessLabel = new javax.swing.JLabel();
+        SubProcessText = new javax.swing.JTextField();
         ChemPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         ChemicalsTable = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        jLabel1.setText("Sub Process Name :");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 15, -1, 32));
-        add(SubProcessNameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 17, 116, 32));
+        SubProcessLabel.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        SubProcessLabel.setText("Sub Process Name :");
 
         ChemPanel1.setBackground(new java.awt.Color(255, 255, 255));
         ChemPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chemicals", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 16))); // NOI18N
@@ -154,15 +169,39 @@ public class SubProcessPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        add(ChemPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 58, -1, -1));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(SubProcessLabel)
+                .addGap(12, 12, 12)
+                .addComponent(SubProcessText, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(ChemPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(SubProcessLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(SubProcessText, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(9, 9, 9)
+                .addComponent(ChemPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ChemPanel1;
     private javax.swing.JTable ChemicalsTable;
-    private javax.swing.JTextField SubProcessNameText;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel SubProcessLabel;
+    private javax.swing.JTextField SubProcessText;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
