@@ -193,6 +193,7 @@ public class AddResinForm extends javax.swing.JFrame {
 
     private void SaveButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButActionPerformed
         // TODO add your handling code here:
+        boolean isSuccessful = false;
         ResinChemical resinChemical = new ResinChemical();
         Chemical chemicalName = new Chemical();
         ResinProgramHandler resinProgramHandler = new ResinProgramHandler();
@@ -200,7 +201,7 @@ public class AddResinForm extends javax.swing.JFrame {
         ChemicalHandler chemicalHandler = new ChemicalHandler();
         int resinProgramId = -1;
         int chemicalId = -1;
-        String asd = processText.getText();
+        
         if(processText.getText().length()>0 && !isNullOrWhitespace(processText.getText()))
         {
             resinProgram.setName(processText.getText());
@@ -229,21 +230,48 @@ public class AddResinForm extends javax.swing.JFrame {
                     resinChemical.setChemicalID(chemicalId);
                     resinChemical.setGPLValue(Float.parseFloat(gpl.toString()));
 
-                    resinChemicalHandler.AddNewResinChemical(resinChemical);
+                    isSuccessful = resinChemicalHandler.AddNewResinChemical(resinChemical);
+                    if(isSuccessful == false)
+                    {
+                        break;
+                    }                    
                 }     
                 else if((chemicalForResinProgram == null && gpl != null) || (chemicalForResinProgram != null && gpl == null))
                 {
                     JOptionPane.showMessageDialog(null, "Please complete data for all rows.");
                 }
              }   
+            
+            if(isSuccessful == true)
+            {
+                JOptionPane.showMessageDialog(null, "The resin program has been successfully added");
+                ClearAllData();
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Saving has failed");
+                resinChemicalHandler.DeleteResinChemicalByResinProgramId(resinProgramId);
+                resinProgramHandler.DeleteResinProgram(resinProgramId);
+                ClearAllData();
+            }
         }
         else
         {
-            JOptionPane.showMessageDialog(null, "Something went wrong.");
+            JOptionPane.showMessageDialog(null, "Please make sure the data are complete.");
         }
             
     }//GEN-LAST:event_SaveButActionPerformed
 
+    public void ClearAllData()
+    {
+        processText.setText("");
+        resinChemicalList = new ArrayList<ResinChemical>();
+        resinProgram = new ResinProgram();
+        ((DefaultTableModel)ChemicalTable.getModel()).setRowCount(1);
+        ChemicalTable.getModel().setValueAt("", 0, 0);
+        ChemicalTable.getModel().setValueAt("", 0, 1);
+    }
+    
     /**
      * @param args the command line arguments
      */

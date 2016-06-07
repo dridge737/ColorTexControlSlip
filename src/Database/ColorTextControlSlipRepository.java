@@ -1703,6 +1703,30 @@ public class ColorTextControlSlipRepository {
         this.closeConn(conn, preparedStmt);
         return isSuccessful;
     }
+    
+    public boolean DeleteResinChemicalByResinProgramID(int ResinProgramId) {
+    
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean isSuccessful = false;
+        try
+        {
+            conn = db.getConnection();
+            String query = "DELETE FROM resin_chemical WHERE ResinProgramID = ?";
+
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setInt(1, ResinProgramId);
+            preparedStmt.executeUpdate();
+            isSuccessful = true;
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, preparedStmt);
+        return isSuccessful;
+    }
     /******************************* FOR Resin Chemical: END ****************************************************/ 
     
     /******************************* FOR DyeingProcess: BEGIN ****************************************************/ 

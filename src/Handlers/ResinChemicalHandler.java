@@ -13,7 +13,7 @@ import Database.ColorTextControlSlipRepository;
  * @author Eldridge
  */
 public class ResinChemicalHandler {
-     public void AddNewResinChemical(ResinChemical newResinChemical)
+     public boolean AddNewResinChemical(ResinChemical newResinChemical)
     {
         boolean isSuccessful = false;
         
@@ -25,7 +25,20 @@ public class ResinChemicalHandler {
         {
             //enter validation 
         }
+        
+        return isSuccessful;
     }
+     
+     public boolean DeleteResinChemicalByResinProgramId(int id)
+     {
+         boolean isSuccessful = false;
+         
+         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+         
+         isSuccessful = repo.DeleteResinChemicalByResinProgramID(id);
+         
+         return isSuccessful;
+     }
     
     public void UpdateResinChemical(ResinChemical thisResinChemical)
     {
