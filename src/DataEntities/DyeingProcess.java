@@ -21,8 +21,8 @@ public class DyeingProcess {
         return dyeingProcessId;
     }
 
-    public void setDyeingProcessId(int customerId) {
-        this.dyeingProcessId = dyeingProcessId;
+    public void setDyeingProcessId(int dyeingID) {
+        this.dyeingProcessId = dyeingID;
     }
     
     public int getDyeingProgramId() {

@@ -20,6 +20,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -1705,21 +1706,30 @@ public class ColorTextControlSlipRepository {
     /******************************* FOR Resin Chemical: END ****************************************************/ 
     
     /******************************* FOR DyeingProcess: BEGIN ****************************************************/ 
-    public boolean AddDyeingProcess(DyeingProcess dyeingProcess) {
+    public int AddDyeingProcess(DyeingProcess dyeingProcess) {
         DBConnection db = new DBConnection();
         Connection conn = null;
         PreparedStatement preparedStmt = null;
         boolean added = false;
+        int DyeingProcessID = -1;
         try {
             conn = db.getConnection();
             String query = "INSERT INTO dyeing_process (DyeingProgramID, Name, dyeing_process.Order) VALUES ( ?, ?, ?)";
 
-            preparedStmt = conn.prepareStatement(query);
+            preparedStmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStmt.setInt(1, dyeingProcess.getDyeingProgramId());
             preparedStmt.setString(2, dyeingProcess.getDyeingProcessName());
             preparedStmt.setString(3, dyeingProcess.getdyeingProcessOrder());
             preparedStmt.execute();
             
+            ResultSet generatedKeys = preparedStmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                DyeingProcessID = generatedKeys.getInt(1);
+            }
+            else {
+                throw new SQLException("Creating user failed, no ID obtained.");
+            }
+                   
             added = true;
         } 
         catch (SQLException ex) {
@@ -1727,7 +1737,7 @@ public class ColorTextControlSlipRepository {
         }
         
         this.closeConn(conn, preparedStmt);
-        return added;
+        return DyeingProcessID;
     }
 
     public boolean UpdateDyeingProcessByDyeingProcessID(DyeingProcess dyeingProcess) 
@@ -1882,9 +1892,9 @@ public class ColorTextControlSlipRepository {
             conn = dbc.getConnection();
             ps = conn.prepareStatement("SELECT ID "
                                  + " FROM dyeing_process "
-                                 + " WHERE Name = ?, dyeing_process.Order = ?, DyeingProgramID = ?");
+                                 + " WHERE Name = ? AND dyeing_process.Order LIKE ? AND DyeingProgramID = ?");
             
-            ps.setString(1, ThisDyeingProcess.getDyeingProcessName());
+            ps.setString(1, ThisDyeingProcess.getDyeingProcessName().toUpperCase());
             ps.setString(2, ThisDyeingProcess.getdyeingProcessOrder());
             ps.setInt(3, ThisDyeingProcess.getDyeingProgramId());
             

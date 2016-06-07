@@ -44,17 +44,17 @@ public class DyeingProcessHandler {
         return dyeingProcessNames;
     }
     
-    public void AddDyeingProcess(DyeingProcess newDyeingProcess)
+    public int AddDyeingProcess(DyeingProcess newDyeingProcess)
     {
         boolean isSuccessful = false;
-        
+        int ID = -1;
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        if(!repo.CheckIfDyeingProcessExists(newDyeingProcess.getDyeingProcessName()))
-        {
-            isSuccessful = repo.AddDyeingProcess(newDyeingProcess);
-        }
-        
+        //if(!repo.CheckIfDyeingProcessExists(newDyeingProcess.getDyeingProcessName()))
+        //{
+            ID = repo.AddDyeingProcess(newDyeingProcess);
+        //}
+        return ID;
         //if(isSuccessful == false)
         //enter validation 
         

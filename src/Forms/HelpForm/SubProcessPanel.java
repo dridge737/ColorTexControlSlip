@@ -147,7 +147,6 @@ public class SubProcessPanel extends javax.swing.JPanel {
      public void AddChemicals(int DyeingProcessID)
      {
         //IF there is more than one sub-process
-         
         Chemical ThisChemical  = new Chemical();
         DyeingChemical ThisDyeingChemical = new DyeingChemical();
         ChemicalHandler ChemicalHandler = new ChemicalHandler();
@@ -158,7 +157,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
             
             String Chemical = ChemicalsTable.getModel().getValueAt(i, 0).toString();
             String Type = ChemicalsTable.getModel().getValueAt(i, 1).toString();
-            String Value = ChemicalsTable.getModel().getValueAt(i, 1).toString();
+            String Value = ChemicalsTable.getModel().getValueAt(i, 2).toString();
             if(Chemical.length() > 0 && Type.length() > 0 && !CheckText(Value))
             {
                 ThisChemical.setChemicalName(Chemical);

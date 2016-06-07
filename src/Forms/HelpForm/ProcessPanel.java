@@ -113,7 +113,7 @@ public class ProcessPanel extends javax.swing.JPanel {
              ThisDyeingProcess.setDyeingProcessName(this.ProcessText.getText());
              ThisDyeingProcess.setDyeingProcessOrder(Integer.toString(TabIndex));
              
-             ThisDyeingProcessHandler.AddDyeingProcess(ThisDyeingProcess);
+             int tempProcessID = ThisDyeingProcessHandler.AddDyeingProcess(ThisDyeingProcess);
              int ProcessID = ThisDyeingProcessHandler.GetDyeingProcessIdByDetails(ThisDyeingProcess);
              ThisDyeingProcess.setDyeingProcessId(ProcessID);
             
