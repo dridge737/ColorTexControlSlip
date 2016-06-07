@@ -113,8 +113,8 @@ public class ProcessPanel extends javax.swing.JPanel {
              ThisDyeingProcess.setDyeingProcessName(this.ProcessText.getText());
              ThisDyeingProcess.setDyeingProcessOrder(Integer.toString(TabIndex));
              
-             int tempProcessID = ThisDyeingProcessHandler.AddDyeingProcess(ThisDyeingProcess);
-             int ProcessID = ThisDyeingProcessHandler.GetDyeingProcessIdByDetails(ThisDyeingProcess);
+             int ProcessID = ThisDyeingProcessHandler.AddDyeingProcess(ThisDyeingProcess);
+             //int ProcessID = ThisDyeingProcessHandler.GetDyeingProcessIdByDetails(ThisDyeingProcess);
              ThisDyeingProcess.setDyeingProcessId(ProcessID);
             
              
@@ -137,7 +137,7 @@ public class ProcessPanel extends javax.swing.JPanel {
              if (c instanceof SubProcessPanel)
              {
                   SubProcessPanel ThisProcessPanel = ((SubProcessPanel)c);
-                  String parsedOrder = Integer.toString(TabIndex) + ConvertToLetters(subProcessNumber);
+                  String parsedOrder = Integer.toString(TabIndex) + "." + ConvertToLetters(subProcessNumber);
                   subProcessNumber++;
                   ThisProcessPanel.AddSubProcess(DyeingProgramID, parsedOrder);
              }
