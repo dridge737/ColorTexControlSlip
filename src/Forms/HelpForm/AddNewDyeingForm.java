@@ -5,6 +5,7 @@
  */
 package Forms.HelpForm;
 
+import Unused.TestProcessPanel;
 import java.awt.Component;
 import java.util.ArrayList;
 import javax.swing.DefaultCellEditor;
@@ -29,7 +30,7 @@ import javax.swing.event.ChangeListener;
  *
  * @author Eldridge
  */
-public class NewDyeingForm extends javax.swing.JFrame {
+public class AddNewDyeingForm extends javax.swing.JFrame {
 
     private int NumberOfTabs = 1;
     private List<SubProcessPanel> subProcessPanels = new ArrayList<SubProcessPanel>();
@@ -41,7 +42,7 @@ public class NewDyeingForm extends javax.swing.JFrame {
     /**
      * Creates new form ResinForm
      */
-    public NewDyeingForm() {
+    public AddNewDyeingForm() {
         initComponents();
         Process.add(new ProcessPanel(), "Process 1", NumberOfProcessTabs++);
         Process.add(new JPanel(), "+", NumberOfProcessTabs++);
@@ -110,8 +111,9 @@ public class NewDyeingForm extends javax.swing.JFrame {
         Process = new javax.swing.JTabbedPane();
         ProgramNameLabel = new javax.swing.JLabel();
         ProgramNameText = new javax.swing.JTextField();
+        CancelBut = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(102, 102, 102));
@@ -124,14 +126,14 @@ public class NewDyeingForm extends javax.swing.JFrame {
         ChemicalHeader.setText("Add Dyeing Program");
         jPanel2.add(ChemicalHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 22, 360, 40));
 
-        SaveBut.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        SaveBut.setText("Save");
+        SaveBut.setFont(new java.awt.Font("Century Gothic", 0, 22)); // NOI18N
+        SaveBut.setText("Add Dyeing Program");
         SaveBut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SaveButActionPerformed(evt);
             }
         });
-        jPanel2.add(SaveBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 640, -1, -1));
+        jPanel2.add(SaveBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 630, 280, 40));
 
         Process.setBackground(new java.awt.Color(255, 255, 255));
         Process.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
@@ -145,6 +147,15 @@ public class NewDyeingForm extends javax.swing.JFrame {
 
         ProgramNameText.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         jPanel2.add(ProgramNameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, 575, 34));
+
+        CancelBut.setFont(new java.awt.Font("Century Gothic", 0, 22)); // NOI18N
+        CancelBut.setText("Cancel & Close");
+        CancelBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CancelButActionPerformed(evt);
+            }
+        });
+        jPanel2.add(CancelBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 630, 280, 40));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 690));
 
@@ -190,6 +201,11 @@ public class NewDyeingForm extends javax.swing.JFrame {
         
     }//GEN-LAST:event_SaveButActionPerformed
 
+    private void CancelButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_CancelButActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -207,14 +223,46 @@ public class NewDyeingForm extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewDyeingForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddNewDyeingForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewDyeingForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddNewDyeingForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewDyeingForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddNewDyeingForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewDyeingForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddNewDyeingForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -251,12 +299,13 @@ public class NewDyeingForm extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewDyeingForm().setVisible(true);
+                new AddNewDyeingForm().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton CancelBut;
     private javax.swing.JLabel ChemicalHeader;
     private javax.swing.JTabbedPane Process;
     private javax.swing.JLabel ProgramNameLabel;

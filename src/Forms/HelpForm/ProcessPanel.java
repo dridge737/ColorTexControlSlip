@@ -120,7 +120,7 @@ public class ProcessPanel extends javax.swing.JPanel {
              
              if(NumberOfTabs > 2)
              {
-                 AddThisSubProcessPanel(ThisDyeingProcess.getDyeingProcessId(),TabIndex);
+                 AddThisSubProcessPanel(DyeingProgramID,TabIndex);
              }
              else
                  AddChemicalFromSubProcessPanel(ThisDyeingProcess.getDyeingProcessId());

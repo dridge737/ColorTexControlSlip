@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Forms.HelpForm;
+package Unused;
 
+import Forms.HelpForm.ProcessPanel;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
