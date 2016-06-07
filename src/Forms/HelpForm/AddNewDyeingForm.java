@@ -20,6 +20,7 @@ import DataEntities.DyeingProgram;
 import Handlers.DyeingProgramHandler;
 import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
@@ -173,9 +174,13 @@ public class AddNewDyeingForm extends javax.swing.JFrame {
         int DyeingProgramID = thisDyeingProgramHandler.GetDyeingProgramIDfromName(thisDyeingProgram.getDyeingProgramName());
         thisDyeingProgram.setDyeingProgramId(DyeingProgramID);
         
-        Component[] this_pane = this.Process.getComponents();
-        int ProcessOrder = 1;
-            for (Component c : this_pane) {
+        if(DyeingProgramID != -1)
+        {
+            Component[] this_pane = this.Process.getComponents();
+            int ProcessOrder = 1;
+            
+            for (Component c : this_pane) 
+            {
                 //System.out.println(c.getClass());
                 if (c instanceof ProcessPanel) {
                     ProcessPanel ThisProcessPanel = ((ProcessPanel)c);
@@ -193,6 +198,10 @@ public class AddNewDyeingForm extends javax.swing.JFrame {
                     //ThisProcessPanel.GetSubProcessText();
                 }
             }
+        }    
+            
+        
+        
     }
     private void SaveButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButActionPerformed
         // TODO add your handling code here:

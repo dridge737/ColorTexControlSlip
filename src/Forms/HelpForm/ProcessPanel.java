@@ -10,6 +10,7 @@ import Handlers.DyeingProcessHandler;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
@@ -117,13 +118,20 @@ public class ProcessPanel extends javax.swing.JPanel {
              //int ProcessID = ThisDyeingProcessHandler.GetDyeingProcessIdByDetails(ThisDyeingProcess);
              ThisDyeingProcess.setDyeingProcessId(ProcessID);
             
-             
-             if(NumberOfTabs > 2)
+             //The Dyeing Process was not added
+             if (ProcessID == -1)
              {
-                 AddThisSubProcessPanel(DyeingProgramID,TabIndex);
+                 JOptionPane.showMessageDialog(null, "Process was not successfully added Please check the details.");
              }
              else
-                 AddChemicalFromSubProcessPanel(ThisDyeingProcess.getDyeingProcessId());
+             {
+                 if(NumberOfTabs > 2)
+                 {
+                     AddThisSubProcessPanel(DyeingProgramID,TabIndex);
+                 }
+                 else
+                     AddChemicalFromSubProcessPanel(ThisDyeingProcess.getDyeingProcessId());
+             }
          }
          
      }

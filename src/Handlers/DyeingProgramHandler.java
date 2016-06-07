@@ -8,6 +8,7 @@ package Handlers;
 import DataEntities.DyeingProgram;
 import Database.ColorTextControlSlipRepository;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 /**
  *
  * @author imbuenyson
@@ -38,7 +39,7 @@ public class DyeingProgramHandler {
         
         if(isSuccessful == false)
         {
-            //enter validation 
+            JOptionPane.showMessageDialog(null, "Dyeing Program with the same name may have already been added.");//enter validation 
         }
     }
     

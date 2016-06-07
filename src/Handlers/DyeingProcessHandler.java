@@ -8,6 +8,7 @@ package Handlers;
 import DataEntities.DyeingProcess;
 import Database.ColorTextControlSlipRepository;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 /**
  *
  * @author imbuenyson
@@ -52,8 +53,12 @@ public class DyeingProcessHandler {
         
         //if(!repo.CheckIfDyeingProcessExists(newDyeingProcess.getDyeingProcessName()))
         //{
-            ID = repo.AddDyeingProcess(newDyeingProcess);
+        ID = repo.AddDyeingProcess(newDyeingProcess);
         //}
+        if(ID == -1)
+        {
+            JOptionPane.showMessageDialog(null, "Process was not added.");
+        }
         return ID;
         //if(isSuccessful == false)
         //enter validation 
