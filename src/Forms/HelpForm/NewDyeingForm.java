@@ -15,6 +15,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import DataEntities.Chemical;
+import DataEntities.DyeingProgram;
+import Handlers.DyeingProgramHandler;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -106,6 +108,8 @@ public class NewDyeingForm extends javax.swing.JFrame {
         ChemicalHeader = new javax.swing.JLabel();
         SaveBut = new javax.swing.JButton();
         Process = new javax.swing.JTabbedPane();
+        ProgramNameLabel = new javax.swing.JLabel();
+        ProgramNameText = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -131,35 +135,59 @@ public class NewDyeingForm extends javax.swing.JFrame {
 
         Process.setBackground(new java.awt.Color(255, 255, 255));
         Process.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        jPanel2.add(Process, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 770, 540));
+        jPanel2.add(Process, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 770, 480));
+
+        ProgramNameLabel.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        ProgramNameLabel.setForeground(new java.awt.Color(255, 255, 255));
+        ProgramNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        ProgramNameLabel.setText("Program Name :");
+        jPanel2.add(ProgramNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 175, 34));
+
+        ProgramNameText.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        jPanel2.add(ProgramNameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, 575, 34));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 690));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void AddDyeingProgram()
+    {
+        DyeingProgram thisDyeingProgram = new DyeingProgram();
+        DyeingProgramHandler thisDyeingProgramHandler = new DyeingProgramHandler();
+        
+        thisDyeingProgram.setDyeingProgramName(this.ProgramNameText.getText());
+        
+        thisDyeingProgramHandler.AddDyeingProgram(thisDyeingProgram);
+        int DyeingProgramID = thisDyeingProgramHandler.GetDyeingProgramIDfromName(thisDyeingProgram.getDyeingProgramName());
+        thisDyeingProgram.setDyeingProgramId(DyeingProgramID);
+        
+        Component[] this_pane = this.Process.getComponents();
+        int ProcessOrder = 1;
+            for (Component c : this_pane) {
+                //System.out.println(c.getClass());
+                if (c instanceof ProcessPanel) {
+                    ProcessPanel ThisProcessPanel = ((ProcessPanel)c);
+                    ThisProcessPanel.AddDyeingProcess(DyeingProgramID, ProcessOrder++);
+                    //Component[] ProcessPanel = ThisProcessPanel.getComponents();
+                    //for (Component d : ProcessPanel) {
+                    //System.out.println(d.getClass());
+                    //        if (d instanceof JTextField) {
+                    //            JTextField textField = ((JTextField)d);
+                    //            System.out.println(textField.getText());
+                    //        }
+                    //ThisProcessPanel.GetSubProcessText();
+                    //System.out.println("Entered");
+                    //}
+                    //ThisProcessPanel.GetSubProcessText();
+                }
+            }
+    }
     private void SaveButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButActionPerformed
         // TODO add your handling code here:
         //this.jPanel2.getComp
+        AddDyeingProgram();
         
-        Component[] this_pane = this.Process.getComponents();
-            for (Component c : this_pane) {
-                System.out.println(c.getClass());
-                if (c instanceof ProcessPanel) {
-                    ProcessPanel ThisProcessPanel = ((ProcessPanel)c);
-                    Component[] ProcessPanel = ThisProcessPanel.getComponents();
-                    for (Component d : ProcessPanel) {
-                    System.out.println(d.getClass());
-                            if (d instanceof JTextField) {
-                                JTextField textField = ((JTextField)d);
-                                System.out.println(textField.getText());
-                            }
-                    //ThisProcessPanel.GetSubProcessText();
-                    System.out.println("Entered");
-                    }
-                    ThisProcessPanel.GetSubProcessText();
-                }
-            }
     }//GEN-LAST:event_SaveButActionPerformed
 
     /**
@@ -231,6 +259,8 @@ public class NewDyeingForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ChemicalHeader;
     private javax.swing.JTabbedPane Process;
+    private javax.swing.JLabel ProgramNameLabel;
+    private javax.swing.JTextField ProgramNameText;
     private javax.swing.JButton SaveBut;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables

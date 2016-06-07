@@ -1166,6 +1166,32 @@ public class ColorTextControlSlipRepository {
         this.closeConn(conn, ps, rs);
         return checkTest;
     }
+    
+    public ArrayList<String> GetAllDyeingProgram()
+    {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ArrayList<String> DyeingList = new ArrayList<>();
+        try
+        {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT Name FROM dyeing_program ");
+            rs = ps.executeQuery();
+            
+            while(rs.next())
+            {
+                DyeingList.add(rs.getString("Name"));
+            }
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, ps, rs);
+        return DyeingList;
+    }
     //END DYEING PROGRAM REPO METHODS
     
 /************************************************************************************************/
@@ -1686,13 +1712,12 @@ public class ColorTextControlSlipRepository {
         boolean added = false;
         try {
             conn = db.getConnection();
-            String query = "INSERT INTO dyeing_process (ID, DyeingProgramID, Name, Order) VALUES (?, ?, ?, ?)";
+            String query = "INSERT INTO dyeing_process (DyeingProgramID, Name, dyeing_process.Order) VALUES ( ?, ?, ?)";
 
             preparedStmt = conn.prepareStatement(query);
-            preparedStmt.setInt(1, dyeingProcess.getDyeingProcessId());
-            preparedStmt.setInt(2, dyeingProcess.getDyeingProgramId());
-            preparedStmt.setString(3, dyeingProcess.getDyeingProcessName());
-            preparedStmt.setString(4, dyeingProcess.getdyeingProcessOrder());
+            preparedStmt.setInt(1, dyeingProcess.getDyeingProgramId());
+            preparedStmt.setString(2, dyeingProcess.getDyeingProcessName());
+            preparedStmt.setString(3, dyeingProcess.getdyeingProcessOrder());
             preparedStmt.execute();
             
             added = true;
@@ -1714,7 +1739,7 @@ public class ColorTextControlSlipRepository {
         try
         {
             conn = db.getConnection();
-            String query = "UPDATE dyeing_process SET DyeingProgramID = ?, Name = ?, Order = ?  WHERE ID = ?";
+            String query = "UPDATE dyeing_process SET DyeingProgramID = ?, Name = ?, dyeing_process.Order = ?  WHERE ID = ?";
 
             preparedStmt = conn.prepareStatement(query);
             preparedStmt.setInt(1, dyeingProcess.getDyeingProcessId());
@@ -1857,7 +1882,7 @@ public class ColorTextControlSlipRepository {
             conn = dbc.getConnection();
             ps = conn.prepareStatement("SELECT ID "
                                  + " FROM dyeing_process "
-                                 + " WHERE Name = ?, Order = ?, DyeingProgramID ");
+                                 + " WHERE Name = ?, dyeing_process.Order = ?, DyeingProgramID = ?");
             
             ps.setString(1, ThisDyeingProcess.getDyeingProcessName());
             ps.setString(2, ThisDyeingProcess.getdyeingProcessOrder());
@@ -1889,13 +1914,14 @@ public class ColorTextControlSlipRepository {
         boolean added = false;
         try {
             conn = db.getConnection();
-            String query = "INSERT INTO dyeing_chemical (ChemicalID, DyeingProcessID, Type, Value) VALUES (?, ?, ?, ?)";
+            String query = "INSERT INTO dyeing_chemical (ChemicalID, DyeingProcessID, Type, Value, dyeing_chemical.order) VALUES (?, ?, ?, ?, ?)";
 
             preparedStmt = conn.prepareStatement(query);
             preparedStmt.setInt(1, thisDyeingChemical.getChemicalID() );
             preparedStmt.setInt(2, thisDyeingChemical.getDyeingProcessID() );
             preparedStmt.setString(3, thisDyeingChemical.getType());
             preparedStmt.setFloat(4, thisDyeingChemical.getValue());
+            preparedStmt.setInt(5, thisDyeingChemical.getOrder());
             preparedStmt.executeUpdate();
             
             added = true;
@@ -1917,14 +1943,15 @@ public class ColorTextControlSlipRepository {
         try
         {
             conn = db.getConnection();
-            String query = "UPDATE dyeing_chemical SET ChemicalID = ?, DyeingProcessID = ?, Type = ?, Value = ? WHERE ID = ?";
+            String query = "UPDATE dyeing_chemical SET ChemicalID = ?, DyeingProcessID = ?, Type = ?, Value = ?, dyeing_chemical.Order = ? WHERE ID = ?";
 
             preparedStmt = conn.prepareStatement(query);
             preparedStmt.setInt(1, thisDyeingChemical.getChemicalID());
             preparedStmt.setInt(2, thisDyeingChemical.getDyeingProcessID());
             preparedStmt.setString(3, thisDyeingChemical.getType() );
             preparedStmt.setFloat(4, thisDyeingChemical.getValue());
-            preparedStmt.setInt(5, thisDyeingChemical.getID());
+            preparedStmt.setInt(5, thisDyeingChemical.getOrder());
+            preparedStmt.setInt(6, thisDyeingChemical.getID());
             preparedStmt.executeUpdate();
             isSuccessful = true;
         }
@@ -1960,29 +1987,38 @@ public class ColorTextControlSlipRepository {
         return isSuccessful;
     }
     
-    public ArrayList<String> GetAllDyeingProgram()
+     public ArrayList<DyeingChemical> GetDyeingChemicalsFromDyeingProcessID(int DyeingProcessID)
     {
-        DBConnection dbc = new DBConnection();
+        DBConnection db = new DBConnection();
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        ArrayList<String> DyeingList = new ArrayList<>();
-        try
-        {
-            conn = dbc.getConnection();
-            ps = conn.prepareStatement("SELECT Name FROM dyeing_program ");
-            rs = ps.executeQuery();
+        ArrayList<DyeingChemical> DyeingChemicalsForProcess = new ArrayList<DyeingChemical>();
+        try{
+            conn = db.getConnection();
+            ps = conn.prepareStatement("SELECT * "
+                                 + " FROM dyeing_chemical "
+                                 + " WHERE DyeingProcessID = ? ");
             
+            ps.setInt(1, DyeingProcessID);
+            
+            rs = ps.executeQuery();
+            DyeingChemical thisDyeingChemical = new DyeingChemical();
             while(rs.next())
             {
-                DyeingList.add(rs.getString("Name"));
+                thisDyeingChemical.setChemicalID(rs.getInt("ChemicalID"));
+                thisDyeingChemical.setType(rs.getString("Type"));
+                thisDyeingChemical.setValue(rs.getFloat("Value"));
+                thisDyeingChemical.setOrder(rs.getInt("Order"));
+                DyeingChemicalsForProcess.add(thisDyeingChemical);
             }
         }
-        catch (SQLException ex) {
+        catch(SQLException ex){
             Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         this.closeConn(conn, ps, rs);
-        return DyeingList;
+        return DyeingChemicalsForProcess;
     }
+    
+    
 }
