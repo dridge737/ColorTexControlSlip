@@ -15,8 +15,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
-import DataEntities.Chemical;
 import DataEntities.DyeingProgram;
+import Handlers.ChemicalHandler;
 import Handlers.DyeingProgramHandler;
 import java.util.List;
 import javax.swing.JButton;
@@ -61,6 +61,7 @@ public class AddNewDyeingForm extends javax.swing.JFrame {
 
     };
     
+    
     private void addNewTabProcess() {
         
         int index = NumberOfProcessTabs - 1;
@@ -93,9 +94,6 @@ public class AddNewDyeingForm extends javax.swing.JFrame {
         }
     }
     
-    
-    
-     
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -125,9 +123,9 @@ public class AddNewDyeingForm extends javax.swing.JFrame {
         ChemicalHeader.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
         ChemicalHeader.setForeground(new java.awt.Color(255, 255, 255));
         ChemicalHeader.setText("Add Dyeing Program");
-        jPanel2.add(ChemicalHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 22, 360, 40));
+        jPanel2.add(ChemicalHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 360, 40));
 
-        SaveBut.setFont(new java.awt.Font("Century Gothic", 0, 22)); // NOI18N
+        SaveBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         SaveBut.setText("Add Dyeing Program");
         SaveBut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -142,21 +140,21 @@ public class AddNewDyeingForm extends javax.swing.JFrame {
 
         ProgramNameLabel.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         ProgramNameLabel.setForeground(new java.awt.Color(255, 255, 255));
-        ProgramNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         ProgramNameLabel.setText("Program Name :");
-        jPanel2.add(ProgramNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 175, 34));
+        jPanel2.add(ProgramNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 165, 34));
 
         ProgramNameText.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
-        jPanel2.add(ProgramNameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, 575, 34));
+        jPanel2.add(ProgramNameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 90, 580, 34));
 
-        CancelBut.setFont(new java.awt.Font("Century Gothic", 0, 22)); // NOI18N
-        CancelBut.setText("Cancel & Close");
+        CancelBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        CancelBut.setText("Cancel");
         CancelBut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CancelButActionPerformed(evt);
             }
         });
         jPanel2.add(CancelBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 630, 280, 40));
+        CancelBut.getAccessibleContext().setAccessibleName("Cancel");
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 690));
 

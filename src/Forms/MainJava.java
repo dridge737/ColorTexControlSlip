@@ -45,8 +45,8 @@ public class MainJava {
         //TestResinForm newResinForm = new TestResinForm();
         //newResinForm.setVisible(true);
         
-        //AddResinForm newResinForm = new AddResinForm();
-        //newResinForm.setVisible(true);
+        AddResinForm newResinForm = new AddResinForm();
+        newResinForm.setVisible(true);
         
         AddNewDyeingForm TestThisFrame = new AddNewDyeingForm();
         TestThisFrame.setVisible(true);

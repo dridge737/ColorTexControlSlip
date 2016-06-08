@@ -234,7 +234,9 @@ public class ProcessPanel extends javax.swing.JPanel {
          }
          return letter;
      }
-     
+     /**
+      * Unused
+      */
      public void GetSubProcessText()
      {
          Component[] this_pane = this.subProcess.getComponents();
@@ -242,20 +244,15 @@ public class ProcessPanel extends javax.swing.JPanel {
                     System.out.println(c.getClass());
                 if (c instanceof SubProcessPanel) {
                     SubProcessPanel ThisProcessPanel = ((SubProcessPanel)c);
-                    ThisProcessPanel.GetSubProcessText();
-                    System.out.println(ThisProcessPanel.GetSubProcessText());
-                    System.out.println(ThisProcessPanel.GetChemicalTable().toString());
+                    //ThisProcessPanel.GetSubProcessText();
+                    //System.out.println(ThisProcessPanel.GetSubProcessText());
+                    //System.out.println(ThisProcessPanel.GetChemicalTable().toString());
                 }
             }
 
      }
      
-     public void AddDyeingChemical()
-     {
-         
-     }
-    
-
+     
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
