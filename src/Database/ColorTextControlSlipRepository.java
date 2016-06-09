@@ -1853,7 +1853,163 @@ public class ColorTextControlSlipRepository {
         return dyeingProcess;
     }
     
-    public ArrayList<String> GetAllDyeingProcessByDyeingProgramId(int dyeingProgramId)
+    public DyeingProcess GetDyeingProcessDetailsByDyeingProgramIdAndProcessOrder(int dyeingProgramId, int ProcessOrder)
+    {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        DyeingProcess dyeingProcess = new DyeingProcess();
+        try
+        {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT * FROM dyeing_process where DyeingProgramID = ? AND dyeing_process.Order = ?");
+            ps.setInt(1, dyeingProgramId);           
+            ps.setString(2, Integer.toString(ProcessOrder));           
+            rs = ps.executeQuery();
+            
+            dyeingProcess.setDyeingProcessId(rs.getInt("ID"));
+            dyeingProcess.setDyeingProcessName(rs.getString("Name"));
+            dyeingProcess.setDyeingProcessOrder(rs.getString("Order"));
+            dyeingProcess.setDyeingProgramId(rs.getInt("DyeingProgramID"));
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, ps, rs);
+        return dyeingProcess;
+    }
+    /**
+     * Get Dyeing Process Details from Current Dyeing Program ID. All subprocess i.e 1.x is not taken.
+     * @param DyeingProgramID
+     * @return Array List of all the dyeing process
+     */
+    public ArrayList<DyeingProcess> GetDyeingProcessDetailsByDyeingProgramId(int DyeingProgramID)
+    {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        //DyeingProcess dyeingProcess = new DyeingProcess();
+        ArrayList<DyeingProcess> AllDyeingProcess = new ArrayList<>();
+        try
+        {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT * FROM dyeing_process where DyeingProgramID = ? AND dyeing_process.ORDER NOT LIKE '%.%';");
+            ps.setInt(1, DyeingProgramID);           
+            rs = ps.executeQuery();
+            
+            while(rs.next())
+            {
+                DyeingProcess dyeingProcess = new DyeingProcess();
+                dyeingProcess.setDyeingProcessId(rs.getInt("ID"));
+                dyeingProcess.setDyeingProcessName(rs.getString("Name"));
+                dyeingProcess.setDyeingProcessOrder(rs.getString("Order"));
+                dyeingProcess.setDyeingProgramId(rs.getInt("DyeingProgramID"));
+                AllDyeingProcess.add(dyeingProcess);
+                
+            }
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, ps, rs);
+        return AllDyeingProcess;
+    }
+    
+    public ArrayList<DyeingProcess> GetDyeingSubProcessDetailsByDyeingProgramIdAndProcessOrder(int DyeingProgramID, int ProcessNumber)
+    {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        //DyeingProcess dyeingProcess = new DyeingProcess();
+        ArrayList<DyeingProcess> AllDyeingProcess = new ArrayList<>();
+        try
+        {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT * FROM dyeing_process where DyeingProgramID = ? AND dyeing_process.Order Like '?.%'");
+            ps.setInt(1, DyeingProgramID);  
+            ps.setInt(2, ProcessNumber);  
+            
+            rs = ps.executeQuery();
+            
+            while(rs.next())
+            {
+                DyeingProcess dyeingProcess = new DyeingProcess();
+                dyeingProcess.setDyeingProcessId(rs.getInt("ID"));
+                dyeingProcess.setDyeingProcessName(rs.getString("Name"));
+                dyeingProcess.setDyeingProcessOrder(rs.getString("Order"));
+                dyeingProcess.setDyeingProgramId(rs.getInt("DyeingProgramID"));
+                AllDyeingProcess.add(dyeingProcess);
+            }
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, ps, rs);
+        return AllDyeingProcess;
+    }
+    
+    public int CountNumberOfDyeingProcess(int DyeingProgramID)
+    {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int TotalNumberOfProcess = 0;
+        try
+        {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT COUNT(ID) AS 'TOTAL' FROM dyeing_process where DyeingProgramID = ? AND dyeing_process.ORDER NOT LIKE '%.%';");
+            int item = 1;
+            ps.setInt(item++, DyeingProgramID);
+            rs = ps.executeQuery();
+            
+            if(rs.first())
+            {
+                TotalNumberOfProcess = rs.getInt("TOTAL");
+            }
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.closeConn(conn, ps, rs);
+        return TotalNumberOfProcess;
+    }
+    
+    public int CountNumberOfDyeingSubProcess(int DyeingProgramID, int ProcessNumber)
+    {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int TotalNumberOfProcess = 0;
+        try
+        {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT COUNT(ID) AS 'TOTAL' FROM dyeing_process where DyeingProgramID = ? AND dyeing_process.ORDER NOT LIKE '?.%';");
+            int item = 1;
+            ps.setInt(item++, DyeingProgramID);
+            ps.setInt(item++, ProcessNumber);
+            rs = ps.executeQuery();
+            
+            if(rs.first())
+            {
+                TotalNumberOfProcess = rs.getInt("TOTAL");
+            }
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.closeConn(conn, ps, rs);
+        return TotalNumberOfProcess;
+    }
+    
+    public ArrayList<String> GetAllDyeingProcessByDyeingProgramId(int DyeingProgramID)
     {
         DBConnection dbc = new DBConnection();
         Connection conn = null;
@@ -1865,7 +2021,7 @@ public class ColorTextControlSlipRepository {
             conn = dbc.getConnection();
             ps = conn.prepareStatement("SELECT Name FROM dyeing_process where DyeingProgramID = ? ");
             int item = 1;
-            ps.setInt(item++, dyeingProgramId);
+            ps.setInt(item++, DyeingProgramID);
             rs = ps.executeQuery();
             
             while(rs.next())
@@ -1997,7 +2153,7 @@ public class ColorTextControlSlipRepository {
         return isSuccessful;
     }
     
-     public ArrayList<DyeingChemical> GetDyeingChemicalsFromDyeingProcessID(int DyeingProcessID)
+     public ArrayList<DyeingChemical> GetAllDyeingChemicalsFromDyeingProcessID(int DyeingProcessID)
     {
         DBConnection db = new DBConnection();
         Connection conn = null;

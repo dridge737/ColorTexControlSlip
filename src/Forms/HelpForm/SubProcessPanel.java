@@ -36,9 +36,11 @@ public class SubProcessPanel extends javax.swing.JPanel {
         addChemicalTextBoxAutoComplete();
         //InitializeChemicalTable();
         //InitializeGPLandPercentColumn();
-        ChemicalTable.getModel().addTableModelListener(newTableListener);
+        //ChemicalTable.getModel().addTableModelListener(newTableListener);
         
     }
+    
+    
     TableModelListener newTableListener = new TableModelListener() {
         public void tableChanged(TableModelEvent e) {
                 // If editing row is last row in table add one more row to table
@@ -174,6 +176,40 @@ public class SubProcessPanel extends javax.swing.JPanel {
                 DyeingChemicalHandler.AddNewDyeingChemical(ThisDyeingChemical);
             }
         }
+     }
+     
+     public void SetSubProcessFromDyeingProgram(int SubProcessID)
+     {
+         DyeingProcess ThisDyeingProcess;
+         DyeingProcessHandler ThisDyeingProcessHandler = new DyeingProcessHandler();
+         ThisDyeingProcess = ThisDyeingProcessHandler.GetDyeingProcessDetailsById(SubProcessID);
+         this.SubProcessText.setText(ThisDyeingProcess.getDyeingProcessName());
+         SetChemicalListFromDyeingProcessID(SubProcessID);
+       
+     }
+     
+     public void SetChemicalListFromDyeingProcessID(int DyeingProcessID)
+     {
+         ArrayList<DyeingChemical> ThisDyeingChemical;
+         DyeingChemicalHandler ThisDyeingChemicalHandler = new DyeingChemicalHandler();
+         DefaultTableModel model = (DefaultTableModel) ChemicalTable.getModel();
+         ThisDyeingChemical = ThisDyeingChemicalHandler.GetAllDyeingChemicalFromDyeingProcessID(DyeingProcessID);
+         
+         for(DyeingChemical thisDyeingChemical : ThisDyeingChemical)
+         {
+             String ChemicalName = getChemicalNameFromID(thisDyeingChemical.getChemicalID());
+             model.addRow(new Object[] {ChemicalName, thisDyeingChemical.getType(), thisDyeingChemical.getValue()});
+         }
+                 
+     }
+     
+     public String getChemicalNameFromID(int ChemicalID)
+     {
+         Chemical thisChemical = new Chemical();
+         ChemicalHandler ChemicalHandler = new ChemicalHandler();
+         thisChemical.setChemicalId(ChemicalID);
+         thisChemical.setChemicalName(ChemicalHandler.GetChemicalNameFromChemicalID(thisChemical.getChemicalId()));
+         return thisChemical.getChemicalName();
      }
 
      /**
@@ -315,7 +351,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(SubProcessLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(SubProcessText, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(SubProcessText, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(ChemPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
