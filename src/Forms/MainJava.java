@@ -48,7 +48,7 @@ public class MainJava {
         //AddResinForm newResinForm = new AddResinForm();
         //newResinForm.setVisible(true);
         
-        AddNewDyeingForm TestThisFrame = new AddNewDyeingForm("BLUE TC", 1);
+        AddNewDyeingForm TestThisFrame = new AddNewDyeingForm();
         TestThisFrame.setVisible(true);
     }
     
