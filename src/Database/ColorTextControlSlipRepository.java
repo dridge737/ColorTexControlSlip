@@ -1839,11 +1839,13 @@ public class ColorTextControlSlipRepository {
             ps = conn.prepareStatement("SELECT * FROM dyeing_process where ID = ? ");
             ps.setInt(1, dyeingProcessId);           
             rs = ps.executeQuery();
-            
-            dyeingProcess.setDyeingProcessId(rs.getInt("ID"));
-            dyeingProcess.setDyeingProcessName(rs.getString("Name"));
-            dyeingProcess.setDyeingProcessOrder(rs.getString("Order"));
-            dyeingProcess.setDyeingProgramId(rs.getInt("DyeingProgramID"));
+            if(rs.first())
+            {
+                dyeingProcess.setDyeingProcessId(rs.getInt("ID"));
+                dyeingProcess.setDyeingProcessName(rs.getString("Name"));
+                dyeingProcess.setDyeingProcessOrder(rs.getString("Order"));
+                dyeingProcess.setDyeingProgramId(rs.getInt("DyeingProgramID"));
+            }
         }
         catch (SQLException ex) {
             Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
@@ -1930,9 +1932,10 @@ public class ColorTextControlSlipRepository {
         try
         {
             conn = dbc.getConnection();
-            ps = conn.prepareStatement("SELECT * FROM dyeing_process where DyeingProgramID = ? AND dyeing_process.Order Like '?.%'");
+            ps = conn.prepareStatement("SELECT * FROM dyeing_process where DyeingProgramID = ? AND dyeing_process.Order LIKE ?");
             ps.setInt(1, DyeingProgramID);  
-            ps.setInt(2, ProcessNumber);  
+            String ParseString =  Integer.toString(ProcessNumber) + ".%";
+            ps.setString(2, ParseString);  
             
             rs = ps.executeQuery();
             
@@ -1991,10 +1994,11 @@ public class ColorTextControlSlipRepository {
         try
         {
             conn = dbc.getConnection();
-            ps = conn.prepareStatement("SELECT COUNT(ID) AS 'TOTAL' FROM dyeing_process where DyeingProgramID = ? AND dyeing_process.ORDER NOT LIKE '?.%';");
+            ps = conn.prepareStatement("SELECT COUNT(ID) AS 'TOTAL' FROM dyeing_process WHERE DyeingProgramID = ? AND dyeing_process.ORDER NOT LIKE ? ;");
             int item = 1;
             ps.setInt(item++, DyeingProgramID);
-            ps.setInt(item++, ProcessNumber);
+            String ParseProcessNumber = Integer.toString(ProcessNumber) + ".%";
+            ps.setString(item++, ParseProcessNumber);
             rs = ps.executeQuery();
             
             if(rs.first())

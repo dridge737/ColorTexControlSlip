@@ -132,7 +132,7 @@ public class ProcessPanel extends javax.swing.JPanel {
     }
     public void addTabToTabbedPane(SubProcessPanel thisPanel, int index)
     {
-        subProcess.add(thisPanel, "Sub Process " + String.valueOf(NumberOfTabs),
+        subProcess.add(thisPanel, "Sub Process " + String.valueOf(NumberOfTabs+1),
                     index);
             NumberOfTabs++;
     }
