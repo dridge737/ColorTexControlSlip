@@ -192,11 +192,11 @@ public class AddNewDyeingForm extends javax.swing.JFrame {
                 SaveButActionPerformed(evt);
             }
         });
-        jPanel2.add(SaveBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 630, 280, 40));
+        jPanel2.add(SaveBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 650, 280, 40));
 
         Process.setBackground(new java.awt.Color(255, 255, 255));
         Process.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        jPanel2.add(Process, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 770, 480));
+        jPanel2.add(Process, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 770, 500));
 
         ProgramNameLabel.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         ProgramNameLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -213,9 +213,9 @@ public class AddNewDyeingForm extends javax.swing.JFrame {
                 CancelButActionPerformed(evt);
             }
         });
-        jPanel2.add(CancelBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 630, 280, 40));
+        jPanel2.add(CancelBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 650, 280, 40));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 690));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 700));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
