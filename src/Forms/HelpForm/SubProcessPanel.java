@@ -158,7 +158,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
         DyeingChemicalHandler DyeingChemicalHandler = new DyeingChemicalHandler();
         int Order = 1;
         
-        for (int i = 0; i < ChemicalTable.getRowCount() - 1; i++) {
+        for (int i = 0; i < ChemicalTable.getRowCount(); i++) {
             
             String Chemical = ChemicalTable.getModel().getValueAt(i, 0).toString();
             String Type = ChemicalTable.getModel().getValueAt(i, 1).toString();
