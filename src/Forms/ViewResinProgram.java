@@ -9,11 +9,14 @@ import DataEntities.ResinProgram;
 import Handlers.ColorHandler;
 import Handlers.ResinProgramHandler;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -29,6 +32,8 @@ public class ViewResinProgram extends javax.swing.JFrame {
      */
     public ViewResinProgram() {
         initComponents();
+        this.set_to_center();
+        this.GetUpdatedTable();
     }
 
     /**
@@ -98,6 +103,11 @@ public class ViewResinProgram extends javax.swing.JFrame {
         SelectBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         SelectBut.setText("Select");
         SelectBut.setToolTipText("");
+        SelectBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SelectButActionPerformed(evt);
+            }
+        });
         BgPanel.add(SelectBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 380, 220, 42));
 
         SearchTextBox.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
@@ -158,6 +168,14 @@ public class ViewResinProgram extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_SearchTextBoxActionPerformed
 
+    public void set_to_center()
+    {
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
+        int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
+        this.setLocation(x,y);
+    }
+    
     private void UpdateRowFilter(String row_filter_text)
     {
         TableRowSorter<TableModel> rowSorter
@@ -202,6 +220,19 @@ public class ViewResinProgram extends javax.swing.JFrame {
         UpdateRowFilter(this.SearchTextBox.getText());
 
     }//GEN-LAST:event_SearchTextBoxKeyReleased
+
+    private void SelectButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectButActionPerformed
+        String resinProgramName = ResinTable.getModel().getValueAt(ResinTable.getSelectedRow(),0).toString();
+        
+        if(resinProgramName != null && !resinProgramName.equals(""))
+        {
+            new ViewResinProgramChemicals(resinProgramName).setVisible(true);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(this, "Please select a resin program.");
+        }
+    }//GEN-LAST:event_SelectButActionPerformed
 
     /**
      * @param args the command line arguments

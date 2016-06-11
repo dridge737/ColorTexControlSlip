@@ -15,16 +15,56 @@ import javax.swing.JOptionPane;
  */
 public class DyeingProcessHandler {
     
-    public DyeingProcess GetDyeingProcessDetailsById(String dyeingProcessName, int dyeingProcessId)
+    public DyeingProcess GetDyeingProcessDetailsById(int dyeingProcessId)
     {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         DyeingProcess dyeingProcessDetails = new DyeingProcess();
                 
-        if(repo.CheckIfDyeingProcessExists(dyeingProcessName))
-        {
+        //if(repo.CheckIfDyeingProcessExists(dyeingProcessName))
+        //{
             dyeingProcessDetails = repo.GetDyeingProcessDetailsByDyeingProcessId(dyeingProcessId);
-        }
+        //}
         return dyeingProcessDetails;
+    }
+    
+    public DyeingProcess GetDyeingProcessDetailsByDyeingProgramIdAndProcessOrder(DyeingProcess ThisProcess)
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        DyeingProcess dyeingProcessDetails = new DyeingProcess();
+        dyeingProcessDetails = repo.GetDyeingProcessDetailsByDyeingProgramIdAndProcessOrder(ThisProcess.getDyeingProgramId(), Integer.parseInt(ThisProcess.getdyeingProcessOrder()));
+        return dyeingProcessDetails;
+    }
+    
+    public ArrayList<DyeingProcess> GetAllDyeingProcessByDyeingProgramId(int dyeingProgramId)
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        //DyeingProcess dyeingProcessDetails = new DyeingProcess();
+                
+        //if(repo.CheckIfDyeingProcessExists(dyeingProcessName))
+        //{
+            return repo.GetDyeingProcessDetailsByDyeingProgramId(dyeingProgramId);
+        //}
+        //return dyeingProcessDetails;
+    }
+    
+    public ArrayList<DyeingProcess> GetDyeingSubProcessByDyeingProgramIdAndProcessOrder(DyeingProcess ThisProcess)
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+//       DyeingProcess dyeingProcessDetails = new DyeingProcess();
+        
+        return repo.GetDyeingSubProcessDetailsByDyeingProgramIdAndProcessOrder(ThisProcess.getDyeingProgramId() , Integer.parseInt(ThisProcess.getdyeingProcessOrder()));
+        //return dyeingProcessDetails;
+    }
+    
+    public int CountNumberOfProcess (int DyeingProgramID)
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        return repo.CountNumberOfDyeingProcess(DyeingProgramID);
+    }
+    public int CountNumberOfSubProcess(DyeingProcess thisProcess)
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        return repo.CountNumberOfDyeingSubProcess(thisProcess.getDyeingProgramId(),Integer.parseInt(thisProcess.getdyeingProcessOrder()));
     }
     
     public int GetDyeingProcessIdByDetails(DyeingProcess thisDyeingProcess)

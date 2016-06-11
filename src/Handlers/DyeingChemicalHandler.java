@@ -7,6 +7,7 @@ package Handlers;
 
 import DataEntities.DyeingChemical;
 import Database.ColorTextControlSlipRepository;
+import java.util.ArrayList;
 /**
  *
  * @author Eldridge
@@ -47,5 +48,11 @@ public class DyeingChemicalHandler {
         {
             
         }
+    }
+    
+    public ArrayList<DyeingChemical> GetAllDyeingChemicalFromDyeingProcessID(int DyeingProcessID)
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        return repo.GetAllDyeingChemicalsFromDyeingProcessID(DyeingProcessID);
     }
 }

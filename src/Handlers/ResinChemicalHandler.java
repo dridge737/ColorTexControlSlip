@@ -7,13 +7,26 @@ package Handlers;
 
 import DataEntities.ResinChemical;
 import Database.ColorTextControlSlipRepository;
+import java.util.ArrayList;
 
 /**
  *
  * @author Eldridge
  */
 public class ResinChemicalHandler {
-     public boolean AddNewResinChemical(ResinChemical newResinChemical)
+    public ArrayList<ResinChemical> GetResinChemicalsByResinProgramId(int resinProgramId)
+    {
+        ArrayList<ResinChemical> resinChemicals;
+        resinChemicals = new ArrayList<ResinChemical>();
+        
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        
+        resinChemicals = repo.GetResinChemicalsByResinProgramId(resinProgramId);
+        
+        return resinChemicals;
+    }
+    
+    public boolean AddNewResinChemical(ResinChemical newResinChemical)
     {
         boolean isSuccessful = false;
         
