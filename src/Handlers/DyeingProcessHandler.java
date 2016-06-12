@@ -73,15 +73,15 @@ public class DyeingProcessHandler {
         return repo.GetDyeingProcessIDFromDyeingProcessDetails(thisDyeingProcess);
     }
     
-    public ArrayList<String> GetAllDyeingProcessNamesByDyeingProgramId(int dyeingProgramId)
+    public ArrayList<String> GetAllDyeingProcessNamesByDyeingProgramId(DyeingProcess thisDyeingProcess)
     {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         ArrayList<String> dyeingProcessNames = new ArrayList<String>();
                 
-        if(repo.CheckIfDyeingProgramExists(dyeingProgramId) != 0)
-        {
-            dyeingProcessNames = repo.GetAllDyeingProcessByDyeingProgramId(dyeingProgramId);
-        }
+        //if(repo.CheckIfDyeingProcessExists(thisDyeingProcess) == 0)
+        //{
+            dyeingProcessNames = repo.GetAllDyeingProcessByDyeingProgramId(thisDyeingProcess.getDyeingProgramId());
+        //}
         return dyeingProcessNames;
     }
     
@@ -111,7 +111,7 @@ public class DyeingProcessHandler {
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        if(repo.CheckIfDyeingProcessExists(dyeingProcess.getDyeingProcessName()))
+        if(repo.CheckIfDyeingProcessExists(dyeingProcess))
         {
             isSuccessful = repo.UpdateDyeingProcessByDyeingProcessID(dyeingProcess);
         }
@@ -122,15 +122,15 @@ public class DyeingProcessHandler {
         }
     }
     
-    public void DeleteDyeingProcessById(String dyeingProcessName, int dyeingProcessId)
+    public void DeleteDyeingProcessById(DyeingProcess ThisDyeingProcess)
     {
         boolean isSuccessful = false;
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        if(repo.CheckIfDyeingProcessExists(dyeingProcessName))
+        if(repo.CheckIfDyeingProcessExists(ThisDyeingProcess))
         {
-            isSuccessful = repo.DeleteDyeingProcessByDyeingProcessID(dyeingProcessId);
+            isSuccessful = repo.DeleteDyeingProcessByDyeingProcessID(ThisDyeingProcess.getDyeingProcessId());
         }
         
         if(isSuccessful == false)

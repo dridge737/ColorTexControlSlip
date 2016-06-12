@@ -40,6 +40,12 @@ public class SubProcessPanel extends javax.swing.JPanel {
         
     }
     
+    public void removeQuantityColumn()
+    {
+        DefaultTableModel DefaultTable = (DefaultTableModel) this.ChemicalTable.getModel();
+        DefaultTable.setColumnCount(3);
+    }
+    
     
     TableModelListener newTableListener = new TableModelListener() {
         public void tableChanged(TableModelEvent e) {

@@ -6,7 +6,7 @@ package Forms;
  * and open the template in the editor.
  */
 import DataEntities.*;
-import Forms.HelpForm.AddNewDyeingForm;
+import Forms.HelpForm.DyeingForm;
 import Unused.TestFrame;
 import Unused.TestResinForm;
 import Handlers.*;
@@ -48,7 +48,7 @@ public class MainJava {
         //AddResinForm newResinForm = new AddResinForm();
         //newResinForm.setVisible(true);
         
-        AddNewDyeingForm TestThisFrame = new AddNewDyeingForm();
+        DyeingForm TestThisFrame = new DyeingForm();
         TestThisFrame.setVisible(true);
     }
     

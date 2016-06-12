@@ -19,7 +19,7 @@ public class DyeingProgramHandler {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         DyeingProgram dyeingProgramDetails = new DyeingProgram();
                 
-        if(repo.CheckIfDyeingProgramExists(dyeingProgramId) == 0)
+        if(repo.CheckIfDyeingProgramExistsUsingID(dyeingProgramId) == 0)
         {
             dyeingProgramDetails = repo.GetDyeingProgramDetailsById(dyeingProgramId);
         }
@@ -32,12 +32,11 @@ public class DyeingProgramHandler {
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        if(repo.CheckIfDyeingProgramExists(newDyeingProgram.getDyeingProgramId()) == 0)
+        if(repo.CheckIfDyeingProgramExists(newDyeingProgram.getDyeingProgramName()) == 0)
         {
             isSuccessful = repo.AddDyeingProgram(newDyeingProgram);
         }
-        
-        if(isSuccessful == false)
+        else
         {
             JOptionPane.showMessageDialog(null, "Dyeing Program with the same name may have already been added.");//enter validation 
         }
@@ -49,9 +48,13 @@ public class DyeingProgramHandler {
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        if(repo.CheckIfDyeingProgramExists(dyeingProgram.getDyeingProgramId()) == 0)
+        if(repo.CheckIfDyeingProgramNameOnOtherIDExists(dyeingProgram) == 0)
         {
             isSuccessful = repo.UpdateDyeingProgramByDyeingProgramId(dyeingProgram);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Dyeing Program with the same name has already been added.");
         }
         
         if(isSuccessful == false)
@@ -66,7 +69,7 @@ public class DyeingProgramHandler {
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        if(repo.CheckIfDyeingProgramExists(dyeingProgramId) == 0)
+        if(repo.CheckIfDyeingProgramExistsUsingID(dyeingProgramId) == 0)
         {
             isSuccessful = repo.DeleteDyeingProgramByDyeingProgramId(dyeingProgramId);
         }

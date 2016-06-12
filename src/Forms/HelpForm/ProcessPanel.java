@@ -30,6 +30,7 @@ public class ProcessPanel extends javax.swing.JPanel {
         initComponents();
         /* add new Sub Process tab */
         addSubProcessPanel();
+        
     }
     
     public ProcessPanel(DyeingProcess thisProcess)
@@ -47,7 +48,7 @@ public class ProcessPanel extends javax.swing.JPanel {
         SubProcessPanel this_panel = new SubProcessPanel();
         //Hide the SubProcess TextField
         this_panel.HideText();
-        
+        this_panel.removeQuantityColumn();
         subProcess.add(this_panel, "Sub Process 1", NumberOfTabs++);
         //Add The Add Tab /* add tab to add new tab when click */
         subProcess.add(new JPanel(), "+", NumberOfTabs++);

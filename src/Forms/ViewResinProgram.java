@@ -226,7 +226,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
         
         if(resinProgramName != null && !resinProgramName.equals(""))
         {
-            new ViewResinProgramChemicals(resinProgramName).setVisible(true);
+            //new ViewResinProgramChemicals(resinProgramName).setVisible(true);
         }
         else
         {
