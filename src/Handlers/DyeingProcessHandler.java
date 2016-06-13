@@ -20,10 +20,10 @@ public class DyeingProcessHandler {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         DyeingProcess dyeingProcessDetails = new DyeingProcess();
                 
-        //if(repo.CheckIfDyeingProcessExists(dyeingProcessName))
-        //{
+        if(repo.CheckIfDyeingProcessExistsWithThisID(dyeingProcessId))
+        {
             dyeingProcessDetails = repo.GetDyeingProcessDetailsByDyeingProcessId(dyeingProcessId);
-        //}
+        }
         return dyeingProcessDetails;
     }
     
@@ -91,10 +91,10 @@ public class DyeingProcessHandler {
         int ID = -1;
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        //if(!repo.CheckIfDyeingProcessExists(newDyeingProcess.getDyeingProcessName()))
-        //{
-        ID = repo.AddDyeingProcess(newDyeingProcess);
-        //}
+        if(!repo.CheckIfDyeingProcessExists(newDyeingProcess))
+        {
+            ID = repo.AddDyeingProcess(newDyeingProcess);
+        }
         if(ID == -1)
         {
             JOptionPane.showMessageDialog(null, "Process was not added.");
@@ -130,7 +130,7 @@ public class DyeingProcessHandler {
         
         if(repo.CheckIfDyeingProcessExists(ThisDyeingProcess))
         {
-            isSuccessful = repo.DeleteDyeingProcessByDyeingProcessID(ThisDyeingProcess.getDyeingProcessId());
+            isSuccessful = repo.DeleteDyeingProcessByDyeingProcessID(ThisDyeingProcess.getId());
         }
         
         if(isSuccessful == false)

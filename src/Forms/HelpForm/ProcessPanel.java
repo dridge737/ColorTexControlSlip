@@ -98,7 +98,7 @@ public class ProcessPanel extends javax.swing.JPanel {
     private void addNewTabForChemicals(DyeingProcess ProcessDetails)
     {
         SubProcessPanel this_panel = new SubProcessPanel();
-        this_panel.SetChemicalListFromDyeingProcessID(ProcessDetails.getDyeingProcessId());
+        this_panel.SetChemicalListFromDyeingProcessID(ProcessDetails.getId());
         this_panel.HideText();
         addTabToTabbedPane(this_panel, this.NumberOfTabs);
     }
@@ -106,7 +106,7 @@ public class ProcessPanel extends javax.swing.JPanel {
     {
         /* add new tab */
         SubProcessPanel this_panel = new SubProcessPanel();
-        this_panel.SetSubProcessFromDyeingProgram(SubProcess.getDyeingProcessId());
+        this_panel.SetSubProcessFromDyeingProgram(SubProcess.getId());
         addTabToTabbedPane(this_panel, this.NumberOfTabs);
             
     }
@@ -162,7 +162,7 @@ public class ProcessPanel extends javax.swing.JPanel {
              
              int ProcessID = ThisDyeingProcessHandler.AddDyeingProcess(ThisDyeingProcess);
              //int ProcessID = ThisDyeingProcessHandler.GetDyeingProcessIdByDetails(ThisDyeingProcess);
-             ThisDyeingProcess.setDyeingProcessId(ProcessID);
+             ThisDyeingProcess.setId(ProcessID);
             
              //The Dyeing Process was not added
              if (ProcessID == -1)
@@ -176,7 +176,7 @@ public class ProcessPanel extends javax.swing.JPanel {
                      AddThisSubProcessPanelInDyeingProcess(DyeingProgramID,TabIndex);
                  }
                  else
-                     AddChemicalFromSubProcessPanel(ThisDyeingProcess.getDyeingProcessId());
+                     AddChemicalFromSubProcessPanel(ThisDyeingProcess.getId());
              }
          }
          

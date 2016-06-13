@@ -12,17 +12,17 @@ import java.util.ArrayList;
  * @author imbuenyson
  */
 public class DyeingProcess {
-    private int dyeingProcessId;
+    private int DyeingID;
     private int dyeingProgramId;
     private String dyeingProcessName;
     private String dyeingProcessOrder;
     
-    public int getDyeingProcessId() {
-        return dyeingProcessId;
+    public int getId() {
+        return DyeingID;
     }
 
-    public void setDyeingProcessId(int dyeingID) {
-        this.dyeingProcessId = dyeingID;
+    public void setId(int dyeingID) {
+        this.DyeingID = dyeingID;
     }
     
     public int getDyeingProgramId() {

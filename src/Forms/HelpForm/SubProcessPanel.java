@@ -142,11 +142,11 @@ public class SubProcessPanel extends javax.swing.JPanel {
                 
                 //USE Handler To Add Dyeing Process
                 int DyeingProcessID = ThisDyeingProcessHandler.AddDyeingProcess(ThisDyeingProcess);
-                ThisDyeingProcess.setDyeingProcessId(   
+                ThisDyeingProcess.setId(   
                         ThisDyeingProcessHandler.GetDyeingProcessIdByDetails(
                                 ThisDyeingProcess));
                 //Add Chemicals After Adding Dyeing Process
-                AddChemicals(ThisDyeingProcess.getDyeingProcessId());
+                AddChemicals(ThisDyeingProcess.getId());
             }
         //}
      }
