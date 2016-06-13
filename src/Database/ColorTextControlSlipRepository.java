@@ -710,6 +710,35 @@ public class ColorTextControlSlipRepository {
         return isSuccessful;
     }
     
+    public int CheckIfChemicalExists(String ChemicalName)
+    {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int checkTest = 0;
+        try 
+        {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT EXISTS "
+                    + " (SELECT ID "
+                    + " FROM chemical WHERE "
+                    + " NAME = ?) "
+                    + " AS 'CheckTest'");
+
+            int item = 1;
+            ps.setString(item++, ChemicalName);
+            rs = ps.executeQuery();
+            if(rs.first())
+                checkTest = rs.getInt("CheckTest");
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, ps, rs);
+        return checkTest;
+    }
               
     public int GetChemicalIDFromChemicalName(String Name)
     {

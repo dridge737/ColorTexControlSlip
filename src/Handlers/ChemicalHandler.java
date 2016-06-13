@@ -19,8 +19,11 @@ public class ChemicalHandler {
         boolean isSuccessful = false;
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
-        
-        isSuccessful = repo.AddChemical(newChemical);
+        if(repo.CheckIfChemicalExists(newChemical.getChemicalName()) == 0)
+        {
+             isSuccessful = repo.AddChemical(newChemical);
+        }
+       
         
         return isSuccessful;
     }
