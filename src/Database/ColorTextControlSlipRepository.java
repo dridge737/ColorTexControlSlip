@@ -2112,7 +2112,7 @@ public class ColorTextControlSlipRepository {
             ps = conn.prepareStatement("SELECT EXISTS "
                     + " (SELECT Name "
                     + " FROM dyeing_process WHERE "
-                    + " ID = ? "
+                    + " ID != ? "
                     + " AND DyeingProgramID = ?"
                     + " AND Name = ? ) "
                     + " AS 'CheckTest'");
