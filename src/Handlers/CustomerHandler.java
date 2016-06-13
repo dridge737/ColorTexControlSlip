@@ -20,8 +20,10 @@ public class CustomerHandler {
         boolean isSuccessful = false;
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
-        
-        isSuccessful = repo.AddCustomer(customer);
+        if(repo.CheckIfCustomerExists(customer.getCustomerName()) == 0)
+        {
+            isSuccessful = repo.AddCustomer(customer);
+        }
         
         return isSuccessful;
     }

@@ -20,8 +20,8 @@ public class DesignHandler {
         boolean isSuccessful = false;
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
-        
-        isSuccessful = repo.AddDesign(newDesign);
+        if( repo.CheckIfDesignExists(newDesign.getDesignName()) == 0)
+            isSuccessful = repo.AddDesign(newDesign);
         
         return isSuccessful;
     }
@@ -31,8 +31,8 @@ public class DesignHandler {
         boolean isSuccessful = false;
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
-        
-        isSuccessful = repo.UpdateDesignByDesignID(thisDesign);
+        if(repo.CheckIdDesignExistsOnOtherId(thisDesign) == 0)
+            isSuccessful = repo.UpdateDesignByDesignID(thisDesign);
         
         if(isSuccessful == false)
         {

@@ -28,18 +28,19 @@ public class ChemicalHandler {
         return isSuccessful;
     }
     
-    public void UpdateChemical(Chemical thisChemical)
+    public boolean UpdateChemical(Chemical thisChemical)
     {
         boolean isSuccessful = false;
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
-        
-        isSuccessful = repo.UpdateChemicalByChemicalID(thisChemical);
-        
-        if(isSuccessful == false)
+        if(repo.CheckIfChemicalNameOnDifferentIDExists(thisChemical) == 0)
         {
-            //enter validation 
+            isSuccessful = repo.UpdateChemicalByChemicalID(thisChemical);
         }
+        
+        return isSuccessful;
+            //enter validation 
+        
     }
     
     public void DeleteChemical(int ChemicalID)

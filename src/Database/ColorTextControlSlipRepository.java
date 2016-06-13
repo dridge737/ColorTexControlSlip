@@ -252,6 +252,38 @@ public class ColorTextControlSlipRepository {
         return checkTest;
     }
     
+    public int CheckIfCustomerNameExistsOnOtherID(Customer ThisCustomer)
+    {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int checkTest = 0;
+        try 
+        {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT EXISTS "
+                    + " (SELECT ID "
+                    + " FROM customer WHERE "
+                    + " NAME = ?"
+                    + " AND ID != ?) "
+                    + " AS 'CheckTest'");
+
+            int item = 1;
+            ps.setString(item++, ThisCustomer.getCustomerName());
+            ps.setInt(item++, ThisCustomer.getCustomerId());
+            rs = ps.executeQuery();
+            if(rs.first())
+                checkTest = rs.getInt("CheckTest");
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, ps, rs);
+        return checkTest;
+    }
+    
     public ArrayList<String> GetAllCustomersName()
     {
         DBConnection dbc = new DBConnection();
@@ -551,6 +583,68 @@ public class ColorTextControlSlipRepository {
         return isSuccessful;
     }
     
+    public int CheckIfDesignExists(String DesignName)
+    {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int checkTest = 0;
+        try 
+        {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT EXISTS "
+                    + " (SELECT ID "
+                    + " FROM design WHERE "
+                    + " NAME = ?) "
+                    + " AS 'CheckTest'");
+
+            int item = 1;
+            ps.setString(item++, DesignName);
+            rs = ps.executeQuery();
+            if(rs.first())
+                checkTest = rs.getInt("CheckTest");
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, ps, rs);
+        return checkTest;
+    }
+    
+    public int CheckIdDesignExistsOnOtherId(Design ThisDesign)
+    {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int checkTest = 0;
+        try 
+        {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT EXISTS "
+                    + " (SELECT ID "
+                    + " FROM design WHERE "
+                    + " NAME = ? "
+                    + " AND ID = ?) "
+                    + " AS 'CheckTest'");
+
+            int item = 1;
+            ps.setString(item++, ThisDesign.getDesignName());
+            ps.setInt(item++, ThisDesign.getDesignId());
+            rs = ps.executeQuery();
+            if(rs.first())
+                checkTest = rs.getInt("CheckTest");
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, ps, rs);
+        return checkTest;
+    }
+    
               
     public int GetDesignIDFromDesignName(String Name)
     {
@@ -728,6 +822,38 @@ public class ColorTextControlSlipRepository {
 
             int item = 1;
             ps.setString(item++, ChemicalName);
+            rs = ps.executeQuery();
+            if(rs.first())
+                checkTest = rs.getInt("CheckTest");
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, ps, rs);
+        return checkTest;
+    }
+    
+    public int CheckIfChemicalNameOnDifferentIDExists(Chemical ThisChemical)
+    {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int checkTest = 0;
+        try 
+        {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT EXISTS "
+                    + " (SELECT ID "
+                    + " FROM chemical WHERE "
+                    + " NAME = ?"
+                    + " AND ID != ?) "
+                    + " AS 'CheckTest'");
+
+            int item = 1;
+            ps.setString(item++, ThisChemical.getChemicalName());
+            ps.setInt(item++, ThisChemical.getChemicalId());
             rs = ps.executeQuery();
             if(rs.first())
                 checkTest = rs.getInt("CheckTest");
