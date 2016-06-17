@@ -6,26 +6,13 @@
 package Forms.HelpForm;
 
 import DataEntities.DyeingProcess;
-import Unused.TestProcessPanel;
 import java.awt.Component;
 import java.util.ArrayList;
-import javax.swing.DefaultCellEditor;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
 import DataEntities.DyeingProgram;
 import Handlers.ChemicalHandler;
 import Handlers.DyeingProcessHandler;
 import Handlers.DyeingProgramHandler;
-import java.util.List;
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
