@@ -42,6 +42,7 @@ public class AddResinForm extends javax.swing.JFrame {
         addChemicalTextBoxAutoComplete();
         
     }
+    
     public void addChemicalTextBoxAutoComplete()
     {
         //Chemical allChemicals = new Chemical();

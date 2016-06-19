@@ -67,6 +67,17 @@ public class ResinChemicalHandler {
         }
     }
     
+    public int GetResinChemicalIdByChemicalId(int ChemicalId, int ResinProgramId)
+    {
+        boolean isSuccessful = false;
+        
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        
+        int resinChemicalId = repo.GetResinChemicalIdByChemicalId(ChemicalId, ResinProgramId);
+        
+        return resinChemicalId;
+    }
+    
      public void DeleteResinChemical(int ResinChemicalID)
     {
         boolean isSuccessful = false;

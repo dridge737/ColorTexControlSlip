@@ -1844,6 +1844,35 @@ public class ColorTextControlSlipRepository {
     
 /************************************************************************************************/
 /******************************* FOR Resin Chemical ****************************************************/ 
+    public int GetResinChemicalIdByChemicalId(int resinChemical, int resinProgramId)
+    {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        //DyeingProcess dyeingProcess = new DyeingProcess();
+        int resinChemicalId = -1;
+        try
+        {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT ID FROM resin_chemical where ResinProgramID = ? AND ChemicalID = ?");
+            ps.setInt(1, resinProgramId); 
+            ps.setInt(2, resinChemical);           
+            rs = ps.executeQuery();
+            
+            while(rs.next())
+            {
+                resinChemicalId = rs.getInt("ID");   
+                break;
+            }
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, ps, rs);
+        return resinChemicalId;
+    }
     
     public boolean AddResinChemical(ResinChemical thisResinChemical) {
         DBConnection db = new DBConnection();
