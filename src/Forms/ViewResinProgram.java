@@ -8,6 +8,7 @@ package Forms;
 import DataEntities.ResinProgram;
 import Handlers.ColorHandler;
 import Handlers.ResinProgramHandler;
+import Handlers.ResinChemicalHandler;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -51,8 +52,9 @@ public class ViewResinProgram extends javax.swing.JFrame {
         ResinTable = new javax.swing.JTable();
         ResinLabel = new javax.swing.JLabel();
         BackBut = new javax.swing.JButton();
-        SelectBut = new javax.swing.JButton();
+        DeleteBut = new javax.swing.JButton();
         SearchTextBox = new javax.swing.JTextField();
+        SelectBut1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -100,15 +102,15 @@ public class ViewResinProgram extends javax.swing.JFrame {
         BackBut.setToolTipText("");
         BgPanel.add(BackBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 380, 220, 42));
 
-        SelectBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
-        SelectBut.setText("Select");
-        SelectBut.setToolTipText("");
-        SelectBut.addActionListener(new java.awt.event.ActionListener() {
+        DeleteBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        DeleteBut.setText("Delete");
+        DeleteBut.setToolTipText("");
+        DeleteBut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SelectButActionPerformed(evt);
+                DeleteButActionPerformed(evt);
             }
         });
-        BgPanel.add(SelectBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 380, 220, 42));
+        BgPanel.add(DeleteBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 440, 220, 42));
 
         SearchTextBox.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
         SearchTextBox.setForeground(new java.awt.Color(204, 204, 204));
@@ -133,6 +135,16 @@ public class ViewResinProgram extends javax.swing.JFrame {
         });
         BgPanel.add(SearchTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 330, 470, -1));
 
+        SelectBut1.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        SelectBut1.setText("Select");
+        SelectBut1.setToolTipText("");
+        SelectBut1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SelectBut1ActionPerformed(evt);
+            }
+        });
+        BgPanel.add(SelectBut1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 380, 220, 42));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -142,7 +154,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(BgPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(BgPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -221,7 +233,27 @@ public class ViewResinProgram extends javax.swing.JFrame {
 
     }//GEN-LAST:event_SearchTextBoxKeyReleased
 
-    private void SelectButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectButActionPerformed
+    private void DeleteButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButActionPerformed
+        if(ResinTable.getSelectedRowCount() > 0 )
+        {
+            int CloseorNoreply = JOptionPane.showConfirmDialog(null,"Delete this Program? "
+                  ,"Delete Resin Program?", JOptionPane.YES_NO_OPTION);
+            if(CloseorNoreply == JOptionPane.YES_OPTION)
+            {
+                String resinProgramName = this.ResinTable.getModel().getValueAt(this.ResinTable.getSelectedRow(), 0).toString();
+                thisResin.setName(resinProgramName);
+                thisResin.setID(new ResinProgramHandler().GetResinProgramIDFromResinProgramName(resinProgramName));
+                new ResinChemicalHandler().DeleteResinChemicalByResinProgramId(thisResin.getID());
+                new ResinProgramHandler().DeleteResinProgram(thisResin.getID());
+                this.GetUpdatedTable();
+            }
+        }else
+        {
+            JOptionPane.showMessageDialog(null, "Please select an Item in the table to be deleted.");
+        }
+    }//GEN-LAST:event_DeleteButActionPerformed
+
+    private void SelectBut1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectBut1ActionPerformed
         String resinProgramName = ResinTable.getModel().getValueAt(ResinTable.getSelectedRow(),0).toString();
         
         if(resinProgramName != null && !resinProgramName.equals(""))
@@ -232,7 +264,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
         {
             JOptionPane.showMessageDialog(this, "Please select a resin program.");
         }
-    }//GEN-LAST:event_SelectButActionPerformed
+    }//GEN-LAST:event_SelectBut1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -272,11 +304,12 @@ public class ViewResinProgram extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackBut;
     private javax.swing.JPanel BgPanel;
+    private javax.swing.JButton DeleteBut;
     private javax.swing.JLabel ResinHeader;
     private javax.swing.JLabel ResinLabel;
     private javax.swing.JTable ResinTable;
     private javax.swing.JTextField SearchTextBox;
-    private javax.swing.JButton SelectBut;
+    private javax.swing.JButton SelectBut1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
