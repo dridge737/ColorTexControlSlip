@@ -42,7 +42,7 @@ public class DyeingProgramHandler {
         }
     }
     
-    public void UpdateDyeingProgram(DyeingProgram dyeingProgram)
+    public boolean UpdateDyeingProgram(DyeingProgram dyeingProgram)
     {
         boolean isSuccessful = false;
         
@@ -57,10 +57,7 @@ public class DyeingProgramHandler {
             JOptionPane.showMessageDialog(null, "Dyeing Program with the same name has already been added.");
         }
         
-        if(isSuccessful == false)
-        {
-            //enter validation 
-        }
+        return isSuccessful;
     }
     
     public void DeleteDyeingProgramById(int dyeingProgramId)

@@ -2490,7 +2490,7 @@ public class ColorTextControlSlipRepository {
         try
         {
             conn = db.getConnection();
-            String query = "UPDATE dyeing_chemical SET ChemicalID = ?, DyeingProcessID = ?, Type = ?, Value = ?, dyeing_chemical.Order = ? WHERE ID = ?";
+            String query = "UPDATE dyeing_chemical SET ChemicalID = ?, DyeingProcessID = ?, Type = ?, Value = ? WHERE ID = ? AND dyeing_chemical.Order = ? ";
 
             preparedStmt = conn.prepareStatement(query);
             preparedStmt.setInt(1, thisDyeingChemical.getChemicalID());

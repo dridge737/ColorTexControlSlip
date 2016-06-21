@@ -28,6 +28,7 @@ import javax.swing.table.TableColumn;
  */
 public class SubProcessPanel extends javax.swing.JPanel {
 
+    DyeingProcess ThisDyeingProcess = new DyeingProcess();
     /**
      * Creates new form TrialPanel
      */
@@ -40,6 +41,47 @@ public class SubProcessPanel extends javax.swing.JPanel {
         
     }
     
+    public SubProcessPanel(int DyeingProcessID)
+    {
+        initComponents();
+        addChemicalTextBoxAutoComplete();
+        
+    }
+    
+    public void SetSubProcessFromDyeingProgram(int SubProcessID)
+     {
+         DyeingProcess ThisDyeingProcess;
+         DyeingProcessHandler ThisDyeingProcessHandler = new DyeingProcessHandler();
+         ThisDyeingProcess = ThisDyeingProcessHandler.GetDyeingProcessDetailsById(SubProcessID);
+         this.SubProcessText.setText(ThisDyeingProcess.getDyeingProcessName());
+         SetChemicalListFromDyeingProcessID(SubProcessID);
+       
+     }
+     
+     public void SetChemicalListFromDyeingProcessID(int DyeingProcessID)
+     {
+         ArrayList<DyeingChemical> ThisDyeingChemical;
+         DyeingChemicalHandler ThisDyeingChemicalHandler = new DyeingChemicalHandler();
+         DefaultTableModel model = (DefaultTableModel) ChemicalTable.getModel();
+         ThisDyeingChemical = ThisDyeingChemicalHandler.GetAllDyeingChemicalFromDyeingProcessID(DyeingProcessID);
+         
+         for(DyeingChemical thisDyeingChemical : ThisDyeingChemical)
+         {
+             String ChemicalName = getChemicalNameFromID(thisDyeingChemical.getChemicalID());
+             model.addRow(new Object[] {ChemicalName, thisDyeingChemical.getType(), thisDyeingChemical.getValue()});
+         }
+                 
+     }
+     
+     public String getChemicalNameFromID(int ChemicalID)
+     {
+         Chemical thisChemical = new Chemical();
+         ChemicalHandler ChemicalHandler = new ChemicalHandler();
+         thisChemical.setChemicalId(ChemicalID);
+         thisChemical.setChemicalName(ChemicalHandler.GetChemicalNameFromChemicalID(thisChemical.getChemicalId()));
+         return thisChemical.getChemicalName();
+     }
+    
     public void removeQuantityColumn()
     {
         DefaultTableModel DefaultTable = (DefaultTableModel) this.ChemicalTable.getModel();
@@ -48,19 +90,21 @@ public class SubProcessPanel extends javax.swing.JPanel {
     
     
     TableModelListener newTableListener = new TableModelListener() {
-        public void tableChanged(TableModelEvent e) {
-                // If editing row is last row in table add one more row to table
-                if(ChemicalTable.getEditingRow() == (ChemicalTable.getRowCount()-1)){
-                    Object chemical = ChemicalTable.getModel().getValueAt(ChemicalTable.getEditingRow(), 0);
-                    Object gpl = ChemicalTable.getModel().getValueAt(ChemicalTable.getEditingRow(), 1);
-                    Object value = ChemicalTable.getModel().getValueAt(ChemicalTable.getEditingRow(), 2);
-                    Object quantity = ChemicalTable.getModel().getValueAt(ChemicalTable.getEditingRow(), 3);
-                    if(gpl != null && chemical != null && value != null && quantity != null)
-                    {
-                        ((DefaultTableModel)ChemicalTable.getModel()).addRow(new Object[]{});
-                    }
+        public void tableChanged(TableModelEvent e) 
+        {
+            // If editing row is last row in table add one more row to table
+            if(ChemicalTable.getEditingRow() == (ChemicalTable.getRowCount()-1))
+            {
+                Object chemical = ChemicalTable.getModel().getValueAt(ChemicalTable.getEditingRow(), 0);
+                Object gpl = ChemicalTable.getModel().getValueAt(ChemicalTable.getEditingRow(), 1);
+                Object value = ChemicalTable.getModel().getValueAt(ChemicalTable.getEditingRow(), 2);
+                Object quantity = ChemicalTable.getModel().getValueAt(ChemicalTable.getEditingRow(), 3);
+                if(gpl != null && chemical != null && value != null && quantity != null)
+                {
+                    ((DefaultTableModel)ChemicalTable.getModel()).addRow(new Object[]{});
                 }
             }
+        }
     };
     
     public void addChemicalTextBoxAutoComplete()
@@ -71,7 +115,6 @@ public class SubProcessPanel extends javax.swing.JPanel {
         auto_complete dropdownAutoComplete = new auto_complete();
         dropdownAutoComplete.setupAutoComplete(this.ChemicalTextfield, AllChemical);
         this.ChemicalTextfield.setColumns(30);
-    
     }
     
     public void HideText()
@@ -128,8 +171,6 @@ public class SubProcessPanel extends javax.swing.JPanel {
       */
      public void AddSubProcess(int DyeingProgramID, String Order)
      {
-        //if(this.SubProcessText.isVisible())
-        //{
             if(SubProcessText.getText().length()> 0)
             {
                 DyeingProcess ThisDyeingProcess = new DyeingProcess();
@@ -148,7 +189,6 @@ public class SubProcessPanel extends javax.swing.JPanel {
                 //Add Chemicals After Adding Dyeing Process
                 AddChemicals(ThisDyeingProcess.getId());
             }
-        //}
      }
      
      /**
@@ -184,39 +224,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
         }
      }
      
-     public void SetSubProcessFromDyeingProgram(int SubProcessID)
-     {
-         DyeingProcess ThisDyeingProcess;
-         DyeingProcessHandler ThisDyeingProcessHandler = new DyeingProcessHandler();
-         ThisDyeingProcess = ThisDyeingProcessHandler.GetDyeingProcessDetailsById(SubProcessID);
-         this.SubProcessText.setText(ThisDyeingProcess.getDyeingProcessName());
-         SetChemicalListFromDyeingProcessID(SubProcessID);
-       
-     }
      
-     public void SetChemicalListFromDyeingProcessID(int DyeingProcessID)
-     {
-         ArrayList<DyeingChemical> ThisDyeingChemical;
-         DyeingChemicalHandler ThisDyeingChemicalHandler = new DyeingChemicalHandler();
-         DefaultTableModel model = (DefaultTableModel) ChemicalTable.getModel();
-         ThisDyeingChemical = ThisDyeingChemicalHandler.GetAllDyeingChemicalFromDyeingProcessID(DyeingProcessID);
-         
-         for(DyeingChemical thisDyeingChemical : ThisDyeingChemical)
-         {
-             String ChemicalName = getChemicalNameFromID(thisDyeingChemical.getChemicalID());
-             model.addRow(new Object[] {ChemicalName, thisDyeingChemical.getType(), thisDyeingChemical.getValue()});
-         }
-                 
-     }
-     
-     public String getChemicalNameFromID(int ChemicalID)
-     {
-         Chemical thisChemical = new Chemical();
-         ChemicalHandler ChemicalHandler = new ChemicalHandler();
-         thisChemical.setChemicalId(ChemicalID);
-         thisChemical.setChemicalName(ChemicalHandler.GetChemicalNameFromChemicalID(thisChemical.getChemicalId()));
-         return thisChemical.getChemicalName();
-     }
 
      /**
       * Checks if text is a valid int or float variable

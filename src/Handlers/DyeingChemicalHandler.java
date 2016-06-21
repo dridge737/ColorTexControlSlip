@@ -36,6 +36,17 @@ public class DyeingChemicalHandler {
         return isSuccessful;        
     }
     
+     public boolean UpdateDyeingChemicalWithOrder(DyeingChemical newDyeingChemical)
+    {
+        boolean isSuccessful = false;
+        
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        if(repo.CheckIfSameDyeingChemicalExistsOnThisProcess(newDyeingChemical) == 0)
+            isSuccessful = repo.UpdateDyeingChemicalByDyeingChemicalID(newDyeingChemical);
+        
+        return isSuccessful;        
+    }
+    
     public void DeleteDyeingChemical(int DyeingChemicalId)
     {
         boolean isSuccessful = false;

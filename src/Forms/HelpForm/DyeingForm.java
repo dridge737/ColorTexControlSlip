@@ -25,10 +25,13 @@ public class DyeingForm extends javax.swing.JFrame {
     //private int NumberOfTabs = 1;
     //private List<SubProcessPanel> subProcessPanels = new ArrayList<SubProcessPanel>();
     //JPanel ThisPanel = new TestProcessPanel();
-    private int NumberOfProcessTabs = 0;
     //private int NumberOfSubProcessTabs = 1;
     //private List<JTextField> ProcessNameList = new ArrayList<JTextField>();
     //private List<JTextField> subProcessNameList = new ArrayList<JTextField>();
+    private int NumberOfProcessTabs = 0;
+    DyeingProgram thisDyeingProgram = new DyeingProgram();
+    private int WindowType = 0;
+    
     /**
      * Creates new form ResinForm
      */
@@ -51,11 +54,12 @@ public class DyeingForm extends javax.swing.JFrame {
     public DyeingForm(String DyeingProgramName, int type)
     {
         initComponents();
-        if(type == 1)
+        WindowType = type;
+        if(WindowType == 1)
         {
             Header.setText("Dyeing Program");
         }
-        else if(type == 2)
+        else if(WindowType == 2)
         {
             Header.setText("Update Dyeing Program");
         }
@@ -70,7 +74,7 @@ public class DyeingForm extends javax.swing.JFrame {
     public void SetDyeingProgramFromProgramName(String DyeingProgramName)
     {
         //Class and Handler Declaration
-        DyeingProgram thisDyeingProgram = new DyeingProgram();
+        
         DyeingProgramHandler thisDyeingProgramHandler = new DyeingProgramHandler();
         //Set Program Name
         thisDyeingProgram.setDyeingProgramName(DyeingProgramName);
@@ -243,16 +247,38 @@ public class DyeingForm extends javax.swing.JFrame {
                     //ThisProcessPanel.GetSubProcessText();
                 }
             }
-        }    
-            
+        } 
+    }
+    
+    private void UpdateDyeingProgram()
+    {
+        DyeingProgramHandler thisDyeingProgramHandler = new DyeingProgramHandler();
         
+        thisDyeingProgram.setDyeingProgramName(this.ProgramNameText.getText());
+       
+        //Returns True If Update is Successful then proceed to update other
+        if(thisDyeingProgramHandler.UpdateDyeingProgram(thisDyeingProgram))
+        {
+            Component[] this_pane = this.Process.getComponents();
+            int ProcessOrder = 1;
+            
+            for (Component c : this_pane) 
+            {
+                if (c instanceof ProcessPanel) {
+                    ProcessPanel ThisProcessPanel = ((ProcessPanel)c);
+                    ThisProcessPanel.UpdateThisPanelInDyeingProcess(thisDyeingProgram.getDyeingProgramId(), ProcessOrder++);
+                }
+            }
+        } 
         
     }
     private void SaveButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButActionPerformed
         // TODO add your handling code here:
         //this.jPanel2.getComp
-        AddDyeingProgram();
-        
+        if(this.WindowType == 1)
+            AddDyeingProgram();
+        else if(this.WindowType == 2)
+            UpdateDyeingProgram();
     }//GEN-LAST:event_SaveButActionPerformed
 
     private void CancelButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButActionPerformed
