@@ -50,7 +50,6 @@ public class ProcessPanel extends javax.swing.JPanel {
         SubProcessPanel this_panel = new SubProcessPanel();
         //Hide the SubProcess TextField
         this_panel.HideText();
-        this_panel.removeQuantityColumn();
         subProcess.add(this_panel, "Sub Process 1", NumberOfTabs++);
         //Add The Add Tab /* add tab to add new tab when click */
         subProcess.add(new JPanel(), "+", NumberOfTabs++);
@@ -103,14 +102,14 @@ public class ProcessPanel extends javax.swing.JPanel {
         SubProcessPanel this_panel = new SubProcessPanel();
         this_panel.SetChemicalListFromDyeingProcessID(ProcessDetails.getId());
         this_panel.HideText();
-        addTabToTabbedPane(this_panel, this.NumberOfTabs);
+        addTabToSubProcessTabbedPane(this_panel, this.NumberOfTabs);
     }
     private void addNewTab(DyeingProcess SubProcess) 
     {
         /* add new tab */
         SubProcessPanel this_panel = new SubProcessPanel();
         this_panel.SetSubProcessFromDyeingProgram(SubProcess.getId());
-        addTabToTabbedPane(this_panel, this.NumberOfTabs);
+        addTabToSubProcessTabbedPane(this_panel, this.NumberOfTabs);
             
     }
     
@@ -124,7 +123,7 @@ public class ProcessPanel extends javax.swing.JPanel {
             if(NumberOfTabs < 3)
                ShowTextOnFirstTab();
             
-            addTabToTabbedPane(this_panel, index);
+            addTabToSubProcessTabbedPane(this_panel, index);
             /* set tab is custom tab */
             //jTabbedPane1.setTabComponentAt(index, new DemoCustomTab(this));
             subProcess.removeChangeListener(changeListener);
@@ -134,9 +133,9 @@ public class ProcessPanel extends javax.swing.JPanel {
             
         }
     }
-    public void addTabToTabbedPane(SubProcessPanel thisPanel, int index)
+    public void addTabToSubProcessTabbedPane(SubProcessPanel thisPanel, int index)
     {
-        subProcess.add(thisPanel, "Sub Process " + String.valueOf(NumberOfTabs+1),
+        subProcess.add(thisPanel, "Sub Process " + String.valueOf(NumberOfTabs),
                     index);
             NumberOfTabs++;
     }

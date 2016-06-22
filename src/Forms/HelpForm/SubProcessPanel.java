@@ -11,16 +11,21 @@ import DataEntities.DyeingProcess;
 import Handlers.ChemicalHandler;
 import Handlers.DyeingChemicalHandler;
 import Handlers.DyeingProcessHandler;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -35,6 +40,14 @@ public class SubProcessPanel extends javax.swing.JPanel {
     public SubProcessPanel() {
         initComponents();
         addChemicalTextBoxAutoComplete();
+        //TableColumn thisColumn = new TableColumn(ChemicalTable.getColumnCount()-1,50 ,new ButtonRenderer(),  new ButtonEditor(new JCheckBox()));
+        //thisColumn.setHeaderValue("Delete");
+        //ChemicalTable.addColumn(thisColumn);
+        DefaultTableModel tableModel = (DefaultTableModel) ChemicalTable.getModel();
+        tableModel.addColumn("Delete");
+        ChemicalTable.setModel(tableModel);
+        ChemicalTable.getColumn("Delete").setCellRenderer(new ButtonRenderer());
+        ChemicalTable.getColumn("Delete").setCellEditor( new ButtonEditor(new JCheckBox()));
         //InitializeChemicalTable();
         //InitializeGPLandPercentColumn();
         //ChemicalTable.getModel().addTableModelListener(newTableListener);
@@ -45,6 +58,9 @@ public class SubProcessPanel extends javax.swing.JPanel {
     {
         initComponents();
         addChemicalTextBoxAutoComplete();
+        TableColumn thisColumn = new TableColumn(ChemicalTable.getColumnCount()-1,50);
+        thisColumn.setHeaderValue("Quantity");
+        ChemicalTable.addColumn(thisColumn);
         
     }
     
@@ -82,11 +98,6 @@ public class SubProcessPanel extends javax.swing.JPanel {
          return thisChemical.getChemicalName();
      }
     
-    public void removeQuantityColumn()
-    {
-        DefaultTableModel DefaultTable = (DefaultTableModel) this.ChemicalTable.getModel();
-        DefaultTable.setColumnCount(3);
-    }
     
     
     TableModelListener newTableListener = new TableModelListener() {
@@ -278,19 +289,19 @@ public class SubProcessPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Chemical", "Type", "Value", "Quantity"
+                "Chemical", "Type", "Value"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.String.class, java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
-        ChemicalTable.setEnabled(false);
         ChemicalTable.setRowHeight(25);
+        ChemicalTable.setRowSelectionAllowed(false);
         jScrollPane1.setViewportView(ChemicalTable);
 
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
