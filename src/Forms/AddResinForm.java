@@ -333,10 +333,31 @@ public class AddResinForm extends javax.swing.JFrame {
     
     private void AddtoTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddtoTableActionPerformed
         // TODO add your handling code here:
-        DefaultTableModel model = (DefaultTableModel) ChemicalTable.getModel();
-        model.addRow(new Object[] {ChemicalTextfield.getText(), GPLTextfield.getText()});
-        this.ChemicalTextfield.setText(null);
-        GPLTextfield.setText(null);
+        String chemicalName;
+        String chemicalTextFieldValue = ChemicalTextfield.getText();
+        boolean validChemicalName = true;
+        for (int i = 0; i < ChemicalTable.getRowCount(); i++) {
+            chemicalName = ChemicalTable.getModel().getValueAt(i, 0).toString();
+            
+            if(chemicalName.equals(chemicalTextFieldValue))
+            {
+                validChemicalName = false;
+                break;
+            }
+          }
+        
+        if(validChemicalName)
+        {
+            DefaultTableModel model = (DefaultTableModel) ChemicalTable.getModel();
+            model.addRow(new Object[] {ChemicalTextfield.getText(), GPLTextfield.getText()});
+            this.ChemicalTextfield.setText(null);
+            GPLTextfield.setText(null);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "This chemical is already added.");
+        }
+        
     }//GEN-LAST:event_AddtoTableActionPerformed
 
     /**
