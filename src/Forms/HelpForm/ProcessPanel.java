@@ -209,7 +209,7 @@ public class ProcessPanel extends javax.swing.JPanel {
                         AddThisSubProcessPanelInDyeingProcess(DyeingProgramID,TabIndex);
                     }
                     else
-                        AddChemicalFromSubProcessPanel(ThisDyeingProcess.getId());
+                        UpdateChemicalFromSubProcessPanel(ThisDyeingProcess.getId());
                 }
             }
         }
@@ -227,6 +227,20 @@ public class ProcessPanel extends javax.swing.JPanel {
                   String parsedOrder = Integer.toString(TabIndex) + "." + ConvertToLetters(subProcessNumber);
                   subProcessNumber++;
                   ThisProcessPanel.AddSubProcess(DyeingProgramID, parsedOrder);
+             }
+         }
+     }
+     
+     public void UpdateChemicalFromSubProcessPanel(int DyeingProcessID)
+     {
+         Component[] this_pane = this.subProcess.getComponents();
+         for (Component c : this_pane)
+         {
+             if (c instanceof SubProcessPanel)
+             {
+                 SubProcessPanel ThisProcessPanel = ((SubProcessPanel)c);
+                 //ThisProcessPanel.AddSubProcess(DyeingProgramID, TOOL_TIP_TEXT_KEY);
+                 ThisProcessPanel.AddChemicals(DyeingProcessID);
              }
          }
      }

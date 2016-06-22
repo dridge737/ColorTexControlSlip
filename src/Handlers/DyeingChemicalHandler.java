@@ -47,13 +47,13 @@ public class DyeingChemicalHandler {
         return isSuccessful;        
     }
     
-    public void DeleteDyeingChemical(int DyeingChemicalId)
+    public void DeleteDyeingChemical(DyeingChemical thisDyeingChemical)
     {
         boolean isSuccessful = false;
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        isSuccessful = repo.DeleteDyeingChemicalByDyeingChemicalID(DyeingChemicalId);
+        isSuccessful = repo.DeleteDyeingChemicalByDyeingChemicalID(thisDyeingChemical);
         
         if(isSuccessful == false)
         {
@@ -65,5 +65,11 @@ public class DyeingChemicalHandler {
     {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         return repo.GetAllDyeingChemicalsFromDyeingProcessID(DyeingProcessID);
+    }
+    
+    public int CountDyeingChemicalForThisDyeingProcess(int DyeingProcessID)
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        return repo.CountNumberOfDyeingChemicalForThisProcess(DyeingProcessID);
     }
 }

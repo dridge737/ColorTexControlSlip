@@ -40,6 +40,16 @@ public class SubProcessPanel extends javax.swing.JPanel {
     public SubProcessPanel() {
         initComponents();
         addChemicalTextBoxAutoComplete();
+        
+        
+        //InitializeChemicalTable();
+        //InitializeGPLandPercentColumn();
+        //ChemicalTable.getModel().addTableModelListener(newTableListener);
+        
+    }
+    
+    public void AddDeleteColumn()
+    {
         //TableColumn thisColumn = new TableColumn(ChemicalTable.getColumnCount()-1,50 ,new ButtonRenderer(),  new ButtonEditor(new JCheckBox()));
         //thisColumn.setHeaderValue("Delete");
         //ChemicalTable.addColumn(thisColumn);
@@ -48,10 +58,6 @@ public class SubProcessPanel extends javax.swing.JPanel {
         ChemicalTable.setModel(tableModel);
         ChemicalTable.getColumn("Delete").setCellRenderer(new ButtonRenderer());
         ChemicalTable.getColumn("Delete").setCellEditor( new ButtonEditor(new JCheckBox()));
-        //InitializeChemicalTable();
-        //InitializeGPLandPercentColumn();
-        //ChemicalTable.getModel().addTableModelListener(newTableListener);
-        
     }
     
     public SubProcessPanel(int DyeingProcessID)
@@ -235,6 +241,44 @@ public class SubProcessPanel extends javax.swing.JPanel {
         }
      }
      
+     public void UpdateChemical(int DyeingProcessID)
+     {
+        Chemical ThisChemical  = new Chemical();
+        DyeingChemical ThisDyeingChemical = new DyeingChemical();
+        ChemicalHandler ChemicalHandler = new ChemicalHandler();
+        DyeingChemicalHandler DyeingChemicalHandler = new DyeingChemicalHandler();
+        int TotalNumberOfChemicals = DyeingChemicalHandler.CountDyeingChemicalForThisDyeingProcess(DyeingProcessID);
+        
+        for (int OrderNum = 1; OrderNum <= ChemicalTable.getRowCount(); OrderNum++) {
+            
+            String Chemical = ChemicalTable.getModel().getValueAt(OrderNum, 0).toString();
+            String Type = ChemicalTable.getModel().getValueAt(OrderNum, 1).toString();
+            String Value = ChemicalTable.getModel().getValueAt(OrderNum, 2).toString();
+            if(Chemical.length() > 0 && Type.length() > 0 && !CheckText(Value))
+            {
+                
+                ThisChemical.setChemicalName(Chemical);
+                ThisChemical.setChemicalId(ChemicalHandler.GetChemicalIDFromChemicalName(ThisChemical.getChemicalName()));
+                
+                ThisDyeingChemical.setChemicalID(ThisChemical.getChemicalId());
+                ThisDyeingChemical.setDyeingProcessID(DyeingProcessID);
+                ThisDyeingChemical.setType(Type);
+                ThisDyeingChemical.setValue(Float.parseFloat(Value));
+                ThisDyeingChemical.setOrder(OrderNum);
+                if(OrderNum <= TotalNumberOfChemicals)
+                    DyeingChemicalHandler.UpdateDyeingChemical(ThisDyeingChemical);
+                else
+                    DyeingChemicalHandler.AddNewDyeingChemical(ThisDyeingChemical);
+            }
+            
+        }
+        for(int LastRow = ChemicalTable.getRowCount(); LastRow < TotalNumberOfChemicals; LastRow++ )
+        {
+            ThisDyeingChemical.setDyeingProcessID(DyeingProcessID);
+            ThisDyeingChemical.setOrder(LastRow);
+            DyeingChemicalHandler.DeleteDyeingChemical(ThisDyeingChemical);
+        }
+     }
      
 
      /**

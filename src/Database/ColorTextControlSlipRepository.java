@@ -2490,15 +2490,15 @@ public class ColorTextControlSlipRepository {
         try
         {
             conn = db.getConnection();
-            String query = "UPDATE dyeing_chemical SET ChemicalID = ?, DyeingProcessID = ?, Type = ?, Value = ? WHERE ID = ? AND dyeing_chemical.Order = ? ";
+            String query = "UPDATE dyeing_chemical SET ChemicalID = ?, Type = ?, Value = ? WHERE DyeingProcessID = ? AND dyeing_chemical.Order = ? LIMIT 1";
 
             preparedStmt = conn.prepareStatement(query);
-            preparedStmt.setInt(1, thisDyeingChemical.getChemicalID());
-            preparedStmt.setInt(2, thisDyeingChemical.getDyeingProcessID());
-            preparedStmt.setString(3, thisDyeingChemical.getType() );
-            preparedStmt.setFloat(4, thisDyeingChemical.getValue());
-            preparedStmt.setInt(5, thisDyeingChemical.getOrder());
-            preparedStmt.setInt(6, thisDyeingChemical.getID());
+            int item = 1;
+            preparedStmt.setInt( item++, thisDyeingChemical.getChemicalID());
+            preparedStmt.setString( item++, thisDyeingChemical.getType() );
+            preparedStmt.setFloat( item++, thisDyeingChemical.getValue());
+            preparedStmt.setInt( item++, thisDyeingChemical.getDyeingProcessID());
+            preparedStmt.setInt(item++, thisDyeingChemical.getOrder());
             preparedStmt.executeUpdate();
             isSuccessful = true;
         }
@@ -2510,7 +2510,7 @@ public class ColorTextControlSlipRepository {
         return isSuccessful;
     }
 
-    public boolean DeleteDyeingChemicalByDyeingChemicalID(int DyeingChemicalId) {
+    public boolean DeleteDyeingChemicalByDyeingChemicalID(DyeingChemical ThisDyeingChemical) {
     
         DBConnection db = new DBConnection();
         Connection conn = null;
@@ -2519,10 +2519,11 @@ public class ColorTextControlSlipRepository {
         try
         {
             conn = db.getConnection();
-            String query = "DELETE FROM dyeing_chemical WHERE ID = ?";
+            String query = "DELETE FROM dyeing_chemical WHERE DyeingProcessID = ? AND dyeing_chemical.Order = ? LIMIT 1";
 
             preparedStmt = conn.prepareStatement(query);
-            preparedStmt.setInt(1, DyeingChemicalId);
+            preparedStmt.setInt(1, ThisDyeingChemical.getDyeingProcessID());
+            preparedStmt.setInt(2, ThisDyeingChemical.getOrder());
             preparedStmt.executeUpdate();
             isSuccessful = true;
         }
@@ -2545,7 +2546,8 @@ public class ColorTextControlSlipRepository {
             conn = db.getConnection();
             ps = conn.prepareStatement("SELECT * "
                                  + " FROM dyeing_chemical "
-                                 + " WHERE DyeingProcessID = ? ");
+                                 + " WHERE DyeingProcessID = ? "
+                                 + " ORDER BY dyeing_chemical.Order ASC");
             
             ps.setInt(1, DyeingProcessID);
             
@@ -2598,8 +2600,35 @@ public class ColorTextControlSlipRepository {
         this.closeConn(conn, ps, rs);
         return checkTest;
     }
+     
+     public int CountNumberOfDyeingChemicalForThisProcess(int DyeingProgramID)
+    {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int TotalNumberOfProcess = 0;
+        try
+        {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT COUNT(ID) AS 'TOTAL' FROM dyeing_chemical WHERE DyeingProcessID = ?;");
+            int item = 1;
+            ps.setInt(item++, DyeingProgramID);
+            rs = ps.executeQuery();
+            
+            if(rs.first())
+            {
+                TotalNumberOfProcess = rs.getInt("TOTAL");
+            }
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.closeConn(conn, ps, rs);
+        return TotalNumberOfProcess;
+    }
     
-      public int CheckIfSameDyeingChemicalExistsOnThisProcess(DyeingChemical ThisDyeingChemical)
+    public int CheckIfSameDyeingChemicalExistsOnThisProcess(DyeingChemical ThisDyeingChemical)
     {
         DBConnection dbc = new DBConnection();
         Connection conn = null;
