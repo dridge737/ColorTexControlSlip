@@ -261,7 +261,10 @@ public class ProcessPanel extends javax.swing.JPanel {
             //Just Add SubProcess and Chemicals
             AddThisSubProcessPanelInDyeingProcess(DyeingProgramID, TabIndex);
             //Delete Chemicals previously Linked to this Dyeing Process
-            ProcessHandler.DeleteDyeingProcessById(ThisDyeingProcess);
+            if(ThisDyeingProcess.getId()!= 0)
+            {
+                ProcessHandler.DeleteDyeingProcessById(ThisDyeingProcess);
+            }
         }
          
      }
