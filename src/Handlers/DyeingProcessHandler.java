@@ -105,17 +105,17 @@ public class DyeingProcessHandler {
         
     }
     
-    public boolean UpdateDyeingProcess(DyeingProcess dyeingProcess)
+    public int UpdateDyeingProcess(DyeingProcess dyeingProcess)
     {
-        boolean isSuccessful = false;
+        int ID = -1;
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
         if(repo.CheckIfDyeingProcessNameExistsOnOtherDyeingProcessID(dyeingProcess))
         {
-            isSuccessful = repo.UpdateDyeingProcessByDyeingProcessID(dyeingProcess);
+            ID = repo.UpdateDyeingProcessByDyeingProcessID(dyeingProcess);
         }
-        return isSuccessful;
+        return ID;
         
     }
     

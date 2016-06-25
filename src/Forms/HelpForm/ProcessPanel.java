@@ -198,7 +198,7 @@ public class ProcessPanel extends javax.swing.JPanel {
                 ThisDyeingProcess.setDyeingProcessOrder(Integer.toString(TabIndex));
                 
                 //The Dyeing Process was not added
-                if (!ThisDyeingProcessHandler.UpdateDyeingProcess(ThisDyeingProcess))
+                if (ThisDyeingProcessHandler.UpdateDyeingProcess(ThisDyeingProcess) == -1)
                 {
                     JOptionPane.showMessageDialog(null, "Process : " +ProcessText.getText()+ " was not successfully updated Please check the details.");
                 }

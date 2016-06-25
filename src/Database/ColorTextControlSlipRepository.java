@@ -2041,31 +2041,36 @@ public class ColorTextControlSlipRepository {
         return DyeingProcessID;
     }
 
-    public boolean UpdateDyeingProcessByDyeingProcessID(DyeingProcess dyeingProcess) 
+    public int UpdateDyeingProcessByDyeingProcessID(DyeingProcess dyeingProcess) 
     {
         DBConnection db = new DBConnection();
         Connection conn = null;
         PreparedStatement preparedStmt = null;
-        boolean isSuccessful = false;
+        int DyeingProcessID = -1;
         try
         {
             conn = db.getConnection();
-            String query = "UPDATE dyeing_process SET DyeingProgramID = ?, Name = ?, dyeing_process.Order = ?  WHERE ID = ?";
+            String query = "UPDATE dyeing_process SET  Name = ?  WHERE DyeingProgramID = ? AND dyeing_process.Order = ?";
 
             preparedStmt = conn.prepareStatement(query);
-            preparedStmt.setInt(1, dyeingProcess.getId());
+            preparedStmt.setString(1, dyeingProcess.getDyeingProcessName());
             preparedStmt.setInt(2, dyeingProcess.getDyeingProgramId());
-            preparedStmt.setString(3, dyeingProcess.getDyeingProcessName());
-            preparedStmt.setString(4, dyeingProcess.getdyeingProcessOrder());
+            preparedStmt.setString(3, dyeingProcess.getdyeingProcessOrder());
             preparedStmt.executeUpdate();
-            isSuccessful = true;
+            ResultSet generatedKeys = preparedStmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                DyeingProcessID = generatedKeys.getInt(1);
+            }
+            else {
+                throw new SQLException("Creating user failed, no ID obtained.");
+            }
         }
         catch (SQLException ex) {
             Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         this.closeConn(conn, preparedStmt);
-        return isSuccessful;
+        return DyeingProcessID;
     }
 
     public boolean DeleteDyeingProcessByDyeingProcessID(int dyeingProcessID) {

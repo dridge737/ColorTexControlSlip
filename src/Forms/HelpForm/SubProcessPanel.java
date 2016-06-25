@@ -208,6 +208,28 @@ public class SubProcessPanel extends javax.swing.JPanel {
             }
      }
      
+     public void UpdateSubProcess(int DyeingProgramID, String Order)
+     {
+            if(SubProcessText.getText().length()> 0)
+            {
+                DyeingProcess ThisDyeingProcess = new DyeingProcess();
+                DyeingProcessHandler ThisDyeingProcessHandler = new DyeingProcessHandler();
+                
+                //SET All Dyeing Process Columns ID, NAME , ORDER
+                ThisDyeingProcess.setDyeingProgramId(DyeingProgramID);
+                ThisDyeingProcess.setDyeingProcessName(this.SubProcessText.getText());
+                ThisDyeingProcess.setDyeingProcessOrder(Order);
+                
+                //USE Handler To Add Dyeing Process
+                int DyeingProcessID = ThisDyeingProcessHandler.UpdateDyeingProcess(ThisDyeingProcess);
+                ThisDyeingProcess.setId(   
+                        ThisDyeingProcessHandler.GetDyeingProcessIdByDetails(
+                                ThisDyeingProcess));
+                //Add Chemicals After Adding Dyeing Process
+                AddChemicals(ThisDyeingProcess.getId());
+            }
+     }
+     
      /**
       * Add to Dyeing Chemicals Table using previously added Dyeing Process row
       * @param DyeingProcessID ID from Dyeing Process Table
