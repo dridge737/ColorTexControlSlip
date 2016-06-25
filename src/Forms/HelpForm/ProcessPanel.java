@@ -231,6 +231,41 @@ public class ProcessPanel extends javax.swing.JPanel {
          }
      }
      
+     public void UpdateThisSubProcessPanelInDyeingProcess(int DyeingProgramID, int TabIndex)
+     {
+         DyeingProcessHandler ProcessHandler = new DyeingProcessHandler();
+         int TotalNumberOfSubProcess = ProcessHandler.CountNumberOfSubProcess(ThisDyeingProcess);
+        
+        if(TotalNumberOfSubProcess > 0)
+        {
+             ArrayList<DyeingProcess> thisDyeingProcess;
+            thisDyeingProcess = ProcessHandler.GetDyeingSubProcessByDyeingProgramIdAndProcessOrder(ThisDyeingProcess);
+            for(int x = 0; x< TotalNumberOfSubProcess; x++)
+            {
+                Component[] this_pane = this.subProcess.getComponents();
+                int subProcessNumber = 1;
+                for (Component c : this_pane)
+                {
+                    if (c instanceof SubProcessPanel)
+                    {
+                        SubProcessPanel ThisProcessPanel = ((SubProcessPanel)c);
+                        String parsedOrder = Integer.toString(TabIndex) + "." + ConvertToLetters(subProcessNumber);
+                        subProcessNumber++;
+                        ThisProcessPanel.AddSubProcess(DyeingProgramID, parsedOrder);
+                    }
+                }
+            }
+        }
+        else
+        {
+            //Just Add SubProcess and Chemicals
+            AddThisSubProcessPanelInDyeingProcess(DyeingProgramID, TabIndex);
+            //Delete Chemicals previously Linked to this Dyeing Process
+            ProcessHandler.DeleteDyeingProcessById(ThisDyeingProcess);
+        }
+         
+     }
+     
      public void UpdateChemicalFromSubProcessPanel(int DyeingProcessID)
      {
          Component[] this_pane = this.subProcess.getComponents();
