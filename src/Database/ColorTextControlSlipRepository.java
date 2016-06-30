@@ -2050,12 +2050,13 @@ public class ColorTextControlSlipRepository {
         try
         {
             conn = db.getConnection();
-            String query = "UPDATE dyeing_process SET  Name = ?  WHERE DyeingProgramID = ? AND dyeing_process.Order = ?";
+            String query = "UPDATE dyeing_process SET Name = ? , dyeing_process.Order = ? WHERE ID = ?";
 
             preparedStmt = conn.prepareStatement(query);
             preparedStmt.setString(1, dyeingProcess.getDyeingProcessName());
-            preparedStmt.setInt(2, dyeingProcess.getDyeingProgramId());
-            preparedStmt.setString(3, dyeingProcess.getdyeingProcessOrder());
+            preparedStmt.setString(2, dyeingProcess.getdyeingProcessOrder());
+            preparedStmt.setInt(3, dyeingProcess.getId());
+            //preparedStmt.setString(3, dyeingProcess.getdyeingProcessOrder());
             preparedStmt.executeUpdate();
             ResultSet generatedKeys = preparedStmt.getGeneratedKeys();
             if (generatedKeys.next()) {
@@ -2280,7 +2281,7 @@ public class ColorTextControlSlipRepository {
         try
         {
             conn = dbc.getConnection();
-            ps = conn.prepareStatement("SELECT * FROM dyeing_process where DyeingProgramID = ? AND dyeing_process.ORDER NOT LIKE '%.%';");
+            ps = conn.prepareStatement("SELECT * FROM dyeing_process WHERE DyeingProgramID = ? AND dyeing_process.ORDER NOT LIKE '%.%' ORDER BY dyeing_process.Order ASC;");
             ps.setInt(1, DyeingProgramID);           
             rs = ps.executeQuery();
             
@@ -2376,7 +2377,7 @@ public class ColorTextControlSlipRepository {
         try
         {
             conn = dbc.getConnection();
-            ps = conn.prepareStatement("SELECT COUNT(ID) AS 'TOTAL' FROM dyeing_process WHERE DyeingProgramID = ? AND dyeing_process.ORDER NOT LIKE ? ;");
+            ps = conn.prepareStatement("SELECT COUNT(ID) AS 'TOTAL' FROM dyeing_process WHERE DyeingProgramID = ? AND dyeing_process.ORDER LIKE ? ;");
             int item = 1;
             ps.setInt(item++, DyeingProgramID);
             String ParseProcessNumber = Integer.toString(ProcessNumber) + ".%";

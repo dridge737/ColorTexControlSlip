@@ -47,9 +47,9 @@ public class MainJava {
         
         //AddResinForm newResinForm = new AddResinForm();
         //newResinForm.setVisible(true);
-        DyeingProcess thisProcess = new DyeingProcess();
+        //DyeingProcess thisProcess = new DyeingProcess();
         
-        DyeingForm TestThisFrame = new DyeingForm();
+        DyeingForm TestThisFrame = new DyeingForm("PROCESSTEST" , 2);
         TestThisFrame.setVisible(true);
     }
     

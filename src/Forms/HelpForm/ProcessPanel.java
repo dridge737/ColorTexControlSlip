@@ -68,23 +68,11 @@ public class ProcessPanel extends javax.swing.JPanel {
         }
         else
         {
-            addNewTabForChemicals(ThisDyeingProcess);
+            setNewTabForChemicals(ThisDyeingProcess);
             //Just Add Chemical and hide Sub Process Textbox
         }
         //ArrayList<DyeingProcess> allDyeingProcess = new ArrayList<DyeingProcess>();
         //DyeingProcessHandler ThisDyeingProcessHandler = new DyeingProcessHandler();
-    }
-    
-    public void addSubProcessPanel()
-    {
-        //Add Initial panel
-        SubProcessPanel this_panel = new SubProcessPanel();
-        //Hide the SubProcess TextField
-        this_panel.HideText();
-        subProcess.add(this_panel, "Sub Process 1", NumberOfTabs++);
-        //Add The Add Tab /* add tab to add new tab when click */
-        subProcess.add(new JPanel(), "+", NumberOfTabs++);
-        subProcess.addChangeListener(changeListener);
     }
     
     ChangeListener changeListener = new ChangeListener() {
@@ -94,7 +82,7 @@ public class ProcessPanel extends javax.swing.JPanel {
         }
 
     };
-    private void addNewTabForChemicals(DyeingProcess ProcessDetails)
+    private void setNewTabForChemicals(DyeingProcess ProcessDetails)
     {
         SubProcessPanel this_panel = new SubProcessPanel();
         this_panel.SetChemicalListFromDyeingProcessID(ProcessDetails.getId());
@@ -119,19 +107,31 @@ public class ProcessPanel extends javax.swing.JPanel {
             if(NumberOfTabs < 3)
                ShowTextOnFirstTab();
             
-            addTabToSubProcessTabbedPane(this_panel, index);
+            addTabToSubProcessTabbedPane(this_panel, index+1);
             /* set tab is custom tab */
             //jTabbedPane1.setTabComponentAt(index, new DemoCustomTab(this));
             subProcess.removeChangeListener(changeListener);
             subProcess.setSelectedIndex(index);
             subProcess.addChangeListener(changeListener);
             
-            
         }
     }
+    
+    public void addSubProcessPanel()
+    {
+        //Add Initial panel
+        SubProcessPanel this_panel = new SubProcessPanel();
+        //Hide the SubProcess TextField
+        this_panel.HideText();
+        subProcess.add(this_panel, "Sub Process 1", NumberOfTabs++);
+        //Add The Add Tab /* add tab to add new tab when click */
+        subProcess.add(new JPanel(), "+", NumberOfTabs++);
+        subProcess.addChangeListener(changeListener);
+    }
+    
     public void addTabToSubProcessTabbedPane(SubProcessPanel thisPanel, int index)
     {
-        subProcess.add(thisPanel, "Sub Process " + String.valueOf(NumberOfTabs),
+        subProcess.add(thisPanel, "Sub Process " + String.valueOf(NumberOfTabs+1),
                     index);
             NumberOfTabs++;
     }
@@ -209,7 +209,7 @@ public class ProcessPanel extends javax.swing.JPanel {
      //FOR UPDATE FUNCTIONS
      public void UpdateThisPanelInDyeingProcess(int DyeingProgramID , int TabIndex)
     {
-        //If This is a new Process Panel Then just add
+        //If This is a new Process Panel Then just add to the existing dyeing program
         if(ThisDyeingProcess.getId() == 0)
         {
             AddThisPanelInDyeingProcess(DyeingProgramID, TabIndex);
@@ -231,7 +231,7 @@ public class ProcessPanel extends javax.swing.JPanel {
                 {
                     if(NumberOfTabs > 2)
                     {
-                        AddThisSubProcessPanelInDyeingProcess(DyeingProgramID,TabIndex);
+                        UpdateThisSubProcessPanelInDyeingProcess(DyeingProgramID,TabIndex);
                     }
                     else
                         UpdateChemicalFromSubProcessPanel(ThisDyeingProcess.getId());
@@ -244,37 +244,46 @@ public class ProcessPanel extends javax.swing.JPanel {
      {
          DyeingProcessHandler ProcessHandler = new DyeingProcessHandler();
          int TotalNumberOfSubProcess = ProcessHandler.CountNumberOfSubProcess(ThisDyeingProcess);
-        
-        if(TotalNumberOfSubProcess > 0)
-        {
-             ArrayList<DyeingProcess> thisDyeingProcess;
-            thisDyeingProcess = ProcessHandler.GetDyeingSubProcessByDyeingProgramIdAndProcessOrder(ThisDyeingProcess);
-            for(int x = 0; x< TotalNumberOfSubProcess; x++)
-            {
-                Component[] this_pane = this.subProcess.getComponents();
-                int subProcessNumber = 1;
-                for (Component c : this_pane)
-                {
-                    if (c instanceof SubProcessPanel)
-                    {
-                        SubProcessPanel ThisProcessPanel = ((SubProcessPanel)c);
-                        String parsedOrder = Integer.toString(TabIndex) + "." + ConvertToLetters(subProcessNumber);
-                        subProcessNumber++;
-                        ThisProcessPanel.AddSubProcess(DyeingProgramID, parsedOrder);
-                    }
-                }
-            }
-        }
-        else
-        {
-            //Just Add SubProcess and Chemicals
+         if(TotalNumberOfSubProcess == 0)
+         {
+             //Just Add SubProcess and Chemicals
             AddThisSubProcessPanelInDyeingProcess(DyeingProgramID, TabIndex);
             //Delete Chemicals previously Linked to this Dyeing Process
             if(ThisDyeingProcess.getId()!= 0)
             {
                 ProcessHandler.DeleteDyeingProcessById(ThisDyeingProcess);
             }
-        }
+         }
+         else
+         {
+             Component[] this_pane = this.subProcess.getComponents();
+             int subProcessNumber = 1;
+             ArrayList<DyeingProcess> thisDyeingProcess;
+                         thisDyeingProcess = ProcessHandler.GetDyeingSubProcessByDyeingProgramIdAndProcessOrder(ThisDyeingProcess);
+             for (Component c : this_pane)
+             {
+                 if (c instanceof SubProcessPanel)
+                 {
+                     SubProcessPanel ThisProcessPanel = ((SubProcessPanel)c);
+                     String parsedOrder = Integer.toString(TabIndex) + "." + ConvertToLetters(subProcessNumber);
+                     //If There is an existing SubProcess Panel then just Update this SubProcessPanel
+                     if(TotalNumberOfSubProcess >= subProcessNumber)
+                     {
+                         //Get The Id of number x subprocess
+                         DyeingProcess currentDyeingProcess = thisDyeingProcess.get(subProcessNumber);
+                         ThisProcessPanel.UpdateSubProcess(thisDyeingProcess.get(subProcessNumber).getId(), parsedOrder);
+                         
+                     }
+                     //Else if this is a new SubProcess then just add it.
+                     else
+                     {
+                         ThisProcessPanel.AddSubProcess(DyeingProgramID, parsedOrder);
+                     }
+                     subProcessNumber++;
+                 }
+             }
+             
+         }
          
      }
      

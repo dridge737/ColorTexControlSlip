@@ -62,6 +62,7 @@ public class DyeingForm extends javax.swing.JFrame {
         else if(WindowType == 2)
         {
             Header.setText("Update Dyeing Program");
+            SaveBut.setText("Update Dyeing Program");
         }
         SetDyeingProgramFromProgramName(DyeingProgramName);
         AddThePlusTab();

@@ -40,12 +40,20 @@ public class SubProcessPanel extends javax.swing.JPanel {
     public SubProcessPanel() {
         initComponents();
         addChemicalTextBoxAutoComplete();
-        
-        
+        AddDeleteColumn();
         //InitializeChemicalTable();
         //InitializeGPLandPercentColumn();
         //ChemicalTable.getModel().addTableModelListener(newTableListener);
-        
+    }
+    
+    public SubProcessPanel(int DyeingProcessID)
+    {
+        initComponents();
+        addChemicalTextBoxAutoComplete();
+        TableColumn thisColumn = new TableColumn(ChemicalTable.getColumnCount()-1,50);
+        thisColumn.setHeaderValue("Quantity");
+        ChemicalTable.addColumn(thisColumn);
+        AddDeleteColumn();
     }
     
     public void AddDeleteColumn()
@@ -58,16 +66,6 @@ public class SubProcessPanel extends javax.swing.JPanel {
         ChemicalTable.setModel(tableModel);
         ChemicalTable.getColumn("Delete").setCellRenderer(new ButtonRenderer());
         ChemicalTable.getColumn("Delete").setCellEditor( new ButtonEditor(new JCheckBox()));
-    }
-    
-    public SubProcessPanel(int DyeingProcessID)
-    {
-        initComponents();
-        addChemicalTextBoxAutoComplete();
-        TableColumn thisColumn = new TableColumn(ChemicalTable.getColumnCount()-1,50);
-        thisColumn.setHeaderValue("Quantity");
-        ChemicalTable.addColumn(thisColumn);
-        
     }
     
     public void SetSubProcessFromDyeingProgram(int SubProcessID)
@@ -92,6 +90,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
              String ChemicalName = getChemicalNameFromID(thisDyeingChemical.getChemicalID());
              model.addRow(new Object[] {ChemicalName, thisDyeingChemical.getType(), thisDyeingChemical.getValue()});
          }
+         this.ChemicalTable.setModel(model);
                  
      }
      
@@ -208,7 +207,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
             }
      }
      
-     public void UpdateSubProcess(int DyeingProgramID, String Order)
+     public void UpdateSubProcess(int DyeingProcessID, String Order)
      {
             if(SubProcessText.getText().length()> 0)
             {
@@ -216,17 +215,14 @@ public class SubProcessPanel extends javax.swing.JPanel {
                 DyeingProcessHandler ThisDyeingProcessHandler = new DyeingProcessHandler();
                 
                 //SET All Dyeing Process Columns ID, NAME , ORDER
-                ThisDyeingProcess.setDyeingProgramId(DyeingProgramID);
+                ThisDyeingProcess.setId(DyeingProcessID);
                 ThisDyeingProcess.setDyeingProcessName(this.SubProcessText.getText());
                 ThisDyeingProcess.setDyeingProcessOrder(Order);
                 
                 //USE Handler To Add Dyeing Process
-                int DyeingProcessID = ThisDyeingProcessHandler.UpdateDyeingProcess(ThisDyeingProcess);
-                ThisDyeingProcess.setId(   
-                        ThisDyeingProcessHandler.GetDyeingProcessIdByDetails(
-                                ThisDyeingProcess));
+                ThisDyeingProcessHandler.UpdateDyeingProcess(ThisDyeingProcess);
                 //Add Chemicals After Adding Dyeing Process
-                AddChemicals(ThisDyeingProcess.getId());
+                UpdateChemicals(ThisDyeingProcess.getId());
             }
      }
      
@@ -263,7 +259,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
         }
      }
      
-     public void UpdateChemical(int DyeingProcessID)
+     public void UpdateChemicals(int DyeingProcessID)
      {
         Chemical ThisChemical  = new Chemical();
         DyeingChemical ThisDyeingChemical = new DyeingChemical();
