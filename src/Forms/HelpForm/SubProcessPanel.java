@@ -189,14 +189,13 @@ public class SubProcessPanel extends javax.swing.JPanel {
      {
             if(SubProcessText.getText().length()> 0)
             {
-                DyeingProcess ThisDyeingProcess = new DyeingProcess();
+                 //SET All Dyeing Process Columns ID, NAME , ORDER
+                DyeingProcess ThisDyeingProcess = new DyeingProcess(DyeingProgramID,this.SubProcessText.getText(), Order );
+                //ThisDyeingProcess.setDyeingProgramId(DyeingProgramID);
+                //ThisDyeingProcess.setDyeingProcessName(this.SubProcessText.getText());
+                //ThisDyeingProcess.setDyeingProcessOrder(Order);
                 DyeingProcessHandler ThisDyeingProcessHandler = new DyeingProcessHandler();
-                
-                //SET All Dyeing Process Columns ID, NAME , ORDER
-                ThisDyeingProcess.setDyeingProgramId(DyeingProgramID);
-                ThisDyeingProcess.setDyeingProcessName(this.SubProcessText.getText());
-                ThisDyeingProcess.setDyeingProcessOrder(Order);
-                
+               
                 //USE Handler To Add Dyeing Process
                 int DyeingProcessID = ThisDyeingProcessHandler.AddDyeingProcess(ThisDyeingProcess);
                 ThisDyeingProcess.setId(   
@@ -211,18 +210,17 @@ public class SubProcessPanel extends javax.swing.JPanel {
      {
             if(SubProcessText.getText().length()> 0)
             {
-                DyeingProcess ThisDyeingProcess = new DyeingProcess();
+                //SET All Dyeing Process Columns ID, NAME , ORDER
+                DyeingProcess ThisDyeingProcess = new DyeingProcess(DyeingProcessID, this.SubProcessText.getText(), Order);
+                //ThisDyeingProcess.setId(DyeingProcessID);
+                //ThisDyeingProcess.setDyeingProcessName(this.SubProcessText.getText());
+                //ThisDyeingProcess.setDyeingProcessOrder(Order);
                 DyeingProcessHandler ThisDyeingProcessHandler = new DyeingProcessHandler();
                 
-                //SET All Dyeing Process Columns ID, NAME , ORDER
-                ThisDyeingProcess.setId(DyeingProcessID);
-                ThisDyeingProcess.setDyeingProcessName(this.SubProcessText.getText());
-                ThisDyeingProcess.setDyeingProcessOrder(Order);
-                
                 //USE Handler To Add Dyeing Process
-                ThisDyeingProcessHandler.UpdateDyeingProcess(ThisDyeingProcess);
+                if(ThisDyeingProcessHandler.UpdateDyeingProcess(ThisDyeingProcess) != -1)
                 //Add Chemicals After Adding Dyeing Process
-                UpdateChemicals(ThisDyeingProcess.getId());
+                    UpdateChemicals(ThisDyeingProcess.getId());
             }
      }
      
@@ -233,69 +231,68 @@ public class SubProcessPanel extends javax.swing.JPanel {
      public void AddChemicals(int DyeingProcessID)
      {
         //IF there is more than one sub-process
-        Chemical ThisChemical  = new Chemical();
-        DyeingChemical ThisDyeingChemical = new DyeingChemical();
-        ChemicalHandler ChemicalHandler = new ChemicalHandler();
+        DyeingChemical ThisDyeingChemical;
         DyeingChemicalHandler DyeingChemicalHandler = new DyeingChemicalHandler();
-        int Order = 1;
         
         for (int i = 0; i < ChemicalTable.getRowCount(); i++) {
-            
-            String Chemical = ChemicalTable.getModel().getValueAt(i, 0).toString();
-            String Type = ChemicalTable.getModel().getValueAt(i, 1).toString();
-            String Value = ChemicalTable.getModel().getValueAt(i, 2).toString();
-            if(Chemical.length() > 0 && Type.length() > 0 && !CheckText(Value))
-            {
-                ThisChemical.setChemicalName(Chemical);
-                ThisChemical.setChemicalId(ChemicalHandler.GetChemicalIDFromChemicalName(ThisChemical.getChemicalName()));
-                
-                ThisDyeingChemical.setChemicalID(ThisChemical.getChemicalId());
-                ThisDyeingChemical.setDyeingProcessID(DyeingProcessID);
-                ThisDyeingChemical.setType(Type);
-                ThisDyeingChemical.setValue(Float.parseFloat(Value));
-                ThisDyeingChemical.setOrder(Order++);
-                DyeingChemicalHandler.AddNewDyeingChemical(ThisDyeingChemical);
+            ThisDyeingChemical = GetThisRowOfValues(i, DyeingProcessID);
+             if(ThisDyeingChemical != null)
+                 DyeingChemicalHandler.AddNewDyeingChemical(ThisDyeingChemical);
             }
-        }
+        
      }
      
      public void UpdateChemicals(int DyeingProcessID)
      {
-        Chemical ThisChemical  = new Chemical();
-        DyeingChemical ThisDyeingChemical = new DyeingChemical();
+        
+        //DyeingChemical ThisDyeingChemical = new DyeingChemical();
         ChemicalHandler ChemicalHandler = new ChemicalHandler();
         DyeingChemicalHandler DyeingChemicalHandler = new DyeingChemicalHandler();
         int TotalNumberOfChemicals = DyeingChemicalHandler.CountDyeingChemicalForThisDyeingProcess(DyeingProcessID);
         
-        for (int OrderNum = 1; OrderNum <= ChemicalTable.getRowCount(); OrderNum++) {
+        for (int OrderNum = 0; OrderNum < ChemicalTable.getRowCount(); OrderNum++) {
+            DyeingChemical ThisDyeingChemical = GetThisRowOfValues(OrderNum, DyeingProcessID);
             
-            String Chemical = ChemicalTable.getModel().getValueAt(OrderNum, 0).toString();
-            String Type = ChemicalTable.getModel().getValueAt(OrderNum, 1).toString();
-            String Value = ChemicalTable.getModel().getValueAt(OrderNum, 2).toString();
-            if(Chemical.length() > 0 && Type.length() > 0 && !CheckText(Value))
-            {
-                
-                ThisChemical.setChemicalName(Chemical);
-                ThisChemical.setChemicalId(ChemicalHandler.GetChemicalIDFromChemicalName(ThisChemical.getChemicalName()));
-                
-                ThisDyeingChemical.setChemicalID(ThisChemical.getChemicalId());
-                ThisDyeingChemical.setDyeingProcessID(DyeingProcessID);
-                ThisDyeingChemical.setType(Type);
-                ThisDyeingChemical.setValue(Float.parseFloat(Value));
-                ThisDyeingChemical.setOrder(OrderNum);
                 if(OrderNum <= TotalNumberOfChemicals)
                     DyeingChemicalHandler.UpdateDyeingChemical(ThisDyeingChemical);
                 else
                     DyeingChemicalHandler.AddNewDyeingChemical(ThisDyeingChemical);
-            }
-            
+                
         }
+        //Delete All the Remaining Dyeing Chemical not included in the Update
         for(int LastRow = ChemicalTable.getRowCount(); LastRow < TotalNumberOfChemicals; LastRow++ )
         {
+            DyeingChemical ThisDyeingChemical = GetThisRowOfValues(LastRow, DyeingProcessID);
             ThisDyeingChemical.setDyeingProcessID(DyeingProcessID);
             ThisDyeingChemical.setOrder(LastRow);
             DyeingChemicalHandler.DeleteDyeingChemical(ThisDyeingChemical);
         }
+     }
+     
+     private DyeingChemical GetThisRowOfValues(int rowNumber, int DyeingProcessID)
+     {
+         Chemical ThisChemical  = new Chemical();
+         DyeingChemical ThisDyeingChemical = new DyeingChemical();
+         ChemicalHandler ChemicalHandler = new ChemicalHandler();
+         
+         String Chemical = ChemicalTable.getModel().getValueAt(rowNumber, 0).toString();
+         String Type = ChemicalTable.getModel().getValueAt(rowNumber, 1).toString();
+         String Value = ChemicalTable.getModel().getValueAt(rowNumber, 2).toString();
+            if(Chemical.length() > 0 && Type.length() > 0 && !CheckText(Value))
+            {
+                ThisChemical.setChemicalName(Chemical);
+                ThisChemical.setChemicalId(ChemicalHandler.GetChemicalIDFromChemicalName(ThisChemical.getChemicalName()));
+                ThisDyeingChemical.setChemicalID(rowNumber);
+                ThisDyeingChemical.setChemicalID(ThisChemical.getChemicalId());
+                ThisDyeingChemical.setDyeingProcessID(DyeingProcessID);
+                ThisDyeingChemical.setType(Type);
+                ThisDyeingChemical.setValue(Float.parseFloat(Value));
+                ThisDyeingChemical.setOrder(rowNumber+1);
+            }
+            else
+                return null;
+            
+         return ThisDyeingChemical;
      }
      
 

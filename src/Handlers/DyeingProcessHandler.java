@@ -111,7 +111,7 @@ public class DyeingProcessHandler {
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        if(repo.CheckIfDyeingProcessNameExistsOnOtherDyeingProcessID(dyeingProcess))
+        if(!repo.CheckIfDyeingProcessNameExistsOnOtherDyeingProcessID(dyeingProcess))
         {
             ID = repo.UpdateDyeingProcessByDyeingProcessID(dyeingProcess);
         }

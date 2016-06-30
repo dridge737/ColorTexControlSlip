@@ -17,6 +17,14 @@ public class DyeingProcess {
     private String dyeingProcessName;
     private String dyeingProcessOrder;
     
+    public DyeingProcess(){}
+    
+    public DyeingProcess(int dyeingID, String processName, String Order )
+    {
+        this.DyeingID = dyeingID;
+        this.dyeingProcessName = processName;
+        this.dyeingProcessOrder = Order;
+    }
     public int getId() {
         return DyeingID;
     }

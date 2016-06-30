@@ -229,7 +229,7 @@ public class ProcessPanel extends javax.swing.JPanel {
                 }
                 else
                 {
-                    if(NumberOfTabs > 2)
+                    if(NumberOfTabs > 1)
                     {
                         UpdateThisSubProcessPanelInDyeingProcess(DyeingProgramID,TabIndex);
                     }
@@ -257,7 +257,7 @@ public class ProcessPanel extends javax.swing.JPanel {
          else
          {
              Component[] this_pane = this.subProcess.getComponents();
-             int subProcessNumber = 1;
+             int subProcessNumber = 0;
              ArrayList<DyeingProcess> thisDyeingProcess;
                          thisDyeingProcess = ProcessHandler.GetDyeingSubProcessByDyeingProgramIdAndProcessOrder(ThisDyeingProcess);
              for (Component c : this_pane)
@@ -265,9 +265,9 @@ public class ProcessPanel extends javax.swing.JPanel {
                  if (c instanceof SubProcessPanel)
                  {
                      SubProcessPanel ThisProcessPanel = ((SubProcessPanel)c);
-                     String parsedOrder = Integer.toString(TabIndex) + "." + ConvertToLetters(subProcessNumber);
+                     String parsedOrder = Integer.toString(TabIndex) + "." + ConvertToLetters(subProcessNumber+1);
                      //If There is an existing SubProcess Panel then just Update this SubProcessPanel
-                     if(TotalNumberOfSubProcess >= subProcessNumber)
+                     if(TotalNumberOfSubProcess > subProcessNumber)
                      {
                          //Get The Id of number x subprocess
                          DyeingProcess currentDyeingProcess = thisDyeingProcess.get(subProcessNumber);
