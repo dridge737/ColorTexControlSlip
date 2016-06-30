@@ -2523,11 +2523,10 @@ public class ColorTextControlSlipRepository {
         try
         {
             conn = db.getConnection();
-            String query = "DELETE FROM dyeing_chemical WHERE DyeingProcessID = ? AND dyeing_chemical.Order = ? LIMIT 1";
+            String query = "DELETE FROM dyeing_chemical WHERE ID = ? LIMIT 1";
 
             preparedStmt = conn.prepareStatement(query);
-            preparedStmt.setInt(1, ThisDyeingChemical.getDyeingProcessID());
-            preparedStmt.setInt(2, ThisDyeingChemical.getOrder());
+            preparedStmt.setInt(1, ThisDyeingChemical.getID());
             preparedStmt.executeUpdate();
             isSuccessful = true;
         }

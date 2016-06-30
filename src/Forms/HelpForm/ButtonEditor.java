@@ -59,20 +59,22 @@ public class ButtonEditor extends DefaultCellEditor {
 
   public Object getCellEditorValue() {
     if (isPushed) {
-      if(JOptionPane.showConfirmDialog(null ,"Would you like to Delete this row?","Delete this Row?",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
-      {
+        
+      //if(JOptionPane.showConfirmDialog(null ,"Would you like to Delete this row?","Delete this Row?",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+      //{
           //JOptionPane.showMessageDialog(button, "Column with Value: "+thisTable.getValueAt(RowNumber, 1) + " -  Clicked!");
           DefaultTableModel model = (DefaultTableModel) thisTable.getModel();
           model.removeRow(RowNumber);
           thisTable.setModel(model);
-      }
+      //}
     }
-    //isPushed = false;
-    return null;
+    isPushed = false;
+    //fireEditingStopped();
+    
+    return new String("Delete");
   }
 
   public boolean stopCellEditing() {
-    isPushed = false;
     return super.stopCellEditing();
   }
 

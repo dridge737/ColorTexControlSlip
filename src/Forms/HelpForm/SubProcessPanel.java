@@ -12,6 +12,7 @@ import Handlers.ChemicalHandler;
 import Handlers.DyeingChemicalHandler;
 import Handlers.DyeingProcessHandler;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 import javax.swing.AbstractAction;
@@ -41,9 +42,11 @@ public class SubProcessPanel extends javax.swing.JPanel {
         initComponents();
         addChemicalTextBoxAutoComplete();
         AddDeleteColumn();
+        //AddDeleteColumn();
         //InitializeChemicalTable();
         //InitializeGPLandPercentColumn();
         //ChemicalTable.getModel().addTableModelListener(newTableListener);
+        
     }
     
     public SubProcessPanel(int DyeingProcessID)
@@ -54,18 +57,30 @@ public class SubProcessPanel extends javax.swing.JPanel {
         thisColumn.setHeaderValue("Quantity");
         ChemicalTable.addColumn(thisColumn);
         AddDeleteColumn();
+        
     }
     
     public void AddDeleteColumn()
     {
+        Action delete = new AbstractAction()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                JTable table = (JTable)e.getSource();
+                int modelRow = Integer.valueOf( e.getActionCommand() );
+                ((DefaultTableModel)table.getModel()).removeRow(modelRow);
+            }
+        };
+        ButtonColumn buttonColumn = new ButtonColumn(ChemicalTable, delete, ChemicalTable.getColumnCount()-1);
+        buttonColumn.setMnemonic(KeyEvent.VK_D);
         //TableColumn thisColumn = new TableColumn(ChemicalTable.getColumnCount()-1,50 ,new ButtonRenderer(),  new ButtonEditor(new JCheckBox()));
         //thisColumn.setHeaderValue("Delete");
         //ChemicalTable.addColumn(thisColumn);
-        DefaultTableModel tableModel = (DefaultTableModel) ChemicalTable.getModel();
-        tableModel.addColumn("Delete");
-        ChemicalTable.setModel(tableModel);
-        ChemicalTable.getColumn("Delete").setCellRenderer(new ButtonRenderer());
-        ChemicalTable.getColumn("Delete").setCellEditor( new ButtonEditor(new JCheckBox()));
+        //DefaultTableModel tableModel = (DefaultTableModel) ChemicalTable.getModel();
+        //tableModel.addColumn("Delete");
+        //ChemicalTable.setModel(tableModel);
+        //ChemicalTable.getColumn("Delete").setCellRenderer(new ButtonRenderer());
+        //ChemicalTable.getColumn("Delete").setCellEditor( new ButtonEditor(new JCheckBox()));
     }
     
     public void SetSubProcessFromDyeingProgram(int SubProcessID)
@@ -88,7 +103,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
          for(DyeingChemical thisDyeingChemical : ThisDyeingChemical)
          {
              String ChemicalName = getChemicalNameFromID(thisDyeingChemical.getChemicalID());
-             model.addRow(new Object[] {ChemicalName, thisDyeingChemical.getType(), thisDyeingChemical.getValue()});
+             model.addRow(new Object[] {ChemicalName, thisDyeingChemical.getType(), thisDyeingChemical.getValue(), "Delete"});
          }
          this.ChemicalTable.setModel(model);
                  
@@ -206,6 +221,23 @@ public class SubProcessPanel extends javax.swing.JPanel {
             }
      }
      
+     /**
+      * Add to Dyeing Chemicals Table using previously added Dyeing Process row
+      * @param DyeingProcessID ID from Dyeing Process Table
+      */
+     public void AddChemicals(int DyeingProcessID)
+     {
+        //IF there is more than one sub-process
+        DyeingChemical ThisDyeingChemical;
+        DyeingChemicalHandler DyeingChemicalHandler = new DyeingChemicalHandler();
+        
+        for (int i = 0; i < ChemicalTable.getRowCount(); i++) {
+            ThisDyeingChemical = GetThisRowOfValues(i, DyeingProcessID);
+             if(ThisDyeingChemical != null)
+                 DyeingChemicalHandler.AddNewDyeingChemical(ThisDyeingChemical);
+            }
+     }
+     
      public void UpdateSubProcess(int DyeingProcessID, String Order)
      {
             if(SubProcessText.getText().length()> 0)
@@ -224,47 +256,31 @@ public class SubProcessPanel extends javax.swing.JPanel {
             }
      }
      
-     /**
-      * Add to Dyeing Chemicals Table using previously added Dyeing Process row
-      * @param DyeingProcessID ID from Dyeing Process Table
-      */
-     public void AddChemicals(int DyeingProcessID)
-     {
-        //IF there is more than one sub-process
-        DyeingChemical ThisDyeingChemical;
-        DyeingChemicalHandler DyeingChemicalHandler = new DyeingChemicalHandler();
-        
-        for (int i = 0; i < ChemicalTable.getRowCount(); i++) {
-            ThisDyeingChemical = GetThisRowOfValues(i, DyeingProcessID);
-             if(ThisDyeingChemical != null)
-                 DyeingChemicalHandler.AddNewDyeingChemical(ThisDyeingChemical);
-            }
-        
-     }
-     
      public void UpdateChemicals(int DyeingProcessID)
      {
         
         //DyeingChemical ThisDyeingChemical = new DyeingChemical();
         ChemicalHandler ChemicalHandler = new ChemicalHandler();
         DyeingChemicalHandler DyeingChemicalHandler = new DyeingChemicalHandler();
-        int TotalNumberOfChemicals = DyeingChemicalHandler.CountDyeingChemicalForThisDyeingProcess(DyeingProcessID);
-        
+        //int TotalNumberOfChemicals = DyeingChemicalHandler.CountDyeingChemicalForThisDyeingProcess(DyeingProcessID);
+        ArrayList<DyeingChemical> ChemicalList = DyeingChemicalHandler.GetAllDyeingChemicalFromDyeingProcessID(DyeingProcessID);
         for (int OrderNum = 0; OrderNum < ChemicalTable.getRowCount(); OrderNum++) {
             DyeingChemical ThisDyeingChemical = GetThisRowOfValues(OrderNum, DyeingProcessID);
             
-                if(OrderNum <= TotalNumberOfChemicals)
+                if(OrderNum < ChemicalList.size())
+                {
+                    ThisDyeingChemical.setID(ChemicalList.get(OrderNum).getID());
                     DyeingChemicalHandler.UpdateDyeingChemical(ThisDyeingChemical);
+                }
                 else
                     DyeingChemicalHandler.AddNewDyeingChemical(ThisDyeingChemical);
                 
         }
         //Delete All the Remaining Dyeing Chemical not included in the Update
-        for(int LastRow = ChemicalTable.getRowCount(); LastRow < TotalNumberOfChemicals; LastRow++ )
+        for(int LastRow = ChemicalTable.getRowCount()-1; LastRow < ChemicalList.size(); LastRow++ )
         {
-            DyeingChemical ThisDyeingChemical = GetThisRowOfValues(LastRow, DyeingProcessID);
-            ThisDyeingChemical.setDyeingProcessID(DyeingProcessID);
-            ThisDyeingChemical.setOrder(LastRow);
+            DyeingChemical ThisDyeingChemical = new DyeingChemical();
+            ThisDyeingChemical.setID(ChemicalList.get(LastRow).getID());
             DyeingChemicalHandler.DeleteDyeingChemical(ThisDyeingChemical);
         }
      }
@@ -348,11 +364,11 @@ public class SubProcessPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Chemical", "Type", "Value"
+                "Chemical", "Type", "Value", "Delete"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -455,7 +471,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
     private void AddtoTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddtoTableActionPerformed
         // TODO add your handling code here:
         DefaultTableModel model = (DefaultTableModel) ChemicalTable.getModel();
-        model.addRow(new Object[] {ChemicalTextfield.getText(), this.TypeBox.getSelectedItem().toString(),GPLTextfield.getText()});
+        model.addRow(new Object[] {ChemicalTextfield.getText(), this.TypeBox.getSelectedItem().toString(),GPLTextfield.getText(), "Delete"} );
         this.ChemicalTextfield.setText(null);
         GPLTextfield.setText(null);
     }//GEN-LAST:event_AddtoTableActionPerformed

@@ -55,10 +55,6 @@ public class DyeingChemicalHandler {
         
         isSuccessful = repo.DeleteDyeingChemicalByDyeingChemicalID(thisDyeingChemical);
         
-        if(isSuccessful == false)
-        {
-            
-        }
     }
     
     public void DeleteDyeingChemicalByDyeingProcessID(DyeingChemical thisDyeingChemical)
