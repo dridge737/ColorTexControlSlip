@@ -149,7 +149,7 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         ResinHeader.setBackground(new java.awt.Color(255, 255, 255));
-        ResinHeader.setFont(new java.awt.Font("Century Gothic", 0, 34)); // NOI18N
+        ResinHeader.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
         ResinHeader.setForeground(new java.awt.Color(255, 255, 255));
         ResinHeader.setText("Resin Program Details");
         jPanel1.add(ResinHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 28, 360, 40));

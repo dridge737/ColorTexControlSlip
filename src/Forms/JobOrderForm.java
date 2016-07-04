@@ -103,7 +103,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                 CustomerDropDownListActionPerformed(evt);
             }
         });
-        jPanel1.add(CustomerDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 195, 30));
+        jPanel1.add(CustomerDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, 195, 30));
 
         DesignDropDownList.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         DesignDropDownList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Design" }));
@@ -112,7 +112,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                 DesignDropDownListActionPerformed(evt);
             }
         });
-        jPanel1.add(DesignDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 195, 30));
+        jPanel1.add(DesignDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, 195, 30));
 
         ColorDropDownList.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         ColorDropDownList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Color" }));
@@ -121,45 +121,45 @@ public class JobOrderForm extends javax.swing.JFrame {
                 ColorDropDownListActionPerformed(evt);
             }
         });
-        jPanel1.add(ColorDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 150, 190, 30));
+        jPanel1.add(ColorDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 140, 190, 30));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel1.setText("Color :");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 150, 110, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 140, 110, -1));
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel2.setText("Customer :");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 125, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 125, -1));
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel3.setText("Design :");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 125, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 125, -1));
 
         jLabel4.setBackground(new java.awt.Color(255, 255, 255));
         jLabel4.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel4.setText("Job Order :");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 125, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 125, -1));
 
         jLabel6.setBackground(new java.awt.Color(255, 255, 255));
         jLabel6.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel6.setText("Date :");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 100, 110, 30));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 90, 110, 30));
 
         JobOrder.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        jPanel1.add(JobOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 100, 195, 30));
+        jPanel1.add(JobOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 90, 195, 30));
 
         jPanel2.setBackground(new java.awt.Color(102, 102, 102));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Machine", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 24), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -249,7 +249,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 240, 660, 170));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 230, 660, 170));
 
         jButton1.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
         jButton1.setText("Next");
@@ -258,24 +258,24 @@ public class JobOrderForm extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 430, 203, 50));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 420, 203, 50));
 
         jButton2.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
         jButton2.setText("Cancel");
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 430, 203, 50));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 420, 203, 50));
 
         CreatedDate.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        jPanel1.add(CreatedDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 100, 190, 30));
+        jPanel1.add(CreatedDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 90, 190, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
         );
 
         pack();

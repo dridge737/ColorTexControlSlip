@@ -208,7 +208,7 @@ public class AddDyeingForm extends javax.swing.JFrame {
         
         for (int i = 0; i < this.subProcessName.size(); i++) 
         {
-            System.out.println("Component:" + subProcessName.get(i).getText().toString());
+            System.out.println("Component:" + subProcessName.get(i).getText());
         } 
        
           

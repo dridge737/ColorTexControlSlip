@@ -62,7 +62,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
         BgPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         ResinHeader.setBackground(new java.awt.Color(255, 255, 255));
-        ResinHeader.setFont(new java.awt.Font("Century Gothic", 0, 34)); // NOI18N
+        ResinHeader.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
         ResinHeader.setForeground(new java.awt.Color(255, 255, 255));
         ResinHeader.setText("Resin Program List");
         BgPanel.add(ResinHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 19, 360, 40));
@@ -90,7 +90,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
         BgPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 123, 470, 200));
 
         ResinLabel.setBackground(new java.awt.Color(255, 255, 255));
-        ResinLabel.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
+        ResinLabel.setFont(new java.awt.Font("Century Gothic", 0, 22)); // NOI18N
         ResinLabel.setForeground(new java.awt.Color(255, 255, 255));
         ResinLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         ResinLabel.setText("  Resin Program List");

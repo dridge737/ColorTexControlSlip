@@ -94,16 +94,17 @@ public class MachineForm extends javax.swing.JFrame {
         jPanel1.add(DeleteMachineButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 510, 185, 46));
 
         MachineName.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        MachineName.setForeground(new java.awt.Color(204, 204, 204));
         MachineName.setText("Name");
         MachineName.setToolTipText("");
-        MachineName.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                MachineNameFocusGained(evt);
-            }
-        });
         MachineName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MachineNameActionPerformed(evt);
+            }
+        });
+        MachineName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                MachineNameFocusGained(evt);
             }
         });
         MachineName.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -114,20 +115,22 @@ public class MachineForm extends javax.swing.JFrame {
         jPanel1.add(MachineName, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 300, 730, -1));
 
         MachineMinimumVolume.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        MachineMinimumVolume.setForeground(new java.awt.Color(204, 204, 204));
         MachineMinimumVolume.setText("Min Volume");
-        MachineMinimumVolume.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                MachineMinimumVolumeFocusGained(evt);
-            }
-        });
         MachineMinimumVolume.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MachineMinimumVolumeActionPerformed(evt);
             }
         });
+        MachineMinimumVolume.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                MachineMinimumVolumeFocusGained(evt);
+            }
+        });
         jPanel1.add(MachineMinimumVolume, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 450, 260, 40));
 
         MachineMaximumVolume.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        MachineMaximumVolume.setForeground(new java.awt.Color(204, 204, 204));
         MachineMaximumVolume.setText("Max Volume");
         MachineMaximumVolume.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -137,6 +140,7 @@ public class MachineForm extends javax.swing.JFrame {
         jPanel1.add(MachineMaximumVolume, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 450, 260, 40));
 
         MachineMaximumCapacity.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        MachineMaximumCapacity.setForeground(new java.awt.Color(204, 204, 204));
         MachineMaximumCapacity.setText("Max Capacity");
         MachineMaximumCapacity.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -146,16 +150,17 @@ public class MachineForm extends javax.swing.JFrame {
         jPanel1.add(MachineMaximumCapacity, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 370, 260, 40));
 
         MachineMinimumCapacity.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        MachineMinimumCapacity.setForeground(new java.awt.Color(204, 204, 204));
         MachineMinimumCapacity.setText("Min Capacity");
         MachineMinimumCapacity.setToolTipText("");
-        MachineMinimumCapacity.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                MachineMinimumCapacityFocusGained(evt);
-            }
-        });
         MachineMinimumCapacity.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MachineMinimumCapacityActionPerformed(evt);
+            }
+        });
+        MachineMinimumCapacity.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                MachineMinimumCapacityFocusGained(evt);
             }
         });
         jPanel1.add(MachineMinimumCapacity, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 370, 260, 40));
@@ -196,7 +201,7 @@ public class MachineForm extends javax.swing.JFrame {
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 340, 730, -1));
 
         DeleteMachineButton1.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        DeleteMachineButton1.setText("Delete Machine");
+        DeleteMachineButton1.setText("Cancel");
         DeleteMachineButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DeleteMachineButton1ActionPerformed(evt);
