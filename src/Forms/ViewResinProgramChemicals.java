@@ -135,7 +135,7 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         ResinProgramTextBox = new javax.swing.JTextField();
-        ChemicalComboBox = new javax.swing.JComboBox<>();
+        ChemicalComboBox = new javax.swing.JComboBox<String>();
         GPLTextField = new javax.swing.JTextField();
         EditChemicalButton = new javax.swing.JButton();
         DeleteChemicalButton = new javax.swing.JButton();
@@ -146,19 +146,23 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
         jPanel1.setMinimumSize(new java.awt.Dimension(510, 422));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         ResinHeader.setBackground(new java.awt.Color(255, 255, 255));
         ResinHeader.setFont(new java.awt.Font("Century Gothic", 0, 34)); // NOI18N
         ResinHeader.setForeground(new java.awt.Color(255, 255, 255));
         ResinHeader.setText("Resin Program Details");
+        jPanel1.add(ResinHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 28, 360, 40));
 
         ResinProgramLabel.setBackground(new java.awt.Color(255, 255, 255));
-        ResinProgramLabel.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
+        ResinProgramLabel.setFont(new java.awt.Font("Century Gothic", 0, 22)); // NOI18N
         ResinProgramLabel.setForeground(new java.awt.Color(255, 255, 255));
         ResinProgramLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         ResinProgramLabel.setText("  Resin Program List");
         ResinProgramLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
+        jPanel1.add(ResinProgramLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 86, 485, 40));
 
+        ResinChemicalTable.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         ResinChemicalTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -172,120 +176,68 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(ResinChemicalTable);
 
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 129, 485, 200));
+
+        jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Resin Program:");
+        jLabel1.setText("Resin Program Name:");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 340, -1, 28));
 
+        jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Chemical");
+        jLabel2.setText("Chemical :");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 385, 89, 30));
 
+        jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("GPL");
+        jLabel3.setText("GPL :");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(336, 385, 50, 30));
 
+        ResinProgramTextBox.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         ResinProgramTextBox.setForeground(new java.awt.Color(204, 204, 204));
         ResinProgramTextBox.setText("Resin Program");
+        jPanel1.add(ResinProgramTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(238, 340, 302, 28));
 
-        ChemicalComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose Chemical" }));
+        ChemicalComboBox.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        ChemicalComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Chemical" }));
+        jPanel1.add(ChemicalComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(148, 385, -1, 30));
 
+        GPLTextField.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         GPLTextField.setForeground(new java.awt.Color(204, 204, 204));
         GPLTextField.setText("GPL Value");
+        jPanel1.add(GPLTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(396, 385, 144, 30));
 
+        EditChemicalButton.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         EditChemicalButton.setText("Edit");
         EditChemicalButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EditChemicalButtonActionPerformed(evt);
             }
         });
+        jPanel1.add(EditChemicalButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(55, 444, 130, 30));
 
+        DeleteChemicalButton.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         DeleteChemicalButton.setText("Delete");
         DeleteChemicalButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DeleteChemicalButtonActionPerformed(evt);
             }
         });
+        jPanel1.add(DeleteChemicalButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(232, 444, 130, 30));
 
+        BackButton.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         BackButton.setText("Back");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(ResinProgramTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(EditChemicalButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(62, 62, 62)
-                                        .addComponent(DeleteChemicalButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(ChemicalComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabel3)))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(58, 58, 58)
-                                        .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(GPLTextField)
-                                        .addGap(8, 8, 8))))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addComponent(ResinHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(ResinProgramLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(107, 107, 107))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(ResinHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(ResinProgramLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(ResinProgramTextBox)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3)
-                        .addComponent(ChemicalComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(GPLTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(32, 32, 32)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(EditChemicalButton)
-                    .addComponent(DeleteChemicalButton)
-                    .addComponent(BackButton))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jPanel1.add(BackButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 444, 130, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 602, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)
         );
 
         pack();
