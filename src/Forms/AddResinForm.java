@@ -45,7 +45,9 @@ public class AddResinForm extends javax.swing.JFrame {
         initComponents();
         //InitializeChemicalTable();
         addChemicalTextBoxAutoComplete();
+        setTableModel();
         AddDeleteColumn();
+        
     }
     
     public void AddDeleteColumn()
@@ -64,6 +66,25 @@ public class AddResinForm extends javax.swing.JFrame {
         };
         ButtonColumn buttonColumn = new ButtonColumn(ChemicalTable, delete, ChemicalTable.getColumnCount()-1);
         buttonColumn.setMnemonic(KeyEvent.VK_D);
+    }
+    
+    public void setTableModel()
+    {
+        DefaultTableModel tableModel = new DefaultTableModel( new Object [][] {
+
+            },
+            new String [] {
+                "Chemical", "GPL", "Delete"
+            }) {
+            
+            @Override
+            public boolean isCellEditable(int row, int column) {
+            //Only the third column
+                return column == 2;
+            }
+        };
+        
+        ChemicalTable.setModel(tableModel);
     }
     
     public void addChemicalTextBoxAutoComplete()
@@ -201,7 +222,6 @@ public class AddResinForm extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        ChemicalTable.setEnabled(false);
         ChemicalTable.setOpaque(false);
         ChemicalTable.setRowHeight(25);
         ChemicalTable.setRowSelectionAllowed(false);

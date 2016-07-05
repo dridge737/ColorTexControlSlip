@@ -180,7 +180,6 @@
                         <Column editable="true" title="Delete" type="java.lang.Object"/>
                       </Table>
                     </Property>
-                    <Property name="enabled" type="boolean" value="false"/>
                     <Property name="opaque" type="boolean" value="false"/>
                     <Property name="rowHeight" type="int" value="25"/>
                     <Property name="rowSelectionAllowed" type="boolean" value="false"/>
