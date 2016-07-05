@@ -71,7 +71,6 @@ public class AddResinForm extends javax.swing.JFrame {
     public void setTableModel()
     {
         DefaultTableModel tableModel = new DefaultTableModel( new Object [][] {
-
             },
             new String [] {
                 "Chemical", "GPL", "Delete"
@@ -83,7 +82,6 @@ public class AddResinForm extends javax.swing.JFrame {
                 return column == 2;
             }
         };
-        
         ChemicalTable.setModel(tableModel);
     }
     
