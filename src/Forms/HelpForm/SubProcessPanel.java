@@ -42,7 +42,6 @@ public class SubProcessPanel extends javax.swing.JPanel {
     public SubProcessPanel() {
         initComponents();
         addChemicalTextBoxAutoComplete();
-       
         setTableModel();
         //InitializeChemicalTable();
         //InitializeGPLandPercentColumn();
@@ -196,7 +195,6 @@ public class SubProcessPanel extends javax.swing.JPanel {
         model.addElement("%");
         ComboBoxTableCellRenderer renderer = new ComboBoxTableCellRenderer();
         renderer.setModel(model);
-        
         InitializeColumns(model, 1);
         //col.setCellRenderer(renderer);
     }
@@ -324,13 +322,6 @@ public class SubProcessPanel extends javax.swing.JPanel {
             
          return ThisDyeingChemical;
      }
-     
-     /**
-      * Checks if text is a valid int or float variable
-      * @param this_text String to be checked
-      * @return true if String is either empty or text is not a valid int or float variable
-      */
-    
      
     /**
      * This method is called from within the constructor to initialize the form.
@@ -486,6 +477,11 @@ public class SubProcessPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Please check your Chemical Name input and GPL value.");
     }//GEN-LAST:event_AddtoTableActionPerformed
 
+    /**
+      * Checks if text is a valid int or float variable
+      * @param this_text String to be checked
+      * @return true if String is either empty or text is not a valid int or float variable
+      */
      public boolean CheckText(String this_text)
     {
         if(this_text.isEmpty())
