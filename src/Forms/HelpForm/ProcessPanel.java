@@ -174,8 +174,6 @@ public class ProcessPanel extends javax.swing.JPanel {
          }
      }
      
-     
-     
      public void AddThisSubProcessPanelInDyeingProcess(int DyeingProgramID, int TabIndex)
      {
          Component[] this_pane = this.subProcess.getComponents();
@@ -250,9 +248,7 @@ public class ProcessPanel extends javax.swing.JPanel {
             AddThisSubProcessPanelInDyeingProcess(DyeingProgramID, TabIndex);
             //Delete Chemicals previously Linked to this Dyeing Process
             if(ThisDyeingProcess.getId()!= 0)
-            {
-                ProcessHandler.DeleteDyeingProcessById(ThisDyeingProcess);
-            }
+                ProcessHandler.DeleteDyeingProcessById(ThisDyeingProcess); 
          }
          else
          {
@@ -272,7 +268,6 @@ public class ProcessPanel extends javax.swing.JPanel {
                          //Get The Id of number x subprocess
                          DyeingProcess currentDyeingProcess = thisDyeingProcess.get(subProcessNumber);
                          ThisProcessPanel.UpdateSubProcess(thisDyeingProcess.get(subProcessNumber).getId(), parsedOrder);
-                         
                      }
                      //Else if this is a new SubProcess then just add it.
                      else
@@ -281,10 +276,8 @@ public class ProcessPanel extends javax.swing.JPanel {
                      }
                      subProcessNumber++;
                  }
-             }
-             
+             }   
          }
-         
      }
      
      public void UpdateChemicalFromSubProcessPanel(int DyeingProcessID)

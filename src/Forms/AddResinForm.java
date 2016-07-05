@@ -197,8 +197,8 @@ public class AddResinForm extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("GPL :");
-        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(353, 40, 65, 30));
-        jPanel3.add(GPLTextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(422, 40, 120, 30));
+        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(345, 40, 60, 30));
+        jPanel3.add(GPLTextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(415, 40, 120, 30));
 
         AddtoTable.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         AddtoTable.setText("Add");
@@ -207,9 +207,9 @@ public class AddResinForm extends javax.swing.JFrame {
                 AddtoTableActionPerformed(evt);
             }
         });
-        jPanel3.add(AddtoTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(552, 40, 128, 30));
+        jPanel3.add(AddtoTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(548, 40, 128, 30));
 
-        BgPanel.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 135, 710, 330));
+        BgPanel.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 135, 710, 320));
 
         getContentPane().add(BgPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 590));
 
@@ -376,8 +376,8 @@ public class AddResinForm extends javax.swing.JFrame {
 
     public static boolean isNullOrWhitespace(String s) {
         return s == null || isWhitespace(s);
-
     }
+    
     private static boolean isWhitespace(String s) {
         int length = s.length();
         if (length > 0) {

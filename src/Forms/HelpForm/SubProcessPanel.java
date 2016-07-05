@@ -21,6 +21,7 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -42,22 +43,16 @@ public class SubProcessPanel extends javax.swing.JPanel {
         initComponents();
         addChemicalTextBoxAutoComplete();
         AddDeleteColumn();
-        //AddDeleteColumn();
         //InitializeChemicalTable();
         //InitializeGPLandPercentColumn();
-        //ChemicalTable.getModel().addTableModelListener(newTableListener);
-        
+        //ChemicalTable.getModel().addTableModelListener(newTableListener);   
     }
     
-    public SubProcessPanel(int DyeingProcessID)
-    {
-        initComponents();
-        addChemicalTextBoxAutoComplete();
+    public SubProcessPanel(int DyeingProcessID){
+        super();
         TableColumn thisColumn = new TableColumn(ChemicalTable.getColumnCount()-1,50);
         thisColumn.setHeaderValue("Quantity");
-        ChemicalTable.addColumn(thisColumn);
-        AddDeleteColumn();
-        
+        ChemicalTable.addColumn(thisColumn);  
     }
     
     public void AddDeleteColumn()
@@ -73,6 +68,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
         };
         ButtonColumn buttonColumn = new ButtonColumn(ChemicalTable, delete, ChemicalTable.getColumnCount()-1);
         buttonColumn.setMnemonic(KeyEvent.VK_D);
+        
         //TableColumn thisColumn = new TableColumn(ChemicalTable.getColumnCount()-1,50 ,new ButtonRenderer(),  new ButtonEditor(new JCheckBox()));
         //thisColumn.setHeaderValue("Delete");
         //ChemicalTable.addColumn(thisColumn);
@@ -90,7 +86,6 @@ public class SubProcessPanel extends javax.swing.JPanel {
          ThisDyeingProcess = ThisDyeingProcessHandler.GetDyeingProcessDetailsById(SubProcessID);
          this.SubProcessText.setText(ThisDyeingProcess.getDyeingProcessName());
          SetChemicalListFromDyeingProcessID(SubProcessID);
-       
      }
      
      public void SetChemicalListFromDyeingProcessID(int DyeingProcessID)
@@ -106,7 +101,6 @@ public class SubProcessPanel extends javax.swing.JPanel {
              model.addRow(new Object[] {ChemicalName, thisDyeingChemical.getType(), thisDyeingChemical.getValue(), "Delete"});
          }
          this.ChemicalTable.setModel(model);
-                 
      }
      
      public String getChemicalNameFromID(int ChemicalID)
@@ -117,8 +111,6 @@ public class SubProcessPanel extends javax.swing.JPanel {
          thisChemical.setChemicalName(ChemicalHandler.GetChemicalNameFromChemicalID(thisChemical.getChemicalId()));
          return thisChemical.getChemicalName();
      }
-    
-    
     
     TableModelListener newTableListener = new TableModelListener() {
         public void tableChanged(TableModelEvent e) 
@@ -258,7 +250,6 @@ public class SubProcessPanel extends javax.swing.JPanel {
      
      public void UpdateChemicals(int DyeingProcessID)
      {
-        
         //DyeingChemical ThisDyeingChemical = new DyeingChemical();
         ChemicalHandler ChemicalHandler = new ChemicalHandler();
         DyeingChemicalHandler DyeingChemicalHandler = new DyeingChemicalHandler();
@@ -266,7 +257,6 @@ public class SubProcessPanel extends javax.swing.JPanel {
         ArrayList<DyeingChemical> ChemicalList = DyeingChemicalHandler.GetAllDyeingChemicalFromDyeingProcessID(DyeingProcessID);
         for (int OrderNum = 0; OrderNum < ChemicalTable.getRowCount(); OrderNum++) {
             DyeingChemical ThisDyeingChemical = GetThisRowOfValues(OrderNum, DyeingProcessID);
-            
                 if(OrderNum < ChemicalList.size())
                 {
                     ThisDyeingChemical.setID(ChemicalList.get(OrderNum).getID());
@@ -311,22 +301,12 @@ public class SubProcessPanel extends javax.swing.JPanel {
          return ThisDyeingChemical;
      }
      
-
      /**
       * Checks if text is a valid int or float variable
       * @param this_text String to be checked
       * @return true if String is either empty or text is not a valid int or float variable
       */
-     public boolean CheckText(String this_text)
-    {
-        if(this_text.isEmpty())
-            return true;
-        String regex = "[^0-9]";
-        Pattern p = Pattern.compile(regex);
-        this_text = this_text.replaceFirst("[.]", "");
-        
-        return p.matcher(this_text).find();
-    }
+    
      
     /**
      * This method is called from within the constructor to initialize the form.
@@ -377,6 +357,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
         });
         ChemicalTable.setRowHeight(25);
         ChemicalTable.setRowSelectionAllowed(false);
+        ChemicalTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(ChemicalTable);
 
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
@@ -470,12 +451,47 @@ public class SubProcessPanel extends javax.swing.JPanel {
 
     private void AddtoTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddtoTableActionPerformed
         // TODO add your handling code here:
-        DefaultTableModel model = (DefaultTableModel) ChemicalTable.getModel();
-        model.addRow(new Object[] {ChemicalTextfield.getText(), this.TypeBox.getSelectedItem().toString(),GPLTextfield.getText(), "Delete"} );
-        this.ChemicalTextfield.setText(null);
-        GPLTextfield.setText(null);
+        if(!isNullOrWhitespaceOrEmpty(ChemicalTextfield.getText()) 
+                && !isNullOrWhitespaceOrEmpty(GPLTextfield.getText())
+                && !CheckText(GPLTextfield.getText()))
+        {
+            DefaultTableModel model = (DefaultTableModel) ChemicalTable.getModel();
+            model.addRow(new Object[] {ChemicalTextfield.getText(), this.TypeBox.getSelectedItem().toString(),GPLTextfield.getText(), "Delete"} );
+            this.ChemicalTextfield.setText(null);
+            GPLTextfield.setText(null);
+        }
+        else
+            JOptionPane.showMessageDialog(null, "Please check your Chemical Name input and GPL value.");
     }//GEN-LAST:event_AddtoTableActionPerformed
 
+     public boolean CheckText(String this_text)
+    {
+        if(this_text.isEmpty())
+            return true;
+        String regex = "[^0-9]";
+        Pattern p = Pattern.compile(regex);
+        this_text = this_text.replaceFirst("[.]", "");
+        
+        return p.matcher(this_text).find();
+    }
+    
+    public static boolean isNullOrWhitespaceOrEmpty(String s) {
+        return s == null || isWhitespace(s) || s.length() == 0;
+    }
+    
+    private static boolean isWhitespace(String s) {
+        int length = s.length();
+        if (length > 0) {
+            for (int i = 0; i < length; i++) {
+                char c = s.charAt(i);
+                if (!Character.isWhitespace(c)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddtoTable;
