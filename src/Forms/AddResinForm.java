@@ -20,7 +20,12 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import DataEntities.Chemical;
+import Forms.HelpForm.ButtonColumn;
 import Forms.HelpForm.auto_complete;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -40,7 +45,25 @@ public class AddResinForm extends javax.swing.JFrame {
         initComponents();
         //InitializeChemicalTable();
         addChemicalTextBoxAutoComplete();
-        
+        AddDeleteColumn();
+    }
+    
+    public void AddDeleteColumn()
+    {
+        Action delete = new AbstractAction()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                JTable table = (JTable)e.getSource();
+                int modelRow = Integer.valueOf( e.getActionCommand() );
+                if(JOptionPane.YES_OPTION == 
+                        JOptionPane.showConfirmDialog(null, "Do you want to delete this row?","DELETE this item?", JOptionPane.YES_NO_OPTION))
+                
+                ((DefaultTableModel)table.getModel()).removeRow(modelRow);
+            }
+        };
+        ButtonColumn buttonColumn = new ButtonColumn(ChemicalTable, delete, ChemicalTable.getColumnCount()-1);
+        buttonColumn.setMnemonic(KeyEvent.VK_D);
     }
     
     public void addChemicalTextBoxAutoComplete()
@@ -167,11 +190,11 @@ public class AddResinForm extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Chemical", "GPL"
+                "Chemical", "GPL", "Delete"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class
+                java.lang.String.class, java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -320,7 +343,7 @@ public class AddResinForm extends javax.swing.JFrame {
         if(validChemicalName)
         {
             DefaultTableModel model = (DefaultTableModel) ChemicalTable.getModel();
-            model.addRow(new Object[] {ChemicalTextfield.getText(), GPLTextfield.getText()});
+            model.addRow(new Object[] {ChemicalTextfield.getText(), GPLTextfield.getText(), "Delete"});
             this.ChemicalTextfield.setText(null);
             GPLTextfield.setText(null);
         }
