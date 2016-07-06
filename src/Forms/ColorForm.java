@@ -92,7 +92,7 @@ public class ColorForm extends javax.swing.JFrame {
         ColorLabel.setBackground(new java.awt.Color(255, 255, 255));
         ColorLabel.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         ColorLabel.setForeground(new java.awt.Color(255, 255, 255));
-        ColorLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        ColorLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         ColorLabel.setText("  Color List");
         ColorLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 3));
         jPanel1.add(ColorLabel);

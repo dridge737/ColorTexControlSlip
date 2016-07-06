@@ -21,6 +21,7 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -41,23 +42,38 @@ public class SubProcessPanel extends javax.swing.JPanel {
     public SubProcessPanel() {
         initComponents();
         addChemicalTextBoxAutoComplete();
-        AddDeleteColumn();
-        //AddDeleteColumn();
+       
+        setTableModel();
         //InitializeChemicalTable();
         //InitializeGPLandPercentColumn();
-        //ChemicalTable.getModel().addTableModelListener(newTableListener);
-        
+        //ChemicalTable.getModel().addTableModelListener(newTableListener);   
+         AddDeleteColumn();
     }
     
-    public SubProcessPanel(int DyeingProcessID)
+    public void setTableModel()
     {
-        initComponents();
-        addChemicalTextBoxAutoComplete();
+        DefaultTableModel tableModel = new DefaultTableModel( new Object [][] {
+
+            },
+            new String [] {
+                "Chemical", "Type", "Value", "Delete"
+            }) {
+            
+            @Override
+            public boolean isCellEditable(int row, int column) {
+            //Only the third column
+                return column == 3;
+            }
+        };
+        
+        ChemicalTable.setModel(tableModel);
+    }
+    
+    public SubProcessPanel(int DyeingProcessID){
+        this();
         TableColumn thisColumn = new TableColumn(ChemicalTable.getColumnCount()-1,50);
         thisColumn.setHeaderValue("Quantity");
-        ChemicalTable.addColumn(thisColumn);
-        AddDeleteColumn();
-        
+        ChemicalTable.addColumn(thisColumn);  
     }
     
     public void AddDeleteColumn()
@@ -68,11 +84,15 @@ public class SubProcessPanel extends javax.swing.JPanel {
             {
                 JTable table = (JTable)e.getSource();
                 int modelRow = Integer.valueOf( e.getActionCommand() );
+                if(JOptionPane.YES_OPTION == 
+                        JOptionPane.showConfirmDialog(null, "Do you want to delete this row?","DELETE this item?", JOptionPane.YES_NO_OPTION))
+                
                 ((DefaultTableModel)table.getModel()).removeRow(modelRow);
             }
         };
         ButtonColumn buttonColumn = new ButtonColumn(ChemicalTable, delete, ChemicalTable.getColumnCount()-1);
         buttonColumn.setMnemonic(KeyEvent.VK_D);
+        
         //TableColumn thisColumn = new TableColumn(ChemicalTable.getColumnCount()-1,50 ,new ButtonRenderer(),  new ButtonEditor(new JCheckBox()));
         //thisColumn.setHeaderValue("Delete");
         //ChemicalTable.addColumn(thisColumn);
@@ -90,7 +110,6 @@ public class SubProcessPanel extends javax.swing.JPanel {
          ThisDyeingProcess = ThisDyeingProcessHandler.GetDyeingProcessDetailsById(SubProcessID);
          this.SubProcessText.setText(ThisDyeingProcess.getDyeingProcessName());
          SetChemicalListFromDyeingProcessID(SubProcessID);
-       
      }
      
      public void SetChemicalListFromDyeingProcessID(int DyeingProcessID)
@@ -106,7 +125,6 @@ public class SubProcessPanel extends javax.swing.JPanel {
              model.addRow(new Object[] {ChemicalName, thisDyeingChemical.getType(), thisDyeingChemical.getValue(), "Delete"});
          }
          this.ChemicalTable.setModel(model);
-                 
      }
      
      public String getChemicalNameFromID(int ChemicalID)
@@ -117,8 +135,6 @@ public class SubProcessPanel extends javax.swing.JPanel {
          thisChemical.setChemicalName(ChemicalHandler.GetChemicalNameFromChemicalID(thisChemical.getChemicalId()));
          return thisChemical.getChemicalName();
      }
-    
-    
     
     TableModelListener newTableListener = new TableModelListener() {
         public void tableChanged(TableModelEvent e) 
@@ -258,7 +274,6 @@ public class SubProcessPanel extends javax.swing.JPanel {
      
      public void UpdateChemicals(int DyeingProcessID)
      {
-        
         //DyeingChemical ThisDyeingChemical = new DyeingChemical();
         ChemicalHandler ChemicalHandler = new ChemicalHandler();
         DyeingChemicalHandler DyeingChemicalHandler = new DyeingChemicalHandler();
@@ -266,7 +281,6 @@ public class SubProcessPanel extends javax.swing.JPanel {
         ArrayList<DyeingChemical> ChemicalList = DyeingChemicalHandler.GetAllDyeingChemicalFromDyeingProcessID(DyeingProcessID);
         for (int OrderNum = 0; OrderNum < ChemicalTable.getRowCount(); OrderNum++) {
             DyeingChemical ThisDyeingChemical = GetThisRowOfValues(OrderNum, DyeingProcessID);
-            
                 if(OrderNum < ChemicalList.size())
                 {
                     ThisDyeingChemical.setID(ChemicalList.get(OrderNum).getID());
@@ -311,22 +325,12 @@ public class SubProcessPanel extends javax.swing.JPanel {
          return ThisDyeingChemical;
      }
      
-
      /**
       * Checks if text is a valid int or float variable
       * @param this_text String to be checked
       * @return true if String is either empty or text is not a valid int or float variable
       */
-     public boolean CheckText(String this_text)
-    {
-        if(this_text.isEmpty())
-            return true;
-        String regex = "[^0-9]";
-        Pattern p = Pattern.compile(regex);
-        this_text = this_text.replaceFirst("[.]", "");
-        
-        return p.matcher(this_text).find();
-    }
+    
      
     /**
      * This method is called from within the constructor to initialize the form.
@@ -350,6 +354,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
         TypeBox = new javax.swing.JComboBox();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setPreferredSize(new java.awt.Dimension(720, 400));
 
         SubProcessLabel.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         SubProcessLabel.setText("Sub Process Name :");
@@ -358,7 +363,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
         ChemPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chemicals", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 16))); // NOI18N
         ChemPanel1.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
 
-        ChemicalTable.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        ChemicalTable.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         ChemicalTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -376,7 +381,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
             }
         });
         ChemicalTable.setRowHeight(25);
-        ChemicalTable.setRowSelectionAllowed(false);
+        ChemicalTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(ChemicalTable);
 
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
@@ -408,34 +413,33 @@ public class SubProcessPanel extends javax.swing.JPanel {
             ChemPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ChemPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(ChemPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(ChemPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1)
                     .addGroup(ChemPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ChemicalTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(ChemicalTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(TypeBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(GPLTextfield, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(AddtoTable, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1))
-                .addContainerGap())
+                        .addComponent(GPLTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(AddtoTable, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         ChemPanel1Layout.setVerticalGroup(
             ChemPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ChemPanel1Layout.createSequentialGroup()
-                .addGap(4, 4, 4)
-                .addGroup(ChemPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(2, 2, 2)
+                .addGroup(ChemPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(ChemicalTextfield)
-                    .addGroup(ChemPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(AddtoTable, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                        .addComponent(GPLTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TypeBox, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-                    .addComponent(TypeBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(GPLTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(AddtoTable, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -448,13 +452,12 @@ public class SubProcessPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ChemPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(SubProcessLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(SubProcessText, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(ChemPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addComponent(SubProcessText, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -470,12 +473,47 @@ public class SubProcessPanel extends javax.swing.JPanel {
 
     private void AddtoTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddtoTableActionPerformed
         // TODO add your handling code here:
-        DefaultTableModel model = (DefaultTableModel) ChemicalTable.getModel();
-        model.addRow(new Object[] {ChemicalTextfield.getText(), this.TypeBox.getSelectedItem().toString(),GPLTextfield.getText(), "Delete"} );
-        this.ChemicalTextfield.setText(null);
-        GPLTextfield.setText(null);
+        if(!isNullOrWhitespaceOrEmpty(ChemicalTextfield.getText()) 
+                && !isNullOrWhitespaceOrEmpty(GPLTextfield.getText())
+                && !CheckText(GPLTextfield.getText()))
+        {
+            DefaultTableModel model = (DefaultTableModel) ChemicalTable.getModel();
+            model.addRow(new Object[] {ChemicalTextfield.getText(), this.TypeBox.getSelectedItem().toString(),GPLTextfield.getText(), "Delete"} );
+            this.ChemicalTextfield.setText(null);
+            GPLTextfield.setText(null);
+        }
+        else
+            JOptionPane.showMessageDialog(null, "Please check your Chemical Name input and GPL value.");
     }//GEN-LAST:event_AddtoTableActionPerformed
 
+     public boolean CheckText(String this_text)
+    {
+        if(this_text.isEmpty())
+            return true;
+        String regex = "[^0-9]";
+        Pattern p = Pattern.compile(regex);
+        this_text = this_text.replaceFirst("[.]", "");
+        
+        return p.matcher(this_text).find();
+    }
+    
+    public static boolean isNullOrWhitespaceOrEmpty(String s) {
+        return s == null || isWhitespace(s) || s.length() == 0;
+    }
+    
+    private static boolean isWhitespace(String s) {
+        int length = s.length();
+        if (length > 0) {
+            for (int i = 0; i < length; i++) {
+                char c = s.charAt(i);
+                if (!Character.isWhitespace(c)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddtoTable;

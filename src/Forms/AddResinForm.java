@@ -20,7 +20,12 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import DataEntities.Chemical;
+import Forms.HelpForm.ButtonColumn;
 import Forms.HelpForm.auto_complete;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -40,7 +45,44 @@ public class AddResinForm extends javax.swing.JFrame {
         initComponents();
         //InitializeChemicalTable();
         addChemicalTextBoxAutoComplete();
+        setTableModel();
+        AddDeleteColumn();
         
+    }
+    
+    public void AddDeleteColumn()
+    {
+        Action delete = new AbstractAction()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                JTable table = (JTable)e.getSource();
+                int modelRow = Integer.valueOf( e.getActionCommand() );
+                if(JOptionPane.YES_OPTION == 
+                        JOptionPane.showConfirmDialog(null, "Do you want to delete this row?","DELETE this item?", JOptionPane.YES_NO_OPTION))
+                
+                ((DefaultTableModel)table.getModel()).removeRow(modelRow);
+            }
+        };
+        ButtonColumn buttonColumn = new ButtonColumn(ChemicalTable, delete, ChemicalTable.getColumnCount()-1);
+        buttonColumn.setMnemonic(KeyEvent.VK_D);
+    }
+    
+    public void setTableModel()
+    {
+        DefaultTableModel tableModel = new DefaultTableModel( new Object [][] {
+            },
+            new String [] {
+                "Chemical", "GPL", "Delete"
+            }) {
+            
+            @Override
+            public boolean isCellEditable(int row, int column) {
+            //Only the third column
+                return column == 2;
+            }
+        };
+        ChemicalTable.setModel(tableModel);
     }
     
     public void addChemicalTextBoxAutoComplete()
@@ -122,10 +164,10 @@ public class AddResinForm extends javax.swing.JFrame {
         BgPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         ChemicalHeader.setBackground(new java.awt.Color(255, 255, 255));
-        ChemicalHeader.setFont(new java.awt.Font("Century Gothic", 0, 36)); // NOI18N
+        ChemicalHeader.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
         ChemicalHeader.setForeground(new java.awt.Color(255, 255, 255));
         ChemicalHeader.setText("Resin Program");
-        BgPanel.add(ChemicalHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(46, 22, 360, 50));
+        BgPanel.add(ChemicalHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 22, 360, 50));
 
         SaveBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         SaveBut.setText("Add Resin Process");
@@ -134,7 +176,7 @@ public class AddResinForm extends javax.swing.JFrame {
                 SaveButActionPerformed(evt);
             }
         });
-        BgPanel.add(SaveBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 500, 240, 40));
+        BgPanel.add(SaveBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 480, 240, 40));
 
         CancelBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         CancelBut.setText("Cancel");
@@ -143,22 +185,23 @@ public class AddResinForm extends javax.swing.JFrame {
                 CancelButActionPerformed(evt);
             }
         });
-        BgPanel.add(CancelBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(415, 500, 240, 40));
+        BgPanel.add(CancelBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(415, 480, 240, 40));
         CancelBut.getAccessibleContext().setAccessibleName("Add");
 
-        jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 22)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Resin Process Name :");
-        BgPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, -1, 34));
+        BgPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 85, -1, 34));
 
         processText.setFont(new java.awt.Font("Century Gothic", 0, 22)); // NOI18N
         processText.setName(""); // NOI18N
-        BgPanel.add(processText, new org.netbeans.lib.awtextra.AbsoluteConstraints(285, 90, 440, 34));
+        BgPanel.add(processText, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 85, 470, 34));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Resin Chemicals", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 22), new java.awt.Color(255, 255, 255))); // NOI18N
         jPanel3.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jPanel3.setOpaque(false);
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         ChemicalTable.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         ChemicalTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -166,32 +209,37 @@ public class AddResinForm extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Chemical", "GPL"
+                "Chemical", "GPL", "Delete"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class
+                java.lang.String.class, java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
-        ChemicalTable.setEnabled(false);
         ChemicalTable.setOpaque(false);
         ChemicalTable.setRowHeight(25);
         ChemicalTable.setRowSelectionAllowed(false);
         ChemicalTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(ChemicalTable);
 
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 81, 653, 228));
+
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Chemical :");
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 40, 97, 30));
+        jPanel3.add(ChemicalTextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 40, 210, 30));
 
         jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("GPL :");
+        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(345, 40, 60, 30));
+        jPanel3.add(GPLTextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(415, 40, 120, 30));
 
         AddtoTable.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         AddtoTable.setText("Add");
@@ -200,45 +248,9 @@ public class AddResinForm extends javax.swing.JFrame {
                 AddtoTableActionPerformed(evt);
             }
         });
+        jPanel3.add(AddtoTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(548, 40, 128, 30));
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 653, Short.MAX_VALUE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ChemicalTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(GPLTextfield, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(AddtoTable, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(8, 8, 8)))
-                .addContainerGap())
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ChemicalTextfield)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(GPLTextfield)
-                    .addComponent(AddtoTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        BgPanel.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 145, -1, -1));
+        BgPanel.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 135, 710, 320));
 
         getContentPane().add(BgPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 590));
 
@@ -349,7 +361,7 @@ public class AddResinForm extends javax.swing.JFrame {
         if(validChemicalName)
         {
             DefaultTableModel model = (DefaultTableModel) ChemicalTable.getModel();
-            model.addRow(new Object[] {ChemicalTextfield.getText(), GPLTextfield.getText()});
+            model.addRow(new Object[] {ChemicalTextfield.getText(), GPLTextfield.getText(), "Delete"});
             this.ChemicalTextfield.setText(null);
             GPLTextfield.setText(null);
         }
@@ -405,8 +417,8 @@ public class AddResinForm extends javax.swing.JFrame {
 
     public static boolean isNullOrWhitespace(String s) {
         return s == null || isWhitespace(s);
-
     }
+    
     private static boolean isWhitespace(String s) {
         int length = s.length();
         if (length > 0) {
