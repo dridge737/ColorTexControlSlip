@@ -5,6 +5,11 @@
  */
 package Forms;
 
+import javax.swing.JOptionPane;
+import java.io.*;
+import java.net.URISyntaxException;
+import java.security.CodeSource;
+
 /**
  *
  * @author Eldridge
@@ -47,11 +52,16 @@ public class MainWindow extends javax.swing.JFrame {
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 370, 160, -1));
 
         jButton1.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        jButton1.setText("jButton1");
+        jButton1.setText("Backup Database");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 130, 120));
 
         jButton2.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        jButton2.setText("jButton2");
+        jButton2.setText("Restore Database");
         jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 140, 130, 120));
 
         jButton3.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
@@ -104,6 +114,10 @@ public class MainWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Backupdbtosql();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -138,6 +152,53 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
     }
+    
+    public static void Backupdbtosql() {
+    try {
+
+        /*NOTE: Getting path to the Jar file being executed*/
+        /*NOTE: YourImplementingClass-> replace with the class executing the code*/
+        CodeSource codeSource = MainWindow.class.getProtectionDomain().getCodeSource();
+        File jarFile = new File(codeSource.getLocation().toURI().getPath());
+        String jarDir = jarFile.getParentFile().getPath();
+
+
+        /*NOTE: Creating Database Constraints*/
+        String dbName = "color_tex_processing";
+        String dbUser = "";
+        String dbPass = "";
+
+        /*NOTE: Creating Path Constraints for folder saving*/
+        /*NOTE: Here the backup folder is created for saving inside it*/
+        String folderPath = jarDir + "\\backup";
+
+        /*NOTE: Creating Folder if it does not exist*/
+        File f1 = new File(folderPath);
+        f1.mkdir();
+
+        /*NOTE: Creating Path Constraints for backup saving*/
+        /*NOTE: Here the backup is saved in a folder called backup with the name backup.sql*/
+         String savePath = "\"" + jarDir + "\\backup\\" + "backup.sql\"";
+
+        /*NOTE: Used to create a cmd command*/
+        String executeCmd = "C:\\xampp\\mysql\\bin\\mysqldump -u" + dbUser + " -p" + dbPass + " --database " + dbName + " -r " + savePath;
+
+        /*NOTE: Executing the command here*/
+        Process runtimeProcess = Runtime.getRuntime().exec(executeCmd);
+        int processComplete = runtimeProcess.waitFor();
+
+        /*NOTE: processComplete=0 if correctly executed, will contain other values if not*/
+        if (processComplete == 0) {
+            System.out.println("Backup Complete");
+        } else {
+            System.out.println("Backup Failure");
+        }
+
+        } 
+        catch (URISyntaxException | IOException | InterruptedException ex) {
+            JOptionPane.showMessageDialog(null, "Error at Backuprestore" + ex.getMessage());
+        }
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
