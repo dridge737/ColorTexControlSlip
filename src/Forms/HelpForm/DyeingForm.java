@@ -208,7 +208,7 @@ public class DyeingForm extends javax.swing.JFrame {
         });
         jPanel2.add(CancelBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 650, 280, 40));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 700));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 710));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
