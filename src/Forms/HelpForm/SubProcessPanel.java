@@ -279,6 +279,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
         ArrayList<DyeingChemical> ChemicalList = DyeingChemicalHandler.GetAllDyeingChemicalFromDyeingProcessID(DyeingProcessID);
         for (int OrderNum = 0; OrderNum < ChemicalTable.getRowCount(); OrderNum++) {
             DyeingChemical ThisDyeingChemical = GetThisRowOfValues(OrderNum, DyeingProcessID);
+            //IF Chemical Size is still within the number of row that has already been added
                 if(OrderNum < ChemicalList.size())
                 {
                     ThisDyeingChemical.setID(ChemicalList.get(OrderNum).getID());
@@ -305,8 +306,9 @@ public class SubProcessPanel extends javax.swing.JPanel {
          
          String Chemical = ChemicalTable.getModel().getValueAt(rowNumber, 0).toString();
          String Type = ChemicalTable.getModel().getValueAt(rowNumber, 1).toString();
-         String Value = ChemicalTable.getModel().getValueAt(rowNumber, 2).toString();
-            if(Chemical.length() > 0 && Type.length() > 0 && !CheckText(Value))
+         String State = ChemicalTable.getModel().getValueAt(rowNumber, 2).toString();
+         String Value = ChemicalTable.getModel().getValueAt(rowNumber, 3).toString();
+            if(Chemical.length() > 0 && !CheckText(Value))
             {
                 ThisChemical.setChemicalName(Chemical);
                 ThisChemical.setChemicalId(ChemicalHandler.GetChemicalIDFromChemicalName(ThisChemical.getChemicalName()));
@@ -316,6 +318,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
                 ThisDyeingChemical.setType(Type);
                 ThisDyeingChemical.setValue(Float.parseFloat(Value));
                 ThisDyeingChemical.setOrder(rowNumber+1);
+                ThisDyeingChemical.setState(State);
             }
             else
                 return null;
@@ -343,6 +346,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
         GPLTextfield = new javax.swing.JTextField();
         AddtoTable = new javax.swing.JButton();
         TypeBox = new javax.swing.JComboBox();
+        StateBox = new javax.swing.JComboBox();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(720, 400));
@@ -360,11 +364,11 @@ public class SubProcessPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Chemical", "Type", "Value", "Delete"
+                "Chemical", "Type", "Value", "State", "Delete"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -398,27 +402,33 @@ public class SubProcessPanel extends javax.swing.JPanel {
         TypeBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "GPL", "%" }));
         TypeBox.setBorder(null);
 
+        StateBox.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        StateBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "G", "L" }));
+        StateBox.setBorder(null);
+
         javax.swing.GroupLayout ChemPanel1Layout = new javax.swing.GroupLayout(ChemPanel1);
         ChemPanel1.setLayout(ChemPanel1Layout);
         ChemPanel1Layout.setHorizontalGroup(
             ChemPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ChemPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(ChemPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1)
+                .addGroup(ChemPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 687, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(ChemPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ChemicalTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ChemicalTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(StateBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(TypeBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(GPLTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(AddtoTable, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         ChemPanel1Layout.setVerticalGroup(
             ChemPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -430,7 +440,8 @@ public class SubProcessPanel extends javax.swing.JPanel {
                     .addComponent(TypeBox, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
                     .addComponent(GPLTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(AddtoTable, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(AddtoTable, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(StateBox, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -469,7 +480,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
                 && !CheckText(GPLTextfield.getText()))
         {
             DefaultTableModel model = (DefaultTableModel) ChemicalTable.getModel();
-            model.addRow(new Object[] {ChemicalTextfield.getText(), this.TypeBox.getSelectedItem().toString(),GPLTextfield.getText(), "Delete"} );
+            model.addRow(new Object[] {ChemicalTextfield.getText(), this.StateBox.getSelectedItem() , this.TypeBox.getSelectedItem().toString(),GPLTextfield.getText(), "Delete"} );
             this.ChemicalTextfield.setText(null);
             GPLTextfield.setText(null);
         }
@@ -517,6 +528,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
     private javax.swing.JTable ChemicalTable;
     private javax.swing.JTextField ChemicalTextfield;
     private javax.swing.JTextField GPLTextfield;
+    private javax.swing.JComboBox StateBox;
     private javax.swing.JLabel SubProcessLabel;
     private javax.swing.JTextField SubProcessText;
     private javax.swing.JComboBox TypeBox;

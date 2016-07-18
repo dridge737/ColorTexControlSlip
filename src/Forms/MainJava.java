@@ -7,9 +7,6 @@ package Forms;
  */
 import DataEntities.*;
 import Forms.HelpForm.DyeingForm;
-import Forms.HelpForm.JobOrderNewFram;
-import Unused.TestFrame;
-import Unused.TestResinForm;
 import Handlers.*;
 /**
  *
@@ -53,8 +50,6 @@ public class MainJava {
         //DyeingForm TestThisFrame = new DyeingForm("PROCESSTEST" , 2);
         //TestThisFrame.setVisible(true);
         
-        JobOrderNewFram thistry = new JobOrderNewFram();
-        thistry.setVisible(true);
                 
     }
     

@@ -16,6 +16,7 @@ public class DyeingChemical {
     private String Type;
     private float Value;
     private int Order;
+    private String State;
 
     /**
      * @return the ID
@@ -99,6 +100,20 @@ public class DyeingChemical {
      */
     public void setOrder(int Order) {
         this.Order = Order;
+    }
+
+    /**
+     * @return the State
+     */
+    public String getState() {
+        return State;
+    }
+
+    /**
+     * @param State the State to set
+     */
+    public void setState(String State) {
+        this.State = State;
     }
     
 }
