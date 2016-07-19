@@ -14,7 +14,7 @@ public class ProcessOrder {
     private int JobOrderID;
     private float Weight;
     private float VolumeH20;
-    private float RollLoad;
+    private String RollLoad;
     private float Roll;
 
     /**
@@ -60,19 +60,7 @@ public class ProcessOrder {
         this.VolumeH20 = VolumeH20;
     }
 
-    /**
-     * @return the RollLoad
-     */
-    public float getRollLoad() {
-        return RollLoad;
-    }
-
-    /**
-     * @param RollLoad the RollLoad to set
-     */
-    public void setRollLoad(float RollLoad) {
-        this.RollLoad = RollLoad;
-    }
+    
 
     /**
      * @return the Roll
@@ -100,6 +88,20 @@ public class ProcessOrder {
      */
     public void setJobOrderID(int JobOrderID) {
         this.JobOrderID = JobOrderID;
+    }
+
+    /**
+     * @param RollLoad the RollLoad to set
+     */
+    public void setRollLoad(String RollLoad) {
+        this.RollLoad = RollLoad;
+    }
+
+    /**
+     * @return the RollLoad
+     */
+    public String getRollLoad() {
+        return RollLoad;
     }
 
    

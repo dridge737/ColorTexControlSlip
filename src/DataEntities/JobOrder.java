@@ -18,7 +18,7 @@ public class JobOrder {
     private int DesignID;
     private int ColorID;
     private int CustomerID;
-    private Date jobDate;
+    private String jobDate;
 
     /**
      * @return the ID
@@ -107,14 +107,14 @@ public class JobOrder {
     /**
      * @return the jobDate
      */
-    public Date getJobDate() {
+    public String getJobDate() {
         return jobDate;
     }
 
     /**
      * @param jobDate the jobDate to set
      */
-    public void setJobDate(Date jobDate) {
+    public void setJobDate(String jobDate) {
         this.jobDate = jobDate;
     }
 }
