@@ -16,19 +16,8 @@ import DataEntities.JobOrder;
 import DataEntities.ProcessOrder;
 import Handlers.DesignHandler;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Toolkit;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import javax.swing.RowFilter;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
-import java.awt.FlowLayout;
-import java.awt.event.*;
-import java.util.Date;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.text.Format;
 import java.util.Locale;
@@ -83,7 +72,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         Weight = new javax.swing.JTextField();
         VolumeTextField = new javax.swing.JTextField();
-        LiquoRatioDropDown = new javax.swing.JComboBox<String>();
+        LiquidRatioDropDown = new javax.swing.JComboBox<String>();
         jLabel9 = new javax.swing.JLabel();
         RollLoad = new javax.swing.JTextField();
         Cancel = new javax.swing.JButton();
@@ -190,11 +179,6 @@ public class JobOrderForm extends javax.swing.JFrame {
         jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 130, -1, 30));
 
         Weight.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        Weight.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                WeightActionPerformed(evt);
-            }
-        });
         Weight.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 WeightFocusLost(evt);
@@ -210,14 +194,14 @@ public class JobOrderForm extends javax.swing.JFrame {
         VolumeTextField.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jPanel2.add(VolumeTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(184, 131, 460, -1));
 
-        LiquoRatioDropDown.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        LiquoRatioDropDown.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Liquid Ratio" }));
-        LiquoRatioDropDown.addActionListener(new java.awt.event.ActionListener() {
+        LiquidRatioDropDown.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        LiquidRatioDropDown.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Liquid Ratio" }));
+        LiquidRatioDropDown.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LiquoRatioDropDownActionPerformed(evt);
+                LiquidRatioDropDownActionPerformed(evt);
             }
         });
-        jPanel2.add(LiquoRatioDropDown, new org.netbeans.lib.awtextra.AbsoluteConstraints(229, 86, 415, -1));
+        jPanel2.add(LiquidRatioDropDown, new org.netbeans.lib.awtextra.AbsoluteConstraints(229, 86, 415, -1));
 
         jLabel9.setBackground(new java.awt.Color(255, 255, 255));
         jLabel9.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
@@ -238,7 +222,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                 CancelActionPerformed(evt);
             }
         });
-        MainPanel.add(Cancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(425, 470, 205, 40));
+        MainPanel.add(Cancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(425, 465, 205, 40));
 
         NextButton.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         NextButton.setText("Next");
@@ -247,7 +231,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                 NextButtonActionPerformed(evt);
             }
         });
-        MainPanel.add(NextButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 470, 205, 40));
+        MainPanel.add(NextButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 465, 205, 40));
 
         ChemicalHeader.setBackground(new java.awt.Color(255, 255, 255));
         ChemicalHeader.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
@@ -303,24 +287,24 @@ public class JobOrderForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_ColorDropDownListActionPerformed
 
-    private void LiquoRatioDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LiquoRatioDropDownActionPerformed
-       String weight = Weight.getText().toString();    
-       String liquoRatio = LiquoRatioDropDown.getSelectedItem().toString();
-        if(!weight.equals("") && !liquoRatio.equals("Liquo Ratio"))
-        {
-            computeForVolume();
-        }        
-    }//GEN-LAST:event_LiquoRatioDropDownActionPerformed
+    private void LiquidRatioDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LiquidRatioDropDownActionPerformed
+        ComputeForVolume();     
+    }//GEN-LAST:event_LiquidRatioDropDownActionPerformed
 
     private void WeightFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_WeightFocusLost
-        String weight = Weight.getText().toString();    
-       String liquoRatio = LiquoRatioDropDown.getSelectedItem().toString();
-        if(!weight.equals("") && !liquoRatio.equals("Liquo Ratio"))
-        {
-            computeForVolume();
-        }   
+        ComputeForVolume();
     }//GEN-LAST:event_WeightFocusLost
 
+    private void ComputeForVolume()
+    {
+        String weight = Weight.getText();    
+       String liquidRatio = LiquidRatioDropDown.getSelectedItem().toString();
+        if(!weight.equals("") && !liquidRatio.equals("Liquid Ratio"))
+        {
+            computeForVolume();
+        } 
+    }
+    
     private void MachineDropDownListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MachineDropDownListActionPerformed
         
         Machine machineDetails = new Machine();
@@ -351,21 +335,16 @@ public class JobOrderForm extends javax.swing.JFrame {
         thisMachine.setMinVolume(machineDetails.getMinVolume());
     }//GEN-LAST:event_MachineDropDownListActionPerformed
 
-    private void WeightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WeightActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_WeightActionPerformed
-
     private void DesignDropDownListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DesignDropDownListActionPerformed
         Design designDetails = new Design();
         DesignHandler handler = new DesignHandler();
         int designId = -1;
-        String designName = "";
                 
         //if(!designName.equals(""))
         if(!DesignDropDownList.getSelectedItem().toString().equals("Choose Design") 
                 && !(DesignDropDownList.getSelectedItem().toString().length() > 1))
         {
-            designName = DesignDropDownList.getSelectedItem().toString();
+            String designName = DesignDropDownList.getSelectedItem().toString();
             thisDesign.setDesignName(designName);
             designId = handler.GetDesignIDFromName(designName);
             thisDesign.setDesignId(designId);
@@ -389,7 +368,6 @@ public class JobOrderForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         SetJobOrderInformationFromTextBox();
         SetProcessOrderInformation();
-        
     }//GEN-LAST:event_NextButtonActionPerformed
 
     private void SetProcessOrderInformation()
@@ -451,26 +429,26 @@ public class JobOrderForm extends javax.swing.JFrame {
         int weightMultiplier = 0;
         double volume = 0;
         
-        Object selected = LiquoRatioDropDown.getSelectedItem();
-        int weight = Integer.parseInt(Weight.getText().toString());
+        String selected = LiquidRatioDropDown.getSelectedItem().toString();
+        int weight = Integer.parseInt(Weight.getText());
         
-        if(selected.toString().equals("1:6"))
+        if(selected.equals("1:6"))
         {
             weightMultiplier = 6;
         }
-        else if(selected.toString().equals("1:8"))
+        else if(selected.equals("1:8"))
         {
             weightMultiplier = 8;
         }
-        else if(selected.toString().equals("1:9"))
+        else if(selected.equals("1:9"))
         {
             weightMultiplier = 9;
         }
-        else if(selected.toString().equals("1:10"))
+        else if(selected.equals("1:10"))
         {
             weightMultiplier = 10;
         }
-        else if(selected.toString().equals("1:12"))
+        else if(selected.equals("1:12"))
         {
             weightMultiplier = 12;
         }
@@ -482,17 +460,17 @@ public class JobOrderForm extends javax.swing.JFrame {
     
     private void populateLiquoRatioDropDown()
     {
-        ArrayList<String> LiquoRatioList = new ArrayList<String>();
+        ArrayList<String> LiquidRatioList = new ArrayList<String>();
         
-        LiquoRatioList.add("1:6");
-        LiquoRatioList.add("1:8");
-        LiquoRatioList.add("1:9");
-        LiquoRatioList.add("1:10");
-        LiquoRatioList.add("1:12");
+        LiquidRatioList.add("1:6");
+        LiquidRatioList.add("1:8");
+        LiquidRatioList.add("1:9");
+        LiquidRatioList.add("1:10");
+        LiquidRatioList.add("1:12");
         
-        for(int x=0; x<LiquoRatioList.size(); x++)
+        for(int x=0; x<LiquidRatioList.size(); x++)
         {
-            LiquoRatioDropDown.addItem(LiquoRatioList.get(x));
+            LiquidRatioDropDown.addItem(LiquidRatioList.get(x));
         }
 
     }
@@ -514,7 +492,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         if(MachineList != null){
             for(int x=0; x<MachineList.size(); x++)
             {
-                MachineDropDownList.addItem(MachineList.get(x).getMachineName().toString());
+                MachineDropDownList.addItem(MachineList.get(x).getMachineName());
             }
         }  
         
@@ -526,7 +504,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         if(ColorList != null){
             for(int x=0; x<ColorList.size(); x++)
             {
-                ColorDropDownList.addItem(ColorList.get(x).toString());
+                ColorDropDownList.addItem(ColorList.get(x));
             }
         }  
     }
@@ -537,7 +515,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         if(DesignList != null){
             for(int x=0; x<DesignList.size(); x++)
             {
-                DesignDropDownList.addItem(DesignList.get(x).toString());
+                DesignDropDownList.addItem(DesignList.get(x));
             }
         }     
     }
@@ -548,7 +526,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         if(CustomerList != null){
             for(int x=0; x<CustomerList.size(); x++)
             {
-                CustomerDropDownList.addItem(CustomerList.get(x).toString());
+                CustomerDropDownList.addItem(CustomerList.get(x));
             }
         }     
     }
@@ -595,7 +573,7 @@ public class JobOrderForm extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> CustomerDropDownList;
     private javax.swing.JComboBox<String> DesignDropDownList;
     private javax.swing.JTextField JobOrder;
-    private javax.swing.JComboBox<String> LiquoRatioDropDown;
+    private javax.swing.JComboBox<String> LiquidRatioDropDown;
     private javax.swing.JComboBox<String> MachineDropDownList;
     private javax.swing.JPanel MainPanel;
     private javax.swing.JButton NextButton;

@@ -1431,7 +1431,7 @@ public class ColorTextControlSlipRepository {
             preparedStmt.setInt(itemNumber++ , newJobOrder.getDesignID());
             preparedStmt.setInt(itemNumber++ , newJobOrder.getColorID());
             preparedStmt.setInt(itemNumber++ , newJobOrder.getCustomerID());
-            preparedStmt.setDate(itemNumber++ , newJobOrder.getJobDate());
+            preparedStmt.setString(itemNumber++ , newJobOrder.getJobDate());
             preparedStmt.executeUpdate();
             
             added = true;
@@ -1462,7 +1462,7 @@ public class ColorTextControlSlipRepository {
             preparedStmt.setInt(itemNumber++, thisJobOrder.getDesignID());
             preparedStmt.setInt(itemNumber++, thisJobOrder.getColorID());
             preparedStmt.setInt(itemNumber++, thisJobOrder.getCustomerID());
-            preparedStmt.setDate(itemNumber++, thisJobOrder.getJobDate());
+            preparedStmt.setString(itemNumber++, thisJobOrder.getJobDate());
             preparedStmt.setInt(itemNumber++, thisJobOrder.getID());
             
             preparedStmt.executeUpdate();
@@ -1551,7 +1551,7 @@ public class ColorTextControlSlipRepository {
                 thisJobOrder.setDesignID(rs.getInt("DesignID") );
                 thisJobOrder.setColorID(rs.getInt("ColorID"));
                 thisJobOrder.setCustomerID(rs.getInt("CutomerID"));
-                thisJobOrder.setJobDate(rs.getDate("Date"));
+                thisJobOrder.setJobDate(rs.getString("Date"));
             }
         }
         catch(SQLException ex){
@@ -1773,7 +1773,7 @@ public class ColorTextControlSlipRepository {
             preparedStmt.setInt(1, thisProcessOrder.getJobOrderID());
             preparedStmt.setFloat(2, thisProcessOrder.getWeight());
             preparedStmt.setFloat(3, thisProcessOrder.getVolumeH20());
-            preparedStmt.setFloat(4, thisProcessOrder.getRollLoad());
+            preparedStmt.setString(4, thisProcessOrder.getRollLoad());
             preparedStmt.setFloat(5, thisProcessOrder.getRoll());
             
             preparedStmt.executeUpdate();
@@ -1803,7 +1803,7 @@ public class ColorTextControlSlipRepository {
             preparedStmt.setInt(1, thisProcessOrder.getJobOrderID());
             preparedStmt.setFloat(2, thisProcessOrder.getWeight());
             preparedStmt.setFloat(3, thisProcessOrder.getVolumeH20());
-            preparedStmt.setFloat(4, thisProcessOrder.getRollLoad());
+            preparedStmt.setString(4, thisProcessOrder.getRollLoad());
             preparedStmt.setFloat(5, thisProcessOrder.getRoll());
             preparedStmt.setInt(6, thisProcessOrder.getID());
             preparedStmt.executeUpdate();
