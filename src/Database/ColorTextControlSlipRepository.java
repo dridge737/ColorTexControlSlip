@@ -1799,7 +1799,7 @@ public class ColorTextControlSlipRepository {
         try
         {
             conn = db.getConnection();
-            String query = "UPDATE process_order SET JobOrderID = ? , Weight = ?, VolH20 = ?, RollLoad = ? , Roll = ? WHERE ID = ?";
+            String query = "UPDATE process_order SET JobOrderID = ? , Weight = ?, VolH20 = ?, RollLoad = ? , Roll = ? , DyeingProgramID = ?, ResinProgramID = ? WHERE ID = ?";
 
             preparedStmt = conn.prepareStatement(query);
             preparedStmt.setInt(1, thisProcessOrder.getJobOrderID());

@@ -116,35 +116,35 @@ public class JobOrderForm extends javax.swing.JFrame {
         MainPanel.add(ColorDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 140, 190, 30));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel1.setText("Color :");
         MainPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 140, 70, 30));
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel2.setText("Customer :");
         MainPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 125, 30));
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel3.setText("Design :");
         MainPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 125, 30));
 
         jLabel4.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel4.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel4.setText("Job Order :");
         MainPanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 125, 30));
 
         jLabel6.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel6.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel6.setText("Date :");
@@ -241,7 +241,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         ChemicalHeader.setText("Dyeing Control Slip");
         MainPanel.add(ChemicalHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 22, -1, -1));
 
-        dateSpinner.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        dateSpinner.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         dateSpinner.setModel(new javax.swing.SpinnerDateModel());
         MainPanel.add(dateSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 90, 190, 30));
         dateSpinner.setEditor(new JSpinner.DateEditor(dateSpinner, "MM/dd/yyyy"));
