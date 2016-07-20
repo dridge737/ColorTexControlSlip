@@ -1767,7 +1767,7 @@ public class ColorTextControlSlipRepository {
         boolean added = false;
         try {
             conn = db.getConnection();
-            String query = "INSERT INTO process_order (JobOrderID, Weight, VolH20, RollLoad, Roll) VALUES (?, ?, ?, ?, ?)";
+            String query = "INSERT INTO process_order (JobOrderID, Weight, VolH20, RollLoad, Roll, DyeingProgramID, ResinProgramID) VALUES (?, ?, ?, ?, ?)";
 
             preparedStmt = conn.prepareStatement(query);
             preparedStmt.setInt(1, thisProcessOrder.getJobOrderID());
@@ -1775,6 +1775,8 @@ public class ColorTextControlSlipRepository {
             preparedStmt.setFloat(3, thisProcessOrder.getVolumeH20());
             preparedStmt.setString(4, thisProcessOrder.getRollLoad());
             preparedStmt.setFloat(5, thisProcessOrder.getRoll());
+            preparedStmt.setInt(6, thisProcessOrder.getDyeingProgramID());
+            preparedStmt.setInt(7, thisProcessOrder.getResinProgramID());
             
             preparedStmt.executeUpdate();
             

@@ -16,6 +16,9 @@ public class ProcessOrder {
     private float VolumeH20;
     private String RollLoad;
     private float Roll;
+    private int DyeingProgramID;
+    private int ResinProgramID;
+            
 
     /**
      * @return the ID
@@ -102,6 +105,34 @@ public class ProcessOrder {
      */
     public String getRollLoad() {
         return RollLoad;
+    }
+
+    /**
+     * @return the DyeingProgramID
+     */
+    public int getDyeingProgramID() {
+        return DyeingProgramID;
+    }
+
+    /**
+     * @param DyeingProgramID the DyeingProgramID to set
+     */
+    public void setDyeingProgramID(int DyeingProgramID) {
+        this.DyeingProgramID = DyeingProgramID;
+    }
+
+    /**
+     * @return the ResinProgramID
+     */
+    public int getResinProgramID() {
+        return ResinProgramID;
+    }
+
+    /**
+     * @param ResinProgramID the ResinProgramID to set
+     */
+    public void setResinProgramID(int ResinProgramID) {
+        this.ResinProgramID = ResinProgramID;
     }
 
    

@@ -15,6 +15,8 @@ import DataEntities.Design;
 import DataEntities.JobOrder;
 import DataEntities.ProcessOrder;
 import Handlers.DesignHandler;
+import Handlers.JobHandler;
+import Handlers.ProcessOrderHandler;
 import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -366,22 +368,38 @@ public class JobOrderForm extends javax.swing.JFrame {
     
     private void NextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextButtonActionPerformed
         // TODO add your handling code here:
-        SetJobOrderInformationFromTextBox();
-        SetProcessOrderInformation();
+        if(SetJobOrderInformationFromTextBox())
+            if(SetProcessOrderInformation())
+            {
+                ViewDyeingProgram chooseDyeingProgram = new ViewDyeingProgram();
+                chooseDyeingProgram.setVisible(true);
+            }
+        
     }//GEN-LAST:event_NextButtonActionPerformed
 
-    private void SetProcessOrderInformation()
+    private boolean SetProcessOrderInformation()
     {
         if(thisJob.getID() > 0)
         {
             thisProcessOrder.setJobOrderID(thisJob.getID());
-            thisProcessOrder.setRollLoad(RollLoad.getText());
-            thisProcessOrder.setVolumeH20(Float.parseFloat(this.VolumeTextField.getText()));
-            thisProcessOrder.setWeight(Float.parseFloat(this.Weight.getText()));
-            
+            if(this.VolumeTextField.getText().length() > 0)
+            {
+                thisProcessOrder.setVolumeH20(Float.parseFloat(this.VolumeTextField.getText()));
+                if(this.Weight.getText().length() > 0)
+                {
+                    thisProcessOrder.setWeight(Float.parseFloat(this.Weight.getText()));
+                    thisProcessOrder.setRollLoad(RollLoad.getText());
+                    ProcessOrderHandler ProcessHandler = new ProcessOrderHandler();
+                    ProcessHandler.AddNewProcessOrder(thisProcessOrder);
+                }
+            }
+            else
+                JOptionPane.showMessageDialog(null, "Please check the value in Volume of Water.");
         }
+        
+        return false;
     }
-    private void SetJobOrderInformationFromTextBox()
+    private boolean SetJobOrderInformationFromTextBox()
     {
         if(thisCustomer.getCustomerId() > 0)
         {
@@ -399,6 +417,9 @@ public class JobOrderForm extends javax.swing.JFrame {
                         {
                             thisJob.setDrNumber(JobOrder.getText());
                             thisJob.setJobDate(get_date_from_spinner(dateSpinner));
+                            
+                            JobHandler thisJobHandler = new JobHandler();
+                            thisJobHandler.AddNewJobOrder(thisJob);
                         }
                         else
                         JOptionPane.showMessageDialog(null, "Please check the Job Order number.");  
@@ -414,6 +435,8 @@ public class JobOrderForm extends javax.swing.JFrame {
         }
         else
         JOptionPane.showMessageDialog(null, "Please check the Customer Name.");
+        
+        return false;
     }
     
     private void CancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelActionPerformed
