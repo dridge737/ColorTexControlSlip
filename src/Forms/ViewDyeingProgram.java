@@ -215,7 +215,10 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
 
     private void SelectButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectButActionPerformed
         // TODO add your handling code here:
-        this.DyeingTable.getSelectedRow();
+        int selectedRow = this.DyeingTable.getSelectedRow();
+       
+        DyeingForm thisDyeingForm = new DyeingForm( DyeingTable.getModel().getValueAt(selectedRow, 0).toString(), 3);
+        thisDyeingForm.setVisible(true);
     }//GEN-LAST:event_SelectButActionPerformed
 
     private void ResinLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ResinLabelMouseEntered

@@ -3,15 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Forms.HelpForm;
+package Forms;
 
 import DataEntities.DyeingProcess;
 import java.awt.Component;
 import java.util.ArrayList;
 import DataEntities.DyeingProgram;
+import Forms.HelpForm.ProcessPanel;
 import Handlers.ChemicalHandler;
 import Handlers.DyeingProcessHandler;
 import Handlers.DyeingProgramHandler;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -37,7 +39,7 @@ public class DyeingForm extends javax.swing.JFrame {
      */
     public DyeingForm() {
         initComponents();
-        
+        WindowType = 1;
         Process.add(new ProcessPanel(), "Process 1", NumberOfProcessTabs++);
         AddThePlusTab();
         //this.jPanel2.add(ThisPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 80, 780, 550));
@@ -57,12 +59,18 @@ public class DyeingForm extends javax.swing.JFrame {
         WindowType = type;
         if(WindowType == 1)
         {
-            Header.setText("Dyeing Program");
+            Header.setText("Add Dyeing Program");
+            SaveBut.setText("Save");
         }
         else if(WindowType == 2)
         {
             Header.setText("Update Dyeing Program");
-            SaveBut.setText("Update Dyeing Program");
+            SaveBut.setText("Update");
+        }
+        else if(WindowType == 3)
+        {
+            Header.setText("Dyeing Program");
+            SaveBut.setText("Next");
         }
         SetDyeingProgramFromProgramName(DyeingProgramName);
         AddThePlusTab();
@@ -280,6 +288,15 @@ public class DyeingForm extends javax.swing.JFrame {
             AddDyeingProgram();
         else if(this.WindowType == 2)
             UpdateDyeingProgram();
+        else if(this.WindowType == 3)
+        {
+            UpdateDyeingProgram();
+            if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Do you want to include a Resin Program with this Job?","Add Resin Program?", JOptionPane.YES_NO_OPTION))
+            {
+                ViewResinProgram thisResinProgram = new ViewResinProgram();
+                thisResinProgram.setVisible(true);
+            }
+        }
     }//GEN-LAST:event_SaveButActionPerformed
 
     private void CancelButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButActionPerformed
