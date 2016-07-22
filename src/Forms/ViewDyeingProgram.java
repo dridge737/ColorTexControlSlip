@@ -6,7 +6,6 @@
 package Forms;
 
 import DataEntities.DyeingProgram;
-import Handlers.ColorHandler;
 import Handlers.DyeingProgramHandler;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -51,6 +50,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         SearchTextBox = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Search Dyeing Program");
 
         BgPanel.setBackground(new java.awt.Color(102, 102, 102));
         BgPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
