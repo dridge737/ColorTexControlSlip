@@ -110,7 +110,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         BgPanel.add(BackBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 380, 220, 42));
 
         SelectBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
-        SelectBut.setText("Next");
+        SelectBut.setText("Select");
         SelectBut.setToolTipText("");
         SelectBut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

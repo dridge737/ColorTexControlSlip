@@ -66,7 +66,7 @@ public class ReviewForm extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Resin Process Name :");
+        jLabel3.setText("Job Order Number :");
         BgPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 85, -1, 34));
 
         processText.setFont(new java.awt.Font("Century Gothic", 0, 22)); // NOI18N
