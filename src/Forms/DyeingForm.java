@@ -186,7 +186,7 @@ public class DyeingForm extends javax.swing.JFrame {
         CancelBut = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Dyeing Program");
+        setTitle("Color Text Control Slip");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(102, 102, 102));

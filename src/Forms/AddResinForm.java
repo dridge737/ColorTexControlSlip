@@ -156,7 +156,7 @@ public class AddResinForm extends javax.swing.JFrame {
         AddtoTable = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Resin Program");
+        setTitle("Color Text Control Slip");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         BgPanel.setBackground(new java.awt.Color(102, 102, 102));

@@ -142,6 +142,7 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
         BackButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Color Text Control Slip");
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));

@@ -83,6 +83,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         dateSpinner = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Color Text Control Slip");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         MainPanel.setBackground(new java.awt.Color(102, 102, 102));

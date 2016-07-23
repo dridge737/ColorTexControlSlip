@@ -58,7 +58,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         SearchTextBox = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Search Dyeing Program");
+        setTitle("Color Text Control Slip");
 
         BgPanel.setBackground(new java.awt.Color(102, 102, 102));
         BgPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
