@@ -13,18 +13,14 @@ import Database.ColorTextControlSlipRepository;
  * @author Eldridge
  */
 public class JobHandler {
-    public void AddNewJobOrder(JobOrder newJobOrder)
+    public int AddNewJobOrder(JobOrder newJobOrder)
     {
-        boolean isSuccessful = false;
+        //boolean isSuccessful = false;
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        isSuccessful = repo.AddJobOrder(newJobOrder);
+        return repo.AddJobOrder(newJobOrder);
         
-        if(isSuccessful == false)
-        {
-            //enter validation 
-        }
     }
     
     public void UpdateJobOrder(JobOrder thisJobOrder)

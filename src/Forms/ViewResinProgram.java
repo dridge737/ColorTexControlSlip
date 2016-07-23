@@ -5,6 +5,7 @@
  */
 package Forms;
 
+import DataEntities.ProcessOrder;
 import DataEntities.ResinProgram;
 import Handlers.ColorHandler;
 import Handlers.ResinProgramHandler;
@@ -27,14 +28,27 @@ public class ViewResinProgram extends javax.swing.JFrame {
 
     DefaultTableModel model = new DefaultTableModel();
     ResinProgram thisResin = new ResinProgram();
-    
+    ProcessOrder thisProcessOrder;
     /**
      * Creates new form ViewResinProgram
      */
     public ViewResinProgram() {
+        initialize();
+    }
+    
+    private void initialize()
+    {
         initComponents();
         this.set_to_center();
         this.GetUpdatedTable();
+    }
+    
+    public ViewResinProgram(ProcessOrder currentProcessOrder) {
+        initialize();
+        thisProcessOrder = currentProcessOrder;
+        SelectBut1.setText("Next");
+        DeleteBut.setVisible(false);
+        Header.setText("Dyeing Control Slip : Page 4/5");
     }
 
     /**
@@ -47,7 +61,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
     private void initComponents() {
 
         BgPanel = new javax.swing.JPanel();
-        ResinHeader = new javax.swing.JLabel();
+        Header = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         ResinTable = new javax.swing.JTable();
         ResinLabel = new javax.swing.JLabel();
@@ -61,12 +75,12 @@ public class ViewResinProgram extends javax.swing.JFrame {
         BgPanel.setBackground(new java.awt.Color(102, 102, 102));
         BgPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        ResinHeader.setBackground(new java.awt.Color(255, 255, 255));
-        ResinHeader.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
-        ResinHeader.setForeground(new java.awt.Color(255, 255, 255));
-        ResinHeader.setText("Resin Program List");
-        BgPanel.add(ResinHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 19, 360, 40));
-        ResinHeader.getAccessibleContext().setAccessibleName("ResinProgram");
+        Header.setBackground(new java.awt.Color(255, 255, 255));
+        Header.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
+        Header.setForeground(new java.awt.Color(255, 255, 255));
+        Header.setText("Resin Program List");
+        BgPanel.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 19, 470, 40));
+        Header.getAccessibleContext().setAccessibleName("ResinProgram");
 
         jScrollPane1.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
 
@@ -254,16 +268,21 @@ public class ViewResinProgram extends javax.swing.JFrame {
     }//GEN-LAST:event_DeleteButActionPerformed
 
     private void SelectBut1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectBut1ActionPerformed
-        String resinProgramName = ResinTable.getModel().getValueAt(ResinTable.getSelectedRow(),0).toString();
+        if(ResinTable.getSelectedRowCount() > 0)
+        {
+            String resinProgramName = ResinTable.getModel().getValueAt(ResinTable.getSelectedRow(),0).toString();
+            if(!resinProgramName.isEmpty())
+            {
+            //    new ViewResinProgramChemicals(resinProgramName).setVisible(true);
+                    
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "Please select a resin program to be used.");
+            }
+        }
         
-        if(resinProgramName != null && !resinProgramName.equals(""))
-        {
-        //    new ViewResinProgramChemicals(resinProgramName).setVisible(true);
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(this, "Please select a resin program.");
-        }
+        
     }//GEN-LAST:event_SelectBut1ActionPerformed
 
     /**
@@ -305,7 +324,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
     private javax.swing.JButton BackBut;
     private javax.swing.JPanel BgPanel;
     private javax.swing.JButton DeleteBut;
-    private javax.swing.JLabel ResinHeader;
+    private javax.swing.JLabel Header;
     private javax.swing.JLabel ResinLabel;
     private javax.swing.JTable ResinTable;
     private javax.swing.JTextField SearchTextBox;

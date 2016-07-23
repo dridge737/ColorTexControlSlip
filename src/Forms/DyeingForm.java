@@ -9,6 +9,7 @@ import DataEntities.DyeingProcess;
 import java.awt.Component;
 import java.util.ArrayList;
 import DataEntities.DyeingProgram;
+import DataEntities.ProcessOrder;
 import Forms.HelpForm.ProcessPanel;
 import Handlers.ChemicalHandler;
 import Handlers.DyeingProcessHandler;
@@ -33,6 +34,7 @@ public class DyeingForm extends javax.swing.JFrame {
     private int NumberOfProcessTabs = 0;
     DyeingProgram thisDyeingProgram = new DyeingProgram();
     private int WindowType = 0;
+    ProcessOrder thisProcessOrder;
     
     /**
      * Creates new form ResinForm
@@ -67,10 +69,22 @@ public class DyeingForm extends javax.swing.JFrame {
             Header.setText("Update Dyeing Program");
             SaveBut.setText("Update");
         }
-        else if(WindowType == 3)
+        SetDyeingProgramFromProgramName(DyeingProgramName);
+        AddThePlusTab();
+    }
+    
+    public DyeingForm(String DyeingProgramName, int type, ProcessOrder ThisProcessOrder)
+    {
+        initComponents();
+        WindowType = type;
+        
+        if(WindowType == 3)
         {
             Header.setText("Dyeing Program");
             SaveBut.setText("Next");
+            CancelBut.setText("Back");
+            Header.setText("Dyeing Control Slip : Page 3/5");
+            thisProcessOrder = ThisProcessOrder;
         }
         SetDyeingProgramFromProgramName(DyeingProgramName);
         AddThePlusTab();
@@ -184,7 +198,7 @@ public class DyeingForm extends javax.swing.JFrame {
         Header.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
         Header.setForeground(new java.awt.Color(255, 255, 255));
         Header.setText("Add Dyeing Program");
-        jPanel2.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 360, 40));
+        jPanel2.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 710, 40));
 
         SaveBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         SaveBut.setText("Add Dyeing Program");
@@ -264,7 +278,7 @@ public class DyeingForm extends javax.swing.JFrame {
         DyeingProgramHandler thisDyeingProgramHandler = new DyeingProgramHandler();
         
         thisDyeingProgram.setDyeingProgramName(this.ProgramNameText.getText());
-       
+        thisProcessOrder.setDyeingProgramID(thisDyeingProgram.getDyeingProgramId());
         //Returns True If Update is Successful then proceed to update other
         if(thisDyeingProgramHandler.UpdateDyeingProgram(thisDyeingProgram))
         {
@@ -291,17 +305,33 @@ public class DyeingForm extends javax.swing.JFrame {
         else if(this.WindowType == 3)
         {
             UpdateDyeingProgram();
+            
             if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Do you want to include a Resin Program with this Job?","Add Resin Program?", JOptionPane.YES_NO_OPTION))
             {
-                ViewResinProgram thisResinProgram = new ViewResinProgram();
+                ViewResinProgram thisResinProgram = new ViewResinProgram(thisProcessOrder);
                 thisResinProgram.setVisible(true);
+            }
+            else
+            {
+                
             }
         }
     }//GEN-LAST:event_SaveButActionPerformed
 
     private void CancelButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButActionPerformed
         // TODO add your handling code here:
-        this.dispose();
+        if(this.WindowType == 3)
+        {
+            ViewDyeingProgram chooseDyeingProgram = new ViewDyeingProgram(this.thisProcessOrder);
+            chooseDyeingProgram.setVisible(true);
+            this.dispose();
+        }
+        else
+        if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Do you want to Cancel this Dyeing Program?","Cancel Dyeing Program?", JOptionPane.YES_NO_OPTION))
+        {
+            this.dispose();
+        }
+        
     }//GEN-LAST:event_CancelButActionPerformed
 
     /**

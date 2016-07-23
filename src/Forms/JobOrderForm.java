@@ -238,7 +238,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         ChemicalHeader.setBackground(new java.awt.Color(255, 255, 255));
         ChemicalHeader.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
         ChemicalHeader.setForeground(new java.awt.Color(255, 255, 255));
-        ChemicalHeader.setText("Dyeing Control Slip");
+        ChemicalHeader.setText("Dyeing Control Slip : Page 1/5");
         MainPanel.add(ChemicalHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 22, -1, -1));
 
         dateSpinner.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
@@ -371,16 +371,15 @@ public class JobOrderForm extends javax.swing.JFrame {
         if(SetJobOrderInformationFromTextBox())
             if(SetProcessOrderInformation())
             {
-                ViewDyeingProgram chooseDyeingProgram = new ViewDyeingProgram();
+                ViewDyeingProgram chooseDyeingProgram = new ViewDyeingProgram(this.thisProcessOrder);
                 chooseDyeingProgram.setVisible(true);
+                this.dispose();
             }
         
     }//GEN-LAST:event_NextButtonActionPerformed
 
     private boolean SetProcessOrderInformation()
     {
-        if(thisJob.getID() > 0)
-        {
             thisProcessOrder.setJobOrderID(thisJob.getID());
             if(this.VolumeTextField.getText().length() > 0)
             {
@@ -395,8 +394,7 @@ public class JobOrderForm extends javax.swing.JFrame {
             }
             else
                 JOptionPane.showMessageDialog(null, "Please check the value in Volume of Water.");
-        }
-        
+            
         return false;
     }
     private boolean SetJobOrderInformationFromTextBox()
@@ -419,7 +417,14 @@ public class JobOrderForm extends javax.swing.JFrame {
                             thisJob.setJobDate(get_date_from_spinner(dateSpinner));
                             
                             JobHandler thisJobHandler = new JobHandler();
-                            thisJobHandler.AddNewJobOrder(thisJob);
+                            int JobOrderID = thisJobHandler.AddNewJobOrder(thisJob);
+                            if(JobOrderID == - 1)
+                                JOptionPane.showMessageDialog(null, "Job Order is not successfully added.");
+                            else
+                            {
+                                thisJob.setID(JobOrderID);
+                                return true;
+                            }
                         }
                         else
                         JOptionPane.showMessageDialog(null, "Please check the Job Order number.");  

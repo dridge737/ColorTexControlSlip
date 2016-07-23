@@ -6,6 +6,7 @@
 package Forms;
 
 import DataEntities.DyeingProgram;
+import DataEntities.ProcessOrder;
 import Handlers.DyeingProgramHandler;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -21,14 +22,21 @@ import javax.swing.table.TableRowSorter;
 public class ViewDyeingProgram extends javax.swing.JFrame {
 
     DefaultTableModel model = new DefaultTableModel();
-    DyeingProgram thisDyeingProgram = new DyeingProgram();
-    
+    ViewDyeingProgram thisDyeingProgram = new ViewDyeingProgram();
+    private ProcessOrder thisProcessOrder;
     /**
      * Creates new form ViewResinProgram
      */
     public ViewDyeingProgram() {
         initComponents();
         GetUpdatedTable();
+    }
+    
+    public ViewDyeingProgram(ProcessOrder ProcessToBeAdded) {
+        initComponents();
+        GetUpdatedTable();
+        thisProcessOrder = ProcessToBeAdded;
+        Header.setText("Dyeing Control Slip : Page 2/5");
     }
 
     /**
@@ -41,7 +49,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
     private void initComponents() {
 
         BgPanel = new javax.swing.JPanel();
-        ResinHeader = new javax.swing.JLabel();
+        Header = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         DyeingTable = new javax.swing.JTable();
         ResinLabel = new javax.swing.JLabel();
@@ -55,12 +63,12 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         BgPanel.setBackground(new java.awt.Color(102, 102, 102));
         BgPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        ResinHeader.setBackground(new java.awt.Color(255, 255, 255));
-        ResinHeader.setFont(new java.awt.Font("Century Gothic", 0, 34)); // NOI18N
-        ResinHeader.setForeground(new java.awt.Color(255, 255, 255));
-        ResinHeader.setText("Dyeing Program List");
-        BgPanel.add(ResinHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 19, 360, 40));
-        ResinHeader.getAccessibleContext().setAccessibleName("ResinProgram");
+        Header.setBackground(new java.awt.Color(255, 255, 255));
+        Header.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
+        Header.setForeground(new java.awt.Color(255, 255, 255));
+        Header.setText("Dyeing Program List");
+        BgPanel.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 19, 470, -1));
+        Header.getAccessibleContext().setAccessibleName("ResinProgram");
 
         jScrollPane1.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
 
@@ -217,7 +225,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         // TODO add your handling code here:
         int selectedRow = this.DyeingTable.getSelectedRow();
        
-        DyeingForm thisDyeingForm = new DyeingForm( DyeingTable.getModel().getValueAt(selectedRow, 0).toString(), 3);
+        DyeingForm thisDyeingForm = new DyeingForm( DyeingTable.getModel().getValueAt(selectedRow, 0).toString(), 3, thisProcessOrder);
         thisDyeingForm.setVisible(true);
     }//GEN-LAST:event_SelectButActionPerformed
 
@@ -253,6 +261,12 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -266,10 +280,24 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
     private javax.swing.JButton BackBut;
     private javax.swing.JPanel BgPanel;
     private javax.swing.JTable DyeingTable;
-    private javax.swing.JLabel ResinHeader;
+    private javax.swing.JLabel Header;
     private javax.swing.JLabel ResinLabel;
     private javax.swing.JTextField SearchTextBox;
     private javax.swing.JButton SelectBut;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the thisProcessOrder
+     */
+    public ProcessOrder getThisProcessOrder() {
+        return thisProcessOrder;
+    }
+
+    /**
+     * @param thisProcessOrder the thisProcessOrder to set
+     */
+    public void setThisProcessOrder(ProcessOrder thisProcessOrder) {
+        this.thisProcessOrder = thisProcessOrder;
+    }
 }
