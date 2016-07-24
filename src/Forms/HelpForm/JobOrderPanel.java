@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Forms;
+package Forms.HelpForm;
 
+import DataEntities.Customer;
 import DataEntities.Machine;
 import Handlers.MachineHandler;
 import DataEntities.ChemicalColor;
@@ -14,6 +15,7 @@ import DataEntities.Customer;
 import DataEntities.Design;
 import DataEntities.JobOrder;
 import DataEntities.ProcessOrder;
+import Forms.ViewDyeingProgram;
 import Handlers.DesignHandler;
 import Handlers.JobHandler;
 import Handlers.ProcessOrderHandler;
@@ -25,24 +27,12 @@ import java.text.Format;
 import java.util.Locale;
 import javax.swing.JSpinner;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.print.Book;
-import java.awt.print.PageFormat;
-import java.awt.print.Printable;
-import java.awt.print.PrinterJob;
-
-
 /**
  *
- * @author imbuenyson
+ * @author Eldridge
  */
-public class JobOrderForm extends javax.swing.JFrame {
+public class JobOrderPanel extends javax.swing.JPanel {
+
     Machine thisMachine = new Machine();
     Design thisDesign = new Design();
     Customer thisCustomer = new Customer();
@@ -50,20 +40,11 @@ public class JobOrderForm extends javax.swing.JFrame {
     JobOrder thisJob = new JobOrder();
     ProcessOrder thisProcessOrder = new ProcessOrder();
     /**
-     * Creates new form JobOrderForm
+     * Creates new form JobOrderPanel
      */
-    public JobOrderForm() {
+    public JobOrderPanel() {
         initComponents();
-        //initTextFields();
-        populateCustomerDropDown();
-        populateDesignDropDown();
-        populateColorDropDown();
-        populateMachineDropDown();
-        populateLiquoRatioDropDown();
     }
-    
-    //--- Private instances declarations
-    private final static int POINTS_PER_INCH = 72;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -93,14 +74,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         LiquidRatioDropDown = new javax.swing.JComboBox<String>();
         jLabel9 = new javax.swing.JLabel();
         RollLoad = new javax.swing.JTextField();
-        Cancel = new javax.swing.JButton();
-        NextButton = new javax.swing.JButton();
-        ChemicalHeader = new javax.swing.JLabel();
         dateSpinner = new javax.swing.JSpinner();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Color Text Control Slip");
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         MainPanel.setBackground(new java.awt.Color(102, 102, 102));
         MainPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -112,7 +86,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                 CustomerDropDownListActionPerformed(evt);
             }
         });
-        MainPanel.add(CustomerDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 140, 195, 30));
+        MainPanel.add(CustomerDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 80, 195, 30));
 
         DesignDropDownList.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         DesignDropDownList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Design" }));
@@ -121,7 +95,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                 DesignDropDownListActionPerformed(evt);
             }
         });
-        MainPanel.add(DesignDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, 195, 30));
+        MainPanel.add(DesignDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 130, 195, 30));
 
         ColorDropDownList.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         ColorDropDownList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Color" }));
@@ -130,45 +104,45 @@ public class JobOrderForm extends javax.swing.JFrame {
                 ColorDropDownListActionPerformed(evt);
             }
         });
-        MainPanel.add(ColorDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 140, 190, 30));
+        MainPanel.add(ColorDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 80, 190, 30));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel1.setText("Color :");
-        MainPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 140, 70, 30));
+        MainPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 80, 70, 30));
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel2.setText("Customer :");
-        MainPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 125, 30));
+        MainPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, 125, 30));
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel3.setText("Design :");
-        MainPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 125, 30));
+        MainPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, 125, 30));
 
         jLabel4.setBackground(new java.awt.Color(255, 255, 255));
         jLabel4.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel4.setText("Job Order :");
-        MainPanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 125, 30));
+        MainPanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 125, 30));
 
         jLabel6.setBackground(new java.awt.Color(255, 255, 255));
         jLabel6.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel6.setText("Date :");
-        MainPanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 90, 70, 30));
+        MainPanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 30, 70, 30));
 
         JobOrder.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        MainPanel.add(JobOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 90, 195, 30));
+        MainPanel.add(JobOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 30, 195, 30));
 
         jPanel2.setBackground(new java.awt.Color(102, 102, 102));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Machine", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 24), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -232,102 +206,73 @@ public class JobOrderForm extends javax.swing.JFrame {
         RollLoad.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jPanel2.add(RollLoad, new org.netbeans.lib.awtextra.AbsoluteConstraints(129, 176, 515, -1));
 
-        MainPanel.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 660, 220));
-
-        Cancel.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
-        Cancel.setText("Cancel");
-        Cancel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CancelActionPerformed(evt);
-            }
-        });
-        MainPanel.add(Cancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(425, 465, 205, 40));
-
-        NextButton.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
-        NextButton.setText("Next");
-        NextButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NextButtonActionPerformed(evt);
-            }
-        });
-        MainPanel.add(NextButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 465, 205, 40));
-
-        ChemicalHeader.setBackground(new java.awt.Color(255, 255, 255));
-        ChemicalHeader.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
-        ChemicalHeader.setForeground(new java.awt.Color(255, 255, 255));
-        ChemicalHeader.setText("Dyeing Control Slip : Page 1/5");
-        MainPanel.add(ChemicalHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 22, -1, -1));
+        MainPanel.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 660, 220));
 
         dateSpinner.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         dateSpinner.setModel(new javax.swing.SpinnerDateModel());
-        MainPanel.add(dateSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 90, 190, 30));
+        MainPanel.add(dateSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 30, 190, 30));
         dateSpinner.setEditor(new JSpinner.DateEditor(dateSpinner, "MM/dd/yyyy"));
 
-        getContentPane().add(MainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 520));
-
-        pack();
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(MainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(MainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
     }// </editor-fold>//GEN-END:initComponents
 
-    public void PrintJobOrderForm() {
-
-    //--- Create a new PrinterJob object
-    PrinterJob printJob = PrinterJob.getPrinterJob();
-
-    //--- Create a new book to add pages to
-    Book book = new Book();
-
-    //--- Add the document page using a landscape page format
-    PageFormat documentPageFormat = new PageFormat();
-    documentPageFormat.setOrientation(PageFormat.PORTRAIT);
-    book.append(new Document(), documentPageFormat);
-
-
-    //--- Tell the printJob to use the book as the pageable object
-    printJob.setPageable(book);
-
-    //--- Show the print dialog box. If the user click the
-    //--- print button we then proceed to print else we cancel
-    //--- the process.
-    if (printJob.printDialog()) {
-      try {
-        printJob.print();
-      } catch (Exception PrintException) {
-        PrintException.printStackTrace();
-      }
-    }
-  }
-    
     private void CustomerDropDownListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CustomerDropDownListActionPerformed
         Customer customerDetails = new Customer();
         CustomerHandler handler = new CustomerHandler();
         int customerId = -1;
         String customerName = "";
-                
+
         if(!CustomerDropDownList.getSelectedItem().toString().equals("Choose Customer"))
         {
             customerName = MachineDropDownList.getSelectedItem().toString();
             thisCustomer.setCustomerName(customerName);
-        }        
-        
+        }
+
         if(!customerName.equals(""))
         {
             customerId = handler.GetCustomerIDFromCustomerName(customerName);
             thisCustomer.setCustomerId(customerId);
-        }      
+        }
     }//GEN-LAST:event_CustomerDropDownListActionPerformed
+
+    private void DesignDropDownListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DesignDropDownListActionPerformed
+        Design designDetails = new Design();
+        DesignHandler handler = new DesignHandler();
+        int designId = -1;
+
+        //if(!designName.equals(""))
+        if(!DesignDropDownList.getSelectedItem().toString().equals("Choose Design")
+            && !(DesignDropDownList.getSelectedItem().toString().length() > 1))
+        {
+            String designName = DesignDropDownList.getSelectedItem().toString();
+            thisDesign.setDesignName(designName);
+            designId = handler.GetDesignIDFromName(designName);
+            thisDesign.setDesignId(designId);
+        }
+
+    }//GEN-LAST:event_DesignDropDownListActionPerformed
 
     private void ColorDropDownListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ColorDropDownListActionPerformed
         ChemicalColor colorDetails = new ChemicalColor();
         ColorHandler handler = new ColorHandler();
         int colorId = -1;
         String colorName = "";
-                
+
         if(!ColorDropDownList.getSelectedItem().toString().equals("Choose Color"))
         {
             colorName = ColorDropDownList.getSelectedItem().toString();
             thisColor.setColorName(colorName);
-        }        
-        
+        }
+
         if(!colorName.equals(""))
         {
             colorId = handler.GetColorIDFromColorName(colorName);
@@ -335,36 +280,28 @@ public class JobOrderForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_ColorDropDownListActionPerformed
 
-    private void LiquidRatioDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LiquidRatioDropDownActionPerformed
-        ComputeForVolume();     
-    }//GEN-LAST:event_LiquidRatioDropDownActionPerformed
-
-    private void WeightFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_WeightFocusLost
-        ComputeForVolume();
-    }//GEN-LAST:event_WeightFocusLost
-
     private void MachineDropDownListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MachineDropDownListActionPerformed
-        
+
         Machine machineDetails = new Machine();
         MachineHandler handler = new MachineHandler();
         int machineId = -1;
         String machineName = "";
-                
+
         if(!MachineDropDownList.getSelectedItem().toString().equals("Choose Machine"))
         {
             machineName = MachineDropDownList.getSelectedItem().toString();
-        }        
-        
+        }
+
         if(!machineName.equals(""))
         {
             machineId = handler.GetMachineIdByName(machineName);
         }
-        
+
         if(machineId > -1)
         {
             machineDetails = handler.GetMachineDetailsById(machineId);
-        }              
-         
+        }
+
         thisMachine.setMachineId(machineId);
         thisMachine.setMachineName(machineDetails.getMachineName());
         thisMachine.setMaxCapacity(machineDetails.getMaxCapacity());
@@ -373,22 +310,9 @@ public class JobOrderForm extends javax.swing.JFrame {
         thisMachine.setMinVolume(machineDetails.getMinVolume());
     }//GEN-LAST:event_MachineDropDownListActionPerformed
 
-    private void DesignDropDownListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DesignDropDownListActionPerformed
-        Design designDetails = new Design();
-        DesignHandler handler = new DesignHandler();
-        int designId = -1;
-                
-        //if(!designName.equals(""))
-        if(!DesignDropDownList.getSelectedItem().toString().equals("Choose Design") 
-                && !(DesignDropDownList.getSelectedItem().toString().length() > 1))
-        {
-            String designName = DesignDropDownList.getSelectedItem().toString();
-            thisDesign.setDesignName(designName);
-            designId = handler.GetDesignIDFromName(designName);
-            thisDesign.setDesignId(designId);
-        }        
-        
-    }//GEN-LAST:event_DesignDropDownListActionPerformed
+    private void WeightFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_WeightFocusLost
+        ComputeForVolume();
+    }//GEN-LAST:event_WeightFocusLost
 
     private void WeightKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_WeightKeyReleased
         String weight = Weight.getText().toString();
@@ -396,24 +320,10 @@ public class JobOrderForm extends javax.swing.JFrame {
         Weight.setText(weight);
     }//GEN-LAST:event_WeightKeyReleased
 
-    private void NextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextButtonActionPerformed
-        // TODO add your handling code here:
-        if(SetJobOrderInformationFromTextBox())
-            if(SetProcessOrderInformation())
-            {
-                ViewDyeingProgram chooseDyeingProgram = new ViewDyeingProgram(this.thisProcessOrder);
-                chooseDyeingProgram.setVisible(true);
-                this.dispose();
-            }
-        
-    }//GEN-LAST:event_NextButtonActionPerformed
+    private void LiquidRatioDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LiquidRatioDropDownActionPerformed
+        ComputeForVolume();
+    }//GEN-LAST:event_LiquidRatioDropDownActionPerformed
 
-    public String get_date_from_spinner(JSpinner this_spinner)
-    {
-        SimpleDateFormat formater = new SimpleDateFormat("yyyy/MM/dd");
-        return formater.format(this_spinner.getValue());
-    }
-    
     private void ComputeForVolume()
     {
         String weight = Weight.getText();    
@@ -490,13 +400,20 @@ public class JobOrderForm extends javax.swing.JFrame {
         return false;
     }
     
-    private void CancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelActionPerformed
+    private void CancelActionPerformed(java.awt.event.ActionEvent evt) {                                       
         // TODO add your handling code here:
         if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Do you want to cancel this Job Order?","Exit?", JOptionPane.YES_NO_OPTION))
         {
-            this.dispose();
+            
         }
-    }//GEN-LAST:event_CancelActionPerformed
+    }
+    
+    public String get_date_from_spinner(JSpinner this_spinner)
+    {
+        SimpleDateFormat formater = new SimpleDateFormat("yyyy/MM/dd");
+        return formater.format(this_spinner.getValue());
+    }
+    
     
     private void computeForVolume()
     {
@@ -604,45 +521,8 @@ public class JobOrderForm extends javax.swing.JFrame {
             }
         }     
     }
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JobOrderForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JobOrderForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JobOrderForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JobOrderForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new JobOrderForm().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Cancel;
-    private javax.swing.JLabel ChemicalHeader;
     private javax.swing.JComboBox<String> ColorDropDownList;
     private javax.swing.JComboBox<String> CustomerDropDownList;
     private javax.swing.JComboBox<String> DesignDropDownList;
@@ -650,7 +530,6 @@ public class JobOrderForm extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> LiquidRatioDropDown;
     private javax.swing.JComboBox<String> MachineDropDownList;
     private javax.swing.JPanel MainPanel;
-    private javax.swing.JButton NextButton;
     private javax.swing.JTextField RollLoad;
     private javax.swing.JTextField VolumeTextField;
     private javax.swing.JTextField Weight;
@@ -665,86 +544,4 @@ public class JobOrderForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
-
-    
-  /**
-   * Class: Document
-   * <p>
-   * 
-   * This class is the painter for the document content.
-   * <p>
-   * 
-   * 
-   * @author Jean-Pierre Dube <jpdube@videotron.ca>
-   * @version 1.0
-   * @since 1.0
-   * @see Printable
-   */
-  private class Document implements Printable {
-
-    /**
-     * Method: print
-     * <p>
-     * 
-     * @param g
-     *            a value of type Graphics
-     * @param pageFormat
-     *            a value of type PageFormat
-     * @param page
-     *            a value of type int
-     * @return a value of type int
-     */
-    public int print(Graphics g, PageFormat pageFormat, int page) {
-
-      //--- Create the Graphics2D object
-      Graphics2D g2d = (Graphics2D) g;
-
-      //--- Translate the origin to 0,0 for the top left corner
-      g2d.translate(pageFormat.getImageableX(), pageFormat
-          .getImageableY());
-
-      //--- Set the drawing color to black
-      g2d.setPaint(Color.black);
-
-      //--- Draw a border arround the page using a 12 point border
-      //g2d.setStroke(new BasicStroke(12));
-      //Rectangle2D.Double border = new Rectangle2D.Double(0, 0, pageFormat
-      //    .getImageableWidth(), pageFormat.getImageableHeight());
-
-      //g2d.draw(border);
-
-      //--- Print page 1
-      if (page == 1) {
-        //--- Print the text one inch from the top and laft margins
-        //---HEADER--//
-        g2d.setFont(new Font("TimesRoman", Font.PLAIN, 24));
-        g2d.drawString("COLORTEX PROCESSING INC.",
-            POINTS_PER_INCH, POINTS_PER_INCH*4);
-        g2d.setFont(new Font("TimesRoman", Font.PLAIN, 16));
-        g2d.drawString("COLORTEX PROCESSING INC.",
-            POINTS_PER_INCH + 36, POINTS_PER_INCH*4);
-        g2d.setFont(new Font("TimesRoman", Font.PLAIN, 12));
-        g2d.drawString("Change this to dyeing process name variable",
-            POINTS_PER_INCH + 72, POINTS_PER_INCH*4);
-        
-        //---DETAILS--//
-        g2d.drawString("Customer ",
-            (POINTS_PER_INCH*3), POINTS_PER_INCH);
-        g2d.drawString("Customer name",
-            (POINTS_PER_INCH*3), POINTS_PER_INCH*2);
-        g2d.drawString("Job No.: ",
-            (POINTS_PER_INCH*3)+36, POINTS_PER_INCH*2);
-        return (PAGE_EXISTS);
-      }
-
-      //--- Validate the page
-      return (NO_SUCH_PAGE);
-
-    }
-  }
-
-} // Example3
-
-
-
-
+}

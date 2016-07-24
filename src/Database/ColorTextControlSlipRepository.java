@@ -1415,11 +1415,12 @@ public class ColorTextControlSlipRepository {
 /************************************************************************************************/
 /******************************* FOR JOB ORDER ***************************************************/
     
-    public boolean AddJobOrder(JobOrder newJobOrder) {
+    public int AddJobOrder(JobOrder newJobOrder) {
         DBConnection db = new DBConnection();
         Connection conn = null;
         PreparedStatement preparedStmt = null;
-        boolean added = false;
+        //boolean added = false;
+        int JobOrderID = -1;
         try {
             conn = db.getConnection();
             String query = "INSERT INTO job_order (DrNumber, MachineID, DesignID, ColorID, CustomerID, Date) VALUES (?, ?, ?, ?, ?, ?)";
@@ -1434,14 +1435,21 @@ public class ColorTextControlSlipRepository {
             preparedStmt.setString(itemNumber++ , newJobOrder.getJobDate());
             preparedStmt.executeUpdate();
             
-            added = true;
+            ResultSet generatedKeys = preparedStmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                JobOrderID = generatedKeys.getInt(1);
+            }
+            else {
+                throw new SQLException("Creating user failed, no ID obtained.");
+            }
+            
         } 
         catch (SQLException ex) {
             Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         this.closeConn(conn, preparedStmt);
-        return added;
+        return JobOrderID;
     }
 
     public boolean UpdateJobOrderByJobOrderID(JobOrder thisJobOrder) 
@@ -1799,7 +1807,7 @@ public class ColorTextControlSlipRepository {
         try
         {
             conn = db.getConnection();
-            String query = "UPDATE process_order SET JobOrderID = ? , Weight = ?, VolH20 = ?, RollLoad = ? , Roll = ? WHERE ID = ?";
+            String query = "UPDATE process_order SET JobOrderID = ? , Weight = ?, VolH20 = ?, RollLoad = ? , Roll = ? , DyeingProgramID = ?, ResinProgramID = ? WHERE ID = ?";
 
             preparedStmt = conn.prepareStatement(query);
             preparedStmt.setInt(1, thisProcessOrder.getJobOrderID());
