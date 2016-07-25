@@ -36,6 +36,9 @@ import java.awt.print.Book;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterJob;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -49,10 +52,16 @@ public class JobOrderForm extends javax.swing.JFrame {
     ChemicalColor thisColor = new ChemicalColor();
     JobOrder thisJob = new JobOrder();
     ProcessOrder thisProcessOrder = new ProcessOrder();
+    private final static int POINTS_PER_INCH = 72;
     /**
      * Creates new form JobOrderForm
      */
     public JobOrderForm() {
+        initialize();
+    }
+    
+    public void initialize()
+    {
         initComponents();
         //initTextFields();
         populateCustomerDropDown();
@@ -62,8 +71,78 @@ public class JobOrderForm extends javax.swing.JFrame {
         populateLiquoRatioDropDown();
     }
     
+    public JobOrderForm(ProcessOrder ProcessOrder) {
+        initialize();
+        thisProcessOrder = thisProcessOrder;
+        SetJobOrderDetails();
+        SetProcessOrderDetails();
+        SetDropDownDetails();
+    }
+    
+    private void SetJobOrderDetails()
+    {
+        thisJob.setID(thisProcessOrder.getID());
+        JobHandler JobOrderHandler = new JobHandler();
+        thisJob = JobOrderHandler.GetJobOrderDetailsFromJobId(thisJob.getID());
+        JobOrder.setText(thisJob.getDrNumber());
+        
+        //Set Date to 
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                dateSpinner.setValue(sdf.parse(thisJob.getJobDate()));
+            } catch (ParseException ex) {
+                Logger.getLogger(JobOrderForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
+    private void SetDropDownDetails()
+    {
+        SetDesignNameDropDown();
+        SetMachineNameDropDown();
+        SetCustomerNameDropDown();
+        SetColorNameDropDown();
+        SetProcessOrderDetails();
+    }
+    
+    private void SetDesignNameDropDown()
+    {
+        thisDesign.setDesignId(thisJob.getDesignID());
+        DesignHandler thisDesignHandler = new DesignHandler();
+        thisDesign.setDesignName(thisDesignHandler.GetDesignNameFromID(thisDesign.getDesignId()));
+        DesignDropDownList.setSelectedItem(thisDesign.getDesignName());
+    }
+    
+    private void SetMachineNameDropDown()
+    {
+        thisMachine.setMachineId(thisJob.getMachineID());
+        MachineHandler thisMachineHandler = new MachineHandler();
+        thisMachine = thisMachineHandler.GetMachineDetailsById(thisMachine.getMachineId());
+        MachineDropDownList.setSelectedItem(thisMachine.getMachineName());
+    }
+    
+    private void SetCustomerNameDropDown()
+    {
+        thisCustomer.setCustomerId(thisJob.getCustomerID());
+        CustomerHandler thisCustomerHandler = new CustomerHandler();
+        thisCustomer.setCustomerName(thisCustomerHandler.GetCustomerNameFromCustomerID(thisCustomer.getCustomerId()));
+        CustomerDropDownList.setSelectedItem(thisCustomer.getCustomerName());
+    }
+    
+    private void SetColorNameDropDown()
+    {
+        thisColor.setColorId(thisJob.getColorID());
+        ColorHandler thisColorHandler = new ColorHandler();
+        thisColor.setColorName(thisColorHandler.GetColorNameFromColorID(thisColor.getColorId()));
+        ColorDropDownList.setSelectedItem(thisColor.getColorName());
+    }
+    
+    private void SetProcessOrderDetails()
+    {
+        Weight.setText(Float.toString(thisProcessOrder.getWeight()));
+        VolumeTextField.setText(Float.toString(thisProcessOrder.getVolumeH20()));
+        RollLoad.setText(thisProcessOrder.getRollLoad());
+    }
     //--- Private instances declarations
-    private final static int POINTS_PER_INCH = 72;
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -305,7 +384,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                 
         if(!CustomerDropDownList.getSelectedItem().toString().equals("Choose Customer"))
         {
-            customerName = MachineDropDownList.getSelectedItem().toString();
+            customerName = CustomerDropDownList.getSelectedItem().toString();
             thisCustomer.setCustomerName(customerName);
         }        
         
@@ -405,7 +484,6 @@ public class JobOrderForm extends javax.swing.JFrame {
                 chooseDyeingProgram.setVisible(true);
                 this.dispose();
             }
-        
     }//GEN-LAST:event_NextButtonActionPerformed
 
     public String get_date_from_spinner(JSpinner this_spinner)
