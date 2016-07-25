@@ -115,6 +115,11 @@ public class ViewResinProgram extends javax.swing.JFrame {
         BackBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         BackBut.setText("Back");
         BackBut.setToolTipText("");
+        BackBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackButActionPerformed(evt);
+            }
+        });
         BgPanel.add(BackBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 380, 220, 42));
 
         DeleteBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
@@ -285,6 +290,12 @@ public class ViewResinProgram extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_SelectBut1ActionPerformed
+
+    private void BackButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButActionPerformed
+        // TODO add your handling code here:
+        DyeingForm thisDyeingForm = new DyeingForm( thisProcessOrder.getDyeingProgramID(), 3, thisProcessOrder);
+        thisDyeingForm.setVisible(true);
+    }//GEN-LAST:event_BackButActionPerformed
 
     /**
      * @param args the command line arguments
