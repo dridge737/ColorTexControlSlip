@@ -471,7 +471,7 @@ public class JobOrderForm extends javax.swing.JFrame {
     }//GEN-LAST:event_DesignDropDownListActionPerformed
 
     private void WeightKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_WeightKeyReleased
-        String weight = Weight.getText().toString();
+        String weight = Weight.getText();
         weight = weight.replaceAll("[^\\d.]", "");
         Weight.setText(weight);
     }//GEN-LAST:event_WeightKeyReleased
