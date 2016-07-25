@@ -176,7 +176,7 @@ public class AddResinForm extends javax.swing.JFrame {
                 SaveButActionPerformed(evt);
             }
         });
-        BgPanel.add(SaveBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 480, 240, 40));
+        BgPanel.add(SaveBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 470, 240, 40));
 
         CancelBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         CancelBut.setText("Cancel");
@@ -185,13 +185,13 @@ public class AddResinForm extends javax.swing.JFrame {
                 CancelButActionPerformed(evt);
             }
         });
-        BgPanel.add(CancelBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(415, 480, 240, 40));
+        BgPanel.add(CancelBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(415, 470, 240, 40));
         CancelBut.getAccessibleContext().setAccessibleName("Add");
 
         jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Resin Process Name :");
-        BgPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 85, -1, 34));
+        BgPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 85, -1, 34));
 
         processText.setFont(new java.awt.Font("Century Gothic", 0, 22)); // NOI18N
         processText.setName(""); // NOI18N

@@ -14,6 +14,7 @@ import Forms.HelpForm.ProcessPanel;
 import Handlers.ChemicalHandler;
 import Handlers.DyeingProcessHandler;
 import Handlers.DyeingProgramHandler;
+import Handlers.ProcessOrderHandler;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
@@ -325,10 +326,14 @@ public class DyeingForm extends javax.swing.JFrame {
             }
             else
             {
+                thisProcessOrder.setResinProgramID(0);
+                //ProcessOrderHandler thisProcess = new ProcessOrderHandler();
+                //thisProcess.AddNewProcessOrder(thisProcessOrder);
                 //Show Review Form and Ask to print
-                
             }
+                
         }
+        this.dispose();
     }//GEN-LAST:event_SaveButActionPerformed
 
     private void CancelButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButActionPerformed
