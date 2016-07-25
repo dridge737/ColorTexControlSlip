@@ -40,6 +40,7 @@ public class MachineHandler {
         return machineList;
     }
     
+    
     public Machine GetMachineDetailsById(int machineId)
     {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();

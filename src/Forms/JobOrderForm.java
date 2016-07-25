@@ -39,6 +39,7 @@ import java.awt.print.PrinterJob;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 
 
 /**
@@ -560,10 +561,10 @@ public class JobOrderForm extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Please check the Design name.");  
             }
             else
-              JOptionPane.showMessageDialog(null, "Please check the Color name.");  
+              JOptionPane.showMessageDialog(null, "Please check the Color name.");
         }
         else
-        JOptionPane.showMessageDialog(null, "Please check the Customer Name.");
+            JOptionPane.showMessageDialog(null, "Please check the Customer Name.");
         
         return false;
     }
@@ -579,7 +580,6 @@ public class JobOrderForm extends javax.swing.JFrame {
     private void computeForVolume()
     {
         int weightMultiplier = 0;
-        double volume = 0;
         
         String selected = LiquidRatioDropDown.getSelectedItem().toString();
         int weight = Integer.parseInt(Weight.getText());
@@ -605,7 +605,7 @@ public class JobOrderForm extends javax.swing.JFrame {
             weightMultiplier = 12;
         }
         
-        volume = weight * weightMultiplier;
+        double volume = weight * weightMultiplier;
         
         VolumeTextField.setText(Double.toString(volume));
     }
@@ -639,6 +639,8 @@ public class JobOrderForm extends javax.swing.JFrame {
     }
     */
     private void populateMachineDropDown(){
+        //PopulateList(new MachineHandler().GetAllMachines() , MachineDropDownList);
+        
         ArrayList<Machine> MachineList = new MachineHandler().GetAllMachines();
         
         if(MachineList != null){
@@ -651,6 +653,9 @@ public class JobOrderForm extends javax.swing.JFrame {
     }
     
     private void populateColorDropDown(){
+        PopulateList(new ColorHandler().GetAllColor() , ColorDropDownList);
+        
+        /*
         ArrayList<String> ColorList = new ColorHandler().GetAllColor();
         
         if(ColorList != null){
@@ -659,9 +664,12 @@ public class JobOrderForm extends javax.swing.JFrame {
                 ColorDropDownList.addItem(ColorList.get(x));
             }
         }  
+        */
     }
     
     private void populateDesignDropDown(){
+        PopulateList(new DesignHandler().GetAllDesigns() , DesignDropDownList);
+        /*
         ArrayList<String> DesignList = new DesignHandler().GetAllDesigns();
         
         if(DesignList != null){
@@ -669,20 +677,31 @@ public class JobOrderForm extends javax.swing.JFrame {
             {
                 DesignDropDownList.addItem(DesignList.get(x));
             }
-        }     
+        }   
+        */
     }
     
     private void populateCustomerDropDown(){
-        ArrayList<String> CustomerList = new CustomerHandler().GetAllCustomers();
+        PopulateList(new CustomerHandler().GetAllCustomers() , CustomerDropDownList);
         
-        if(CustomerList != null){
-            for(int x=0; x<CustomerList.size(); x++)
+        //ArrayList<String> CustomerList = new CustomerHandler().GetAllCustomers();
+        
+        //if(CustomerList != null){
+        //    for(int x=0; x<CustomerList.size(); x++)
+        //    {
+        //        CustomerDropDownList.addItem(CustomerList.get(x));
+        //    }
+        //}     
+    }
+    private void PopulateList(ArrayList<String> thisList , JComboBox thisBox)
+    {
+        if(thisBox != null){
+            for(int x=0; x<thisList.size(); x++)
             {
-                CustomerDropDownList.addItem(CustomerList.get(x));
+                thisBox.addItem(thisList.get(x));
             }
         }     
     }
-    
     /**
      * @param args the command line arguments
      */
