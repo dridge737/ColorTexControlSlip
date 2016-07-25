@@ -48,7 +48,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
         thisProcessOrder = currentProcessOrder;
         SelectBut1.setText("Next");
         DeleteBut.setVisible(false);
-        Header.setText("Dyeing Control Slip : Page 4/5");
+        Header.setText("Dyeing Control Slip : Page 4/6");
     }
 
     /**
@@ -120,7 +120,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
                 BackButActionPerformed(evt);
             }
         });
-        BgPanel.add(BackBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 370, 220, 42));
+        BgPanel.add(BackBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(285, 370, 220, 42));
 
         DeleteBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         DeleteBut.setText("Delete");
@@ -135,11 +135,6 @@ public class ViewResinProgram extends javax.swing.JFrame {
         SearchTextBox.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
         SearchTextBox.setForeground(new java.awt.Color(204, 204, 204));
         SearchTextBox.setText("Search :");
-        SearchTextBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SearchTextBoxActionPerformed(evt);
-            }
-        });
         SearchTextBox.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 SearchTextBoxFocusGained(evt);
@@ -163,7 +158,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
                 SelectBut1ActionPerformed(evt);
             }
         });
-        BgPanel.add(SelectBut1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, 220, 42));
+        BgPanel.add(SelectBut1, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 370, 220, 42));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -195,10 +190,6 @@ public class ViewResinProgram extends javax.swing.JFrame {
         if(SearchTextBox.getText().equals(""))
         this.ResetResinText();
     }//GEN-LAST:event_SearchTextBoxFocusLost
-
-    private void SearchTextBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchTextBoxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_SearchTextBoxActionPerformed
 
     public void set_to_center()
     {
@@ -279,8 +270,8 @@ public class ViewResinProgram extends javax.swing.JFrame {
             String resinProgramName = ResinTable.getModel().getValueAt(ResinTable.getSelectedRow(),0).toString();
             if(!resinProgramName.isEmpty())
             {
-            //    new ViewResinProgramChemicals(resinProgramName).setVisible(true);
-                    
+                
+                //    new ViewResinProgramChemicals(resinProgramName).setVisible(true);
             }
             else
             {

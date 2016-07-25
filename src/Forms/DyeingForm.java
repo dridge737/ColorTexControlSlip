@@ -83,7 +83,7 @@ public class DyeingForm extends javax.swing.JFrame {
             Header.setText("Dyeing Program");
             SaveBut.setText("Next");
             CancelBut.setText("Back");
-            Header.setText("Dyeing Control Slip : Page 3/5");
+            Header.setText("Dyeing Control Slip : Page 3/6");
             thisProcessOrder = ThisProcessOrder;
         }
         SetDyeingProgramFromProgramID(DyeingProgramName);
