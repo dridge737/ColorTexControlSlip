@@ -50,6 +50,7 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
         initialize();
         this.resinProgramName = resinProgramName;
         Header.setText("Dyeing Control Slip : Page 5/6");
+        this.EditChemicalButton.setText("Next");
         this.GetUpdatedTable();
         initEditComponents();
         populateChemicalComboBox();
