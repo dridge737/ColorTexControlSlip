@@ -120,7 +120,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
                 BackButActionPerformed(evt);
             }
         });
-        BgPanel.add(BackBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 380, 220, 42));
+        BgPanel.add(BackBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 370, 220, 42));
 
         DeleteBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         DeleteBut.setText("Delete");
@@ -130,7 +130,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
                 DeleteButActionPerformed(evt);
             }
         });
-        BgPanel.add(DeleteBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 440, 220, 42));
+        BgPanel.add(DeleteBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 425, 220, 42));
 
         SearchTextBox.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
         SearchTextBox.setForeground(new java.awt.Color(204, 204, 204));
@@ -153,7 +153,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
                 SearchTextBoxKeyReleased(evt);
             }
         });
-        BgPanel.add(SearchTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 330, 470, -1));
+        BgPanel.add(SearchTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 325, 470, -1));
 
         SelectBut1.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         SelectBut1.setText("Select");
@@ -163,7 +163,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
                 SelectBut1ActionPerformed(evt);
             }
         });
-        BgPanel.add(SelectBut1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 380, 220, 42));
+        BgPanel.add(SelectBut1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, 220, 42));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
