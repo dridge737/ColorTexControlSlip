@@ -234,7 +234,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         // TODO add your handling code here:
         int selectedRow = this.DyeingTable.getSelectedRow();
         int DyeingProgramID = new DyeingProgramHandler().GetDyeingProgramIDfromName(DyeingTable.getModel().getValueAt(selectedRow, 0).toString());
-        DyeingForm thisDyeingForm = new DyeingForm(DyeingProgramID , 3, thisProcessOrder);
+        DyeingForm thisDyeingForm = new DyeingForm(DyeingProgramID , thisProcessOrder);
         thisDyeingForm.setVisible(true);
     }//GEN-LAST:event_SelectButActionPerformed
 

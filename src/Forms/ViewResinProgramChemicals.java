@@ -33,24 +33,20 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
     String currentChemicalName;
     Float currentGPL;
     
-    public void initialize()
-    {
-        initComponents();
-        set_to_center();
-    }
     /**
      * Creates new form ViewResinProgramChemicals
      */
     public ViewResinProgramChemicals() {
-        initialize();
+        initComponents();
+        set_to_center();
     }
 
     public ViewResinProgramChemicals(String resinProgramName)
     {
-        initialize();
+        this();
         this.resinProgramName = resinProgramName;
-        Header.setText("Dyeing Control Slip : Page 5/6");
-        this.EditChemicalButton.setText("Next");
+        //Header.setText("Dyeing Control Slip : Page 5/6");
+        //this.EditChemicalButton.setText("Next");
         this.GetUpdatedTable();
         initEditComponents();
         populateChemicalComboBox();
@@ -232,6 +228,11 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
 
         BackButton.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         BackButton.setText("Back");
+        BackButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackButtonActionPerformed(evt);
+            }
+        });
         jPanel1.add(BackButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(385, 440, 130, 30));
 
         BackButton1.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
@@ -402,6 +403,10 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_DeleteChemicalButtonActionPerformed
+
+    private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BackButtonActionPerformed
 
     /**
      * @param args the command line arguments

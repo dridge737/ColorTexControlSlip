@@ -20,6 +20,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import DataEntities.Chemical;
+import DataEntities.ProcessOrder;
 import Forms.HelpForm.ButtonColumn;
 import Forms.HelpForm.auto_complete;
 import java.awt.event.ActionEvent;
@@ -38,6 +39,8 @@ public class AddResinForm extends javax.swing.JFrame {
 
     ArrayList<ResinChemical> resinChemicalList = new ArrayList<ResinChemical>();
     ResinProgram resinProgram = new ResinProgram();
+    DefaultTableModel model = new DefaultTableModel();
+    ProcessOrder thisProcess = new ProcessOrder();
     /**
      * Creates new form ResinForm
      */
@@ -46,8 +49,18 @@ public class AddResinForm extends javax.swing.JFrame {
         //InitializeChemicalTable();
         addChemicalTextBoxAutoComplete();
         setTableModel();
-        AddDeleteColumn();
-        
+        AddDeleteColumn();   
+    }
+    
+    public AddResinForm(String ResinProgramName, ProcessOrder currentProcessOrder)
+    {
+        this();
+        thisProcess = currentProcessOrder;
+        processText.setText(ResinProgramName);
+        Header.setText("Dyeing Control Slip : Page 5/6");
+        this.SaveBut.setText("Next");
+        this.CancelBut.setText("Back");
+        this.GetUpdatedTable();
     }
     
     public void AddDeleteColumn()
@@ -66,6 +79,32 @@ public class AddResinForm extends javax.swing.JFrame {
         };
         ButtonColumn buttonColumn = new ButtonColumn(ChemicalTable, delete, ChemicalTable.getColumnCount()-1);
         buttonColumn.setMnemonic(KeyEvent.VK_D);
+    }
+    
+    private void GetUpdatedTable()
+    {
+        model = getUpdatedResinTableModel();
+        this.ChemicalTable.setModel(model);
+    }
+    
+    public DefaultTableModel getUpdatedResinTableModel() {      
+        ResinProgramHandler resinProgramHandler = new ResinProgramHandler();
+        ResinChemicalHandler resinChemicalHandler = new ResinChemicalHandler();
+        ChemicalHandler chemicalHandler = new ChemicalHandler();
+        DefaultTableModel model_original = new DefaultTableModel();
+        
+        model_original.addColumn("Chemical Name");
+        model_original.addColumn("Value GPL");
+        
+        int resinProgramId = resinProgramHandler.GetResinProgramIDFromResinProgramName(processText.getText());
+        ArrayList<ResinChemical> ThisChemicalList = resinChemicalHandler.GetResinChemicalsByResinProgramId(resinProgramId);
+        
+        for(int x=0; x<ThisChemicalList.size(); x++)
+        {
+            String chemicalName = chemicalHandler.GetChemicalNameFromChemicalID(ThisChemicalList.get(x).getChemicalID());
+            model_original.addRow(new Object[]{chemicalName, ThisChemicalList.get(x).getGPLValue()});
+        }
+        return model_original;
     }
     
     public void setTableModel()
@@ -141,7 +180,7 @@ public class AddResinForm extends javax.swing.JFrame {
     private void initComponents() {
 
         BgPanel = new javax.swing.JPanel();
-        ChemicalHeader = new javax.swing.JLabel();
+        Header = new javax.swing.JLabel();
         SaveBut = new javax.swing.JButton();
         CancelBut = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
@@ -163,11 +202,11 @@ public class AddResinForm extends javax.swing.JFrame {
         BgPanel.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         BgPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        ChemicalHeader.setBackground(new java.awt.Color(255, 255, 255));
-        ChemicalHeader.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
-        ChemicalHeader.setForeground(new java.awt.Color(255, 255, 255));
-        ChemicalHeader.setText("Resin Program");
-        BgPanel.add(ChemicalHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 22, 360, 50));
+        Header.setBackground(new java.awt.Color(255, 255, 255));
+        Header.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
+        Header.setForeground(new java.awt.Color(255, 255, 255));
+        Header.setText("Resin Program");
+        BgPanel.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 22, 360, 50));
 
         SaveBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         SaveBut.setText("Add Resin Process");
@@ -259,7 +298,12 @@ public class AddResinForm extends javax.swing.JFrame {
 
     private void CancelButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButActionPerformed
         // TODO add your handling code here:
-        this.dispose();
+        if(CancelBut.getText().equals("Back"))
+        {
+            
+        }
+        else
+            this.dispose();
     }//GEN-LAST:event_CancelButActionPerformed
 
     private void SaveButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButActionPerformed
@@ -436,10 +480,10 @@ public class AddResinForm extends javax.swing.JFrame {
     private javax.swing.JButton AddtoTable;
     private javax.swing.JPanel BgPanel;
     private javax.swing.JButton CancelBut;
-    private javax.swing.JLabel ChemicalHeader;
     private javax.swing.JTable ChemicalTable;
     private javax.swing.JTextField ChemicalTextfield;
     private javax.swing.JTextField GPLTextfield;
+    private javax.swing.JLabel Header;
     private javax.swing.JButton SaveBut;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

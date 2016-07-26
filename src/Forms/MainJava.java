@@ -49,7 +49,7 @@ public class MainJava {
         //DyeingForm TestThisFrame = new DyeingForm("PROCESSTEST" , 2);
         //TestThisFrame.setVisible(true);
         JobOrderForm thisJobForm = new JobOrderForm();
-        thisJobForm.PrintJobOrderForm();
+        thisJobForm.setVisible(true);
                 
     }
     

@@ -33,18 +33,14 @@ public class ViewResinProgram extends javax.swing.JFrame {
      * Creates new form ViewResinProgram
      */
     public ViewResinProgram() {
-        initialize();
-    }
-    
-    private void initialize()
-    {
         initComponents();
         this.set_to_center();
         this.GetUpdatedTable();
     }
     
+    
     public ViewResinProgram(ProcessOrder currentProcessOrder) {
-        initialize();
+        this();
         thisProcessOrder = currentProcessOrder;
         SelectBut1.setText("Next");
         DeleteBut.setVisible(false);
@@ -270,8 +266,12 @@ public class ViewResinProgram extends javax.swing.JFrame {
             String resinProgramName = ResinTable.getModel().getValueAt(ResinTable.getSelectedRow(),0).toString();
             if(!resinProgramName.isEmpty())
             {
-                
-                //    new ViewResinProgramChemicals(resinProgramName).setVisible(true);
+                if(SelectBut1.getText().equals("Next"))
+                {
+                    new AddResinForm(resinProgramName, this.thisProcessOrder).setVisible(true);
+                }
+                else
+                    new ViewResinProgramChemicals(resinProgramName).setVisible(true);
             }
             else
             {
@@ -284,7 +284,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
 
     private void BackButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButActionPerformed
         // TODO add your handling code here:
-        DyeingForm thisDyeingForm = new DyeingForm( thisProcessOrder.getDyeingProgramID(), 3, thisProcessOrder);
+        DyeingForm thisDyeingForm = new DyeingForm( thisProcessOrder.getDyeingProgramID(), thisProcessOrder);
         thisDyeingForm.setVisible(true);
     }//GEN-LAST:event_BackButActionPerformed
 
