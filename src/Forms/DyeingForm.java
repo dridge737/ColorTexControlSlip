@@ -14,6 +14,7 @@ import Forms.HelpForm.ProcessPanel;
 import Handlers.ChemicalHandler;
 import Handlers.DyeingProcessHandler;
 import Handlers.DyeingProgramHandler;
+import Handlers.ProcessOrderHandler;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
@@ -43,21 +44,29 @@ public class DyeingForm extends javax.swing.JFrame {
         initComponents();
         WindowType = 1;
         Process.add(new ProcessPanel(), "Process 1", NumberOfProcessTabs++);
-        AddThePlusTab();
+        setWindowType(1);
         //this.jPanel2.add(ThisPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 80, 780, 550));
         //this.jPanel2.validate();
      
     }
-    
-    public void AddThePlusTab()
-    {
-        Process.add(new JPanel(), "+", NumberOfProcessTabs++);
-        Process.addChangeListener(changeListener);
-    }
     //For Edit or View
-    public DyeingForm(String DyeingProgramName, int type)
+    public DyeingForm(String DyeingProgramName)
     {
         initComponents();
+        SetDyeingProgramFromProgramName(DyeingProgramName);
+        setWindowType(2);
+    }
+    //For Job Order Form
+    public DyeingForm(int DyeingProgramID,  ProcessOrder ThisProcessOrder)
+    {
+        initComponents();
+        thisProcessOrder = ThisProcessOrder;
+        SetDyeingProgramFromProgramID(DyeingProgramID);
+        setWindowType(3);
+    }
+    
+     public void setWindowType(int type)
+    {
         WindowType = type;
         if(WindowType == 1)
         {
@@ -69,25 +78,26 @@ public class DyeingForm extends javax.swing.JFrame {
             Header.setText("Update Dyeing Program");
             SaveBut.setText("Update");
         }
-        SetDyeingProgramFromProgramName(DyeingProgramName);
-        AddThePlusTab();
-    }
-    
-    public DyeingForm(String DyeingProgramName, int type, ProcessOrder ThisProcessOrder)
-    {
-        initComponents();
-        WindowType = type;
-        
-        if(WindowType == 3)
+        else if(WindowType == 3)
         {
             Header.setText("Dyeing Program");
             SaveBut.setText("Next");
             CancelBut.setText("Back");
-            Header.setText("Dyeing Control Slip : Page 3/5");
-            thisProcessOrder = ThisProcessOrder;
+            Header.setText("Dyeing Control Slip : Page 3/6");
         }
-        SetDyeingProgramFromProgramName(DyeingProgramName);
-        AddThePlusTab();
+        
+        Process.add(new JPanel(), "+", NumberOfProcessTabs++);
+        Process.addChangeListener(changeListener);
+    }
+    
+    public void SetDyeingProgramFromProgramID(int DyeingProgramID)
+    {
+        DyeingProgramHandler thisDyeingProgramHandler = new DyeingProgramHandler();
+        thisDyeingProgram.setDyeingProgramId(DyeingProgramID);
+        thisDyeingProgram = thisDyeingProgramHandler.GetDyeingProgramDetailsById(DyeingProgramID);
+        
+        this.ProgramNameText.setText(thisDyeingProgram.getDyeingProgramName());
+        SetDyeingProgramProcessFromProgramID(thisDyeingProgram.getDyeingProgramId());
     }
     
     /**
@@ -97,13 +107,12 @@ public class DyeingForm extends javax.swing.JFrame {
     public void SetDyeingProgramFromProgramName(String DyeingProgramName)
     {
         //Class and Handler Declaration
-        
         DyeingProgramHandler thisDyeingProgramHandler = new DyeingProgramHandler();
         //Set Program Name
         thisDyeingProgram.setDyeingProgramName(DyeingProgramName);
         thisDyeingProgram.setDyeingProgramId(thisDyeingProgramHandler.GetDyeingProgramIDfromName(thisDyeingProgram.getDyeingProgramName()));
-        this.ProgramNameText.setText(thisDyeingProgram.getDyeingProgramName());
         
+        this.ProgramNameText.setText(thisDyeingProgram.getDyeingProgramName());
         SetDyeingProgramProcessFromProgramID(thisDyeingProgram.getDyeingProgramId());
     }
     
@@ -237,7 +246,6 @@ public class DyeingForm extends javax.swing.JFrame {
 
     public void AddDyeingProgram()
     {
-        DyeingProgram thisDyeingProgram = new DyeingProgram();
         DyeingProgramHandler thisDyeingProgramHandler = new DyeingProgramHandler();
         
         thisDyeingProgram.setDyeingProgramName(this.ProgramNameText.getText());
@@ -278,7 +286,8 @@ public class DyeingForm extends javax.swing.JFrame {
         DyeingProgramHandler thisDyeingProgramHandler = new DyeingProgramHandler();
         
         thisDyeingProgram.setDyeingProgramName(this.ProgramNameText.getText());
-        thisProcessOrder.setDyeingProgramID(thisDyeingProgram.getDyeingProgramId());
+        //thisDyeingProgram.setDyeingProgramId();
+        
         //Returns True If Update is Successful then proceed to update other
         if(thisDyeingProgramHandler.UpdateDyeingProgram(thisDyeingProgram))
         {
@@ -305,17 +314,24 @@ public class DyeingForm extends javax.swing.JFrame {
         else if(this.WindowType == 3)
         {
             UpdateDyeingProgram();
+            thisProcessOrder.setDyeingProgramID(thisDyeingProgram.getDyeingProgramId());
             
             if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Do you want to include a Resin Program with this Job?","Add Resin Program?", JOptionPane.YES_NO_OPTION))
             {
+                //Show the Resin Form
                 ViewResinProgram thisResinProgram = new ViewResinProgram(thisProcessOrder);
                 thisResinProgram.setVisible(true);
             }
             else
             {
-                
+                thisProcessOrder.setResinProgramID(0);
+                //ProcessOrderHandler thisProcess = new ProcessOrderHandler();
+                //thisProcess.AddNewProcessOrder(thisProcessOrder);
+                //Show Review Form and Ask to print
             }
+                
         }
+        this.dispose();
     }//GEN-LAST:event_SaveButActionPerformed
 
     private void CancelButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButActionPerformed

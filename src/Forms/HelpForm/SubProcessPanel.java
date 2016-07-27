@@ -70,7 +70,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
     
     public SubProcessPanel(int DyeingProcessID){
         this();
-        TableColumn thisColumn = new TableColumn(ChemicalTable.getColumnCount()-1,50);
+        TableColumn thisColumn = new TableColumn(ChemicalTable.getColumnCount()-2,50);
         thisColumn.setHeaderValue("Quantity");
         ChemicalTable.addColumn(thisColumn);  
     }

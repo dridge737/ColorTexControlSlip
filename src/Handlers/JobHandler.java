@@ -50,4 +50,10 @@ public class JobHandler {
             //enter validation 
         }
     }
+     
+     public JobOrder GetJobOrderDetailsFromJobId(int JobOrderID)
+     {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        return repo.GetJobOrderDetailsFromJobOrderID(JobOrderID);
+     }
 }

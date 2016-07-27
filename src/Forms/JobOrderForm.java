@@ -24,17 +24,11 @@ import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import java.text.SimpleDateFormat;
-import java.text.Format;
-import java.util.Locale;
 import javax.swing.JSpinner;
-
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
 import java.awt.print.Book;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
@@ -42,6 +36,10 @@ import java.awt.print.PrinterJob;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JComboBox;
 
 
 /**
@@ -55,6 +53,7 @@ public class JobOrderForm extends javax.swing.JFrame {
     ChemicalColor thisColor = new ChemicalColor();
     JobOrder thisJob = new JobOrder();
     ProcessOrder thisProcessOrder = new ProcessOrder();
+    private final static int POINTS_PER_INCH = 72;
     /**
      * Creates new form JobOrderForm
      */
@@ -68,8 +67,78 @@ public class JobOrderForm extends javax.swing.JFrame {
         populateLiquoRatioDropDown();
     }
     
+    public JobOrderForm(ProcessOrder ProcessOrder) {
+        this();
+        thisProcessOrder = ProcessOrder;
+        SetJobOrderDetails();
+        SetProcessOrderDetails();
+        SetDropDownDetails();
+    }
+    
+    private void SetJobOrderDetails()
+    {
+        thisJob.setID(thisProcessOrder.getID());
+        JobHandler JobOrderHandler = new JobHandler();
+        thisJob = JobOrderHandler.GetJobOrderDetailsFromJobId(thisJob.getID());
+        JobOrder.setText(thisJob.getDrNumber());
+        
+        //Set Date to 
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                dateSpinner.setValue(sdf.parse(thisJob.getJobDate()));
+            } catch (ParseException ex) {
+                Logger.getLogger(JobOrderForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
+    private void SetDropDownDetails()
+    {
+        SetDesignNameDropDown();
+        SetMachineNameDropDown();
+        SetCustomerNameDropDown();
+        SetColorNameDropDown();
+        SetProcessOrderDetails();
+    }
+    
+    private void SetDesignNameDropDown()
+    {
+        thisDesign.setDesignId(thisJob.getDesignID());
+        DesignHandler thisDesignHandler = new DesignHandler();
+        thisDesign.setDesignName(thisDesignHandler.GetDesignNameFromID(thisDesign.getDesignId()));
+        DesignDropDownList.setSelectedItem(thisDesign.getDesignName());
+    }
+    
+    private void SetMachineNameDropDown()
+    {
+        thisMachine.setMachineId(thisJob.getMachineID());
+        MachineHandler thisMachineHandler = new MachineHandler();
+        thisMachine = thisMachineHandler.GetMachineDetailsById(thisMachine.getMachineId());
+        MachineDropDownList.setSelectedItem(thisMachine.getMachineName());
+    }
+    
+    private void SetCustomerNameDropDown()
+    {
+        thisCustomer.setCustomerId(thisJob.getCustomerID());
+        CustomerHandler thisCustomerHandler = new CustomerHandler();
+        thisCustomer.setCustomerName(thisCustomerHandler.GetCustomerNameFromCustomerID(thisCustomer.getCustomerId()));
+        CustomerDropDownList.setSelectedItem(thisCustomer.getCustomerName());
+    }
+    
+    private void SetColorNameDropDown()
+    {
+        thisColor.setColorId(thisJob.getColorID());
+        ColorHandler thisColorHandler = new ColorHandler();
+        thisColor.setColorName(thisColorHandler.GetColorNameFromColorID(thisColor.getColorId()));
+        ColorDropDownList.setSelectedItem(thisColor.getColorName());
+    }
+    
+    private void SetProcessOrderDetails()
+    {
+        Weight.setText(Float.toString(thisProcessOrder.getWeight()));
+        VolumeTextField.setText(Float.toString(thisProcessOrder.getVolumeH20()));
+        RollLoad.setText(thisProcessOrder.getRollLoad());
+    }
     //--- Private instances declarations
-    private final static int POINTS_PER_INCH = 72;
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -261,7 +330,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         ChemicalHeader.setBackground(new java.awt.Color(255, 255, 255));
         ChemicalHeader.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
         ChemicalHeader.setForeground(new java.awt.Color(255, 255, 255));
-        ChemicalHeader.setText("Dyeing Control Slip : Page 1/5");
+        ChemicalHeader.setText("Dyeing Control Slip : Page 1/6");
         MainPanel.add(ChemicalHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 22, -1, -1));
 
         dateSpinner.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
@@ -283,7 +352,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                 
         if(!CustomerDropDownList.getSelectedItem().toString().equals("Choose Customer"))
         {
-            customerName = MachineDropDownList.getSelectedItem().toString();
+            customerName = CustomerDropDownList.getSelectedItem().toString();
             thisCustomer.setCustomerName(customerName);
         }        
         
@@ -369,7 +438,7 @@ public class JobOrderForm extends javax.swing.JFrame {
     }//GEN-LAST:event_DesignDropDownListActionPerformed
 
     private void WeightKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_WeightKeyReleased
-        String weight = Weight.getText().toString();
+        String weight = Weight.getText();
         weight = weight.replaceAll("[^\\d.]", "");
         Weight.setText(weight);
     }//GEN-LAST:event_WeightKeyReleased
@@ -383,7 +452,6 @@ public class JobOrderForm extends javax.swing.JFrame {
                 chooseDyeingProgram.setVisible(true);
                 this.dispose();
             }
-        
     }//GEN-LAST:event_NextButtonActionPerformed
 
     public String get_date_from_spinner(JSpinner this_spinner)
@@ -460,10 +528,10 @@ public class JobOrderForm extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Please check the Design name.");  
             }
             else
-              JOptionPane.showMessageDialog(null, "Please check the Color name.");  
+              JOptionPane.showMessageDialog(null, "Please check the Color name.");
         }
         else
-        JOptionPane.showMessageDialog(null, "Please check the Customer Name.");
+            JOptionPane.showMessageDialog(null, "Please check the Customer Name.");
         
         return false;
     }
@@ -479,7 +547,6 @@ public class JobOrderForm extends javax.swing.JFrame {
     private void computeForVolume()
     {
         int weightMultiplier = 0;
-        double volume = 0;
         
         String selected = LiquidRatioDropDown.getSelectedItem().toString();
         int weight = Integer.parseInt(Weight.getText());
@@ -505,7 +572,7 @@ public class JobOrderForm extends javax.swing.JFrame {
             weightMultiplier = 12;
         }
         
-        volume = weight * weightMultiplier;
+        double volume = weight * weightMultiplier;
         
         VolumeTextField.setText(Double.toString(volume));
     }
@@ -539,6 +606,8 @@ public class JobOrderForm extends javax.swing.JFrame {
     }
     */
     private void populateMachineDropDown(){
+        //PopulateList(new MachineHandler().GetAllMachines() , MachineDropDownList);
+        
         ArrayList<Machine> MachineList = new MachineHandler().GetAllMachines();
         
         if(MachineList != null){
@@ -551,6 +620,9 @@ public class JobOrderForm extends javax.swing.JFrame {
     }
     
     private void populateColorDropDown(){
+        PopulateList(new ColorHandler().GetAllColor() , ColorDropDownList);
+        
+        /*
         ArrayList<String> ColorList = new ColorHandler().GetAllColor();
         
         if(ColorList != null){
@@ -559,9 +631,12 @@ public class JobOrderForm extends javax.swing.JFrame {
                 ColorDropDownList.addItem(ColorList.get(x));
             }
         }  
+        */
     }
     
     private void populateDesignDropDown(){
+        PopulateList(new DesignHandler().GetAllDesigns() , DesignDropDownList);
+        /*
         ArrayList<String> DesignList = new DesignHandler().GetAllDesigns();
         
         if(DesignList != null){
@@ -569,20 +644,31 @@ public class JobOrderForm extends javax.swing.JFrame {
             {
                 DesignDropDownList.addItem(DesignList.get(x));
             }
-        }     
+        }   
+        */
     }
     
     private void populateCustomerDropDown(){
-        ArrayList<String> CustomerList = new CustomerHandler().GetAllCustomers();
+        PopulateList(new CustomerHandler().GetAllCustomers() , CustomerDropDownList);
         
-        if(CustomerList != null){
-            for(int x=0; x<CustomerList.size(); x++)
+        //ArrayList<String> CustomerList = new CustomerHandler().GetAllCustomers();
+        
+        //if(CustomerList != null){
+        //    for(int x=0; x<CustomerList.size(); x++)
+        //    {
+        //        CustomerDropDownList.addItem(CustomerList.get(x));
+        //    }
+        //}     
+    }
+    private void PopulateList(ArrayList<String> thisList , JComboBox thisBox)
+    {
+        if(thisBox != null){
+            for(int x=0; x<thisList.size(); x++)
             {
-                CustomerDropDownList.addItem(CustomerList.get(x));
+                thisBox.addItem(thisList.get(x));
             }
         }     
     }
-    
     /**
      * @param args the command line arguments
      */
