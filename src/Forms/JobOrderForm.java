@@ -14,9 +14,12 @@ import DataEntities.Customer;
 import DataEntities.Design;
 import DataEntities.JobOrder;
 import DataEntities.ProcessOrder;
+import Database.ColorTextControlSlipRepository;
 import Handlers.DesignHandler;
 import Handlers.JobHandler;
 import Handlers.ProcessOrderHandler;
+import Handlers.PrintHandler;
+import com.itextpdf.text.DocumentException;
 import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -36,6 +39,9 @@ import java.awt.print.Book;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterJob;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -268,35 +274,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void PrintJobOrderForm() {
-
-    //--- Create a new PrinterJob object
-    PrinterJob printJob = PrinterJob.getPrinterJob();
-
-    //--- Create a new book to add pages to
-    Book book = new Book();
-
-    //--- Add the document page using a landscape page format
-    PageFormat documentPageFormat = new PageFormat();
-    documentPageFormat.setOrientation(PageFormat.PORTRAIT);
-    book.append(new Document(), documentPageFormat);
-
-
-    //--- Tell the printJob to use the book as the pageable object
-    printJob.setPageable(book);
-
-    //--- Show the print dialog box. If the user click the
-    //--- print button we then proceed to print else we cancel
-    //--- the process.
-    if (printJob.printDialog()) {
-      try {
-        printJob.print();
-      } catch (Exception PrintException) {
-        PrintException.printStackTrace();
-      }
-    }
-  }
-    
+      
     private void CustomerDropDownListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CustomerDropDownListActionPerformed
         Customer customerDetails = new Customer();
         CustomerHandler handler = new CustomerHandler();
@@ -667,81 +645,7 @@ public class JobOrderForm extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     
-  /**
-   * Class: Document
-   * <p>
-   * 
-   * This class is the painter for the document content.
-   * <p>
-   * 
-   * 
-   * @author Jean-Pierre Dube <jpdube@videotron.ca>
-   * @version 1.0
-   * @since 1.0
-   * @see Printable
-   */
-  private class Document implements Printable {
-
-    /**
-     * Method: print
-     * <p>
-     * 
-     * @param g
-     *            a value of type Graphics
-     * @param pageFormat
-     *            a value of type PageFormat
-     * @param page
-     *            a value of type int
-     * @return a value of type int
-     */
-    public int print(Graphics g, PageFormat pageFormat, int page) {
-
-      //--- Create the Graphics2D object
-      Graphics2D g2d = (Graphics2D) g;
-
-      //--- Translate the origin to 0,0 for the top left corner
-      g2d.translate(pageFormat.getImageableX(), pageFormat
-          .getImageableY());
-
-      //--- Set the drawing color to black
-      g2d.setPaint(Color.black);
-
-      //--- Draw a border arround the page using a 12 point border
-      //g2d.setStroke(new BasicStroke(12));
-      //Rectangle2D.Double border = new Rectangle2D.Double(0, 0, pageFormat
-      //    .getImageableWidth(), pageFormat.getImageableHeight());
-
-      //g2d.draw(border);
-
-      //--- Print page 1
-      if (page == 1) {
-        //--- Print the text one inch from the top and laft margins
-        //---HEADER--//
-        g2d.setFont(new Font("TimesRoman", Font.PLAIN, 24));
-        g2d.drawString("COLORTEX PROCESSING INC.",
-            POINTS_PER_INCH, POINTS_PER_INCH*4);
-        g2d.setFont(new Font("TimesRoman", Font.PLAIN, 16));
-        g2d.drawString("COLORTEX PROCESSING INC.",
-            POINTS_PER_INCH + 36, POINTS_PER_INCH*4);
-        g2d.setFont(new Font("TimesRoman", Font.PLAIN, 12));
-        g2d.drawString("Change this to dyeing process name variable",
-            POINTS_PER_INCH + 72, POINTS_PER_INCH*4);
-        
-        //---DETAILS--//
-        g2d.drawString("Customer ",
-            (POINTS_PER_INCH*3), POINTS_PER_INCH);
-        g2d.drawString("Customer name",
-            (POINTS_PER_INCH*3), POINTS_PER_INCH*2);
-        g2d.drawString("Job No.: ",
-            (POINTS_PER_INCH*3)+36, POINTS_PER_INCH*2);
-        return (PAGE_EXISTS);
-      }
-
-      //--- Validate the page
-      return (NO_SUCH_PAGE);
-
-    }
-  }
+  
 
 } // Example3
 
