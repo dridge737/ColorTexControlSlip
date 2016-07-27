@@ -58,6 +58,7 @@ public class AddResinForm extends javax.swing.JFrame {
         thisProcess = currentProcessOrder;
         processText.setText(ResinProgramName);
         Header.setText("Dyeing Control Slip : Page 5/6");
+        
         this.SaveBut.setText("Next");
         this.CancelBut.setText("Back");
         this.GetUpdatedTable();
@@ -109,7 +110,7 @@ public class AddResinForm extends javax.swing.JFrame {
     
     public void setTableModel()
     {
-        DefaultTableModel tableModel = new DefaultTableModel( new Object [][] {
+        model = new DefaultTableModel( new Object [][] {
             },
             new String [] {
                 "Chemical", "GPL", "Delete"
@@ -121,7 +122,7 @@ public class AddResinForm extends javax.swing.JFrame {
                 return column == 2;
             }
         };
-        ChemicalTable.setModel(tableModel);
+        ChemicalTable.setModel(model);
     }
     
     public void addChemicalTextBoxAutoComplete()

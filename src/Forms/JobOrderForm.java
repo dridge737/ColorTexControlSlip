@@ -52,11 +52,6 @@ public class JobOrderForm extends javax.swing.JFrame {
      * Creates new form JobOrderForm
      */
     public JobOrderForm() {
-        initialize();
-    }
-    
-    public void initialize()
-    {
         initComponents();
         //initTextFields();
         populateCustomerDropDown();
@@ -67,8 +62,8 @@ public class JobOrderForm extends javax.swing.JFrame {
     }
     
     public JobOrderForm(ProcessOrder ProcessOrder) {
-        initialize();
-        thisProcessOrder = thisProcessOrder;
+        this();
+        thisProcessOrder = ProcessOrder;
         SetJobOrderDetails();
         SetProcessOrderDetails();
         SetDropDownDetails();
