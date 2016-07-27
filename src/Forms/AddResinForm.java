@@ -40,7 +40,7 @@ public class AddResinForm extends javax.swing.JFrame {
     ArrayList<ResinChemical> resinChemicalList = new ArrayList<ResinChemical>();
     ResinProgram resinProgram = new ResinProgram();
     DefaultTableModel model = new DefaultTableModel();
-    ProcessOrder thisProcess = new ProcessOrder();
+    ProcessOrder thisProcessOrder = new ProcessOrder();
     /**
      * Creates new form ResinForm
      */
@@ -55,10 +55,21 @@ public class AddResinForm extends javax.swing.JFrame {
     public AddResinForm(String ResinProgramName, ProcessOrder currentProcessOrder)
     {
         this();
-        thisProcess = currentProcessOrder;
+        InitializeForControlSlip(ResinProgramName, currentProcessOrder);
+    }
+    
+    public AddResinForm(int ResinProgramId , ProcessOrder currentProcessOrder)
+    {
+        this();
+        String ResinProgramName = new ResinProgramHandler().GetResinProgramNameFromResinProgramID(ResinProgramId);
+        InitializeForControlSlip(ResinProgramName, currentProcessOrder);
+    }
+    
+    public void InitializeForControlSlip(String ResinProgramName, ProcessOrder currentProcessOrder)
+    {
         processText.setText(ResinProgramName);
+        thisProcessOrder = currentProcessOrder;
         Header.setText("Dyeing Control Slip : Page 5/6");
-        
         this.SaveBut.setText("Next");
         this.CancelBut.setText("Back");
         this.GetUpdatedTable();
@@ -301,7 +312,7 @@ public class AddResinForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(CancelBut.getText().equals("Back"))
         {
-            
+            new ViewResinProgram(thisProcessOrder).setVisible(true);
         }
         else
             this.dispose();
@@ -309,6 +320,17 @@ public class AddResinForm extends javax.swing.JFrame {
 
     private void SaveButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButActionPerformed
         // TODO add your handling code here:
+        if(SaveBut.getText().equals("Next"))
+        {
+            new ReviewForm(thisProcessOrder).setVisible(true);
+        }
+        else
+            AddResin();
+            
+    }//GEN-LAST:event_SaveButActionPerformed
+
+    public void AddResin()
+    {
         boolean isSuccessful = false;
         ResinChemical resinChemical = new ResinChemical();
         Chemical chemicalName = new Chemical();
@@ -368,16 +390,19 @@ public class AddResinForm extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Saving has failed");
                 resinChemicalHandler.DeleteResinChemicalByResinProgramId(resinProgramId);
                 resinProgramHandler.DeleteResinProgram(resinProgramId);
-                ClearAllData();
             }
         }
         else
         {
             JOptionPane.showMessageDialog(null, "Please make sure the data are complete.");
         }
-            
-    }//GEN-LAST:event_SaveButActionPerformed
-
+    }
+    
+    public void AddAllResinChemicals()
+    {
+        
+    }
+    
     public void ClearAllData()
     {
         processText.setText("");

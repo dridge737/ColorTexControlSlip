@@ -8,14 +8,18 @@ package Forms;
 import DataEntities.ChemicalColor;
 import DataEntities.Customer;
 import DataEntities.Design;
+import DataEntities.DyeingProgram;
 import DataEntities.JobOrder;
 import DataEntities.Machine;
 import DataEntities.ProcessOrder;
+import DataEntities.ResinProgram;
 import Handlers.ColorHandler;
 import Handlers.CustomerHandler;
 import Handlers.DesignHandler;
+import Handlers.DyeingProgramHandler;
 import Handlers.JobHandler;
 import Handlers.MachineHandler;
+import Handlers.ResinProgramHandler;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -54,10 +58,18 @@ public class ReviewForm extends javax.swing.JFrame {
 
     private void SetDyeingProgramName()
     {
-        
+         DyeingProgram thisDyeingProgram = 
+                 new DyeingProgramHandler().GetDyeingProgramDetailsById(thisProcessOrder.getDyeingProgramID());
+         DyeingProgramText.setText(thisDyeingProgram.getDyeingProgramName());
     }
     private void SetResinProgramName()
     {
+        if(thisProcessOrder.getResinProgramID() > 0)
+        {
+            String ResinProgramName = 
+                new ResinProgramHandler().GetResinProgramNameFromResinProgramID(thisProcessOrder.getResinProgramID());
+            ResinProgramText.setText(ResinProgramName);
+        }
         
     }
     
@@ -159,10 +171,10 @@ public class ReviewForm extends javax.swing.JFrame {
         dateSpinner = new javax.swing.JSpinner();
         jLabel5 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        RollLoad1 = new javax.swing.JTextField();
-        RollLoad2 = new javax.swing.JTextField();
+        DyeingProgramText = new javax.swing.JTextField();
+        ResinProgramText = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Color Text Control Slip");
 
         BgPanel.setBackground(new java.awt.Color(102, 102, 102));
@@ -347,11 +359,11 @@ public class ReviewForm extends javax.swing.JFrame {
         jLabel10.setText("Dyeing Program :");
         BgPanel.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 430, 140, 30));
 
-        RollLoad1.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        BgPanel.add(RollLoad1, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 430, 480, 30));
+        DyeingProgramText.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        BgPanel.add(DyeingProgramText, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 430, 480, 30));
 
-        RollLoad2.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        BgPanel.add(RollLoad2, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 470, 480, 30));
+        ResinProgramText.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        BgPanel.add(ResinProgramText, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 470, 480, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -377,7 +389,14 @@ public class ReviewForm extends javax.swing.JFrame {
 
     private void CancelButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButActionPerformed
         // TODO add your handling code here:
-        
+        if(thisProcessOrder.getResinProgramID() > 0)
+        {
+            new AddResinForm(thisProcessOrder.getResinProgramID(), thisProcessOrder).setVisible(true);
+        }
+        else
+        {
+            new DyeingForm(thisProcessOrder.getDyeingProgramID(),  thisProcessOrder).setVisible(true);
+        }
         this.dispose();
     }//GEN-LAST:event_CancelButActionPerformed
 
@@ -653,13 +672,13 @@ public class ReviewForm extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> ColorDropDownList;
     private javax.swing.JComboBox<String> CustomerDropDownList;
     private javax.swing.JComboBox<String> DesignDropDownList;
+    private javax.swing.JTextField DyeingProgramText;
     private javax.swing.JTextField JobOrder;
     private javax.swing.JComboBox<String> LiquidRatioDropDown;
     private javax.swing.JComboBox<String> MachineDropDownList;
     private javax.swing.JPanel MainPanel;
+    private javax.swing.JTextField ResinProgramText;
     private javax.swing.JTextField RollLoad;
-    private javax.swing.JTextField RollLoad1;
-    private javax.swing.JTextField RollLoad2;
     private javax.swing.JButton SaveBut;
     private javax.swing.JTextField VolumeTextField;
     private javax.swing.JTextField Weight;
