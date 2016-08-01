@@ -19,7 +19,6 @@ import Handlers.DesignHandler;
 import Handlers.JobHandler;
 import Handlers.ProcessOrderHandler;
 import Handlers.PrintHandler;
-import com.itextpdf.text.DocumentException;
 import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -538,7 +537,7 @@ public class JobOrderForm extends javax.swing.JFrame {
     
     private void CancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelActionPerformed
         // TODO add your handling code here:
-        if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Do you want to cancel this Job Order?","Exit?", JOptionPane.YES_NO_OPTION))
+        if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel this Control Slip?","Exit?", JOptionPane.YES_NO_OPTION))
         {
             this.dispose();
         }

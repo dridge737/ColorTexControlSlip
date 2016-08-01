@@ -33,13 +33,19 @@ public class MainWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        Exit = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        Date = new javax.swing.JLabel();
+        ControlSlipButton = new javax.swing.JButton();
+        DyeingForm = new javax.swing.JButton();
+        ResinForm = new javax.swing.JButton();
+        ChemBut = new javax.swing.JButton();
+        ColorBut = new javax.swing.JButton();
+        CustomerBut = new javax.swing.JButton();
+        DesignBut = new javax.swing.JButton();
+        MachineBut = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Color Text Control Slip");
@@ -47,77 +53,175 @@ public class MainWindow extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Date : 4 / 12 /2016");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 370, 160, -1));
-
-        jButton1.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        jButton1.setText("Backup Database");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        Exit.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        Exit.setText("Exit");
+        Exit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                ExitActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 130, 120));
-
-        jButton2.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        jButton2.setText("Restore Database");
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 140, 130, 120));
-
-        jButton3.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        jButton3.setText("jButton3");
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 140, 130, 120));
+        jPanel1.add(Exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 330, 370, 50));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Dyeing Control System");
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(485, 7, 250, -1));
 
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 22)); // NOI18N
         jLabel1.setText("Colortex Processing Inc.");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(485, 27, 255, -1));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(375, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        Date.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        Date.setText("4 / 12 /2016");
+        jPanel2.add(Date, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, 70));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 60));
+
+        ControlSlipButton.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        ControlSlipButton.setText("Enter Control Slip");
+        ControlSlipButton.setToolTipText("");
+        ControlSlipButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ControlSlipButtonActionPerformed(evt);
+            }
+        });
+        jPanel1.add(ControlSlipButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 90, 370, 30));
+
+        DyeingForm.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        DyeingForm.setText("Change Dyeing Ingredients");
+        DyeingForm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DyeingFormActionPerformed(evt);
+            }
+        });
+        jPanel1.add(DyeingForm, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 130, 370, 30));
+
+        ResinForm.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        ResinForm.setText("Change Resin Ingredients");
+        ResinForm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ResinFormActionPerformed(evt);
+            }
+        });
+        jPanel1.add(ResinForm, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 170, 370, 30));
+
+        ChemBut.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        ChemBut.setText("Chemical");
+        ChemBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ChemButActionPerformed(evt);
+            }
+        });
+        jPanel1.add(ChemBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 210, 180, 30));
+
+        ColorBut.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        ColorBut.setText("Color");
+        ColorBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ColorButActionPerformed(evt);
+            }
+        });
+        jPanel1.add(ColorBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 210, 180, 30));
+
+        CustomerBut.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        CustomerBut.setText("Customer");
+        CustomerBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CustomerButActionPerformed(evt);
+            }
+        });
+        jPanel1.add(CustomerBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 250, 180, 30));
+
+        DesignBut.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        DesignBut.setText("Design");
+        DesignBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DesignButActionPerformed(evt);
+            }
+        });
+        jPanel1.add(DesignBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 250, 180, 30));
+
+        MachineBut.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        MachineBut.setText("Machine");
+        MachineBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MachineButActionPerformed(evt);
+            }
+        });
+        jPanel1.add(MachineBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 290, 370, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Backupdbtosql();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void ControlSlipButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ControlSlipButtonActionPerformed
+        // TODO add your handling code here:
+        JobOrderForm thisJobForm = new JobOrderForm();
+        thisJobForm.setVisible(true);
+    }//GEN-LAST:event_ControlSlipButtonActionPerformed
+
+    private void MachineButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MachineButActionPerformed
+        // TODO add your handling code here:
+        MachineForm thisMachine = new MachineForm();
+        thisMachine.setVisible(true);
+    }//GEN-LAST:event_MachineButActionPerformed
+
+    private void DyeingFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DyeingFormActionPerformed
+        // TODO add your handling code here:
+        ViewDyeingProgram newDyeingForm = new ViewDyeingProgram();
+        newDyeingForm.setVisible(true);
+    }//GEN-LAST:event_DyeingFormActionPerformed
+
+    private void ResinFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResinFormActionPerformed
+        // TODO add your handling code here:
+        ViewResinProgram newResinForm = new ViewResinProgram();
+        newResinForm.setVisible(true);
+    }//GEN-LAST:event_ResinFormActionPerformed
+
+    private void CustomerButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CustomerButActionPerformed
+        // TODO add your handling code here:
+        CustomerForm newCustForm = new CustomerForm();
+        newCustForm.setVisible(true);
+    }//GEN-LAST:event_CustomerButActionPerformed
+
+    private void ChemButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChemButActionPerformed
+        // TODO add your handling code here:
+        ChemicalForm thisChemForm = new ChemicalForm();
+        thisChemForm.setVisible(true);
+    }//GEN-LAST:event_ChemButActionPerformed
+
+    private void ColorButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ColorButActionPerformed
+        // TODO add your handling code here:
+        ColorForm newColorForm = new ColorForm();
+        newColorForm.setVisible(true);
+    }//GEN-LAST:event_ColorButActionPerformed
+
+    private void DesignButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DesignButActionPerformed
+        // TODO add your handling code here:
+        DesignForm thisDesignForm = new DesignForm();
+        thisDesignForm.setVisible(true);
+    }//GEN-LAST:event_DesignButActionPerformed
+
+    private void ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitActionPerformed
+        // TODO add your handling code here:
+        System.exit(1);
+    }//GEN-LAST:event_ExitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -202,12 +306,18 @@ public class MainWindow extends javax.swing.JFrame {
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton ChemBut;
+    private javax.swing.JButton ColorBut;
+    private javax.swing.JButton ControlSlipButton;
+    private javax.swing.JButton CustomerBut;
+    private javax.swing.JLabel Date;
+    private javax.swing.JButton DesignBut;
+    private javax.swing.JButton DyeingForm;
+    private javax.swing.JButton Exit;
+    private javax.swing.JButton MachineBut;
+    private javax.swing.JButton ResinForm;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables

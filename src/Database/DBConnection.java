@@ -35,7 +35,7 @@ public class DBConnection {
         {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null,ex);
-            
+            JOptionPane.showMessageDialog(null, "ERROR");
         }
         
         return null;
