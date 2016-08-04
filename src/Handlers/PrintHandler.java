@@ -6,16 +6,21 @@
 package Handlers;
  
 import com.itextpdf.text.Chapter;
+import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Element;
+import com.itextpdf.text.ExceptionConverter;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.GrayColor;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
  
 import java.io.File;
@@ -28,6 +33,8 @@ import java.io.IOException;
 public class PrintHandler {
     public static final String DEST = "C:\\chapter_title.pdf";
  
+    private int chapterNumber;
+    
     public void createPDF() throws IOException, DocumentException {
         File file = new File(DEST);
         file.getParentFile().mkdirs();
@@ -36,7 +43,8 @@ public class PrintHandler {
  
     public void renderPDF(String dest) throws IOException, DocumentException {
         Document document = new Document();
-        PdfWriter.getInstance(document, new FileOutputStream(dest));
+        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(dest));
+        
         document.setPageSize(PageSize.LETTER);
         document.setMargins(72, 36, 36, 36);
         document.open();
@@ -47,6 +55,7 @@ public class PrintHandler {
         Paragraph companyHeader = new Paragraph("Colortex Processing Inc.", companyHeaderFont);
         companyHeader.setAlignment(Element.ALIGN_CENTER);
         Chapter chapter = new Chapter(companyHeader, 1);
+        chapterNumber = 1;
         
         Font controlSlipHeaderFont = FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL);
         Paragraph controlSlipHeader = new Paragraph("Pushcart Control Slip", controlSlipHeaderFont);
@@ -75,7 +84,7 @@ public class PrintHandler {
         table.addCell(p2);
         
         Phrase p3 = new Phrase();
-        p3.add("Job DIKOGETS: ");
+        p3.add("Job#/DR#: ");
         pCell = new PdfPCell(p3);
         table.addCell(p3);
         
@@ -218,7 +227,7 @@ public class PrintHandler {
         table.addCell(p2);
         
         p3 = new Phrase();
-        p3.add("Job DIKOGETS: ");
+        p3.add("Job#/DR#: ");
         pCell = new PdfPCell(p3);
         table.addCell(p3);
         
@@ -329,8 +338,130 @@ public class PrintHandler {
         chapter.add(table);
         ////////////////////////***************END SECOND SECTION***************////////////////////////
         document.add(chapter);
+        
+        document = AddSecondPage(document, writer);
+        
         document.close();
     }
+    
+    public Document AddSecondPage(Document document, PdfWriter writer)  throws IOException, DocumentException 
+    {
+        Font companyHeaderFont = FontFactory.getFont(FontFactory.HELVETICA, 18, Font.BOLDITALIC);
+        Paragraph companyHeader = new Paragraph("Colortex Processing Inc.", companyHeaderFont);
+        companyHeader.setAlignment(Element.ALIGN_CENTER);
+        document.add(companyHeader);
+        //Chapter chapter = new Chapter(companyHeader, 1);
+        chapterNumber = 2;
+        //chapter.setNumberDepth(0);
+        
+        Font controlSlipHeaderFont = FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL);
+        Paragraph controlSlipHeader = new Paragraph("Dyeing Control Slip", controlSlipHeaderFont);
+        controlSlipHeader.setAlignment(Element.ALIGN_CENTER);
+        document.add(controlSlipHeader);
+        
+        PdfPTable table = new PdfPTable(1);
+        table.getDefaultCell().setBorder(PdfPCell.NO_BORDER);
+        table.setWidthPercentage(100);
+        
+        Phrase filler = new Phrase();
+        filler.add(" ");
+        PdfPCell pCell1 = new PdfPCell(filler);
+        table.addCell(filler);
+        document.add(table);
+        
+        Font dyeingProcessFont = FontFactory.getFont(FontFactory.HELVETICA, 13, Font.NORMAL);
+        Paragraph dyeingProcessHeader = new Paragraph("Change to dyeing process name", dyeingProcessFont);
+        dyeingProcessHeader.setAlignment(Element.ALIGN_CENTER);
+        document.add(dyeingProcessHeader);
+        
+        table = new PdfPTable(2);
+        table.getDefaultCell().setBorder(PdfPCell.NO_BORDER);
+        table.setWidthPercentage(100);
+        table.addCell(filler);
+        table.addCell(filler);
+        table.addCell(filler);
+        table.addCell(filler);
+        
+        Phrase p = new Phrase();
+        p.add("Customer: ");
+        PdfPCell pCell = new PdfPCell(p);
+        table.addCell(p);
+        
+        Phrase p2 = new Phrase();
+        p2.add("Batch NO.: ");
+        pCell = new PdfPCell(p2);
+        table.addCell(p2);
+        
+        Phrase p3 = new Phrase();
+        p3.add("Job NO.: ");
+        pCell = new PdfPCell(p3);
+        table.addCell(p3);
+        
+        Phrase p6 = new Phrase();
+        p6.add("Machine #: ");
+        pCell = new PdfPCell(p6);
+        table.addCell(p6);
+        
+        Phrase p5 = new Phrase();
+        p5.add("Design #: ");
+        pCell = new PdfPCell(p5);
+        table.addCell(p5);
+        
+        Phrase p4 = new Phrase();
+        p4.add("Weight: ");
+        pCell = new PdfPCell(p4);
+        table.addCell(p4);
+        
+        Phrase p7 = new Phrase();
+        p7.add("Color: ");
+        pCell = new PdfPCell(p7);
+        table.addCell(p7);
+        
+        Phrase p8 = new Phrase();
+        p7.add("Vol. of Water: ");
+        pCell = new PdfPCell(p8);
+        table.addCell(p8);
+        table.addCell(filler);
+        table.addCell(filler);
+        document.add(table);
+        
+        Paragraph paragraph = new Paragraph("Supervisor:_________ Drugman:_________ Operator:_________ Date:_________");
+        document.add(paragraph);
+        document.add(Chunk.NEWLINE);
+        
+        float[] columnWidths = {5, 2, 2, 2};
+        table = new PdfPTable(columnWidths);
+        table.setWidthPercentage(100);
+        table.getDefaultCell().setBorder(Rectangle.BOTTOM);
+        table.getDefaultCell().setUseAscender(true);
+        table.getDefaultCell().setUseDescender(true);
+        PdfPCell cell = new PdfPCell();
+        table.getDefaultCell().setBackgroundColor(new GrayColor(0.75f));
+            table.addCell("Process Name");
+            table.addCell("GPL");
+            table.addCell("%");
+            table.addCell("Quantity");
+            
+        table.getDefaultCell().setBackgroundColor(GrayColor.GRAYWHITE);
+        table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
+        
+        int currentPageNumber = writer.getPageNumber();
+        
+        for (int counter = 1; counter < 101; counter++) {
+                table.addCell(String.valueOf(counter));
+                table.addCell("key " + counter);
+                table.addCell("value " + counter);
+                table.addCell("value " + counter);
+        }
+        
+        document.add(table);
+        
+        //document.add(chapter);
+        
+        return document;
+    }
+    
+    
     
     public void printPDF()
     {
