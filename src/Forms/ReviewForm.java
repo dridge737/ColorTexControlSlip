@@ -13,6 +13,7 @@ import DataEntities.JobOrder;
 import DataEntities.Machine;
 import DataEntities.ProcessOrder;
 import DataEntities.ResinProgram;
+import Handlers.PrintHandler;
 import Handlers.ColorHandler;
 import Handlers.CustomerHandler;
 import Handlers.DesignHandler;
@@ -20,6 +21,8 @@ import Handlers.DyeingProgramHandler;
 import Handlers.JobHandler;
 import Handlers.MachineHandler;
 import Handlers.ResinProgramHandler;
+import com.itextpdf.text.DocumentException;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,6 +43,7 @@ public class ReviewForm extends javax.swing.JFrame {
     ChemicalColor thisColor = new ChemicalColor();
     JobOrder thisJob = new JobOrder();
     ProcessOrder thisProcessOrder = new ProcessOrder();
+    DyeingProgram thisDyeingProgram = new DyeingProgram();
     /**
      * Creates new form ReviewForm
      */
@@ -58,7 +62,7 @@ public class ReviewForm extends javax.swing.JFrame {
 
     private void SetDyeingProgramName()
     {
-         DyeingProgram thisDyeingProgram = 
+         thisDyeingProgram = 
                  new DyeingProgramHandler().GetDyeingProgramDetailsById(thisProcessOrder.getDyeingProgramID());
          DyeingProgramText.setText(thisDyeingProgram.getDyeingProgramName());
     }
@@ -67,7 +71,7 @@ public class ReviewForm extends javax.swing.JFrame {
         if(thisProcessOrder.getResinProgramID() > 0)
         {
             String ResinProgramName = 
-                new ResinProgramHandler().GetResinProgramNameFromResinProgramID(thisProcessOrder.getResinProgramID());
+                new ResinProgramHandler().GetResinProgramNameFromResinProgramID(thisProcessOrder.getResinProgramID());            
             ResinProgramText.setText(ResinProgramName);
         }
         
@@ -383,8 +387,15 @@ public class ReviewForm extends javax.swing.JFrame {
 
     private void SaveButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButActionPerformed
         // TODO add your handling code here:
-        
-
+        try
+        {
+            PrintHandler handler = new PrintHandler();
+            handler.createPDF(thisMachine, thisDesign, thisCustomer, thisColor, thisJob, thisProcessOrder, thisDyeingProgram, VolumeTextField.getText().toString());
+        }
+        catch(IOException | DocumentException e)
+        {
+            
+        }
     }//GEN-LAST:event_SaveButActionPerformed
 
     private void CancelButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButActionPerformed

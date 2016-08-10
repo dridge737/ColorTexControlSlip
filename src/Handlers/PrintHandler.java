@@ -5,6 +5,17 @@
  */
 package Handlers;
  
+import DataEntities.ChemicalColor;
+import DataEntities.Customer;
+import DataEntities.Design;
+import DataEntities.DyeingProgram;
+import DataEntities.JobOrder;
+import DataEntities.Machine;
+import DataEntities.ProcessOrder;
+import DataEntities.DyeingProcess;
+import DataEntities.DyeingChemical;
+import Helpers.RomanNumber;
+import java.util.ArrayList;
 import com.itextpdf.text.Chapter;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -13,19 +24,19 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Element;
-import com.itextpdf.text.ExceptionConverter;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.GrayColor;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
  
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 /**
  *
  * @author imbuenyson
@@ -35,13 +46,13 @@ public class PrintHandler {
  
     private int chapterNumber;
     
-    public void createPDF() throws IOException, DocumentException {
+    public void createPDF(Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, ProcessOrder processOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException {
         File file = new File(DEST);
         file.getParentFile().mkdirs();
-        new PrintHandler().renderPDF(DEST);
+        new PrintHandler().renderPDF(DEST, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, processOrderDetails, dyeingProgramDetails, volume);
     }
  
-    public void renderPDF(String dest) throws IOException, DocumentException {
+    public void renderPDF(String dest, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, ProcessOrder processOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException {
         Document document = new Document();
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(dest));
         
@@ -74,7 +85,7 @@ public class PrintHandler {
         table.addCell(pFiller1);
         
         Phrase p = new Phrase();
-        p.add("Customer: ");
+        p.add("Customer: " + customerDetails.getCustomerName());
         PdfPCell pCell = new PdfPCell(p);
         table.addCell(p);
         
@@ -84,17 +95,17 @@ public class PrintHandler {
         table.addCell(p2);
         
         Phrase p3 = new Phrase();
-        p3.add("Job#/DR#: ");
+        p3.add("Job#/DR#: " + jobOrderDetails.getDrNumber());
         pCell = new PdfPCell(p3);
         table.addCell(p3);
         
         Phrase p6 = new Phrase();
-        p6.add("Weight: ");
+        p6.add("Weight: " + processOrderDetails.getWeight());
         pCell = new PdfPCell(p6);
         table.addCell(p6);
         
         Phrase p5 = new Phrase();
-        p5.add("Design: ");
+        p5.add("Design: " + designDetails.getDesignName());
         pCell = new PdfPCell(p5);
         table.addCell(p5);
         
@@ -104,7 +115,7 @@ public class PrintHandler {
         table.addCell(p4);
         
         Phrase p7 = new Phrase();
-        p7.add("Color: ");
+        p7.add("Color: " + chemicalDetails.getColorName());
         pCell = new PdfPCell(p7);
         table.addCell(p7);
         
@@ -217,7 +228,7 @@ public class PrintHandler {
         table.addCell(pFiller1);
         
         p = new Phrase();
-        p.add("Customer: ");
+        p.add("Customer: " + customerDetails.getCustomerName());
         pCell = new PdfPCell(p);
         table.addCell(p);
         
@@ -227,17 +238,17 @@ public class PrintHandler {
         table.addCell(p2);
         
         p3 = new Phrase();
-        p3.add("Job#/DR#: ");
+        p3.add("Job#/DR#: " + jobOrderDetails.getDrNumber());
         pCell = new PdfPCell(p3);
         table.addCell(p3);
         
         p6 = new Phrase();
-        p6.add("Weight: ");
+        p6.add("Weight: " + processOrderDetails.getWeight());
         pCell = new PdfPCell(p6);
         table.addCell(p6);
         
         p5 = new Phrase();
-        p5.add("Design: ");
+        p5.add("Design: " + designDetails.getDesignName());
         pCell = new PdfPCell(p5);
         table.addCell(p5);
         
@@ -247,7 +258,7 @@ public class PrintHandler {
         table.addCell(p4);
         
         p7 = new Phrase();
-        p7.add("Color: ");
+        p7.add("Color: " + chemicalDetails.getColorName());
         pCell = new PdfPCell(p7);
         table.addCell(p7);
         
@@ -338,13 +349,23 @@ public class PrintHandler {
         chapter.add(table);
         ////////////////////////***************END SECOND SECTION***************////////////////////////
         document.add(chapter);
+        document.add(Chunk.NEWLINE);
+        document.add(Chunk.NEWLINE);
+        document.add(Chunk.NEWLINE);
+        document.add(Chunk.NEWLINE);
+        document.add(Chunk.NEWLINE);
+        document = AddSecondPage(document, writer, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, processOrderDetails, dyeingProgramDetails, volume);
         
-        document = AddSecondPage(document, writer);
+        //CHANGE CONDITION TO IF RESIGNPROGRAM EXISTING
+        if(processOrderDetails.getResinProgramID() > 0)
+        {
+            document = AddThirdPage(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, processOrderDetails, dyeingProgramDetails, volume);
+        }
         
         document.close();
     }
     
-    public Document AddSecondPage(Document document, PdfWriter writer)  throws IOException, DocumentException 
+    public Document AddSecondPage(Document document, PdfWriter writer, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, ProcessOrder processOrderDetails, DyeingProgram dyeingProgramDetails, String volume)  throws IOException, DocumentException 
     {
         Font companyHeaderFont = FontFactory.getFont(FontFactory.HELVETICA, 18, Font.BOLDITALIC);
         Paragraph companyHeader = new Paragraph("Colortex Processing Inc.", companyHeaderFont);
@@ -370,7 +391,7 @@ public class PrintHandler {
         document.add(table);
         
         Font dyeingProcessFont = FontFactory.getFont(FontFactory.HELVETICA, 13, Font.NORMAL);
-        Paragraph dyeingProcessHeader = new Paragraph("Change to dyeing process name", dyeingProcessFont);
+        Paragraph dyeingProcessHeader = new Paragraph(dyeingProgramDetails.getDyeingProgramName(), dyeingProcessFont);
         dyeingProcessHeader.setAlignment(Element.ALIGN_CENTER);
         document.add(dyeingProcessHeader);
         
@@ -383,7 +404,7 @@ public class PrintHandler {
         table.addCell(filler);
         
         Phrase p = new Phrase();
-        p.add("Customer: ");
+        p.add("Customer: " + customerDetails.getCustomerName());
         PdfPCell pCell = new PdfPCell(p);
         table.addCell(p);
         
@@ -393,32 +414,32 @@ public class PrintHandler {
         table.addCell(p2);
         
         Phrase p3 = new Phrase();
-        p3.add("Job NO.: ");
+        p3.add("Job NO.: " + jobOrderDetails.getDrNumber());
         pCell = new PdfPCell(p3);
         table.addCell(p3);
         
         Phrase p6 = new Phrase();
-        p6.add("Machine #: ");
+        p6.add("Machine: " + machineDetails.getMachineName());
         pCell = new PdfPCell(p6);
         table.addCell(p6);
         
         Phrase p5 = new Phrase();
-        p5.add("Design #: ");
+        p5.add("Design #: " + designDetails.getDesignName());
         pCell = new PdfPCell(p5);
         table.addCell(p5);
         
         Phrase p4 = new Phrase();
-        p4.add("Weight: ");
+        p4.add("Weight: " + processOrderDetails.getWeight());
         pCell = new PdfPCell(p4);
         table.addCell(p4);
         
         Phrase p7 = new Phrase();
-        p7.add("Color: ");
+        p7.add("Color: " + chemicalDetails.getColorName());
         pCell = new PdfPCell(p7);
         table.addCell(p7);
         
         Phrase p8 = new Phrase();
-        p7.add("Vol. of Water: ");
+        p7.add("Vol. of Water: " + volume);
         pCell = new PdfPCell(p8);
         table.addCell(p8);
         table.addCell(filler);
@@ -437,7 +458,7 @@ public class PrintHandler {
         table.getDefaultCell().setUseDescender(true);
         PdfPCell cell = new PdfPCell();
         table.getDefaultCell().setBackgroundColor(new GrayColor(0.75f));
-            table.addCell("Process Name");
+            table.addCell(" ");
             table.addCell("GPL");
             table.addCell("%");
             table.addCell("Quantity");
@@ -445,23 +466,414 @@ public class PrintHandler {
         table.getDefaultCell().setBackgroundColor(GrayColor.GRAYWHITE);
         table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
         
-        int currentPageNumber = writer.getPageNumber();
+        DyeingChemicalHandler dChemHandler = new DyeingChemicalHandler();
+        DyeingProcessHandler dProcessHandler = new DyeingProcessHandler();
+        ChemicalHandler chemHandler = new ChemicalHandler();
+        ArrayList<DyeingProcess> dyeingProcessList = dProcessHandler.GetAllDyeingProcessByDyeingProgramId(dyeingProgramDetails.getDyeingProgramId());
+        ArrayList<DyeingChemical> dyeingChemicalList = null;
+        int rows = 0;
         
-        for (int counter = 1; counter < 101; counter++) {
-                table.addCell(String.valueOf(counter));
-                table.addCell("key " + counter);
-                table.addCell("value " + counter);
-                table.addCell("value " + counter);
+        Collections.sort(dyeingProcessList, new Comparator<DyeingProcess>() {
+            @Override
+            public int compare(DyeingProcess o1, DyeingProcess o2) {
+                return o2.getdyeingProcessOrder().compareTo(o1.getdyeingProcessOrder());
+            }
+        });
+        
+        for(int x=0; x<dyeingProcessList.size(); x++)
+        {
+            if(rows%30 != 0){
+                if (dyeingProcessList.get(x).getdyeingProcessOrder().contains("[a-zA-Z]+") == false){
+                    table.addCell(RomanNumber.toRoman(x+1) + ". " + dyeingProcessList.get(x).getDyeingProcessName());
+                    table.addCell(" ");
+                    table.addCell(" ");
+                    table.addCell(" ");
+                    rows++;
+                }
+                else if(dyeingProcessList.get(x).getdyeingProcessOrder().contains("[a-zA-Z]+") == true){
+                    String dyeingSubProcessLetter = dyeingProcessList.get(x).getdyeingProcessOrder().replaceAll("[^A-Za-z]+", "");
+
+                    table.addCell("    " + dyeingSubProcessLetter.toUpperCase() + ". " + dyeingProcessList.get(x).getDyeingProcessName());
+                    table.addCell(" ");
+                    table.addCell(" ");
+                    table.addCell(" ");
+                    rows++;
+
+                    dyeingChemicalList = dChemHandler.GetAllDyeingChemicalFromDyeingProcessID(dyeingProcessList.get(x).getId());
+
+                    if(dyeingChemicalList.size() > 0)
+                    {
+                        Collections.sort(dyeingChemicalList, new Comparator<DyeingChemical>(){
+                            @Override
+                            public int compare(DyeingChemical o1, DyeingChemical o2){
+                                int rollno1 = o1.getOrder();
+                                int rollno2 = o2.getOrder();
+
+                                /*For ascending order*/
+                                return rollno1-rollno2;
+
+                            }                    
+                        });
+                    }
+
+                    for(int i = 0; i<dyeingChemicalList.size(); i++)
+                    {
+                        table.addCell("        " + dyeingChemicalList.get(i).getOrder() + ". " + chemHandler.GetChemicalNameFromChemicalID(dyeingChemicalList.get(i).getChemicalID()));
+                        if("GPL".equals(dyeingChemicalList.get(i).getType().toUpperCase())){
+                            table.addCell(String.valueOf(dyeingChemicalList.get(i).getValue()));
+                            table.addCell(" ");
+                        }
+                        else
+                        {
+                            table.addCell(" ");
+                            table.addCell(String.valueOf(dyeingChemicalList.get(i).getValue()));
+                        }
+                        table.addCell("Quantity");
+                        rows++;
+                    }
+                }
+            }
+            else
+            {
+                document.add(table);
+                document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, processOrderDetails, dyeingProgramDetails, volume);
+                table = new PdfPTable(columnWidths);
+                table.setWidthPercentage(100);
+                table.getDefaultCell().setBorder(Rectangle.BOTTOM);
+                table.getDefaultCell().setUseAscender(true);
+                table.getDefaultCell().setUseDescender(true);
+                cell = new PdfPCell();
+                table.getDefaultCell().setBackgroundColor(new GrayColor(0.75f));
+                table.addCell("Process Name");
+                table.addCell("GPL");
+                table.addCell("%");
+                table.addCell("Quantity");
+
+                table.getDefaultCell().setBackgroundColor(GrayColor.GRAYWHITE);
+                table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
+                
+                if (dyeingProcessList.get(x).getdyeingProcessOrder().contains("[a-zA-Z]+") == false){
+                    table.addCell(RomanNumber.toRoman(x+1) + ". " + dyeingProcessList.get(x).getDyeingProcessName());
+                    table.addCell(" ");
+                    table.addCell(" ");
+                    table.addCell(" ");
+                    rows++;
+                }
+                else if(dyeingProcessList.get(x).getdyeingProcessOrder().contains("[a-zA-Z]+") == true){
+                    String dyeingSubProcessLetter = dyeingProcessList.get(x).getdyeingProcessOrder().replaceAll("[^A-Za-z]+", "");
+
+                    table.addCell("    " + dyeingSubProcessLetter.toUpperCase() + ". " + dyeingProcessList.get(x).getDyeingProcessName());
+                    table.addCell(" ");
+                    table.addCell(" ");
+                    table.addCell(" ");
+                    rows++;
+
+                    dyeingChemicalList = dChemHandler.GetAllDyeingChemicalFromDyeingProcessID(dyeingProcessList.get(x).getId());
+
+                    if(dyeingChemicalList.size() > 0)
+                    {
+                        Collections.sort(dyeingChemicalList, new Comparator<DyeingChemical>(){
+                            @Override
+                            public int compare(DyeingChemical o1, DyeingChemical o2){
+                                int rollno1 = o1.getOrder();
+                                int rollno2 = o2.getOrder();
+
+                                /*For ascending order*/
+                                return rollno1-rollno2;
+
+                            }                    
+                        });
+                    }
+
+                    for(int i = 0; i<dyeingChemicalList.size(); i++)
+                    {
+                        table.addCell("        " + dyeingChemicalList.get(i).getOrder() + ". " + chemHandler.GetChemicalNameFromChemicalID(dyeingChemicalList.get(i).getChemicalID()));
+                        if("GPL".equals(dyeingChemicalList.get(i).getType().toUpperCase())){
+                            table.addCell(String.valueOf(dyeingChemicalList.get(i).getValue()));
+                            table.addCell(" ");
+                        }
+                        else
+                        {
+                            table.addCell(" ");
+                            table.addCell(String.valueOf(dyeingChemicalList.get(i).getValue()));
+                        }
+                        table.addCell("Quantity");
+                        rows++;
+                    }
+                }
+            }
         }
         
         document.add(table);
         
+        document.add(Chunk.NEWLINE);
+        
+        table = new PdfPTable(3);
+        
+        Paragraph rectangleText = new Paragraph("SAMPLE", controlSlipHeaderFont);
+        
+        PdfPCell cellMasterSample = new PdfPCell(rectangleText);
+        cellMasterSample.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cellMasterSample.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cellMasterSample.setFixedHeight(80f);
+        table.addCell(cellMasterSample);
+        
+        PdfPCell cellFiller = new PdfPCell();
+        cellFiller.setFixedHeight(80f);
+        cellFiller.setBorder(Rectangle.NO_BORDER);
+        table.addCell(cellFiller);
+        
+        PdfPCell cellCottonDyeing = new PdfPCell(rectangleText);
+        cellCottonDyeing.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cellCottonDyeing.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cellCottonDyeing.setFixedHeight(80f);
+        table.addCell(cellCottonDyeing);
+        
+        document.add(table);
+        
+        document.add(Chunk.NEWLINE);
+        
+        table = new PdfPTable(3);
+        
+        PdfPCell cellPesDyeing = new PdfPCell(rectangleText);
+        cellPesDyeing.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cellPesDyeing.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cellPesDyeing.setFixedHeight(80f);
+        table.addCell(cellPesDyeing);
+        
+        table.addCell(cellFiller);
+        
+        PdfPCell cellTreatment = new PdfPCell(rectangleText);
+        cellTreatment.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        cellTreatment.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cellTreatment.setFixedHeight(80f);
+        table.addCell(cellTreatment);
+        
+        document.add(table);
         //document.add(chapter);
         
         return document;
     }
     
+    public Document AddSecondPageHeader(Document document, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, ProcessOrder processOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException
+    {
+        Font companyHeaderFont = FontFactory.getFont(FontFactory.HELVETICA, 18, Font.BOLDITALIC);
+        Paragraph companyHeader = new Paragraph("Colortex Processing Inc.", companyHeaderFont);
+        companyHeader.setAlignment(Element.ALIGN_CENTER);
+        document.add(companyHeader);
+        //Chapter chapter = new Chapter(companyHeader, 1);
+        chapterNumber = 2;
+        //chapter.setNumberDepth(0);
+        
+        Font controlSlipHeaderFont = FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL);
+        Paragraph controlSlipHeader = new Paragraph("Dyeing Control Slip", controlSlipHeaderFont);
+        controlSlipHeader.setAlignment(Element.ALIGN_CENTER);
+        document.add(controlSlipHeader);
+        
+        PdfPTable table = new PdfPTable(1);
+        table.getDefaultCell().setBorder(PdfPCell.NO_BORDER);
+        table.setWidthPercentage(100);
+        
+        Phrase filler = new Phrase();
+        filler.add(" ");
+        PdfPCell pCell1 = new PdfPCell(filler);
+        table.addCell(filler);
+        document.add(table);
+        
+        Font dyeingProcessFont = FontFactory.getFont(FontFactory.HELVETICA, 13, Font.NORMAL);
+        Paragraph dyeingProcessHeader = new Paragraph(dyeingProgramDetails.getDyeingProgramName(), dyeingProcessFont);
+        dyeingProcessHeader.setAlignment(Element.ALIGN_CENTER);
+        document.add(dyeingProcessHeader);
+        
+        table = new PdfPTable(2);
+        table.getDefaultCell().setBorder(PdfPCell.NO_BORDER);
+        table.setWidthPercentage(100);
+        table.addCell(filler);
+        table.addCell(filler);
+        table.addCell(filler);
+        table.addCell(filler);
+        
+        Phrase p = new Phrase();
+        p.add("Customer: " + customerDetails.getCustomerName());
+        PdfPCell pCell = new PdfPCell(p);
+        table.addCell(p);
+        
+        Phrase p2 = new Phrase();
+        p2.add("Batch NO.: ");
+        pCell = new PdfPCell(p2);
+        table.addCell(p2);
+        
+        Phrase p3 = new Phrase();
+        p3.add("Job NO.: " + jobOrderDetails.getDrNumber());
+        pCell = new PdfPCell(p3);
+        table.addCell(p3);
+        
+        Phrase p6 = new Phrase();
+        p6.add("Machine: " + machineDetails.getMachineName());
+        pCell = new PdfPCell(p6);
+        table.addCell(p6);
+        
+        Phrase p5 = new Phrase();
+        p5.add("Design: " + designDetails.getDesignName());
+        pCell = new PdfPCell(p5);
+        table.addCell(p5);
+        
+        Phrase p4 = new Phrase();
+        p4.add("Weight: " + processOrderDetails.getWeight());
+        pCell = new PdfPCell(p4);
+        table.addCell(p4);
+        
+        Phrase p7 = new Phrase();
+        p7.add("Color: " + chemicalDetails.getColorName());
+        pCell = new PdfPCell(p7);
+        table.addCell(p7);
+        
+        Phrase p8 = new Phrase();
+        p7.add("Vol. of Water: " + volume);
+        pCell = new PdfPCell(p8);
+        table.addCell(p8);
+        table.addCell(filler);
+        table.addCell(filler);
+        document.add(table);
+        
+        Paragraph paragraph = new Paragraph("Supervisor:_________ Drugman:_________ Operator:_________ Date:_________");
+        document.add(paragraph);
+        document.add(Chunk.NEWLINE);
+        
+        return document;
+    }
     
+    public Document AddThirdPage(Document document, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, ProcessOrder processOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException 
+    {
+        Font companyHeaderFont = FontFactory.getFont(FontFactory.HELVETICA, 18, Font.BOLDITALIC);
+        Paragraph companyHeader = new Paragraph("Colortex Processing Inc.", companyHeaderFont);
+        companyHeader.setAlignment(Element.ALIGN_CENTER);
+        //document.add(companyHeader);
+        Chapter chapter = new Chapter(companyHeader, 1);
+        chapterNumber = 3;
+        chapter.setNumberDepth(0);
+        
+        Font controlSlipHeaderFont = FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL);
+        Paragraph controlSlipHeader = new Paragraph("Dyeing Control Slip", controlSlipHeaderFont);
+        controlSlipHeader.setAlignment(Element.ALIGN_CENTER);
+        chapter.add(controlSlipHeader);
+        
+        PdfPTable table = new PdfPTable(1);
+        table.getDefaultCell().setBorder(PdfPCell.NO_BORDER);
+        table.setWidthPercentage(100);
+        
+        Phrase filler = new Phrase();
+        filler.add(" ");
+        PdfPCell pCell1 = new PdfPCell(filler);
+        table.addCell(filler);
+        chapter.add(table);
+        
+        Font dyeingProcessFont = FontFactory.getFont(FontFactory.HELVETICA, 13, Font.NORMAL);
+        Paragraph dyeingProcessHeader = new Paragraph(dyeingProgramDetails.getDyeingProgramName(), dyeingProcessFont);
+        dyeingProcessHeader.setAlignment(Element.ALIGN_CENTER);
+        chapter.add(dyeingProcessHeader);
+        
+        table = new PdfPTable(2);
+        table.getDefaultCell().setBorder(PdfPCell.NO_BORDER);
+        table.setWidthPercentage(100);
+        table.addCell(filler);
+        table.addCell(filler);
+        table.addCell(filler);
+        table.addCell(filler);
+        
+        Phrase p = new Phrase();
+        p.add("Customer: " + customerDetails.getCustomerName());
+        PdfPCell pCell = new PdfPCell(p);
+        table.addCell(p);
+        
+        Phrase p2 = new Phrase();
+        p2.add("Batch NO.: ");
+        pCell = new PdfPCell(p2);
+        table.addCell(p2);
+        
+        Phrase p3 = new Phrase();
+        p3.add("Job NO.: " + jobOrderDetails.getDrNumber());
+        pCell = new PdfPCell(p3);
+        table.addCell(p3);
+        
+        Phrase p6 = new Phrase();
+        p6.add("Machine: " + machineDetails.getMachineName());
+        pCell = new PdfPCell(p6);
+        table.addCell(p6);
+        
+        Phrase p5 = new Phrase();
+        p5.add("Design: " + designDetails.getDesignName());
+        pCell = new PdfPCell(p5);
+        table.addCell(p5);
+        
+        Phrase p4 = new Phrase();
+        p4.add("Weight: " + processOrderDetails.getWeight());
+        pCell = new PdfPCell(p4);
+        table.addCell(p4);
+        
+        Phrase p7 = new Phrase();
+        p7.add("Color: " + chemicalDetails.getColorName());
+        pCell = new PdfPCell(p7);
+        table.addCell(p7);
+        
+        Phrase p8 = new Phrase();
+        p7.add("Vol. of Water: " + volume);
+        pCell = new PdfPCell(p8);
+        table.addCell(p8);
+        table.addCell(filler);
+        table.addCell(filler);
+        chapter.add(table);
+        
+        Paragraph paragraph = new Paragraph("Supervisor:_________ Drugman:_________ Operator:_________ Date:_________");
+        chapter.add(paragraph);
+        
+        paragraph = new Paragraph("Loading Time:_______________________");
+        paragraph.setAlignment(Element.ALIGN_CENTER);
+        
+        chapter.add(paragraph);
+        
+        document.add(chapter);
+        document.add(Chunk.NEWLINE);
+        document.add(Chunk.NEWLINE);
+        
+        paragraph = new Paragraph("Change to Resin Program Name");
+        paragraph.setAlignment(Element.ALIGN_CENTER);
+        document.add(paragraph);
+        document.add(Chunk.NEWLINE);
+        
+        float[] columnWidths = {5, 3, 3};
+        table = new PdfPTable(columnWidths);
+        table.setWidthPercentage(100);
+        table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+        table.getDefaultCell().setUseAscender(true);
+        table.getDefaultCell().setUseDescender(true);
+        PdfPCell cell = new PdfPCell();
+        table.getDefaultCell().setBackgroundColor(new GrayColor(0.75f));
+            table.addCell("Resin Chemical");
+            table.addCell("GPL");
+            table.addCell("Quantity");
+
+            
+        table.getDefaultCell().setBackgroundColor(GrayColor.GRAYWHITE);
+        table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
+        
+                                    table.addCell(" ");
+                table.addCell(" ");
+                table.addCell(" ");
+        
+        for (int counter = 1; counter < 10; counter++) {
+                table.addCell(counter + ".  " + "Resin Chemical" + counter);
+                table.addCell("key " + counter);
+                table.addCell("value " + counter);
+                table.addCell(" ");
+                table.addCell(" ");
+                table.addCell(" ");
+        }
+        
+        document.add(table);
+        
+        return document;
+    }
     
     public void printPDF()
     {
