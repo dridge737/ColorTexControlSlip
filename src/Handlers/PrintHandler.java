@@ -14,6 +14,8 @@ import DataEntities.Machine;
 import DataEntities.ProcessOrder;
 import DataEntities.DyeingProcess;
 import DataEntities.DyeingChemical;
+import DataEntities.ResinChemical;
+import DataEntities.ResinProgram;
 import Helpers.RomanNumber;
 import java.util.ArrayList;
 import com.itextpdf.text.Chapter;
@@ -836,7 +838,13 @@ public class PrintHandler {
         document.add(Chunk.NEWLINE);
         document.add(Chunk.NEWLINE);
         
-        paragraph = new Paragraph("Change to Resin Program Name");
+        ResinProgramHandler resinProgramHandler = new ResinProgramHandler();
+        ResinChemicalHandler resinChemicalHandler = new ResinChemicalHandler();
+        ChemicalHandler chemicalHandler = new ChemicalHandler();
+        String resinProgramName = resinProgramHandler.GetResinProgramNameFromResinProgramID(processOrderDetails.getResinProgramID());
+        ArrayList<ResinChemical> resinChemicalList = resinChemicalHandler.GetResinChemicalsByResinProgramId(processOrderDetails.getResinProgramID());
+        
+        paragraph = new Paragraph(resinProgramName);
         paragraph.setAlignment(Element.ALIGN_CENTER);
         document.add(paragraph);
         document.add(Chunk.NEWLINE);
@@ -857,14 +865,14 @@ public class PrintHandler {
         table.getDefaultCell().setBackgroundColor(GrayColor.GRAYWHITE);
         table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
         
-                                    table.addCell(" ");
-                table.addCell(" ");
-                table.addCell(" ");
+            table.addCell(" ");
+            table.addCell(" ");
+            table.addCell(" ");
         
-        for (int counter = 1; counter < 10; counter++) {
-                table.addCell(counter + ".  " + "Resin Chemical" + counter);
-                table.addCell("key " + counter);
-                table.addCell("value " + counter);
+        for (int x = 0; x < resinChemicalList.size(); x++) {
+                table.addCell((x+1) + ".  " + chemicalHandler.GetChemicalNameFromChemicalID(resinChemicalList.get(x).getChemicalID()));
+                table.addCell(String.valueOf(resinChemicalList.get(x).getGPLValue()));
+                table.addCell("QUANTITY");
                 table.addCell(" ");
                 table.addCell(" ");
                 table.addCell(" ");
