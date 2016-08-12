@@ -15,7 +15,6 @@ import DataEntities.ProcessOrder;
 import DataEntities.DyeingProcess;
 import DataEntities.DyeingChemical;
 import DataEntities.ResinChemical;
-import DataEntities.ResinProgram;
 import Helpers.RomanNumber;
 import java.util.ArrayList;
 import com.itextpdf.text.Chapter;
@@ -33,12 +32,23 @@ import com.itextpdf.text.pdf.GrayColor;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
  
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.Comparator;
+import javax.print.DocFlavor;
+import javax.print.DocPrintJob;
+import javax.print.PrintException;
+import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
+import javax.print.SimpleDoc;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.swing.JOptionPane;
 /**
  *
  * @author imbuenyson
@@ -883,9 +893,28 @@ public class PrintHandler {
         return document;
     }
     
-    public void printPDF()
+    public void printPDF (Document document) throws DocumentException, IOException
     {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PdfWriter f1 =PdfWriter.getInstance(document,baos);
         
+        try{ 
+        byte[] pdfbyte = baos.toByteArray();
+        //System.out.println(pdf);
+        InputStream bis = new ByteArrayInputStream(pdfbyte);
+        SimpleDoc pdfp = new SimpleDoc(bis, DocFlavor.BYTE_ARRAY.AUTOSENSE, null);
+        PrintService printService = PrintServiceLookup.lookupDefaultPrintService();
+        DocPrintJob printjob= printService.createPrintJob();
+        printjob.print(pdfp, new HashPrintRequestAttributeSet());
+        bis.close();
+
+        }
+        catch(IOException e){
+            JOptionPane.showMessageDialog(null, "EEE :"+e);
+            e.printStackTrace();
+        }
+        catch (PrintException ex) {    
+        }    
     }
 
 }
