@@ -899,15 +899,14 @@ public class PrintHandler {
         PdfWriter f1 =PdfWriter.getInstance(document,baos);
         
         try{ 
-        byte[] pdfbyte = baos.toByteArray();
-        //System.out.println(pdf);
-        InputStream bis = new ByteArrayInputStream(pdfbyte);
-        SimpleDoc pdfp = new SimpleDoc(bis, DocFlavor.BYTE_ARRAY.AUTOSENSE, null);
-        PrintService printService = PrintServiceLookup.lookupDefaultPrintService();
-        DocPrintJob printjob= printService.createPrintJob();
-        printjob.print(pdfp, new HashPrintRequestAttributeSet());
-        bis.close();
-
+            byte[] pdfbyte = baos.toByteArray();
+            //System.out.println(pdf);
+            InputStream bis = new ByteArrayInputStream(pdfbyte);
+            SimpleDoc pdfp = new SimpleDoc(bis, DocFlavor.BYTE_ARRAY.AUTOSENSE, null);
+            PrintService printService = PrintServiceLookup.lookupDefaultPrintService();
+            DocPrintJob printjob= printService.createPrintJob();
+            printjob.print(pdfp, new HashPrintRequestAttributeSet());
+            bis.close();
         }
         catch(IOException e){
             JOptionPane.showMessageDialog(null, "EEE :"+e);
