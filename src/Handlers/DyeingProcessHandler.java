@@ -130,9 +130,5 @@ public class DyeingProcessHandler {
             isSuccessful = repo.DeleteDyeingProcessByDyeingProcessID(ThisDyeingProcess.getId());
         }
         
-        if(isSuccessful == false)
-        {
-            //enter validation 
-        }
     }
 }

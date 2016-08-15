@@ -388,7 +388,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         if(!colorName.equals(""))
         {
             colorId = handler.GetColorIDFromColorName(colorName);
-            thisCustomer.setCustomerId(colorId);
+            thisColor.setColorId(colorId);
         }
     }//GEN-LAST:event_ColorDropDownListActionPerformed
 
@@ -442,7 +442,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                 
         //if(!designName.equals(""))
         if(!DesignDropDownList.getSelectedItem().toString().equals("Choose Design") 
-                && !(DesignDropDownList.getSelectedItem().toString().length() > 1))
+                && (DesignDropDownList.getSelectedItem().toString().length() > 0))
         {
             String designName = DesignDropDownList.getSelectedItem().toString();
             thisDesign.setDesignName(designName);
@@ -506,6 +506,7 @@ public class JobOrderForm extends javax.swing.JFrame {
     }
     private boolean SetJobOrderInformationFromTextBox()
     {
+        boolean isSuccessful = false;
         if(thisCustomer.getCustomerId() > 0)
         {
             thisJob.setCustomerID(thisCustomer.getCustomerId());
@@ -524,14 +525,20 @@ public class JobOrderForm extends javax.swing.JFrame {
                             thisJob.setJobDate(get_date_from_spinner(dateSpinner));
                             
                             JobHandler thisJobHandler = new JobHandler();
-                            int JobOrderID = thisJobHandler.AddNewJobOrder(thisJob);
-                            if(JobOrderID == - 1)
-                                JOptionPane.showMessageDialog(null, "Job Order is not successfully added.");
-                            else
+                            if(thisJobHandler.CheckIfThisJobOrderHasBeenAdded(thisJob))
                             {
-                                thisJob.setID(JobOrderID);
-                                return true;
+                                int JobOrderID = thisJobHandler.AddNewJobOrder(thisJob);
+                                if(JobOrderID == - 1)
+                                    JOptionPane.showMessageDialog(null, "Job Order was not added.");
+                                else
+                                {
+                                    thisJob.setID(JobOrderID);
+                                    JOptionPane.showMessageDialog(null, "Job Order was successfully added.");
+                                    isSuccessful = true;
+                                }
+                                
                             }
+
                         }
                         else
                         JOptionPane.showMessageDialog(null, "Please check the Job Order number.");  
@@ -548,7 +555,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         else
             JOptionPane.showMessageDialog(null, "Please check the Customer Name.");
         
-        return false;
+        return isSuccessful;
     }
     
     private void CancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelActionPerformed

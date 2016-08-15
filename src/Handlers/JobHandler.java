@@ -56,4 +56,13 @@ public class JobHandler {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         return repo.GetJobOrderDetailsFromJobOrderID(JobOrderID);
      }
+
+    public boolean CheckIfThisJobOrderHasBeenAdded(JobOrder thisJob) {
+        boolean itExist = false;
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        if(repo.CheckIfJobOrderExists(thisJob) == 1)
+            itExist = true;
+        return itExist;
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

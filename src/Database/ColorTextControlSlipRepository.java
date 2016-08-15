@@ -1425,7 +1425,7 @@ public class ColorTextControlSlipRepository {
             conn = db.getConnection();
             String query = "INSERT INTO job_order (DrNumber, MachineID, DesignID, ColorID, CustomerID, Date) VALUES (?, ?, ?, ?, ?, ?)";
 
-            preparedStmt = conn.prepareStatement(query);
+            preparedStmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             int itemNumber = 1;
             preparedStmt.setString(itemNumber++ , newJobOrder.getDrNumber().toUpperCase());
             preparedStmt.setInt(itemNumber++ , newJobOrder.getMachineID());
@@ -1433,7 +1433,7 @@ public class ColorTextControlSlipRepository {
             preparedStmt.setInt(itemNumber++ , newJobOrder.getColorID());
             preparedStmt.setInt(itemNumber++ , newJobOrder.getCustomerID());
             preparedStmt.setString(itemNumber++ , newJobOrder.getJobDate());
-            preparedStmt.executeUpdate();
+            preparedStmt.execute();
             
             ResultSet generatedKeys = preparedStmt.getGeneratedKeys();
             if (generatedKeys.next()) {
@@ -1567,6 +1567,39 @@ public class ColorTextControlSlipRepository {
         }
         this.closeConn(conn, ps, rs);
         return thisJobOrder;
+    }
+    
+    public int CheckIfJobOrderExists(JobOrder thisJobOrder)
+    {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int checkTest = 0;
+        try 
+        {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT EXISTS "
+                    + " (SELECT ID "
+                    + " FROM job_order WHERE "
+                    + " DrNumber = ?"
+                    + " AND Date = ?) "
+                    + " AS 'CheckTest'");
+
+            int item = 1;
+            ps.setString(item++, thisJobOrder.getDrNumber());
+            ps.setString(item++, thisJobOrder.getJobDate());
+            rs = ps.executeQuery();
+            if(rs.first())
+                checkTest = rs.getInt("CheckTest");
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, ps, rs);
+        return checkTest;
+        
     }
     
 /************************************************************************************************/
