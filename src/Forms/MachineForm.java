@@ -71,7 +71,7 @@ public class MachineForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Color Text Control Slip");
-        setMaximumSize(new java.awt.Dimension(820, 579));
+        setMaximumSize(null);
         setMinimumSize(new java.awt.Dimension(820, 579));
         getContentPane().setLayout(null);
 
@@ -213,7 +213,7 @@ public class MachineForm extends javax.swing.JFrame {
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 340, 730, -1));
 
         DeleteMachineButton1.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        DeleteMachineButton1.setText("Cancel");
+        DeleteMachineButton1.setText("Close");
         DeleteMachineButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DeleteMachineButton1ActionPerformed(evt);

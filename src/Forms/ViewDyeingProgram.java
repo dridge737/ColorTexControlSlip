@@ -31,8 +31,8 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
      */
     public ViewDyeingProgram() {
         initComponents();
-        GetUpdatedTable();
         SetToCenter();
+        GetUpdatedTable();
     }
     
     public ViewDyeingProgram(ProcessOrder ProcessToBeAdded) {

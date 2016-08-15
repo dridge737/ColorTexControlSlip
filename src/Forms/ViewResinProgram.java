@@ -45,6 +45,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
         SelectBut1.setText("Next");
         DeleteBut.setVisible(false);
         Header.setText("Dyeing Control Slip : Page 4/6");
+        BackBut.setText("Back");
     }
 
     /**
@@ -109,14 +110,14 @@ public class ViewResinProgram extends javax.swing.JFrame {
         BgPanel.add(ResinLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 85, 470, 40));
 
         BackBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
-        BackBut.setText("Back");
+        BackBut.setText("Close");
         BackBut.setToolTipText("");
         BackBut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BackButActionPerformed(evt);
             }
         });
-        BgPanel.add(BackBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(285, 370, 220, 42));
+        BgPanel.add(BackBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 370, 145, 42));
 
         DeleteBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         DeleteBut.setText("Delete");
@@ -126,7 +127,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
                 DeleteButActionPerformed(evt);
             }
         });
-        BgPanel.add(DeleteBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 425, 220, 42));
+        BgPanel.add(DeleteBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 370, 145, 42));
 
         SearchTextBox.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
         SearchTextBox.setForeground(new java.awt.Color(204, 204, 204));
@@ -154,7 +155,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
                 SelectBut1ActionPerformed(evt);
             }
         });
-        BgPanel.add(SelectBut1, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 370, 220, 42));
+        BgPanel.add(SelectBut1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 370, 145, 42));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -164,9 +165,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(BgPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(BgPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -284,8 +283,13 @@ public class ViewResinProgram extends javax.swing.JFrame {
 
     private void BackButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButActionPerformed
         // TODO add your handling code here:
-        DyeingForm thisDyeingForm = new DyeingForm( thisProcessOrder.getDyeingProgramID(), thisProcessOrder);
-        thisDyeingForm.setVisible(true);
+        if(BackBut.getText().equals("Back"))
+        {
+            DyeingForm thisDyeingForm = new DyeingForm( thisProcessOrder.getDyeingProgramID(), thisProcessOrder);
+            thisDyeingForm.setVisible(true);
+        }
+        this.dispose();
+        
     }//GEN-LAST:event_BackButActionPerformed
 
     /**
