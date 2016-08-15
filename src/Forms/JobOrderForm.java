@@ -293,7 +293,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                 WeightKeyReleased(evt);
             }
         });
-        jPanel2.add(Weight, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 86, 119, -1));
+        jPanel2.add(Weight, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 86, 150, -1));
 
         VolumeTextField.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jPanel2.add(VolumeTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(184, 131, 460, -1));
@@ -305,7 +305,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                 LiquidRatioDropDownActionPerformed(evt);
             }
         });
-        jPanel2.add(LiquidRatioDropDown, new org.netbeans.lib.awtextra.AbsoluteConstraints(229, 86, 415, -1));
+        jPanel2.add(LiquidRatioDropDown, new org.netbeans.lib.awtextra.AbsoluteConstraints(254, 86, 390, -1));
 
         jLabel9.setBackground(new java.awt.Color(255, 255, 255));
         jLabel9.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
@@ -426,6 +426,10 @@ public class JobOrderForm extends javax.swing.JFrame {
             thisMachine.setMaxVolume(machineDetails.getMaxVolume());
             thisMachine.setMinCapacity(machineDetails.getMinCapacity());
             thisMachine.setMinVolume(machineDetails.getMinVolume());
+            
+            VolumeTextField.setText(Float.toString(thisMachine.getMaxVolume()));
+            Weight.setText(Float.toString(thisMachine.getMaxCapacity()));
+            
         }        
         
         
@@ -560,7 +564,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         int weightMultiplier = 0;
         
         String selected = LiquidRatioDropDown.getSelectedItem().toString();
-        int weight = Integer.parseInt(Weight.getText());
+        float weight = Float.parseFloat(Weight.getText());
         
         if(selected.equals("1:6"))
         {
