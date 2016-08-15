@@ -22,6 +22,8 @@ import Handlers.JobHandler;
 import Handlers.MachineHandler;
 import Handlers.ResinProgramHandler;
 import com.itextpdf.text.DocumentException;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -49,6 +51,7 @@ public class ReviewForm extends javax.swing.JFrame {
      */
     public ReviewForm() {
         initComponents();
+        SetToCenter();
     }
     
     public ReviewForm(ProcessOrder setThisProcessOrder)
@@ -59,6 +62,15 @@ public class ReviewForm extends javax.swing.JFrame {
         SetProcessOrderDetails();
         SetDropDownDetails();
     }
+    
+    public void SetToCenter()
+    {
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
+        int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
+        this.setLocation(x,y);
+    }
+    
 
     private void SetDyeingProgramName()
     {

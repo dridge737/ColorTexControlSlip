@@ -9,6 +9,8 @@ import DataEntities.DyeingProgram;
 import DataEntities.ProcessOrder;
 import Handlers.DyeingProgramHandler;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -30,6 +32,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
     public ViewDyeingProgram() {
         initComponents();
         GetUpdatedTable();
+        SetToCenter();
     }
     
     public ViewDyeingProgram(ProcessOrder ProcessToBeAdded) {
@@ -40,6 +43,14 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         BackBut.setText("Back");
     }
 
+    public void SetToCenter()
+    {
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
+        int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
+        this.setLocation(x,y);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

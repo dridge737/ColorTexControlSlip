@@ -33,6 +33,15 @@ public class MachineForm extends javax.swing.JFrame {
     public MachineForm() {
         initComponents();
         this.get_updated_table();
+        SetToCenter();
+    }
+    
+    public void SetToCenter()
+    {
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
+        int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
+        this.setLocation(x,y);
     }
 
     /**
@@ -62,6 +71,8 @@ public class MachineForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Color Text Control Slip");
+        setMaximumSize(new java.awt.Dimension(820, 579));
+        setMinimumSize(new java.awt.Dimension(820, 579));
         getContentPane().setLayout(null);
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));

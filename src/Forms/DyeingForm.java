@@ -15,6 +15,8 @@ import Handlers.ChemicalHandler;
 import Handlers.DyeingProcessHandler;
 import Handlers.DyeingProgramHandler;
 import Handlers.ProcessOrderHandler;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
@@ -45,6 +47,7 @@ public class DyeingForm extends javax.swing.JFrame {
         WindowType = 1;
         Process.add(new ProcessPanel(), "Process 1", NumberOfProcessTabs++);
         setWindowType(1);
+       
         //this.jPanel2.add(ThisPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 80, 780, 550));
         //this.jPanel2.validate();
      
@@ -65,8 +68,17 @@ public class DyeingForm extends javax.swing.JFrame {
         setWindowType(3);
     }
     
+    public void SetToCenter()
+    {
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
+        int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
+        this.setLocation(x,y);
+    }
+    
      public void setWindowType(int type)
     {
+         SetToCenter();
         WindowType = type;
         if(WindowType == 1)
         {
