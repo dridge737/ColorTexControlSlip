@@ -410,24 +410,25 @@ public class JobOrderForm extends javax.swing.JFrame {
         if(!MachineDropDownList.getSelectedItem().toString().equals("Choose Machine"))
         {
             machineName = MachineDropDownList.getSelectedItem().toString();
+            machineId = handler.GetMachineIdByName(machineName);
+            
+            //if(!machineName.equals(""))
+            //{}
+         
+            if(machineId > -1)
+            {
+                machineDetails = handler.GetMachineDetailsById(machineId);
+            }
+            
+            thisMachine.setMachineId(machineId);
+            thisMachine.setMachineName(machineDetails.getMachineName());
+            thisMachine.setMaxCapacity(machineDetails.getMaxCapacity());
+            thisMachine.setMaxVolume(machineDetails.getMaxVolume());
+            thisMachine.setMinCapacity(machineDetails.getMinCapacity());
+            thisMachine.setMinVolume(machineDetails.getMinVolume());
         }        
         
-        if(!machineName.equals(""))
-        {
-            machineId = handler.GetMachineIdByName(machineName);
-        }
         
-        if(machineId > -1)
-        {
-            machineDetails = handler.GetMachineDetailsById(machineId);
-        }              
-         
-        thisMachine.setMachineId(machineId);
-        thisMachine.setMachineName(machineDetails.getMachineName());
-        thisMachine.setMaxCapacity(machineDetails.getMaxCapacity());
-        thisMachine.setMaxVolume(machineDetails.getMaxVolume());
-        thisMachine.setMinCapacity(machineDetails.getMinCapacity());
-        thisMachine.setMinVolume(machineDetails.getMinVolume());
     }//GEN-LAST:event_MachineDropDownListActionPerformed
 
     private void DesignDropDownListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DesignDropDownListActionPerformed

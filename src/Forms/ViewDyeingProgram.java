@@ -24,8 +24,8 @@ import javax.swing.table.TableRowSorter;
 public class ViewDyeingProgram extends javax.swing.JFrame {
 
     DefaultTableModel model = new DefaultTableModel();
-    ViewDyeingProgram thisDyeingProgram = new ViewDyeingProgram();
-    private ProcessOrder thisProcessOrder;
+    DyeingProgram thisDyeingProgram = new DyeingProgram();
+    ProcessOrder thisProcessOrder = new ProcessOrder();
     /**
      * Creates new form ViewResinProgram
      */
@@ -33,11 +33,11 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         initComponents();
         SetToCenter();
         GetUpdatedTable();
+        this.SearchTextBox.setVisible(false);
     }
     
     public ViewDyeingProgram(ProcessOrder ProcessToBeAdded) {
-        initComponents();
-        GetUpdatedTable();
+        this();
         thisProcessOrder = ProcessToBeAdded;
         Header.setText("Dyeing Control Slip : Page 2/6");
         BackBut.setText("Back");
@@ -69,7 +69,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         SelectBut = new javax.swing.JButton();
         SearchTextBox = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Color Text Control Slip");
 
         BgPanel.setBackground(new java.awt.Color(102, 102, 102));
@@ -127,7 +127,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
                 BackButActionPerformed(evt);
             }
         });
-        BgPanel.add(BackBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(285, 380, 220, 42));
+        BgPanel.add(BackBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(285, 405, 220, 42));
 
         SelectBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         SelectBut.setText("Select");
@@ -137,7 +137,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
                 SelectButActionPerformed(evt);
             }
         });
-        BgPanel.add(SelectBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 380, 220, 42));
+        BgPanel.add(SelectBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 405, 220, 42));
 
         SearchTextBox.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
         SearchTextBox.setForeground(new java.awt.Color(204, 204, 204));
@@ -160,7 +160,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
                 SearchTextBoxKeyReleased(evt);
             }
         });
-        BgPanel.add(SearchTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 85, 470, 38));
+        BgPanel.add(SearchTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(42, 355, 465, 38));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -170,9 +170,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(BgPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(BgPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
         );
 
         pack();
@@ -252,6 +250,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
     private void TopTableLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TopTableLabelMouseEntered
         // TODO add your handling code here:
         this.TopTableLabel.setVisible(false);
+        this.SearchTextBox.setVisible(true);
     }//GEN-LAST:event_TopTableLabelMouseEntered
 
     private void BackButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButActionPerformed
@@ -268,6 +267,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
     private void TopTableLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TopTableLabelMouseExited
         // TODO add your handling code here:
         TopTableLabel.setVisible(true);
+        this.SearchTextBox.setVisible(false);
     }//GEN-LAST:event_TopTableLabelMouseExited
 
     /**
