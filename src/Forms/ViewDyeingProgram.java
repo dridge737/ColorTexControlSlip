@@ -33,7 +33,6 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         initComponents();
         SetToCenter();
         GetUpdatedTable();
-        this.SearchTextBox.setVisible(false);
     }
     
     public ViewDyeingProgram(ProcessOrder ProcessToBeAdded) {
@@ -109,14 +108,6 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         TopTableLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         TopTableLabel.setText("Dyeing Program List");
         TopTableLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
-        TopTableLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                TopTableLabelMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                TopTableLabelMouseExited(evt);
-            }
-        });
         BgPanel.add(TopTableLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 85, 470, 38));
 
         BackBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
@@ -137,7 +128,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
                 SelectButActionPerformed(evt);
             }
         });
-        BgPanel.add(SelectBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 405, 220, 42));
+        BgPanel.add(SelectBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 405, 220, 42));
 
         SearchTextBox.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
         SearchTextBox.setForeground(new java.awt.Color(204, 204, 204));
@@ -247,12 +238,6 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         thisDyeingForm.setVisible(true);
     }//GEN-LAST:event_SelectButActionPerformed
 
-    private void TopTableLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TopTableLabelMouseEntered
-        // TODO add your handling code here:
-        this.TopTableLabel.setVisible(false);
-        this.SearchTextBox.setVisible(true);
-    }//GEN-LAST:event_TopTableLabelMouseEntered
-
     private void BackButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButActionPerformed
         // TODO add your handling code here:
         if(BackBut.getText().equals("Back"))
@@ -263,12 +248,6 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         this.dispose();
         
     }//GEN-LAST:event_BackButActionPerformed
-
-    private void TopTableLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TopTableLabelMouseExited
-        // TODO add your handling code here:
-        TopTableLabel.setVisible(true);
-        this.SearchTextBox.setVisible(false);
-    }//GEN-LAST:event_TopTableLabelMouseExited
 
     /**
      * @param args the command line arguments
