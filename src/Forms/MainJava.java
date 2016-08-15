@@ -32,9 +32,11 @@ public class MainJava {
         
         //DyeingForm TestThisFrame = new DyeingForm("PROCESSTEST" , 2);
         //TestThisFrame.setVisible(true);
-        JobOrderForm thisJobForm = new JobOrderForm();
-        thisJobForm.setVisible(true);
+        //JobOrderForm thisJobForm = new JobOrderForm();
+        //thisJobForm.setVisible(true);
                 
+        MainWindow thisMain = new MainWindow();
+        thisMain.setVisible(true);
     }
     
 }

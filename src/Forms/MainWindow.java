@@ -5,6 +5,8 @@
  */
 package Forms;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 import java.io.*;
 import java.net.URISyntaxException;
@@ -21,6 +23,15 @@ public class MainWindow extends javax.swing.JFrame {
      */
     public MainWindow() {
         initComponents();
+        SetToCenter();
+    }
+    
+    public void SetToCenter()
+    {
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
+        int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
+        this.setLocation(x,y);
     }
 
     /**
@@ -82,7 +93,7 @@ public class MainWindow extends javax.swing.JFrame {
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 60));
 
         ControlSlipButton.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        ControlSlipButton.setText("Enter Control Slip");
+        ControlSlipButton.setText("New Control Slip");
         ControlSlipButton.setToolTipText("");
         ControlSlipButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

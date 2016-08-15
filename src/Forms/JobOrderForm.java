@@ -25,9 +25,11 @@ import javax.swing.JOptionPane;
 import java.text.SimpleDateFormat;
 import javax.swing.JSpinner;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Toolkit;
 import java.awt.print.Book;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
@@ -64,6 +66,15 @@ public class JobOrderForm extends javax.swing.JFrame {
         populateColorDropDown();
         populateMachineDropDown();
         populateLiquoRatioDropDown();
+        SetToCenter();
+    }
+    
+    public void SetToCenter()
+    {
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
+        int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
+        this.setLocation(x,y);
     }
     
     public JobOrderForm(ProcessOrder ProcessOrder) {

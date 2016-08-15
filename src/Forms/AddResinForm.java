@@ -23,6 +23,8 @@ import DataEntities.Chemical;
 import DataEntities.ProcessOrder;
 import Forms.HelpForm.ButtonColumn;
 import Forms.HelpForm.auto_complete;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
@@ -49,7 +51,16 @@ public class AddResinForm extends javax.swing.JFrame {
         //InitializeChemicalTable();
         addChemicalTextBoxAutoComplete();
         setTableModel();
-        AddDeleteColumn();   
+        AddDeleteColumn();  
+        SetToCenter();
+    }
+    
+    public void SetToCenter()
+    {
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
+        int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
+        this.setLocation(x,y);
     }
     
     public AddResinForm(String ResinProgramName, ProcessOrder currentProcessOrder)
