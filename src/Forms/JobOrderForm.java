@@ -55,6 +55,7 @@ public class JobOrderForm extends javax.swing.JFrame {
     JobOrder thisJob = new JobOrder();
     ProcessOrder thisProcessOrder = new ProcessOrder();
     private final static int POINTS_PER_INCH = 72;
+    private int WindowType = 0;
     /**
      * Creates new form JobOrderForm
      */
@@ -83,11 +84,12 @@ public class JobOrderForm extends javax.swing.JFrame {
         SetJobOrderDetails();
         SetProcessOrderDetails();
         SetDropDownDetails();
+        WindowType = 1;
     }
     
     private void SetJobOrderDetails()
     {
-        thisJob.setID(thisProcessOrder.getID());
+        thisJob.setID(thisProcessOrder.getJobOrderID());
         JobHandler JobOrderHandler = new JobHandler();
         thisJob = JobOrderHandler.GetJobOrderDetailsFromJobId(thisJob.getID());
         JobOrder.setText(thisJob.getDrNumber());
@@ -497,8 +499,9 @@ public class JobOrderForm extends javax.swing.JFrame {
                     thisProcessOrder.setWeight(Float.parseFloat(this.Weight.getText()));
                     thisProcessOrder.setRollLoad(RollLoad.getText());
                     ProcessOrderHandler ProcessHandler = new ProcessOrderHandler();
-                    ProcessHandler.AddNewProcessOrder(thisProcessOrder);
-                    isSuccessful = true;
+                    thisProcessOrder.setID(ProcessHandler.AddNewProcessOrder(thisProcessOrder));
+                    if(thisProcessOrder.getID() >0)
+                        isSuccessful = true;
                 }
             }
             else
@@ -527,6 +530,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                             thisJob.setJobDate(get_date_from_spinner(dateSpinner));
                             
                             JobHandler thisJobHandler = new JobHandler();
+                            
                             if(thisJobHandler.CheckIfThisJobOrderHasBeenAdded(thisJob))
                             {
                                 int JobOrderID = thisJobHandler.AddNewJobOrder(thisJob);
@@ -535,10 +539,15 @@ public class JobOrderForm extends javax.swing.JFrame {
                                 else
                                 {
                                     thisJob.setID(JobOrderID);
-                                    JOptionPane.showMessageDialog(null, "Job Order was successfully added.");
+                                    //JOptionPane.showMessageDialog(null, "Job Order was successfully added.");
                                     isSuccessful = true;
                                 }
                                 
+                            }
+                            else if(WindowType == 1)
+                            {
+                                thisJob.setID(this.thisProcessOrder.getJobOrderID());
+                                thisJobHandler.UpdateJobOrder(thisJob);
                             }
                             else
                             {
@@ -568,6 +577,11 @@ public class JobOrderForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel this Control Slip?","Exit?", JOptionPane.YES_NO_OPTION))
         {
+            if(WindowType == 1)
+            {
+                new JobHandler().DeleteJobOrder(thisProcessOrder.getJobOrderID());
+                new ProcessOrderHandler().DeleteProcessOrder(thisProcessOrder.getID());
+            }
             this.dispose();
         }
     }//GEN-LAST:event_CancelActionPerformed

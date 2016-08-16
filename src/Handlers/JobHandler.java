@@ -23,32 +23,20 @@ public class JobHandler {
         
     }
     
-    public void UpdateJobOrder(JobOrder thisJobOrder)
+    public boolean UpdateJobOrder(JobOrder thisJobOrder)
     {
-        boolean isSuccessful = false;
-        
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        isSuccessful = repo.UpdateJobOrderByJobOrderID(thisJobOrder);
+        return repo.UpdateJobOrderByJobOrderID(thisJobOrder);
         
-        if(isSuccessful == false)
-        {
-            //enter validation 
-        }
     }
     
      public void DeleteJobOrder(int JobOrderId)
     {
         boolean isSuccessful = false;
-        
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
         isSuccessful = repo.DeleteJobOrderByJobOrderID(JobOrderId);
-        
-        if(isSuccessful == false)
-        {
-            //enter validation 
-        }
     }
      
      public JobOrder GetJobOrderDetailsFromJobId(int JobOrderID)

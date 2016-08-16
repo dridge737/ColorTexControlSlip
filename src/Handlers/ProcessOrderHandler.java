@@ -13,15 +13,12 @@ import Database.ColorTextControlSlipRepository;
  * @author Eldridge
  */
 public class ProcessOrderHandler {
-     public boolean AddNewProcessOrder(ProcessOrder thisProcessOrder)
+     public int AddNewProcessOrder(ProcessOrder thisProcessOrder)
     {
-        boolean isSuccessful = false;
-        
+        //boolean isSuccessful = false;
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        isSuccessful = repo.AddProcessOrder(thisProcessOrder);
-        
-        return isSuccessful;
+        return repo.AddProcessOrder(thisProcessOrder);
     }
     
     public boolean UpdateProcessOrder(ProcessOrder thisProcessOrder)

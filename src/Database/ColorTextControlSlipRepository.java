@@ -1558,7 +1558,7 @@ public class ColorTextControlSlipRepository {
                 thisJobOrder.setMachineID(rs.getInt("MachineID") );
                 thisJobOrder.setDesignID(rs.getInt("DesignID") );
                 thisJobOrder.setColorID(rs.getInt("ColorID"));
-                thisJobOrder.setCustomerID(rs.getInt("CutomerID"));
+                thisJobOrder.setCustomerID(rs.getInt("CustomerID"));
                 thisJobOrder.setJobDate(rs.getString("Date"));
             }
         }
@@ -1800,17 +1800,18 @@ public class ColorTextControlSlipRepository {
 /************************************************************************************************/
 /******************************* FOR Process Order ****************************************************/
     
-    public boolean AddProcessOrder(ProcessOrder thisProcessOrder) 
+    public int AddProcessOrder(ProcessOrder thisProcessOrder) 
     {
         DBConnection db = new DBConnection();
         Connection conn = null;
         PreparedStatement preparedStmt = null;
         boolean added = false;
+        int ProcessOrder = -1;
         try {
             conn = db.getConnection();
             String query = "INSERT INTO process_order (JobOrderID, Weight, VolH20, RollLoad, Roll, DyeingProgramID, ResinProgramID) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-            preparedStmt = conn.prepareStatement(query);
+            preparedStmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStmt.setInt(1, thisProcessOrder.getJobOrderID());
             preparedStmt.setFloat(2, thisProcessOrder.getWeight());
             preparedStmt.setFloat(3, thisProcessOrder.getVolumeH20());
@@ -1819,16 +1820,22 @@ public class ColorTextControlSlipRepository {
             preparedStmt.setInt(6, thisProcessOrder.getDyeingProgramID());
             preparedStmt.setInt(7, thisProcessOrder.getResinProgramID());
             
-            preparedStmt.executeUpdate();
+            preparedStmt.execute();
+            ResultSet generatedKeys = preparedStmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                ProcessOrder = generatedKeys.getInt(1);
+            }
+            else {
+                throw new SQLException("Creating user failed, no ID obtained.");
+            }
             
-            added = true;
         } 
         catch (SQLException ex) {
             Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         this.closeConn(conn, preparedStmt);
-        return added;
+        return ProcessOrder;
     }
 
     public boolean UpdateProcessOrderByProcessOrderId(ProcessOrder thisProcessOrder) 
