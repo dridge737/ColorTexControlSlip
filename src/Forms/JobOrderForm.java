@@ -487,6 +487,7 @@ public class JobOrderForm extends javax.swing.JFrame {
     
     private boolean SetProcessOrderInformation()
     {
+        boolean isSuccessful = false;
             thisProcessOrder.setJobOrderID(thisJob.getID());
             if(this.VolumeTextField.getText().length() > 0)
             {
@@ -497,12 +498,13 @@ public class JobOrderForm extends javax.swing.JFrame {
                     thisProcessOrder.setRollLoad(RollLoad.getText());
                     ProcessOrderHandler ProcessHandler = new ProcessOrderHandler();
                     ProcessHandler.AddNewProcessOrder(thisProcessOrder);
+                    isSuccessful = true;
                 }
             }
             else
                 JOptionPane.showMessageDialog(null, "Please check the value in Volume of Water.");
             
-        return false;
+        return isSuccessful;
     }
     private boolean SetJobOrderInformationFromTextBox()
     {
@@ -537,6 +539,10 @@ public class JobOrderForm extends javax.swing.JFrame {
                                     isSuccessful = true;
                                 }
                                 
+                            }
+                            else
+                            {
+                                JOptionPane.showMessageDialog(null, "Job Order #"+ thisJob.getDrNumber()+" has already been added");
                             }
 
                         }

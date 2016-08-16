@@ -62,7 +62,7 @@ public class JobHandler {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         if(repo.CheckIfJobOrderExists(thisJob) == 1)
             itExist = true;
-        return itExist;
+        return !itExist;
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

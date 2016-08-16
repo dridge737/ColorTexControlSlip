@@ -36,7 +36,9 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
     }
     
     public ViewDyeingProgram(ProcessOrder ProcessToBeAdded) {
-        this();
+        initComponents();
+        SetToCenter();
+        GetUpdatedTable();
         thisProcessOrder = ProcessToBeAdded;
         Header.setText("Dyeing Control Slip : Page 2/6");
         BackBut.setText("Back");
