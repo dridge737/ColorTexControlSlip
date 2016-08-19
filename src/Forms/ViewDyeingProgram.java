@@ -72,6 +72,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         BackBut = new javax.swing.JButton();
         SelectBut = new javax.swing.JButton();
         SearchTextBox = new javax.swing.JTextField();
+        NewBut = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Color Text Control Slip");
@@ -123,7 +124,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
                 BackButActionPerformed(evt);
             }
         });
-        BgPanel.add(BackBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(285, 405, 220, 42));
+        BgPanel.add(BackBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(287, 405, 220, 42));
 
         SelectBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         SelectBut.setText("Select");
@@ -135,7 +136,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         });
         BgPanel.add(SelectBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 405, 220, 42));
 
-        SearchTextBox.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
+        SearchTextBox.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         SearchTextBox.setForeground(new java.awt.Color(204, 204, 204));
         SearchTextBox.setText("Search :");
         SearchTextBox.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -151,13 +152,23 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
                 SearchTextBoxKeyReleased(evt);
             }
         });
-        BgPanel.add(SearchTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(42, 355, 465, 38));
+        BgPanel.add(SearchTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(41, 357, 330, 37));
+
+        NewBut.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        NewBut.setText("New");
+        NewBut.setToolTipText("");
+        NewBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NewButActionPerformed(evt);
+            }
+        });
+        BgPanel.add(NewBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 357, 128, 37));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(BgPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 545, Short.MAX_VALUE)
+            .addComponent(BgPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -238,6 +249,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
             thisDyeingForm = new DyeingForm(DyeingTable.getModel().getValueAt(selectedRow, 0).toString());
         
         thisDyeingForm.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_SelectButActionPerformed
 
     private void BackButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButActionPerformed
@@ -250,6 +262,13 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         this.dispose();
         
     }//GEN-LAST:event_BackButActionPerformed
+
+    private void NewButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewButActionPerformed
+        // TODO add your handling code here:
+        DyeingForm newAddDyeingForm = new DyeingForm();
+        newAddDyeingForm.setVisible(true);
+                
+    }//GEN-LAST:event_NewButActionPerformed
 
     /**
      * @param args the command line arguments
@@ -298,6 +317,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
     private javax.swing.JPanel BgPanel;
     private javax.swing.JTable DyeingTable;
     private javax.swing.JLabel Header;
+    private javax.swing.JButton NewBut;
     private javax.swing.JTextField SearchTextBox;
     private javax.swing.JButton SelectBut;
     private javax.swing.JLabel TopTableLabel;

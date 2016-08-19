@@ -295,7 +295,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
                 
         }
         //Delete All the Remaining Dyeing Chemical not included in the Update
-        for(int LastRow = ChemicalTable.getRowCount()-1; LastRow < ChemicalList.size(); LastRow++ )
+        for(int LastRow = ChemicalTable.getRowCount(); LastRow < ChemicalList.size(); LastRow++ )
         {
             DyeingChemical ThisDyeingChemical = new DyeingChemical();
             ThisDyeingChemical.setID(ChemicalList.get(LastRow).getID());

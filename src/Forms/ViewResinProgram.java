@@ -66,9 +66,11 @@ public class ViewResinProgram extends javax.swing.JFrame {
         DeleteBut = new javax.swing.JButton();
         SearchTextBox = new javax.swing.JTextField();
         SelectBut1 = new javax.swing.JButton();
+        NewBut = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Color Text Control Slip");
+        setPreferredSize(new java.awt.Dimension(545, 460));
 
         BgPanel.setBackground(new java.awt.Color(102, 102, 102));
         BgPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -76,7 +78,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
         Header.setBackground(new java.awt.Color(255, 255, 255));
         Header.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
         Header.setForeground(new java.awt.Color(255, 255, 255));
-        Header.setText("Resin Program List");
+        Header.setText("Resin Program");
         BgPanel.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 19, 470, 40));
         Header.getAccessibleContext().setAccessibleName("ResinProgram");
 
@@ -104,14 +106,16 @@ public class ViewResinProgram extends javax.swing.JFrame {
         ResinLabel.setBackground(new java.awt.Color(255, 255, 255));
         ResinLabel.setFont(new java.awt.Font("Century Gothic", 0, 22)); // NOI18N
         ResinLabel.setForeground(new java.awt.Color(255, 255, 255));
-        ResinLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        ResinLabel.setText("  Resin Program List");
+        ResinLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ResinLabel.setText("  Program List");
         ResinLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
         BgPanel.add(ResinLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 85, 470, 40));
 
         BackBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         BackBut.setText("Close");
         BackBut.setToolTipText("");
+        BackBut.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        BackBut.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         BackBut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BackButActionPerformed(evt);
@@ -145,7 +149,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
                 SearchTextBoxKeyReleased(evt);
             }
         });
-        BgPanel.add(SearchTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 325, 470, -1));
+        BgPanel.add(SearchTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 328, 360, 30));
 
         SelectBut1.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         SelectBut1.setText("Select");
@@ -157,11 +161,21 @@ public class ViewResinProgram extends javax.swing.JFrame {
         });
         BgPanel.add(SelectBut1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 370, 145, 42));
 
+        NewBut.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        NewBut.setText("New");
+        NewBut.setToolTipText("");
+        NewBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NewButActionPerformed(evt);
+            }
+        });
+        BgPanel.add(NewBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 328, 98, 30));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(BgPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 545, Short.MAX_VALUE)
+            .addComponent(BgPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -292,6 +306,14 @@ public class ViewResinProgram extends javax.swing.JFrame {
         
     }//GEN-LAST:event_BackButActionPerformed
 
+    private void NewButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewButActionPerformed
+        // TODO add your handling code here:
+        AddResinForm newResinForm  = new AddResinForm();
+        newResinForm.setVisible(true);
+        this.dispose();
+                
+    }//GEN-LAST:event_NewButActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -332,6 +354,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
     private javax.swing.JPanel BgPanel;
     private javax.swing.JButton DeleteBut;
     private javax.swing.JLabel Header;
+    private javax.swing.JButton NewBut;
     private javax.swing.JLabel ResinLabel;
     private javax.swing.JTable ResinTable;
     private javax.swing.JTextField SearchTextBox;
