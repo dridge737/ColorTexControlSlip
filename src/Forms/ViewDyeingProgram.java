@@ -267,6 +267,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         // TODO add your handling code here:
         DyeingForm newAddDyeingForm = new DyeingForm();
         newAddDyeingForm.setVisible(true);
+        this.dispose();
                 
     }//GEN-LAST:event_NewButActionPerformed
 
