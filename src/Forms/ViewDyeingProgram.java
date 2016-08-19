@@ -26,6 +26,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
     DefaultTableModel model = new DefaultTableModel();
     DyeingProgram thisDyeingProgram = new DyeingProgram();
     ProcessOrder thisProcessOrder = new ProcessOrder();
+    int WindowType = 0;
     /**
      * Creates new form ViewResinProgram
      */
@@ -42,6 +43,8 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         thisProcessOrder = ProcessToBeAdded;
         Header.setText("Dyeing Control Slip : Page 2/6");
         BackBut.setText("Back");
+        SelectBut.setText("Next");
+        WindowType = 1;
     }
 
     public void SetToCenter()
@@ -135,11 +138,6 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         SearchTextBox.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
         SearchTextBox.setForeground(new java.awt.Color(204, 204, 204));
         SearchTextBox.setText("Search :");
-        SearchTextBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SearchTextBoxActionPerformed(evt);
-            }
-        });
         SearchTextBox.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 SearchTextBoxFocusGained(evt);
@@ -184,10 +182,6 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         this.ResetDyeingText();
     }//GEN-LAST:event_SearchTextBoxFocusLost
 
-    private void SearchTextBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchTextBoxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_SearchTextBoxActionPerformed
-
     private void UpdateRowFilter(String row_filter_text)
     {
         TableRowSorter<TableModel> rowSorter
@@ -229,20 +223,26 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
     private void SearchTextBoxKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SearchTextBoxKeyReleased
         // TODO add your handling code here:
         UpdateRowFilter(this.SearchTextBox.getText());
-
     }//GEN-LAST:event_SearchTextBoxKeyReleased
 
     private void SelectButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectButActionPerformed
         // TODO add your handling code here:
         int selectedRow = this.DyeingTable.getSelectedRow();
-        int DyeingProgramID = new DyeingProgramHandler().GetDyeingProgramIDfromName(DyeingTable.getModel().getValueAt(selectedRow, 0).toString());
-        DyeingForm thisDyeingForm = new DyeingForm(DyeingProgramID , thisProcessOrder);
+        //int DyeingProgramID = new DyeingProgramHandler().GetDyeingProgramIDfromName(DyeingTable.getModel().getValueAt(selectedRow, 0).toString());
+        DyeingForm thisDyeingForm;
+        if(this.WindowType == 1)
+        {
+            thisDyeingForm = new DyeingForm(DyeingTable.getModel().getValueAt(selectedRow, 0).toString() , thisProcessOrder);
+        }
+        else
+            thisDyeingForm = new DyeingForm(DyeingTable.getModel().getValueAt(selectedRow, 0).toString());
+        
         thisDyeingForm.setVisible(true);
     }//GEN-LAST:event_SelectButActionPerformed
 
     private void BackButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButActionPerformed
         // TODO add your handling code here:
-        if(BackBut.getText().equals("Back"))
+        if(WindowType == 1)
         {
             JobOrderForm newJobOrderForm = new JobOrderForm(this.thisProcessOrder);
             newJobOrderForm.setVisible(true);

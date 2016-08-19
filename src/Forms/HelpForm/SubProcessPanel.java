@@ -273,10 +273,15 @@ public class SubProcessPanel extends javax.swing.JPanel {
      public void UpdateChemicals(int DyeingProcessID)
      {
         //DyeingChemical ThisDyeingChemical = new DyeingChemical();
+        //int TotalNumberOfChemicals = DyeingChemicalHandler.CountDyeingChemicalForThisDyeingProcess(DyeingProcessID);
+        //DECLARATION
         ChemicalHandler ChemicalHandler = new ChemicalHandler();
         DyeingChemicalHandler DyeingChemicalHandler = new DyeingChemicalHandler();
-        //int TotalNumberOfChemicals = DyeingChemicalHandler.CountDyeingChemicalForThisDyeingProcess(DyeingProcessID);
-        ArrayList<DyeingChemical> ChemicalList = DyeingChemicalHandler.GetAllDyeingChemicalFromDyeingProcessID(DyeingProcessID);
+        
+        //Get All Dyeing Chemicals
+        ArrayList<DyeingChemical> ChemicalList = 
+                DyeingChemicalHandler.GetAllDyeingChemicalFromDyeingProcessID(DyeingProcessID);
+        
         for (int OrderNum = 0; OrderNum < ChemicalTable.getRowCount(); OrderNum++) {
             DyeingChemical ThisDyeingChemical = GetThisRowOfValues(OrderNum, DyeingProcessID);
             //IF Chemical Size is still within the number of row that has already been added
@@ -306,8 +311,8 @@ public class SubProcessPanel extends javax.swing.JPanel {
          
          String Chemical = ChemicalTable.getModel().getValueAt(rowNumber, 0).toString();
          String Type = ChemicalTable.getModel().getValueAt(rowNumber, 1).toString();
-         String State = ChemicalTable.getModel().getValueAt(rowNumber, 2).toString();
-         String Value = ChemicalTable.getModel().getValueAt(rowNumber, 3).toString();
+         String Value = ChemicalTable.getModel().getValueAt(rowNumber, 2).toString();
+         //String State = ChemicalTable.getModel().getValueAt(rowNumber, 3).toString();
             if(Chemical.length() > 0 && !CheckText(Value))
             {
                 ThisChemical.setChemicalName(Chemical);
@@ -318,7 +323,8 @@ public class SubProcessPanel extends javax.swing.JPanel {
                 ThisDyeingChemical.setType(Type);
                 ThisDyeingChemical.setValue(Float.parseFloat(Value));
                 ThisDyeingChemical.setOrder(rowNumber+1);
-                ThisDyeingChemical.setState(State);
+                //TO Be FIXED: How to know if this will be Solid or Liquid. G or L               
+                //ThisDyeingChemical.setState(State);
             }
             else
                 return null;

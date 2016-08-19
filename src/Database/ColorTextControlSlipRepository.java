@@ -1253,9 +1253,11 @@ public class ColorTextControlSlipRepository {
             preparedStmt = conn.prepareStatement(query);
             preparedStmt.setInt(1, dyeingProgramId);
             resultSet = preparedStmt.executeQuery();
-            
+            if(resultSet.first())
+            {
             dyeingProgramDetails.setDyeingProgramId(resultSet.getInt("ID"));
             dyeingProgramDetails.setDyeingProgramName(resultSet.getString("Name"));
+            }
         } 
         catch (SQLException ex) {
             Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
@@ -2636,6 +2638,7 @@ public class ColorTextControlSlipRepository {
             while(rs.next())
             {
                 DyeingChemical thisDyeingChemical = new DyeingChemical();
+                thisDyeingChemical.setID(rs.getInt("ID"));
                 thisDyeingChemical.setChemicalID(rs.getInt("ChemicalID"));
                 thisDyeingChemical.setType(rs.getString("Type"));
                 thisDyeingChemical.setValue(rs.getFloat("Value"));

@@ -60,25 +60,25 @@ public class DyeingForm extends javax.swing.JFrame {
         setWindowType(2);
     }
     //For Job Order Form
-    public DyeingForm(int DyeingProgramID,  ProcessOrder ThisProcessOrder)
+    public DyeingForm(String DyeingProgramName,  ProcessOrder ThisProcessOrder)
     {
         initComponents();
         thisProcessOrder = ThisProcessOrder;
-        SetDyeingProgramFromProgramID(DyeingProgramID);
+        SetDyeingProgramFromProgramName(DyeingProgramName);
         setWindowType(3);
     }
     
-    public void SetToCenter()
+    public DyeingForm(int DyeingProgramID, ProcessOrder ThisProcessOrder)
     {
-        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-        int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
-        int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
-        this.setLocation(x,y);
+        initComponents();
+        thisProcessOrder = ThisProcessOrder;
+        this.SetDyeingProgramFromProgramID(DyeingProgramID);
+        setWindowType(3);
     }
     
      public void setWindowType(int type)
     {
-         SetToCenter();
+        SetToCenter();
         WindowType = type;
         if(WindowType == 1)
         {
@@ -101,13 +101,20 @@ public class DyeingForm extends javax.swing.JFrame {
         Process.add(new JPanel(), "+", NumberOfProcessTabs++);
         Process.addChangeListener(changeListener);
     }
+     
+    public void SetToCenter()
+    {
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
+        int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
+        this.setLocation(x,y);
+    }
     
     public void SetDyeingProgramFromProgramID(int DyeingProgramID)
     {
         DyeingProgramHandler thisDyeingProgramHandler = new DyeingProgramHandler();
         thisDyeingProgram.setDyeingProgramId(DyeingProgramID);
         thisDyeingProgram = thisDyeingProgramHandler.GetDyeingProgramDetailsById(DyeingProgramID);
-        
         this.ProgramNameText.setText(thisDyeingProgram.getDyeingProgramName());
         SetDyeingProgramProcessFromProgramID(thisDyeingProgram.getDyeingProgramId());
     }
