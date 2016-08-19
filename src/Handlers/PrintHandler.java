@@ -609,7 +609,7 @@ public class PrintHandler {
                             table.addCell(" ");
                             table.addCell(String.valueOf(dyeingChemicalList.get(i).getValue()));
                         }
-                        table.addCell("Quantity");
+                        table.addCell(String.valueOf(dyeingChemicalList.get(i).getValue() * processOrderDetails.getVolumeH20()));
                         rows++;
                     }
                 }
@@ -882,7 +882,7 @@ public class PrintHandler {
         for (int x = 0; x < resinChemicalList.size(); x++) {
                 table.addCell((x+1) + ".  " + chemicalHandler.GetChemicalNameFromChemicalID(resinChemicalList.get(x).getChemicalID()));
                 table.addCell(String.valueOf(resinChemicalList.get(x).getGPLValue()));
-                table.addCell("QUANTITY");
+                table.addCell(String.valueOf(processOrderDetails.getVolumeH20() * resinChemicalList.get(x).getGPLValue()));
                 table.addCell(" ");
                 table.addCell(" ");
                 table.addCell(" ");
