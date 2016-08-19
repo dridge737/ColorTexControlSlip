@@ -76,14 +76,18 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Color Text Control Slip");
+        setPreferredSize(new java.awt.Dimension(545, 490));
+        setResizable(false);
 
         BgPanel.setBackground(new java.awt.Color(102, 102, 102));
+        BgPanel.setMinimumSize(new java.awt.Dimension(545, 469));
+        BgPanel.setPreferredSize(new java.awt.Dimension(545, 480));
         BgPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Header.setBackground(new java.awt.Color(255, 255, 255));
         Header.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
         Header.setForeground(new java.awt.Color(255, 255, 255));
-        Header.setText("Dyeing Program List");
+        Header.setText("Dyeing Program");
         BgPanel.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 19, 470, -1));
         Header.getAccessibleContext().setAccessibleName("ResinProgram");
 
@@ -112,7 +116,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         TopTableLabel.setFont(new java.awt.Font("Century Gothic", 0, 22)); // NOI18N
         TopTableLabel.setForeground(new java.awt.Color(255, 255, 255));
         TopTableLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        TopTableLabel.setText("Dyeing Program List");
+        TopTableLabel.setText("Program List");
         TopTableLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
         BgPanel.add(TopTableLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 85, 470, 38));
 
@@ -124,7 +128,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
                 BackButActionPerformed(evt);
             }
         });
-        BgPanel.add(BackBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(287, 405, 220, 42));
+        BgPanel.add(BackBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(288, 405, 220, 42));
 
         SelectBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         SelectBut.setText("Select");
@@ -172,7 +176,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(BgPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
+            .addComponent(BgPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();

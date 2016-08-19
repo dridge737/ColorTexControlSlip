@@ -320,6 +320,7 @@ public class DyeingForm extends javax.swing.JFrame {
                     ThisProcessPanel.UpdateThisPanelInDyeingProcess(thisDyeingProgram.getDyeingProgramId(), ProcessOrder++);
                 }
             }
+            JOptionPane.showMessageDialog(null, "Successfully Updated : "+thisDyeingProgram.getDyeingProgramName());
         } 
         
     }

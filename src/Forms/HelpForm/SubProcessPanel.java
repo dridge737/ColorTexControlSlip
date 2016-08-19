@@ -55,13 +55,13 @@ public class SubProcessPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Chemical", "Type", "Value", "Delete"
+                "Chemical", "State" , "Type", "Value" , "Delete"
             }) {
             
             @Override
             public boolean isCellEditable(int row, int column) {
             //Only the third column
-                return column == 3;
+                return column == 4;
             }
         };
         
@@ -355,7 +355,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
         StateBox = new javax.swing.JComboBox();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(720, 400));
+        setPreferredSize(new java.awt.Dimension(739, 400));
 
         SubProcessLabel.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         SubProcessLabel.setText("Sub Process Name :");
