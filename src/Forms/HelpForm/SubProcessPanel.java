@@ -36,7 +36,10 @@ import javax.swing.table.TableModel;
 public class SubProcessPanel extends javax.swing.JPanel {
 
     DyeingProcess ThisDyeingProcess = new DyeingProcess();
-    
+    int ChemicalColumn = 0;
+    int StateColumn = 1;
+    int TypeColumn = 2;
+    int ValueColumn = 3;
     /**
      * Creates new form TrialPanel
      */
@@ -58,14 +61,14 @@ public class SubProcessPanel extends javax.swing.JPanel {
         if(type == 1)
         {
             TableHeader = new String [] {
-                "Chemical", "State" , "Gram/Liter", "Value" , "Quantity" ,"Delete"
+                "Chemical", "Gram/Liter", "Type", "Value" , "Quantity" ,"Delete"
             };
             EditableCol = 5;
         }
         else
         {
             TableHeader = new String [] {
-                "Chemical", "State" , "Gram/Liter", "Value" ,"Delete"
+                "Chemical", "Gram/Liter", "Type", "Value" ,"Delete"
             };
             EditableCol = 4;
         }
@@ -141,7 +144,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
          for(DyeingChemical thisDyeingChemical : ThisDyeingChemical)
          {
              String ChemicalName = getChemicalNameFromID(thisDyeingChemical.getChemicalID());
-             model.addRow(new Object[] {ChemicalName, thisDyeingChemical.getType(), thisDyeingChemical.getValue(), "Delete"});
+             model.addRow(new Object[] {ChemicalName, thisDyeingChemical.getState(),thisDyeingChemical.getType(), thisDyeingChemical.getValue(), "Delete"});
          }
          this.ChemicalTable.setModel(model);
      }
@@ -329,10 +332,10 @@ public class SubProcessPanel extends javax.swing.JPanel {
          DyeingChemical ThisDyeingChemical = new DyeingChemical();
          ChemicalHandler ChemicalHandler = new ChemicalHandler();
          
-         String Chemical = ChemicalTable.getModel().getValueAt(rowNumber, 0).toString();
-         String Type = ChemicalTable.getModel().getValueAt(rowNumber, 1).toString();
-         String Value = ChemicalTable.getModel().getValueAt(rowNumber, 2).toString();
-         //String State = ChemicalTable.getModel().getValueAt(rowNumber, 3).toString();
+         String Chemical = ChemicalTable.getModel().getValueAt(rowNumber, ChemicalColumn).toString();
+         String Type = ChemicalTable.getModel().getValueAt(rowNumber, TypeColumn).toString();
+         String Value = ChemicalTable.getModel().getValueAt(rowNumber, ValueColumn).toString();
+         String State = ChemicalTable.getModel().getValueAt(rowNumber, StateColumn).toString();
             if(Chemical.length() > 0 && !CheckText(Value))
             {
                 ThisChemical.setChemicalName(Chemical);
@@ -343,6 +346,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
                 ThisDyeingChemical.setType(Type);
                 ThisDyeingChemical.setValue(Float.parseFloat(Value));
                 ThisDyeingChemical.setOrder(rowNumber+1);
+                ThisDyeingChemical.setState(State);
                 //TO Be FIXED: How to know if this will be Solid or Liquid. G or L               
                 //ThisDyeingChemical.setState(State);
             }

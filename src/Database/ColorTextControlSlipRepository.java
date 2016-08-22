@@ -2642,6 +2642,7 @@ public class ColorTextControlSlipRepository {
                 thisDyeingChemical.setChemicalID(rs.getInt("ChemicalID"));
                 thisDyeingChemical.setType(rs.getString("Type"));
                 thisDyeingChemical.setValue(rs.getFloat("Value"));
+                thisDyeingChemical.setState(rs.getString("State"));
                 thisDyeingChemical.setOrder(rs.getInt("Order"));
                 DyeingChemicalsForProcess.add(thisDyeingChemical);
             }
