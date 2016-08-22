@@ -50,11 +50,38 @@ public class SubProcessPanel extends javax.swing.JPanel {
         //InitializeChemicalTable();
         //InitializeGPLandPercentColumn();
         //ChemicalTable.getModel().addTableModelListener(newTableListener);   
-         AddDeleteColumn();
-         
+         AddDeleteColumn();    
     }
     
-    public void setTableModel(int type)
+    public SubProcessPanel(int DyeingProcessID){
+        this();
+        //initComponents();
+        //addChemicalTextBoxAutoComplete();
+        //setTableModel(1);
+        //AddDeleteColumn();
+        
+        //TableColumn thisColumn = new TableColumn(ChemicalTable.getColumnCount()-2,50);
+        //thisColumn.setHeaderValue("Quantity");
+        //ChemicalTable.addColumn(thisColumn);  
+        //ChemicalTable.removeColumn(thisColumn);
+        SetSubProcessFromDyeingProgram(DyeingProcessID);
+    }
+    
+    public SubProcessPanel(int DyeingProcessID, int type)
+    {
+        initComponents();
+        addChemicalTextBoxAutoComplete();
+        
+        setTableModel(type);
+        AddDeleteColumn();
+        //TableColumn thisColumn = new TableColumn(ChemicalTable.getColumnCount()-2,50);
+        //thisColumn.setHeaderValue("Quantity");
+        //ChemicalTable.addColumn(thisColumn);  
+        //ChemicalTable.removeColumn(thisColumn);
+        SetSubProcessFromDyeingProgram(DyeingProcessID);
+    }
+    
+    private void setTableModel(int type)
     {
         String[] TableHeader;
         int EditableCol;
@@ -83,19 +110,6 @@ public class SubProcessPanel extends javax.swing.JPanel {
         };
         
         ChemicalTable.setModel(tableModel);
-    }
-    
-    public SubProcessPanel(int DyeingProcessID){
-        initComponents();
-        addChemicalTextBoxAutoComplete();
-        
-        setTableModel(1);
-        AddDeleteColumn();
-        //TableColumn thisColumn = new TableColumn(ChemicalTable.getColumnCount()-2,50);
-        //thisColumn.setHeaderValue("Quantity");
-        //ChemicalTable.addColumn(thisColumn);  
-        //ChemicalTable.removeColumn(thisColumn);
-        SetSubProcessFromDyeingProgram(DyeingProcessID);
     }
     
     public void AddDeleteColumn()
