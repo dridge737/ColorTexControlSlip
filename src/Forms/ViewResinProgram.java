@@ -79,7 +79,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
         Header.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
         Header.setForeground(new java.awt.Color(255, 255, 255));
         Header.setText("Resin Program");
-        BgPanel.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 19, 470, 40));
+        BgPanel.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 19, 470, 40));
         Header.getAccessibleContext().setAccessibleName("ResinProgram");
 
         jScrollPane1.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
@@ -101,7 +101,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
         ResinTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(ResinTable);
 
-        BgPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 123, 470, 200));
+        BgPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 470, 200));
 
         ResinLabel.setBackground(new java.awt.Color(255, 255, 255));
         ResinLabel.setFont(new java.awt.Font("Century Gothic", 0, 22)); // NOI18N
@@ -109,7 +109,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
         ResinLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         ResinLabel.setText("  Program List");
         ResinLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
-        BgPanel.add(ResinLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 85, 470, 40));
+        BgPanel.add(ResinLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 470, 40));
 
         BackBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         BackBut.setText("Close");
@@ -121,7 +121,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
                 BackButActionPerformed(evt);
             }
         });
-        BgPanel.add(BackBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 370, 145, 42));
+        BgPanel.add(BackBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 370, 145, 42));
 
         DeleteBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         DeleteBut.setText("Delete");
@@ -131,7 +131,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
                 DeleteButActionPerformed(evt);
             }
         });
-        BgPanel.add(DeleteBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 370, 145, 42));
+        BgPanel.add(DeleteBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 370, 145, 42));
 
         SearchTextBox.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
         SearchTextBox.setForeground(new java.awt.Color(204, 204, 204));
@@ -149,7 +149,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
                 SearchTextBoxKeyReleased(evt);
             }
         });
-        BgPanel.add(SearchTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 328, 360, 30));
+        BgPanel.add(SearchTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 360, 30));
 
         SelectBut1.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         SelectBut1.setText("Select");
@@ -159,9 +159,9 @@ public class ViewResinProgram extends javax.swing.JFrame {
                 SelectBut1ActionPerformed(evt);
             }
         });
-        BgPanel.add(SelectBut1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 370, 145, 42));
+        BgPanel.add(SelectBut1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, 145, 42));
 
-        NewBut.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        NewBut.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         NewBut.setText("New");
         NewBut.setToolTipText("");
         NewBut.addActionListener(new java.awt.event.ActionListener() {
@@ -169,13 +169,13 @@ public class ViewResinProgram extends javax.swing.JFrame {
                 NewButActionPerformed(evt);
             }
         });
-        BgPanel.add(NewBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 328, 98, 30));
+        BgPanel.add(NewBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 330, 98, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(BgPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(BgPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

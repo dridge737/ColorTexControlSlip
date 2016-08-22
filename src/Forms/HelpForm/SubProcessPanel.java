@@ -36,29 +36,43 @@ import javax.swing.table.TableModel;
 public class SubProcessPanel extends javax.swing.JPanel {
 
     DyeingProcess ThisDyeingProcess = new DyeingProcess();
+    
     /**
      * Creates new form TrialPanel
      */
     public SubProcessPanel() {
         initComponents();
         addChemicalTextBoxAutoComplete();
-        setTableModel();
+        setTableModel(0);
         //InitializeChemicalTable();
         //InitializeGPLandPercentColumn();
         //ChemicalTable.getModel().addTableModelListener(newTableListener);   
          AddDeleteColumn();
+         
     }
     
-    public void setTableModel()
+    public void setTableModel(int type)
     {
+        String[] TableHeader;
+        int EditableCol;
+        if(type == 1)
+        {
+            TableHeader = new String [] {
+                "Chemical", "State" , "Gram/Liter", "Value" , "Quantity" ,"Delete"
+            };
+            EditableCol = 5;
+        }
+        else
+        {
+            TableHeader = new String [] {
+                "Chemical", "State" , "Gram/Liter", "Value" ,"Delete"
+            };
+            EditableCol = 4;
+        }
+        
         DefaultTableModel tableModel = new DefaultTableModel( new Object [][] {
-
-            },
-            new String [] {
-                "Chemical", "State" , "Type", "Value" , "Delete"
-            }) {
-            
-            @Override
+            }, TableHeader) {
+                @Override
             public boolean isCellEditable(int row, int column) {
             //Only the third column
                 return column == 4;
@@ -69,10 +83,16 @@ public class SubProcessPanel extends javax.swing.JPanel {
     }
     
     public SubProcessPanel(int DyeingProcessID){
-        this();
-        TableColumn thisColumn = new TableColumn(ChemicalTable.getColumnCount()-2,50);
-        thisColumn.setHeaderValue("Quantity");
-        ChemicalTable.addColumn(thisColumn);  
+        initComponents();
+        addChemicalTextBoxAutoComplete();
+        
+        setTableModel(1);
+        AddDeleteColumn();
+        //TableColumn thisColumn = new TableColumn(ChemicalTable.getColumnCount()-2,50);
+        //thisColumn.setHeaderValue("Quantity");
+        //ChemicalTable.addColumn(thisColumn);  
+        //ChemicalTable.removeColumn(thisColumn);
+        SetSubProcessFromDyeingProgram(DyeingProcessID);
     }
     
     public void AddDeleteColumn()

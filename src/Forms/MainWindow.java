@@ -57,6 +57,8 @@ public class MainWindow extends javax.swing.JFrame {
         CustomerBut = new javax.swing.JButton();
         DesignBut = new javax.swing.JButton();
         MachineBut = new javax.swing.JButton();
+        NewDyeingProgram = new javax.swing.JButton();
+        NewResinProgram = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Color Text Control Slip");
@@ -103,22 +105,22 @@ public class MainWindow extends javax.swing.JFrame {
         jPanel1.add(ControlSlipButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 90, 370, 30));
 
         DyeingForm.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        DyeingForm.setText("Change Dyeing Ingredients");
+        DyeingForm.setText("Change Dyeing Program");
         DyeingForm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DyeingFormActionPerformed(evt);
             }
         });
-        jPanel1.add(DyeingForm, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 130, 370, 30));
+        jPanel1.add(DyeingForm, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 130, 280, 30));
 
         ResinForm.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        ResinForm.setText("Change Resin Ingredients");
+        ResinForm.setText("Change Resin Program");
         ResinForm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ResinFormActionPerformed(evt);
             }
         });
-        jPanel1.add(ResinForm, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 170, 370, 30));
+        jPanel1.add(ResinForm, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 170, 280, 30));
 
         ChemBut.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         ChemBut.setText("Chemical");
@@ -164,6 +166,26 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
         jPanel1.add(MachineBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 290, 370, 30));
+
+        NewDyeingProgram.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        NewDyeingProgram.setText("New");
+        NewDyeingProgram.setMargin(new java.awt.Insets(2, 7, 2, 7));
+        NewDyeingProgram.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NewDyeingProgramActionPerformed(evt);
+            }
+        });
+        jPanel1.add(NewDyeingProgram, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 130, 85, 30));
+
+        NewResinProgram.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        NewResinProgram.setText("New");
+        NewResinProgram.setMargin(new java.awt.Insets(2, 7, 2, 7));
+        NewResinProgram.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NewResinProgramActionPerformed(evt);
+            }
+        });
+        jPanel1.add(NewResinProgram, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 170, 85, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -233,6 +255,19 @@ public class MainWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.exit(1);
     }//GEN-LAST:event_ExitActionPerformed
+
+    private void NewDyeingProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewDyeingProgramActionPerformed
+        // TODO add your handling code here:
+        DyeingForm newAddDyeingForm = new DyeingForm();
+        newAddDyeingForm.setVisible(true);
+        
+    }//GEN-LAST:event_NewDyeingProgramActionPerformed
+
+    private void NewResinProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewResinProgramActionPerformed
+        // TODO add your handling code here:
+         AddResinForm newResinForm  = new AddResinForm();
+        newResinForm.setVisible(true);
+    }//GEN-LAST:event_NewResinProgramActionPerformed
 
     /**
      * @param args the command line arguments
@@ -326,6 +361,8 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton DyeingForm;
     private javax.swing.JButton Exit;
     private javax.swing.JButton MachineBut;
+    private javax.swing.JButton NewDyeingProgram;
+    private javax.swing.JButton NewResinProgram;
     private javax.swing.JButton ResinForm;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

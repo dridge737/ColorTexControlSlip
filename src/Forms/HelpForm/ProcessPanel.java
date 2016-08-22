@@ -89,13 +89,6 @@ public class ProcessPanel extends javax.swing.JPanel {
         this_panel.HideText();
         addTabToSubProcessTabbedPane(this_panel, this.NumberOfTabs);
     }
-    private void addNewTab(DyeingProcess SubProcess) 
-    {
-        /* add new tab */
-        SubProcessPanel this_panel = new SubProcessPanel();
-        this_panel.SetSubProcessFromDyeingProgram(SubProcess.getId());
-        addTabToSubProcessTabbedPane(this_panel, this.NumberOfTabs); 
-    }
     
     private void addNewTab() 
     {
@@ -115,6 +108,14 @@ public class ProcessPanel extends javax.swing.JPanel {
             subProcess.addChangeListener(changeListener);
             
         }
+    }
+    //OVERLOAD for new tabs with items
+    private void addNewTab(DyeingProcess SubProcess) 
+    {
+        /* add new tab */
+        SubProcessPanel this_panel = new SubProcessPanel(SubProcess.getId());
+        //this_panel.SetSubProcessFromDyeingProgram();
+        addTabToSubProcessTabbedPane(this_panel, this.NumberOfTabs); 
     }
     
     public void addSubProcessPanel()
