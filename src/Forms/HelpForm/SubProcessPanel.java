@@ -46,39 +46,32 @@ public class SubProcessPanel extends javax.swing.JPanel {
     public SubProcessPanel() {
         initComponents();
         addChemicalTextBoxAutoComplete();
+        
         setTableModel(0);
+        AddDeleteColumn();    
         //InitializeChemicalTable();
         //InitializeGPLandPercentColumn();
         //ChemicalTable.getModel().addTableModelListener(newTableListener);   
-         AddDeleteColumn();    
     }
     
     public SubProcessPanel(int DyeingProcessID){
         this();
-        //initComponents();
-        //addChemicalTextBoxAutoComplete();
-        //setTableModel(1);
-        //AddDeleteColumn();
-        
-        //TableColumn thisColumn = new TableColumn(ChemicalTable.getColumnCount()-2,50);
-        //thisColumn.setHeaderValue("Quantity");
-        //ChemicalTable.addColumn(thisColumn);  
-        //ChemicalTable.removeColumn(thisColumn);
         SetSubProcessFromDyeingProgram(DyeingProcessID);
     }
     
     public SubProcessPanel(int DyeingProcessID, int type)
     {
+        //intialize constructors
         initComponents();
         addChemicalTextBoxAutoComplete();
-        
         setTableModel(type);
         AddDeleteColumn();
+        
+        SetSubProcessFromDyeingProgram(DyeingProcessID);
         //TableColumn thisColumn = new TableColumn(ChemicalTable.getColumnCount()-2,50);
         //thisColumn.setHeaderValue("Quantity");
         //ChemicalTable.addColumn(thisColumn);  
         //ChemicalTable.removeColumn(thisColumn);
-        SetSubProcessFromDyeingProgram(DyeingProcessID);
     }
     
     private void setTableModel(int type)

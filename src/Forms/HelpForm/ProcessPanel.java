@@ -31,7 +31,6 @@ public class ProcessPanel extends javax.swing.JPanel {
         initComponents();
         /* add new Sub Process tab */
         addSubProcessPanel();
-        
     }
     
     public ProcessPanel(DyeingProcess thisProcess)
@@ -43,6 +42,7 @@ public class ProcessPanel extends javax.swing.JPanel {
         //Call this function to Set all the Process details
         this.SetAllProcessDetailsFromDyeingProgramID();
     }
+    
     /**
      * Set the Details of the process and its Sub-process (if there is) into this ProcessPanel
      * @param DyeingProgramID
@@ -87,7 +87,8 @@ public class ProcessPanel extends javax.swing.JPanel {
         SubProcessPanel this_panel = new SubProcessPanel();
         this_panel.SetChemicalListFromDyeingProcessID(ProcessDetails.getId());
         this_panel.HideText();
-        addTabToSubProcessTabbedPane(this_panel, this.NumberOfTabs);
+        addTabToSubProcessTabbedPane(this_panel);
+        
     }
     
     private void addNewTab() 
@@ -100,9 +101,9 @@ public class ProcessPanel extends javax.swing.JPanel {
             if(NumberOfTabs < 3)
                ShowTextOnFirstTab();
             
-            addTabToSubProcessTabbedPane(this_panel, index+1);
             /* set tab is custom tab */
             //jTabbedPane1.setTabComponentAt(index, new DemoCustomTab(this));
+            addTabToSubProcessTabbedPane(this_panel);
             subProcess.removeChangeListener(changeListener);
             subProcess.setSelectedIndex(index);
             subProcess.addChangeListener(changeListener);
@@ -115,7 +116,8 @@ public class ProcessPanel extends javax.swing.JPanel {
         /* add new tab */
         SubProcessPanel this_panel = new SubProcessPanel(SubProcess.getId());
         //this_panel.SetSubProcessFromDyeingProgram();
-        addTabToSubProcessTabbedPane(this_panel, this.NumberOfTabs); 
+        addTabToSubProcessTabbedPane(this_panel); 
+        
     }
     
     public void addSubProcessPanel()
@@ -126,15 +128,21 @@ public class ProcessPanel extends javax.swing.JPanel {
         this_panel.HideText();
         subProcess.add(this_panel, "Sub Process 1", NumberOfTabs++);
         //Add The Add Tab /* add tab to add new tab when click */
+        addPlusTab();
+    }
+    
+    private void addPlusTab()
+    {
         subProcess.add(new JPanel(), "+", NumberOfTabs++);
         subProcess.addChangeListener(changeListener);
     }
     
-    public void addTabToSubProcessTabbedPane(SubProcessPanel thisPanel, int index)
+    public void addTabToSubProcessTabbedPane(SubProcessPanel thisPanel)
     {
-        subProcess.add(thisPanel, "Sub Process " + String.valueOf(NumberOfTabs+1),
-                    index);
+        subProcess.add(thisPanel, "Sub Process " + String.valueOf(NumberOfTabs),
+                    NumberOfTabs-1);
             NumberOfTabs++;
+        
     }
      
      private void ShowTextOnFirstTab()
