@@ -65,6 +65,7 @@ public class ProcessPanel extends javax.swing.JPanel {
                 //Add SubProcess Tab
                 this.addNewTab(CurrentDyeingProcess);
             }
+            
         }
         else
         {
