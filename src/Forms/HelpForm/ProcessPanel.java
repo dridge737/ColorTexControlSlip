@@ -72,6 +72,7 @@ public class ProcessPanel extends javax.swing.JPanel {
             setNewTabForChemicals(ThisDyeingProcess);
             //Just Add Chemical and hide Sub Process Textbox
         }
+        addPlusTab();
         //ArrayList<DyeingProcess> allDyeingProcess = new ArrayList<DyeingProcess>();
         //DyeingProcessHandler ThisDyeingProcessHandler = new DyeingProcessHandler();
     }
@@ -141,8 +142,8 @@ public class ProcessPanel extends javax.swing.JPanel {
     public void addTabToSubProcessTabbedPane(SubProcessPanel thisPanel)
     {
         subProcess.add(thisPanel, "Sub Process " + String.valueOf(NumberOfTabs),
-                    NumberOfTabs-1);
-            NumberOfTabs++;
+                    NumberOfTabs++);
+            //NumberOfTabs++;
         
     }
      
