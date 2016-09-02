@@ -144,7 +144,6 @@ public class ProcessPanel extends javax.swing.JPanel {
         subProcess.add(thisPanel, "Sub Process " + String.valueOf(NumberOfTabs),
                     NumberOfTabs++);
             //NumberOfTabs++;
-        
     }
      
      private void ShowTextOnFirstTab()
