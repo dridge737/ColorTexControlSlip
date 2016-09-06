@@ -291,10 +291,10 @@ public class SubProcessPanel extends javax.swing.JPanel {
             if(SubProcessText.getText().length()> 0)
             {
                 //SET All Dyeing Process Columns ID, NAME , ORDER
-                DyeingProcess ThisDyeingProcess = new DyeingProcess(DyeingProcessID, this.SubProcessText.getText(), Order);
-                //ThisDyeingProcess.setId(DyeingProcessID);
-                //ThisDyeingProcess.setDyeingProcessName(this.SubProcessText.getText());
-                //ThisDyeingProcess.setDyeingProcessOrder(Order);
+                DyeingProcess ThisDyeingProcess = new DyeingProcess();
+                ThisDyeingProcess.setId(DyeingProcessID);
+                ThisDyeingProcess.setDyeingProcessName(this.SubProcessText.getText());
+                ThisDyeingProcess.setDyeingProcessOrder(Order);
                 DyeingProcessHandler ThisDyeingProcessHandler = new DyeingProcessHandler();
                 
                 //USE Handler To Add Dyeing Process
@@ -525,14 +525,16 @@ public class SubProcessPanel extends javax.swing.JPanel {
                 && !isNullOrWhitespaceOrEmpty(GPLTextfield.getText())
                 && !CheckText(GPLTextfield.getText()))
         {
-            if(AllChemical.indexOf(ChemicalTextfield.getText()) == -1)
+            String CurrentChemicalText = ChemicalTextfield.getText().trim().toUpperCase();
+            if(AllChemical.indexOf(CurrentChemicalText) == -1)
             {
+                
                 if(JOptionPane.YES_OPTION == 
                         JOptionPane.showConfirmDialog(null, "This chemical name has not yet been added. Do you want to add it?","Add this chemical?", JOptionPane.YES_NO_OPTION))
                 {
                     //Add the Chemicalname to the database
                     Chemical thisChemical = new Chemical();
-                    thisChemical.setChemicalName(ChemicalTextfield.getText());
+                    thisChemical.setChemicalName(CurrentChemicalText);
                     ChemicalHandler ChemHandler = new ChemicalHandler();
                     ChemHandler.AddNewChemical(thisChemical);
                     //End of adding Chemical to the database

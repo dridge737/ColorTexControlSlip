@@ -19,9 +19,9 @@ public class DyeingProcess {
     
     public DyeingProcess(){}
     
-    public DyeingProcess(int dyeingID, String processName, String Order )
+    public DyeingProcess(int DyeingProgID, String processName, String Order )
     {
-        this.DyeingID = dyeingID;
+        this.dyeingProgramId = DyeingProgID;
         this.dyeingProcessName = processName;
         this.dyeingProcessOrder = Order;
     }
