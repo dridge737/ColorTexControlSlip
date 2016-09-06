@@ -113,9 +113,9 @@
                   <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel1" alignment="3" max="32767" attributes="0"/>
-                      <Component id="ChemicalTextfield" alignment="3" max="32767" attributes="0"/>
+                      <Component id="ChemicalTextfield" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="TypeBox" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                      <Component id="jLabel2" alignment="3" pref="31" max="32767" attributes="0"/>
+                      <Component id="jLabel2" alignment="3" max="32767" attributes="0"/>
                       <Component id="GPLTextfield" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="AddtoTable" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="StateBox" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
@@ -190,6 +190,9 @@
               <Font name="Century Gothic" size="16" style="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="GPLTextfieldKeyReleased"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="AddtoTable">
           <Properties>

@@ -107,7 +107,7 @@ public class ProcessPanel extends javax.swing.JPanel {
             //jTabbedPane1.setTabComponentAt(index, new DemoCustomTab(this));
             addTabToSubProcessTabbedPane(this_panel);
             subProcess.removeChangeListener(changeListener);
-            subProcess.setSelectedIndex(index+1);
+            subProcess.setSelectedIndex(index);
             subProcess.addChangeListener(changeListener);
         }
     }
@@ -143,11 +143,12 @@ public class ProcessPanel extends javax.swing.JPanel {
         if(NumberOfTabs == 0 )
         {
             subProcess.add(thisPanel, "Sub Process 1",
-                    NumberOfTabs++);
+                    NumberOfTabs);
         }
         else
         subProcess.add(thisPanel, "Sub Process " + String.valueOf(NumberOfTabs),
-                    NumberOfTabs++);
+                    NumberOfTabs - 1);
+        NumberOfTabs++;
     }
      
      private void ShowTextOnFirstTab()

@@ -11,6 +11,7 @@ import DataEntities.DyeingProcess;
 import Handlers.ChemicalHandler;
 import Handlers.DyeingChemicalHandler;
 import Handlers.DyeingProcessHandler;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -40,6 +41,9 @@ public class SubProcessPanel extends javax.swing.JPanel {
     int StateColumn = 1;
     int TypeColumn = 2;
     int ValueColumn = 3;
+    boolean ValueTextCheckerTriggered = false;
+     ArrayList<String> AllChemical = new ArrayList<String>();
+     Color ColorError = new Color(232,228,42);
     /**
      * Creates new form TrialPanel
      */
@@ -187,7 +191,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
     {
         //Chemical allChemicals = new Chemical();
         ChemicalHandler ChemHandler = new ChemicalHandler();
-        ArrayList<String> AllChemical = ChemHandler.GetAllChemical();
+        AllChemical = ChemHandler.GetAllChemical();
         auto_complete dropdownAutoComplete = new auto_complete();
         dropdownAutoComplete.setupAutoComplete(this.ChemicalTextfield, AllChemical);
         this.ChemicalTextfield.setColumns(30);
@@ -426,6 +430,11 @@ public class SubProcessPanel extends javax.swing.JPanel {
         jLabel2.setText("Value :");
 
         GPLTextfield.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        GPLTextfield.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                GPLTextfieldKeyReleased(evt);
+            }
+        });
 
         AddtoTable.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         AddtoTable.setText("Add");
@@ -473,9 +482,9 @@ public class SubProcessPanel extends javax.swing.JPanel {
                 .addGap(2, 2, 2)
                 .addGroup(ChemPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ChemicalTextfield)
+                    .addComponent(ChemicalTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TypeBox, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(GPLTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(AddtoTable, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(StateBox, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -516,14 +525,58 @@ public class SubProcessPanel extends javax.swing.JPanel {
                 && !isNullOrWhitespaceOrEmpty(GPLTextfield.getText())
                 && !CheckText(GPLTextfield.getText()))
         {
-            DefaultTableModel model = (DefaultTableModel) ChemicalTable.getModel();
-            model.addRow(new Object[] {ChemicalTextfield.getText(), this.StateBox.getSelectedItem() , this.TypeBox.getSelectedItem().toString(),GPLTextfield.getText(), "Delete"} );
-            this.ChemicalTextfield.setText(null);
-            GPLTextfield.setText(null);
+            if(AllChemical.indexOf(ChemicalTextfield.getText()) == -1)
+            {
+                if(JOptionPane.YES_OPTION == 
+                        JOptionPane.showConfirmDialog(null, "This chemical name has not yet been added. Do you want to add it?","Add this chemical?", JOptionPane.YES_NO_OPTION))
+                {
+                    //Add the Chemicalname to the database
+                    Chemical thisChemical = new Chemical();
+                    thisChemical.setChemicalName(ChemicalTextfield.getText());
+                    ChemicalHandler ChemHandler = new ChemicalHandler();
+                    ChemHandler.AddNewChemical(thisChemical);
+                    //End of adding Chemical to the database
+                    AddTextToTable();
+                }
+                else
+                    JOptionPane.showMessageDialog(null, "Please add or change the Chemical Name to add this row.");
+            }
+            else
+                AddTextToTable();
+            
         }
         else
             JOptionPane.showMessageDialog(null, "Please check your Chemical Name input and GPL value.");
     }//GEN-LAST:event_AddtoTableActionPerformed
+
+    private void AddTextToTable()
+    {
+        DefaultTableModel model = (DefaultTableModel) ChemicalTable.getModel();
+        model.addRow(new Object[] {ChemicalTextfield.getText(), this.StateBox.getSelectedItem() , this.TypeBox.getSelectedItem().toString(),GPLTextfield.getText(), "Delete"} );
+        this.ChemicalTextfield.setText(null);
+        GPLTextfield.setText(null);
+    }
+    private void GPLTextfieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_GPLTextfieldKeyReleased
+        // TODO add your handling code here:
+        if(!this.ValueTextCheckerTriggered)    
+        {
+            if(CheckText(this.GPLTextfield.getText())){
+                AddtoTable.setEnabled(false);
+                this.GPLTextfield.setBackground(ColorError);
+                ValueTextCheckerTriggered = true;
+            }
+        }   
+        else
+        {
+             if(!CheckText(this.GPLTextfield.getText())){
+                 AddtoTable.setEnabled(true);
+                this.GPLTextfield.setBackground(Color.white);
+                ValueTextCheckerTriggered = false;
+             }
+            
+        }
+            
+    }//GEN-LAST:event_GPLTextfieldKeyReleased
 
     /**
       * Checks if text is a valid int or float variable
