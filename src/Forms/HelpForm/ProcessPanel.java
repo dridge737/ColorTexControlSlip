@@ -95,7 +95,7 @@ public class ProcessPanel extends javax.swing.JPanel {
     
     private void addNewTab() 
     {
-        int index = NumberOfTabs - 1;
+        int index = NumberOfTabs -1;
         if (subProcess.getSelectedIndex() == index) { /* if click new tab */
             /* add new tab */
             SubProcessPanel this_panel = new SubProcessPanel();
@@ -107,9 +107,8 @@ public class ProcessPanel extends javax.swing.JPanel {
             //jTabbedPane1.setTabComponentAt(index, new DemoCustomTab(this));
             addTabToSubProcessTabbedPane(this_panel);
             subProcess.removeChangeListener(changeListener);
-            subProcess.setSelectedIndex(index);
+            subProcess.setSelectedIndex(index+1);
             subProcess.addChangeListener(changeListener);
-            
         }
     }
     //OVERLOAD for new tabs with items
@@ -141,9 +140,14 @@ public class ProcessPanel extends javax.swing.JPanel {
     
     public void addTabToSubProcessTabbedPane(SubProcessPanel thisPanel)
     {
+        if(NumberOfTabs == 0 )
+        {
+            subProcess.add(thisPanel, "Sub Process 1",
+                    NumberOfTabs++);
+        }
+        else
         subProcess.add(thisPanel, "Sub Process " + String.valueOf(NumberOfTabs),
                     NumberOfTabs++);
-            //NumberOfTabs++;
     }
      
      private void ShowTextOnFirstTab()
