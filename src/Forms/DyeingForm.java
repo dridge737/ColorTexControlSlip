@@ -268,6 +268,7 @@ public class DyeingForm extends javax.swing.JFrame {
     {
         DyeingProgramHandler thisDyeingProgramHandler = new DyeingProgramHandler();
         
+        if(this.ProgramNameText.getText().trim().length() > 0)
         thisDyeingProgram.setDyeingProgramName(this.ProgramNameText.getText());
         
         thisDyeingProgramHandler.AddDyeingProgram(thisDyeingProgram);
@@ -281,21 +282,10 @@ public class DyeingForm extends javax.swing.JFrame {
             
             for (Component c : this_pane) 
             {
-                //System.out.println(c.getClass());
                 if (c instanceof ProcessPanel) {
                     ProcessPanel ThisProcessPanel = ((ProcessPanel)c);
                     ThisProcessPanel.AddThisPanelInDyeingProcess(DyeingProgramID, ProcessOrder++);
-                    //Component[] ProcessPanel = ThisProcessPanel.getComponents();
-                    //for (Component d : ProcessPanel) {
-                    //System.out.println(d.getClass());
-                    //        if (d instanceof JTextField) {
-                    //            JTextField textField = ((JTextField)d);
-                    //            System.out.println(textField.getText());
-                    //        }
-                    //ThisProcessPanel.GetSubProcessText();
-                    //System.out.println("Entered");
-                    //}
-                    //ThisProcessPanel.GetSubProcessText();
+                    
                 }
             }
         } 

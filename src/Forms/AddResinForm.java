@@ -367,10 +367,10 @@ public class AddResinForm extends javax.swing.JFrame {
         ChemicalHandler chemicalHandler = new ChemicalHandler();
         int resinProgramId = -1;
         int chemicalId = -1;
-        
-        if(processText.getText().length()>0 && !isNullOrWhitespace(processText.getText()))
+        String thisProcessName = processText.getText().trim();
+        if(thisProcessName.length()>0 && !isNullOrWhitespace(processText.getText()))
         {
-            resinProgram.setName(processText.getText());
+            resinProgram.setName(thisProcessName);
             resinProgramHandler.AddNewResinProgram(resinProgram);
             resinProgramId = resinProgramHandler.GetResinProgramIDFromResinProgramName(resinProgram.getName());
         }
