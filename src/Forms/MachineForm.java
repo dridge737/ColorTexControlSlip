@@ -128,7 +128,7 @@ public class MachineForm extends javax.swing.JFrame {
                 MachineNameKeyReleased(evt);
             }
         });
-        jPanel1.add(MachineName, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 325, 750, -1));
+        jPanel1.add(MachineName, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 328, 750, 32));
 
         MachineMinimumVolume.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         MachineMinimumVolume.setForeground(new java.awt.Color(204, 204, 204));
@@ -143,7 +143,7 @@ public class MachineForm extends javax.swing.JFrame {
                 MachineMinimumVolumeFocusGained(evt);
             }
         });
-        jPanel1.add(MachineMinimumVolume, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 458, 375, 35));
+        jPanel1.add(MachineMinimumVolume, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 458, 375, 32));
 
         MachineMaximumVolume.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         MachineMaximumVolume.setForeground(new java.awt.Color(204, 204, 204));
@@ -153,7 +153,7 @@ public class MachineForm extends javax.swing.JFrame {
                 MachineMaximumVolumeFocusGained(evt);
             }
         });
-        jPanel1.add(MachineMaximumVolume, new org.netbeans.lib.awtextra.AbsoluteConstraints(415, 458, 375, 35));
+        jPanel1.add(MachineMaximumVolume, new org.netbeans.lib.awtextra.AbsoluteConstraints(415, 458, 375, 32));
 
         MachineMaximumCapacity.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         MachineMaximumCapacity.setForeground(new java.awt.Color(204, 204, 204));
@@ -163,7 +163,7 @@ public class MachineForm extends javax.swing.JFrame {
                 MachineMaximumCapacityFocusGained(evt);
             }
         });
-        jPanel1.add(MachineMaximumCapacity, new org.netbeans.lib.awtextra.AbsoluteConstraints(415, 388, 375, 35));
+        jPanel1.add(MachineMaximumCapacity, new org.netbeans.lib.awtextra.AbsoluteConstraints(415, 392, 375, 32));
 
         MachineMinimumCapacity.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         MachineMinimumCapacity.setForeground(new java.awt.Color(204, 204, 204));
@@ -179,7 +179,7 @@ public class MachineForm extends javax.swing.JFrame {
                 MachineMinimumCapacityFocusGained(evt);
             }
         });
-        jPanel1.add(MachineMinimumCapacity, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 388, 375, 35));
+        jPanel1.add(MachineMinimumCapacity, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 392, 375, 32));
 
         MachineListTable.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         MachineListTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -214,7 +214,7 @@ public class MachineForm extends javax.swing.JFrame {
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Capacity");
         jLabel4.setOpaque(true);
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 360, 760, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 364, 760, -1));
 
         DeleteMachineButton1.setBackground(new java.awt.Color(220, 220, 220));
         DeleteMachineButton1.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N

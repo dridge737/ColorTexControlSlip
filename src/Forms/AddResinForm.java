@@ -384,7 +384,7 @@ public class AddResinForm extends javax.swing.JFrame {
         {
             if(ChemicalTable.getRowCount() < 1)
             {
-                
+                JOptionPane.showMessageDialog(null, "Please add at least one chemical for this resin program");
             }
             else
             {
@@ -469,7 +469,7 @@ public class AddResinForm extends javax.swing.JFrame {
         String chemicalTextFieldValue = ChemicalTextfield.getText().trim().toUpperCase();
         if(chemicalTextFieldValue.length()> 0 && GPLTextfield.getText().length() > 0)
         {
-            if(AllChemical.indexOf(chemicalTextFieldValue) != -1)
+            if(AllChemical.indexOf(chemicalTextFieldValue) == -1)
             {
                 boolean validChemicalName = CheckIfChemicalisOnTable(chemicalTextFieldValue);
                 if(validChemicalName)
@@ -488,7 +488,8 @@ public class AddResinForm extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "This chemical has not yet been Added to the Database.");
            
         }
-        
+        else
+            JOptionPane.showMessageDialog(null, "Please input a chemical name and a chemical value");
     }//GEN-LAST:event_AddtoTableActionPerformed
 
     public boolean CheckIfChemicalisOnTable(String ChemicalName)
