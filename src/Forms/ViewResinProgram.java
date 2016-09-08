@@ -61,7 +61,6 @@ public class ViewResinProgram extends javax.swing.JFrame {
         Header = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         ResinTable = new javax.swing.JTable();
-        ResinLabel = new javax.swing.JLabel();
         BackBut = new javax.swing.JButton();
         DeleteBut = new javax.swing.JButton();
         SearchTextBox = new javax.swing.JTextField();
@@ -108,15 +107,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
         ResinTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(ResinTable);
 
-        BgPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 470, 200));
-
-        ResinLabel.setBackground(new java.awt.Color(255, 255, 255));
-        ResinLabel.setFont(new java.awt.Font("Century Gothic", 0, 22)); // NOI18N
-        ResinLabel.setForeground(new java.awt.Color(255, 255, 255));
-        ResinLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ResinLabel.setText("  Program List");
-        ResinLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
-        BgPanel.add(ResinLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 470, 40));
+        BgPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 115, 470, 250));
 
         BackBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         BackBut.setText("Close");
@@ -128,7 +119,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
                 BackButActionPerformed(evt);
             }
         });
-        BgPanel.add(BackBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 370, 145, 42));
+        BgPanel.add(BackBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(352, 370, 145, 42));
 
         DeleteBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         DeleteBut.setText("Delete");
@@ -156,7 +147,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
                 SearchTextBoxKeyReleased(evt);
             }
         });
-        BgPanel.add(SearchTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 360, 30));
+        BgPanel.add(SearchTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 360, 30));
 
         SelectBut1.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         SelectBut1.setText("Select");
@@ -176,7 +167,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
                 NewButActionPerformed(evt);
             }
         });
-        BgPanel.add(NewBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 330, 98, 30));
+        BgPanel.add(NewBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 80, 98, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -367,7 +358,6 @@ public class ViewResinProgram extends javax.swing.JFrame {
     private javax.swing.JButton DeleteBut;
     private javax.swing.JLabel Header;
     private javax.swing.JButton NewBut;
-    private javax.swing.JLabel ResinLabel;
     private javax.swing.JTable ResinTable;
     private javax.swing.JTextField SearchTextBox;
     private javax.swing.JButton SelectBut1;

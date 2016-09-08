@@ -68,7 +68,6 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         Header = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         DyeingTable = new javax.swing.JTable();
-        TopTableLabel = new javax.swing.JLabel();
         BackBut = new javax.swing.JButton();
         SelectBut = new javax.swing.JButton();
         SearchTextBox = new javax.swing.JTextField();
@@ -119,14 +118,6 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
 
         BgPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 123, 470, 230));
 
-        TopTableLabel.setBackground(new java.awt.Color(255, 255, 255));
-        TopTableLabel.setFont(new java.awt.Font("Century Gothic", 0, 22)); // NOI18N
-        TopTableLabel.setForeground(new java.awt.Color(255, 255, 255));
-        TopTableLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        TopTableLabel.setText("Program List");
-        TopTableLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
-        BgPanel.add(TopTableLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 85, 470, 38));
-
         BackBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         BackBut.setText("Cancel");
         BackBut.setToolTipText("");
@@ -163,7 +154,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
                 SearchTextBoxKeyReleased(evt);
             }
         });
-        BgPanel.add(SearchTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(41, 357, 330, 37));
+        BgPanel.add(SearchTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 330, 37));
 
         NewBut.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         NewBut.setText("New");
@@ -173,7 +164,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
                 NewButActionPerformed(evt);
             }
         });
-        BgPanel.add(NewBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 357, 128, 37));
+        BgPanel.add(NewBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 80, 128, 37));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -338,7 +329,6 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
     private javax.swing.JButton NewBut;
     private javax.swing.JTextField SearchTextBox;
     private javax.swing.JButton SelectBut;
-    private javax.swing.JLabel TopTableLabel;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 

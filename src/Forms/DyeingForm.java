@@ -330,44 +330,47 @@ public class DyeingForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         //this.jPanel2.getComp
         boolean CloseWindow = false;
-        if(this.WindowType == 1)
+         
+        switch(WindowType)
         {
-            CloseWindow = AddDyeingProgram();
-        }
-        else if(this.WindowType == 2)
-        {
-            CloseWindow = UpdateDyeingProgram();
-            if(CloseWindow){
-                JOptionPane.showMessageDialog(null, "Successfully updated Dyeing Program : "+thisDyeingProgram.getDyeingProgramName());
-                this.dispose();
-            }
-        }
-        else if(this.WindowType == 3)
-        {
-            CloseWindow = UpdateDyeingProgram();
-            if(CloseWindow)
-            {
-                thisProcessOrder.setDyeingProgramID(thisDyeingProgram.getDyeingProgramId());
-                if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Do you want to include a Resin Program with this Job?","Add Resin Program?", JOptionPane.YES_NO_OPTION))
-                {
-                //Show the Resin Form
-                    ViewResinProgram thisResinProgram = new ViewResinProgram(thisProcessOrder);
-                    thisResinProgram.setVisible(true);
-                }
-                else
-                {
-                    thisProcessOrder.setResinProgramID(0);
-                    ReviewForm thisReviewForm = new ReviewForm(this.thisProcessOrder);
-                    thisReviewForm.setVisible(true);
-                //ProcessOrderHandler thisProcess = new ProcessOrderHandler();
-                //thisProcess.AddNewProcessOrder(thisProcessOrder);
-                //Show Review Form and Ask to print
-                }
-            }
+            case 1:
+                CloseWindow = AddDyeingProgram();
+                break;
+            case 2:
+            case 3:
+                CloseWindow = UpdateDyeingProgram();
+                break;
         }
         if(CloseWindow)
+        {
+            switch(WindowType)
+            {
+                case 1:
+                    JOptionPane.showMessageDialog(null, "Successfully added Dyeing Program : "+thisDyeingProgram.getDyeingProgramName());
+                    
+                case 2:
+                    JOptionPane.showMessageDialog(null, "Successfully updated Dyeing Program : "+thisDyeingProgram.getDyeingProgramName());
+                    break;
+                case 3:
+                    thisProcessOrder.setDyeingProgramID(thisDyeingProgram.getDyeingProgramId());
+                    if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Do you want to include a Resin Program with this Job?","Add Resin Program?", JOptionPane.YES_NO_OPTION))
+                    {//Show the Resin Form
+                        ViewResinProgram thisResinProgram = new ViewResinProgram(thisProcessOrder);
+                        thisResinProgram.setVisible(true);
+                    }
+                    else
+                    {
+                        thisProcessOrder.setResinProgramID(0);
+                        ReviewForm thisReviewForm = new ReviewForm(this.thisProcessOrder);
+                        //Show Review Form and Ask to print
+                        thisReviewForm.setVisible(true);
+                        //ProcessOrderHandler thisProcess = new ProcessOrderHandler();
+                        //thisProcess.AddNewProcessOrder(thisProcessOrder);
+                    }
+                    break;
+            }
             this.dispose();
-        
+        }
     }//GEN-LAST:event_SaveButActionPerformed
 
     private void CancelButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButActionPerformed

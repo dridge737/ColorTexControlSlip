@@ -319,7 +319,7 @@ public class AddResinForm extends javax.swing.JFrame {
                 AddtoTableActionPerformed(evt);
             }
         });
-        jPanel3.add(AddtoTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(548, 40, 128, 30));
+        jPanel3.add(AddtoTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 40, 128, 30));
 
         BgPanel.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 135, 710, 320));
 
