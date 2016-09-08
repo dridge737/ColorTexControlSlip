@@ -74,6 +74,7 @@ public class AddResinForm extends javax.swing.JFrame {
     {
         this();
         InitializeForControlSlip(ResinProgramName, currentProcessOrder);
+        processText.setEnabled(false);
     }
     
     public AddResinForm(int ResinProgramId , ProcessOrder currentProcessOrder)
@@ -81,6 +82,7 @@ public class AddResinForm extends javax.swing.JFrame {
         this();
         String ResinProgramName = new ResinProgramHandler().GetResinProgramNameFromResinProgramID(ResinProgramId);
         InitializeForControlSlip(ResinProgramName, currentProcessOrder);
+        processText.setEnabled(false);
     }
     
     public void InitializeForControlSlip(String ResinProgramName, ProcessOrder currentProcessOrder)
@@ -345,6 +347,9 @@ public class AddResinForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(SaveBut.getText().equals("Next"))
         {
+            ResinProgram thisResinProgram = new ResinProgram();
+            ResinProgramHandler thisResinProgramHandler = new ResinProgramHandler();
+            thisProcessOrder.setResinProgramID(thisResinProgramHandler.GetResinProgramIDFromResinProgramName( this.processText.getText() ) );
             new ReviewForm(thisProcessOrder).setVisible(true);
         }
         else

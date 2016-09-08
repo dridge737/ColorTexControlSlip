@@ -96,6 +96,7 @@ public class DyeingForm extends javax.swing.JFrame {
             SaveBut.setText("Next");
             CancelBut.setText("Back");
             Header.setText("Dyeing Control Slip : Page 3/6");
+            ProgramNameText.setEnabled(false);
         }
         
         Process.add(new JPanel(), "+", NumberOfProcessTabs++);
