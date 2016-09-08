@@ -43,8 +43,8 @@ public class SubProcessPanel extends javax.swing.JPanel {
     int ValueColumn = 3;
     boolean ValueTextCheckerTriggered = false;
     ArrayList<String> AllChemical = new ArrayList<String>();
-    Color ColorError = new Color(232,228,42);
     ArrayList<String> AddedChemicalList = new ArrayList<String>();
+    Color ColorError = new Color(232,228,42);
     /**
      * Creates new form TrialPanel
      */

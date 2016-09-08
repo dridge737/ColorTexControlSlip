@@ -23,6 +23,7 @@ import DataEntities.Chemical;
 import DataEntities.ProcessOrder;
 import Forms.HelpForm.ButtonColumn;
 import Forms.HelpForm.auto_complete;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -43,7 +44,12 @@ public class AddResinForm extends javax.swing.JFrame {
     ResinProgram resinProgram = new ResinProgram();
     DefaultTableModel model = new DefaultTableModel();
     ProcessOrder thisProcessOrder = new ProcessOrder();
+    //Chemical List to see if it is possible to add chemical to Chem Table
+    ArrayList<String> AllChemical = new ArrayList<String>();
+    //Chemical List to see if the Chemical has already been added to the table.
+    ArrayList<String> AddedChemicalList = new ArrayList<String>();
     int WindowType = 0;
+    Color ColorError = new Color(232,228,42);
     /**
      * Creates new form ResinForm
      */
@@ -327,7 +333,12 @@ public class AddResinForm extends javax.swing.JFrame {
             new ViewResinProgram(thisProcessOrder).setVisible(true);
         }
         else
-            this.dispose();
+        {
+            if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Do you want to Cancel this Dyeing Program?","Cancel Dyeing Program?", JOptionPane.YES_NO_OPTION))
+            {
+                this.dispose();
+            }
+        }
     }//GEN-LAST:event_CancelButActionPerformed
 
     private void SaveButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButActionPerformed
@@ -358,38 +369,38 @@ public class AddResinForm extends javax.swing.JFrame {
             resinProgramHandler.AddNewResinProgram(resinProgram);
             resinProgramId = resinProgramHandler.GetResinProgramIDFromResinProgramName(resinProgram.getName());
         }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Please input a process name");
+            processText.setBackground(ColorError);
+        }
         
         if(resinProgramId != -1)
         {
-            for (int i = 0; i < ChemicalTable.getRowCount(); i++) {
-                Object chemicalForResinProgram = ChemicalTable.getModel().getValueAt(i, 0);
-                Object gpl = ChemicalTable.getModel().getValueAt(i, 1);
-
-                if(chemicalForResinProgram != null)
+            if(ChemicalTable.getRowCount() < 1)
+            {
+                
+            }
+            else
+            {
+                for (int i = 0; i < ChemicalTable.getRowCount(); i++)
                 {
-                   chemicalId = chemicalHandler.GetChemicalIDFromChemicalName(chemicalForResinProgram.toString());
-                }
-                else
-                {
-                    JOptionPane.showMessageDialog(null, "Please enter a name for the resin program.");
-                }
-
-                if(chemicalForResinProgram != null && gpl != null)
-                {
-                    resinChemical.setResinProgramID(resinProgramId);
-                    resinChemical.setChemicalID(chemicalId);
-                    resinChemical.setGPLValue(Float.parseFloat(gpl.toString()));
-
-                    isSuccessful = resinChemicalHandler.AddNewResinChemical(resinChemical);
-                    if(isSuccessful == false)
+                    Object chemicalForResinProgram = ChemicalTable.getModel().getValueAt(i, 0);
+                    Object gpl = ChemicalTable.getModel().getValueAt(i, 1);
+                    
+                    if(chemicalForResinProgram != null && gpl != null)
                     {
-                        break;
-                    }                    
-                }     
-                else if((chemicalForResinProgram == null && gpl != null) || (chemicalForResinProgram != null && gpl == null))
-                {
-                    JOptionPane.showMessageDialog(null, "Please complete data for all rows.");
-                }
+                        resinChemical.setResinProgramID(resinProgramId);
+                        resinChemical.setChemicalID(chemicalId);
+                        resinChemical.setGPLValue(Float.parseFloat(gpl.toString()));
+                        isSuccessful = resinChemicalHandler.AddNewResinChemical(resinChemical);
+                        
+                        if(isSuccessful == false)
+                        {
+                            break;
+                        }
+                    }
+                    
              }   
             
             if(isSuccessful == true)
@@ -403,6 +414,8 @@ public class AddResinForm extends javax.swing.JFrame {
                 resinChemicalHandler.DeleteResinChemicalByResinProgramId(resinProgramId);
                 resinProgramHandler.DeleteResinProgram(resinProgramId);
             }
+            }
+            
         }
         else
         {
@@ -415,6 +428,26 @@ public class AddResinForm extends javax.swing.JFrame {
         
     }
     
+    
+    //UNUSED
+    public void UnusedCodes()
+    {
+        /*
+        if(chemicalForResinProgram != null)
+                {
+                   chemicalId = chemicalHandler.GetChemicalIDFromChemicalName(chemicalForResinProgram.toString());
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "Please enter a name for the resin program.");
+                }
+        
+        else if((chemicalForResinProgram == null && gpl != null) || (chemicalForResinProgram != null && gpl == null))
+                    {
+                        JOptionPane.showMessageDialog(null, "Please complete data for all rows.");
+                    }
+        */
+    }
     public void ClearAllData()
     {
         processText.setText("");
@@ -427,33 +460,46 @@ public class AddResinForm extends javax.swing.JFrame {
     
     private void AddtoTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddtoTableActionPerformed
         // TODO add your handling code here:
-        String chemicalName;
-        String chemicalTextFieldValue = ChemicalTextfield.getText();
-        boolean validChemicalName = true;
-        for (int i = 0; i < ChemicalTable.getRowCount(); i++) {
-            chemicalName = ChemicalTable.getModel().getValueAt(i, 0).toString();
-            
-            if(chemicalName.equals(chemicalTextFieldValue))
-            {
-                validChemicalName = false;
-                break;
-            }
-          }
         
-        if(validChemicalName)
+        String chemicalTextFieldValue = ChemicalTextfield.getText().trim().toUpperCase();
+        if(chemicalTextFieldValue.length()> 0 && GPLTextfield.getText().length() > 0)
         {
-            DefaultTableModel model = (DefaultTableModel) ChemicalTable.getModel();
-            model.addRow(new Object[] {ChemicalTextfield.getText(), GPLTextfield.getText(), "Delete"});
-            this.ChemicalTextfield.setText(null);
-            GPLTextfield.setText(null);
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(null, "This chemical is already added.");
+            if(AllChemical.indexOf(chemicalTextFieldValue) != -1)
+            {
+                boolean validChemicalName = CheckIfChemicalisOnTable(chemicalTextFieldValue);
+                if(validChemicalName)
+                {
+                    DefaultTableModel model = (DefaultTableModel) ChemicalTable.getModel();
+                    model.addRow(new Object[] {ChemicalTextfield.getText(), GPLTextfield.getText(), "Delete"});
+                    this.ChemicalTextfield.setText(null);
+                    GPLTextfield.setText(null);
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "This chemical has already been added to the Table.");
+                }
+            }
+            else
+                JOptionPane.showMessageDialog(null, "This chemical has not yet been Added to the Database.");
+           
         }
         
     }//GEN-LAST:event_AddtoTableActionPerformed
 
+    public boolean CheckIfChemicalisOnTable(String ChemicalName)
+    {
+        boolean ItIsOnTheTable = false;
+        for (int i = 0; i < ChemicalTable.getRowCount(); i++) {
+            String CurrentChemical = ChemicalTable.getModel().getValueAt(i, 0).toString();
+            
+            if(CurrentChemical.equals(ChemicalName))
+            {
+                ItIsOnTheTable = true;
+                break;
+            }
+          }
+        return ItIsOnTheTable;
+    }
     /**
      * @param args the command line arguments
      */
