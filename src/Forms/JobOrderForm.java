@@ -19,7 +19,6 @@ import Handlers.DesignHandler;
 import Handlers.JobHandler;
 import Handlers.ProcessOrderHandler;
 import Handlers.PrintHandler;
-import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import java.text.SimpleDateFormat;
@@ -56,6 +55,7 @@ public class JobOrderForm extends javax.swing.JFrame {
     ProcessOrder thisProcessOrder = new ProcessOrder();
     private final static int POINTS_PER_INCH = 72;
     private int WindowType = 0;
+    private Color ErrorColor = new Color(232,228,42);
     /**
      * Creates new form JobOrderForm
      */
@@ -295,7 +295,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                 WeightKeyReleased(evt);
             }
         });
-        jPanel2.add(Weight, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 86, 150, -1));
+        jPanel2.add(Weight, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 86, 150, 30));
 
         VolumeTextField.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jPanel2.add(VolumeTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(184, 131, 460, -1));
@@ -307,7 +307,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                 LiquidRatioDropDownActionPerformed(evt);
             }
         });
-        jPanel2.add(LiquidRatioDropDown, new org.netbeans.lib.awtextra.AbsoluteConstraints(254, 86, 390, -1));
+        jPanel2.add(LiquidRatioDropDown, new org.netbeans.lib.awtextra.AbsoluteConstraints(254, 86, 390, 30));
 
         jLabel9.setBackground(new java.awt.Color(255, 255, 255));
         jLabel9.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
@@ -530,8 +530,12 @@ public class JobOrderForm extends javax.swing.JFrame {
                             thisJob.setJobDate(get_date_from_spinner(dateSpinner));
                             
                             JobHandler thisJobHandler = new JobHandler();
-                            
-                            if(thisJobHandler.CheckIfThisJobOrderHasBeenAdded(thisJob))
+                            if(WindowType == 1)
+                            {
+                                thisJob.setID(this.thisProcessOrder.getJobOrderID());
+                                thisJobHandler.UpdateJobOrder(thisJob);
+                            }
+                            else if(thisJobHandler.CheckIfThisJobOrderHasBeenAdded(thisJob))
                             {
                                 int JobOrderID = thisJobHandler.AddNewJobOrder(thisJob);
                                 if(JobOrderID == - 1)
@@ -541,17 +545,12 @@ public class JobOrderForm extends javax.swing.JFrame {
                                     thisJob.setID(JobOrderID);
                                     //JOptionPane.showMessageDialog(null, "Job Order was successfully added.");
                                     isSuccessful = true;
-                                }
-                                
-                            }
-                            else if(WindowType == 1)
-                            {
-                                thisJob.setID(this.thisProcessOrder.getJobOrderID());
-                                thisJobHandler.UpdateJobOrder(thisJob);
+                                }  
                             }
                             else
                             {
                                 JOptionPane.showMessageDialog(null, "Job Order #"+ thisJob.getDrNumber()+" has already been added");
+                                JobOrder.setBackground(ErrorColor);
                             }
 
                         }

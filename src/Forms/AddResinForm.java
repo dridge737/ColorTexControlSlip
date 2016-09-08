@@ -43,6 +43,7 @@ public class AddResinForm extends javax.swing.JFrame {
     ResinProgram resinProgram = new ResinProgram();
     DefaultTableModel model = new DefaultTableModel();
     ProcessOrder thisProcessOrder = new ProcessOrder();
+    int WindowType = 0;
     /**
      * Creates new form ResinForm
      */

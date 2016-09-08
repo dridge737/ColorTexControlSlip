@@ -89,7 +89,7 @@ public class ProcessPanel extends javax.swing.JPanel {
         SubProcessPanel this_panel = new SubProcessPanel();
         this_panel.SetChemicalListFromDyeingProcessID(ProcessDetails.getId());
         this_panel.HideText();
-        addTabToSubProcessTabbedPane(this_panel);
+        addTabToSubProcessTabbedPane(this_panel, this.NumberOfTabs++);
         
     }
     
@@ -105,10 +105,11 @@ public class ProcessPanel extends javax.swing.JPanel {
             
             /* set tab is custom tab */
             //jTabbedPane1.setTabComponentAt(index, new DemoCustomTab(this));
-            addTabToSubProcessTabbedPane(this_panel);
+            addTabToSubProcessTabbedPane(this_panel, index);
             subProcess.removeChangeListener(changeListener);
             subProcess.setSelectedIndex(index);
             subProcess.addChangeListener(changeListener);
+            NumberOfTabs++;
         }
     }
     //OVERLOAD for new tabs with items
@@ -117,7 +118,7 @@ public class ProcessPanel extends javax.swing.JPanel {
         /* add new tab */
         SubProcessPanel this_panel = new SubProcessPanel(SubProcess.getId());
         //this_panel.SetSubProcessFromDyeingProgram();
-        addTabToSubProcessTabbedPane(this_panel); 
+        addTabToSubProcessTabbedPane(this_panel, this.NumberOfTabs++); 
         
     }
     
@@ -138,17 +139,11 @@ public class ProcessPanel extends javax.swing.JPanel {
         subProcess.addChangeListener(changeListener);
     }
     
-    public void addTabToSubProcessTabbedPane(SubProcessPanel thisPanel)
+    public void addTabToSubProcessTabbedPane(SubProcessPanel thisPanel, int index)
     {
-        if(NumberOfTabs == 0 )
-        {
-            subProcess.add(thisPanel, "Sub Process 1",
-                    NumberOfTabs);
-        }
-        else
-        subProcess.add(thisPanel, "Sub Process " + String.valueOf(NumberOfTabs),
-                    NumberOfTabs - 1);
-        NumberOfTabs++;
+        subProcess.add(thisPanel, "Sub Process " + String.valueOf(index+1),
+                    index);
+        //NumberOfTabs++;
     }
      
      private void ShowTextOnFirstTab()

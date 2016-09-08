@@ -42,8 +42,9 @@ public class SubProcessPanel extends javax.swing.JPanel {
     int TypeColumn = 2;
     int ValueColumn = 3;
     boolean ValueTextCheckerTriggered = false;
-     ArrayList<String> AllChemical = new ArrayList<String>();
-     Color ColorError = new Color(232,228,42);
+    ArrayList<String> AllChemical = new ArrayList<String>();
+    Color ColorError = new Color(232,228,42);
+    ArrayList<String> AddedChemicalList = new ArrayList<String>();
     /**
      * Creates new form TrialPanel
      */
@@ -118,9 +119,14 @@ public class SubProcessPanel extends javax.swing.JPanel {
                 JTable table = (JTable)e.getSource();
                 int modelRow = Integer.valueOf( e.getActionCommand() );
                 if(JOptionPane.YES_OPTION == 
-                        JOptionPane.showConfirmDialog(null, "Do you want to delete this row?","DELETE this item?", JOptionPane.YES_NO_OPTION))
+                        JOptionPane.showConfirmDialog(null, "Do you want to delete Chemical: "+ table.getModel().getValueAt(modelRow, 0) + " From this Process?","DELETE this item?", JOptionPane.YES_NO_OPTION))
                 
-                ((DefaultTableModel)table.getModel()).removeRow(modelRow);
+                {
+                    AddedChemicalList.remove(table.getModel().getValueAt(modelRow, 0));
+                    ((DefaultTableModel)table.getModel()).removeRow(modelRow);
+                }
+                
+                
             }
         };
         ButtonColumn buttonColumn = new ButtonColumn(ChemicalTable, delete, ChemicalTable.getColumnCount()-1);
@@ -154,10 +160,15 @@ public class SubProcessPanel extends javax.swing.JPanel {
          
          for(DyeingChemical thisDyeingChemical : ThisDyeingChemical)
          {
+             //Add Chemical and its details to the Table
              String ChemicalName = getChemicalNameFromID(thisDyeingChemical.getChemicalID());
              model.addRow(new Object[] {ChemicalName, thisDyeingChemical.getState(),thisDyeingChemical.getType(), thisDyeingChemical.getValue(), "Delete"});
+             
+             //ChemicalList
+             //After Adding Chemical to table add it to list to check if same chemical will be added
+             this.AddedChemicalList.add(ChemicalName);
          }
-         this.ChemicalTable.setModel(model);
+         //this.ChemicalTable.setModel(model);
      }
      
      public String getChemicalNameFromID(int ChemicalID)
@@ -209,39 +220,6 @@ public class SubProcessPanel extends javax.swing.JPanel {
         this.SubProcessLabel.setVisible(true);
         this.SubProcessText.setVisible(true);
     }
-    
-    public void InitializeChemicalTable()
-    {
-        DefaultComboBoxModel model = new DefaultComboBoxModel();
-        ArrayList<String> AllChemical = new Handlers.ChemicalHandler().GetAllChemical();
-        for(String thisChemical : AllChemical)
-        {
-            model.addElement(thisChemical);
-        }
-        InitializeColumns(model, 0);
-        //col.setCellRenderer(renderer);
-    }
-    
-     private void InitializeGPLandPercentColumn()
-    {
-        DefaultComboBoxModel model = new DefaultComboBoxModel();
-        model.addElement("GPL");
-        model.addElement("%");
-        ComboBoxTableCellRenderer renderer = new ComboBoxTableCellRenderer();
-        renderer.setModel(model);
-        InitializeColumns(model, 1);
-        //col.setCellRenderer(renderer);
-    }
-     
-     private void InitializeColumns(DefaultComboBoxModel model , int column)
-     {
-        JComboBox comboBox = new JComboBox();
-        comboBox.setModel(model);
-        ComboBoxTableCellRenderer renderer = new ComboBoxTableCellRenderer();
-        renderer.setModel(model);
-        TableColumn col = ChemicalTable.getColumnModel().getColumn(column);
-        col.setCellEditor(new DefaultCellEditor(comboBox));
-     }
      
      /**
       * Used to add Sub Process in case there are more process below the parent process
@@ -526,25 +504,29 @@ public class SubProcessPanel extends javax.swing.JPanel {
                 && !CheckText(GPLTextfield.getText()))
         {
             String CurrentChemicalText = ChemicalTextfield.getText().trim().toUpperCase();
-            if(AllChemical.indexOf(CurrentChemicalText) == -1)
+            if(!this.AddedChemicalList.contains(CurrentChemicalText))
             {
-                
-                if(JOptionPane.YES_OPTION == 
-                        JOptionPane.showConfirmDialog(null, "This chemical name has not yet been added. Do you want to add it?","Add this chemical?", JOptionPane.YES_NO_OPTION))
+                if(AllChemical.indexOf(CurrentChemicalText) == -1)
                 {
-                    //Add the Chemicalname to the database
-                    Chemical thisChemical = new Chemical();
-                    thisChemical.setChemicalName(CurrentChemicalText);
-                    ChemicalHandler ChemHandler = new ChemicalHandler();
-                    ChemHandler.AddNewChemical(thisChemical);
-                    //End of adding Chemical to the database
-                    AddTextToTable();
+                    if(JOptionPane.YES_OPTION == 
+                        JOptionPane.showConfirmDialog(null, "This chemical name has not yet been added. Do you want to add it?","Add this chemical?", JOptionPane.YES_NO_OPTION))
+                    {
+                        //Add the Chemicalname to the database
+                        Chemical thisChemical = new Chemical();
+                        thisChemical.setChemicalName(CurrentChemicalText);
+                        ChemicalHandler ChemHandler = new ChemicalHandler();
+                        ChemHandler.AddNewChemical(thisChemical);
+                        //End of adding Chemical to the database
+                        AddTextToTable();
+                    }
+                    else
+                        JOptionPane.showMessageDialog(null, "Please add or change the Chemical Name to add this row.");
                 }
                 else
-                    JOptionPane.showMessageDialog(null, "Please add or change the Chemical Name to add this row.");
+                    AddTextToTable();
             }
             else
-                AddTextToTable();
+                JOptionPane.showMessageDialog(null, "This chemical has already been added to this Process.");
             
         }
         else
@@ -553,8 +535,13 @@ public class SubProcessPanel extends javax.swing.JPanel {
 
     private void AddTextToTable()
     {
+        String ChemicalName = ChemicalTextfield.getText().trim().toUpperCase();
         DefaultTableModel model = (DefaultTableModel) ChemicalTable.getModel();
-        model.addRow(new Object[] {ChemicalTextfield.getText(), this.StateBox.getSelectedItem() , this.TypeBox.getSelectedItem().toString(),GPLTextfield.getText(), "Delete"} );
+        model.addRow(new Object[] {ChemicalName, this.StateBox.getSelectedItem() , this.TypeBox.getSelectedItem().toString(),GPLTextfield.getText(), "Delete"} );
+        
+        //ChemicalList
+        //After Adding Chemical to table add it to list to check if same chemical will be added
+        this.AddedChemicalList.add(ChemicalName);
         this.ChemicalTextfield.setText(null);
         GPLTextfield.setText(null);
     }
@@ -574,10 +561,8 @@ public class SubProcessPanel extends javax.swing.JPanel {
                  AddtoTable.setEnabled(true);
                 this.GPLTextfield.setBackground(Color.white);
                 ValueTextCheckerTriggered = false;
-             }
-            
+             }   
         }
-            
     }//GEN-LAST:event_GPLTextfieldKeyReleased
 
     /**
@@ -628,4 +613,41 @@ public class SubProcessPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+    
+
+//UNUSED
+    
+    public void InitializeChemicalTable()
+    {
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        ArrayList<String> AllChemical = new Handlers.ChemicalHandler().GetAllChemical();
+        for(String thisChemical : AllChemical)
+        {
+            model.addElement(thisChemical);
+        }
+        InitializeColumns(model, 0);
+        //col.setCellRenderer(renderer);
+    }
+    
+     private void InitializeGPLandPercentColumn()
+    {
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        model.addElement("GPL");
+        model.addElement("%");
+        ComboBoxTableCellRenderer renderer = new ComboBoxTableCellRenderer();
+        renderer.setModel(model);
+        InitializeColumns(model, 1);
+        //col.setCellRenderer(renderer);
+    }
+     
+     private void InitializeColumns(DefaultComboBoxModel model , int column)
+     {
+        JComboBox comboBox = new JComboBox();
+        comboBox.setModel(model);
+        ComboBoxTableCellRenderer renderer = new ComboBoxTableCellRenderer();
+        renderer.setModel(model);
+        TableColumn col = ChemicalTable.getColumnModel().getColumn(column);
+        col.setCellEditor(new DefaultCellEditor(comboBox));
+     }
+
 }

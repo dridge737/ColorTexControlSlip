@@ -71,6 +71,13 @@ public class ViewResinProgram extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Color Text Control Slip");
         setPreferredSize(new java.awt.Dimension(545, 460));
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                formWindowGainedFocus(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            }
+        });
 
         BgPanel.setBackground(new java.awt.Color(102, 102, 102));
         BgPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -310,9 +317,14 @@ public class ViewResinProgram extends javax.swing.JFrame {
         // TODO add your handling code here:
         AddResinForm newResinForm  = new AddResinForm();
         newResinForm.setVisible(true);
-        this.dispose();
+        //this.dispose();
                 
     }//GEN-LAST:event_NewButActionPerformed
+
+    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+        // TODO add your handling code here:
+        GetUpdatedTable();
+    }//GEN-LAST:event_formWindowGainedFocus
 
     /**
      * @param args the command line arguments

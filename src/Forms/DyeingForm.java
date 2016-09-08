@@ -300,8 +300,9 @@ public class DyeingForm extends javax.swing.JFrame {
         } 
     }
     
-    private void UpdateDyeingProgram()
+    private boolean UpdateDyeingProgram()
     {
+        boolean SuccessfullyUpdated = false;
         DyeingProgramHandler thisDyeingProgramHandler = new DyeingProgramHandler();
         
         thisDyeingProgram.setDyeingProgramName(this.ProgramNameText.getText());
@@ -320,9 +321,9 @@ public class DyeingForm extends javax.swing.JFrame {
                     ThisProcessPanel.UpdateThisPanelInDyeingProcess(thisDyeingProgram.getDyeingProgramId(), ProcessOrder++);
                 }
             }
-            JOptionPane.showMessageDialog(null, "Successfully Updated : "+thisDyeingProgram.getDyeingProgramName());
+            SuccessfullyUpdated = true;
         } 
-        
+        return SuccessfullyUpdated;
     }
     private void SaveButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButActionPerformed
         // TODO add your handling code here:
@@ -330,26 +331,30 @@ public class DyeingForm extends javax.swing.JFrame {
         if(this.WindowType == 1)
             AddDyeingProgram();
         else if(this.WindowType == 2)
-            UpdateDyeingProgram();
+            if(UpdateDyeingProgram())
+                JOptionPane.showMessageDialog(null, "Successfully updated Dyeing Program : "+thisDyeingProgram.getDyeingProgramName());
+        
         else if(this.WindowType == 3)
         {
-            UpdateDyeingProgram();
-            thisProcessOrder.setDyeingProgramID(thisDyeingProgram.getDyeingProgramId());
-            
-            if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Do you want to include a Resin Program with this Job?","Add Resin Program?", JOptionPane.YES_NO_OPTION))
+            if(UpdateDyeingProgram())
             {
+                thisProcessOrder.setDyeingProgramID(thisDyeingProgram.getDyeingProgramId());
+                if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Do you want to include a Resin Program with this Job?","Add Resin Program?", JOptionPane.YES_NO_OPTION))
+                {
                 //Show the Resin Form
-                ViewResinProgram thisResinProgram = new ViewResinProgram(thisProcessOrder);
-                thisResinProgram.setVisible(true);
-            }
-            else
-            {
-                thisProcessOrder.setResinProgramID(0);
+                    ViewResinProgram thisResinProgram = new ViewResinProgram(thisProcessOrder);
+                    thisResinProgram.setVisible(true);
+                }
+                else
+                {
+                    thisProcessOrder.setResinProgramID(0);
+                    ReviewForm thisReviewForm = new ReviewForm(this.thisProcessOrder);
+                    thisReviewForm.setVisible(true);
                 //ProcessOrderHandler thisProcess = new ProcessOrderHandler();
                 //thisProcess.AddNewProcessOrder(thisProcessOrder);
                 //Show Review Form and Ask to print
+                }
             }
-                
         }
         this.dispose();
     }//GEN-LAST:event_SaveButActionPerformed
