@@ -15,6 +15,7 @@ import Handlers.ChemicalHandler;
 import Handlers.DyeingProcessHandler;
 import Handlers.DyeingProgramHandler;
 import Handlers.ProcessOrderHandler;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JOptionPane;
@@ -38,6 +39,7 @@ public class DyeingForm extends javax.swing.JFrame {
     DyeingProgram thisDyeingProgram = new DyeingProgram();
     private int WindowType = 0;
     ProcessOrder thisProcessOrder;
+    Color ColorError = new Color(232,228,42);
     
     /**
      * Creates new form ResinForm
@@ -264,8 +266,9 @@ public class DyeingForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void AddDyeingProgram()
+    public boolean AddDyeingProgram()
     {
+        boolean isSuccessful = false;
         DyeingProgramHandler thisDyeingProgramHandler = new DyeingProgramHandler();
         
         if(this.ProgramNameText.getText().trim().length() > 0)
@@ -287,8 +290,15 @@ public class DyeingForm extends javax.swing.JFrame {
                         ThisProcessPanel.AddThisPanelInDyeingProcess(DyeingProgramID, ProcessOrder++);
                     }
                 }
+                isSuccessful = true;
             } 
         }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Please input a dyeing program name.");
+            ProgramNameText.setBackground(ColorError);
+        }
+        return isSuccessful;
     }
     
     private boolean UpdateDyeingProgram()
@@ -319,15 +329,23 @@ public class DyeingForm extends javax.swing.JFrame {
     private void SaveButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButActionPerformed
         // TODO add your handling code here:
         //this.jPanel2.getComp
+        boolean CloseWindow = false;
         if(this.WindowType == 1)
-            AddDyeingProgram();
+        {
+            CloseWindow = AddDyeingProgram();
+        }
         else if(this.WindowType == 2)
-            if(UpdateDyeingProgram())
+        {
+            CloseWindow = UpdateDyeingProgram();
+            if(CloseWindow){
                 JOptionPane.showMessageDialog(null, "Successfully updated Dyeing Program : "+thisDyeingProgram.getDyeingProgramName());
-        
+                this.dispose();
+            }
+        }
         else if(this.WindowType == 3)
         {
-            if(UpdateDyeingProgram())
+            CloseWindow = UpdateDyeingProgram();
+            if(CloseWindow)
             {
                 thisProcessOrder.setDyeingProgramID(thisDyeingProgram.getDyeingProgramId());
                 if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Do you want to include a Resin Program with this Job?","Add Resin Program?", JOptionPane.YES_NO_OPTION))
@@ -347,7 +365,9 @@ public class DyeingForm extends javax.swing.JFrame {
                 }
             }
         }
-        this.dispose();
+        if(CloseWindow)
+            this.dispose();
+        
     }//GEN-LAST:event_SaveButActionPerformed
 
     private void CancelButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButActionPerformed
