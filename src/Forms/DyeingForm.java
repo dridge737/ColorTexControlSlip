@@ -269,26 +269,26 @@ public class DyeingForm extends javax.swing.JFrame {
         DyeingProgramHandler thisDyeingProgramHandler = new DyeingProgramHandler();
         
         if(this.ProgramNameText.getText().trim().length() > 0)
-        thisDyeingProgram.setDyeingProgramName(this.ProgramNameText.getText());
-        
-        thisDyeingProgramHandler.AddDyeingProgram(thisDyeingProgram);
-        int DyeingProgramID = thisDyeingProgramHandler.GetDyeingProgramIDfromName(thisDyeingProgram.getDyeingProgramName());
-        thisDyeingProgram.setDyeingProgramId(DyeingProgramID);
-        
-        if(DyeingProgramID != -1)
         {
-            Component[] this_pane = this.Process.getComponents();
-            int ProcessOrder = 1;
+            thisDyeingProgram.setDyeingProgramName(this.ProgramNameText.getText());
+            thisDyeingProgramHandler.AddDyeingProgram(thisDyeingProgram);
+            int DyeingProgramID = thisDyeingProgramHandler.GetDyeingProgramIDfromName(thisDyeingProgram.getDyeingProgramName());
+            thisDyeingProgram.setDyeingProgramId(DyeingProgramID);
             
-            for (Component c : this_pane) 
+            if(DyeingProgramID != -1)
             {
-                if (c instanceof ProcessPanel) {
-                    ProcessPanel ThisProcessPanel = ((ProcessPanel)c);
-                    ThisProcessPanel.AddThisPanelInDyeingProcess(DyeingProgramID, ProcessOrder++);
-                    
+                Component[] this_pane = this.Process.getComponents();
+                int ProcessOrder = 1;
+                
+                for (Component c : this_pane)
+                {
+                    if (c instanceof ProcessPanel) {
+                        ProcessPanel ThisProcessPanel = ((ProcessPanel)c);
+                        ThisProcessPanel.AddThisPanelInDyeingProcess(DyeingProgramID, ProcessOrder++);
+                    }
                 }
-            }
-        } 
+            } 
+        }
     }
     
     private boolean UpdateDyeingProgram()
