@@ -185,7 +185,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         ChemicalHeader = new javax.swing.JLabel();
         dateSpinner = new javax.swing.JSpinner();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Color Text Control Slip");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

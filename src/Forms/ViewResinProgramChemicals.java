@@ -145,7 +145,7 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
         BackButton = new javax.swing.JButton();
         BackButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Color Text Control Slip");
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
@@ -224,7 +224,7 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
                 DeleteChemicalButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(DeleteChemicalButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 440, 130, 30));
+        jPanel1.add(DeleteChemicalButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 440, 130, 30));
 
         BackButton.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         BackButton.setText("Back");

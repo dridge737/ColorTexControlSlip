@@ -71,10 +71,10 @@ public class MachineForm extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         DeleteMachineButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Color Text Control Slip");
         setMaximumSize(null);
-        setMinimumSize(new java.awt.Dimension(820, 579));
+        setMinimumSize(new java.awt.Dimension(825, 579));
         getContentPane().setLayout(null);
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
