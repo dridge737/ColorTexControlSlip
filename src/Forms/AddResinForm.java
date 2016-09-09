@@ -350,7 +350,7 @@ public class AddResinForm extends javax.swing.JFrame {
             ResinProgram thisResinProgram = new ResinProgram();
             ResinProgramHandler thisResinProgramHandler = new ResinProgramHandler();
             thisProcessOrder.setResinProgramID(thisResinProgramHandler.GetResinProgramIDFromResinProgramName( this.processText.getText() ) );
-            new ReviewForm(thisProcessOrder).setVisible(true);
+            new ReviewForm(thisProcessOrder, 1).setVisible(true);
         }
         else
             AddResin();

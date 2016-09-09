@@ -341,6 +341,7 @@ public class DyeingForm extends javax.swing.JFrame {
                 CloseWindow = UpdateDyeingProgram();
                 break;
         }
+        
         if(CloseWindow)
         {
             switch(WindowType)
@@ -361,7 +362,7 @@ public class DyeingForm extends javax.swing.JFrame {
                     else
                     {
                         thisProcessOrder.setResinProgramID(0);
-                        ReviewForm thisReviewForm = new ReviewForm(this.thisProcessOrder);
+                        ReviewForm thisReviewForm = new ReviewForm(this.thisProcessOrder, 1);
                         //Show Review Form and Ask to print
                         thisReviewForm.setVisible(true);
                         //ProcessOrderHandler thisProcess = new ProcessOrderHandler();

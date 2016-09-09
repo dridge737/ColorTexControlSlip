@@ -46,6 +46,7 @@ public class ReviewForm extends javax.swing.JFrame {
     JobOrder thisJob = new JobOrder();
     ProcessOrder thisProcessOrder = new ProcessOrder();
     DyeingProgram thisDyeingProgram = new DyeingProgram();
+    //int jobOrderType = 1;
     /**
      * Creates new form ReviewForm
      */
@@ -54,13 +55,19 @@ public class ReviewForm extends javax.swing.JFrame {
         SetToCenter();
     }
     
-    public ReviewForm(ProcessOrder setThisProcessOrder)
+    public ReviewForm(ProcessOrder setThisProcessOrder, int JobOrderType)
     {
         this();
         thisProcessOrder = setThisProcessOrder;
         SetJobOrderDetails();
         SetProcessOrderDetails();
         SetDropDownDetails();
+        SetDyeingProgramName();
+        if(JobOrderType == 2)
+        {
+            SetResinProgramName();
+        }
+            
     }
     
     public void SetToCenter()
@@ -77,6 +84,7 @@ public class ReviewForm extends javax.swing.JFrame {
          thisDyeingProgram = 
                  new DyeingProgramHandler().GetDyeingProgramDetailsById(thisProcessOrder.getDyeingProgramID());
          DyeingProgramText.setText(thisDyeingProgram.getDyeingProgramName());
+         
     }
     private void SetResinProgramName()
     {
@@ -286,6 +294,7 @@ public class ReviewForm extends javax.swing.JFrame {
         jLabel6.setText("Date :");
         MainPanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 20, 70, 30));
 
+        JobOrder.setEditable(false);
         JobOrder.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         MainPanel.add(JobOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 195, 30));
 
@@ -316,6 +325,7 @@ public class ReviewForm extends javax.swing.JFrame {
         jLabel8.setText("Volume of Water :");
         jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, 30));
 
+        Weight.setEditable(false);
         Weight.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         Weight.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -329,6 +339,7 @@ public class ReviewForm extends javax.swing.JFrame {
         });
         jPanel2.add(Weight, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 119, 30));
 
+        VolumeTextField.setEditable(false);
         VolumeTextField.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         jPanel2.add(VolumeTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, 477, 30));
 
@@ -348,6 +359,7 @@ public class ReviewForm extends javax.swing.JFrame {
         jLabel9.setText("Roll Load :");
         jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, -1, 30));
 
+        RollLoad.setEditable(false);
         RollLoad.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         jPanel2.add(RollLoad, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 150, 517, 30));
 
@@ -375,9 +387,11 @@ public class ReviewForm extends javax.swing.JFrame {
         jLabel10.setText("Dyeing Program :");
         BgPanel.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 430, 140, 30));
 
+        DyeingProgramText.setEditable(false);
         DyeingProgramText.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         BgPanel.add(DyeingProgramText, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 430, 480, 30));
 
+        ResinProgramText.setEditable(false);
         ResinProgramText.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         BgPanel.add(ResinProgramText, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 470, 480, 30));
 
