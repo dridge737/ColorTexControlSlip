@@ -99,7 +99,7 @@ public class ColorForm extends javax.swing.JFrame {
         ColorLabel.setBounds(10, 80, 400, 40);
 
         AddButton.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
-        AddButton.setText("Add Color");
+        AddButton.setText("Add");
         AddButton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         AddButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         AddButton.addActionListener(new java.awt.event.ActionListener() {
@@ -317,9 +317,10 @@ public class ColorForm extends javax.swing.JFrame {
 
     private void EditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditButtonActionPerformed
         // TODO add your handling code here:
-        if(ColorTable.getSelectedRowCount() > 0 )
+
+        if(EditButton.getText().equals("Edit"))
         {
-            if(EditButton.getText().equals("Edit"))
+            if(ColorTable.getSelectedRowCount() > 0 )
             {
                 ColorText.setForeground(Color.BLACK);
                 thisColor.setColorName(this.ColorTable.getModel().getValueAt(this.ColorTable.getSelectedRow(), 0).toString());
@@ -333,18 +334,18 @@ public class ColorForm extends javax.swing.JFrame {
             }
             else
             {
-                model.addRow(new String[]{thisColor.getColorName()});
-                thisColor.setColorName("");
-                this.UpdateRowFilter("");
-                EditButton.setText("Edit");
-                this.AddButton.setText("Add Color");
-                this.DeleteButton.setEnabled(true);
-                this.ResetColorText();
+                JOptionPane.showMessageDialog(null, "Please select an item in the table to be edited");
             }
         }
         else
         {
-            JOptionPane.showMessageDialog(null, "Please select an Item in the table to be edited");
+            model.addRow(new String[]{thisColor.getColorName()});
+            thisColor.setColorName("");
+            this.UpdateRowFilter("");
+            EditButton.setText("Edit");
+            this.AddButton.setText("Add Color");
+            this.DeleteButton.setEnabled(true);
+            this.ResetColorText();
         }
     }//GEN-LAST:event_EditButtonActionPerformed
 

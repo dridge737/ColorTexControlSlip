@@ -313,9 +313,10 @@ public class DesignForm extends javax.swing.JFrame {
 
     private void EditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditButtonActionPerformed
         // TODO add your handling code here:
-        if(DesignTable.getSelectedRowCount() > 0 )
+
+        if(EditButton.getText().equals("Edit"))
         {
-            if(EditButton.getText().equals("Edit"))
+            if(DesignTable.getSelectedRowCount() > 0 )
             {
                 DesignText.setForeground(Color.BLACK);
                 thisDesign.setDesignName(this.DesignTable.getModel().getValueAt(this.DesignTable.getSelectedRow(), 0).toString());
@@ -329,19 +330,20 @@ public class DesignForm extends javax.swing.JFrame {
             }
             else
             {
-                model.addRow(new String[]{thisDesign.getDesignName()});
-                thisDesign.setDesignName("");
-                this.UpdateRowFilter("");
-                EditButton.setText("Edit");
-                this.AddButton.setText("Add");
-                this.DeleteButton.setEnabled(true);
-                this.ResetDesignText();
+                JOptionPane.showMessageDialog(null, "Please select an Item in the table to be edited");
             }
         }
         else
         {
-            JOptionPane.showMessageDialog(null, "Please select an Item in the table to be edited");
+            model.addRow(new String[]{thisDesign.getDesignName()});
+            thisDesign.setDesignName("");
+            this.UpdateRowFilter("");
+            EditButton.setText("Edit");
+            this.AddButton.setText("Add");
+            this.DeleteButton.setEnabled(true);
+            this.ResetDesignText();
         }
+       
     }//GEN-LAST:event_EditButtonActionPerformed
 
     private void CloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseButtonActionPerformed

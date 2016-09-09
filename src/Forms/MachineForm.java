@@ -415,20 +415,20 @@ public class MachineForm extends javax.swing.JFrame {
     {   
         boolean DetailsValid = true;
         //Machine newMachineDetails = new Machine();
-        if(MachineName.getText().length() > 0 && MachineName.getText() != "Name")
+        if(MachineName.getText().length() > 0 && !MachineName.getText().equals("Name"))
         {
             thisMachine.setMachineName(MachineName.getText());
             //newMachineDetails.setMachineName(MachineName.getText());
         }
         else
         {
-            JOptionPane.showMessageDialog(null, "Please input the machine's name");
+            JOptionPane.showMessageDialog(null, "Please input a machine name");
             MachineName.setBackground(ColorError);
             DetailsValid = false;
         }
 
         //Maximum Capacity Check
-        if(MachineMaximumCapacity.getText().matches("[0-9]+") == true)
+        if(MachineMaximumCapacity.getText().matches("[0-9]+") == true )
         {
             thisMachine.setMaxCapacity(Integer.parseInt(MachineMaximumCapacity.getText()));
             //newMachineDetails.setMaxCapacity(Integer.parseInt(MachineMaximumCapacity.getText()));
@@ -442,12 +442,13 @@ public class MachineForm extends javax.swing.JFrame {
             }
             else
                 JOptionPane.showMessageDialog(null, "Please enter a valid number in the Machine's maximum capacity");
+            MachineMaximumCapacity.setBackground(ColorError);
             DetailsValid = false;
             //TODO please input machine name
         }
         
         /* Minimum Capacity Check */
-        if(MachineMinimumCapacity.getText().matches("[0-9]+") == true)
+        if(MachineMinimumCapacity.getText().matches("[0-9]+") == true )
         {
             thisMachine.setMinCapacity(Integer.parseInt(MachineMinimumCapacity.getText()));
             //newMachineDetails.setMinCapacity(Integer.parseInt(MachineMinimumCapacity.getText()));
@@ -462,6 +463,7 @@ public class MachineForm extends javax.swing.JFrame {
              else
                  JOptionPane.showMessageDialog(null, "Please enter a valid number in the Machine's minimum capacity");
             DetailsValid = false;
+            MachineMinimumCapacity.setBackground(ColorError);
             //TODO please input machine name
         }
 
@@ -479,6 +481,7 @@ public class MachineForm extends javax.swing.JFrame {
             else
                 //TODO numeric characters only validation message
                 JOptionPane.showMessageDialog(null, "Please enter a valid number in the Machine's maximum volume");
+            MachineMaximumVolume.setBackground(ColorError);
             DetailsValid = false;
             //TODO please input machine name
         }
@@ -488,8 +491,6 @@ public class MachineForm extends javax.swing.JFrame {
         {
             thisMachine.setMinVolume(Integer.parseInt(MachineMinimumVolume.getText()));
             //newMachineDetails.setMinVolume(Integer.parseInt(MachineMinimumVolume.getText()));
-            
-            DetailsValid = false;
             //TODO numeric characters only validation message
         }
         else 
@@ -500,6 +501,7 @@ public class MachineForm extends javax.swing.JFrame {
             }
             else
                 JOptionPane.showMessageDialog(null, "Please enter a valid number in the Machine's mimimum volume");
+            MachineMinimumVolume.setBackground(ColorError);
             DetailsValid = false;
             //TODO please input machine name
         }

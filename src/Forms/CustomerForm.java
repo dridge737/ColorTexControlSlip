@@ -311,9 +311,10 @@ public class CustomerForm extends javax.swing.JFrame {
 
     private void EditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditButtonActionPerformed
         // TODO add your handling code here:
-        if(CustomerTable.getSelectedRowCount() > 0 )
+
+        if(EditButton.getText().equals("Edit"))
         {
-            if(EditButton.getText().equals("Edit"))
+            if(CustomerTable.getSelectedRowCount() > 0 )
             {
                 CustomerText.setForeground(Color.BLACK);
                 thisCustomer.setCustomerName(this.CustomerTable.getModel().getValueAt(this.CustomerTable.getSelectedRow(), 0).toString());
@@ -327,6 +328,11 @@ public class CustomerForm extends javax.swing.JFrame {
             }
             else
             {
+                JOptionPane.showMessageDialog(null, "Please select an item in the table to be edited");
+            }
+        }
+            else
+            {
                 model.addRow(new String[]{thisCustomer.getCustomerName()});
                 thisCustomer.setCustomerName("");
                 this.UpdateRowFilter("");
@@ -335,7 +341,7 @@ public class CustomerForm extends javax.swing.JFrame {
                 this.DeleteButton.setEnabled(true);
                 this.ResetCustomerText();
             }
-        }
+        
     }//GEN-LAST:event_EditButtonActionPerformed
 
     private void CloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseButtonActionPerformed

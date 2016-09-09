@@ -318,9 +318,10 @@ public class ChemicalForm extends javax.swing.JFrame {
 
     private void EditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditButtonActionPerformed
         // TODO add your handling code here:
-        if(ChemicalTable.getSelectedRowCount() > 0 )
+
+        if(EditButton.getText().equals("Edit"))
         {
-            if(EditButton.getText().equals("Edit"))
+            if(ChemicalTable.getSelectedRowCount() > 0 )
             {
                 ChemicalText.setForeground(Color.BLACK);
                 thisChemical.setChemicalName(this.ChemicalTable.getModel().getValueAt(this.ChemicalTable.getSelectedRow(), 0).toString());
@@ -334,15 +335,19 @@ public class ChemicalForm extends javax.swing.JFrame {
             }
             else
             {
-                model.addRow(new String[]{thisChemical.getChemicalName()});
-                thisChemical.setChemicalName("");
-                this.UpdateRowFilter("");
-                this.ResetText();
+                JOptionPane.showMessageDialog(null, "Please select an Item in the table to be edited");
             }
         }
         else
         {
-            JOptionPane.showMessageDialog(null, "Please select an Item in the table to be edited");
+            model.addRow(new String[]{thisChemical.getChemicalName()});
+            thisChemical.setChemicalName("");
+            this.UpdateRowFilter("");
+            this.ResetText();
+            EditButton.setText("Edit");
+            this.AddButton.setText("Add");
+            this.DeleteButton.setEnabled(true);
+                this.ResetText();
         }
     }//GEN-LAST:event_EditButtonActionPerformed
 
