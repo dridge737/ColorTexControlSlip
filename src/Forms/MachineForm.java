@@ -28,6 +28,7 @@ public class MachineForm extends javax.swing.JFrame {
     DefaultTableModel model = new DefaultTableModel();
     Machine thisMachine = new Machine();
     Color DefaultColor = new Color(220,220,220);
+    Color ColorError = new Color(232,228,42);
     /**
      * Creates new form AddMachine
      */
@@ -422,72 +423,87 @@ public class MachineForm extends javax.swing.JFrame {
         else
         {
             JOptionPane.showMessageDialog(null, "Please input the machine's name");
+            MachineName.setBackground(ColorError);
             DetailsValid = false;
         }
 
-        if(MachineMaximumCapacity.getText().matches("/^[a-zA-Z]+$/") == true)
-        {
-            DetailsValid = false;
-            //TODO numeric characters only validation message
-        }
-        else if(MachineMaximumCapacity.getText().length() <= 0)
-        {
-            DetailsValid = false;
-            //TODO please input machine name
-        }
-        else
+        //Maximum Capacity Check
+        if(MachineMaximumCapacity.getText().matches("[0-9]+") == true)
         {
             thisMachine.setMaxCapacity(Integer.parseInt(MachineMaximumCapacity.getText()));
             //newMachineDetails.setMaxCapacity(Integer.parseInt(MachineMaximumCapacity.getText()));
-        }
-
-        if(MachineMinimumCapacity.getText().matches("/^[a-zA-Z]+$/") == true)
-        {
-            DetailsValid = false;
             //TODO numeric characters only validation message
         }
-        else if(MachineMinimumCapacity.getText().length() <= 0)
+        else 
         {
+            if(MachineMaximumCapacity.getText().length() <= 0)
+            {
+                JOptionPane.showMessageDialog(null, "Please enter at least one number in the Machine's maximum capacity");
+            }
+            else
+                JOptionPane.showMessageDialog(null, "Please enter a valid number in the Machine's maximum capacity");
             DetailsValid = false;
             //TODO please input machine name
         }
-        else
+        
+        /* Minimum Capacity Check */
+        if(MachineMinimumCapacity.getText().matches("[0-9]+") == true)
         {
             thisMachine.setMinCapacity(Integer.parseInt(MachineMinimumCapacity.getText()));
             //newMachineDetails.setMinCapacity(Integer.parseInt(MachineMinimumCapacity.getText()));
-        }
-
-        if(MachineMaximumVolume.getText().matches("/^[a-zA-Z]+$/") == true)
-        {
-            DetailsValid = false;
+            
             //TODO numeric characters only validation message
         }
-        else if(MachineMaximumVolume.getText().length() <= 0)
+        else
         {
+             if(MachineMinimumCapacity.getText().length() <= 0){
+                 JOptionPane.showMessageDialog(null, "Please enter at least one number in the Machine's minimum capacity");
+             }
+             else
+                 JOptionPane.showMessageDialog(null, "Please enter a valid number in the Machine's minimum capacity");
             DetailsValid = false;
             //TODO please input machine name
         }
-        else
+
+        /* Maximum Volume Check */
+        if(MachineMaximumVolume.getText().matches("[0-9]+") == true)
         {
             thisMachine.setMaxVolume(Integer.parseInt(MachineMaximumVolume.getText()));
             //newMachineDetails.setMaxVolume(Integer.parseInt(MachineMaximumVolume.getText()));
         }
-
-        if(MachineMinimumVolume.getText().matches("/^[a-zA-Z]+$/") == true)
+        else 
         {
-            DetailsValid = false;
-            //TODO numeric characters only validation message
-        }
-        else if(MachineMinimumVolume.getText().length() <= 0)
-        {
+            if(MachineMaximumVolume.getText().length() <= 0){
+                JOptionPane.showMessageDialog(null, "Please input at least one number in the Machine's maximum volume");
+            }
+            else
+                //TODO numeric characters only validation message
+                JOptionPane.showMessageDialog(null, "Please enter a valid number in the Machine's maximum volume");
             DetailsValid = false;
             //TODO please input machine name
         }
-        else
+
+        /* Minimum Volume Check */
+        if(MachineMinimumVolume.getText().matches("[0-9]+") == true)
         {
             thisMachine.setMinVolume(Integer.parseInt(MachineMinimumVolume.getText()));
             //newMachineDetails.setMinVolume(Integer.parseInt(MachineMinimumVolume.getText()));
+            
+            DetailsValid = false;
+            //TODO numeric characters only validation message
         }
+        else 
+        {
+            if(MachineMinimumVolume.getText().length() <= 0)
+            {
+                JOptionPane.showMessageDialog(null, "Please input at least one number in the Machine's mimimum volume");
+            }
+            else
+                JOptionPane.showMessageDialog(null, "Please enter a valid number in the Machine's mimimum volume");
+            DetailsValid = false;
+            //TODO please input machine name
+        }
+        
         return DetailsValid;
     }
     private void MachineMinimumVolumeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_MachineMinimumVolumeFocusGained
