@@ -239,7 +239,6 @@ public class ColorForm extends javax.swing.JFrame {
             }
             
             this.GetUpdatedTable();
-            UpdateRowFilter("");
             this.ResetColorText();
         }
         else
@@ -251,6 +250,7 @@ public class ColorForm extends javax.swing.JFrame {
     {
         this.ColorText.setText("Color :");
         ColorText.setForeground(new Color(204,204,204));
+        UpdateRowFilter("");
     }
     
     private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
@@ -261,11 +261,10 @@ public class ColorForm extends javax.swing.JFrame {
                   ,"Delete Color?", JOptionPane.YES_NO_OPTION);
             if(CloseorNoreply == JOptionPane.YES_OPTION)
             {
-                String ColorName = this.ColorTable.getModel().getValueAt(this.ColorTable.getSelectedRow(), 0).toString();
-                thisColor.setColorName(ColorName);
-                thisColor.setColorId(new ColorHandler().GetColorIDFromColorName(ColorName));
+                setColorDetails();
                 new ColorHandler().DeleteColor(thisColor.getColorId());
                 this.GetUpdatedTable();
+                
             }
         }else
         {
@@ -315,6 +314,13 @@ public class ColorForm extends javax.swing.JFrame {
             this.ResetColorText();
     }//GEN-LAST:event_ColorTextFocusLost
 
+    private void setColorDetails()
+    {
+        int convertedRow = ColorTable.convertRowIndexToModel(this.ColorTable.getSelectedRow());
+        thisColor.setColorName(this.ColorTable.getModel().getValueAt(convertedRow, 0).toString());
+        thisColor.setColorId(new ColorHandler().GetColorIDFromColorName(thisColor.getColorName()));
+        model.removeRow(convertedRow); 
+    }
     private void EditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditButtonActionPerformed
         // TODO add your handling code here:
 
@@ -323,10 +329,8 @@ public class ColorForm extends javax.swing.JFrame {
             if(ColorTable.getSelectedRowCount() > 0 )
             {
                 ColorText.setForeground(Color.BLACK);
-                thisColor.setColorName(this.ColorTable.getModel().getValueAt(this.ColorTable.getSelectedRow(), 0).toString());
+                setColorDetails();
                 ColorText.setText(thisColor.getColorName());
-                thisColor.setColorId(new ColorHandler().GetColorIDFromColorName(thisColor.getColorName()));
-                model.removeRow(this.ColorTable.getSelectedRow());
             
                 this.EditButton.setText("Cancel");
                 this.AddButton.setText("Save");
@@ -341,7 +345,6 @@ public class ColorForm extends javax.swing.JFrame {
         {
             model.addRow(new String[]{thisColor.getColorName()});
             thisColor.setColorName("");
-            this.UpdateRowFilter("");
             EditButton.setText("Edit");
             this.AddButton.setText("Add Color");
             this.DeleteButton.setEnabled(true);

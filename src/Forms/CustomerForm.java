@@ -233,7 +233,6 @@ public class CustomerForm extends javax.swing.JFrame {
             }
             
             this.GetUpdatedTable();
-            UpdateRowFilter("");
             this.ResetCustomerText();
         }
         else
@@ -245,6 +244,7 @@ public class CustomerForm extends javax.swing.JFrame {
     {
         this.CustomerText.setText("Name :");
         CustomerText.setForeground(new Color(204,204,204));
+        this.UpdateRowFilter("");
     }
     
     private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
@@ -256,9 +256,7 @@ public class CustomerForm extends javax.swing.JFrame {
                   ,"Delete Customer?", JOptionPane.YES_NO_OPTION);
             if(CloseorNoreply == JOptionPane.YES_OPTION)
             {
-                String CustomerName = this.CustomerTable.getModel().getValueAt(this.CustomerTable.getSelectedRow(), 0).toString();
-                thisCustomer.setCustomerName(CustomerName);
-                thisCustomer.setCustomerId(new CustomerHandler().GetCustomerIDFromCustomerName(CustomerName));
+                setCustomerDetails();
                 new CustomerHandler().DeleteCustomer(thisCustomer.getCustomerId());
                 this.GetUpdatedTable();
             }
@@ -269,6 +267,15 @@ public class CustomerForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_DeleteButtonActionPerformed
 
+    private void setCustomerDetails()
+    {
+        int convertedRow = CustomerTable.convertRowIndexToModel(this.CustomerTable.getSelectedRow());
+        String CustomerName = this.CustomerTable.getModel().getValueAt(convertedRow, 0).toString();
+        thisCustomer.setCustomerName(CustomerName);
+        thisCustomer.setCustomerId(new CustomerHandler().GetCustomerIDFromCustomerName(CustomerName));
+        model.removeRow(convertedRow); 
+    }
+    
     private void GetUpdatedTable()
     {
         model = getUpdatedCustomerTableModel();
@@ -317,11 +324,8 @@ public class CustomerForm extends javax.swing.JFrame {
             if(CustomerTable.getSelectedRowCount() > 0 )
             {
                 CustomerText.setForeground(Color.BLACK);
-                thisCustomer.setCustomerName(this.CustomerTable.getModel().getValueAt(this.CustomerTable.getSelectedRow(), 0).toString());
+                setCustomerDetails();
                 CustomerText.setText(thisCustomer.getCustomerName());
-                thisCustomer.setCustomerId(new CustomerHandler().GetCustomerIDFromCustomerName(thisCustomer.getCustomerName()));
-                model.removeRow(this.CustomerTable.getSelectedRow());
-               
                 this.EditButton.setText("Cancel");
                 this.AddButton.setText("Save");
                 this.DeleteButton.setEnabled(false);
@@ -335,7 +339,6 @@ public class CustomerForm extends javax.swing.JFrame {
             {
                 model.addRow(new String[]{thisCustomer.getCustomerName()});
                 thisCustomer.setCustomerName("");
-                this.UpdateRowFilter("");
                 EditButton.setText("Edit");
                 this.AddButton.setText("Add");
                 this.DeleteButton.setEnabled(true);
@@ -344,6 +347,8 @@ public class CustomerForm extends javax.swing.JFrame {
         
     }//GEN-LAST:event_EditButtonActionPerformed
 
+    
+    
     private void CloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseButtonActionPerformed
         // TODO add your handling code here:
             this.dispose();

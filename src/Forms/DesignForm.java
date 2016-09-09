@@ -235,7 +235,6 @@ public class DesignForm extends javax.swing.JFrame {
             }
             
             this.GetUpdatedTable();
-            UpdateRowFilter("");
             this.ResetDesignText();
         }
         else
@@ -247,6 +246,7 @@ public class DesignForm extends javax.swing.JFrame {
     {
         this.DesignText.setText("Name :");
         DesignText.setForeground(new Color(204,204,204));
+        this.UpdateRowFilter("");
     }
     
     private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
@@ -257,9 +257,7 @@ public class DesignForm extends javax.swing.JFrame {
                   ,"Delete Design?", JOptionPane.YES_NO_OPTION);
             if(CloseorNoreply == JOptionPane.YES_OPTION)
             {
-                String DesignName = this.DesignTable.getModel().getValueAt(this.DesignTable.getSelectedRow(), 0).toString();
-                thisDesign.setDesignName(DesignName);
-                thisDesign.setDesignId(new DesignHandler().GetDesignIDFromName(DesignName));
+                setDesignDetails();
                 new DesignHandler().DeleteDesign(thisDesign.getDesignId());
                 this.GetUpdatedTable();
             }
@@ -319,10 +317,11 @@ public class DesignForm extends javax.swing.JFrame {
             if(DesignTable.getSelectedRowCount() > 0 )
             {
                 DesignText.setForeground(Color.BLACK);
-                thisDesign.setDesignName(this.DesignTable.getModel().getValueAt(this.DesignTable.getSelectedRow(), 0).toString());
+                //thisDesign.setDesignName(this.DesignTable.getModel().getValueAt(getUpdatedSelectedRowIndex(), 0).toString());
+                //thisDesign.setDesignId(new DesignHandler().GetDesignIDFromName(thisDesign.getDesignName()));
+                //model.removeRow(getUpdatedSelectedRowIndex());
+                setDesignDetails();
                 DesignText.setText(thisDesign.getDesignName());
-                thisDesign.setDesignId(new DesignHandler().GetDesignIDFromName(thisDesign.getDesignName()));
-                model.removeRow(this.DesignTable.getSelectedRow());
             
                 this.EditButton.setText("Cancel");
                 this.AddButton.setText("Save");
@@ -337,7 +336,7 @@ public class DesignForm extends javax.swing.JFrame {
         {
             model.addRow(new String[]{thisDesign.getDesignName()});
             thisDesign.setDesignName("");
-            this.UpdateRowFilter("");
+            
             EditButton.setText("Edit");
             this.AddButton.setText("Add");
             this.DeleteButton.setEnabled(true);
@@ -346,6 +345,18 @@ public class DesignForm extends javax.swing.JFrame {
        
     }//GEN-LAST:event_EditButtonActionPerformed
 
+    private void setDesignDetails()
+    {
+        String DesignName = this.DesignTable.getModel().getValueAt(getUpdatedSelectedRowIndex(), 0).toString();
+        thisDesign.setDesignName(DesignName);
+        thisDesign.setDesignId(new DesignHandler().GetDesignIDFromName(DesignName));
+        model.removeRow(getUpdatedSelectedRowIndex()); 
+    }
+    
+    private int getUpdatedSelectedRowIndex()
+    {
+        return DesignTable.convertRowIndexToModel(this.DesignTable.getSelectedRow());
+    }
     private void CloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseButtonActionPerformed
         // TODO add your handling code here:
             this.dispose();

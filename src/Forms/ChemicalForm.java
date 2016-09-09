@@ -233,7 +233,7 @@ public class ChemicalForm extends javax.swing.JFrame {
             }
             
             this.GetUpdatedTable();
-            UpdateRowFilter("");
+            
             this.ResetText();
         }
         else
@@ -252,6 +252,8 @@ public class ChemicalForm extends javax.swing.JFrame {
     {
         this.ChemicalText.setText(defaultTextBoxString);
         ChemicalText.setForeground(new Color(204,204,204));
+        UpdateRowFilter("");
+        
     }
     
     private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
@@ -262,9 +264,10 @@ public class ChemicalForm extends javax.swing.JFrame {
                   ,"Delete Chemical?", JOptionPane.YES_NO_OPTION);
             if(CloseorNoreply == JOptionPane.YES_OPTION)
             {
-                String ChemicalName = this.ChemicalTable.getModel().getValueAt(this.ChemicalTable.getSelectedRow(), 0).toString();
-                thisChemical.setChemicalName(ChemicalName);
-                thisChemical.setChemicalId(new ChemicalHandler().GetChemicalIDFromChemicalName(ChemicalName));
+                //String ChemicalName = this.ChemicalTable.getModel().getValueAt(this.ChemicalTable.getSelectedRow(), 0).toString();
+                //thisChemical.setChemicalName(ChemicalName);
+                //thisChemical.setChemicalId(new ChemicalHandler().GetChemicalIDFromChemicalName(ChemicalName));
+                setChemicalDetails();
                 new ChemicalHandler().DeleteChemical(thisChemical.getChemicalId());
                 this.GetUpdatedTable();
             }
@@ -316,6 +319,18 @@ public class ChemicalForm extends javax.swing.JFrame {
             this.ResetText();
     }//GEN-LAST:event_ChemicalTextFocusLost
 
+    private void setChemicalDetails()
+    {
+        thisChemical.setChemicalName(this.ChemicalTable.getModel().getValueAt(getUpdatedSelectedRowIndex(), 0).toString());
+        thisChemical.setChemicalId(new ChemicalHandler().GetChemicalIDFromChemicalName(thisChemical.getChemicalName()));
+        model.removeRow(getUpdatedSelectedRowIndex()); 
+    }
+    
+    private int getUpdatedSelectedRowIndex()
+    {
+        return ChemicalTable.convertRowIndexToModel(this.ChemicalTable.getSelectedRow());
+    }
+    
     private void EditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditButtonActionPerformed
         // TODO add your handling code here:
 
@@ -324,10 +339,8 @@ public class ChemicalForm extends javax.swing.JFrame {
             if(ChemicalTable.getSelectedRowCount() > 0 )
             {
                 ChemicalText.setForeground(Color.BLACK);
-                thisChemical.setChemicalName(this.ChemicalTable.getModel().getValueAt(this.ChemicalTable.getSelectedRow(), 0).toString());
+                setChemicalDetails();
                 ChemicalText.setText(thisChemical.getChemicalName());
-                thisChemical.setChemicalId(new ChemicalHandler().GetChemicalIDFromChemicalName(thisChemical.getChemicalName()));
-                model.removeRow(this.ChemicalTable.getSelectedRow());
             
                 this.EditButton.setText("Cancel");
                 this.AddButton.setText("Save");
@@ -342,12 +355,10 @@ public class ChemicalForm extends javax.swing.JFrame {
         {
             model.addRow(new String[]{thisChemical.getChemicalName()});
             thisChemical.setChemicalName("");
-            this.UpdateRowFilter("");
-            this.ResetText();
             EditButton.setText("Edit");
             this.AddButton.setText("Add");
             this.DeleteButton.setEnabled(true);
-                this.ResetText();
+            this.ResetText();
         }
     }//GEN-LAST:event_EditButtonActionPerformed
 
