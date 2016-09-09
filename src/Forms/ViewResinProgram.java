@@ -271,10 +271,13 @@ public class ViewResinProgram extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_DeleteButActionPerformed
 
+   
+    
     private void SelectBut1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectBut1ActionPerformed
         if(ResinTable.getSelectedRowCount() > 0)
         {
-            String resinProgramName = ResinTable.getModel().getValueAt(ResinTable.getSelectedRow(),0).toString();
+            int updatedRowNumber = ResinTable.convertRowIndexToModel(this.ResinTable.getSelectedRow());
+            String resinProgramName = ResinTable.getModel().getValueAt(updatedRowNumber,0).toString();
             if(!resinProgramName.isEmpty())
             {
                 if(SelectBut1.getText().equals("Next"))

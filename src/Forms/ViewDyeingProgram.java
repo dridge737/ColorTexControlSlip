@@ -237,21 +237,24 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         // TODO add your handling code here:
         UpdateRowFilter(this.SearchTextBox.getText());
     }//GEN-LAST:event_SearchTextBoxKeyReleased
-
+    
     private void SelectButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectButActionPerformed
         // TODO add your handling code here:
-        int selectedRow = this.DyeingTable.getSelectedRow();
-        //int DyeingProgramID = new DyeingProgramHandler().GetDyeingProgramIDfromName(DyeingTable.getModel().getValueAt(selectedRow, 0).toString());
-        DyeingForm thisDyeingForm;
-        if(this.WindowType == 1)
+        if(DyeingTable.getSelectedRowCount() > 0)
         {
-            thisDyeingForm = new DyeingForm(DyeingTable.getModel().getValueAt(selectedRow, 0).toString() , thisProcessOrder);
+            //int DyeingProgramID = new DyeingProgramHandler().GetDyeingProgramIDfromName(DyeingTable.getModel().getValueAt(selectedRow, 0).toString());
+            int convertedRowNumber = DyeingTable.convertRowIndexToModel(this.DyeingTable.getSelectedRow());
+            String DyeingName = DyeingTable.getModel().getValueAt(convertedRowNumber , 0).toString();
+            DyeingForm thisDyeingForm;
+            if(this.WindowType == 1)
+            {
+                thisDyeingForm = new DyeingForm(DyeingName, thisProcessOrder);
+            }
+            else
+                thisDyeingForm = new DyeingForm(DyeingName);
+            thisDyeingForm.setVisible(true);
+            this.dispose();
         }
-        else
-            thisDyeingForm = new DyeingForm(DyeingTable.getModel().getValueAt(selectedRow, 0).toString());
-        
-        thisDyeingForm.setVisible(true);
-        this.dispose();
     }//GEN-LAST:event_SelectButActionPerformed
 
     private void BackButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButActionPerformed
