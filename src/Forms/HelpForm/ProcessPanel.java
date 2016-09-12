@@ -252,13 +252,20 @@ public class ProcessPanel extends javax.swing.JPanel {
      {
          DyeingProcessHandler ProcessHandler = new DyeingProcessHandler();
          int TotalNumberOfSubProcess = ProcessHandler.CountNumberOfSubProcess(ThisDyeingProcess);
+         //IF Previously there is no sub process for this process. Then relink dyeing chemical into sub process
          if(TotalNumberOfSubProcess == 0)
          {
-             //Just Add SubProcess and Chemicals
-            AddThisSubProcessPanelInDyeingProcess(DyeingProgramID, TabIndex);
-            //Delete Chemicals previously Linked to this Dyeing Process
+             //ERROR HERE!
             if(ThisDyeingProcess.getId()!= 0)
-                ProcessHandler.DeleteDyeingProcessById(ThisDyeingProcess); 
+            //Delete Chemicals previously Linked to this Dyeing Process
+                ProcessHandler.UpdateDyeingProcess(ThisDyeingProcess); 
+             //Just Add SubProcess and Chemicals
+            else
+            {
+                AddThisSubProcessPanelInDyeingProcess(DyeingProgramID, TabIndex);
+        
+            }
+            
          }
          else
          {
