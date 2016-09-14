@@ -74,7 +74,7 @@ public class AddResinForm extends javax.swing.JFrame {
     {
         this();
         InitializeForControlSlip(ResinProgramName, currentProcessOrder);
-        processText.setEnabled(false);
+        ResinProcessName.setEnabled(false);
     }
     
     public AddResinForm(int ResinProgramId , ProcessOrder currentProcessOrder)
@@ -82,12 +82,12 @@ public class AddResinForm extends javax.swing.JFrame {
         this();
         String ResinProgramName = new ResinProgramHandler().GetResinProgramNameFromResinProgramID(ResinProgramId);
         InitializeForControlSlip(ResinProgramName, currentProcessOrder);
-        processText.setEnabled(false);
+        ResinProcessName.setEnabled(false);
     }
     
     public void InitializeForControlSlip(String ResinProgramName, ProcessOrder currentProcessOrder)
     {
-        processText.setText(ResinProgramName);
+        ResinProcessName.setText(ResinProgramName);
         thisProcessOrder = currentProcessOrder;
         Header.setText("Dyeing Control Slip : Page 5/6");
         this.SaveBut.setText("Next");
@@ -128,7 +128,7 @@ public class AddResinForm extends javax.swing.JFrame {
         model_original.addColumn("Chemical Name");
         model_original.addColumn("Value GPL");
         
-        int resinProgramId = resinProgramHandler.GetResinProgramIDFromResinProgramName(processText.getText());
+        int resinProgramId = resinProgramHandler.GetResinProgramIDFromResinProgramName(ResinProcessName.getText());
         ArrayList<ResinChemical> ThisChemicalList = resinChemicalHandler.GetResinChemicalsByResinProgramId(resinProgramId);
         
         for(int x=0; x<ThisChemicalList.size(); x++)
@@ -216,7 +216,7 @@ public class AddResinForm extends javax.swing.JFrame {
         SaveBut = new javax.swing.JButton();
         CancelBut = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        processText = new javax.swing.JTextField();
+        ResinProcessName = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         ChemicalTable = new javax.swing.JTable();
@@ -264,9 +264,9 @@ public class AddResinForm extends javax.swing.JFrame {
         jLabel3.setText("Resin Process Name :");
         BgPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 85, -1, 34));
 
-        processText.setFont(new java.awt.Font("Century Gothic", 0, 22)); // NOI18N
-        processText.setName(""); // NOI18N
-        BgPanel.add(processText, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 85, 470, 34));
+        ResinProcessName.setFont(new java.awt.Font("Century Gothic", 0, 22)); // NOI18N
+        ResinProcessName.setName(""); // NOI18N
+        BgPanel.add(ResinProcessName, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 85, 470, 34));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Resin Chemicals", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 22), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -333,6 +333,7 @@ public class AddResinForm extends javax.swing.JFrame {
         if(CancelBut.getText().equals("Back"))
         {
             new ViewResinProgram(thisProcessOrder).setVisible(true);
+            this.dispose();
         }
         else
         {
@@ -349,8 +350,10 @@ public class AddResinForm extends javax.swing.JFrame {
         {
             ResinProgram thisResinProgram = new ResinProgram();
             ResinProgramHandler thisResinProgramHandler = new ResinProgramHandler();
-            thisProcessOrder.setResinProgramID(thisResinProgramHandler.GetResinProgramIDFromResinProgramName( this.processText.getText() ) );
-            new ReviewForm(thisProcessOrder, 1).setVisible(true);
+            thisProcessOrder.setResinProgramID(thisResinProgramHandler.GetResinProgramIDFromResinProgramName( this.ResinProcessName.getText() ) );
+            ReviewForm thisForm = new ReviewForm(thisProcessOrder, 2);
+            thisForm.setVisible(true);
+            this.dispose();
         }
         else
             AddResin();
@@ -367,8 +370,8 @@ public class AddResinForm extends javax.swing.JFrame {
         ChemicalHandler chemicalHandler = new ChemicalHandler();
         int resinProgramId = -1;
         int chemicalId = -1;
-        String thisProcessName = processText.getText().trim();
-        if(thisProcessName.length()>0 && !isNullOrWhitespace(processText.getText()))
+        String thisProcessName = ResinProcessName.getText().trim();
+        if(thisProcessName.length()>0 && !isNullOrWhitespace(ResinProcessName.getText()))
         {
             resinProgram.setName(thisProcessName);
             resinProgramHandler.AddNewResinProgram(resinProgram);
@@ -377,7 +380,7 @@ public class AddResinForm extends javax.swing.JFrame {
         else
         {
             JOptionPane.showMessageDialog(null, "Please input a process name");
-            processText.setBackground(ColorError);
+            ResinProcessName.setBackground(ColorError);
         }
         
         if(resinProgramId != -1)
@@ -455,7 +458,7 @@ public class AddResinForm extends javax.swing.JFrame {
     }
     public void ClearAllData()
     {
-        processText.setText("");
+        ResinProcessName.setText("");
         resinChemicalList = new ArrayList<ResinChemical>();
         resinProgram = new ResinProgram();
         ((DefaultTableModel)ChemicalTable.getModel()).setRowCount(1);
@@ -472,7 +475,7 @@ public class AddResinForm extends javax.swing.JFrame {
             if(AllChemical.indexOf(chemicalTextFieldValue) == -1)
             {
                 boolean validChemicalName = CheckIfChemicalisOnTable(chemicalTextFieldValue);
-                if(validChemicalName)
+                if(!validChemicalName)
                 {
                     DefaultTableModel model = (DefaultTableModel) ChemicalTable.getModel();
                     model.addRow(new Object[] {ChemicalTextfield.getText(), GPLTextfield.getText(), "Delete"});
@@ -495,15 +498,10 @@ public class AddResinForm extends javax.swing.JFrame {
     public boolean CheckIfChemicalisOnTable(String ChemicalName)
     {
         boolean ItIsOnTheTable = false;
-        for (int i = 0; i < ChemicalTable.getRowCount(); i++) {
-            String CurrentChemical = ChemicalTable.getModel().getValueAt(i, 0).toString();
-            
-            if(CurrentChemical.equals(ChemicalName))
-            {
-                ItIsOnTheTable = true;
-                break;
-            }
-          }
+        if(this.AddedChemicalList.indexOf(ChemicalName) != -1)
+        {
+            ItIsOnTheTable = true;
+        }
         return ItIsOnTheTable;
     }
     /**
@@ -574,13 +572,13 @@ public class AddResinForm extends javax.swing.JFrame {
     private javax.swing.JTextField ChemicalTextfield;
     private javax.swing.JTextField GPLTextfield;
     private javax.swing.JLabel Header;
+    private javax.swing.JTextField ResinProcessName;
     private javax.swing.JButton SaveBut;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField processText;
     // End of variables declaration//GEN-END:variables
 }
 

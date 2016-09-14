@@ -19,7 +19,7 @@ public class DyeingProgramHandler {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         DyeingProgram dyeingProgramDetails = new DyeingProgram();
                 
-        if(repo.CheckIfDyeingProgramExistsUsingID(dyeingProgramId) == 0)
+        if(repo.CheckIfDyeingProgramExistsUsingID(dyeingProgramId) == 1)
         {
             dyeingProgramDetails = repo.GetDyeingProgramDetailsById(dyeingProgramId);
         }

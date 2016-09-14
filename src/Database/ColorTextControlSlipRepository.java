@@ -1248,7 +1248,7 @@ public class ColorTextControlSlipRepository {
         boolean added = false;
         try {
             conn = db.getConnection();
-            String query = "SELECT * FROM machine WHERE ID = ?";
+            String query = "SELECT * FROM dyeing_program WHERE ID = ?;";
               
             preparedStmt = conn.prepareStatement(query);
             preparedStmt.setInt(1, dyeingProgramId);
@@ -2602,7 +2602,7 @@ public class ColorTextControlSlipRepository {
         try
         {
             conn = db.getConnection();
-            String query = "SQL_SAFE_UPDATE = 0; DELETE FROM dyeing_chemical WHERE DyeingProcessID = ?; SET SQL_SAFE_UPDATES = 1;";
+            String query = "SET SQL_SAFE_UPDATES = 0; DELETE FROM dyeing_chemical WHERE DyeingProcessID = ?; SET SQL_SAFE_UPDATES = 1;";
 
             preparedStmt = conn.prepareStatement(query);
             preparedStmt.setInt(1, ThisDyeingChemical.getDyeingProcessID());

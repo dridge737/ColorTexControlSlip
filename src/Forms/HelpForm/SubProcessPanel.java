@@ -228,7 +228,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
       */
      public void AddSubProcess(int DyeingProgramID, String Order)
      {
-            if(SubProcessText.getText().length()> 0)
+            if(CheckIfTextIsReady())
             {
                  //SET All Dyeing Process Columns ID, NAME , ORDER
                 DyeingProcess ThisDyeingProcess = new DyeingProcess(DyeingProgramID,this.SubProcessText.getText(), Order );
@@ -264,9 +264,10 @@ public class SubProcessPanel extends javax.swing.JPanel {
             }
      }
      
-     public void UpdateSubProcess(int DyeingProcessID, String Order)
+     public boolean UpdateSubProcess(int DyeingProcessID, String Order)
      {
-            if(SubProcessText.getText().length()> 0)
+         boolean isSuccessful = false;
+            if(CheckIfTextIsReady())
             {
                 //SET All Dyeing Process Columns ID, NAME , ORDER
                 DyeingProcess ThisDyeingProcess = new DyeingProcess();
@@ -278,8 +279,13 @@ public class SubProcessPanel extends javax.swing.JPanel {
                 //USE Handler To Add Dyeing Process
                 if(ThisDyeingProcessHandler.UpdateDyeingProcess(ThisDyeingProcess) != -1)
                 //Add Chemicals After Adding Dyeing Process
+                {
                     UpdateChemicals(ThisDyeingProcess.getId());
+                    isSuccessful = true;
+                } 
             }
+            
+            return isSuccessful;
      }
      
      public void UpdateChemicals(int DyeingProcessID)
@@ -325,7 +331,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
          String Type = ChemicalTable.getModel().getValueAt(rowNumber, TypeColumn).toString();
          String Value = ChemicalTable.getModel().getValueAt(rowNumber, ValueColumn).toString();
          String State = ChemicalTable.getModel().getValueAt(rowNumber, StateColumn).toString();
-            if(Chemical.length() > 0 && !CheckText(Value))
+            if(Chemical.length() > 0 && !CheckTextIfItsANumber(Value))
             {
                 ThisChemical.setChemicalName(Chemical);
                 ThisChemical.setChemicalId(ChemicalHandler.GetChemicalIDFromChemicalName(ThisChemical.getChemicalName()));
@@ -497,11 +503,30 @@ public class SubProcessPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    public boolean CheckIfTextIsReady()
+    {
+        boolean validText = true;
+        if(SubProcessText.isVisible())
+            if(isNullOrWhitespaceOrEmpty(SubProcessText.getText()))
+            {
+                validText = false;
+                SubProcessText.setBackground(ColorError);
+                 JOptionPane.showMessageDialog(null, "Please check the sub process text");
+            }
+        
+        if(ChemicalTable.getRowCount() == 0)
+        {
+            validText = false;
+             JOptionPane.showMessageDialog(null, "Please add a Chemical to for this sub process.");
+        }
+        
+        return validText;
+    }
     private void AddtoTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddtoTableActionPerformed
         // TODO add your handling code here:
         if(!isNullOrWhitespaceOrEmpty(ChemicalTextfield.getText()) 
                 && !isNullOrWhitespaceOrEmpty(GPLTextfield.getText())
-                && !CheckText(GPLTextfield.getText()))
+                && !CheckTextIfItsANumber(GPLTextfield.getText()))
         {
             String CurrentChemicalText = ChemicalTextfield.getText().trim().toUpperCase();
             if(!this.AddedChemicalList.contains(CurrentChemicalText))
@@ -549,7 +574,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         if(!this.ValueTextCheckerTriggered)    
         {
-            if(CheckText(this.GPLTextfield.getText())){
+            if(CheckTextIfItsANumber(this.GPLTextfield.getText())){
                 AddtoTable.setEnabled(false);
                 this.GPLTextfield.setBackground(ColorError);
                 ValueTextCheckerTriggered = true;
@@ -557,7 +582,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
         }   
         else
         {
-             if(!CheckText(this.GPLTextfield.getText())){
+             if(!CheckTextIfItsANumber(this.GPLTextfield.getText())){
                  AddtoTable.setEnabled(true);
                 this.GPLTextfield.setBackground(Color.white);
                 ValueTextCheckerTriggered = false;
@@ -566,11 +591,11 @@ public class SubProcessPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_GPLTextfieldKeyReleased
 
     /**
-      * Checks if text is a valid int or float variable
+      * Checks if text is a validText int or float variable
       * @param this_text String to be checked
-      * @return true if String is either empty or text is not a valid int or float variable
+      * @return true if String is either empty or text is not a validText int or float variable
       */
-     public boolean CheckText(String this_text)
+     public boolean CheckTextIfItsANumber(String this_text)
     {
         if(this_text.isEmpty())
             return true;

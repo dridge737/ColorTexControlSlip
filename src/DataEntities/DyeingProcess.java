@@ -22,8 +22,8 @@ public class DyeingProcess {
     public DyeingProcess(int DyeingProgID, String processName, String Order )
     {
         this.dyeingProgramId = DyeingProgID;
-        this.dyeingProcessName = processName;
-        this.dyeingProcessOrder = Order;
+        this.dyeingProcessName = processName.toUpperCase();
+        this.dyeingProcessOrder = Order.toUpperCase();
     }
     public int getId() {
         return DyeingID;

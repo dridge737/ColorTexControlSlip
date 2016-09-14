@@ -5,7 +5,9 @@
  */
 package Forms.HelpForm;
 
+import DataEntities.DyeingChemical;
 import DataEntities.DyeingProcess;
+import Handlers.DyeingChemicalHandler;
 import Handlers.DyeingProcessHandler;
 import java.awt.Component;
 import java.util.ArrayList;
@@ -159,29 +161,26 @@ public class ProcessPanel extends javax.swing.JPanel {
      
      public void AddThisPanelInDyeingProcess(int DyeingProgramID , int TabIndex)
      {
-         if(ProcessText.getText().length()> 0)
+         DyeingProcessHandler ThisDyeingProcessHandler = new DyeingProcessHandler();
+         ThisDyeingProcess.setDyeingProgramId(DyeingProgramID);
+         ThisDyeingProcess.setDyeingProcessName(this.ProcessText.getText());
+         ThisDyeingProcess.setDyeingProcessOrder(Integer.toString(TabIndex));
+         
+         int ProcessID = ThisDyeingProcessHandler.AddDyeingProcess(ThisDyeingProcess);
+         //int ProcessID = ThisDyeingProcessHandler.GetDyeingProcessIdByDetails(ThisDyeingProcess);
+         ThisDyeingProcess.setId(ProcessID);
+         
+        //The Dyeing Process was not added
+         if (ProcessID == -1)
+             JOptionPane.showMessageDialog(null, "Process : " +ProcessText.getText()+ "  was not successfully added Please check the details.");
+         else
          {
-             DyeingProcessHandler ThisDyeingProcessHandler = new DyeingProcessHandler();
-             
-             ThisDyeingProcess.setDyeingProgramId(DyeingProgramID);
-             ThisDyeingProcess.setDyeingProcessName(this.ProcessText.getText());
-             ThisDyeingProcess.setDyeingProcessOrder(Integer.toString(TabIndex));
-             
-             int ProcessID = ThisDyeingProcessHandler.AddDyeingProcess(ThisDyeingProcess);
-             //int ProcessID = ThisDyeingProcessHandler.GetDyeingProcessIdByDetails(ThisDyeingProcess);
-             ThisDyeingProcess.setId(ProcessID);
-            
-             //The Dyeing Process was not added
-             if (ProcessID == -1)
-                 JOptionPane.showMessageDialog(null, "Process : " +ProcessText.getText()+ "  was not successfully added Please check the details.");
+             if(NumberOfTabs > 2)
+                 AddThisSubProcessPanelInDyeingProcess(DyeingProgramID,TabIndex);
              else
-             {
-                 if(NumberOfTabs > 2)
-                     AddThisSubProcessPanelInDyeingProcess(DyeingProgramID,TabIndex);
-                 else
-                     AddChemicalFromSubProcessPanel(ThisDyeingProcess.getId());
-             }
+                 AddChemicalFromSubProcessPanel(ThisDyeingProcess.getId());
          }
+         
      }
      
      public void AddThisSubProcessPanelInDyeingProcess(int DyeingProgramID, int TabIndex)
@@ -220,7 +219,12 @@ public class ProcessPanel extends javax.swing.JPanel {
         //If This is a new Process Panel Then just add to the existing dyeing program
         if(ThisDyeingProcess.getId() == 0)
         {
-            AddThisPanelInDyeingProcess(DyeingProgramID, TabIndex);
+            if(ProcessText.getText().length()> 0)
+            {
+                AddThisPanelInDyeingProcess(DyeingProgramID, TabIndex);   
+            }
+            else
+                JOptionPane.showMessageDialog(null, "Process was not successfully updated Please check the Process Name.");
         }
         else
         {
@@ -237,7 +241,7 @@ public class ProcessPanel extends javax.swing.JPanel {
                 }
                 else
                 {
-                    if(NumberOfTabs > 1)
+                    if(NumberOfTabs > 2)
                     {
                         UpdateThisSubProcessPanelInDyeingProcess(DyeingProgramID,TabIndex);
                     }
@@ -252,19 +256,23 @@ public class ProcessPanel extends javax.swing.JPanel {
      {
          DyeingProcessHandler ProcessHandler = new DyeingProcessHandler();
          int TotalNumberOfSubProcess = ProcessHandler.CountNumberOfSubProcess(ThisDyeingProcess);
+         DyeingChemicalHandler DyeChemHandler = new DyeingChemicalHandler();
+         DyeingChemical DyeChem = new DyeingChemical();
          //IF Previously there is no sub process for this process. Then relink dyeing chemical into sub process
          if(TotalNumberOfSubProcess == 0)
          {
-             //ERROR HERE!
-            if(ThisDyeingProcess.getId()!= 0)
-            //Delete Chemicals previously Linked to this Dyeing Process
-                ProcessHandler.UpdateDyeingProcess(ThisDyeingProcess); 
-             //Just Add SubProcess and Chemicals
-            else
-            {
+             if(ThisDyeingProcess.getId()!= 0)
+             {
+                //Delete Chemicals previously Linked to this Dyeing Process
+                 DyeChem.setDyeingProcessID(ThisDyeingProcess.getId());
+                 DyeChemHandler.DeleteDyeingChemicalByDyeingProcessID(DyeChem);
+                 //Add SubProcess and Chemicals into the new sub process
+             }
+            
+                //Add the New Sub Process in the dyeing process table
                 AddThisSubProcessPanelInDyeingProcess(DyeingProgramID, TabIndex);
         
-            }
+            
             
          }
          else

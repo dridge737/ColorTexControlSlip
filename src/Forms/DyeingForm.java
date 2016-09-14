@@ -348,7 +348,7 @@ public class DyeingForm extends javax.swing.JFrame {
             {
                 case 1:
                     JOptionPane.showMessageDialog(null, "Successfully added Dyeing Program : "+thisDyeingProgram.getDyeingProgramName());
-                    
+                    break;
                 case 2:
                     JOptionPane.showMessageDialog(null, "Successfully updated Dyeing Program : "+thisDyeingProgram.getDyeingProgramName());
                     break;
@@ -361,7 +361,7 @@ public class DyeingForm extends javax.swing.JFrame {
                     }
                     else
                     {
-                        thisProcessOrder.setResinProgramID(0);
+                        //thisProcessOrder.setResinProgramID(0);
                         ReviewForm thisReviewForm = new ReviewForm(this.thisProcessOrder, 1);
                         //Show Review Form and Ask to print
                         thisReviewForm.setVisible(true);
