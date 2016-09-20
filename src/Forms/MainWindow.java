@@ -48,7 +48,6 @@ public class MainWindow extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        Date = new javax.swing.JLabel();
         ControlSlipButton = new javax.swing.JButton();
         DyeingForm = new javax.swing.JButton();
         ResinForm = new javax.swing.JButton();
@@ -87,10 +86,6 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 22)); // NOI18N
         jLabel1.setText("Colortex Processing Inc.");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(485, 27, 255, -1));
-
-        Date.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        Date.setText("4 / 12 /2016");
-        jPanel2.add(Date, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 60));
 
@@ -356,7 +351,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton ColorBut;
     private javax.swing.JButton ControlSlipButton;
     private javax.swing.JButton CustomerBut;
-    private javax.swing.JLabel Date;
     private javax.swing.JButton DesignBut;
     private javax.swing.JButton DyeingForm;
     private javax.swing.JButton Exit;

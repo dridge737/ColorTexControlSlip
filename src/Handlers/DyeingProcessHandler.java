@@ -38,11 +38,35 @@ public class DyeingProcessHandler {
     public ArrayList<DyeingProcess> GetAllDyeingProcessByDyeingProgramId(int dyeingProgramId)
     {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
-        //DyeingProcess dyeingProcessDetails = new DyeingProcess();
                 
         //if(repo.CheckIfDyeingProcessExists(dyeingProcessName))
         //{
             return repo.GetDyeingProcessDetailsByDyeingProgramId(dyeingProgramId);
+        //}
+        //return dyeingProcessDetails;
+    }
+    
+    public ArrayList<DyeingProcess> GetAllDyeingProcessAndSubProcessByDyeingProgramId(int dyeingProgramId)
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        //DyeingProcess dyeingProcessDetails = new DyeingProcess();
+        ArrayList<DyeingProcess> dyeingProcessListNoSub = repo.GetDyeingProcessDetailsByDyeingProgramId(dyeingProgramId);
+        ArrayList<DyeingProcess> dyeingProcessList = new ArrayList<DyeingProcess>();
+        
+        for(DyeingProcess dyeingProcess: dyeingProcessListNoSub)
+        {
+            int TotalNumberOfSubProcess = CountNumberOfSubProcess(dyeingProcess);
+            dyeingProcessList.add(dyeingProcess);
+            if(TotalNumberOfSubProcess > 0)
+            {
+                dyeingProcessList.addAll(GetDyeingSubProcessByDyeingProgramIdAndProcessOrder(dyeingProcess));
+            }
+        }
+        
+                
+        //if(repo.CheckIfDyeingProcessExists(dyeingProcessName))
+        //{
+            return dyeingProcessList;
         //}
         //return dyeingProcessDetails;
     }

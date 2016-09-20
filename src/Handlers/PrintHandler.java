@@ -32,23 +32,23 @@ import com.itextpdf.text.pdf.GrayColor;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfWriter;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
+import java.awt.Desktop;
+import java.awt.print.PrinterJob;
  
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Collections;
 import java.util.Comparator;
+import javax.print.Doc;
 import javax.print.DocFlavor;
 import javax.print.DocPrintJob;
-import javax.print.PrintException;
 import javax.print.PrintService;
-import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
 import javax.print.attribute.HashPrintRequestAttributeSet;
-import javax.swing.JOptionPane;
+import javax.print.attribute.PrintRequestAttributeSet;
 /**
  *
  * @author imbuenyson
@@ -62,6 +62,7 @@ public class PrintHandler {
         File file = new File(DEST);
         file.getParentFile().mkdirs();
         new PrintHandler().renderPDF(DEST, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, processOrderDetails, dyeingProgramDetails, volume);
+        printPDF();
     }
  
     public void renderPDF(String dest, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, ProcessOrder processOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException {
@@ -451,7 +452,7 @@ public class PrintHandler {
         table.addCell(p7);
         
         Phrase p8 = new Phrase();
-        p7.add("Vol. of Water: " + volume);
+        p8.add("Vol. of Water: " + volume);
         pCell = new PdfPCell(p8);
         table.addCell(p8);
         table.addCell(filler);
@@ -481,7 +482,7 @@ public class PrintHandler {
         DyeingChemicalHandler dChemHandler = new DyeingChemicalHandler();
         DyeingProcessHandler dProcessHandler = new DyeingProcessHandler();
         ChemicalHandler chemHandler = new ChemicalHandler();
-        ArrayList<DyeingProcess> dyeingProcessList = dProcessHandler.GetAllDyeingProcessByDyeingProgramId(dyeingProgramDetails.getDyeingProgramId());
+        ArrayList<DyeingProcess> dyeingProcessList = dProcessHandler.GetAllDyeingProcessAndSubProcessByDyeingProgramId(dyeingProgramDetails.getDyeingProgramId());
         ArrayList<DyeingChemical> dyeingChemicalList = null;
         int rows = 0;
         
@@ -494,15 +495,15 @@ public class PrintHandler {
         
         for(int x=0; x<dyeingProcessList.size(); x++)
         {
-            if(rows%30 != 0){
-                if (dyeingProcessList.get(x).getdyeingProcessOrder().contains("[a-zA-Z]+") == false){
+            if(rows%30 != 0 || rows == 0){
+                if (dyeingProcessList.get(x).getdyeingProcessOrder().matches("[0-9]+")){
                     table.addCell(RomanNumber.toRoman(x+1) + ". " + dyeingProcessList.get(x).getDyeingProcessName());
                     table.addCell(" ");
                     table.addCell(" ");
                     table.addCell(" ");
                     rows++;
                 }
-                else if(dyeingProcessList.get(x).getdyeingProcessOrder().contains("[a-zA-Z]+") == true){
+                else if(!(dyeingProcessList.get(x).getdyeingProcessOrder().matches("[0-9]+"))){
                     String dyeingSubProcessLetter = dyeingProcessList.get(x).getdyeingProcessOrder().replaceAll("[^A-Za-z]+", "");
 
                     table.addCell("    " + dyeingSubProcessLetter.toUpperCase() + ". " + dyeingProcessList.get(x).getDyeingProcessName());
@@ -540,7 +541,18 @@ public class PrintHandler {
                             table.addCell(" ");
                             table.addCell(String.valueOf(dyeingChemicalList.get(i).getValue()));
                         }
-                        table.addCell("Quantity");
+                        
+                        if(dyeingChemicalList.get(i).getType()== "%")
+                        {
+                           Float quantity = processOrderDetails.getWeight() * dyeingChemicalList.get(i).getValue();
+                           table.addCell(quantity.toString() + dyeingChemicalList.get(i).getState()); 
+                        }
+                        else
+                        {
+                            Float quantity = Float.parseFloat(volume) * dyeingChemicalList.get(i).getValue();
+                            table.addCell(quantity.toString() + dyeingChemicalList.get(i).getState());
+                        }
+                        
                         rows++;
                     }
                 }
@@ -741,7 +753,7 @@ public class PrintHandler {
         table.addCell(p7);
         
         Phrase p8 = new Phrase();
-        p7.add("Vol. of Water: " + volume);
+        p8.add("Vol. of Water: " + volume);
         pCell = new PdfPCell(p8);
         table.addCell(p8);
         table.addCell(filler);
@@ -893,9 +905,9 @@ public class PrintHandler {
         return document;
     }
     
-    public void printPDF (Document document) throws DocumentException, IOException
+    public void printPDF () throws DocumentException, IOException
     {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        /*ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PdfWriter f1 =PdfWriter.getInstance(document,baos);
         
         try{ 
@@ -913,7 +925,56 @@ public class PrintHandler {
             e.printStackTrace();
         }
         catch (PrintException ex) {    
-        }    
-    }
+        } */
+        
+        File myFile = new File("C:\\chapter_title.pdf");
+        Desktop.getDesktop().open(myFile);
+        
+        /*FileInputStream psStream = null;
+        try {
+            psStream = new FileInputStream("C:\\chapter_title.pdf");
+            } catch (FileNotFoundException ffne) {
+              ffne.printStackTrace();
+            }
+            if (psStream == null) {
+                return;
+            }
+        DocFlavor psInFormat = DocFlavor.INPUT_STREAM.AUTOSENSE;
+        Doc myDoc = new SimpleDoc(psStream, psInFormat, null);  
+        PrintRequestAttributeSet aset = new HashPrintRequestAttributeSet();
+        //PrintService[] services = PrintServiceLookup.lookupPrintServices(psInFormat, aset);
+        
+        PrinterJob printerJob = PrinterJob.getPrinterJob();
+
+        PrintService printService = null;
+        if(printerJob.printDialog())
+        {
+            printService = printerJob.getPrintService();
+        }
+        
+         
+        // this step is necessary because I have several printers configured
+        PrintService myPrinter = null;
+        for (int i = 0; i < services.length; i++){
+            String svcName = services[i].toString();           
+            if (svcName.contains("printer closest to me")){
+                myPrinter = services[i];
+                System.out.println("my printer found: "+svcName);
+                break;
+            }
+        }
+         
+        if (printService != null) {            
+            DocPrintJob job = printService.createPrintJob();
+            try {
+            job.print(myDoc, aset);
+             
+            } catch (Exception pe) {
+            }
+        } else {
+            System.out.println("no printer services found");
+        }*/
+   }
+    
 
 }

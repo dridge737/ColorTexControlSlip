@@ -286,6 +286,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
                 }
                 else
                     new ViewResinProgramChemicals(resinProgramName).setVisible(true);
+                this.dispose();
             }
             else
             {

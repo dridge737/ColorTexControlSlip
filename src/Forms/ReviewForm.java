@@ -53,6 +53,11 @@ public class ReviewForm extends javax.swing.JFrame {
     public ReviewForm() {
         initComponents();
         SetToCenter();
+        populateCustomerDropDown();
+        populateDesignDropDown();
+        populateColorDropDown();
+        populateMachineDropDown();
+        populateLiquoRatioDropDown();
     }
     
     public ReviewForm(ProcessOrder setThisProcessOrder, int JobOrderType)
@@ -99,7 +104,7 @@ public class ReviewForm extends javax.swing.JFrame {
     
      private void SetJobOrderDetails()
     {
-        thisJob.setID(thisProcessOrder.getID());
+        thisJob.setID(thisProcessOrder.getJobOrderID());
         JobHandler JobOrderHandler = new JobHandler();
         thisJob = JobOrderHandler.GetJobOrderDetailsFromJobId(thisJob.getID());
         JobOrder.setText(thisJob.getDrNumber());
@@ -212,7 +217,7 @@ public class ReviewForm extends javax.swing.JFrame {
         BgPanel.add(ChemicalHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 22, 690, 50));
 
         SaveBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
-        SaveBut.setText("Save & Print");
+        SaveBut.setText("Print Preview");
         SaveBut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SaveButActionPerformed(evt);
@@ -416,7 +421,7 @@ public class ReviewForm extends javax.swing.JFrame {
         try
         {
             PrintHandler handler = new PrintHandler();
-            handler.createPDF(thisMachine, thisDesign, thisCustomer, thisColor, thisJob, thisProcessOrder, thisDyeingProgram, VolumeTextField.getText().toString());
+            handler.createPDF(thisMachine, thisDesign, thisCustomer, thisColor, thisJob, thisProcessOrder, thisDyeingProgram, VolumeTextField.getText());
         }
         catch(IOException | DocumentException e)
         {

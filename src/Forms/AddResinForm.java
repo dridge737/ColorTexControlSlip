@@ -348,18 +348,36 @@ public class AddResinForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(SaveBut.getText().equals("Next"))
         {
-            ResinProgram thisResinProgram = new ResinProgram();
-            ResinProgramHandler thisResinProgramHandler = new ResinProgramHandler();
-            thisProcessOrder.setResinProgramID(thisResinProgramHandler.GetResinProgramIDFromResinProgramName( this.ResinProcessName.getText() ) );
-            ReviewForm thisForm = new ReviewForm(thisProcessOrder, 2);
-            thisForm.setVisible(true);
-            this.dispose();
+            if(CheckIfResinInputIsReady()){
+                ResinProgram thisResinProgram = new ResinProgram();
+                ResinProgramHandler thisResinProgramHandler = new ResinProgramHandler();
+                thisProcessOrder.setResinProgramID(thisResinProgramHandler.GetResinProgramIDFromResinProgramName( this.ResinProcessName.getText() ) );
+                ReviewForm thisForm = new ReviewForm(thisProcessOrder, 2);
+                thisForm.setVisible(true);
+                this.dispose();
+            }
         }
         else
             AddResin();
             
     }//GEN-LAST:event_SaveButActionPerformed
 
+    private boolean CheckIfResinInputIsReady()
+    {
+        boolean Ready = true;
+        if(this.ResinProcessName.getText().trim().length() == 0 )
+        {
+            JOptionPane.showMessageDialog(null, "Please check the Resin process name.");
+            ResinProcessName.setBackground(ColorError);
+            Ready = false;
+        }
+        if(ChemicalTable.getRowCount() < 1)
+        {
+            JOptionPane.showMessageDialog(null, "Please add at least one chemical for this resin program");
+            Ready = false;
+        }
+        return Ready;
+    }
     public void AddResin()
     {
         boolean isSuccessful = false;
@@ -371,45 +389,31 @@ public class AddResinForm extends javax.swing.JFrame {
         int resinProgramId = -1;
         int chemicalId = -1;
         String thisProcessName = ResinProcessName.getText().trim();
-        if(thisProcessName.length()>0 && !isNullOrWhitespace(ResinProcessName.getText()))
+        if(CheckIfResinInputIsReady())
         {
             resinProgram.setName(thisProcessName);
             resinProgramHandler.AddNewResinProgram(resinProgram);
             resinProgramId = resinProgramHandler.GetResinProgramIDFromResinProgramName(resinProgram.getName());
         }
-        else
-        {
-            JOptionPane.showMessageDialog(null, "Please input a process name");
-            ResinProcessName.setBackground(ColorError);
-        }
         
         if(resinProgramId != -1)
         {
-            if(ChemicalTable.getRowCount() < 1)
+            for (int i = 0; i < ChemicalTable.getRowCount(); i++)
             {
-                JOptionPane.showMessageDialog(null, "Please add at least one chemical for this resin program");
-            }
-            else
-            {
-                for (int i = 0; i < ChemicalTable.getRowCount(); i++)
+                Object chemicalForResinProgram = ChemicalTable.getModel().getValueAt(i, 0);
+                Object gpl = ChemicalTable.getModel().getValueAt(i, 1);
+                
+                if(chemicalForResinProgram != null && gpl != null)
                 {
-                    Object chemicalForResinProgram = ChemicalTable.getModel().getValueAt(i, 0);
-                    Object gpl = ChemicalTable.getModel().getValueAt(i, 1);
+                    resinChemical.setResinProgramID(resinProgramId);
+                    resinChemical.setChemicalID(chemicalId);
+                    resinChemical.setGPLValue(Float.parseFloat(gpl.toString()));
+                    isSuccessful = resinChemicalHandler.AddNewResinChemical(resinChemical);
                     
-                    if(chemicalForResinProgram != null && gpl != null)
-                    {
-                        resinChemical.setResinProgramID(resinProgramId);
-                        resinChemical.setChemicalID(chemicalId);
-                        resinChemical.setGPLValue(Float.parseFloat(gpl.toString()));
-                        isSuccessful = resinChemicalHandler.AddNewResinChemical(resinChemical);
-                        
-                        if(isSuccessful == false)
-                        {
-                            break;
-                        }
-                    }
-                    
-             }   
+                    if(isSuccessful == false)
+                        break;
+                }
+            }   
             
             if(isSuccessful == true)
             {
@@ -422,21 +426,13 @@ public class AddResinForm extends javax.swing.JFrame {
                 resinChemicalHandler.DeleteResinChemicalByResinProgramId(resinProgramId);
                 resinProgramHandler.DeleteResinProgram(resinProgramId);
             }
-            }
-            
         }
         else
         {
             JOptionPane.showMessageDialog(null, "Please make sure the data are complete.");
         }
     }
-    
-    public void AddAllResinChemicals()
-    {
-        
-    }
-    
-    
+
     //UNUSED
     public void UnusedCodes()
     {
