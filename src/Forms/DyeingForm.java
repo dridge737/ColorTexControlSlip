@@ -58,24 +58,24 @@ public class DyeingForm extends javax.swing.JFrame {
     public DyeingForm(String DyeingProgramName)
     {
         initComponents();
-        SetDyeingProgramFromProgramName(DyeingProgramName);
         setWindowType(2);
+        SetDyeingProgramFromProgramName(DyeingProgramName);
     }
     //For Job Order Form
     public DyeingForm(String DyeingProgramName,  ProcessOrder ThisProcessOrder)
     {
         initComponents();
         thisProcessOrder = ThisProcessOrder;
-        SetDyeingProgramFromProgramName(DyeingProgramName);
         setWindowType(3);
+        SetDyeingProgramFromProgramName(DyeingProgramName);
     }
     
     public DyeingForm(int DyeingProgramID, ProcessOrder ThisProcessOrder)
     {
         initComponents();
         thisProcessOrder = ThisProcessOrder;
-        this.SetDyeingProgramFromProgramID(DyeingProgramID);
         setWindowType(3);
+        this.SetDyeingProgramFromProgramID(DyeingProgramID);
     }
     
      public void setWindowType(int type)
@@ -173,7 +173,13 @@ public class DyeingForm extends javax.swing.JFrame {
     private void addNewTabProcess(DyeingProcess thisProcess)
     {
         //Declare the Tab to be added
-        ProcessPanel this_panel = new ProcessPanel(thisProcess);
+        ProcessPanel this_panel; 
+        if(WindowType == 3)
+        {
+            this_panel = new ProcessPanel(thisProcess, 3);
+        }
+        else
+            this_panel = new ProcessPanel(thisProcess);
         
         //Add the Tab to the JtabbedPane
         Process.add(this_panel, "Process " + String.valueOf(NumberOfProcessTabs+1),

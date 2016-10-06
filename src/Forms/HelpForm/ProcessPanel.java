@@ -26,6 +26,7 @@ public class ProcessPanel extends javax.swing.JPanel {
     private int NumberOfTabs = 0;
     //private List<JTextField> subProcessName = new ArrayList<JTextField>();
     private DyeingProcess ThisDyeingProcess = new DyeingProcess();
+    int WindowType;
     /**
      * Creates new form ProcessPanel
      */
@@ -33,6 +34,7 @@ public class ProcessPanel extends javax.swing.JPanel {
         initComponents();
         /* add new Sub Process tab */
         addSubProcessPanel();
+        
     }
     
     public ProcessPanel(DyeingProcess thisProcess)
@@ -43,6 +45,19 @@ public class ProcessPanel extends javax.swing.JPanel {
         this.ProcessText.setText(thisProcess.getDyeingProcessName());
         //Call this function to Set all the Process details
         this.SetAllProcessDetailsFromDyeingProgramID();
+        
+    }
+    
+    public ProcessPanel(DyeingProcess thisProcess, int currentWindowType)
+    {
+        initComponents();
+        ThisDyeingProcess = thisProcess;
+        //Set the Process Name
+        this.WindowType = currentWindowType;
+        this.ProcessText.setText(thisProcess.getDyeingProcessName());
+        //Call this function to Set all the Process details
+        this.SetAllProcessDetailsFromDyeingProgramID();
+        
     }
     
     /**
@@ -52,20 +67,20 @@ public class ProcessPanel extends javax.swing.JPanel {
      */
     public void SetAllProcessDetailsFromDyeingProgramID()
     {
-        //ArrayList<DyeingProcess> thisDyeingProcess;
+        //ArrayList<DyeingProcess> thisDyeingSubProcess;
         DyeingProcessHandler ProcessHandler = new DyeingProcessHandler();
         //thisDyeingProcess = ProcessHandler.GetAllDyeingProcessByDyeingProgramId(DyeingProgramID);
         int TotalNumberOfSubProcess = ProcessHandler.CountNumberOfSubProcess(ThisDyeingProcess);
         
         if(TotalNumberOfSubProcess > 0)
         {
-            ArrayList<DyeingProcess> thisDyeingProcess;
-            thisDyeingProcess = ProcessHandler.GetDyeingSubProcessByDyeingProgramIdAndProcessOrder(ThisDyeingProcess);
+            ArrayList<DyeingProcess> thisDyeingSubProcess;
+            thisDyeingSubProcess = ProcessHandler.GetDyeingSubProcessByDyeingProgramIdAndProcessOrder(ThisDyeingProcess);
             
-            for(DyeingProcess CurrentDyeingProcess : thisDyeingProcess)
+            for(DyeingProcess CurrentDyeingSubProcess : thisDyeingSubProcess)
             {
                 //Add SubProcess Tab
-                this.addNewTab(CurrentDyeingProcess);
+                this.addNewTab(CurrentDyeingSubProcess);
             }
             
         }
@@ -118,7 +133,13 @@ public class ProcessPanel extends javax.swing.JPanel {
     private void addNewTab(DyeingProcess SubProcess) 
     {
         /* add new tab */
-        SubProcessPanel this_panel = new SubProcessPanel(SubProcess.getId());
+        SubProcessPanel this_panel;
+        if(WindowType == 3)
+        {
+            this_panel = new SubProcessPanel(SubProcess.getId(), WindowType);
+        }
+        else
+            this_panel = new SubProcessPanel(SubProcess.getId());
         //this_panel.SetSubProcessFromDyeingProgram();
         addTabToSubProcessTabbedPane(this_panel, this.NumberOfTabs++); 
         

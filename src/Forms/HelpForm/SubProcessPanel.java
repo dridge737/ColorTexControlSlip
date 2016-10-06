@@ -41,6 +41,8 @@ public class SubProcessPanel extends javax.swing.JPanel {
     int StateColumn = 1;
     int TypeColumn = 2;
     int ValueColumn = 3;
+    int WindowType = 0;
+    int EditableCol = 4;
     boolean ValueTextCheckerTriggered = false;
     ArrayList<String> AllChemical = new ArrayList<String>();
     ArrayList<String> AddedChemicalList = new ArrayList<String>();
@@ -51,8 +53,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
     public SubProcessPanel() {
         initComponents();
         addChemicalTextBoxAutoComplete();
-        
-        setTableModel(0);
+        setTableModel(WindowType);
         AddDeleteColumn();    
         //InitializeChemicalTable();
         //InitializeGPLandPercentColumn();
@@ -69,7 +70,8 @@ public class SubProcessPanel extends javax.swing.JPanel {
         //intialize constructors
         initComponents();
         addChemicalTextBoxAutoComplete();
-        setTableModel(type);
+        WindowType = type;
+        setTableModel(WindowType);
         AddDeleteColumn();
         
         SetSubProcessFromDyeingProgram(DyeingProcessID);
@@ -82,8 +84,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
     private void setTableModel(int type)
     {
         String[] TableHeader;
-        int EditableCol;
-        if(type == 1)
+        if(type == 3)
         {
             TableHeader = new String [] {
                 "Chemical", "Gram/Liter", "Type", "Value" , "Quantity" ,"Delete"
@@ -95,7 +96,6 @@ public class SubProcessPanel extends javax.swing.JPanel {
             TableHeader = new String [] {
                 "Chemical", "Gram/Liter", "Type", "Value" ,"Delete"
             };
-            EditableCol = 4;
         }
         
         DefaultTableModel tableModel = new DefaultTableModel( new Object [][] {
@@ -103,7 +103,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
                 @Override
             public boolean isCellEditable(int row, int column) {
             //Only the third column
-                return column == 4;
+                return column == EditableCol;
             }
         };
         
@@ -162,7 +162,12 @@ public class SubProcessPanel extends javax.swing.JPanel {
          {
              //Add Chemical and its details to the Table
              String ChemicalName = getChemicalNameFromID(thisDyeingChemical.getChemicalID());
-             model.addRow(new Object[] {ChemicalName, thisDyeingChemical.getState(),thisDyeingChemical.getType(), thisDyeingChemical.getValue(), "Delete"});
+             if(WindowType == 3)
+             {
+                 model.addRow(new Object[] {ChemicalName, thisDyeingChemical.getState(),thisDyeingChemical.getType(), thisDyeingChemical.getValue(),0, "Delete"});                 
+             }
+             else
+                 model.addRow(new Object[] {ChemicalName, thisDyeingChemical.getState(),thisDyeingChemical.getType(), thisDyeingChemical.getValue(), "Delete"});
              
              //ChemicalList
              //After Adding Chemical to table add it to list to check if same chemical will be added
