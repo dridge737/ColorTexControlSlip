@@ -41,7 +41,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
     int StateColumn = 1;
     int TypeColumn = 2;
     int ValueColumn = 3;
-    int WindowType = 0;
+    private int WindowType = 0;
     int EditableCol = 4;
     boolean ValueTextCheckerTriggered = false;
     ArrayList<String> AllChemical = new ArrayList<String>();
@@ -60,9 +60,12 @@ public class SubProcessPanel extends javax.swing.JPanel {
         //ChemicalTable.getModel().addTableModelListener(newTableListener);   
     }
     
-    public SubProcessPanel(int DyeingProcessID){
-        this();
-        SetSubProcessFromDyeingProgram(DyeingProcessID);
+    public SubProcessPanel(int type){
+        initComponents();
+        WindowType = type;
+        addChemicalTextBoxAutoComplete();
+        setTableModel(WindowType);
+        AddDeleteColumn(); 
     }
     
     public SubProcessPanel(int DyeingProcessID, int type)
@@ -679,5 +682,12 @@ public class SubProcessPanel extends javax.swing.JPanel {
         TableColumn col = ChemicalTable.getColumnModel().getColumn(column);
         col.setCellEditor(new DefaultCellEditor(comboBox));
      }
+
+    /**
+     * @param WindowType the WindowType to set
+     */
+    public void setWindowType(int WindowType) {
+        this.WindowType = WindowType;
+    }
 
 }

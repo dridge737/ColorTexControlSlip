@@ -26,7 +26,7 @@ public class ProcessPanel extends javax.swing.JPanel {
     private int NumberOfTabs = 0;
     //private List<JTextField> subProcessName = new ArrayList<JTextField>();
     private DyeingProcess ThisDyeingProcess = new DyeingProcess();
-    int WindowType;
+    int WindowType = 0;
     /**
      * Creates new form ProcessPanel
      */
@@ -103,7 +103,7 @@ public class ProcessPanel extends javax.swing.JPanel {
     };
     private void setNewTabForChemicals(DyeingProcess ProcessDetails)
     {
-        SubProcessPanel this_panel = new SubProcessPanel();
+        SubProcessPanel this_panel = new SubProcessPanel(3);
         this_panel.SetChemicalListFromDyeingProcessID(ProcessDetails.getId());
         this_panel.HideText();
         addTabToSubProcessTabbedPane(this_panel, this.NumberOfTabs++);
@@ -133,13 +133,7 @@ public class ProcessPanel extends javax.swing.JPanel {
     private void addNewTab(DyeingProcess SubProcess) 
     {
         /* add new tab */
-        SubProcessPanel this_panel;
-        if(WindowType == 3)
-        {
-            this_panel = new SubProcessPanel(SubProcess.getId(), WindowType);
-        }
-        else
-            this_panel = new SubProcessPanel(SubProcess.getId());
+        SubProcessPanel this_panel = new SubProcessPanel(SubProcess.getId(), WindowType);
         //this_panel.SetSubProcessFromDyeingProgram();
         addTabToSubProcessTabbedPane(this_panel, this.NumberOfTabs++); 
         

@@ -48,7 +48,7 @@ public class DyeingForm extends javax.swing.JFrame {
         initComponents();
         WindowType = 1;
         Process.add(new ProcessPanel(), "Process 1", NumberOfProcessTabs++);
-        setWindowType(1);
+        setWindowType();
        
         //this.jPanel2.add(ThisPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 80, 780, 550));
         //this.jPanel2.validate();
@@ -58,30 +58,32 @@ public class DyeingForm extends javax.swing.JFrame {
     public DyeingForm(String DyeingProgramName)
     {
         initComponents();
-        setWindowType(2);
+        WindowType = 2;
         SetDyeingProgramFromProgramName(DyeingProgramName);
+        setWindowType();
     }
     //For Job Order Form
     public DyeingForm(String DyeingProgramName,  ProcessOrder ThisProcessOrder)
     {
         initComponents();
         thisProcessOrder = ThisProcessOrder;
-        setWindowType(3);
+        WindowType = 3;
         SetDyeingProgramFromProgramName(DyeingProgramName);
+        setWindowType();
     }
     
     public DyeingForm(int DyeingProgramID, ProcessOrder ThisProcessOrder)
     {
         initComponents();
+        WindowType = 3;
         thisProcessOrder = ThisProcessOrder;
-        setWindowType(3);
         this.SetDyeingProgramFromProgramID(DyeingProgramID);
+        setWindowType();
     }
     
-     public void setWindowType(int type)
+     public void setWindowType()
     {
         SetToCenter();
-        WindowType = type;
         if(WindowType == 1)
         {
             Header.setText("Add Dyeing Program");
