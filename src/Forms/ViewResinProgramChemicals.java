@@ -162,21 +162,21 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
         ResinProgramLabel.setBackground(new java.awt.Color(255, 255, 255));
         ResinProgramLabel.setFont(new java.awt.Font("Century Gothic", 0, 22)); // NOI18N
         ResinProgramLabel.setForeground(new java.awt.Color(255, 255, 255));
-        ResinProgramLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        ResinProgramLabel.setText("  Chemical List");
+        ResinProgramLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ResinProgramLabel.setText("Program Label");
         ResinProgramLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
-        jPanel1.add(ResinProgramLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 485, 40));
+        jPanel1.add(ResinProgramLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 87, 485, 40));
 
         ResinChemicalTable.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         ResinChemicalTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Resin Chemical", "Value"
             }
         ));
         jScrollPane1.setViewportView(ResinChemicalTable);
@@ -406,6 +406,7 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
 
     private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed
         // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_BackButtonActionPerformed
 
     /**

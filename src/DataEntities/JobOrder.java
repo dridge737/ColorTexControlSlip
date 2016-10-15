@@ -19,6 +19,7 @@ public class JobOrder {
     private int ColorID;
     private int CustomerID;
     private String jobDate;
+    private String BatchNo;
 
     /**
      * @return the ID
@@ -117,4 +118,19 @@ public class JobOrder {
     public void setJobDate(String jobDate) {
         this.jobDate = jobDate;
     }
+
+    /**
+     * @return the BatchNo
+     */
+    public String getBatchNo() {
+        return BatchNo;
+    }
+
+    /**
+     * @param BatchNo the BatchNo to set
+     */
+    public void setBatchNo(String BatchNo) {
+        this.BatchNo = BatchNo;
+    }
+
 }

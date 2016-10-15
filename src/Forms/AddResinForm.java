@@ -93,6 +93,7 @@ public class AddResinForm extends javax.swing.JFrame {
         this.SaveBut.setText("Next");
         this.CancelBut.setText("Back");
         this.GetUpdatedTable();
+        this.WindowType = 1;
     }
     
     public void AddDeleteColumn()
@@ -238,7 +239,7 @@ public class AddResinForm extends javax.swing.JFrame {
         Header.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
         Header.setForeground(new java.awt.Color(255, 255, 255));
         Header.setText("Resin Program");
-        BgPanel.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 22, 360, 50));
+        BgPanel.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 22, 710, 50));
 
         SaveBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         SaveBut.setText("Add Resin Process");
@@ -346,7 +347,7 @@ public class AddResinForm extends javax.swing.JFrame {
 
     private void SaveButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButActionPerformed
         // TODO add your handling code here:
-        if(SaveBut.getText().equals("Next"))
+        if(WindowType == 1)
         {
             if(CheckIfResinInputIsReady()){
                 ResinProgram thisResinProgram = new ResinProgram();
@@ -394,6 +395,7 @@ public class AddResinForm extends javax.swing.JFrame {
             resinProgram.setName(thisProcessName);
             resinProgramHandler.AddNewResinProgram(resinProgram);
             resinProgramId = resinProgramHandler.GetResinProgramIDFromResinProgramName(resinProgram.getName());
+            this.dispose();
         }
         
         if(resinProgramId != -1)

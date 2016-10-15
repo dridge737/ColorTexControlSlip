@@ -93,7 +93,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         JobHandler JobOrderHandler = new JobHandler();
         thisJob = JobOrderHandler.GetJobOrderDetailsFromJobId(thisJob.getID());
         JobOrder.setText(thisJob.getDrNumber());
-        
+        BatchNo.setText(thisJob.getBatchNo());
         //Set Date to 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             try {
@@ -184,6 +184,8 @@ public class JobOrderForm extends javax.swing.JFrame {
         NextButton = new javax.swing.JButton();
         ChemicalHeader = new javax.swing.JLabel();
         dateSpinner = new javax.swing.JSpinner();
+        jLabel10 = new javax.swing.JLabel();
+        BatchNo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Color Text Control Slip");
@@ -199,7 +201,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                 CustomerDropDownListActionPerformed(evt);
             }
         });
-        MainPanel.add(CustomerDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 140, 195, 30));
+        MainPanel.add(CustomerDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, 190, 30));
 
         DesignDropDownList.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         DesignDropDownList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Design" }));
@@ -208,7 +210,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                 DesignDropDownListActionPerformed(evt);
             }
         });
-        MainPanel.add(DesignDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, 195, 30));
+        MainPanel.add(DesignDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, 190, 30));
 
         ColorDropDownList.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         ColorDropDownList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Color" }));
@@ -217,45 +219,45 @@ public class JobOrderForm extends javax.swing.JFrame {
                 ColorDropDownListActionPerformed(evt);
             }
         });
-        MainPanel.add(ColorDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 140, 190, 30));
+        MainPanel.add(ColorDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(485, 190, 190, 30));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel1.setText("Color :");
-        MainPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 140, 70, 30));
+        MainPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(372, 190, 100, 30));
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel2.setText("Customer :");
-        MainPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 125, 30));
+        MainPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 140, 110, 30));
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel3.setText("Design :");
-        MainPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 125, 30));
+        MainPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 190, 110, 30));
 
         jLabel4.setBackground(new java.awt.Color(255, 255, 255));
         jLabel4.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel4.setText("Job Order :");
-        MainPanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 125, 30));
+        MainPanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 90, 110, 30));
 
         jLabel6.setBackground(new java.awt.Color(255, 255, 255));
         jLabel6.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel6.setText("Date :");
-        MainPanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 90, 70, 30));
+        MainPanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(372, 140, 100, 30));
 
         JobOrder.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        MainPanel.add(JobOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 90, 195, 30));
+        MainPanel.add(JobOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 90, 190, 30));
 
         jPanel2.setBackground(new java.awt.Color(102, 102, 102));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Machine", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 24), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -347,8 +349,18 @@ public class JobOrderForm extends javax.swing.JFrame {
 
         dateSpinner.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         dateSpinner.setModel(new javax.swing.SpinnerDateModel());
-        MainPanel.add(dateSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 90, 190, 30));
+        MainPanel.add(dateSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(485, 140, 190, 30));
         dateSpinner.setEditor(new JSpinner.DateEditor(dateSpinner, "MM/dd/yyyy"));
+
+        jLabel10.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel10.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel10.setText("Batch No :");
+        MainPanel.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(372, 90, 100, 30));
+
+        BatchNo.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        MainPanel.add(BatchNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(485, 90, 190, 30));
 
         getContentPane().add(MainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 520));
 
@@ -529,30 +541,36 @@ public class JobOrderForm extends javax.swing.JFrame {
                             thisJob.setDrNumber(JobOrder.getText());
                             thisJob.setJobDate(get_date_from_spinner(dateSpinner));
                             
-                            JobHandler thisJobHandler = new JobHandler();
-                            if(WindowType == 1)
+                            if(this.BatchNo.getText().length() > 0)
                             {
-                                thisJob.setID(this.thisProcessOrder.getJobOrderID());
-                                thisJobHandler.UpdateJobOrder(thisJob);
-                            }
-                            else if(thisJobHandler.CheckIfThisJobOrderHasBeenAdded(thisJob))
-                            {
-                                int JobOrderID = thisJobHandler.AddNewJobOrder(thisJob);
-                                if(JobOrderID == - 1)
-                                    JOptionPane.showMessageDialog(null, "Job Order was not added.");
+                                thisJob.setBatchNo(BatchNo.getText());
+                                JobHandler thisJobHandler = new JobHandler();
+                                if(WindowType == 1)
+                                {
+                                    thisJob.setID(this.thisProcessOrder.getJobOrderID());
+                                    thisJobHandler.UpdateJobOrder(thisJob);
+                                }
+                                else if(thisJobHandler.CheckIfThisJobOrderHasBeenAdded(thisJob))
+                                {
+                                    int JobOrderID = thisJobHandler.AddNewJobOrder(thisJob);
+                                    if(JobOrderID == - 1)
+                                        JOptionPane.showMessageDialog(null, "Job Order was not added.");
+                                    else
+                                    {
+                                        thisJob.setID(JobOrderID);
+                                    //JOptionPane.showMessageDialog(null, "Job Order was successfully added.");
+                                        isSuccessful = true;
+                                    }
+                                }
                                 else
                                 {
-                                    thisJob.setID(JobOrderID);
-                                    //JOptionPane.showMessageDialog(null, "Job Order was successfully added.");
-                                    isSuccessful = true;
-                                }  
+                                    JOptionPane.showMessageDialog(null, "Job Order #"+ thisJob.getDrNumber()+" has already been added");
+                                JobOrder.setBackground(ErrorColor);
+                                }
                             }
                             else
-                            {
-                                JOptionPane.showMessageDialog(null, "Job Order #"+ thisJob.getDrNumber()+" has already been added");
-                                JobOrder.setBackground(ErrorColor);
-                            }
-
+                                JOptionPane.showMessageDialog(null, "Please check the Batch number.");  
+                                
                         }
                         else
                         JOptionPane.showMessageDialog(null, "Please check the Job Order number.");  
@@ -746,6 +764,7 @@ public class JobOrderForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField BatchNo;
     private javax.swing.JButton Cancel;
     private javax.swing.JLabel ChemicalHeader;
     private javax.swing.JComboBox<String> ColorDropDownList;
@@ -761,6 +780,7 @@ public class JobOrderForm extends javax.swing.JFrame {
     private javax.swing.JTextField Weight;
     private javax.swing.JSpinner dateSpinner;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
