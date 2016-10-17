@@ -404,8 +404,9 @@ public class AddResinForm extends javax.swing.JFrame {
             {
                 Object chemicalForResinProgram = ChemicalTable.getModel().getValueAt(i, 0);
                 Object gpl = ChemicalTable.getModel().getValueAt(i, 1);
+                chemicalId = chemicalHandler.GetChemicalIDFromChemicalName(chemicalForResinProgram.toString());
                 
-                if(chemicalForResinProgram != null && gpl != null)
+                if(chemicalId != -1 && gpl != null)
                 {
                     resinChemical.setResinProgramID(resinProgramId);
                     resinChemical.setChemicalID(chemicalId);
@@ -470,7 +471,7 @@ public class AddResinForm extends javax.swing.JFrame {
         String chemicalTextFieldValue = ChemicalTextfield.getText().trim().toUpperCase();
         if(chemicalTextFieldValue.length()> 0 && GPLTextfield.getText().length() > 0)
         {
-            if(AllChemical.indexOf(chemicalTextFieldValue) == -1)
+            if(AllChemical.indexOf(chemicalTextFieldValue) != -1)
             {
                 boolean validChemicalName = CheckIfChemicalisOnTable(chemicalTextFieldValue);
                 if(!validChemicalName)
