@@ -1425,7 +1425,7 @@ public class ColorTextControlSlipRepository {
         int JobOrderID = -1;
         try {
             conn = db.getConnection();
-            String query = "INSERT INTO job_order (DrNumber, MachineID, DesignID, ColorID, CustomerID, Date) VALUES (?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO job_order (DrNumber, MachineID, DesignID, ColorID, CustomerID, Date, BatchNo) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
             preparedStmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             int itemNumber = 1;
@@ -1435,6 +1435,7 @@ public class ColorTextControlSlipRepository {
             preparedStmt.setInt(itemNumber++ , newJobOrder.getColorID());
             preparedStmt.setInt(itemNumber++ , newJobOrder.getCustomerID());
             preparedStmt.setString(itemNumber++ , newJobOrder.getJobDate());
+            preparedStmt.setString(itemNumber++ , newJobOrder.getBatchNo());
             preparedStmt.execute();
             
             ResultSet generatedKeys = preparedStmt.getGeneratedKeys();
@@ -1463,7 +1464,7 @@ public class ColorTextControlSlipRepository {
         try
         {
             conn = db.getConnection();
-            String query = "UPDATE job_order SET DrNumber = ?, MachineID = ? , DesignID = ?, ColorID = ?, CustomerID = ?, Date = ? WHERE ID = ?";
+            String query = "UPDATE job_order SET DrNumber = ?, MachineID = ? , DesignID = ?, ColorID = ?, CustomerID = ?, Date = ?, BatchNo = ? WHERE ID = ?";
             
             int itemNumber = 1;
             preparedStmt = conn.prepareStatement(query);
@@ -1473,6 +1474,7 @@ public class ColorTextControlSlipRepository {
             preparedStmt.setInt(itemNumber++, thisJobOrder.getColorID());
             preparedStmt.setInt(itemNumber++, thisJobOrder.getCustomerID());
             preparedStmt.setString(itemNumber++, thisJobOrder.getJobDate());
+            preparedStmt.setString(itemNumber++, thisJobOrder.getBatchNo());
             preparedStmt.setInt(itemNumber++, thisJobOrder.getID());
             
             preparedStmt.executeUpdate();
@@ -1562,6 +1564,7 @@ public class ColorTextControlSlipRepository {
                 thisJobOrder.setColorID(rs.getInt("ColorID"));
                 thisJobOrder.setCustomerID(rs.getInt("CustomerID"));
                 thisJobOrder.setJobDate(rs.getString("Date"));
+                thisJobOrder.setBatchNo(rs.getString("BatchNo"));
             }
         }
         catch(SQLException ex){

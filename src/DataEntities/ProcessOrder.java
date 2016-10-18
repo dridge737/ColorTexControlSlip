@@ -63,8 +63,6 @@ public class ProcessOrder {
         this.VolumeH20 = VolumeH20;
     }
 
-    
-
     /**
      * @return the Roll
      */

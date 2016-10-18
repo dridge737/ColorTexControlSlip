@@ -103,7 +103,7 @@ public class PrintHandler {
         table.addCell(p);
         
         Phrase p2 = new Phrase();
-        p2.add("Batch #: ");
+        p2.add("Batch #: " + jobOrderDetails.getBatchNo());
         pCell = new PdfPCell(p2);
         table.addCell(p2);
         
@@ -246,7 +246,7 @@ public class PrintHandler {
         table.addCell(p);
         
         p2 = new Phrase();
-        p2.add("Batch #: ");
+        p2.add("Batch #: " + jobOrderDetails.getBatchNo());
         pCell = new PdfPCell(p2);
         table.addCell(p2);
         
@@ -422,12 +422,12 @@ public class PrintHandler {
         table.addCell(p);
         
         Phrase p2 = new Phrase();
-        p2.add("Batch NO.: ");
+        p2.add("Batch #: " + jobOrderDetails.getBatchNo());
         pCell = new PdfPCell(p2);
         table.addCell(p2);
         
         Phrase p3 = new Phrase();
-        p3.add("Job NO.: " + jobOrderDetails.getDrNumber());
+        p3.add("Job#/DR#: " + jobOrderDetails.getDrNumber());
         pCell = new PdfPCell(p3);
         table.addCell(p3);
         
@@ -486,18 +486,11 @@ public class PrintHandler {
         ArrayList<DyeingChemical> dyeingChemicalList = null;
         int rows = 0;
         
-        Collections.sort(dyeingProcessList, new Comparator<DyeingProcess>() {
-            @Override
-            public int compare(DyeingProcess o1, DyeingProcess o2) {
-                return o2.getdyeingProcessOrder().compareTo(o1.getdyeingProcessOrder());
-            }
-        });
-        
         for(int x=0; x<dyeingProcessList.size(); x++)
         {
             if(rows%30 != 0 || rows == 0){
                 if (dyeingProcessList.get(x).getdyeingProcessOrder().matches("[0-9]+")){
-                    table.addCell(RomanNumber.toRoman(x+1) + ". " + dyeingProcessList.get(x).getDyeingProcessName());
+                    table.addCell(RomanNumber.toRoman(Integer.parseInt(dyeingProcessList.get(x).getdyeingProcessOrder())) + ". " + dyeingProcessList.get(x).getDyeingProcessName());
                     table.addCell(" ");
                     table.addCell(" ");
                     table.addCell(" ");
@@ -577,7 +570,7 @@ public class PrintHandler {
                 table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
                 
                 if (dyeingProcessList.get(x).getdyeingProcessOrder().contains("[a-zA-Z]+") == false){
-                    table.addCell(RomanNumber.toRoman(x+1) + ". " + dyeingProcessList.get(x).getDyeingProcessName());
+                    table.addCell(RomanNumber.toRoman(Integer.parseInt(dyeingProcessList.get(x).getdyeingProcessOrder())) + ". " + dyeingProcessList.get(x).getDyeingProcessName());
                     table.addCell(" ");
                     table.addCell(" ");
                     table.addCell(" ");
@@ -723,12 +716,12 @@ public class PrintHandler {
         table.addCell(p);
         
         Phrase p2 = new Phrase();
-        p2.add("Batch NO.: ");
+        p2.add("Batch #: " + jobOrderDetails.getBatchNo());
         pCell = new PdfPCell(p2);
         table.addCell(p2);
         
         Phrase p3 = new Phrase();
-        p3.add("Job NO.: " + jobOrderDetails.getDrNumber());
+        p3.add("Job#/DR#: " + jobOrderDetails.getDrNumber());
         pCell = new PdfPCell(p3);
         table.addCell(p3);
         
@@ -811,12 +804,12 @@ public class PrintHandler {
         table.addCell(p);
         
         Phrase p2 = new Phrase();
-        p2.add("Batch NO.: ");
+        p2.add("Batch #: " + jobOrderDetails.getBatchNo());
         pCell = new PdfPCell(p2);
         table.addCell(p2);
         
         Phrase p3 = new Phrase();
-        p3.add("Job NO.: " + jobOrderDetails.getDrNumber());
+        p3.add("Job#/DR#: " + jobOrderDetails.getDrNumber());
         pCell = new PdfPCell(p3);
         table.addCell(p3);
         
@@ -841,7 +834,7 @@ public class PrintHandler {
         table.addCell(p7);
         
         Phrase p8 = new Phrase();
-        p7.add("Vol. of Water: " + volume);
+        p8.add("Vol. of Water: " + volume);
         pCell = new PdfPCell(p8);
         table.addCell(p8);
         table.addCell(filler);
