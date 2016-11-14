@@ -1414,6 +1414,103 @@ public class ColorTextControlSlipRepository {
     }
     //END DYEING PROGRAM REPO METHODS
     
+    /************************************************************************************************/
+/******************************* FOR Process Order ****************************************************/
+    
+    public int AddProcessOrder(ProcessOrder thisProcessOrder) 
+    {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean added = false;
+        int ProcessOrder = -1;
+        try {
+            conn = db.getConnection();
+            String query = "INSERT INTO process_order (JobOrderID, Weight, VolH20, RollLoad, Roll, DyeingProgramID, ResinProgramID) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+            preparedStmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            preparedStmt.setInt(1, thisProcessOrder.getJobOrderID());
+            preparedStmt.setFloat(2, thisProcessOrder.getWeight());
+            preparedStmt.setFloat(3, thisProcessOrder.getVolumeH20());
+            preparedStmt.setString(4, thisProcessOrder.getRollLoad());
+            preparedStmt.setFloat(5, thisProcessOrder.getRoll());
+            preparedStmt.setInt(6, thisProcessOrder.getDyeingProgramID());
+            preparedStmt.setInt(7, thisProcessOrder.getResinProgramID());
+            
+            preparedStmt.execute();
+            ResultSet generatedKeys = preparedStmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                ProcessOrder = generatedKeys.getInt(1);
+            }
+            else {
+                throw new SQLException("Creating user failed, no ID obtained.");
+            }
+            
+        } 
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, preparedStmt);
+        return ProcessOrder;
+    }
+
+    public boolean UpdateProcessOrderByProcessOrderId(ProcessOrder thisProcessOrder) 
+    {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean isSuccessful = false;
+        try
+        {
+            conn = db.getConnection();
+            String query = "UPDATE process_order SET JobOrderID = ? , Weight = ?, VolH20 = ?, RollLoad = ? , Roll = ? , DyeingProgramID = ?, ResinProgramID = ? WHERE ID = ?";
+
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setInt(1, thisProcessOrder.getJobOrderID());
+            preparedStmt.setFloat(2, thisProcessOrder.getWeight());
+            preparedStmt.setFloat(3, thisProcessOrder.getVolumeH20());
+            preparedStmt.setString(4, thisProcessOrder.getRollLoad());
+            preparedStmt.setFloat(5, thisProcessOrder.getRoll());
+            preparedStmt.setInt(6, thisProcessOrder.getDyeingProgramID());
+            preparedStmt.setInt(7, thisProcessOrder.getResinProgramID());
+            preparedStmt.setInt(8, thisProcessOrder.getID());
+            preparedStmt.executeUpdate();
+            isSuccessful = true;
+            
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, preparedStmt);
+        return isSuccessful;
+    }
+
+    public boolean DeleteProcessOrderByProcessOrderId(int ProcessOrderID) {
+    
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean isSuccessful = false;
+        try
+        {
+            conn = db.getConnection();
+            String query = "DELETE FROM process_order WHERE ID = ?";
+
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setInt(1, ProcessOrderID);
+            preparedStmt.executeUpdate();
+            isSuccessful = true;
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, preparedStmt);
+        return isSuccessful;
+    }
+    
 /************************************************************************************************/
 /******************************* FOR JOB ORDER ***************************************************/
     
@@ -1425,7 +1522,20 @@ public class ColorTextControlSlipRepository {
         int JobOrderID = -1;
         try {
             conn = db.getConnection();
-            String query = "INSERT INTO job_order (DrNumber, MachineID, DesignID, ColorID, CustomerID, Date, BatchNo) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO job_order (DrNumber, "
+                    + "MachineID, "
+                    + "DesignID, "
+                    + "ColorID, "
+                    + "CustomerID, "
+                    + "Date, "
+                    + "BatchNo, "
+                    + "Weight, "
+                    + "VolH20, "
+                    + "RollLoad, "
+                    + "Roll, "
+                    + "DyeingProgramID, "
+                    //                         1  2  3  4  5  6  7  8  9  10 11 12 13
+                    + "ResinProgramID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             preparedStmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             int itemNumber = 1;
@@ -1436,6 +1546,12 @@ public class ColorTextControlSlipRepository {
             preparedStmt.setInt(itemNumber++ , newJobOrder.getCustomerID());
             preparedStmt.setString(itemNumber++ , newJobOrder.getJobDate());
             preparedStmt.setString(itemNumber++ , newJobOrder.getBatchNo());
+            preparedStmt.setFloat(itemNumber++, newJobOrder.getWeight());
+            preparedStmt.setFloat(itemNumber++, newJobOrder.getVolumeH20());
+            preparedStmt.setString(itemNumber++, newJobOrder.getRollLoad());
+            preparedStmt.setFloat(itemNumber++, newJobOrder.getRoll());
+            preparedStmt.setInt(itemNumber++, newJobOrder.getDyeingProgramID());
+            preparedStmt.setInt(itemNumber++, newJobOrder.getResinProgramID());
             preparedStmt.execute();
             
             ResultSet generatedKeys = preparedStmt.getGeneratedKeys();
@@ -1565,6 +1681,12 @@ public class ColorTextControlSlipRepository {
                 thisJobOrder.setCustomerID(rs.getInt("CustomerID"));
                 thisJobOrder.setJobDate(rs.getString("Date"));
                 thisJobOrder.setBatchNo(rs.getString("BatchNo"));
+                thisJobOrder.setWeight(rs.getFloat("Weight"));
+                thisJobOrder.setVolumeH20(rs.getFloat("VolH2O"));
+                thisJobOrder.setRollLoad(rs.getString("RollLoad"));
+                thisJobOrder.setRoll(rs.getFloat("Roll"));
+                thisJobOrder.setDyeingProgramID(rs.getInt("DyeingProgramID"));
+                thisJobOrder.setResinProgramID(rs.getInt("ResinProgramID"));
             }
         }
         catch(SQLException ex){
@@ -1802,103 +1924,7 @@ public class ColorTextControlSlipRepository {
     
     
 
-/************************************************************************************************/
-/******************************* FOR Process Order ****************************************************/
-    
-    public int AddProcessOrder(ProcessOrder thisProcessOrder) 
-    {
-        DBConnection db = new DBConnection();
-        Connection conn = null;
-        PreparedStatement preparedStmt = null;
-        boolean added = false;
-        int ProcessOrder = -1;
-        try {
-            conn = db.getConnection();
-            String query = "INSERT INTO process_order (JobOrderID, Weight, VolH20, RollLoad, Roll, DyeingProgramID, ResinProgramID) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-            preparedStmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            preparedStmt.setInt(1, thisProcessOrder.getJobOrderID());
-            preparedStmt.setFloat(2, thisProcessOrder.getWeight());
-            preparedStmt.setFloat(3, thisProcessOrder.getVolumeH20());
-            preparedStmt.setString(4, thisProcessOrder.getRollLoad());
-            preparedStmt.setFloat(5, thisProcessOrder.getRoll());
-            preparedStmt.setInt(6, thisProcessOrder.getDyeingProgramID());
-            preparedStmt.setInt(7, thisProcessOrder.getResinProgramID());
-            
-            preparedStmt.execute();
-            ResultSet generatedKeys = preparedStmt.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                ProcessOrder = generatedKeys.getInt(1);
-            }
-            else {
-                throw new SQLException("Creating user failed, no ID obtained.");
-            }
-            
-        } 
-        catch (SQLException ex) {
-            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        this.closeConn(conn, preparedStmt);
-        return ProcessOrder;
-    }
-
-    public boolean UpdateProcessOrderByProcessOrderId(ProcessOrder thisProcessOrder) 
-    {
-        DBConnection db = new DBConnection();
-        Connection conn = null;
-        PreparedStatement preparedStmt = null;
-        boolean isSuccessful = false;
-        try
-        {
-            conn = db.getConnection();
-            String query = "UPDATE process_order SET JobOrderID = ? , Weight = ?, VolH20 = ?, RollLoad = ? , Roll = ? , DyeingProgramID = ?, ResinProgramID = ? WHERE ID = ?";
-
-            preparedStmt = conn.prepareStatement(query);
-            preparedStmt.setInt(1, thisProcessOrder.getJobOrderID());
-            preparedStmt.setFloat(2, thisProcessOrder.getWeight());
-            preparedStmt.setFloat(3, thisProcessOrder.getVolumeH20());
-            preparedStmt.setString(4, thisProcessOrder.getRollLoad());
-            preparedStmt.setFloat(5, thisProcessOrder.getRoll());
-            preparedStmt.setInt(6, thisProcessOrder.getDyeingProgramID());
-            preparedStmt.setInt(7, thisProcessOrder.getResinProgramID());
-            preparedStmt.setInt(8, thisProcessOrder.getID());
-            preparedStmt.executeUpdate();
-            isSuccessful = true;
-            
-        }
-        catch (SQLException ex) {
-            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        this.closeConn(conn, preparedStmt);
-        return isSuccessful;
-    }
-
-    public boolean DeleteProcessOrderByProcessOrderId(int ProcessOrderID) {
-    
-        DBConnection db = new DBConnection();
-        Connection conn = null;
-        PreparedStatement preparedStmt = null;
-        boolean isSuccessful = false;
-        try
-        {
-            conn = db.getConnection();
-            String query = "DELETE FROM process_order WHERE ID = ?";
-
-            preparedStmt = conn.prepareStatement(query);
-            preparedStmt.setInt(1, ProcessOrderID);
-            preparedStmt.executeUpdate();
-            isSuccessful = true;
-        }
-        catch (SQLException ex) {
-            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        this.closeConn(conn, preparedStmt);
-        return isSuccessful;
-    }
-    
 /************************************************************************************************/
 /******************************* FOR Resin Chemical ****************************************************/ 
     public int GetResinChemicalIdByChemicalId(int resinChemical, int resinProgramId)

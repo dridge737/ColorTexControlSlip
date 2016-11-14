@@ -6,6 +6,7 @@
 package Forms;
 
 import DataEntities.DyeingProgram;
+import DataEntities.JobOrder;
 import DataEntities.ProcessOrder;
 import Handlers.DyeingProgramHandler;
 import java.awt.Color;
@@ -25,7 +26,8 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
 
     DefaultTableModel model = new DefaultTableModel();
     DyeingProgram thisDyeingProgram = new DyeingProgram();
-    ProcessOrder thisProcessOrder = new ProcessOrder();
+    //ProcessOrder thisProcessOrder = new ProcessOrder();
+    private JobOrder thisJob = new JobOrder();
     int WindowType = 0;
     /**
      * Creates new form ViewResinProgram
@@ -36,11 +38,11 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         GetUpdatedTable();
     }
     
-    public ViewDyeingProgram(ProcessOrder ProcessToBeAdded) {
+    public ViewDyeingProgram(JobOrder currentJob) {
         initComponents();
         SetToCenter();
         GetUpdatedTable();
-        thisProcessOrder = ProcessToBeAdded;
+        thisJob = currentJob;
         Header.setText("Dyeing Control Slip : Page 2/6");
         BackBut.setText("Back");
         SelectBut.setText("Next");
@@ -248,7 +250,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
             DyeingForm thisDyeingForm;
             if(this.WindowType == 1)
             {
-                thisDyeingForm = new DyeingForm(DyeingName, thisProcessOrder);
+                thisDyeingForm = new DyeingForm(DyeingName, getThisJob());
             }
             else
                 thisDyeingForm = new DyeingForm(DyeingName);
@@ -261,7 +263,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(WindowType == 1)
         {
-            JobOrderForm newJobOrderForm = new JobOrderForm(this.thisProcessOrder);
+            JobOrderForm newJobOrderForm = new JobOrderForm(getThisJob());
             newJobOrderForm.setVisible(true);
         }
         this.dispose();
@@ -336,16 +338,18 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     /**
-     * @return the thisProcessOrder
+     * @return the thisJob
      */
-    public ProcessOrder getThisProcessOrder() {
-        return thisProcessOrder;
+    public JobOrder getThisJob() {
+        return thisJob;
     }
 
     /**
-     * @param thisProcessOrder the thisProcessOrder to set
+     * @param thisJob the thisJob to set
      */
-    public void setThisProcessOrder(ProcessOrder thisProcessOrder) {
-        this.thisProcessOrder = thisProcessOrder;
+    public void setThisJob(JobOrder thisJob) {
+        this.thisJob = thisJob;
     }
+
+   
 }

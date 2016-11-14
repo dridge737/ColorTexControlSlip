@@ -45,6 +45,7 @@ public class ReviewForm extends javax.swing.JFrame {
     ChemicalColor thisColor = new ChemicalColor();
     JobOrder thisJob = new JobOrder();
     ProcessOrder thisProcessOrder = new ProcessOrder();
+    
     DyeingProgram thisDyeingProgram = new DyeingProgram();
     //int jobOrderType = 1;
     /**
@@ -60,10 +61,9 @@ public class ReviewForm extends javax.swing.JFrame {
         populateLiquoRatioDropDown();
     }
     
-    public ReviewForm(ProcessOrder setThisProcessOrder, int JobOrderType)
+    public ReviewForm(JobOrder thisJob, int JobOrderType)
     {
         this();
-        thisProcessOrder = setThisProcessOrder;
         SetJobOrderDetails();
         SetProcessOrderDetails();
         SetDropDownDetails();
@@ -87,16 +87,16 @@ public class ReviewForm extends javax.swing.JFrame {
     private void SetDyeingProgramName()
     {
          thisDyeingProgram = 
-                 new DyeingProgramHandler().GetDyeingProgramDetailsById(thisProcessOrder.getDyeingProgramID());
+                 new DyeingProgramHandler().GetDyeingProgramDetailsById(thisJob.getDyeingProgramID());
          DyeingProgramText.setText(thisDyeingProgram.getDyeingProgramName());
          
     }
     private void SetResinProgramName()
     {
-        if(thisProcessOrder.getResinProgramID() > 0)
+        if(thisJob.getResinProgramID() > 0)
         {
             String ResinProgramName = 
-                new ResinProgramHandler().GetResinProgramNameFromResinProgramID(thisProcessOrder.getResinProgramID());            
+                new ResinProgramHandler().GetResinProgramNameFromResinProgramID(thisJob.getResinProgramID());            
             ResinProgramText.setText(ResinProgramName);
         }
         
@@ -104,9 +104,9 @@ public class ReviewForm extends javax.swing.JFrame {
     
      private void SetJobOrderDetails()
     {
-        thisJob.setID(thisProcessOrder.getJobOrderID());
-        JobHandler JobOrderHandler = new JobHandler();
-        thisJob = JobOrderHandler.GetJobOrderDetailsFromJobId(thisJob.getID());
+        //thisJob.setID(thisProcessOrder.getJobOrderID());
+        //JobHandler JobOrderHandler = new JobHandler();
+        //thisJob = JobOrderHandler.GetJobOrderDetailsFromJobId(thisJob.getID());
         JobOrder.setText(thisJob.getDrNumber());
         
         //Set Date to 
@@ -160,9 +160,9 @@ public class ReviewForm extends javax.swing.JFrame {
     
     private void SetProcessOrderDetails()
     {
-        Weight.setText(Float.toString(thisProcessOrder.getWeight()));
-        VolumeTextField.setText(Float.toString(thisProcessOrder.getVolumeH20()));
-        RollLoad.setText(thisProcessOrder.getRollLoad());
+        Weight.setText(Float.toString(thisJob.getWeight()));
+        VolumeTextField.setText(Float.toString(thisJob.getVolumeH20()));
+        RollLoad.setText(thisJob.getRollLoad());
     }
     
     /**
@@ -431,13 +431,13 @@ public class ReviewForm extends javax.swing.JFrame {
 
     private void CancelButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButActionPerformed
         // TODO add your handling code here:
-        if(thisProcessOrder.getResinProgramID() > 0)
+        if(thisJob.getResinProgramID() > 0)
         {
-            new AddResinForm(thisProcessOrder.getResinProgramID(), thisProcessOrder).setVisible(true);
+            new AddResinForm(thisJob).setVisible(true);
         }
         else
         {
-            new DyeingForm(thisProcessOrder.getDyeingProgramID(),  thisProcessOrder).setVisible(true);
+            new DyeingForm(thisJob).setVisible(true);
         }
         this.dispose();
     }//GEN-LAST:event_CancelButActionPerformed

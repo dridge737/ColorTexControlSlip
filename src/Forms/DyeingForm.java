@@ -9,6 +9,7 @@ import DataEntities.DyeingProcess;
 import java.awt.Component;
 import java.util.ArrayList;
 import DataEntities.DyeingProgram;
+import DataEntities.JobOrder;
 import DataEntities.ProcessOrder;
 import Forms.HelpForm.ProcessPanel;
 import Handlers.ChemicalHandler;
@@ -38,7 +39,7 @@ public class DyeingForm extends javax.swing.JFrame {
     private int NumberOfProcessTabs = 0;
     DyeingProgram thisDyeingProgram = new DyeingProgram();
     private int WindowType = 0;
-    ProcessOrder thisProcessOrder;
+    JobOrder thisJob;
     Color ColorError = new Color(232,228,42);
     
     /**
@@ -47,7 +48,7 @@ public class DyeingForm extends javax.swing.JFrame {
     public DyeingForm() {
         initComponents();
         WindowType = 1;
-        Process.add(new ProcessPanel(), "Process 1", NumberOfProcessTabs++);
+        GUITabbedPaneProcess.add(new ProcessPanel(), "Process 1", NumberOfProcessTabs++);
         setWindowType();
        
         //this.jPanel2.add(ThisPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 80, 780, 550));
@@ -63,21 +64,21 @@ public class DyeingForm extends javax.swing.JFrame {
         setWindowType();
     }
     //For Job Order Form
-    public DyeingForm(String DyeingProgramName,  ProcessOrder ThisProcessOrder)
+    public DyeingForm(String DyeingProgramName,  JobOrder currentJob)
     {
         initComponents();
-        thisProcessOrder = ThisProcessOrder;
+        thisJob = currentJob;
         WindowType = 3;
         SetDyeingProgramFromProgramName(DyeingProgramName);
         setWindowType();
     }
     
-    public DyeingForm(int DyeingProgramID, ProcessOrder ThisProcessOrder)
+    public DyeingForm(JobOrder currentJob)
     {
         initComponents();
         WindowType = 3;
-        thisProcessOrder = ThisProcessOrder;
-        this.SetDyeingProgramFromProgramID(DyeingProgramID);
+        thisJob = currentJob;
+        this.SetDyeingProgramFromProgramID(currentJob.getDyeingProgramID());
         setWindowType();
     }
     
@@ -103,8 +104,8 @@ public class DyeingForm extends javax.swing.JFrame {
             ProgramNameText.setEnabled(false);
         }
         
-        Process.add(new JPanel(), "+", NumberOfProcessTabs++);
-        Process.addChangeListener(changeListener);
+        GUITabbedPaneProcess.add(new JPanel(), "+", NumberOfProcessTabs++);
+        GUITabbedPaneProcess.addChangeListener(changeListener);
     }
      
     public void SetToCenter()
@@ -184,7 +185,7 @@ public class DyeingForm extends javax.swing.JFrame {
             this_panel = new ProcessPanel(thisProcess);
         
         //Add the Tab to the JtabbedPane
-        Process.add(this_panel, "Process " + String.valueOf(NumberOfProcessTabs+1),
+        GUITabbedPaneProcess.add(this_panel, "Process " + String.valueOf(NumberOfProcessTabs+1),
                     NumberOfProcessTabs);
         NumberOfProcessTabs++;
         
@@ -192,16 +193,16 @@ public class DyeingForm extends javax.swing.JFrame {
     private void addNewTabProcess() 
     {
         int index = NumberOfProcessTabs - 1;
-        if (Process.getSelectedIndex() == index) { /* if click new tab */
+        if (GUITabbedPaneProcess.getSelectedIndex() == index) { /* if click new tab */
            
             /* add new tab */
             JPanel this_panel = new ProcessPanel();
-            Process.add(this_panel, "Process " + String.valueOf(NumberOfProcessTabs),
+            GUITabbedPaneProcess.add(this_panel, "Process " + String.valueOf(NumberOfProcessTabs),
                     index);
             /* set tab is custom tab */
-            Process.removeChangeListener(changeListener);
-            Process.setSelectedIndex(index);
-            Process.addChangeListener(changeListener);
+            GUITabbedPaneProcess.removeChangeListener(changeListener);
+            GUITabbedPaneProcess.setSelectedIndex(index);
+            GUITabbedPaneProcess.addChangeListener(changeListener);
             NumberOfProcessTabs++;
         }
     }
@@ -219,7 +220,7 @@ public class DyeingForm extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         Header = new javax.swing.JLabel();
         SaveBut = new javax.swing.JButton();
-        Process = new javax.swing.JTabbedPane();
+        GUITabbedPaneProcess = new javax.swing.JTabbedPane();
         ProgramNameLabel = new javax.swing.JLabel();
         ProgramNameText = new javax.swing.JTextField();
         CancelBut = new javax.swing.JButton();
@@ -248,9 +249,9 @@ public class DyeingForm extends javax.swing.JFrame {
         });
         jPanel2.add(SaveBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 650, 280, 40));
 
-        Process.setBackground(new java.awt.Color(255, 255, 255));
-        Process.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        jPanel2.add(Process, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 770, 500));
+        GUITabbedPaneProcess.setBackground(new java.awt.Color(255, 255, 255));
+        GUITabbedPaneProcess.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        jPanel2.add(GUITabbedPaneProcess, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 770, 500));
 
         ProgramNameLabel.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         ProgramNameLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -288,7 +289,7 @@ public class DyeingForm extends javax.swing.JFrame {
             
             if(DyeingProgramID != -1)
             {
-                Component[] this_pane = this.Process.getComponents();
+                Component[] this_pane = this.GUITabbedPaneProcess.getComponents();
                 int ProcessOrder = 1;
                 
                 for (Component c : this_pane)
@@ -320,7 +321,7 @@ public class DyeingForm extends javax.swing.JFrame {
         //Returns True If Update is Successful then proceed to update other
         if(thisDyeingProgramHandler.UpdateDyeingProgram(thisDyeingProgram))
         {
-            Component[] this_pane = this.Process.getComponents();
+            Component[] this_pane = this.GUITabbedPaneProcess.getComponents();
             int ProcessOrder = 1;
             
             for (Component c : this_pane) 
@@ -331,7 +332,9 @@ public class DyeingForm extends javax.swing.JFrame {
                 }
             }
             SuccessfullyUpdated = true;
+            thisJob.setDyeingProgramID(thisDyeingProgram.getDyeingProgramId());
         } 
+        
         return SuccessfullyUpdated;
     }
     private void SaveButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButActionPerformed
@@ -361,16 +364,15 @@ public class DyeingForm extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Successfully updated Dyeing Program : "+thisDyeingProgram.getDyeingProgramName());
                     break;
                 case 3:
-                    thisProcessOrder.setDyeingProgramID(thisDyeingProgram.getDyeingProgramId());
                     if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Do you want to include a Resin Program with this Job?","Add Resin Program?", JOptionPane.YES_NO_OPTION))
                     {//Show the Resin Form
-                        ViewResinProgram thisResinProgram = new ViewResinProgram(thisProcessOrder);
+                        ViewResinProgram thisResinProgram = new ViewResinProgram(thisJob);
                         thisResinProgram.setVisible(true);
                     }
                     else
                     {
                         //thisProcessOrder.setResinProgramID(0);
-                        ReviewForm thisReviewForm = new ReviewForm(this.thisProcessOrder, 1);
+                        ReviewForm thisReviewForm = new ReviewForm(thisJob, 1);
                         //Show Review Form and Ask to print
                         thisReviewForm.setVisible(true);
                         //ProcessOrderHandler thisProcess = new ProcessOrderHandler();
@@ -386,7 +388,7 @@ public class DyeingForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(this.WindowType == 3)
         {
-            ViewDyeingProgram chooseDyeingProgram = new ViewDyeingProgram(this.thisProcessOrder);
+            ViewDyeingProgram chooseDyeingProgram = new ViewDyeingProgram(thisJob);
             chooseDyeingProgram.setVisible(true);
             this.dispose();
         }
@@ -562,8 +564,8 @@ public class DyeingForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CancelBut;
+    private javax.swing.JTabbedPane GUITabbedPaneProcess;
     private javax.swing.JLabel Header;
-    private javax.swing.JTabbedPane Process;
     private javax.swing.JLabel ProgramNameLabel;
     private javax.swing.JTextField ProgramNameText;
     private javax.swing.JButton SaveBut;

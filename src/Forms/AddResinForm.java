@@ -20,6 +20,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import DataEntities.Chemical;
+import DataEntities.JobOrder;
 import DataEntities.ProcessOrder;
 import Forms.HelpForm.ButtonColumn;
 import Forms.HelpForm.auto_complete;
@@ -43,7 +44,8 @@ public class AddResinForm extends javax.swing.JFrame {
     ArrayList<ResinChemical> resinChemicalList = new ArrayList<ResinChemical>();
     ResinProgram resinProgram = new ResinProgram();
     DefaultTableModel model = new DefaultTableModel();
-    ProcessOrder thisProcessOrder = new ProcessOrder();
+    //ProcessOrder thisProcessOrder = new ProcessOrder();
+    JobOrder thisJob = new JobOrder();
     //Chemical List to see if it is possible to add chemical to Chem Table
     ArrayList<String> AllChemical = new ArrayList<String>();
     //Chemical List to see if the Chemical has already been added to the table.
@@ -70,25 +72,25 @@ public class AddResinForm extends javax.swing.JFrame {
         this.setLocation(x,y);
     }
     
-    public AddResinForm(String ResinProgramName, ProcessOrder currentProcessOrder)
+    public AddResinForm(JobOrder currentJob)
     {
         this();
-        InitializeForControlSlip(ResinProgramName, currentProcessOrder);
+        String ResinProgramName = new ResinProgramHandler().GetResinProgramNameFromResinProgramID(currentJob.getResinProgramID());
+        InitializeWindowForControlSlip(ResinProgramName, currentJob);
         ResinProcessName.setEnabled(false);
     }
     
-    public AddResinForm(int ResinProgramId , ProcessOrder currentProcessOrder)
+    public AddResinForm(String ResinProgramName , JobOrder currentJob)
     {
         this();
-        String ResinProgramName = new ResinProgramHandler().GetResinProgramNameFromResinProgramID(ResinProgramId);
-        InitializeForControlSlip(ResinProgramName, currentProcessOrder);
+        InitializeWindowForControlSlip(ResinProgramName, currentJob);
         ResinProcessName.setEnabled(false);
     }
     
-    public void InitializeForControlSlip(String ResinProgramName, ProcessOrder currentProcessOrder)
+    public void InitializeWindowForControlSlip(String ResinProgramName, JobOrder thisJobOrder)
     {
         ResinProcessName.setText(ResinProgramName);
-        thisProcessOrder = currentProcessOrder;
+        thisJob = thisJobOrder;
         Header.setText("Dyeing Control Slip : Page 5/6");
         this.SaveBut.setText("Next");
         this.CancelBut.setText("Back");
@@ -333,7 +335,7 @@ public class AddResinForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(CancelBut.getText().equals("Back"))
         {
-            new ViewResinProgram(thisProcessOrder).setVisible(true);
+            new ViewResinProgram(thisJob).setVisible(true);
             this.dispose();
         }
         else
@@ -352,8 +354,8 @@ public class AddResinForm extends javax.swing.JFrame {
             if(CheckIfResinInputIsReady()){
                 ResinProgram thisResinProgram = new ResinProgram();
                 ResinProgramHandler thisResinProgramHandler = new ResinProgramHandler();
-                thisProcessOrder.setResinProgramID(thisResinProgramHandler.GetResinProgramIDFromResinProgramName( this.ResinProcessName.getText() ) );
-                ReviewForm thisForm = new ReviewForm(thisProcessOrder, 2);
+                thisJob.setResinProgramID(thisResinProgramHandler.GetResinProgramIDFromResinProgramName( this.ResinProcessName.getText() ) );
+                ReviewForm thisForm = new ReviewForm(thisJob, 2);
                 thisForm.setVisible(true);
                 this.dispose();
             }

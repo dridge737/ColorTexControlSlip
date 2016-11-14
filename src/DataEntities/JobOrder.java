@@ -20,6 +20,12 @@ public class JobOrder {
     private int CustomerID;
     private String jobDate;
     private String BatchNo;
+    private float Weight;
+    private float VolumeH20;
+    private String RollLoad;
+    private float Roll;
+    private int DyeingProgramID;
+    private int ResinProgramID;
 
     /**
      * @return the ID
@@ -46,7 +52,7 @@ public class JobOrder {
      * @param DrNumber the DrNumber to set
      */
     public void setDrNumber(String DrNumber) {
-        this.DrNumber = DrNumber;
+        this.DrNumber = DrNumber.toUpperCase();
     }
 
     /**
@@ -131,6 +137,90 @@ public class JobOrder {
      */
     public void setBatchNo(String BatchNo) {
         this.BatchNo = BatchNo;
+    }
+
+    /**
+     * @return the Weight
+     */
+    public float getWeight() {
+        return Weight;
+    }
+
+    /**
+     * @param Weight the Weight to set
+     */
+    public void setWeight(float Weight) {
+        this.Weight = Weight;
+    }
+
+    /**
+     * @return the VolumeH20
+     */
+    public float getVolumeH20() {
+        return VolumeH20;
+    }
+
+    /**
+     * @param VolumeH20 the VolumeH20 to set
+     */
+    public void setVolumeH20(float VolumeH20) {
+        this.VolumeH20 = VolumeH20;
+    }
+
+    /**
+     * @return the RollLoad
+     */
+    public String getRollLoad() {
+        return RollLoad;
+    }
+
+    /**
+     * @param RollLoad the RollLoad to set
+     */
+    public void setRollLoad(String RollLoad) {
+        this.RollLoad = RollLoad;
+    }
+
+    /**
+     * @return the Roll
+     */
+    public float getRoll() {
+        return Roll;
+    }
+
+    /**
+     * @param Roll the Roll to set
+     */
+    public void setRoll(float Roll) {
+        this.Roll = Roll;
+    }
+
+    /**
+     * @return the DyeingProgramID
+     */
+    public int getDyeingProgramID() {
+        return DyeingProgramID;
+    }
+
+    /**
+     * @param DyeingProgramID the DyeingProgramID to set
+     */
+    public void setDyeingProgramID(int DyeingProgramID) {
+        this.DyeingProgramID = DyeingProgramID;
+    }
+
+    /**
+     * @return the ResinProgramID
+     */
+    public int getResinProgramID() {
+        return ResinProgramID;
+    }
+
+    /**
+     * @param ResinProgramID the ResinProgramID to set
+     */
+    public void setResinProgramID(int ResinProgramID) {
+        this.ResinProgramID = ResinProgramID;
     }
 
 }

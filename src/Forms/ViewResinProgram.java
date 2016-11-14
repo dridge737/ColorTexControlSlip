@@ -5,6 +5,7 @@
  */
 package Forms;
 
+import DataEntities.JobOrder;
 import DataEntities.ProcessOrder;
 import DataEntities.ResinProgram;
 import Handlers.ColorHandler;
@@ -28,7 +29,8 @@ public class ViewResinProgram extends javax.swing.JFrame {
 
     DefaultTableModel model = new DefaultTableModel();
     ResinProgram thisResin = new ResinProgram();
-    ProcessOrder thisProcessOrder;
+    //ProcessOrder thisProcessOrder;
+    JobOrder thisJob;
     /**
      * Creates new form ViewResinProgram
      */
@@ -39,9 +41,9 @@ public class ViewResinProgram extends javax.swing.JFrame {
     }
     
     
-    public ViewResinProgram(ProcessOrder currentProcessOrder) {
+    public ViewResinProgram(JobOrder currentJob) {
         this();
-        thisProcessOrder = currentProcessOrder;
+        thisJob = currentJob;
         SelectBut1.setText("Next");
         DeleteBut.setVisible(false);
         Header.setText("Dyeing Control Slip : Page 4/6");
@@ -282,7 +284,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
             {
                 if(SelectBut1.getText().equals("Next"))
                 {
-                    new AddResinForm(resinProgramName, this.thisProcessOrder).setVisible(true);
+                    new AddResinForm(resinProgramName, thisJob).setVisible(true);
                 }
                 else
                     new ViewResinProgramChemicals(resinProgramName).setVisible(true);
@@ -301,7 +303,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(BackBut.getText().equals("Back"))
         {
-            DyeingForm thisDyeingForm = new DyeingForm( thisProcessOrder.getDyeingProgramID(), thisProcessOrder);
+            DyeingForm thisDyeingForm = new DyeingForm(thisJob);
             thisDyeingForm.setVisible(true);
         }
         this.dispose();

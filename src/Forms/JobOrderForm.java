@@ -52,7 +52,7 @@ public class JobOrderForm extends javax.swing.JFrame {
     Customer thisCustomer = new Customer();
     ChemicalColor thisColor = new ChemicalColor();
     JobOrder thisJob = new JobOrder();
-    ProcessOrder thisProcessOrder = new ProcessOrder();
+    //ProcessOrder thisProcessOrder = new ProcessOrder();
     private final static int POINTS_PER_INCH = 72;
     private int WindowType = 0;
     private Color ErrorColor = new Color(232,228,42);
@@ -78,20 +78,23 @@ public class JobOrderForm extends javax.swing.JFrame {
         this.setLocation(x,y);
     }
     
-    public JobOrderForm(ProcessOrder ProcessOrder) {
+    public JobOrderForm(JobOrder thisJobOrder) {
         this();
-        thisProcessOrder = ProcessOrder;
+        thisJob = thisJobOrder;
+        //thisProcessOrder = ProcessOrder;
         SetJobOrderDetails();
-        SetProcessOrderDetails();
+        //SetProcessOrderDetails();
         SetDropDownDetails();
         WindowType = 1;
     }
     
+    //private void SetProcessOrderDetails(){}
+    
     private void SetJobOrderDetails()
     {
-        thisJob.setID(thisProcessOrder.getJobOrderID());
-        JobHandler JobOrderHandler = new JobHandler();
-        thisJob = JobOrderHandler.GetJobOrderDetailsFromJobId(thisJob.getID());
+        //thisJob.setID(thisProcessOrder.getJobOrderID());
+        //JobHandler JobOrderHandler = new JobHandler();
+        //thisJob = JobOrderHandler.GetJobOrderDetailsFromJobId(thisJob.getID());
         JobOrder.setText(thisJob.getDrNumber());
         BatchNo.setText(thisJob.getBatchNo());
         //Set Date to 
@@ -101,6 +104,10 @@ public class JobOrderForm extends javax.swing.JFrame {
             } catch (ParseException ex) {
                 Logger.getLogger(JobOrderForm.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
+       Weight.setText(Float.toString(thisJob.getWeight()));
+        VolumeTextField.setText(Float.toString(thisJob.getVolumeH20()));
+        RollLoad.setText(thisJob.getRollLoad());
     }
     private void SetDropDownDetails()
     {
@@ -108,7 +115,6 @@ public class JobOrderForm extends javax.swing.JFrame {
         SetMachineNameDropDown();
         SetCustomerNameDropDown();
         SetColorNameDropDown();
-        SetProcessOrderDetails();
     }
     
     private void SetDesignNameDropDown()
@@ -143,12 +149,6 @@ public class JobOrderForm extends javax.swing.JFrame {
         ColorDropDownList.setSelectedItem(thisColor.getColorName());
     }
     
-    private void SetProcessOrderDetails()
-    {
-        Weight.setText(Float.toString(thisProcessOrder.getWeight()));
-        VolumeTextField.setText(Float.toString(thisProcessOrder.getVolumeH20()));
-        RollLoad.setText(thisProcessOrder.getRollLoad());
-    }
     //--- Private instances declarations
     
 
@@ -480,12 +480,11 @@ public class JobOrderForm extends javax.swing.JFrame {
     private void NextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextButtonActionPerformed
         // TODO add your handling code here:
         if(SetJobOrderInformationFromTextBox())
-            if(SetProcessOrderInformation())
-            {
-                ViewDyeingProgram chooseDyeingProgram = new ViewDyeingProgram(this.thisProcessOrder);
-                chooseDyeingProgram.setVisible(true);
-                this.dispose();
-            }
+        {
+            ViewDyeingProgram chooseDyeingProgram = new ViewDyeingProgram(thisJob);
+            chooseDyeingProgram.setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_NextButtonActionPerformed
 
     public String get_date_from_spinner(JSpinner this_spinner)
@@ -503,7 +502,7 @@ public class JobOrderForm extends javax.swing.JFrame {
             computeForVolume();
         } 
     }
-    
+    /*
     private boolean SetProcessOrderInformation()
     {
         boolean isSuccessful = false;
@@ -525,73 +524,89 @@ public class JobOrderForm extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Please check the value in Volume of Water.");
             
         return isSuccessful;
-    }
+    }*/
     private boolean SetJobOrderInformationFromTextBox()
     {
-        boolean isSuccessful = false;
-        if(thisCustomer.getCustomerId() > 0)
+        boolean isSuccessful = true;
+        if(thisCustomer.getCustomerId() < 1)
+        {
+            isSuccessful = false;
+            JOptionPane.showMessageDialog(null, "Please check the Customer Name.");
+        }
+        else if(thisColor.getColorId() < 1)
+        {
+            isSuccessful = false;
+            JOptionPane.showMessageDialog(null, "Please check the Color name.");
+        }
+        else if(thisDesign.getDesignId() < 1)
+        {
+            isSuccessful = false;
+            JOptionPane.showMessageDialog(null, "Please check the Design name."); 
+        }
+        else if(thisMachine.getMachineId() < 1)
+        {
+            isSuccessful = false;
+            JOptionPane.showMessageDialog(null, "Please check the Machine details.");  
+        }
+        else if(JobOrder.getText().length() < 1)
+        {
+            isSuccessful = false;
+            JOptionPane.showMessageDialog(null, "Please check the Job Order number.");  
+        }
+        else if(this.BatchNo.getText().length() < 1)
+        {
+            isSuccessful = false;
+            JOptionPane.showMessageDialog(null, "Please check the Batch number.");
+        }
+        else if(this.VolumeTextField.getText().length() < 1)
+        {
+            isSuccessful = false;
+            JOptionPane.showMessageDialog(null, "Please check the value in Volume of Water."); 
+        }
+        else if(this.Weight.getText().length() < 1)
+        {
+            isSuccessful = false;
+            JOptionPane.showMessageDialog(null, "Please check the value in the Weight."); 
+        }
+        
+                
+        //If all inputs are good
+        if(isSuccessful)
         {
             thisJob.setCustomerID(thisCustomer.getCustomerId());
-            if(thisColor.getColorId() > 0)
+            thisJob.setColorID(thisColor.getColorId());
+            thisJob.setDesignID(thisDesign.getDesignId());
+            thisJob.setMachineID(thisMachine.getMachineId());
+            thisJob.setDrNumber(JobOrder.getText());
+            thisJob.setJobDate(get_date_from_spinner(dateSpinner));
+            thisJob.setBatchNo(BatchNo.getText());
+            thisJob.setVolumeH20(Float.parseFloat(this.VolumeTextField.getText()));
+            thisJob.setWeight(Float.parseFloat(this.Weight.getText()));
+            thisJob.setRollLoad(RollLoad.getText());
+            JobHandler thisJobHandler = new JobHandler();
+            if(WindowType == 1)
             {
-                thisJob.setColorID(thisColor.getColorId());
-                if(thisDesign.getDesignId() > 0)
-                {
-                    thisJob.setDesignID(thisDesign.getDesignId());
-                    if(thisMachine.getMachineId() > 0)
-                    {
-                        thisJob.setMachineID(thisMachine.getMachineId());
-                        if(JobOrder.getText().length() > 0)
-                        {
-                            thisJob.setDrNumber(JobOrder.getText());
-                            thisJob.setJobDate(get_date_from_spinner(dateSpinner));
-                            
-                            if(this.BatchNo.getText().length() > 0)
-                            {
-                                thisJob.setBatchNo(BatchNo.getText());
-                                JobHandler thisJobHandler = new JobHandler();
-                                if(WindowType == 1)
-                                {
-                                    thisJob.setID(this.thisProcessOrder.getJobOrderID());
-                                    thisJobHandler.UpdateJobOrder(thisJob);
-                                }
-                                else if(thisJobHandler.CheckIfThisJobOrderHasBeenAdded(thisJob))
-                                {
-                                    int JobOrderID = thisJobHandler.AddNewJobOrder(thisJob);
-                                    if(JobOrderID == - 1)
-                                        JOptionPane.showMessageDialog(null, "Job Order was not added.");
-                                    else
-                                    {
-                                        thisJob.setID(JobOrderID);
-                                    //JOptionPane.showMessageDialog(null, "Job Order was successfully added.");
-                                        isSuccessful = true;
-                                    }
-                                }
-                                else
-                                {
-                                    JOptionPane.showMessageDialog(null, "Job Order #"+ thisJob.getDrNumber()+" has already been added");
-                                JobOrder.setBackground(ErrorColor);
-                                }
-                            }
-                            else
-                                JOptionPane.showMessageDialog(null, "Please check the Batch number.");  
-                                
-                        }
-                        else
-                        JOptionPane.showMessageDialog(null, "Please check the Job Order number.");  
-                    }
-                    else
-                    JOptionPane.showMessageDialog(null, "Please check the Machine details.");  
-                }
+                //thisJob.setID(this.thisProcessOrder.getJobOrderID());
+                thisJobHandler.UpdateJobOrder(thisJob);
+            }
+            else if(thisJobHandler.CheckIfThisJobOrderHasBeenAdded(thisJob))
+            {
+                int JobOrderID = thisJobHandler.AddNewJobOrder(thisJob);
+                if(JobOrderID == - 1)
+                    JOptionPane.showMessageDialog(null, "Job Order was not added.");
                 else
-                    JOptionPane.showMessageDialog(null, "Please check the Design name.");  
+                {
+                    thisJob.setID(JobOrderID);
+                    //JOptionPane.showMessageDialog(null, "Job Order was successfully added.");
+                    isSuccessful = true;
+                }
             }
             else
-              JOptionPane.showMessageDialog(null, "Please check the Color name.");
-        }
-        else
-            JOptionPane.showMessageDialog(null, "Please check the Customer Name.");
-        
+            {
+                JOptionPane.showMessageDialog(null, "Job Order #"+ thisJob.getDrNumber()+" has already been added");
+                JobOrder.setBackground(ErrorColor);
+            }
+        }                  
         return isSuccessful;
     }
     
@@ -600,10 +615,8 @@ public class JobOrderForm extends javax.swing.JFrame {
         if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel this Control Slip?","Exit?", JOptionPane.YES_NO_OPTION))
         {
             if(WindowType == 1)
-            {
-                new JobHandler().DeleteJobOrder(thisProcessOrder.getJobOrderID());
-                new ProcessOrderHandler().DeleteProcessOrder(thisProcessOrder.getID());
-            }
+                new JobHandler().DeleteJobOrder(thisJob.getID());
+            
             this.dispose();
         }
     }//GEN-LAST:event_CancelActionPerformed
