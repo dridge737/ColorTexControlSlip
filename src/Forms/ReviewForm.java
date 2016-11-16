@@ -421,7 +421,7 @@ public class ReviewForm extends javax.swing.JFrame {
         try
         {
             PrintHandler handler = new PrintHandler();
-            handler.createPDF(thisMachine, thisDesign, thisCustomer, thisColor, thisJob, thisProcessOrder, thisDyeingProgram, VolumeTextField.getText());
+            handler.createPDF(thisMachine, thisDesign, thisCustomer, thisColor, thisJob, thisDyeingProgram, VolumeTextField.getText());
         }
         catch(IOException | DocumentException e)
         {
