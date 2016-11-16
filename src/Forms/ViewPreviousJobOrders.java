@@ -57,7 +57,6 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
             }
         });
         BgPanel.add(SaveBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 480, 240, 40));
-        SaveBut.getAccessibleContext().setAccessibleName("Use Job Order");
 
         CancelBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         CancelBut.setText("Cancel");
@@ -66,7 +65,7 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
                 CancelButActionPerformed(evt);
             }
         });
-        BgPanel.add(CancelBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 480, 240, 40));
+        BgPanel.add(CancelBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 480, 240, 40));
 
         jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -80,11 +79,11 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Job Order", "Design", "Color", "Date", "Dyeing Program Name", "Resin Program Name"
+                "Job Order", "Design", "Customer", "Color", "Date", "Dyeing Program", "Resin Program"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -104,7 +103,7 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
         BgPanel.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 85, 590, -1));
 
         getContentPane().add(BgPanel);
-        BgPanel.setBounds(0, 11, 790, 541);
+        BgPanel.setBounds(0, 0, 790, 550);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

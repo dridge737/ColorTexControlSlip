@@ -162,9 +162,9 @@ public class JobOrderForm extends javax.swing.JFrame {
     private void initComponents() {
 
         MainPanel = new javax.swing.JPanel();
-        CustomerDropDownList = new javax.swing.JComboBox<>();
-        DesignDropDownList = new javax.swing.JComboBox<>();
-        ColorDropDownList = new javax.swing.JComboBox<>();
+        CustomerDropDownList = new javax.swing.JComboBox<String>();
+        DesignDropDownList = new javax.swing.JComboBox<String>();
+        ColorDropDownList = new javax.swing.JComboBox<String>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -172,12 +172,12 @@ public class JobOrderForm extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         JobOrder = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
-        MachineDropDownList = new javax.swing.JComboBox<>();
+        MachineDropDownList = new javax.swing.JComboBox<String>();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         Weight = new javax.swing.JTextField();
         VolumeTextField = new javax.swing.JTextField();
-        LiquidRatioDropDown = new javax.swing.JComboBox<>();
+        LiquidRatioDropDown = new javax.swing.JComboBox<String>();
         jLabel9 = new javax.swing.JLabel();
         RollLoad = new javax.swing.JTextField();
         Cancel = new javax.swing.JButton();
@@ -195,7 +195,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         MainPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         CustomerDropDownList.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        CustomerDropDownList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose Customer" }));
+        CustomerDropDownList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Customer" }));
         CustomerDropDownList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CustomerDropDownListActionPerformed(evt);
@@ -204,7 +204,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         MainPanel.add(CustomerDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, 190, 30));
 
         DesignDropDownList.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        DesignDropDownList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose Design" }));
+        DesignDropDownList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Design" }));
         DesignDropDownList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DesignDropDownListActionPerformed(evt);
@@ -213,7 +213,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         MainPanel.add(DesignDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, 190, 30));
 
         ColorDropDownList.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        ColorDropDownList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose Color" }));
+        ColorDropDownList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Color" }));
         ColorDropDownList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ColorDropDownListActionPerformed(evt);
@@ -264,7 +264,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         MachineDropDownList.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        MachineDropDownList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose Machine" }));
+        MachineDropDownList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Machine" }));
         MachineDropDownList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MachineDropDownListActionPerformed(evt);
@@ -305,10 +305,15 @@ public class JobOrderForm extends javax.swing.JFrame {
                 VolumeTextFieldActionPerformed(evt);
             }
         });
+        VolumeTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                VolumeTextFieldKeyReleased(evt);
+            }
+        });
         jPanel2.add(VolumeTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(184, 131, 460, -1));
 
         LiquidRatioDropDown.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        LiquidRatioDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Liquid Ratio" }));
+        LiquidRatioDropDown.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Liquid Ratio" }));
         LiquidRatioDropDown.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 LiquidRatioDropDownActionPerformed(evt);
@@ -365,6 +370,11 @@ public class JobOrderForm extends javax.swing.JFrame {
         MainPanel.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(372, 90, 100, 30));
 
         BatchNo.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        BatchNo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                BatchNoKeyTyped(evt);
+            }
+        });
         MainPanel.add(BatchNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(485, 90, 190, 30));
 
         getContentPane().add(MainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 520));
@@ -624,6 +634,20 @@ public class JobOrderForm extends javax.swing.JFrame {
     private void VolumeTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VolumeTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_VolumeTextFieldActionPerformed
+
+    private void VolumeTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_VolumeTextFieldKeyReleased
+        // TODO add your handling code here:
+        String Volume = this.VolumeTextField.getText();
+        Volume = Volume.replaceAll("[^\\d.]", "");
+        this.VolumeTextField.setText(Volume);
+    }//GEN-LAST:event_VolumeTextFieldKeyReleased
+
+    private void BatchNoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BatchNoKeyTyped
+        // TODO add your handling code here:
+        String thisBatchNo = this.BatchNo.getText();
+        thisBatchNo = thisBatchNo.replaceAll("[^\\d.]", "");
+        this.BatchNo.setText(thisBatchNo);
+    }//GEN-LAST:event_BatchNoKeyTyped
     
     private void computeForVolume()
     {
