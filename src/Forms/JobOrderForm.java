@@ -578,8 +578,7 @@ public class JobOrderForm extends javax.swing.JFrame {
             isSuccessful = false;
             JOptionPane.showMessageDialog(null, "Please check the value in the Weight."); 
         }
-        
-                
+         
         //If all inputs are good
         if(isSuccessful)
         {
@@ -593,6 +592,7 @@ public class JobOrderForm extends javax.swing.JFrame {
             thisJob.setVolumeH20(Float.parseFloat(this.VolumeTextField.getText()));
             thisJob.setWeight(Float.parseFloat(this.Weight.getText()));
             thisJob.setRollLoad(RollLoad.getText());
+            /*
             JobHandler thisJobHandler = new JobHandler();
             if(WindowType == 1)
             {
@@ -606,16 +606,15 @@ public class JobOrderForm extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Job Order was not added.");
                 else
                 {
-                    thisJob.setID(JobOrderID);
                     //JOptionPane.showMessageDialog(null, "Job Order was successfully added.");
-                    isSuccessful = true;
                 }
             }
             else
             {
                 JOptionPane.showMessageDialog(null, "Job Order #"+ thisJob.getDrNumber()+" has already been added");
                 JobOrder.setBackground(ErrorColor);
-            }
+            }*/
+                    isSuccessful = true;
         }                  
         return isSuccessful;
     }

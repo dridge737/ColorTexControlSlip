@@ -43,7 +43,7 @@ public class DyeingForm extends javax.swing.JFrame {
     Color ColorError = new Color(232,228,42);
     
     /**
-     * Creates new form ResinForm
+     * Creates new form Dyeing Form
      */
     public DyeingForm() {
         initComponents();
@@ -63,7 +63,7 @@ public class DyeingForm extends javax.swing.JFrame {
         SetDyeingProgramFromProgramName(DyeingProgramName);
         setWindowType();
     }
-    //For Job Order Form
+    //For Control Slip Form
     public DyeingForm(String DyeingProgramName,  JobOrder currentJob)
     {
         initComponents();
@@ -348,8 +348,8 @@ public class DyeingForm extends javax.swing.JFrame {
                 CloseWindow = AddDyeingProgram();
                 break;
             case 2:
-            case 3:
                 CloseWindow = UpdateDyeingProgram();
+            case 3:
                 break;
         }
         
