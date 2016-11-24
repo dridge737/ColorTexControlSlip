@@ -2801,4 +2801,90 @@ public class ColorTextControlSlipRepository {
         this.closeConn(conn, ps, rs);
         return checkTest;
     }
+    
+    public ArrayList<JobOrder> GetAllJobOrderHistoryByCustomerId(int customerId)
+    {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ArrayList<JobOrder> CustomerJobOrders = new ArrayList<JobOrder>();
+        try{
+            conn = db.getConnection();
+            ps = conn.prepareStatement("SELECT * "
+                                 + " FROM job_order "
+                                 + " WHERE CustomerID = ? "
+                                 + " ORDER BY job_order.Date ASC");
+            
+            ps.setInt(1, customerId);
+            
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                JobOrder thisJobOrder = new JobOrder();
+                thisJobOrder.setID(rs.getInt("ID"));
+                thisJobOrder.setDrNumber(rs.getString("DrNumber"));
+                thisJobOrder.setMachineID(rs.getInt("MachineID"));
+                thisJobOrder.setDesignID(rs.getInt("DesignID"));
+                thisJobOrder.setColorID(rs.getInt("ColorID"));
+                thisJobOrder.setCustomerID(rs.getInt("CustomerID"));
+                thisJobOrder.setBatchNo(rs.getString("BatchNo"));
+                thisJobOrder.setWeight(rs.getFloat("Weight"));
+                thisJobOrder.setVolumeH20(rs.getInt("VolH2O"));
+                thisJobOrder.setRollLoad(rs.getString("RollLoad"));
+                thisJobOrder.setRoll(rs.getInt("Roll"));
+                thisJobOrder.setDyeingProgramID(rs.getInt("DyeingProgramID"));
+                thisJobOrder.setResinProgramID(rs.getInt("ResinProgramID"));
+                CustomerJobOrders.add(thisJobOrder);
+            }
+        }
+        catch(SQLException ex){
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.closeConn(conn, ps, rs);
+        return CustomerJobOrders;
+    }
+    
+    public ArrayList<JobOrder> GetAllJobOrderHistoryByJobOrderNumber(int jobOrderNumber)
+    {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ArrayList<JobOrder> CustomerJobOrders = new ArrayList<JobOrder>();
+        try{
+            conn = db.getConnection();
+            ps = conn.prepareStatement("SELECT * "
+                                 + " FROM job_order "
+                                 + " WHERE DrNumber = ? "
+                                 + " ORDER BY job_order.Date ASC");
+            
+            ps.setInt(1, jobOrderNumber);
+            
+            rs = ps.executeQuery();
+            while(rs.next())
+            {
+                JobOrder thisJobOrder = new JobOrder();
+                thisJobOrder.setID(rs.getInt("ID"));
+                thisJobOrder.setDrNumber(rs.getString("DrNumber"));
+                thisJobOrder.setMachineID(rs.getInt("MachineID"));
+                thisJobOrder.setDesignID(rs.getInt("DesignID"));
+                thisJobOrder.setColorID(rs.getInt("ColorID"));
+                thisJobOrder.setCustomerID(rs.getInt("CustomerID"));
+                thisJobOrder.setBatchNo(rs.getString("BatchNo"));
+                thisJobOrder.setWeight(rs.getFloat("Weight"));
+                thisJobOrder.setVolumeH20(rs.getInt("VolH2O"));
+                thisJobOrder.setRollLoad(rs.getString("RollLoad"));
+                thisJobOrder.setRoll(rs.getInt("Roll"));
+                thisJobOrder.setDyeingProgramID(rs.getInt("DyeingProgramID"));
+                thisJobOrder.setResinProgramID(rs.getInt("ResinProgramID"));
+                CustomerJobOrders.add(thisJobOrder);
+            }
+        }
+        catch(SQLException ex){
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.closeConn(conn, ps, rs);
+        return CustomerJobOrders;
+    }
 }

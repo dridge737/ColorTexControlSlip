@@ -58,14 +58,14 @@ public class PrintHandler {
  
     private int chapterNumber;
     
-    public void createPDF(Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, ProcessOrder processOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException {
+    public void createPDF(Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException {
         File file = new File(DEST);
         file.getParentFile().mkdirs();
-        new PrintHandler().renderPDF(DEST, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, processOrderDetails, dyeingProgramDetails, volume);
+        new PrintHandler().renderPDF(DEST, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
         printPDF();
     }
  
-    public void renderPDF(String dest, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, ProcessOrder processOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException {
+    public void renderPDF(String dest, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException {
         Document document = new Document();
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(dest));
         
@@ -113,7 +113,7 @@ public class PrintHandler {
         table.addCell(p3);
         
         Phrase p6 = new Phrase();
-        p6.add("Weight: " + processOrderDetails.getWeight());
+        p6.add("Weight: " + jobOrderDetails.getWeight());
         pCell = new PdfPCell(p6);
         table.addCell(p6);
         
@@ -256,7 +256,7 @@ public class PrintHandler {
         table.addCell(p3);
         
         p6 = new Phrase();
-        p6.add("Weight: " + processOrderDetails.getWeight());
+        p6.add("Weight: " + jobOrderDetails.getWeight());
         pCell = new PdfPCell(p6);
         table.addCell(p6);
         
@@ -367,18 +367,18 @@ public class PrintHandler {
         document.add(Chunk.NEWLINE);
         document.add(Chunk.NEWLINE);
         document.add(Chunk.NEWLINE);
-        document = AddSecondPage(document, writer, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, processOrderDetails, dyeingProgramDetails, volume);
+        document = AddSecondPage(document, writer, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
         
         //CHANGE CONDITION TO IF RESIGNPROGRAM EXISTING
-        if(processOrderDetails.getResinProgramID() > 0)
+        if(jobOrderDetails.getResinProgramID() > 0)
         {
-            document = AddThirdPage(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, processOrderDetails, dyeingProgramDetails, volume);
+            document = AddThirdPage(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
         }
         
         document.close();
     }
     
-    public Document AddSecondPage(Document document, PdfWriter writer, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, ProcessOrder processOrderDetails, DyeingProgram dyeingProgramDetails, String volume)  throws IOException, DocumentException 
+    public Document AddSecondPage(Document document, PdfWriter writer, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume)  throws IOException, DocumentException 
     {
         Font companyHeaderFont = FontFactory.getFont(FontFactory.HELVETICA, 18, Font.BOLDITALIC);
         Paragraph companyHeader = new Paragraph("Colortex Processing Inc.", companyHeaderFont);
@@ -442,7 +442,7 @@ public class PrintHandler {
         table.addCell(p5);
         
         Phrase p4 = new Phrase();
-        p4.add("Weight: " + processOrderDetails.getWeight());
+        p4.add("Weight: " + jobOrderDetails.getWeight());
         pCell = new PdfPCell(p4);
         table.addCell(p4);
         
@@ -537,7 +537,7 @@ public class PrintHandler {
                         
                         if(dyeingChemicalList.get(i).getType()== "%")
                         {
-                           Float quantity = processOrderDetails.getWeight() * dyeingChemicalList.get(i).getValue();
+                           Float quantity = jobOrderDetails.getWeight() * dyeingChemicalList.get(i).getValue();
                            table.addCell(quantity.toString() + dyeingChemicalList.get(i).getState()); 
                         }
                         else
@@ -553,7 +553,7 @@ public class PrintHandler {
             else
             {
                 document.add(table);
-                document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, processOrderDetails, dyeingProgramDetails, volume);
+                document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
                 table = new PdfPTable(columnWidths);
                 table.setWidthPercentage(100);
                 table.getDefaultCell().setBorder(Rectangle.BOTTOM);
@@ -614,7 +614,7 @@ public class PrintHandler {
                             table.addCell(" ");
                             table.addCell(String.valueOf(dyeingChemicalList.get(i).getValue()));
                         }
-                        table.addCell(String.valueOf(dyeingChemicalList.get(i).getValue() * processOrderDetails.getVolumeH20()));
+                        table.addCell(String.valueOf(dyeingChemicalList.get(i).getValue() * jobOrderDetails.getVolumeH20()));
                         rows++;
                     }
                 }
@@ -672,7 +672,7 @@ public class PrintHandler {
         return document;
     }
     
-    public Document AddSecondPageHeader(Document document, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, ProcessOrder processOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException
+    public Document AddSecondPageHeader(Document document, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException
     {
         Font companyHeaderFont = FontFactory.getFont(FontFactory.HELVETICA, 18, Font.BOLDITALIC);
         Paragraph companyHeader = new Paragraph("Colortex Processing Inc.", companyHeaderFont);
@@ -736,7 +736,7 @@ public class PrintHandler {
         table.addCell(p5);
         
         Phrase p4 = new Phrase();
-        p4.add("Weight: " + processOrderDetails.getWeight());
+        p4.add("Weight: " + jobOrderDetails.getWeight());
         pCell = new PdfPCell(p4);
         table.addCell(p4);
         
@@ -760,7 +760,7 @@ public class PrintHandler {
         return document;
     }
     
-    public Document AddThirdPage(Document document, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, ProcessOrder processOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException 
+    public Document AddThirdPage(Document document, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException 
     {
         Font companyHeaderFont = FontFactory.getFont(FontFactory.HELVETICA, 18, Font.BOLDITALIC);
         Paragraph companyHeader = new Paragraph("Colortex Processing Inc.", companyHeaderFont);
@@ -824,7 +824,7 @@ public class PrintHandler {
         table.addCell(p5);
         
         Phrase p4 = new Phrase();
-        p4.add("Weight: " + processOrderDetails.getWeight());
+        p4.add("Weight: " + jobOrderDetails.getWeight());
         pCell = new PdfPCell(p4);
         table.addCell(p4);
         
@@ -856,8 +856,8 @@ public class PrintHandler {
         ResinProgramHandler resinProgramHandler = new ResinProgramHandler();
         ResinChemicalHandler resinChemicalHandler = new ResinChemicalHandler();
         ChemicalHandler chemicalHandler = new ChemicalHandler();
-        String resinProgramName = resinProgramHandler.GetResinProgramNameFromResinProgramID(processOrderDetails.getResinProgramID());
-        ArrayList<ResinChemical> resinChemicalList = resinChemicalHandler.GetResinChemicalsByResinProgramId(processOrderDetails.getResinProgramID());
+        String resinProgramName = resinProgramHandler.GetResinProgramNameFromResinProgramID(jobOrderDetails.getResinProgramID());
+        ArrayList<ResinChemical> resinChemicalList = resinChemicalHandler.GetResinChemicalsByResinProgramId(jobOrderDetails.getResinProgramID());
         
         paragraph = new Paragraph(resinProgramName);
         paragraph.setAlignment(Element.ALIGN_CENTER);
@@ -887,7 +887,7 @@ public class PrintHandler {
         for (int x = 0; x < resinChemicalList.size(); x++) {
                 table.addCell((x+1) + ".  " + chemicalHandler.GetChemicalNameFromChemicalID(resinChemicalList.get(x).getChemicalID()));
                 table.addCell(String.valueOf(resinChemicalList.get(x).getGPLValue()));
-                table.addCell(String.valueOf(processOrderDetails.getVolumeH20() * resinChemicalList.get(x).getGPLValue()));
+                table.addCell(String.valueOf(jobOrderDetails.getVolumeH20() * resinChemicalList.get(x).getGPLValue()));
                 table.addCell(" ");
                 table.addCell(" ");
                 table.addCell(" ");

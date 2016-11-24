@@ -7,6 +7,7 @@ package Handlers;
 
 import DataEntities.JobOrder;
 import Database.ColorTextControlSlipRepository;
+import java.util.ArrayList;
 
 /**
  *
@@ -52,5 +53,17 @@ public class JobHandler {
             itExist = true;
         return !itExist;
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public ArrayList<JobOrder> GetAllJobOrderHistoryByCustomerId (int customerID)
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        return repo.GetAllJobOrderHistoryByCustomerId(customerID);
+    }
+    
+    public ArrayList<JobOrder> GetAllJobOrderHistoryByJobOrderNumber (int customerID)
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        return repo.GetAllJobOrderHistoryByJobOrderNumber(customerID);
     }
 }
