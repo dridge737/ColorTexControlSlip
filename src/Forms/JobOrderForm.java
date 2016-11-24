@@ -98,7 +98,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         JobOrder.setText(thisJob.getDrNumber());
         BatchNo.setText(thisJob.getBatchNo());
         //Set Date to 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
             try {
                 dateSpinner.setValue(sdf.parse(thisJob.getJobDate()));
             } catch (ParseException ex) {
@@ -300,11 +300,6 @@ public class JobOrderForm extends javax.swing.JFrame {
         jPanel2.add(Weight, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 86, 150, 30));
 
         VolumeTextField.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        VolumeTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                VolumeTextFieldActionPerformed(evt);
-            }
-        });
         VolumeTextField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 VolumeTextFieldKeyReleased(evt);
@@ -484,7 +479,14 @@ public class JobOrderForm extends javax.swing.JFrame {
     private void WeightKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_WeightKeyReleased
         String weight = Weight.getText();
         weight = weight.replaceAll("[^\\d.]", "");
-        Weight.setText(weight);
+        Float ConvertedWeight = Float.parseFloat(weight);
+        if(ConvertedWeight > thisMachine.getMaxCapacity())
+            Weight.setText(Float.toString(thisMachine.getMaxCapacity()));
+        else if(ConvertedWeight < thisMachine.getMinCapacity())
+            Weight.setText(Float.toString(thisMachine.getMinCapacity()));
+        else    
+            Weight.setText(weight);
+        
     }//GEN-LAST:event_WeightKeyReleased
 
     private void NextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextButtonActionPerformed
@@ -630,15 +632,17 @@ public class JobOrderForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_CancelActionPerformed
 
-    private void VolumeTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VolumeTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_VolumeTextFieldActionPerformed
-
     private void VolumeTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_VolumeTextFieldKeyReleased
         // TODO add your handling code here:
         String Volume = this.VolumeTextField.getText();
         Volume = Volume.replaceAll("[^\\d.]", "");
-        this.VolumeTextField.setText(Volume);
+        Float ConvertedVolume = Float.parseFloat(Volume);
+        if(ConvertedVolume > thisMachine.getMaxVolume())
+            this.VolumeTextField.setText(Float.toString(thisMachine.getMaxVolume()));
+        else if(ConvertedVolume < thisMachine.getMinCapacity())
+            this.VolumeTextField.setText(Float.toString(thisMachine.getMinCapacity()));
+        else
+            this.VolumeTextField.setText(Volume);
     }//GEN-LAST:event_VolumeTextFieldKeyReleased
 
     private void BatchNoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BatchNoKeyTyped

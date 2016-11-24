@@ -28,7 +28,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
     DyeingProgram thisDyeingProgram = new DyeingProgram();
     //ProcessOrder thisProcessOrder = new ProcessOrder();
     private JobOrder thisJob = new JobOrder();
-    int WindowType = 0;
+    int WindowType = 1;
     /**
      * Creates new form ViewResinProgram
      */
@@ -46,7 +46,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         Header.setText("Dyeing Control Slip : Page 2/6");
         BackBut.setText("Back");
         SelectBut.setText("Next");
-        WindowType = 1;
+        WindowType = 3;
     }
 
     public void SetToCenter()
@@ -222,7 +222,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         DefaultTableModel model_original = new DefaultTableModel();
         model_original.addColumn("Program Name");
         
-        ArrayList<String> DyeingList = new DyeingProgramHandler().GetAllDyeingProgram();
+        ArrayList<String> DyeingList = new DyeingProgramHandler().GetAllDefaultDyeingProgramName();
         for (String DyeingList1 : DyeingList) {
             model_original.addRow(new Object[]{DyeingList1});
         }
@@ -248,7 +248,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
             int convertedRowNumber = DyeingTable.convertRowIndexToModel(this.DyeingTable.getSelectedRow());
             String DyeingName = DyeingTable.getModel().getValueAt(convertedRowNumber , 0).toString();
             DyeingForm thisDyeingForm;
-            if(this.WindowType == 1)
+            if(this.WindowType == 3)
             {
                 thisDyeingForm = new DyeingForm(DyeingName, getThisJob());
             }
@@ -261,7 +261,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
 
     private void BackButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButActionPerformed
         // TODO add your handling code here:
-        if(WindowType == 1)
+        if(WindowType == 3)
         {
             JobOrderForm newJobOrderForm = new JobOrderForm(getThisJob());
             newJobOrderForm.setVisible(true);

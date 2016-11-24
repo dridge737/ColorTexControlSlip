@@ -23,12 +23,14 @@ import DataEntities.Chemical;
 import DataEntities.JobOrder;
 import DataEntities.ProcessOrder;
 import Forms.HelpForm.ButtonColumn;
+import static Forms.HelpForm.SubProcessPanel.isNullOrWhitespaceOrEmpty;
 import Forms.HelpForm.auto_complete;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.regex.Pattern;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JOptionPane;
@@ -163,7 +165,8 @@ public class AddResinForm extends javax.swing.JFrame {
     {
         //Chemical allChemicals = new Chemical();
         ChemicalHandler ChemHandler = new ChemicalHandler();
-        ArrayList<String> AllChemical = ChemHandler.GetAllChemical();
+        
+        AllChemical = ChemHandler.GetAllChemical();
         auto_complete dropdownAutoComplete = new auto_complete();
         dropdownAutoComplete.setupAutoComplete(this.ChemicalTextfield, AllChemical);
         this.ChemicalTextfield.setColumns(30);
@@ -469,33 +472,60 @@ public class AddResinForm extends javax.swing.JFrame {
     
     private void AddtoTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddtoTableActionPerformed
         // TODO add your handling code here:
-        
-        String chemicalTextFieldValue = ChemicalTextfield.getText().trim().toUpperCase();
-        if(chemicalTextFieldValue.length()> 0 && GPLTextfield.getText().length() > 0)
+        if(!isNullOrWhitespaceOrEmpty(ChemicalTextfield.getText()) 
+                && !isNullOrWhitespaceOrEmpty(GPLTextfield.getText())
+                && !CheckTextIfItsANumber(GPLTextfield.getText()))
         {
-            if(AllChemical.indexOf(chemicalTextFieldValue) != -1)
+            String chemicalTextFieldValue = ChemicalTextfield.getText().trim().toUpperCase();
+            boolean validChemicalName = CheckIfChemicalisOnTable(chemicalTextFieldValue);
+            if(!validChemicalName)
             {
-                boolean validChemicalName = CheckIfChemicalisOnTable(chemicalTextFieldValue);
-                if(!validChemicalName)
+                
+                if(AllChemical.indexOf(chemicalTextFieldValue) == -1)
                 {
-                    DefaultTableModel model = (DefaultTableModel) ChemicalTable.getModel();
-                    model.addRow(new Object[] {ChemicalTextfield.getText(), GPLTextfield.getText(), "Delete"});
-                    this.ChemicalTextfield.setText(null);
-                    GPLTextfield.setText(null);
+                    if(JOptionPane.YES_OPTION == 
+                        JOptionPane.showConfirmDialog(null, "This chemical name has not yet been added. Do you want to add it?","Add this chemical?", JOptionPane.YES_NO_OPTION))
+                    {
+                        Chemical thisChemical = new Chemical();
+                        thisChemical.setChemicalName(chemicalTextFieldValue);
+                        ChemicalHandler ChemHandler = new ChemicalHandler();
+                        ChemHandler.AddNewChemical(thisChemical);
+                        //End of adding Chemical to the database
+                        AddTextToTable();
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(null, "This chemical has not yet been Added to the Database.");
+                    }
                 }
                 else
                 {
-                    JOptionPane.showMessageDialog(null, "This chemical has already been added to the Table.");
+                    AddTextToTable();
                 }
+                
             }
             else
-                JOptionPane.showMessageDialog(null, "This chemical has not yet been Added to the Database.");
+                JOptionPane.showMessageDialog(null, "This chemical has already been added to the Table.");
            
         }
         else
             JOptionPane.showMessageDialog(null, "Please input a chemical name and a chemical value");
+        
     }//GEN-LAST:event_AddtoTableActionPerformed
 
+    private void AddTextToTable()
+    {
+        String ChemicalName = ChemicalTextfield.getText().trim().toUpperCase();
+        DefaultTableModel model = (DefaultTableModel) ChemicalTable.getModel();
+        //model.addRow(new Object[] {ChemicalName, this.StateBox.getSelectedItem() , this.TypeBox.getSelectedItem().toString(),GPLTextfield.getText(), "Delete"} );
+        model.addRow(new Object[] {ChemicalTextfield.getText(), GPLTextfield.getText(), "Delete"});
+        //ChemicalList
+        //After Adding Chemical to table add it to list to check if same chemical will be added
+        this.AddedChemicalList.add(ChemicalName);
+        this.ChemicalTextfield.setText(null);
+        GPLTextfield.setText(null);
+    }
+    
     public boolean CheckIfChemicalisOnTable(String ChemicalName)
     {
         boolean ItIsOnTheTable = false;
@@ -543,13 +573,19 @@ public class AddResinForm extends javax.swing.JFrame {
         });
     }
 
-    
-    public static boolean isNullOrEmpty(String s) {
-        return s == null || s.length() == 0;
+     public boolean CheckTextIfItsANumber(String this_text)
+    {
+        if(this_text.isEmpty())
+            return true;
+        String regex = "[^0-9]";
+        Pattern p = Pattern.compile(regex);
+        this_text = this_text.replaceFirst("[.]", "");
+        
+        return p.matcher(this_text).find();
     }
-
-    public static boolean isNullOrWhitespace(String s) {
-        return s == null || isWhitespace(s);
+    
+    public static boolean isNullOrWhitespaceOrEmpty(String s) {
+        return s == null || isWhitespace(s) || s.length() == 0;
     }
     
     private static boolean isWhitespace(String s) {

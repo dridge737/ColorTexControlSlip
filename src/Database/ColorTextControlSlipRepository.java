@@ -1412,6 +1412,32 @@ public class ColorTextControlSlipRepository {
         this.closeConn(conn, ps, rs);
         return DyeingList;
     }
+    
+    public ArrayList<String> GetAllDefaultDyeingProgram()
+    {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ArrayList<String> DyeingList = new ArrayList<>();
+        try
+        {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT Name FROM dyeing_program WHERE default = 1;");
+            rs = ps.executeQuery();
+            
+            while(rs.next())
+            {
+                DyeingList.add(rs.getString("Name"));
+            }
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, ps, rs);
+        return DyeingList;
+    }
     //END DYEING PROGRAM REPO METHODS
     
     /************************************************************************************************/
@@ -2635,7 +2661,7 @@ public class ColorTextControlSlipRepository {
 
             preparedStmt = conn.prepareStatement(query);
             preparedStmt.setInt(1, ThisDyeingChemical.getDyeingProcessID());
-            preparedStmt.setInt(2, ThisDyeingChemical.getOrder());
+            //preparedStmt.setInt(2, ThisDyeingChemical.getOrder());
             preparedStmt.executeUpdate();
             isSuccessful = true;
         }

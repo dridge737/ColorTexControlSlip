@@ -111,19 +111,7 @@ public class JobOrder {
         this.CustomerID = CustomerID;
     }
 
-    /**
-     * @return the jobDate
-     */
-    public String getJobDate() {
-        return jobDate;
-    }
-
-    /**
-     * @param jobDate the jobDate to set
-     */
-    public void setJobDate(String jobDate) {
-        this.jobDate = jobDate;
-    }
+    
 
     /**
      * @return the BatchNo
@@ -222,5 +210,21 @@ public class JobOrder {
     public void setResinProgramID(int ResinProgramID) {
         this.ResinProgramID = ResinProgramID;
     }
+
+    /**
+     * @return the jobDate
+     */
+    public String getJobDate() {
+        return jobDate;
+    }
+
+    /**
+     * @param jobDate the jobDate to set
+     */
+    public void setJobDate(String jobDate) {
+        this.jobDate = jobDate;
+    }
+
+    
 
 }

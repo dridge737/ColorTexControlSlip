@@ -103,7 +103,7 @@ public class ProcessPanel extends javax.swing.JPanel {
     };
     private void setNewTabForChemicals(DyeingProcess ProcessDetails)
     {
-        SubProcessPanel this_panel = new SubProcessPanel(3);
+        SubProcessPanel this_panel = new SubProcessPanel(WindowType);
         this_panel.SetChemicalListFromDyeingProcessID(ProcessDetails.getId());
         this_panel.HideText();
         addTabToSubProcessTabbedPane(this_panel, this.NumberOfTabs++);

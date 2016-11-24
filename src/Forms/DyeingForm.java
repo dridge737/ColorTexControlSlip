@@ -38,7 +38,10 @@ public class DyeingForm extends javax.swing.JFrame {
     //private List<JTextField> subProcessNameList = new ArrayList<JTextField>();
     private int NumberOfProcessTabs = 0;
     DyeingProgram thisDyeingProgram = new DyeingProgram();
-    private int WindowType = 0;
+    private int WindowProcessType = 0;
+    //1 for new Dyeing Program
+    //2 For Update Dyeing Program
+    //3 For ControlSlip Dyeing Program
     JobOrder thisJob;
     Color ColorError = new Color(232,228,42);
     
@@ -47,9 +50,9 @@ public class DyeingForm extends javax.swing.JFrame {
      */
     public DyeingForm() {
         initComponents();
-        WindowType = 1;
+        WindowProcessType = 1;
         GUITabbedPaneProcess.add(new ProcessPanel(), "Process 1", NumberOfProcessTabs++);
-        setWindowType();
+        setWindowForthisProcessType();
        
         //this.jPanel2.add(ThisPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 80, 780, 550));
         //this.jPanel2.validate();
@@ -59,43 +62,43 @@ public class DyeingForm extends javax.swing.JFrame {
     public DyeingForm(String DyeingProgramName)
     {
         initComponents();
-        WindowType = 2;
+        WindowProcessType = 2;
         SetDyeingProgramFromProgramName(DyeingProgramName);
-        setWindowType();
+        setWindowForthisProcessType();
     }
     //For Control Slip Form
     public DyeingForm(String DyeingProgramName,  JobOrder currentJob)
     {
         initComponents();
         thisJob = currentJob;
-        WindowType = 3;
+        WindowProcessType = 3;
         SetDyeingProgramFromProgramName(DyeingProgramName);
-        setWindowType();
+        setWindowForthisProcessType();
     }
     
     public DyeingForm(JobOrder currentJob)
     {
         initComponents();
-        WindowType = 3;
+        WindowProcessType = 3;
         thisJob = currentJob;
         this.SetDyeingProgramFromProgramID(currentJob.getDyeingProgramID());
-        setWindowType();
+        setWindowForthisProcessType();
     }
     
-     public void setWindowType()
+     public void setWindowForthisProcessType()
     {
         SetToCenter();
-        if(WindowType == 1)
+        if(WindowProcessType == 1)
         {
             Header.setText("Add Dyeing Program");
             SaveBut.setText("Save");
         }
-        else if(WindowType == 2)
+        else if(WindowProcessType == 2)
         {
             Header.setText("Update Dyeing Program");
             SaveBut.setText("Update");
         }
-        else if(WindowType == 3)
+        else if(WindowProcessType == 3)
         {
             Header.setText("Dyeing Program");
             SaveBut.setText("Next");
@@ -176,13 +179,8 @@ public class DyeingForm extends javax.swing.JFrame {
     private void addNewTabProcess(DyeingProcess thisProcess)
     {
         //Declare the Tab to be added
-        ProcessPanel this_panel; 
-        if(WindowType == 3)
-        {
-            this_panel = new ProcessPanel(thisProcess, 3);
-        }
-        else
-            this_panel = new ProcessPanel(thisProcess);
+        ProcessPanel this_panel;
+        this_panel = new ProcessPanel(thisProcess, WindowProcessType);
         
         //Add the Tab to the JtabbedPane
         GUITabbedPaneProcess.add(this_panel, "Process " + String.valueOf(NumberOfProcessTabs+1),
@@ -332,7 +330,7 @@ public class DyeingForm extends javax.swing.JFrame {
                 }
             }
             SuccessfullyUpdated = true;
-            thisJob.setDyeingProgramID(thisDyeingProgram.getDyeingProgramId());
+            
         } 
         
         return SuccessfullyUpdated;
@@ -342,29 +340,32 @@ public class DyeingForm extends javax.swing.JFrame {
         //this.jPanel2.getComp
         boolean CloseWindow = false;
          
-        switch(WindowType)
+        switch(WindowProcessType)
         {
             case 1:
                 CloseWindow = AddDyeingProgram();
                 break;
             case 2:
                 CloseWindow = UpdateDyeingProgram();
+                break;
             case 3:
+                //if Default program then add, else update.
+                thisJob.setDyeingProgramID(thisDyeingProgram.getDyeingProgramId());
                 break;
         }
         
         if(CloseWindow)
         {
-            switch(WindowType)
+            switch(WindowProcessType)
             {
                 case 1:
-                    JOptionPane.showMessageDialog(null, "Successfully added Dyeing Program : "+thisDyeingProgram.getDyeingProgramName());
+                    JOptionPane.showMessageDialog(null, "Successfully added dyeing program : "+thisDyeingProgram.getDyeingProgramName());
                     break;
                 case 2:
-                    JOptionPane.showMessageDialog(null, "Successfully updated Dyeing Program : "+thisDyeingProgram.getDyeingProgramName());
+                    JOptionPane.showMessageDialog(null, "Successfully updated dyeing program : "+thisDyeingProgram.getDyeingProgramName());
                     break;
                 case 3:
-                    if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Do you want to include a Resin Program with this Job?","Add Resin Program?", JOptionPane.YES_NO_OPTION))
+                    if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Do you want to include a RESIN PROGRAM with this Job?","Add Resin Program?", JOptionPane.YES_NO_OPTION))
                     {//Show the Resin Form
                         ViewResinProgram thisResinProgram = new ViewResinProgram(thisJob);
                         thisResinProgram.setVisible(true);
@@ -386,7 +387,7 @@ public class DyeingForm extends javax.swing.JFrame {
 
     private void CancelButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButActionPerformed
         // TODO add your handling code here:
-        if(this.WindowType == 3)
+        if(this.WindowProcessType == 3)
         {
             ViewDyeingProgram chooseDyeingProgram = new ViewDyeingProgram(thisJob);
             chooseDyeingProgram.setVisible(true);
