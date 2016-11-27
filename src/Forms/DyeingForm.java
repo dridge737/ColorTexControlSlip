@@ -72,6 +72,7 @@ public class DyeingForm extends javax.swing.JFrame {
         initComponents();
         thisJob = currentJob;
         WindowProcessType = 3;
+        
         SetDyeingProgramFromProgramName(DyeingProgramName);
         setWindowForthisProcessType();
     }

@@ -1438,6 +1438,65 @@ public class ColorTextControlSlipRepository {
         this.closeConn(conn, ps, rs);
         return DyeingList;
     }
+    
+    public int CheckIfSpecificDyeingProgramExistsForThisCustomer(String dyeingProgramName, int CustomerID)
+    {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int checkTest = 0;
+        try 
+        {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement(
+                    " SELECT EXISTS "
+                            + "(SELECT ID FROM dyeing_program WHERE Name = ? "
+                            + " AND ID IN (SELECT ID FROM job_order WHERE CustomerId = ?))"
+                    + " AS 'CheckTest'");
+
+            int item = 1;
+            ps.setString(item++, dyeingProgramName);
+            ps.setInt(item++, CustomerID);
+            
+            rs = ps.executeQuery();
+            if(rs.first())
+                checkTest = rs.getInt("CheckTest");
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, ps, rs);
+        return checkTest;
+    }
+    
+    public int GetDyeingProgramIDForThisCustomer(String dyeingProgramName, int CustomerID)
+    {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int DyeingProgramID = -1;
+        try{
+            conn = db.getConnection();
+            ps = conn.prepareStatement(
+                    " SELECT dyeing_program.ID FROM dyeing_program WHERE Name = ? "
+                            + " AND dyeing_program.ID IN (SELECT job_order.ID FROM job_order WHERE CustomerId = ?)");
+            
+            rs = ps.executeQuery();
+            if(rs.first())
+            {
+                DyeingProgramID = rs.getInt("ID");
+            }
+        }
+        catch(SQLException ex){
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.closeConn(conn, ps, rs);
+        return DyeingProgramID;
+    }
+    
     //END DYEING PROGRAM REPO METHODS
     
     /************************************************************************************************/

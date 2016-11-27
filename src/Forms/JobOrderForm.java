@@ -292,17 +292,12 @@ public class JobOrderForm extends javax.swing.JFrame {
                 WeightFocusLost(evt);
             }
         });
-        Weight.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                WeightKeyReleased(evt);
-            }
-        });
         jPanel2.add(Weight, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 86, 150, 30));
 
         VolumeTextField.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        VolumeTextField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                VolumeTextFieldKeyReleased(evt);
+        VolumeTextField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                VolumeTextFieldFocusLost(evt);
             }
         });
         jPanel2.add(VolumeTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(184, 131, 460, -1));
@@ -422,6 +417,16 @@ public class JobOrderForm extends javax.swing.JFrame {
 
     private void WeightFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_WeightFocusLost
         ComputeForVolume();
+        
+        String weight = Weight.getText();
+        weight = weight.replaceAll("[^\\d.]", "");
+        Float ConvertedWeight = Float.parseFloat(weight);
+        if(ConvertedWeight > thisMachine.getMaxCapacity())
+            Weight.setText(Float.toString(thisMachine.getMaxCapacity()));
+        else if(ConvertedWeight < thisMachine.getMinCapacity())
+            Weight.setText(Float.toString(thisMachine.getMinCapacity()));
+        //else    
+        //    Weight.setText(weight);
     }//GEN-LAST:event_WeightFocusLost
 
     private void MachineDropDownListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MachineDropDownListActionPerformed
@@ -475,19 +480,6 @@ public class JobOrderForm extends javax.swing.JFrame {
         }        
         
     }//GEN-LAST:event_DesignDropDownListActionPerformed
-
-    private void WeightKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_WeightKeyReleased
-        String weight = Weight.getText();
-        weight = weight.replaceAll("[^\\d.]", "");
-        Float ConvertedWeight = Float.parseFloat(weight);
-        if(ConvertedWeight > thisMachine.getMaxCapacity())
-            Weight.setText(Float.toString(thisMachine.getMaxCapacity()));
-        else if(ConvertedWeight < thisMachine.getMinCapacity())
-            Weight.setText(Float.toString(thisMachine.getMinCapacity()));
-        else    
-            Weight.setText(weight);
-        
-    }//GEN-LAST:event_WeightKeyReleased
 
     private void NextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextButtonActionPerformed
         // TODO add your handling code here:
@@ -632,25 +624,25 @@ public class JobOrderForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_CancelActionPerformed
 
-    private void VolumeTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_VolumeTextFieldKeyReleased
-        // TODO add your handling code here:
-        String Volume = this.VolumeTextField.getText();
-        Volume = Volume.replaceAll("[^\\d.]", "");
-        Float ConvertedVolume = Float.parseFloat(Volume);
-        if(ConvertedVolume > thisMachine.getMaxVolume())
-            this.VolumeTextField.setText(Float.toString(thisMachine.getMaxVolume()));
-        else if(ConvertedVolume < thisMachine.getMinCapacity())
-            this.VolumeTextField.setText(Float.toString(thisMachine.getMinCapacity()));
-        else
-            this.VolumeTextField.setText(Volume);
-    }//GEN-LAST:event_VolumeTextFieldKeyReleased
-
     private void BatchNoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BatchNoKeyTyped
         // TODO add your handling code here:
         String thisBatchNo = this.BatchNo.getText();
         thisBatchNo = thisBatchNo.replaceAll("[^\\d.]", "");
         this.BatchNo.setText(thisBatchNo);
     }//GEN-LAST:event_BatchNoKeyTyped
+
+    private void VolumeTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_VolumeTextFieldFocusLost
+        // TODO add your handling code here:
+        String Volume = this.VolumeTextField.getText();
+        Volume = Volume.replaceAll("[^\\d.]", "");
+        Float ConvertedVolume = Float.parseFloat(Volume);
+        if(ConvertedVolume > thisMachine.getMaxVolume())
+            this.VolumeTextField.setText(Float.toString(thisMachine.getMaxVolume()));
+        else if(ConvertedVolume < thisMachine.getMinVolume())
+            this.VolumeTextField.setText(Float.toString(thisMachine.getMinVolume()));
+        //else
+        //    this.VolumeTextField.setText(Volume);
+    }//GEN-LAST:event_VolumeTextFieldFocusLost
     
     private void computeForVolume()
     {

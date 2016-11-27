@@ -66,4 +66,5 @@ public class JobHandler {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         return repo.GetAllJobOrderHistoryByJobOrderNumber(customerID);
     }
+
 }

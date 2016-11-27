@@ -61,14 +61,14 @@ public class ReviewForm extends javax.swing.JFrame {
         populateLiquoRatioDropDown();
     }
     
-    public ReviewForm(JobOrder thisJob, int JobOrderType)
+    public ReviewForm(JobOrder thisJob, int WindowType)
     {
         this();
         SetJobOrderDetails();
         SetProcessOrderDetails();
         SetDropDownDetails();
         SetDyeingProgramName();
-        if(JobOrderType == 2)
+        if(WindowType == 2)
         {
             SetResinProgramName();
         }

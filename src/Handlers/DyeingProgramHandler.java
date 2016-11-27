@@ -94,4 +94,17 @@ public class DyeingProgramHandler {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         return repo.GetAllDyeingProgram();
     }
+    
+    public int CheckIfSpecificDyeingProgramExistForThisCustomer(String DyeingProgramName , int CustomerID)
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        return repo.CheckIfSpecificDyeingProgramExistsForThisCustomer(DyeingProgramName, CustomerID);
+    }
+    
+    public int GetDyeingProgramIDForCustomerDyeingProgram(String DyeingProgramName , int CustomerID)
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        return repo.GetDyeingProgramIDForThisCustomer(DyeingProgramName, CustomerID);
+    }
+    
 }
