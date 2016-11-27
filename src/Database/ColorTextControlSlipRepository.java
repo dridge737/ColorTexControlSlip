@@ -1325,7 +1325,7 @@ public class ColorTextControlSlipRepository {
         return checkTest;
     }
     
-    public int CheckIfDyeingProgramExists(String dyeingProgramName)
+    public int CheckIfDyeingProgramNameExists(String dyeingProgramName)
     {
         DBConnection dbc = new DBConnection();
         Connection conn = null;
@@ -1337,7 +1337,7 @@ public class ColorTextControlSlipRepository {
             conn = dbc.getConnection();
             ps = conn.prepareStatement("SELECT EXISTS "
                     + " (SELECT ID "
-                    + " FROM dyeing_program WHERE "
+                    + " FROM dyeing_program_name WHERE "
                     + " Name = ?) "
                     + " AS 'CheckTest'");
 
@@ -1367,7 +1367,7 @@ public class ColorTextControlSlipRepository {
             conn = dbc.getConnection();
             ps = conn.prepareStatement("SELECT EXISTS "
                     + " (SELECT ID "
-                    + " FROM dyeing_program WHERE "
+                    + " FROM dyeing_program_name WHERE "
                     + " Name = ?"
                     + " AND ID != ?) "
                     + " AS 'CheckTest'");
@@ -1397,7 +1397,7 @@ public class ColorTextControlSlipRepository {
         try
         {
             conn = dbc.getConnection();
-            ps = conn.prepareStatement("SELECT Name FROM dyeing_program ");
+            ps = conn.prepareStatement("SELECT Name FROM dyeing_program_name ");
             rs = ps.executeQuery();
             
             while(rs.next())
@@ -1451,8 +1451,12 @@ public class ColorTextControlSlipRepository {
             conn = dbc.getConnection();
             ps = conn.prepareStatement(
                     " SELECT EXISTS "
-                            + "(SELECT ID FROM dyeing_program WHERE Name = ? "
-                            + " AND ID IN (SELECT ID FROM job_order WHERE CustomerId = ?))"
+                            + "(SELECT dyeing_program.ID "
+                            + " FROM dyeing_program, dyeing_program_name "
+                            + " WHERE Name = ? "
+                            + " AND ProgramNameID = dyeing_program_name.ID"
+                            + " AND dyeing_program.ID "
+                            + " IN (SELECT DyeingProgramID FROM job_order WHERE CustomerId = ?))"
                     + " AS 'CheckTest'");
 
             int item = 1;
@@ -1481,8 +1485,10 @@ public class ColorTextControlSlipRepository {
         try{
             conn = db.getConnection();
             ps = conn.prepareStatement(
-                    " SELECT dyeing_program.ID FROM dyeing_program WHERE Name = ? "
-                            + " AND dyeing_program.ID IN (SELECT job_order.ID FROM job_order WHERE CustomerId = ?)");
+                    " SELECT dyeing_program.ID FROM dyeing_program, dyeing_program_name "
+                            + " WHERE Name = ? "
+                            + " AND ProgramNameID = dyeing_program_name.ID"
+                            + " AND dyeing_program.ID IN (SELECT DyeingProgramID FROM job_order WHERE CustomerId = ?)");
             
             rs = ps.executeQuery();
             if(rs.first())

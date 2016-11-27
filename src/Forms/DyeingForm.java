@@ -72,7 +72,7 @@ public class DyeingForm extends javax.swing.JFrame {
         initComponents();
         thisJob = currentJob;
         WindowProcessType = 3;
-        
+        //Check if customer has this dyeingProgramName
         SetDyeingProgramFromProgramName(DyeingProgramName);
         setWindowForthisProcessType();
     }
@@ -139,6 +139,7 @@ public class DyeingForm extends javax.swing.JFrame {
         DyeingProgramHandler thisDyeingProgramHandler = new DyeingProgramHandler();
         //Set Program Name
         thisDyeingProgram.setDyeingProgramName(DyeingProgramName);
+        //ERROR FIX this 
         thisDyeingProgram.setDyeingProgramId(thisDyeingProgramHandler.GetDyeingProgramIDfromName(thisDyeingProgram.getDyeingProgramName()));
         
         this.ProgramNameText.setText(thisDyeingProgram.getDyeingProgramName());
@@ -283,6 +284,7 @@ public class DyeingForm extends javax.swing.JFrame {
         {
             thisDyeingProgram.setDyeingProgramName(this.ProgramNameText.getText());
             thisDyeingProgramHandler.AddDyeingProgram(thisDyeingProgram);
+            //FIX THIS edit for Dyeing Program Name
             int DyeingProgramID = thisDyeingProgramHandler.GetDyeingProgramIDfromName(thisDyeingProgram.getDyeingProgramName());
             thisDyeingProgram.setDyeingProgramId(DyeingProgramID);
             

@@ -32,7 +32,7 @@ public class DyeingProgramHandler {
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        if(repo.CheckIfDyeingProgramExists(newDyeingProgram.getDyeingProgramName()) == 0)
+        if(repo.CheckIfDyeingProgramNameExists(newDyeingProgram.getDyeingProgramName()) == 0)
         {
             isSuccessful = repo.AddDyeingProgram(newDyeingProgram);
         }
@@ -83,7 +83,8 @@ public class DyeingProgramHandler {
         return repo.GetDyeingProgramIDFromName(Name);
     }
     
-    public ArrayList<String> GetAllDyeingProgram()
+    //Updated for dyeing_program_name Table
+    public ArrayList<String> GetAllDyeingProgramName()
     {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         return repo.GetAllDyeingProgram();
