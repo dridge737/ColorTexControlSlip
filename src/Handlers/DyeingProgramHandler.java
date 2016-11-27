@@ -26,20 +26,12 @@ public class DyeingProgramHandler {
         return dyeingProgramDetails;
     }
     
-    public void AddDyeingProgram(DyeingProgram newDyeingProgram)
+    public int AddDyeingProgram(DyeingProgram newDyeingProgram)
     {
-        boolean isSuccessful = false;
+        //boolean isSuccessful = false;
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
-        
-        if(repo.CheckIfDyeingProgramNameExists(newDyeingProgram.getDyeingProgramName()) == 0)
-        {
-            isSuccessful = repo.AddDyeingProgram(newDyeingProgram);
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(null, "Dyeing Program with the same name may have already been added.");//enter validation 
-        }
+        return repo.AddDyeingProgram(newDyeingProgram);
     }
     
     public boolean UpdateDyeingProgram(DyeingProgram dyeingProgram)
@@ -47,15 +39,7 @@ public class DyeingProgramHandler {
         boolean isSuccessful = false;
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
-        
-        if(repo.CheckIfDyeingProgramNameOnOtherIDExists(dyeingProgram) == 0)
-        {
-            isSuccessful = repo.UpdateDyeingProgramByDyeingProgramId(dyeingProgram);
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(null, "Dyeing Program with the same name has already been added.");
-        }
+        isSuccessful = repo.UpdateDyeingProgramByDyeingProgramId(dyeingProgram);
         
         return isSuccessful;
     }
@@ -71,24 +55,13 @@ public class DyeingProgramHandler {
             isSuccessful = repo.DeleteDyeingProgramByDyeingProgramId(dyeingProgramId);
         }
         
-        if(isSuccessful == false)
-        {
-            //enter validation 
-        }
     }
     
-    public int GetDyeingProgramIDfromName(String Name)
-    {
-        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
-        return repo.GetDyeingProgramIDFromName(Name);
-    }
-    
-    //Updated for dyeing_program_name Table
-    public ArrayList<String> GetAllDyeingProgramName()
-    {
-        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
-        return repo.GetAllDyeingProgram();
-    }
+    //public int GetDyeingProgramIDfromName(String Name)
+    //{
+    //    ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+    //    return repo.GetDyeingProgramNameIDFromName(Name);
+    //}
     
     public ArrayList<String> GetAllDefaultDyeingProgramName()
     {
@@ -106,6 +79,13 @@ public class DyeingProgramHandler {
     {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         return repo.GetDyeingProgramIDForThisCustomer(DyeingProgramName, CustomerID);
+    }
+
+    public int getDefaultProgramIDForThisDyeingProgramNameID(int DyeingProgramNameID) {
+        
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        return repo.getDefaultDyeingProgramForThisDyeingProgramID(DyeingProgramNameID);
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

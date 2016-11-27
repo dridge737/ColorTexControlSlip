@@ -18,6 +18,7 @@ import Handlers.ColorHandler;
 import Handlers.CustomerHandler;
 import Handlers.DesignHandler;
 import Handlers.DyeingProgramHandler;
+import Handlers.DyeingProgramNameHandler;
 import Handlers.JobHandler;
 import Handlers.MachineHandler;
 import Handlers.ResinProgramHandler;
@@ -88,7 +89,11 @@ public class ReviewForm extends javax.swing.JFrame {
     {
          thisDyeingProgram = 
                  new DyeingProgramHandler().GetDyeingProgramDetailsById(thisJob.getDyeingProgramID());
-         DyeingProgramText.setText(thisDyeingProgram.getDyeingProgramName());
+         
+         DyeingProgramNameHandler thisDyeingProgramName = new DyeingProgramNameHandler();
+         String DyeingProgramName = thisDyeingProgramName.GetDyeingProgramNameFromID(thisDyeingProgram.getDyeingProgramNameID());
+         
+         DyeingProgramText.setText(DyeingProgramName);
          
     }
     private void SetResinProgramName()
