@@ -63,12 +63,6 @@ public class DyeingProgramHandler {
     //    return repo.GetDyeingProgramNameIDFromName(Name);
     //}
     
-    public ArrayList<String> GetAllDefaultDyeingProgramName()
-    {
-        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
-        return repo.GetAllDyeingProgram();
-    }
-    
     public int CheckIfSpecificDyeingProgramExistForThisCustomer(String DyeingProgramName , int CustomerID)
     {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();

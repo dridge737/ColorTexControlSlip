@@ -1368,32 +1368,6 @@ public class ColorTextControlSlipRepository {
         return checkTest;
     }
     
-    public ArrayList<String> GetAllDyeingProgram()
-    {
-        DBConnection dbc = new DBConnection();
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        ArrayList<String> DyeingList = new ArrayList<>();
-        try
-        {
-            conn = dbc.getConnection();
-            ps = conn.prepareStatement("SELECT Name FROM dyeing_program_name ");
-            rs = ps.executeQuery();
-            
-            while(rs.next())
-            {
-                DyeingList.add(rs.getString("Name"));
-            }
-        }
-        catch (SQLException ex) {
-            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        this.closeConn(conn, ps, rs);
-        return DyeingList;
-    }
-    
     public ArrayList<String> GetAllDefaultDyeingProgram()
     {
         DBConnection dbc = new DBConnection();
@@ -1632,6 +1606,32 @@ public class ColorTextControlSlipRepository {
         }
         
         return isSuccessful;
+    }
+    
+    public ArrayList<String> GetAllDyeingProgramName()
+    {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ArrayList<String> DyeingList = new ArrayList<>();
+        try
+        {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT Name FROM dyeing_program_name ");
+            rs = ps.executeQuery();
+            
+            while(rs.next())
+            {
+                DyeingList.add(rs.getString("Name"));
+            }
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, ps, rs);
+        return DyeingList;
     }
     
     /************************************************************************************************/
