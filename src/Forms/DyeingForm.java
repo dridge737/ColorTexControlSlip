@@ -66,21 +66,22 @@ public class DyeingForm extends javax.swing.JFrame {
     {
         initComponents();
         WindowProcessType = 2;
-        SetDyeingProgramFromProgramName(DyeingProgramName);
+        SetDefaultDyeingProgramFromProgramName(DyeingProgramName);
         setWindowForthisProcessType();
     }
     //For Control Slip Form
     public DyeingForm(String DyeingProgramName,  JobOrder currentJob)
     {
         initComponents();
-        thisJob = currentJob;
         WindowProcessType = 3;
+        thisJob = currentJob;
         //Check if customer has this dyeingProgramName
         //Fix this
-        SetDyeingProgramFromProgramName(DyeingProgramName);
+        SetDefaultDyeingProgramFromProgramName(DyeingProgramName);
         setWindowForthisProcessType();
     }
     
+    //Jumps From Review Form / Back from View Resin Form
     public DyeingForm(JobOrder currentJob)
     {
         initComponents();
@@ -127,9 +128,14 @@ public class DyeingForm extends javax.swing.JFrame {
     public void SetDyeingProgramFromProgramID(int DyeingProgramID)
     {
         DyeingProgramHandler thisDyeingProgramHandler = new DyeingProgramHandler();
+        DyeingProgramNameHandler thisDyeingProgramNameHandler = new DyeingProgramNameHandler();
+        
         thisDyeingProgram.SetID(DyeingProgramID);
         thisDyeingProgram = thisDyeingProgramHandler.GetDyeingProgramDetailsById(DyeingProgramID);
-        this.ProgramNameText.setText(thisDyeingProgram.getDyeingProgramName());
+        thisDyeingProgramName.setID(thisDyeingProgram.getDyeingProgramNameID());
+        String DyeingProgramName = thisDyeingProgramNameHandler.GetDyeingProgramNameFromID(thisDyeingProgramName.getID());
+        thisDyeingProgramName.setDyeingProgramName(DyeingProgramName);
+        this.ProgramNameText.setText(DyeingProgramName);
         SetDyeingProgramProcessFromProgramID(thisDyeingProgram.getID());
     }
     
@@ -137,7 +143,7 @@ public class DyeingForm extends javax.swing.JFrame {
      * Sets Dyeing Program Name Only and then Calls to set the individual process
      * @param DyeingProgramName 
      */
-    public void SetDyeingProgramFromProgramName(String DyeingProgramName)
+    public void SetDefaultDyeingProgramFromProgramName(String DyeingProgramName)
     {
         //Class and Handler Declaration
         //FOR DYEING PROGRAM NAME
@@ -145,7 +151,7 @@ public class DyeingForm extends javax.swing.JFrame {
         DyeingProgramHandler thisDyeingProgramHandler = new DyeingProgramHandler();
         //Set Program Name
         thisDyeingProgramName.setDyeingProgramName(DyeingProgramName);
-        //ERROR FIX this 
+        //SET ID From dyeing program name
         thisDyeingProgramName.setID(
                 thisDyeingProgramNameHandler.GetDyeingProgramNameIDfromName(thisDyeingProgramName.getDyeingProgramName()));
         this.ProgramNameText.setText(thisDyeingProgramName.getDyeingProgramName());
@@ -154,6 +160,21 @@ public class DyeingForm extends javax.swing.JFrame {
         thisDyeingProgram.SetID(
                 thisDyeingProgramHandler.getDefaultProgramIDForThisDyeingProgramNameID(thisDyeingProgram.getDyeingProgramNameID()));
         SetDyeingProgramProcessFromProgramID(thisDyeingProgram.getID());
+    }
+    
+    public void SetDyeingProgramFromProgramNameForThisCustomer(String DyeingProgramName)
+    {
+        DyeingProgramHandler thisDyeingProgramHandler = new DyeingProgramHandler();
+        if(thisDyeingProgramHandler.
+                CheckIfSpecificDyeingProgramExistForThisCustomer(DyeingProgramName, thisJob.getCustomerID()))
+        {
+            thisDyeingProgram.SetID(thisDyeingProgramHandler.GetDyeingProgramIDForCustomerDyeingProgram(DyeingProgramName, thisJob.getCustomerID()));
+            thisDyeingProgram = thisDyeingProgramHandler.GetDyeingProgramDetailsById(thisDyeingProgram.getID());
+            
+        }
+        else
+            SetDefaultDyeingProgramFromProgramName(DyeingProgramName);
+        
     }
     
     /**

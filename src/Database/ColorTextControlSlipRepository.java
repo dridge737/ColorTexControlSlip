@@ -1162,7 +1162,15 @@ public class ColorTextControlSlipRepository {
         return machineId;
     }
     //END MACHINE REPOSITORY METHODS
-    
+
+/***************************************************************************************************************************/
+
+/***
+ * 
+ * @param newDyeingProgram
+ * @return 
+ */
+
     //BEGIN DYEING PROGRAM REPO METHODS
     public int AddDyeingProgram(DyeingProgram newDyeingProgram) 
     {
@@ -1443,7 +1451,7 @@ public class ColorTextControlSlipRepository {
                     " SELECT dyeing_program.ID FROM dyeing_program, dyeing_program_name "
                             + " WHERE Name = ? "
                             + " AND ProgramNameID = dyeing_program_name.ID"
-                            + " AND dyeing_program.ID IN (SELECT DyeingProgramID FROM job_order WHERE CustomerId = ?)");
+                            + " AND dyeing_program.ID IN (SELECT DISTINCT(DyeingProgramID) FROM job_order WHERE CustomerId = ?)");
             
             int item = 1;
             ps.setString(item++, dyeingProgramName);

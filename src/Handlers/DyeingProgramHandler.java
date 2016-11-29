@@ -19,10 +19,10 @@ public class DyeingProgramHandler {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         DyeingProgram dyeingProgramDetails = new DyeingProgram();
                 
-        if(repo.CheckIfDyeingProgramExistsUsingID(dyeingProgramId) == 1)
-        {
+        //if(repo.CheckIfDyeingProgramExistsUsingID(dyeingProgramId) == 1)
+        //{
             dyeingProgramDetails = repo.GetDyeingProgramDetailsById(dyeingProgramId);
-        }
+        //}
         return dyeingProgramDetails;
     }
     
@@ -63,10 +63,10 @@ public class DyeingProgramHandler {
     //    return repo.GetDyeingProgramNameIDFromName(Name);
     //}
     
-    public int CheckIfSpecificDyeingProgramExistForThisCustomer(String DyeingProgramName , int CustomerID)
+    public boolean CheckIfSpecificDyeingProgramExistForThisCustomer(String DyeingProgramName , int CustomerID)
     {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
-        return repo.CheckIfSpecificDyeingProgramExistsForThisCustomer(DyeingProgramName, CustomerID);
+        return repo.CheckIfSpecificDyeingProgramExistsForThisCustomer(DyeingProgramName, CustomerID) == 1;
     }
     
     public int GetDyeingProgramIDForCustomerDyeingProgram(String DyeingProgramName , int CustomerID)
