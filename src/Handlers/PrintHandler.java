@@ -482,7 +482,7 @@ public class PrintHandler {
         DyeingChemicalHandler dChemHandler = new DyeingChemicalHandler();
         DyeingProcessHandler dProcessHandler = new DyeingProcessHandler();
         ChemicalHandler chemHandler = new ChemicalHandler();
-        ArrayList<DyeingProcess> dyeingProcessList = dProcessHandler.GetAllDyeingProcessAndSubProcessByDyeingProgramId(dyeingProgramDetails.getDyeingProgramId());
+        ArrayList<DyeingProcess> dyeingProcessList = dProcessHandler.GetAllDyeingProcessAndSubProcessByDyeingProgramId(dyeingProgramDetails.getID());
         ArrayList<DyeingChemical> dyeingChemicalList = null;
         int rows = 0;
         

@@ -9,6 +9,7 @@ import DataEntities.DyeingProgram;
 import DataEntities.JobOrder;
 import DataEntities.ProcessOrder;
 import Handlers.DyeingProgramHandler;
+import Handlers.DyeingProgramNameHandler;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -222,7 +223,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         DefaultTableModel model_original = new DefaultTableModel();
         model_original.addColumn("Program Name");
         
-        ArrayList<String> DyeingList = new DyeingProgramHandler().GetAllDefaultDyeingProgramName();
+        ArrayList<String> DyeingList = new DyeingProgramNameHandler().GetAllDefaultDyeingProgramName();
         for (String DyeingList1 : DyeingList) {
             model_original.addRow(new Object[]{DyeingList1});
         }
