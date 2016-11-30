@@ -11,7 +11,8 @@ package DataEntities;
  */
 public class ResinProgram {
     private int ID;
-    private String Name;
+    private int ProgramNameID;
+    private String ProgramDefault;
 
     /**
      * @return the ID
@@ -30,14 +31,28 @@ public class ResinProgram {
     /**
      * @return the Name
      */
-    public String getName() {
-        return Name;
+    public int getProgramNameID() {
+        return ProgramNameID;
     }
 
     /**
      * @param Name the Name to set
      */
-    public void setName(String Name) {
-        this.Name = Name;
+    public void setProgramNameID(int ProgramNameID) {
+        this.ProgramNameID = ProgramNameID;
+    }
+    
+    /**
+     * @return the Name
+     */
+    public String getProgramDefault() {
+        return ProgramDefault;
+    }
+
+    /**
+     * @param Name the Name to set
+     */
+    public void setProgramDefault(String ProgramDefault) {
+        this.ProgramDefault = ProgramDefault;
     }
 }

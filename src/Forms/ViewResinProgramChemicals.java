@@ -51,7 +51,7 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
         initEditComponents();
         populateChemicalComboBox();
         ResinProgramLabel.setText(resinProgramName);
-        
+        ResinProgramTextBox.setText(resinProgramName);
     }
     
     private void populateChemicalComboBox()
@@ -68,9 +68,9 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
     
     private void initEditComponents()
     {
-        ResinProgramTextBox.setEnabled(false);
-        GPLTextField.setEnabled(false);
-        ChemicalComboBox.setEnabled(false);
+        ResinProgramTextBox.setEnabled(true);
+        GPLTextField.setEnabled(true);
+        ChemicalComboBox.setEnabled(true);
     }
     
     public void set_to_center()
@@ -138,12 +138,12 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         ResinProgramTextBox = new javax.swing.JTextField();
-        ChemicalComboBox = new javax.swing.JComboBox<String>();
+        ChemicalComboBox = new javax.swing.JComboBox<>();
         GPLTextField = new javax.swing.JTextField();
         EditChemicalButton = new javax.swing.JButton();
         DeleteChemicalButton = new javax.swing.JButton();
         BackButton = new javax.swing.JButton();
-        BackButton1 = new javax.swing.JButton();
+        AddChemicalButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Color Text Control Slip");
@@ -192,30 +192,46 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("GPL :");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(225, 340, 40, 30));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 340, 40, 30));
 
         ResinProgramTextBox.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        ResinProgramTextBox.setForeground(new java.awt.Color(204, 204, 204));
         ResinProgramTextBox.setText("Resin Program");
+        ResinProgramTextBox.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                ResinProgramTextBoxFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                ResinProgramTextBoxFocusLost(evt);
+            }
+        });
         jPanel1.add(ResinProgramTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(182, 385, 337, 28));
 
         ChemicalComboBox.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        ChemicalComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Chemical" }));
-        jPanel1.add(ChemicalComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 340, -1, 30));
+        ChemicalComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose Chemical" }));
+        jPanel1.add(ChemicalComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 340, 270, 30));
 
         GPLTextField.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         GPLTextField.setForeground(new java.awt.Color(204, 204, 204));
         GPLTextField.setText("GPL Value");
-        jPanel1.add(GPLTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(275, 340, 144, 30));
+        GPLTextField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                GPLTextFieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                GPLTextFieldFocusLost(evt);
+            }
+        });
+        jPanel1.add(GPLTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(374, 340, 150, 30));
 
         EditChemicalButton.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         EditChemicalButton.setText("Edit");
+        EditChemicalButton.setActionCommand("");
         EditChemicalButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EditChemicalButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(EditChemicalButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 440, 130, 30));
+        jPanel1.add(EditChemicalButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 440, 120, 30));
 
         DeleteChemicalButton.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         DeleteChemicalButton.setText("Delete");
@@ -224,7 +240,7 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
                 DeleteChemicalButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(DeleteChemicalButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 440, 130, 30));
+        jPanel1.add(DeleteChemicalButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 440, 110, 30));
 
         BackButton.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         BackButton.setText("Back");
@@ -233,11 +249,19 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
                 BackButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(BackButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(385, 440, 130, 30));
+        jPanel1.add(BackButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 440, 80, 30));
 
-        BackButton1.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        BackButton1.setText("Add");
-        jPanel1.add(BackButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 340, 90, 30));
+        AddChemicalButton.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        AddChemicalButton.setText("Add");
+        AddChemicalButton.setToolTipText("");
+        AddChemicalButton.setActionCommand("");
+        AddChemicalButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddChemicalButtonActionPerformed(evt);
+            }
+        });
+        jPanel1.add(AddChemicalButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 440, 120, 30));
+        AddChemicalButton.getAccessibleContext().setAccessibleName("Add");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -255,12 +279,13 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
 
     private void EditChemicalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditChemicalButtonActionPerformed
         // TODO add your handling code here:
-        
+        String asd = "asd";
             if(EditChemicalButton.getText().equals("Edit"))
             {
                 if(ResinChemicalTable.getSelectedRowCount() > 0 )
                 {
                     currentChemicalName = this.ResinChemicalTable.getModel().getValueAt(this.ResinChemicalTable.getSelectedRow(), 0).toString();
+                    ChemicalComboBox.setSelectedItem(currentChemicalName);
                     currentGPL = Float.parseFloat(this.ResinChemicalTable.getModel().getValueAt(this.ResinChemicalTable.getSelectedRow(), 1).toString());
                     
                     ResinProgramTextBox.setForeground(Color.BLACK);
@@ -271,13 +296,10 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
                     //thisResinChemical.setGPLValue(this.ResinChemicalTable.getModel().getValueAt(this.ResinChemicalTable.getSelectedRow(), 1));
                     model.removeRow(this.ResinChemicalTable.getSelectedRow());
 
-                    ResinProgramTextBox.setEnabled(true);
-                    GPLTextField.setEnabled(true);
-                    ChemicalComboBox.setEnabled(true);
-
                     this.DeleteChemicalButton.setText("Cancel");
                     this.EditChemicalButton.setText("Save");
                     this.BackButton.setEnabled(false);
+                    this.AddChemicalButton.setEnabled(false);
                 }
                 else
                 {
@@ -339,9 +361,6 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
                 
                     resinChemicalHandler.AddNewResinChemical(newResinChemical);
                 }
-                
-                
-                
                 GetUpdatedTable();
             }
         
@@ -354,17 +373,14 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
             {
                 GetUpdatedTable();
 
-                ResinProgramTextBox.setText("Resin Program");
+                ResinProgramTextBox.setText(this.resinProgramName);
                 GPLTextField.setText("GPL Value");
                 ChemicalComboBox.setSelectedIndex(0);
-
-                ResinProgramTextBox.setEnabled(false);
-                GPLTextField.setEnabled(false);
-                ChemicalComboBox.setEnabled(false);
 
                 this.DeleteChemicalButton.setText("Delete");
                 this.EditChemicalButton.setText("Edit");
                 this.BackButton.setEnabled(true);
+                this.AddChemicalButton.setEnabled(true);
             }
             else
             {
@@ -409,6 +425,110 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_BackButtonActionPerformed
 
+    private void GPLTextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_GPLTextFieldFocusGained
+        // TODO add your handling code here:
+        if(GPLTextField.getText().equals("GPL Value") == true)
+        {
+            GPLTextField.setForeground(Color.BLACK);
+            GPLTextField.setText("");
+        }
+    }//GEN-LAST:event_GPLTextFieldFocusGained
+
+    private void GPLTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_GPLTextFieldFocusLost
+        // TODO add your handling code here:
+        if(GPLTextField.getText().trim().equalsIgnoreCase("") == true)
+        {
+            GPLTextField.setText("GPL Value");
+        }
+    }//GEN-LAST:event_GPLTextFieldFocusLost
+
+    private void ResinProgramTextBoxFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ResinProgramTextBoxFocusGained
+        // TODO add your handling code here:
+        //if(ResinProgramTextBox.getText().equals(this.resinProgramName) == true)
+        //{
+        //    ResinProgramTextBox.setText("");
+        //}
+    }//GEN-LAST:event_ResinProgramTextBoxFocusGained
+
+    private void ResinProgramTextBoxFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ResinProgramTextBoxFocusLost
+        // TODO add your handling code here:
+        //if(ResinProgramTextBox.getText().trim().equalsIgnoreCase("") == true)
+        //{
+        //    ResinProgramTextBox.setText(this.resinProgramName);
+        //}
+    }//GEN-LAST:event_ResinProgramTextBoxFocusLost
+
+    private void AddChemicalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddChemicalButtonActionPerformed
+        // TODO add your handling code here:
+        boolean ready = CheckIfDataFieldInputReady();
+        int CloseorNoreply; 
+        ResinProgramHandler resinProgramHandler = new ResinProgramHandler();
+        
+        if(ResinProgramTextBox.getText().equals(this.resinProgramName) == false)
+        {
+            CloseorNoreply = JOptionPane.showConfirmDialog(null,"The resin program name is different from the current program name, do you want to update the program name?"
+                            ,"Update Resin Program Name", JOptionPane.YES_NO_OPTION);
+            if(CloseorNoreply == JOptionPane.YES_OPTION)
+            {
+                resinProgramHandler.UpdateResinProgramName(ResinProgramTextBox.getText(), this.resinProgramName);
+                ResinProgramLabel.setText(ResinProgramTextBox.getText());
+                this.resinProgramName = ResinProgramTextBox.getText();
+            }
+        }
+        
+        if(ready == true)
+        {
+            ResinChemicalHandler resinChemicalHandler = new ResinChemicalHandler();
+                ChemicalHandler chemicalHandler = new ChemicalHandler();
+                ResinChemical newResinChemical = new ResinChemical();
+                int chemicalId = -1;
+                int resinChemicalId = -1;
+                int currentChemicalId = -1;
+
+                String chemicalName = ChemicalComboBox.getSelectedItem().toString();
+                
+                int newResinChemicalId = resinChemicalHandler.GetResinChemicalIdByChemicalId(chemicalHandler.GetChemicalIDFromChemicalName(chemicalName), resinProgramHandler.GetResinProgramIDFromResinProgramName(ResinProgramLabel.getText()));
+                                
+                if(newResinChemicalId == -1)
+                {
+                    if(chemicalName != "Choose Chemical")
+                    {                    
+                        newResinChemical.setChemicalID(chemicalHandler.GetChemicalIDFromChemicalName(chemicalName));
+                        newResinChemical.setGPLValue(Float.parseFloat(GPLTextField.getText()));
+                        newResinChemical.setResinProgramID(resinProgramHandler.GetResinProgramIDFromResinProgramName(ResinProgramLabel.getText()));
+                    }
+                    resinChemicalHandler.AddNewResinChemical(newResinChemical);
+                }
+                
+                if(newResinChemicalId > -1)
+                {
+                    resinChemicalHandler.DeleteResinChemical(newResinChemicalId);
+                    if(chemicalName != "Choose Chemical")
+                    {                    
+                        newResinChemical.setChemicalID(chemicalHandler.GetChemicalIDFromChemicalName(chemicalName));
+                        newResinChemical.setGPLValue(Float.parseFloat(GPLTextField.getText()));
+                        newResinChemical.setResinProgramID(resinProgramHandler.GetResinProgramIDFromResinProgramName(ResinProgramLabel.getText()));
+                    }
+                
+                    resinChemicalHandler.AddNewResinChemical(newResinChemical);
+                }
+                GetUpdatedTable();
+        }
+    }//GEN-LAST:event_AddChemicalButtonActionPerformed
+
+    public boolean CheckIfDataFieldInputReady()
+    {
+        boolean ready = true;
+        if(ChemicalComboBox.getSelectedItem().equals("Choose Chemical") == true)
+        {
+            return ready = false;
+        }
+        if(GPLTextField.getText().equals("GPL Value") == true)
+        {
+            return ready = false;
+        }
+        return ready;
+    }
     /**
      * @param args the command line arguments
      */
@@ -445,8 +565,8 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton AddChemicalButton;
     private javax.swing.JButton BackButton;
-    private javax.swing.JButton BackButton1;
     private javax.swing.JComboBox<String> ChemicalComboBox;
     private javax.swing.JButton DeleteChemicalButton;
     private javax.swing.JButton EditChemicalButton;

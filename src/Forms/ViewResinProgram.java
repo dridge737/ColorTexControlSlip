@@ -261,7 +261,6 @@ public class ViewResinProgram extends javax.swing.JFrame {
             if(CloseorNoreply == JOptionPane.YES_OPTION)
             {
                 String resinProgramName = this.ResinTable.getModel().getValueAt(this.ResinTable.getSelectedRow(), 0).toString();
-                thisResin.setName(resinProgramName);
                 thisResin.setID(new ResinProgramHandler().GetResinProgramIDFromResinProgramName(resinProgramName));
                 new ResinChemicalHandler().DeleteResinChemicalByResinProgramId(thisResin.getID());
                 new ResinProgramHandler().DeleteResinProgram(thisResin.getID());

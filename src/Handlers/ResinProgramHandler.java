@@ -5,6 +5,7 @@
  */
 package Handlers;
 import DataEntities.ResinProgram;
+import DataEntities.ResinProgramName;
 import Database.ColorTextControlSlipRepository;
 import java.util.ArrayList;
 
@@ -13,15 +14,37 @@ import java.util.ArrayList;
  * @author Eldridge
  */
 public class ResinProgramHandler {
-     public boolean AddNewResinProgram(ResinProgram newResinProgram)
+     public int AddNewResinProgramName(ResinProgramName newResinProgramName)
     {
         boolean isSuccessful = false;
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        isSuccessful = repo.AddResinProgram(newResinProgram);
+        int resinProgramNameId = repo.AddNewResinProgramName(newResinProgramName);
         
-        return isSuccessful;
+        return resinProgramNameId;
+    }
+     
+    public int AddNewResinProgram(ResinProgram resinProgram)
+    {
+        int resinProgramId = -1;
+        
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        
+        resinProgramId = repo.AddNewResinProgram(resinProgram);
+        
+        return resinProgramId;
+    }
+    
+    public boolean UpdateResinProgramName(String newProgramName, String oldProgramName)
+    {
+        boolean isSuccessful = false;
+        
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        
+        isSuccessful = repo.UpdateResinProgramName(newProgramName, oldProgramName);
+        
+        return isSuccessful;     
     }
     
     public boolean UpdateResinProgram(ResinProgram newResinProgram)
@@ -41,6 +64,20 @@ public class ResinProgramHandler {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
         isSuccessful = repo.DeleteResinProgramByResinProgramId(ResinId);
+        
+        if(isSuccessful == false)
+        {
+            
+        }
+    }
+    
+    public void DeleteResinProgramName(int resinProgramNameId)
+    {
+        boolean isSuccessful = false;
+        
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        
+        isSuccessful = repo.DeleteResinProgramNameByResinProgramNameId(resinProgramNameId);
         
         if(isSuccessful == false)
         {

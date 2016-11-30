@@ -66,5 +66,26 @@ public class JobHandler {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         return repo.GetAllJobOrderHistoryByJobOrderNumber(customerID);
     }
+    
+    public boolean CheckIfResinNewToCustomer(int customerId, int resinProgramNameId)
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        ArrayList<JobOrder> jobOrderList = new ArrayList<JobOrder>();
+        boolean isExisting = false;
+        
+        jobOrderList = repo.GetAllJobOrderHistoryByCustomerId(customerId);
+        
+        for(int x=0; x<jobOrderList.size(); x++)
+        {
+            int oldResinProgramNameId = repo.GetResinProgramNameIDByResinProgramID(jobOrderList.get(x).getResinProgramID());
+            if(resinProgramNameId == oldResinProgramNameId)
+            {
+                isExisting = true;
+                break;
+            }
+        }
+        
+        return isExisting;
+    }
 
 }
