@@ -6,6 +6,7 @@
 package Handlers;
 
 import DataEntities.JobOrder;
+import DataEntities.JobOrderExtended;
 import Database.ColorTextControlSlipRepository;
 import java.util.ArrayList;
 
@@ -67,6 +68,12 @@ public class JobHandler {
         return repo.GetAllJobOrderHistoryByJobOrderNumber(customerID);
     }
     
+    public ArrayList<JobOrderExtended> GetAllExtendedJobOrderDetails()
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        return repo.GetConnectedJobOrderDetails();
+    }
+    
     public boolean CheckIfResinNewToCustomer(int customerId, int resinProgramNameId)
     {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
@@ -84,7 +91,6 @@ public class JobHandler {
                 break;
             }
         }
-        
         return isExisting;
     }
 

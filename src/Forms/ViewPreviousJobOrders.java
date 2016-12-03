@@ -5,17 +5,25 @@
  */
 package Forms;
 
+import DataEntities.JobOrderExtended;
+import Handlers.JobHandler;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Eldridge
  */
 public class ViewPreviousJobOrders extends javax.swing.JFrame {
 
+    DefaultTableModel model = new DefaultTableModel();
+    
     /**
      * Creates new form ViewPreviousJobOrders
      */
     public ViewPreviousJobOrders() {
         initComponents();
+        
     }
 
     /**
@@ -33,7 +41,7 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
         CancelBut = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        ChemicalTable = new javax.swing.JTable();
+        JobOrderTable = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -73,29 +81,29 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
         jLabel3.setText("Search :");
         BgPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 85, 120, 34));
 
-        ChemicalTable.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
-        ChemicalTable.setModel(new javax.swing.table.DefaultTableModel(
+        JobOrderTable.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        JobOrderTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Job Order", "Design", "Customer", "Color", "Date", "Dyeing Program", "Resin Program"
+                "Job Order", "Design", "Color", "Customer", "Date", "Design", "Dyeing Program", "Machine", "Resin Program"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
-        ChemicalTable.setDropMode(javax.swing.DropMode.ON);
-        ChemicalTable.setOpaque(false);
-        ChemicalTable.setRowHeight(25);
-        ChemicalTable.setRowSelectionAllowed(false);
-        ChemicalTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane1.setViewportView(ChemicalTable);
+        JobOrderTable.setDropMode(javax.swing.DropMode.ON);
+        JobOrderTable.setOpaque(false);
+        JobOrderTable.setRowHeight(25);
+        JobOrderTable.setRowSelectionAllowed(false);
+        JobOrderTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane1.setViewportView(JobOrderTable);
 
         BgPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 710, 310));
 
@@ -118,6 +126,34 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
 
     }//GEN-LAST:event_CancelButActionPerformed
 
+    private void GetUpdatedTable()
+    {
+        model = getUpdatedTableModel();
+        this.JobOrderTable.setModel(model);
+    }    
+    
+    public DefaultTableModel getUpdatedTableModel() {      
+        
+        DefaultTableModel model_original = new DefaultTableModel();
+        model_original.addColumn("DR Number");
+        model_original.addColumn("Design");
+        model_original.addColumn("Color");
+        model_original.addColumn("Customer");
+        model_original.addColumn("Date");
+        model_original.addColumn("Design");
+        model_original.addColumn("Dyeing Program");
+        model_original.addColumn("Machine");
+        model_original.addColumn("Resin Program");
+        
+        ArrayList<JobOrderExtended> JobOrderList = new JobHandler().GetAllExtendedJobOrderDetails();
+        
+        for(int x=0; x<JobOrderList.size(); x++)
+        {
+            model_original.addRow(new Object[]{JobOrderList.get(x).toString()});
+        }
+        return model_original;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -156,8 +192,8 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BgPanel;
     private javax.swing.JButton CancelBut;
-    private javax.swing.JTable ChemicalTable;
     private javax.swing.JLabel Header;
+    private javax.swing.JTable JobOrderTable;
     private javax.swing.JButton SaveBut;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;

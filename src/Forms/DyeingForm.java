@@ -156,9 +156,8 @@ public class DyeingForm extends javax.swing.JFrame {
                 thisDyeingProgramNameHandler.GetDyeingProgramNameIDfromName(thisDyeingProgramName.getDyeingProgramName()));
         this.ProgramNameText.setText(thisDyeingProgramName.getDyeingProgramName());
         
-        thisDyeingProgram.setDyeingProgramNameID(thisDyeingProgramName.getID());
-        thisDyeingProgram.SetID(
-                thisDyeingProgramHandler.getDefaultProgramIDForThisDyeingProgramNameID(thisDyeingProgram.getDyeingProgramNameID()));
+        //thisDyeingProgram.setDyeingProgramNameID(thisDyeingProgramName.getID());
+        thisDyeingProgram = thisDyeingProgramHandler.getDefaultProgramIDForThisDyeingProgramNameID(thisDyeingProgram.getDyeingProgramNameID());
         SetDyeingProgramProcessFromProgramID(thisDyeingProgram.getID());
     }
     
@@ -168,9 +167,8 @@ public class DyeingForm extends javax.swing.JFrame {
         if(thisDyeingProgramHandler.
                 CheckIfSpecificDyeingProgramExistForThisCustomer(DyeingProgramName, thisJob.getCustomerID()))
         {
-            thisDyeingProgram.SetID(thisDyeingProgramHandler.GetDyeingProgramIDForCustomerDyeingProgram(DyeingProgramName, thisJob.getCustomerID()));
-            thisDyeingProgram = thisDyeingProgramHandler.GetDyeingProgramDetailsById(thisDyeingProgram.getID());
-            
+            thisDyeingProgram = thisDyeingProgramHandler.GetDyeingProgramDetailsById(thisDyeingProgramHandler.GetDyeingProgramIDForCustomerDyeingProgram(DyeingProgramName, thisJob.getCustomerID()));
+            SetDyeingProgramProcessFromProgramID(thisDyeingProgram.getID());
         }
         else
             SetDefaultDyeingProgramFromProgramName(DyeingProgramName);
@@ -306,10 +304,10 @@ public class DyeingForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public boolean AddDyeingProgram()
+    public boolean AddDyeingProgramNameAndDyeingProgram()
     {
         boolean isSuccessful = false;
-        DyeingProgramHandler thisDyeingProgramHandler = new DyeingProgramHandler();
+        
         DyeingProgramNameHandler thisDyeingProgramNameHandler = new DyeingProgramNameHandler();
         
         if(this.ProgramNameText.getText().trim().length() > 0)
@@ -321,30 +319,45 @@ public class DyeingForm extends javax.swing.JFrame {
                 int thisDyeingProgramNameID = 
                         thisDyeingProgramNameHandler.AddDyeingProgramName(thisDyeingProgramName.getDyeingProgramName());
                 thisDyeingProgram.setDyeingProgramNameID(thisDyeingProgramNameID);
-                thisDyeingProgram.SetID(thisDyeingProgramHandler.AddDyeingProgram(thisDyeingProgram));
+                //ADD and Set Dyeing Program ID
+                thisDyeingProgram.setDefaultColumn(1);
                 //int DyeingProgramID = thisDyeingProgramHandler.GetDyeingProgramIDfromName(thisDyeingProgram.getDyeingProgramName());
                 //FIX THIS edit for Dyeing Program Name
                 //thisDyeingProgram.SetID(DyeingProgramID);
-                if(thisDyeingProgram.getID() != -1)
-                {
-                    Component[] this_pane = this.GUITabbedPaneProcess.getComponents();
-                    int ProcessOrder = 1;
-                    
-                    for (Component c : this_pane)
-                    {
-                        if (c instanceof ProcessPanel) {
-                            ProcessPanel ThisProcessPanel = ((ProcessPanel)c);
-                            ThisProcessPanel.AddThisPanelInDyeingProcess(thisDyeingProgram.getID(), ProcessOrder++);
-                        }
-                    }
-                    isSuccessful = true;
-                }
+                
+                isSuccessful = AddDyeingProgram();
             }
         }
         else
         {
             JOptionPane.showMessageDialog(null, "Please input a dyeing program name.");
             ProgramNameText.setBackground(ColorError);
+        }
+        return isSuccessful;
+    }
+    
+    private boolean AddDyeingProgram()
+    {
+        DyeingProgramHandler thisDyeingProgramHandler = new DyeingProgramHandler();
+        thisDyeingProgram.SetID(thisDyeingProgramHandler.AddDyeingProgram(thisDyeingProgram));
+        return AddDyeingProcessForThisDyeingProgram();
+    }
+    
+    private boolean AddDyeingProcessForThisDyeingProgram()
+    {
+        boolean isSuccessful = false;
+        if(thisDyeingProgram.getID() != -1)
+        {
+            Component[] this_pane = this.GUITabbedPaneProcess.getComponents();
+            int ProcessOrder = 1;
+            for (Component c : this_pane)
+            {
+                if (c instanceof ProcessPanel) {
+                    ProcessPanel ThisProcessPanel = ((ProcessPanel)c);
+                    ThisProcessPanel.AddThisPanelInDyeingProcess(thisDyeingProgram.getID(), ProcessOrder++);
+                }
+            }
+            isSuccessful = true;
         }
         return isSuccessful;
     }
@@ -387,13 +400,21 @@ public class DyeingForm extends javax.swing.JFrame {
         switch(WindowProcessType)
         {
             case 1:
-                CloseWindow = AddDyeingProgram();
+                CloseWindow = AddDyeingProgramNameAndDyeingProgram();
                 break;
             case 2:
                 CloseWindow = UpdateDyeingProgram();
                 break;
             case 3:
                 //if Default program then add, else update.
+                if(thisDyeingProgram.getDefaultColumn() == 1)
+                {
+                    thisDyeingProgram.setDefaultColumn(0);
+                    CloseWindow = this.AddDyeingProgram();
+                }
+                else
+                    CloseWindow = UpdateDyeingProgram();
+                
                 thisJob.setDyeingProgramID(thisDyeingProgram.getID());
                 break;
         }
