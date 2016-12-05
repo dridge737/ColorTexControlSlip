@@ -58,6 +58,7 @@ public class PrintHandler {
  
     private int chapterNumber;
     
+    
     public void createPDF(Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException {
         File file = new File(DEST);
         file.getParentFile().mkdirs();
@@ -384,6 +385,7 @@ public class PrintHandler {
         Paragraph companyHeader = new Paragraph("Colortex Processing Inc.", companyHeaderFont);
         companyHeader.setAlignment(Element.ALIGN_CENTER);
         document.add(companyHeader);
+        DyeingProgramNameHandler dyeingProgramNameHandler = new DyeingProgramNameHandler();
         //Chapter chapter = new Chapter(companyHeader, 1);
         chapterNumber = 2;
         //chapter.setNumberDepth(0);
@@ -404,7 +406,7 @@ public class PrintHandler {
         document.add(table);
         
         Font dyeingProcessFont = FontFactory.getFont(FontFactory.HELVETICA, 13, Font.NORMAL);
-        Paragraph dyeingProcessHeader = new Paragraph(dyeingProgramDetails.getDyeingProgramName(), dyeingProcessFont);
+        Paragraph dyeingProcessHeader = new Paragraph(dyeingProgramNameHandler.GetDyeingProgramNameFromID(dyeingProgramDetails.getDyeingProgramNameID()), dyeingProcessFont);
         dyeingProcessHeader.setAlignment(Element.ALIGN_CENTER);
         document.add(dyeingProcessHeader);
         
@@ -674,6 +676,7 @@ public class PrintHandler {
     
     public Document AddSecondPageHeader(Document document, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException
     {
+        DyeingProgramNameHandler dyeingProgramNameHandler = new DyeingProgramNameHandler();
         Font companyHeaderFont = FontFactory.getFont(FontFactory.HELVETICA, 18, Font.BOLDITALIC);
         Paragraph companyHeader = new Paragraph("Colortex Processing Inc.", companyHeaderFont);
         companyHeader.setAlignment(Element.ALIGN_CENTER);
@@ -698,7 +701,7 @@ public class PrintHandler {
         document.add(table);
         
         Font dyeingProcessFont = FontFactory.getFont(FontFactory.HELVETICA, 13, Font.NORMAL);
-        Paragraph dyeingProcessHeader = new Paragraph(dyeingProgramDetails.getDyeingProgramName(), dyeingProcessFont);
+        Paragraph dyeingProcessHeader = new Paragraph(dyeingProgramNameHandler.GetDyeingProgramNameFromID(dyeingProgramDetails.getDyeingProgramNameID()), dyeingProcessFont);
         dyeingProcessHeader.setAlignment(Element.ALIGN_CENTER);
         document.add(dyeingProcessHeader);
         
@@ -762,6 +765,7 @@ public class PrintHandler {
     
     public Document AddThirdPage(Document document, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException 
     {
+        DyeingProgramNameHandler dyeingProgramNameHandler = new DyeingProgramNameHandler();
         Font companyHeaderFont = FontFactory.getFont(FontFactory.HELVETICA, 18, Font.BOLDITALIC);
         Paragraph companyHeader = new Paragraph("Colortex Processing Inc.", companyHeaderFont);
         companyHeader.setAlignment(Element.ALIGN_CENTER);
@@ -786,7 +790,7 @@ public class PrintHandler {
         chapter.add(table);
         
         Font dyeingProcessFont = FontFactory.getFont(FontFactory.HELVETICA, 13, Font.NORMAL);
-        Paragraph dyeingProcessHeader = new Paragraph(dyeingProgramDetails.getDyeingProgramName(), dyeingProcessFont);
+        Paragraph dyeingProcessHeader = new Paragraph(dyeingProgramNameHandler.GetDyeingProgramNameFromID(dyeingProgramDetails.getDyeingProgramNameID()), dyeingProcessFont);
         dyeingProcessHeader.setAlignment(Element.ALIGN_CENTER);
         chapter.add(dyeingProcessHeader);
         

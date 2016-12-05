@@ -44,7 +44,7 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
         JobOrderTable = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
 
         BgPanel.setBackground(new java.awt.Color(102, 102, 102));
@@ -123,7 +123,7 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
 
     private void CancelButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButActionPerformed
         // TODO add your handling code here:
-
+        this.dispose();
     }//GEN-LAST:event_CancelButActionPerformed
 
     private void GetUpdatedTable()
