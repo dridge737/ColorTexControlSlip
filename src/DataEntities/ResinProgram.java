@@ -12,7 +12,7 @@ package DataEntities;
 public class ResinProgram {
     private int ID;
     private int ProgramNameID;
-    private String ProgramDefault;
+    private int ProgramDefault;
 
     /**
      * @return the ID
@@ -45,14 +45,14 @@ public class ResinProgram {
     /**
      * @return the Name
      */
-    public String getProgramDefault() {
+    public int getProgramDefault() {
         return ProgramDefault;
     }
 
     /**
      * @param Name the Name to set
      */
-    public void setProgramDefault(String ProgramDefault) {
+    public void setProgramDefault(int ProgramDefault) {
         this.ProgramDefault = ProgramDefault;
     }
 }

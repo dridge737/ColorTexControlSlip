@@ -62,11 +62,11 @@ public class ReviewForm extends javax.swing.JFrame {
         populateLiquoRatioDropDown();
     }
     
-    public ReviewForm(JobOrder thisJob, int WindowType)
+    public ReviewForm(JobOrder currentJob, int WindowType)
     {
         this();
+        thisJob = currentJob;
         SetJobOrderDetails();
-        SetProcessOrderDetails();
         SetDropDownDetails();
         SetDyeingProgramName();
         if(WindowType == 2)
@@ -115,12 +115,17 @@ public class ReviewForm extends javax.swing.JFrame {
         JobOrder.setText(thisJob.getDrNumber());
         
         //Set Date to 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-            try {
-                dateSpinner.setValue(sdf.parse(thisJob.getJobDate()));
-            } catch (ParseException ex) {
-                Logger.getLogger(JobOrderForm.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        
+        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        //    try {
+        //        dateSpinner.setValue(sdf.parse(thisJob.getJobDate()));
+        //    } catch (ParseException ex) {
+        //        Logger.getLogger(JobOrderForm.class.getName()).log(Level.SEVERE, null, ex);
+        //    }
+        
+        Weight.setText(Float.toString(thisJob.getWeight()));
+        VolumeTextField.setText(Float.toString(thisJob.getVolumeH20()));
+        RollLoad.setText(thisJob.getRollLoad());
     }
     private void SetDropDownDetails()
     {
@@ -128,7 +133,6 @@ public class ReviewForm extends javax.swing.JFrame {
         SetMachineNameDropDown();
         SetCustomerNameDropDown();
         SetColorNameDropDown();
-        SetProcessOrderDetails();
     }
     
     private void SetDesignNameDropDown()
@@ -163,12 +167,6 @@ public class ReviewForm extends javax.swing.JFrame {
         ColorDropDownList.setSelectedItem(thisColor.getColorName());
     }
     
-    private void SetProcessOrderDetails()
-    {
-        Weight.setText(Float.toString(thisJob.getWeight()));
-        VolumeTextField.setText(Float.toString(thisJob.getVolumeH20()));
-        RollLoad.setText(thisJob.getRollLoad());
-    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -423,6 +421,10 @@ public class ReviewForm extends javax.swing.JFrame {
 
     private void SaveButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButActionPerformed
         // TODO add your handling code here:
+        JobHandler thisJobHandler = new JobHandler();
+        thisJobHandler.AddNewJobOrder(thisJob);
+                
+        
         try
         {
             PrintHandler handler = new PrintHandler();

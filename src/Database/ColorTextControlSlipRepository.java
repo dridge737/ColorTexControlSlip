@@ -1430,7 +1430,7 @@ public class ColorTextControlSlipRepository {
             rs = ps.executeQuery();
             if(rs.first())
             {
-                DyeingProgramID = rs.getInt("ID");
+                DyeingProgramID = rs.getInt("dyeing_program.ID");
             }
         }
         catch(SQLException ex){
@@ -2060,10 +2060,11 @@ public class ColorTextControlSlipRepository {
         int resinProgramId = -1;
         try {
             conn = db.getConnection();
-            String query = "INSERT INTO resin_program (ProgramNameID) VALUES (?)";
+            String query = "INSERT INTO resin_program (ProgramNameID, ProgramDefault) VALUES (?, ?)";
 
             preparedStmt = conn.prepareStatement(query);
             preparedStmt.setInt(1, newResinProgram.getProgramNameID());
+            preparedStmt.setInt(2, newResinProgram.getProgramDefault());
             preparedStmt.executeUpdate();
             
             PreparedStatement ps = conn.prepareStatement("SELECT ID "
@@ -2193,32 +2194,33 @@ public class ColorTextControlSlipRepository {
         PreparedStatement ps = null;
         ResultSet rs = null;
         int ResinID = -1;
-        int ResinNameID = -1;
+        
         try{
             conn = db.getConnection();
-            ps = conn.prepareStatement("SELECT ID "
-                                 + " FROM resin_program_name "
-                                 + " WHERE Name = ? ");
+            ps = conn.prepareStatement("SELECT rProg.ID "
+                                 + " FROM resin_program_name rProgName, resin_program rProg "
+                                 + " WHERE rProgName.Name = ? "
+                                 + " AND rProgName.ID = rProg.ProgramNameID AND rProg.ProgramDefault = 1");
             
             ps.setString(1, ResinName);
             
             rs = ps.executeQuery();
             if(rs.first())
             {
-                ResinNameID = rs.getInt("ID");
+                ResinID = rs.getInt("rProg.ID");
             }
             
-            ps = conn.prepareStatement("SELECT ID "
-                                 + " FROM resin_program "
-                                 + " WHERE ProgramNameID = ? ");
+            //ps = conn.prepareStatement("SELECT ID "
+            //                     + " FROM resin_program "
+            //                     + " WHERE ProgramNameID = ? AND ProgramDefault = 1");
             
-            ps.setInt(1, ResinNameID);
+            //ps.setInt(1, ResinNameID);
             
-            rs = ps.executeQuery();
-            if(rs.first())
-            {
-                ResinID = rs.getInt("ID");
-            }
+            //rs = ps.executeQuery();
+            //if(rs.first())
+            //{
+            //    ResinID = rs.getInt("ID");
+            //}
         }
         catch(SQLException ex){
             Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
@@ -2226,6 +2228,8 @@ public class ColorTextControlSlipRepository {
         this.closeConn(conn, ps, rs);
         return ResinID;
     }
+    
+    
     
     public String GetResinNameFromResinID(int ResinID)
     {
@@ -2236,9 +2240,10 @@ public class ColorTextControlSlipRepository {
         String ResinName = "";
         try{
             conn = db.getConnection();
-            ps = conn.prepareStatement("SELECT Name "
-                                 + " FROM resin_program "
-                                 + " WHERE ID = ? ");
+            ps = conn.prepareStatement("SELECT rProgName.Name "
+                                 + " FROM resin_program rProg, resin_program_name rProgName"
+                                 + " WHERE rProg.ID = ? "
+                                 + " AND rProg.ProgramNameID = rProgName.ID");
             
             ps.setInt(1, ResinID);
             
@@ -2288,6 +2293,108 @@ public class ColorTextControlSlipRepository {
             itExists = true;
         
         return itExists;
+    }
+    
+    public int CheckIfSpecificResinProgramExistsForThisCustomer(String ResinProgramName, int CustomerID)
+    {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int checkTest = 0;
+        try 
+        {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement(
+                    " SELECT EXISTS "
+                            + "(SELECT resin_program.ID "
+                            + " FROM resin_program, resin_program_name "
+                            + " WHERE Name = ? "
+                            + " AND ProgramNameID = resin_program_name.ID"
+                            + " AND resin_program.ID "
+                            + " IN (SELECT ResinProgramID FROM job_order WHERE CustomerId = ?))"
+                    + " AS 'CheckTest'");
+
+            int item = 1;
+            ps.setString(item++, ResinProgramName);
+            ps.setInt(item++, CustomerID);
+            
+            rs = ps.executeQuery();
+            if(rs.first())
+                checkTest = rs.getInt("CheckTest");
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, ps, rs);
+        return checkTest;
+    }
+    
+    public ResinProgram GetDefaultResinProgramForThisProgramName(String ResinProgramName) {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ResinProgram thisResinProgram = new ResinProgram();
+        try{
+            conn = db.getConnection();
+            ps = conn.prepareStatement(
+                    " SELECT rProg.ID, ProgramNameID, ProgramDefault FROM resin_program rProg, resin_program_name rProgName"
+                            + " WHERE Name = ? "
+                            + " AND ProgramDefault = 1 "
+                            + " AND ProgramNameID = rProgName.ID");
+                            
+            int item = 1;
+            ps.setString(item++, ResinProgramName);
+            rs = ps.executeQuery();
+            if(rs.first())
+            {
+                thisResinProgram.setID(rs.getInt("rProg.ID"));
+                thisResinProgram.setProgramNameID(rs.getInt("ProgramNameID"));
+                thisResinProgram.setProgramDefault(rs.getInt("ProgramDefault"));
+            }
+        }
+        catch(SQLException ex){
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.closeConn(conn, ps, rs);
+        return thisResinProgram;
+    
+    }
+    
+    public ResinProgram GetResinProgramDetailsFromResinProgramNameAndCustomerID(String ResinProgramName, int customerID)
+    {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ResinProgram thisResinProgram = new ResinProgram();
+        try{
+            conn = db.getConnection();
+            ps = conn.prepareStatement(
+                    " SELECT rProg.ID, ProgramNameID, ProgramDefault FROM resin_program rProg, resin_program_name rProgName"
+                            + " WHERE Name = ? "
+                            + " AND ProgramNameID = resin_program_name.ID"
+                            + " AND resin_program.ID IN (SELECT DISTINCT(ResinProgramID) FROM job_order WHERE CustomerId = ?)");
+            
+            int item = 1;
+            ps.setString(item++, ResinProgramName);
+            ps.setInt(item++, customerID);
+            rs = ps.executeQuery();
+            if(rs.first())
+            {
+                thisResinProgram.setID(rs.getInt("rProg.ID"));
+                thisResinProgram.setProgramNameID(rs.getInt("ProgramNameID"));
+                thisResinProgram.setProgramDefault(rs.getInt("ProgramDefault"));
+            }
+        }
+        catch(SQLException ex){
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.closeConn(conn, ps, rs);
+        return thisResinProgram;
+    
     }
     
     public ArrayList<String> GetAllResinProgram()
@@ -3257,7 +3364,7 @@ public class ColorTextControlSlipRepository {
     }
     
     public int GetResinProgramNameIDByResinProgramID(int resinProgramId)
-{
+    {
 	DBConnection db = new DBConnection();
         Connection conn = null;
         PreparedStatement preparedStmt = null;
@@ -3282,5 +3389,6 @@ public class ColorTextControlSlipRepository {
         
         this.closeConn(conn, preparedStmt, resultSet);
         return resinProgramNameId;
-}
+    }
+
 }
