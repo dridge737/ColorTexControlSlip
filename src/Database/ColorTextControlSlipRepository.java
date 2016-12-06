@@ -1186,7 +1186,7 @@ public class ColorTextControlSlipRepository {
             //preparedStmt = conn.prepareStatement(query);
             preparedStmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStmt.setInt(1, newDyeingProgram.getDyeingProgramNameID());
-            preparedStmt.setInt(2, newDyeingProgram.getDefaultColumn());
+            preparedStmt.setInt(2, newDyeingProgram.getProgramDefault());
             preparedStmt.execute();
             
             ResultSet generatedKeys = preparedStmt.getGeneratedKeys();
@@ -1458,8 +1458,8 @@ public class ColorTextControlSlipRepository {
             if(resultSet.first())
             {
                 dyeingProgramDetails.SetID(resultSet.getInt("ID"));
-                dyeingProgramDetails.setDyeingProgramNameID(resultSet.getInt("DyeingProgramNameID"));
-                dyeingProgramDetails.setDefaultColumn(resultSet.getInt("DefaultColumn"));
+                dyeingProgramDetails.setDyeingProgramNameID(resultSet.getInt("ProgramNameID"));
+                dyeingProgramDetails.setProgramDefault(resultSet.getInt("ProgramDefault"));
             }
         } 
         catch (SQLException ex) {
@@ -1492,7 +1492,7 @@ public class ColorTextControlSlipRepository {
             {
                 dyeingProgramDetails.SetID(rs.getInt("ID"));
                 dyeingProgramDetails.setDyeingProgramNameID(ProgramNameID);
-                dyeingProgramDetails.setDyeingProgramNameID(rs.getInt("ProgramDefault"));
+                dyeingProgramDetails.setProgramDefault(rs.getInt("ProgramDefault"));
             }
         }
         catch(SQLException ex){

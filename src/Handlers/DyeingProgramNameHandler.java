@@ -74,7 +74,7 @@ public class DyeingProgramNameHandler {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         if(repo.CheckIfDyeingProgramNameOnOtherIDExists(thisDyeingProgramName) == 0)
         {
-            JOptionPane.showMessageDialog(null, "Dyeing Program with the name" +thisDyeingProgramName.getDyeingProgramName()+ "has already been added.");
+            JOptionPane.showMessageDialog(null, "Dyeing Program with the name " +thisDyeingProgramName.getDyeingProgramName()+ "has already been added.");
             Exists = true;
         }
         return Exists;

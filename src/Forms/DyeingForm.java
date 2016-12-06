@@ -77,7 +77,7 @@ public class DyeingForm extends javax.swing.JFrame {
         thisJob = currentJob;
         //Check if customer has this dyeingProgramName
         //Fix this
-        SetDefaultDyeingProgramFromProgramName(DyeingProgramName);
+        SetDyeingProgramFromProgramNameForThisCustomer(DyeingProgramName);
         setWindowForthisProcessType();
     }
     
@@ -156,7 +156,7 @@ public class DyeingForm extends javax.swing.JFrame {
                 thisDyeingProgramNameHandler.GetDyeingProgramNameIDfromName(thisDyeingProgramName.getDyeingProgramName()));
         this.ProgramNameText.setText(thisDyeingProgramName.getDyeingProgramName());
         
-        //thisDyeingProgram.setDyeingProgramNameID(thisDyeingProgramName.getID());
+        thisDyeingProgram.setDyeingProgramNameID(thisDyeingProgramName.getID());
         thisDyeingProgram = thisDyeingProgramHandler.getDefaultProgramIDForThisDyeingProgramNameID(thisDyeingProgram.getDyeingProgramNameID());
         SetDyeingProgramProcessFromProgramID(thisDyeingProgram.getID());
     }
@@ -320,7 +320,7 @@ public class DyeingForm extends javax.swing.JFrame {
                         thisDyeingProgramNameHandler.AddDyeingProgramName(thisDyeingProgramName.getDyeingProgramName());
                 thisDyeingProgram.setDyeingProgramNameID(thisDyeingProgramNameID);
                 //ADD and Set Dyeing Program ID
-                thisDyeingProgram.setDefaultColumn(1);
+                thisDyeingProgram.setProgramDefault(1);
                 //int DyeingProgramID = thisDyeingProgramHandler.GetDyeingProgramIDfromName(thisDyeingProgram.getDyeingProgramName());
                 //FIX THIS edit for Dyeing Program Name
                 //thisDyeingProgram.SetID(DyeingProgramID);
@@ -407,9 +407,9 @@ public class DyeingForm extends javax.swing.JFrame {
                 break;
             case 3:
                 //if Default program then add, else update.
-                if(thisDyeingProgram.getDefaultColumn() == 1)
+                if(thisDyeingProgram.getProgramDefault() == 1)
                 {
-                    thisDyeingProgram.setDefaultColumn(0);
+                    thisDyeingProgram.setProgramDefault(0);
                     CloseWindow = this.AddDyeingProgram();
                 }
                 else

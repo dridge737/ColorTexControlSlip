@@ -115,7 +115,7 @@ public class ReviewForm extends javax.swing.JFrame {
         JobOrder.setText(thisJob.getDrNumber());
         
         //Set Date to 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
             try {
                 dateSpinner.setValue(sdf.parse(thisJob.getJobDate()));
             } catch (ParseException ex) {

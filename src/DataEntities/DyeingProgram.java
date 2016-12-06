@@ -13,7 +13,7 @@ public class DyeingProgram {
     private int ID;
     //private String dyeingProgramName;
     private int dyeingProgramNameID;
-    private int DefaultColumn;
+    private int ProgramDefault;
     
     public int getID() {
         return ID;
@@ -41,17 +41,17 @@ public class DyeingProgram {
     //}
 
     /**
-     * @return the DefaultColumn
+     * @return the ProgramDefault
      */
-    public int getDefaultColumn() {
-        return DefaultColumn;
+    public int getProgramDefault() {
+        return ProgramDefault;
     }
 
     /**
-     * @param DefaultColumn the DefaultColumn to set
+     * @param thisProgramDefault the ProgramDefault to set
      */
-    public void setDefaultColumn(int DefaultColumn) {
-        this.DefaultColumn = DefaultColumn;
+    public void setProgramDefault(int thisProgramDefault) {
+        this.ProgramDefault = thisProgramDefault;
     }
 
     /**
