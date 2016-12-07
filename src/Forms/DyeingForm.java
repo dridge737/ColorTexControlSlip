@@ -211,6 +211,9 @@ public class DyeingForm extends javax.swing.JFrame {
     {
         //Declare the Tab to be added
         ProcessPanel this_panel;
+        if(WindowProcessType == 3)
+        this_panel = new ProcessPanel(thisProcess, WindowProcessType, thisJob);
+        else
         this_panel = new ProcessPanel(thisProcess, WindowProcessType);
         
         //Add the Tab to the JtabbedPane

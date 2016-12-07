@@ -8,6 +8,7 @@ package Forms.HelpForm;
 import DataEntities.Chemical;
 import DataEntities.DyeingChemical;
 import DataEntities.DyeingProcess;
+import DataEntities.JobOrder;
 import Handlers.ChemicalHandler;
 import Handlers.DyeingChemicalHandler;
 import Handlers.DyeingProcessHandler;
@@ -47,6 +48,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
     ArrayList<String> AllChemical = new ArrayList<String>();
     ArrayList<String> AddedChemicalList = new ArrayList<String>();
     Color ColorError = new Color(232,228,42);
+    JobOrder thisJobOrder = new JobOrder();
     /**
      * Creates new form TrialPanel
      */
@@ -77,6 +79,22 @@ public class SubProcessPanel extends javax.swing.JPanel {
         setTableModel(WindowType);
         AddDeleteColumn();
         
+        SetSubProcessFromDyeingProgram(DyeingProcessID);
+        //TableColumn thisColumn = new TableColumn(ChemicalTable.getColumnCount()-2,50);
+        //thisColumn.setHeaderValue("Quantity");
+        //ChemicalTable.addColumn(thisColumn);  
+        //ChemicalTable.removeColumn(thisColumn);
+    }
+    
+    public SubProcessPanel(int DyeingProcessID, int type , JobOrder currentJobOrder)
+    {
+        //intialize constructors
+        initComponents();
+        addChemicalTextBoxAutoComplete();
+        WindowType = type;
+        setTableModel(WindowType);
+        AddDeleteColumn();
+        thisJobOrder = currentJobOrder;
         SetSubProcessFromDyeingProgram(DyeingProcessID);
         //TableColumn thisColumn = new TableColumn(ChemicalTable.getColumnCount()-2,50);
         //thisColumn.setHeaderValue("Quantity");
@@ -153,6 +171,20 @@ public class SubProcessPanel extends javax.swing.JPanel {
          this.SubProcessText.setText(ThisDyeingProcess.getDyeingProcessName());
          SetChemicalListFromDyeingProcessID(SubProcessID);
      }
+    
+     public float ComputeQuantityFromWeightOrVol(String Type, Float Value)
+     {
+         Float quantity;
+         if(Type.equals("%"))
+         {
+             quantity = thisJobOrder.getWeight() * Value;
+         }
+         else
+         {
+             quantity = thisJobOrder.getVolumeH20() * Value;
+         }
+         return quantity;
+     }
      
      public void SetChemicalListFromDyeingProcessID(int DyeingProcessID)
      {
@@ -165,9 +197,11 @@ public class SubProcessPanel extends javax.swing.JPanel {
          {
              //Add Chemical and its details to the Table
              String ChemicalName = getChemicalNameFromID(thisDyeingChemical.getChemicalID());
+             Float Quantity = ComputeQuantityFromWeightOrVol(thisDyeingChemical.getType(), thisDyeingChemical.getValue());
              if(WindowType == 3)
              {
-                 model.addRow(new Object[] {ChemicalName, thisDyeingChemical.getState(),thisDyeingChemical.getType(), thisDyeingChemical.getValue(),0, "Delete"});                 
+                 
+                 model.addRow(new Object[] {ChemicalName, thisDyeingChemical.getState(),thisDyeingChemical.getType(), thisDyeingChemical.getValue(),Quantity, "Delete"});                 
              }
              else
                  model.addRow(new Object[] {ChemicalName, thisDyeingChemical.getState(),thisDyeingChemical.getType(), thisDyeingChemical.getValue(), "Delete"});
@@ -376,7 +410,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         ChemicalTextfield = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        GPLTextfield = new javax.swing.JTextField();
+        ValueText = new javax.swing.JTextField();
         AddtoTable = new javax.swing.JButton();
         TypeBox = new javax.swing.JComboBox();
         StateBox = new javax.swing.JComboBox();
@@ -421,10 +455,10 @@ public class SubProcessPanel extends javax.swing.JPanel {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Value :");
 
-        GPLTextfield.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        GPLTextfield.addKeyListener(new java.awt.event.KeyAdapter() {
+        ValueText.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        ValueText.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                GPLTextfieldKeyReleased(evt);
+                ValueTextKeyReleased(evt);
             }
         });
 
@@ -463,7 +497,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(GPLTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ValueText, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(AddtoTable, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -477,7 +511,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
                     .addComponent(ChemicalTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TypeBox, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(GPLTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ValueText, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(AddtoTable, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(StateBox, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -533,8 +567,8 @@ public class SubProcessPanel extends javax.swing.JPanel {
     private void AddtoTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddtoTableActionPerformed
         // TODO add your handling code here:
         if(!isNullOrWhitespaceOrEmpty(ChemicalTextfield.getText()) 
-                && !isNullOrWhitespaceOrEmpty(GPLTextfield.getText())
-                && !CheckTextIfItsANumber(GPLTextfield.getText()))
+                && !isNullOrWhitespaceOrEmpty(ValueText.getText())
+                && !CheckTextIfItsANumber(ValueText.getText()))
         {
             String CurrentChemicalText = ChemicalTextfield.getText().trim().toUpperCase();
             if(!this.AddedChemicalList.contains(CurrentChemicalText))
@@ -570,33 +604,40 @@ public class SubProcessPanel extends javax.swing.JPanel {
     {
         String ChemicalName = ChemicalTextfield.getText().trim().toUpperCase();
         DefaultTableModel model = (DefaultTableModel) ChemicalTable.getModel();
-        model.addRow(new Object[] {ChemicalName, this.StateBox.getSelectedItem() , this.TypeBox.getSelectedItem().toString(),GPLTextfield.getText(), "Delete"} );
+        
+        if(WindowType == 3)
+        {
+            float Quantity = this.ComputeQuantityFromWeightOrVol(this.TypeBox.getSelectedItem().toString(), Float.parseFloat(ValueText.getText()));
+            model.addRow(new Object[] {ChemicalName, this.StateBox.getSelectedItem(),this.TypeBox.getSelectedItem().toString(), ValueText.getText(),Quantity, "Delete"});
+        }
+        else
+            model.addRow(new Object[] {ChemicalName, this.StateBox.getSelectedItem(),this.TypeBox.getSelectedItem().toString(), ValueText.getText(), "Delete"});
         
         //ChemicalList
         //After Adding Chemical to table add it to list to check if same chemical will be added
         this.AddedChemicalList.add(ChemicalName);
         this.ChemicalTextfield.setText(null);
-        GPLTextfield.setText(null);
+        ValueText.setText(null);
     }
-    private void GPLTextfieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_GPLTextfieldKeyReleased
+    private void ValueTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ValueTextKeyReleased
         // TODO add your handling code here:
         if(!this.ValueTextCheckerTriggered)    
         {
-            if(CheckTextIfItsANumber(this.GPLTextfield.getText())){
+            if(CheckTextIfItsANumber(this.ValueText.getText())){
                 AddtoTable.setEnabled(false);
-                this.GPLTextfield.setBackground(ColorError);
+                this.ValueText.setBackground(ColorError);
                 ValueTextCheckerTriggered = true;
             }
         }   
         else
         {
-             if(!CheckTextIfItsANumber(this.GPLTextfield.getText())){
+             if(!CheckTextIfItsANumber(this.ValueText.getText())){
                  AddtoTable.setEnabled(true);
-                this.GPLTextfield.setBackground(Color.white);
+                this.ValueText.setBackground(Color.white);
                 ValueTextCheckerTriggered = false;
              }   
         }
-    }//GEN-LAST:event_GPLTextfieldKeyReleased
+    }//GEN-LAST:event_ValueTextKeyReleased
 
     /**
       * Checks if text is a validText int or float variable
@@ -637,11 +678,11 @@ public class SubProcessPanel extends javax.swing.JPanel {
     private javax.swing.JPanel ChemPanel1;
     private javax.swing.JTable ChemicalTable;
     private javax.swing.JTextField ChemicalTextfield;
-    private javax.swing.JTextField GPLTextfield;
     private javax.swing.JComboBox StateBox;
     private javax.swing.JLabel SubProcessLabel;
     private javax.swing.JTextField SubProcessText;
     private javax.swing.JComboBox TypeBox;
+    private javax.swing.JTextField ValueText;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;

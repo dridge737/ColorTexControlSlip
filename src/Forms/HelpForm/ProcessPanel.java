@@ -7,6 +7,7 @@ package Forms.HelpForm;
 
 import DataEntities.DyeingChemical;
 import DataEntities.DyeingProcess;
+import DataEntities.JobOrder;
 import Handlers.DyeingChemicalHandler;
 import Handlers.DyeingProcessHandler;
 import java.awt.Component;
@@ -27,6 +28,7 @@ public class ProcessPanel extends javax.swing.JPanel {
     //private List<JTextField> subProcessName = new ArrayList<JTextField>();
     private DyeingProcess ThisDyeingProcess = new DyeingProcess();
     int WindowType = 0;
+    JobOrder thisJobOrder;
     /**
      * Creates new form ProcessPanel
      */
@@ -60,6 +62,19 @@ public class ProcessPanel extends javax.swing.JPanel {
         
     }
     
+    public ProcessPanel(DyeingProcess thisProcess, int currentWindowType, JobOrder currentJobOrder)
+    {
+        initComponents();
+        ThisDyeingProcess = thisProcess;
+        //Set the Process Name
+        thisJobOrder = currentJobOrder;
+        this.WindowType = currentWindowType;
+        this.ProcessText.setText(thisProcess.getDyeingProcessName());
+        //Call this function to Set all the Process details
+        this.SetAllProcessDetailsFromDyeingProgramID();
+        
+    }
+    
     /**
      * Set the Details of the process and its Sub-process (if there is) into this ProcessPanel
      * @param DyeingProgramID
@@ -75,13 +90,19 @@ public class ProcessPanel extends javax.swing.JPanel {
         if(TotalNumberOfSubProcess > 0)
         {
             ArrayList<DyeingProcess> thisDyeingSubProcess;
-            thisDyeingSubProcess = ProcessHandler.GetDyeingSubProcessByDyeingProgramIdAndProcessOrder(ThisDyeingProcess);
-            
-            for(DyeingProcess CurrentDyeingSubProcess : thisDyeingSubProcess)
+            if(this.WindowType == 3)
             {
+                thisDyeingSubProcess = ProcessHandler.GetDyeingSubProcessByDyeingProgramIdAndProcessOrder(ThisDyeingProcess);
+            }
+            else
+                thisDyeingSubProcess = ProcessHandler.GetDyeingSubProcessByDyeingProgramIdAndProcessOrder(ThisDyeingProcess);
+            
+            
+                for(DyeingProcess CurrentDyeingSubProcess : thisDyeingSubProcess)
+                {
                 //Add SubProcess Tab
                 this.addNewTab(CurrentDyeingSubProcess);
-            }
+                }
             
         }
         else
@@ -133,7 +154,13 @@ public class ProcessPanel extends javax.swing.JPanel {
     private void addNewTab(DyeingProcess SubProcess) 
     {
         /* add new tab */
-        SubProcessPanel this_panel = new SubProcessPanel(SubProcess.getId(), WindowType);
+        SubProcessPanel this_panel;
+        if(WindowType == 3)
+        {
+            this_panel = new SubProcessPanel(SubProcess.getId(), WindowType, thisJobOrder);
+        }
+        else
+            this_panel = new SubProcessPanel(SubProcess.getId(), WindowType);
         //this_panel.SetSubProcessFromDyeingProgram();
         addTabToSubProcessTabbedPane(this_panel, this.NumberOfTabs++); 
         
