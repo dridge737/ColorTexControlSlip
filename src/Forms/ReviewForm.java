@@ -113,20 +113,19 @@ public class ReviewForm extends javax.swing.JFrame {
         //JobHandler JobOrderHandler = new JobHandler();
         //thisJob = JobOrderHandler.GetJobOrderDetailsFromJobId(thisJob.getID());
         JobOrder.setText(thisJob.getDrNumber());
-        
-        //Set Date to 
-        
-        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-        //    try {
-        //        dateSpinner.setValue(sdf.parse(thisJob.getJobDate()));
-        //    } catch (ParseException ex) {
-        //        Logger.getLogger(JobOrderForm.class.getName()).log(Level.SEVERE, null, ex);
-        //    }
-        
+        BatchNo.setText(thisJob.getBatchNo());
         Weight.setText(Float.toString(thisJob.getWeight()));
         VolumeTextField.setText(Float.toString(thisJob.getVolumeH20()));
         RollLoad.setText(thisJob.getRollLoad());
-    }
+        //Set Date to 
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        try {
+            dateSpinner.setValue(sdf.parse(thisJob.getJobDate()));
+        } catch (ParseException ex) {
+            Logger.getLogger(JobOrderForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        }
     private void SetDropDownDetails()
     {
         SetDesignNameDropDown();
@@ -201,6 +200,8 @@ public class ReviewForm extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         RollLoad = new javax.swing.JTextField();
         dateSpinner = new javax.swing.JSpinner();
+        jLabel11 = new javax.swing.JLabel();
+        BatchNo = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         DyeingProgramText = new javax.swing.JTextField();
@@ -265,42 +266,42 @@ public class ReviewForm extends javax.swing.JFrame {
                 ColorDropDownListActionPerformed(evt);
             }
         });
-        MainPanel.add(ColorDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 65, 190, 30));
+        MainPanel.add(ColorDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 110, 190, 30));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel1.setText("Color :");
-        MainPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 65, 70, 30));
+        MainPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 110, 90, 30));
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Customer :");
         MainPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 65, 100, 30));
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("Design :");
         MainPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 110, 100, 30));
 
         jLabel4.setBackground(new java.awt.Color(255, 255, 255));
         jLabel4.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel4.setText("Job Order :");
         MainPanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 20, 100, 30));
 
         jLabel6.setBackground(new java.awt.Color(255, 255, 255));
         jLabel6.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel6.setText("Date :");
-        MainPanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 20, 70, 30));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel6.setText("Batch No :");
+        MainPanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 20, 90, 30));
 
         JobOrder.setEditable(false);
         JobOrder.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
@@ -375,8 +376,18 @@ public class ReviewForm extends javax.swing.JFrame {
 
         dateSpinner.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         dateSpinner.setModel(new javax.swing.SpinnerDateModel());
-        MainPanel.add(dateSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 20, 190, 30));
+        MainPanel.add(dateSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 65, 190, 30));
         dateSpinner.setEditor(new JSpinner.DateEditor(dateSpinner, "MM/dd/yyyy"));
+
+        jLabel11.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel11.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel11.setText("Date :");
+        MainPanel.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 65, 90, 30));
+
+        BatchNo.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        MainPanel.add(BatchNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, 190, 30));
 
         BgPanel.add(MainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 690, -1));
 
@@ -715,6 +726,7 @@ public class ReviewForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField BatchNo;
     private javax.swing.JPanel BgPanel;
     private javax.swing.JButton CancelBut;
     private javax.swing.JLabel ChemicalHeader;
@@ -734,6 +746,7 @@ public class ReviewForm extends javax.swing.JFrame {
     private javax.swing.JSpinner dateSpinner;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
