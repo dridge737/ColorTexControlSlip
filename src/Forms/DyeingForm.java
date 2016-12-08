@@ -111,6 +111,7 @@ public class DyeingForm extends javax.swing.JFrame {
             CancelBut.setText("Back");
             Header.setText("Dyeing Control Slip : Page 3/6");
             ProgramNameText.setEnabled(false);
+            ProgramNameText.setBackground(Color.LIGHT_GRAY);
         }
         
         GUITabbedPaneProcess.add(new JPanel(), "+", NumberOfProcessTabs++);
@@ -167,6 +168,7 @@ public class DyeingForm extends javax.swing.JFrame {
         if(thisDyeingProgramHandler.
                 CheckIfSpecificDyeingProgramExistForThisCustomer(DyeingProgramName, thisJob.getCustomerID()))
         {
+            this.ProgramNameText.setText(DyeingProgramName);
             thisDyeingProgram = thisDyeingProgramHandler.GetDyeingProgramDetailsById(thisDyeingProgramHandler.GetDyeingProgramIDForCustomerDyeingProgram(DyeingProgramName, thisJob.getCustomerID()));
             SetDyeingProgramProcessFromProgramID(thisDyeingProgram.getID());
         }
@@ -291,6 +293,7 @@ public class DyeingForm extends javax.swing.JFrame {
         jPanel2.add(ProgramNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 165, 34));
 
         ProgramNameText.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        ProgramNameText.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jPanel2.add(ProgramNameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 90, 580, 34));
 
         CancelBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
