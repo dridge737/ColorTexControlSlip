@@ -381,6 +381,7 @@ public class AddResinForm extends javax.swing.JFrame {
             if(isResinNewToCustomer == true)
             {
                 UpdateResinProgramWhenNotNewToCustomer();
+                resinProgramId = resinProgram.getID();
             }
             else
             {
@@ -420,7 +421,35 @@ public class AddResinForm extends javax.swing.JFrame {
     private void UpdateResinProgramWhenNotNewToCustomer()
     {
         ResinProgramHandler resinProgramHandler = new ResinProgramHandler();
+        ResinChemicalHandler resinChemicalHandler = new ResinChemicalHandler();
+        ChemicalHandler chemicalHandler = new ChemicalHandler();
+        int chemicalId = -1;
+        boolean isSuccessful = false;
         
+        ResinChemical resinChemical = new ResinChemical();
+        
+        resinChemicalHandler.DeleteResinChemicalByResinProgramId(resinProgram.getID());
+        
+        if(resinProgram.getProgramDefault() == 0)
+        {
+            for (int i = 0; i < ChemicalTable.getRowCount(); i++)
+                {
+                    Object chemicalForResinProgram = ChemicalTable.getModel().getValueAt(i, 0);
+                    Object gpl = ChemicalTable.getModel().getValueAt(i, 1);
+                    chemicalId = chemicalHandler.GetChemicalIDFromChemicalName(chemicalForResinProgram.toString());
+
+                    if(chemicalId != -1 && gpl != null)
+                    {
+                        resinChemical.setResinProgramID(resinProgram.getID());
+                        resinChemical.setChemicalID(chemicalId);
+                        resinChemical.setGPLValue(Float.parseFloat(gpl.toString()));
+                        isSuccessful = resinChemicalHandler.AddNewResinChemical(resinChemical);
+
+                        if(isSuccessful == false)
+                            break;
+                    }
+                }   
+        }
     }
     
     private boolean CheckIfResinNewToCustomer(int customerId, int resinProgramNameId)
@@ -544,7 +573,7 @@ public class AddResinForm extends javax.swing.JFrame {
         {
             resinProgramName.setName(thisProcessName);
 
-            resinProgramNameId = resinProgramHandler.AddNewResinProgramName(resinProgramName);
+            resinProgramNameId = resinProgramHandler.GetResinProgramNameIdFromResinProgramName(resinProgramName.getName());
 
             if(resinProgramNameId != -1)
             {

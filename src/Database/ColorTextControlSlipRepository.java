@@ -2062,21 +2062,14 @@ public class ColorTextControlSlipRepository {
             conn = db.getConnection();
             String query = "INSERT INTO resin_program (ProgramNameID, ProgramDefault) VALUES (?, ?)";
 
-            preparedStmt = conn.prepareStatement(query);
+            preparedStmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStmt.setInt(1, newResinProgram.getProgramNameID());
             preparedStmt.setInt(2, newResinProgram.getProgramDefault());
-            preparedStmt.executeUpdate();
+            preparedStmt.execute();
             
-            PreparedStatement ps = conn.prepareStatement("SELECT ID "
-                                 + " FROM resin_program "
-                                 + " WHERE ProgramNameID = ? AND ProgramDefault = 1");
-            
-            ps.setInt(1, newResinProgram.getProgramNameID());
-            
-            ResultSet rs = ps.executeQuery();
-            if(rs.first())
-            {
-                resinProgramId = rs.getInt("ID");
+            ResultSet generatedKeys = preparedStmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                resinProgramId = generatedKeys.getInt(1);
             }
             
             added = true;
@@ -2375,8 +2368,8 @@ public class ColorTextControlSlipRepository {
             ps = conn.prepareStatement(
                     " SELECT rProg.ID, ProgramNameID, ProgramDefault FROM resin_program rProg, resin_program_name rProgName"
                             + " WHERE Name = ? "
-                            + " AND ProgramNameID = resin_program_name.ID"
-                            + " AND resin_program.ID IN (SELECT DISTINCT(ResinProgramID) FROM job_order WHERE CustomerId = ?)");
+                            + " AND ProgramNameID = rProgName.ID"
+                            + " AND rProg.ID IN (SELECT DISTINCT(ResinProgramID) FROM job_order WHERE CustomerId = ?)");
             
             int item = 1;
             ps.setString(item++, ResinProgramName);
@@ -3381,6 +3374,34 @@ public class ColorTextControlSlipRepository {
             if(resultSet.first())
             {
                 resinProgramNameId = resultSet.getInt("ProgramNameID");
+            }
+        } 
+        catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.closeConn(conn, preparedStmt, resultSet);
+        return resinProgramNameId;
+    }
+    
+    public int GetResinProgramNameIdFromResinProgramName(String resinProgramName)
+    {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        ResultSet resultSet = null;
+		int resinProgramNameId = -1;
+		try {
+            conn = db.getConnection();
+            String query = "SELECT ID FROM resin_program_name WHERE Name = ?";
+              
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setString(1, resinProgramName);
+            resultSet = preparedStmt.executeQuery();
+			
+            if(resultSet.first())
+            {
+                resinProgramNameId = resultSet.getInt("ID");
             }
         } 
         catch (SQLException ex) {
