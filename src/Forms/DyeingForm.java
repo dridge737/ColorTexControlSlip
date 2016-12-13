@@ -293,7 +293,8 @@ public class DyeingForm extends javax.swing.JFrame {
         jPanel2.add(ProgramNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 165, 34));
 
         ProgramNameText.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
-        ProgramNameText.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        ProgramNameText.setToolTipText("");
+        ProgramNameText.setDisabledTextColor(new java.awt.Color(51, 51, 51));
         jPanel2.add(ProgramNameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 90, 580, 34));
 
         CancelBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
