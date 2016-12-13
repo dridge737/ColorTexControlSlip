@@ -129,4 +129,10 @@ public class ResinProgramHandler {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         return repo.GetAllResinProgram();
     }
+    
+    public int GetResinProgramNameIdFromResinProgramName(String resinProgramName)
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        return repo.GetResinProgramNameIdFromResinProgramName(resinProgramName);
+    }
 }

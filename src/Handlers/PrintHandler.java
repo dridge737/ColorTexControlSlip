@@ -490,7 +490,8 @@ public class PrintHandler {
         
         for(int x=0; x<dyeingProcessList.size(); x++)
         {
-            if(rows%30 != 0 || rows == 0){
+            if(rows%30 != 0 || rows == 0)
+            {
                 if (dyeingProcessList.get(x).getdyeingProcessOrder().matches("[0-9]+")){
                     table.addCell(RomanNumber.toRoman(Integer.parseInt(dyeingProcessList.get(x).getdyeingProcessOrder())) + ". " + dyeingProcessList.get(x).getDyeingProcessName());
                     table.addCell(" ");
