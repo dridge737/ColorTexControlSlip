@@ -5,17 +5,24 @@
  */
 package Forms;
 
+import DataEntities.Customer;
+import Handlers.CustomerHandler;
+import java.util.ArrayList;
+import javax.swing.JComboBox;
+
 /**
  *
  * @author Eldridge
  */
 public class ViewCustomerOrder extends javax.swing.JFrame {
 
+    Customer thisCustomer = new Customer();
     /**
      * Creates new form ViewCustomerOrder
      */
     public ViewCustomerOrder() {
         initComponents();
+        populateCustomerDropDown();
     }
 
     /**
@@ -35,7 +42,7 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         ChemicalTable = new javax.swing.JTable();
-        jComboBox1 = new javax.swing.JComboBox();
+        customerDropDown = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -107,9 +114,14 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
 
         BgPanel.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 135, 730, 320));
 
-        jComboBox1.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        BgPanel.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 85, 570, 34));
+        customerDropDown.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        customerDropDown.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Customer" }));
+        customerDropDown.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                customerDropDownActionPerformed(evt);
+            }
+        });
+        BgPanel.add(customerDropDown, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 85, 570, 34));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -129,6 +141,21 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void populateCustomerDropDown()
+    {
+        PopulateList(new CustomerHandler().GetAllCustomers(), customerDropDown);
+    }
+    
+    private void PopulateList(ArrayList<String> thisList , JComboBox thisBox)
+    {
+        if(thisBox != null){
+            for(int x=0; x<thisList.size(); x++)
+            {
+                thisBox.addItem(thisList.get(x));
+            }
+        }     
+    }
+    
     private void SaveButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButActionPerformed
         // TODO add your handling code here:
         
@@ -140,6 +167,33 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
         
     }//GEN-LAST:event_CancelButActionPerformed
 
+    private void customerDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerDropDownActionPerformed
+        // TODO add your handling code here:
+        Customer customerDetails = new Customer();
+        CustomerHandler handler = new CustomerHandler();
+        int customerId = -1;
+        String customerName = "";
+                
+        if(!customerDropDown.getSelectedItem().toString().equals("Choose Customer"))
+        {
+            customerName = customerDropDown.getSelectedItem().toString();
+            thisCustomer.setCustomerName(customerName);
+        }        
+        
+        if(!customerName.equals(""))
+        {
+            customerId = handler.GetCustomerIDFromCustomerName(customerName);
+            thisCustomer.setCustomerId(customerId);
+        }  
+        
+        PopulateTable();
+    }//GEN-LAST:event_customerDropDownActionPerformed
+
+    private void PopulateTable()
+    {
+        
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -181,7 +235,7 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
     private javax.swing.JTable ChemicalTable;
     private javax.swing.JLabel Header;
     private javax.swing.JButton SaveBut;
-    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox customerDropDown;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
