@@ -74,6 +74,12 @@ public class JobHandler {
         return repo.GetConnectedJobOrderDetails();
     }
     
+    public ArrayList<JobOrderExtended> GetAllExtendedJobOrderDetails(int customerId)
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        return repo.GetConnectedJobOrderDetails(customerId);
+    }
+    
     public boolean CheckIfResinNewToCustomer(int customerId, int resinProgramNameId)
     {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();

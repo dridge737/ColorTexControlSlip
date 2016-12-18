@@ -23,7 +23,6 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
      */
     public ViewPreviousJobOrders() {
         initComponents();
-        
     }
 
     /**
