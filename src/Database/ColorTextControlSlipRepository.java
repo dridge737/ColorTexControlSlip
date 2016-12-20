@@ -1939,6 +1939,25 @@ public class ColorTextControlSlipRepository {
         ArrayList<JobOrderExtended> thisJobOrder = new ArrayList<>();
         try{
             conn = db.getConnection();
+            
+            ps = conn.prepareStatement("SELECT DrNumber , Date , col.Name as coName, cus.Name as cName, " +
+                    "des.Name as dName , mach.Name as mName, " +
+                    "dProgName.Name as dpName, resin_program_name.Name as rpName " +
+                    " FROM color col, customer cus , design des, " +
+                    " job_order LEFT JOIN Resin_Program ON job_order.ResinProgramID = resin_program.ID" +
+                    " LEFT JOIN resin_program_name ON Resin_program.ProgramNameID = resin_program_name.ID" +
+                    " , machine mach, dyeing_program dProg, dyeing_program_name dProgName " +
+                    " WHERE col.ID = ColorID " +
+                    " AND cus.ID = CustomerID  " +
+                    " AND des.ID = designID " +
+                    " AND mach.ID = MachineID " +
+                    " AND dProg.ID = DyeingProgramID " +
+                    " AND dProg.ProgramNameID = dProgName.ID;");
+            
+            /*ps = conn.prepareStatement("SELECT DrNumber , Date ,  resin_program_name.Name as rName " +
+" FROM job_order LEFT JOIN Resin_Program ON job_order.ResinProgramID = resin_program.ID " +
+" Left JOIN resin_program_name ON Resin_program.ProgramNameID = resin_program_name.ID;");
+            
             ps = conn.prepareStatement("SELECT DrNumber , Date , col.Name as \"Color Name\", cus.Name as \"Customer Name\", des.Name as \"Design Name\" , mach.Name as \"Machine Name\", " +
                     " dProgName.Name as \"Dyeing Program Name\", rProgName.Name as \"Resin Program Name\" " +
                     " FROM color col, customer cus , design des, job_order, machine mach, " +
@@ -1951,24 +1970,24 @@ public class ColorTextControlSlipRepository {
                     " AND dProg.ProgramNameID = dProgName.ID " +
                     " AND rProg.ID = ResinProgramID " +
                     " AND rProg.ProgramNameID = rProgName.ID;");
-            
+            */
             
             rs = ps.executeQuery();
             JobOrderExtended currentJobOrder = new JobOrderExtended();
-            if(rs.first()){
-                while(rs.next())
-                {
+            
+            while(rs.next())
+            {
                     currentJobOrder.setDrNumber( rs.getString("DrNumber") );
                     currentJobOrder.setJobDate(rs.getString("Date"));
-                    currentJobOrder.setColorName(rs.getString("Color Name"));
-                    currentJobOrder.setCustomerName(rs.getString("Customer Name"));
-                    currentJobOrder.setDesignName(rs.getString("Design Name"));
-                    currentJobOrder.setDyeingProgramName(rs.getString("Dyeing Program Name"));
-                    currentJobOrder.setMachineName(rs.getString("Machine Name"));
-                    currentJobOrder.setResinProgramName(rs.getString("Resin Program Name"));
+                    currentJobOrder.setColorName(rs.getString("coName"));
+                    currentJobOrder.setCustomerName(rs.getString("cName"));
+                    currentJobOrder.setDesignName(rs.getString("dName"));
+                    currentJobOrder.setDyeingProgramName(rs.getString("dpName"));
+                    currentJobOrder.setMachineName(rs.getString("mName"));
+                    currentJobOrder.setResinProgramName(rs.getString("rpName"));
                     thisJobOrder.add(currentJobOrder);
                 }
-            }
+            
         }
         catch(SQLException ex){
             Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
@@ -2458,12 +2477,15 @@ public class ColorTextControlSlipRepository {
         boolean added = false;
         try {
             conn = db.getConnection();
-            String query = "INSERT INTO resin_chemical (ChemicalID, ResinProgramID, ValueGPL) VALUES (?, ?, ?)";
+            String query = "INSERT INTO resin_chemical (ChemicalID, ResinProgramID, ValueGPL, State, Type) VALUES (?, ?, ?, ?, ?)";
 
             preparedStmt = conn.prepareStatement(query);
             preparedStmt.setInt(1, thisResinChemical.getChemicalID() );
             preparedStmt.setInt(2, thisResinChemical.getResinProgramID() );
             preparedStmt.setFloat(3, thisResinChemical.getGPLValue() );
+            preparedStmt.setString(4, thisResinChemical.getState());
+            preparedStmt.setString(5, thisResinChemical.getType());
+            
             preparedStmt.executeUpdate();
             
             added = true;
@@ -2571,6 +2593,8 @@ public class ColorTextControlSlipRepository {
                 ResinChemical resinChemical = new ResinChemical();
                 resinChemical.setChemicalID(rs.getInt("ChemicalID"));
                 resinChemical.setGPLValue(rs.getFloat("ValueGPL"));
+                resinChemical.setState(rs.getString("State"));
+                resinChemical.setType(rs.getString("Type"));
                 resinChemicals.add(resinChemical);                
             }
         }

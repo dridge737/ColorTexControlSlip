@@ -109,6 +109,8 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
         
         model_original.addColumn("Chemical Name");
         model_original.addColumn("Value GPL");
+        model_original.addColumn("State");
+        model_original.addColumn("Type");
         
         int resinProgramId = resinProgramHandler.GetResinProgramIDFromResinProgramName(resinProgramName);
         ArrayList<ResinChemical> resinChemicalList = resinChemicalHandler.GetResinChemicalsByResinProgramId(resinProgramId);
@@ -116,7 +118,7 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
         for(int x=0; x<resinChemicalList.size(); x++)
         {
             String chemicalName = chemicalHandler.GetChemicalNameFromChemicalID(resinChemicalList.get(x).getChemicalID());
-            model_original.addRow(new Object[]{chemicalName, resinChemicalList.get(x).getGPLValue()});
+            model_original.addRow(new Object[]{chemicalName, resinChemicalList.get(x).getGPLValue(), resinChemicalList.get(x).getState(), resinChemicalList.get(x).getType()});
         }
         return model_original;
     }
@@ -136,14 +138,15 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         ResinChemicalTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         ResinProgramTextBox = new javax.swing.JTextField();
-        ChemicalComboBox = new javax.swing.JComboBox<>();
+        ChemicalComboBox = new javax.swing.JComboBox<String>();
         GPLTextField = new javax.swing.JTextField();
         EditChemicalButton = new javax.swing.JButton();
         DeleteChemicalButton = new javax.swing.JButton();
         BackButton = new javax.swing.JButton();
         AddChemicalButton = new javax.swing.JButton();
+        TypeComboBox = new javax.swing.JComboBox();
+        StateComboBox = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Color Text Control Slip");
@@ -188,12 +191,6 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
         jLabel1.setText("Program Name:");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 385, -1, 28));
 
-        jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel3.setText("GPL :");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 340, 40, 30));
-
         ResinProgramTextBox.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         ResinProgramTextBox.setText("Resin Program");
         ResinProgramTextBox.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -207,8 +204,8 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
         jPanel1.add(ResinProgramTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(182, 385, 337, 28));
 
         ChemicalComboBox.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        ChemicalComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose Chemical" }));
-        jPanel1.add(ChemicalComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 340, 270, 30));
+        ChemicalComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Chemical" }));
+        jPanel1.add(ChemicalComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 340, 190, 30));
 
         GPLTextField.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         GPLTextField.setForeground(new java.awt.Color(204, 204, 204));
@@ -221,7 +218,7 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
                 GPLTextFieldFocusLost(evt);
             }
         });
-        jPanel1.add(GPLTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(374, 340, 150, 30));
+        jPanel1.add(GPLTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 340, 150, 30));
 
         EditChemicalButton.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         EditChemicalButton.setText("Edit");
@@ -261,7 +258,14 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
             }
         });
         jPanel1.add(AddChemicalButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 440, 120, 30));
-        AddChemicalButton.getAccessibleContext().setAccessibleName("Add");
+
+        TypeComboBox.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        TypeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "GPL", "%", " " }));
+        jPanel1.add(TypeComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 340, -1, 30));
+
+        StateComboBox.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        StateComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "G", "L" }));
+        jPanel1.add(StateComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 340, 50, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -339,10 +343,12 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
                 ,"Non-Existent Resin Chemical", JOptionPane.YES_NO_OPTION);
                    if(CloseorNoreply == JOptionPane.YES_OPTION)
                     {
-                    if(chemicalName != "Choose Chemical")
+                    if(chemicalName != "Chemical")
                     {                    
                         newResinChemical.setChemicalID(chemicalHandler.GetChemicalIDFromChemicalName(chemicalName));
                         newResinChemical.setGPLValue(Float.parseFloat(GPLTextField.getText()));
+                        newResinChemical.setState(StateComboBox.getSelectedItem().toString());
+                        newResinChemical.setType(TypeComboBox.getSelectedItem().toString());
                         newResinChemical.setResinProgramID(resinProgramHandler.GetResinProgramIDFromResinProgramName(ResinProgramLabel.getText()));
                     }
                 
@@ -356,6 +362,8 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
                     {                    
                         newResinChemical.setChemicalID(chemicalHandler.GetChemicalIDFromChemicalName(chemicalName));
                         newResinChemical.setGPLValue(Float.parseFloat(GPLTextField.getText()));
+                        newResinChemical.setState(StateComboBox.getSelectedItem().toString());
+                        newResinChemical.setType(TypeComboBox.getSelectedItem().toString());
                         newResinChemical.setResinProgramID(resinProgramHandler.GetResinProgramIDFromResinProgramName(ResinProgramLabel.getText()));
                     }
                 
@@ -394,7 +402,7 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
 
                     String chemicalName = this.ResinChemicalTable.getModel().getValueAt(this.ResinChemicalTable.getSelectedRow(), 0).toString();
 
-                    if(chemicalName != "Choose Chemical")
+                    if(chemicalName != "Chemical")
                     {
                         chemicalId = chemicalHandler.GetChemicalIDFromChemicalName(chemicalName);
                     }
@@ -491,10 +499,12 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
                                 
                 if(newResinChemicalId == -1)
                 {
-                    if(chemicalName != "Choose Chemical")
+                    if(chemicalName != "Chemical")
                     {                    
                         newResinChemical.setChemicalID(chemicalHandler.GetChemicalIDFromChemicalName(chemicalName));
                         newResinChemical.setGPLValue(Float.parseFloat(GPLTextField.getText()));
+                        newResinChemical.setState(StateComboBox.getSelectedItem().toString());
+                        newResinChemical.setType(TypeComboBox.getSelectedItem().toString());
                         newResinChemical.setResinProgramID(resinProgramHandler.GetResinProgramIDFromResinProgramName(ResinProgramLabel.getText()));
                     }
                     resinChemicalHandler.AddNewResinChemical(newResinChemical);
@@ -503,9 +513,11 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
                 if(newResinChemicalId > -1)
                 {
                     resinChemicalHandler.DeleteResinChemical(newResinChemicalId);
-                    if(chemicalName != "Choose Chemical")
+                    if(chemicalName != "Chemical")
                     {                    
                         newResinChemical.setChemicalID(chemicalHandler.GetChemicalIDFromChemicalName(chemicalName));
+                        newResinChemical.setState(StateComboBox.getSelectedItem().toString());
+                        newResinChemical.setType(TypeComboBox.getSelectedItem().toString());
                         newResinChemical.setGPLValue(Float.parseFloat(GPLTextField.getText()));
                         newResinChemical.setResinProgramID(resinProgramHandler.GetResinProgramIDFromResinProgramName(ResinProgramLabel.getText()));
                     }
@@ -519,7 +531,7 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
     public boolean CheckIfDataFieldInputReady()
     {
         boolean ready = true;
-        if(ChemicalComboBox.getSelectedItem().equals("Choose Chemical") == true)
+        if(ChemicalComboBox.getSelectedItem().equals("Chemical") == true)
         {
             return ready = false;
         }
@@ -575,8 +587,9 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
     private javax.swing.JTable ResinChemicalTable;
     private javax.swing.JLabel ResinProgramLabel;
     private javax.swing.JTextField ResinProgramTextBox;
+    private javax.swing.JComboBox StateComboBox;
+    private javax.swing.JComboBox TypeComboBox;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables

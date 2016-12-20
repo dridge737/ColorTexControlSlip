@@ -87,6 +87,7 @@ public class AddResinForm extends javax.swing.JFrame {
     {
         this();
         InitializeWindowForControlSlip(ResinProgramName, currentJob);
+        AddDeleteColumn(); 
         ResinProcessName.setEnabled(false);
     }
     
@@ -154,6 +155,10 @@ public class AddResinForm extends javax.swing.JFrame {
         
         model_original.addColumn("Chemical Name");
         model_original.addColumn("Value GPL");
+        model_original.addColumn("State");
+        model_original.addColumn("Type");
+        model_original.addColumn("Quantity");
+        model_original.addColumn("Delete");
         
         //int resinProgramId = resinProgramHandler.GetResinProgramIDFromResinProgramName(ResinProcessName.getText());
         ArrayList<ResinChemical> ThisChemicalList = resinChemicalHandler.GetResinChemicalsByResinProgramId(resinProgram.getID());
@@ -161,17 +166,31 @@ public class AddResinForm extends javax.swing.JFrame {
         for(int x=0; x<ThisChemicalList.size(); x++)
         {
             String chemicalName = chemicalHandler.GetChemicalNameFromChemicalID(ThisChemicalList.get(x).getChemicalID());
-            model_original.addRow(new Object[]{chemicalName, ThisChemicalList.get(x).getGPLValue()});
+            model_original.addRow(new Object[]{chemicalName, ThisChemicalList.get(x).getGPLValue(), ThisChemicalList.get(x).getState(), ThisChemicalList.get(x).getType(), ComputeQuantityFromWeightOrVol(ThisChemicalList.get(x).getType(), ThisChemicalList.get(x).getGPLValue()), "Delete"});
         }
         return model_original;
     }
+    
+    public float ComputeQuantityFromWeightOrVol(String Type, Float Value)
+     {
+         Float quantity;
+         if(Type.equals("%"))
+         {
+             quantity = thisJob.getWeight() * Value;
+         }
+         else
+         {
+             quantity = thisJob.getVolumeH20() * Value;
+         }
+         return quantity;
+     }
     
     public void setTableModel()
     {
         model = new DefaultTableModel( new Object [][] {
             },
             new String [] {
-                "Chemical", "GPL", "Delete"
+                "Chemical", "GPL", "State", "Type", "Delete"
             }) {
             
             @Override
@@ -250,9 +269,10 @@ public class AddResinForm extends javax.swing.JFrame {
         ChemicalTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         ChemicalTextfield = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
         GPLTextfield = new javax.swing.JTextField();
         AddtoTable = new javax.swing.JButton();
+        StateComboBox = new javax.swing.JComboBox();
+        TypeComboBox = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Color Text Control Slip");
@@ -333,12 +353,8 @@ public class AddResinForm extends javax.swing.JFrame {
         jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 40, 97, 30));
         jPanel3.add(ChemicalTextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 40, 210, 30));
 
-        jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel2.setText("GPL :");
-        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(345, 40, 60, 30));
-        jPanel3.add(GPLTextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(415, 40, 120, 30));
+        GPLTextfield.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        jPanel3.add(GPLTextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 40, 110, 30));
 
         AddtoTable.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         AddtoTable.setText("Add");
@@ -347,7 +363,15 @@ public class AddResinForm extends javax.swing.JFrame {
                 AddtoTableActionPerformed(evt);
             }
         });
-        jPanel3.add(AddtoTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 40, 128, 30));
+        jPanel3.add(AddtoTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(588, 40, 90, 30));
+
+        StateComboBox.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        StateComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "G", "L" }));
+        jPanel3.add(StateComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 40, 50, 30));
+
+        TypeComboBox.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        TypeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "GPL", "%" }));
+        jPanel3.add(TypeComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(395, 40, 70, 30));
 
         BgPanel.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 135, 710, 320));
 
@@ -443,6 +467,8 @@ public class AddResinForm extends javax.swing.JFrame {
                         resinChemical.setResinProgramID(resinProgram.getID());
                         resinChemical.setChemicalID(chemicalId);
                         resinChemical.setGPLValue(Float.parseFloat(gpl.toString()));
+                        resinChemical.setState(ChemicalTable.getModel().getValueAt(i, 2).toString());
+                    resinChemical.setType(ChemicalTable.getModel().getValueAt(i, 3).toString());
                         isSuccessful = resinChemicalHandler.AddNewResinChemical(resinChemical);
 
                         if(isSuccessful == false)
@@ -525,6 +551,8 @@ public class AddResinForm extends javax.swing.JFrame {
                         resinChemical.setResinProgramID(resinProgramId);
                         resinChemical.setChemicalID(chemicalId);
                         resinChemical.setGPLValue(Float.parseFloat(gpl.toString()));
+                        resinChemical.setState(ChemicalTable.getModel().getValueAt(i, 2).toString());
+                    resinChemical.setType(ChemicalTable.getModel().getValueAt(i, 3).toString());
                         isSuccessful = resinChemicalHandler.AddNewResinChemical(resinChemical);
 
                         if(isSuccessful == false)
@@ -597,6 +625,8 @@ public class AddResinForm extends javax.swing.JFrame {
                     resinChemical.setResinProgramID(resinProgramId);
                     resinChemical.setChemicalID(chemicalId);
                     resinChemical.setGPLValue(Float.parseFloat(gpl.toString()));
+                    resinChemical.setState(ChemicalTable.getModel().getValueAt(i, 2).toString());
+                    resinChemical.setType(ChemicalTable.getModel().getValueAt(i, 3).toString());
                     isSuccessful = resinChemicalHandler.AddNewResinChemical(resinChemical);
 
                     if(isSuccessful == false)
@@ -697,7 +727,7 @@ public class AddResinForm extends javax.swing.JFrame {
         String ChemicalName = ChemicalTextfield.getText().trim().toUpperCase();
         DefaultTableModel model = (DefaultTableModel) ChemicalTable.getModel();
         //model.addRow(new Object[] {ChemicalName, this.StateBox.getSelectedItem() , this.TypeBox.getSelectedItem().toString(),GPLTextfield.getText(), "Delete"} );
-        model.addRow(new Object[] {ChemicalTextfield.getText(), GPLTextfield.getText(), "Delete"});
+        model.addRow(new Object[] {ChemicalTextfield.getText(), GPLTextfield.getText(), StateComboBox.getSelectedItem().toString(), TypeComboBox.getSelectedItem().toString(), "Delete"});
         //ChemicalList
         //After Adding Chemical to table add it to list to check if same chemical will be added
         this.AddedChemicalList.add(ChemicalName);
@@ -790,8 +820,9 @@ public class AddResinForm extends javax.swing.JFrame {
     private javax.swing.JLabel Header;
     private javax.swing.JTextField ResinProcessName;
     private javax.swing.JButton SaveBut;
+    private javax.swing.JComboBox StateComboBox;
+    private javax.swing.JComboBox TypeComboBox;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;

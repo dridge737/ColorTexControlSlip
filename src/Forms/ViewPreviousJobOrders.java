@@ -23,7 +23,7 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
      */
     public ViewPreviousJobOrders() {
         initComponents();
-        
+        GetUpdatedTable();
     }
 
     /**
@@ -81,7 +81,7 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
         jLabel3.setText("Search :");
         BgPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 85, 120, 34));
 
-        JobOrderTable.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        JobOrderTable.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         JobOrderTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -140,7 +140,6 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
         model_original.addColumn("Color");
         model_original.addColumn("Customer");
         model_original.addColumn("Date");
-        model_original.addColumn("Design");
         model_original.addColumn("Dyeing Program");
         model_original.addColumn("Machine");
         model_original.addColumn("Resin Program");
@@ -149,7 +148,15 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
         
         for(int x=0; x<JobOrderList.size(); x++)
         {
-            model_original.addRow(new Object[]{JobOrderList.get(x).toString()});
+            model_original.addRow(new Object[]{JobOrderList.get(x).getDrNumber(), 
+                                               JobOrderList.get(x).getDesignName(),
+                                               JobOrderList.get(x).getColorName(),
+                                               JobOrderList.get(x).getCustomerName(),
+                                               JobOrderList.get(x).getJobDate(),
+                                               JobOrderList.get(x).getDyeingProgramName(),
+                                               JobOrderList.get(x).getMachineName(),
+                                               JobOrderList.get(x).getResinProgramName()
+            });
         }
         return model_original;
     }

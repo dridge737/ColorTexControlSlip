@@ -14,6 +14,8 @@ public class ResinChemical {
     private int ChemicalID;
     private int ResinProgramID;
     private float GPLValue;
+    private String Type;
+    private String State;
 
     /**
      * @return the ID
@@ -69,6 +71,34 @@ public class ResinChemical {
      */
     public void setGPLValue(float GPLValue) {
         this.GPLValue = GPLValue;
+    }
+
+    /**
+     * @return the Type
+     */
+    public String getType() {
+        return Type;
+    }
+
+    /**
+     * @param Type the Type to set
+     */
+    public void setType(String Type) {
+        this.Type = Type;
+    }
+
+    /**
+     * @return the State
+     */
+    public String getState() {
+        return State;
+    }
+
+    /**
+     * @param State the State to set
+     */
+    public void setState(String State) {
+        this.State = State;
     }
            
     
