@@ -5,17 +5,28 @@
  */
 package Forms;
 
+import DataEntities.Customer;
+import DataEntities.JobOrderExtended;
+import Handlers.CustomerHandler;
+import Handlers.JobHandler;
+import java.util.ArrayList;
+import javax.swing.JComboBox;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Eldridge
  */
 public class ViewCustomerOrder extends javax.swing.JFrame {
 
+    Customer thisCustomer = new Customer();
+    DefaultTableModel model = new DefaultTableModel();
     /**
      * Creates new form ViewCustomerOrder
      */
     public ViewCustomerOrder() {
         initComponents();
+        populateCustomerDropDown();
     }
 
     /**
@@ -34,8 +45,8 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        ChemicalTable = new javax.swing.JTable();
-        jComboBox1 = new javax.swing.JComboBox();
+        JobOrderTable = new javax.swing.JTable();
+        customerDropDown = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -79,8 +90,8 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
         jPanel3.setOpaque(false);
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        ChemicalTable.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
-        ChemicalTable.setModel(new javax.swing.table.DefaultTableModel(
+        JobOrderTable.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        JobOrderTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -96,20 +107,25 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        ChemicalTable.setDropMode(javax.swing.DropMode.ON);
-        ChemicalTable.setOpaque(false);
-        ChemicalTable.setRowHeight(25);
-        ChemicalTable.setRowSelectionAllowed(false);
-        ChemicalTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane1.setViewportView(ChemicalTable);
+        JobOrderTable.setDropMode(javax.swing.DropMode.ON);
+        JobOrderTable.setOpaque(false);
+        JobOrderTable.setRowHeight(25);
+        JobOrderTable.setRowSelectionAllowed(false);
+        JobOrderTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane1.setViewportView(JobOrderTable);
 
         jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 39, 710, 270));
 
         BgPanel.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 135, 730, 320));
 
-        jComboBox1.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        BgPanel.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 85, 570, 34));
+        customerDropDown.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        customerDropDown.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Customer" }));
+        customerDropDown.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                customerDropDownActionPerformed(evt);
+            }
+        });
+        BgPanel.add(customerDropDown, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 85, 570, 34));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -129,6 +145,21 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void populateCustomerDropDown()
+    {
+        PopulateList(new CustomerHandler().GetAllCustomers(), customerDropDown);
+    }
+    
+    private void PopulateList(ArrayList<String> thisList , JComboBox thisBox)
+    {
+        if(thisBox != null){
+            for(int x=0; x<thisList.size(); x++)
+            {
+                thisBox.addItem(thisList.get(x));
+            }
+        }     
+    }
+    
     private void SaveButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButActionPerformed
         // TODO add your handling code here:
         
@@ -140,6 +171,55 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
         
     }//GEN-LAST:event_CancelButActionPerformed
 
+    private void customerDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerDropDownActionPerformed
+        // TODO add your handling code here:
+        Customer customerDetails = new Customer();
+        CustomerHandler handler = new CustomerHandler();
+        int customerId = -1;
+        String customerName = "";
+                
+        if(!customerDropDown.getSelectedItem().toString().equals("Choose Customer"))
+        {
+            customerName = customerDropDown.getSelectedItem().toString();
+            thisCustomer.setCustomerName(customerName);
+        }        
+        
+        if(!customerName.equals(""))
+        {
+            customerId = handler.GetCustomerIDFromCustomerName(customerName);
+            thisCustomer.setCustomerId(customerId);
+        }  
+        
+        GetUpdatedTable();
+    }//GEN-LAST:event_customerDropDownActionPerformed
+
+    private void GetUpdatedTable()
+    {
+        model = getUpdatedTableModel();
+        this.JobOrderTable.setModel(model);
+    }    
+    
+    public DefaultTableModel getUpdatedTableModel() {      
+        
+        DefaultTableModel model_original = new DefaultTableModel();
+        model_original.addColumn("DR Number");
+        model_original.addColumn("Design");
+        model_original.addColumn("Color");
+        model_original.addColumn("Customer");
+        model_original.addColumn("Machine");
+        model_original.addColumn("Date");
+        model_original.addColumn("Dyeing Program");
+        model_original.addColumn("Resin Program");
+        
+        ArrayList<JobOrderExtended> JobOrderList = new JobHandler().GetAllExtendedJobOrderDetails(thisCustomer.getCustomerId());
+        
+        for(int x=0; x<JobOrderList.size(); x++)
+        {
+            model_original.addRow(new Object[]{JobOrderList.get(x).getDrNumber().toString(), JobOrderList.get(x).getDesignName().toString(), JobOrderList.get(x).getColorName().toString(), thisCustomer.getCustomerName().toString(), JobOrderList.get(x).getMachineName().toString(), JobOrderList.get(x).getJobDate().toString(), JobOrderList.get(x).getDyeingProgramName().toString(), JobOrderList.get(x).getResinProgramName().toString()});
+        }
+        return model_original;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -178,10 +258,10 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BgPanel;
     private javax.swing.JButton CancelBut;
-    private javax.swing.JTable ChemicalTable;
     private javax.swing.JLabel Header;
+    private javax.swing.JTable JobOrderTable;
     private javax.swing.JButton SaveBut;
-    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox customerDropDown;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;

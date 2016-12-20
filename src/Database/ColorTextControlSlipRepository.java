@@ -1997,6 +1997,55 @@ public class ColorTextControlSlipRepository {
         
     }
     
+    public ArrayList<JobOrderExtended> GetConnectedJobOrderDetails(int customerId)
+    {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ArrayList<JobOrderExtended> thisJobOrder = new ArrayList<>();
+        try{
+            conn = db.getConnection();
+            ps = conn.prepareStatement("SELECT DrNumber , Date , col.Name as \"Color Name\", cus.Name as \"Customer Name\", des.Name as \"Design Name\" , mach.Name as \"Machine Name\", " +
+                    " dProgName.Name as \"Dyeing Program Name\", rProgName.Name as \"Resin Program Name\" " +
+                    " FROM color col, customer cus , design des, job_order, machine mach, " +
+                    " dyeing_program dProg, dyeing_program_name dProgName, resin_program rProg, resin_program_name rProgName " +
+                    " WHERE col.ID = ColorID " +
+                    " AND cus.ID = CustomerID " +
+                    " AND des.ID = designID " +
+                    " AND mach.ID = MachineID " +
+                    " AND dProg.ID = DyeingProgramID " +
+                    " AND dProg.ProgramNameID = dProgName.ID " +
+                    " AND rProg.ID = ResinProgramID " +
+                    " AND rProg.ProgramNameID = rProgName.ID;");
+            
+            
+            rs = ps.executeQuery();
+            JobOrderExtended currentJobOrder = new JobOrderExtended();
+            if(rs.first()){
+                while(rs.next())
+                {
+                    currentJobOrder = new JobOrderExtended();
+                    currentJobOrder.setDrNumber( rs.getString("DrNumber") );
+                    currentJobOrder.setJobDate(rs.getString("Date"));
+                    currentJobOrder.setColorName(rs.getString("Color Name"));
+                    currentJobOrder.setCustomerName(rs.getString("Customer Name"));
+                    currentJobOrder.setDesignName(rs.getString("Design Name"));
+                    currentJobOrder.setDyeingProgramName(rs.getString("Dyeing Program Name"));
+                    currentJobOrder.setMachineName(rs.getString("Machine Name"));
+                    currentJobOrder.setResinProgramName(rs.getString("Resin Program Name"));
+                    thisJobOrder.add(currentJobOrder);
+                }
+            }
+        }
+        catch(SQLException ex){
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.closeConn(conn, ps, rs);
+        return thisJobOrder;
+        
+    }
+    
     public int CheckIfJobOrderExists(JobOrder thisJobOrder)
     {
         DBConnection dbc = new DBConnection();
