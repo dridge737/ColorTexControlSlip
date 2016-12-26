@@ -369,6 +369,10 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
                 
                     resinChemicalHandler.AddNewResinChemical(newResinChemical);
                 }
+                this.DeleteChemicalButton.setText("Delete");
+                this.EditChemicalButton.setText("Edit");
+                this.BackButton.setEnabled(true);
+                this.AddChemicalButton.setEnabled(true);
                 GetUpdatedTable();
             }
         

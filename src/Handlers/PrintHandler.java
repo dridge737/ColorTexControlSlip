@@ -869,7 +869,7 @@ public class PrintHandler {
         document.add(paragraph);
         document.add(Chunk.NEWLINE);
         
-        float[] columnWidths = {5, 3, 3};
+        float[] columnWidths = {5, 2, 2, 2};
         table = new PdfPTable(columnWidths);
         table.setWidthPercentage(100);
         table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
@@ -879,6 +879,7 @@ public class PrintHandler {
         table.getDefaultCell().setBackgroundColor(new GrayColor(0.75f));
             table.addCell("Resin Chemical");
             table.addCell("GPL");
+            table.addCell("%");
             table.addCell("Quantity");
 
             
@@ -888,14 +889,34 @@ public class PrintHandler {
             table.addCell(" ");
             table.addCell(" ");
             table.addCell(" ");
+            table.addCell(" ");
         
         for (int x = 0; x < resinChemicalList.size(); x++) {
                 table.addCell((x+1) + ".  " + chemicalHandler.GetChemicalNameFromChemicalID(resinChemicalList.get(x).getChemicalID()));
-                table.addCell(String.valueOf(resinChemicalList.get(x).getGPLValue()));
-                table.addCell(String.valueOf(jobOrderDetails.getVolumeH20() * resinChemicalList.get(x).getGPLValue()));
-                table.addCell(" ");
-                table.addCell(" ");
-                table.addCell(" ");
+                //table.addCell(String.valueOf(resinChemicalList.get(x).getGPLValue()));
+                if("GPL".equals(resinChemicalList.get(x).getType().toUpperCase())){
+                    table.addCell(String.valueOf(resinChemicalList.get(x).getGPLValue()));
+                    table.addCell(" ");
+                }
+                else
+                {
+                    table.addCell(" ");
+                    table.addCell(String.valueOf(resinChemicalList.get(x).getGPLValue()));
+                }
+                //table.addCell(String.valueOf(jobOrderDetails.getVolumeH20() * resinChemicalList.get(x).getGPLValue()));
+                if(resinChemicalList.get(x).getType()== "%")
+                {
+                   Float quantity = jobOrderDetails.getWeight() * resinChemicalList.get(x).getGPLValue();
+                   table.addCell(quantity.toString() + resinChemicalList.get(x).getState()); 
+                }
+                else
+                {
+                    Float quantity = Float.parseFloat(volume) * resinChemicalList.get(x).getGPLValue();
+                    table.addCell(quantity.toString() + resinChemicalList.get(x).getState());
+                }
+                //table.addCell(" ");
+                //table.addCell(" ");
+                //table.addCell(" ");
         }
         
         document.add(table);
