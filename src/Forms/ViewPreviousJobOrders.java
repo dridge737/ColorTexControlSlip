@@ -82,9 +82,9 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("Search :");
-        BgPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 85, 120, 34));
+        BgPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 85, 100, 34));
 
         JobOrderTable.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         JobOrderTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -118,7 +118,7 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
                 SearchBoxKeyReleased(evt);
             }
         });
-        BgPanel.add(SearchBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 85, 590, -1));
+        BgPanel.add(SearchBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 85, 580, -1));
 
         getContentPane().add(BgPanel);
         BgPanel.setBounds(0, 0, 790, 550);
