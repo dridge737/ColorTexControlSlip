@@ -5,10 +5,15 @@
  */
 package Forms;
 
+import DataEntities.JobOrder;
 import DataEntities.JobOrderExtended;
 import Handlers.JobHandler;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -42,7 +47,7 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         JobOrderTable = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
+        SearchBox = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -107,8 +112,13 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
 
         BgPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 710, 310));
 
-        jTextField1.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
-        BgPanel.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 85, 590, -1));
+        SearchBox.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        SearchBox.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                SearchBoxKeyReleased(evt);
+            }
+        });
+        BgPanel.add(SearchBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 85, 590, -1));
 
         getContentPane().add(BgPanel);
         BgPanel.setBounds(0, 0, 790, 550);
@@ -118,6 +128,21 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
 
     private void SaveButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButActionPerformed
         // TODO add your handling code here:
+        if(JobOrderTable.getSelectedRowCount() > 0)
+        {
+            int convertedRowNumber = JobOrderTable.convertRowIndexToModel(this.JobOrderTable.getSelectedRow());
+            String DrNumber = JobOrderTable.getModel().getValueAt(convertedRowNumber , 0).toString();
+            JobHandler thisJobOrderHandler = new JobHandler();
+            JobOrder thisJob =thisJobOrderHandler.GetJobOrderDetailsFromDrNumber(DrNumber);
+            ReviewForm orderReviewForm = new ReviewForm(thisJob, 3);
+            orderReviewForm.setVisible(true);
+            this.dispose();
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Please select a current job order.");
+            
+        }
 
     }//GEN-LAST:event_SaveButActionPerformed
 
@@ -126,6 +151,25 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_CancelButActionPerformed
 
+    private void SearchBoxKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SearchBoxKeyReleased
+        // TODO add your handling code here:
+         update_row_filter(SearchBox.getText());
+    }//GEN-LAST:event_SearchBoxKeyReleased
+
+    private void update_row_filter(String row_filter_text)
+    {
+        TableRowSorter<TableModel> rowSorter
+            = new TableRowSorter<>(this.JobOrderTable.getModel());
+        
+        this.JobOrderTable.setRowSorter(rowSorter);
+        
+        if (row_filter_text.trim().length() == 0) {
+            rowSorter.setRowFilter(null);
+        } else {
+            rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + row_filter_text));        
+        }
+    }
+    
     private void GetUpdatedTable()
     {
         model = getUpdatedTableModel();
@@ -202,8 +246,8 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
     private javax.swing.JLabel Header;
     private javax.swing.JTable JobOrderTable;
     private javax.swing.JButton SaveBut;
+    private javax.swing.JTextField SearchBox;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

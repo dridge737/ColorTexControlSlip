@@ -14,6 +14,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -257,6 +258,10 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
                 thisDyeingForm = new DyeingForm(DyeingName);
             thisDyeingForm.setVisible(true);
             this.dispose();
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Please select a Dyeing program to be used.");
         }
     }//GEN-LAST:event_SelectButActionPerformed
 

@@ -46,6 +46,12 @@ public class JobHandler {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         return repo.GetJobOrderDetailsFromJobOrderID(JobOrderID);
      }
+     
+     public JobOrder GetJobOrderDetailsFromDrNumber(String DrNumber)
+     {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        return repo.GetJobOrderDetailsFromDrNumber(DrNumber);
+     }
 
     public boolean CheckIfThisJobOrderHasBeenAdded(JobOrder thisJob) {
         boolean itExist = false;

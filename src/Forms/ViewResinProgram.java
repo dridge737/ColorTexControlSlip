@@ -271,9 +271,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please select an Item in the table to be deleted.");
         }
     }//GEN-LAST:event_DeleteButActionPerformed
-
-   
-    
+       
     private void SelectBut1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectBut1ActionPerformed
         if(ResinTable.getSelectedRowCount() > 0)
         {

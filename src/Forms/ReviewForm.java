@@ -46,7 +46,7 @@ public class ReviewForm extends javax.swing.JFrame {
     ChemicalColor thisColor = new ChemicalColor();
     JobOrder thisJob = new JobOrder();
     ProcessOrder thisProcessOrder = new ProcessOrder();
-    
+    int WindowType = 0;
     DyeingProgram thisDyeingProgram = new DyeingProgram();
     //int jobOrderType = 1;
     /**
@@ -62,16 +62,22 @@ public class ReviewForm extends javax.swing.JFrame {
         populateLiquoRatioDropDown();
     }
     
-    public ReviewForm(JobOrder currentJob, int WindowType)
+    public ReviewForm(JobOrder currentJob, int setWindowType)
     {
         this();
         thisJob = currentJob;
         SetJobOrderDetails();
         SetDropDownDetails();
         SetDyeingProgramName();
-        if(WindowType == 2)
+        WindowType = setWindowType;
+        if(currentJob.getResinProgramID() > 0)
         {
             SetResinProgramName();
+        }
+        if(WindowType == 3)
+        {
+            JobOrder.setText("");
+            JobOrder.setEnabled(true);
         }
             
     }
@@ -178,7 +184,7 @@ public class ReviewForm extends javax.swing.JFrame {
 
         BgPanel = new javax.swing.JPanel();
         ChemicalHeader = new javax.swing.JLabel();
-        SaveBut = new javax.swing.JButton();
+        SavePrint = new javax.swing.JButton();
         CancelBut = new javax.swing.JButton();
         MainPanel = new javax.swing.JPanel();
         CustomerDropDownList = new javax.swing.JComboBox<String>();
@@ -206,6 +212,9 @@ public class ReviewForm extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         DyeingProgramText = new javax.swing.JTextField();
         ResinProgramText = new javax.swing.JTextField();
+        EditResinProgram = new javax.swing.JButton();
+        EditDyeingProgram = new javax.swing.JButton();
+        SaveExit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Color Text Control Slip");
@@ -220,14 +229,14 @@ public class ReviewForm extends javax.swing.JFrame {
         ChemicalHeader.setText("Dyeing Control Slip : Review");
         BgPanel.add(ChemicalHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 22, 690, 50));
 
-        SaveBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
-        SaveBut.setText("Print Preview");
-        SaveBut.addActionListener(new java.awt.event.ActionListener() {
+        SavePrint.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        SavePrint.setText("Save & Print");
+        SavePrint.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SaveButActionPerformed(evt);
+                SavePrintActionPerformed(evt);
             }
         });
-        BgPanel.add(SaveBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(115, 525, 240, 40));
+        BgPanel.add(SavePrint, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 520, 200, 40));
 
         CancelBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         CancelBut.setText("Back");
@@ -236,7 +245,7 @@ public class ReviewForm extends javax.swing.JFrame {
                 CancelButActionPerformed(evt);
             }
         });
-        BgPanel.add(CancelBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 525, 240, 40));
+        BgPanel.add(CancelBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 520, 200, 40));
 
         MainPanel.setBackground(new java.awt.Color(102, 102, 102));
         MainPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -394,25 +403,52 @@ public class ReviewForm extends javax.swing.JFrame {
         jLabel5.setBackground(new java.awt.Color(255, 255, 255));
         jLabel5.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel5.setText("Resin Program :");
         jLabel5.setToolTipText("");
-        BgPanel.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 470, 140, 30));
+        BgPanel.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 470, 140, 30));
 
         jLabel10.setBackground(new java.awt.Color(255, 255, 255));
         jLabel10.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel10.setText("Dyeing Program :");
-        BgPanel.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 430, 140, 30));
+        BgPanel.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 430, 140, 30));
 
         DyeingProgramText.setEditable(false);
         DyeingProgramText.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        BgPanel.add(DyeingProgramText, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 430, 480, 30));
+        BgPanel.add(DyeingProgramText, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 430, 440, 30));
 
         ResinProgramText.setEditable(false);
         ResinProgramText.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        BgPanel.add(ResinProgramText, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 470, 480, 30));
+        BgPanel.add(ResinProgramText, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 470, 440, 30));
+
+        EditResinProgram.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        EditResinProgram.setText("...");
+        EditResinProgram.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EditResinProgramActionPerformed(evt);
+            }
+        });
+        BgPanel.add(EditResinProgram, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 470, 40, 30));
+
+        EditDyeingProgram.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        EditDyeingProgram.setText("...");
+        EditDyeingProgram.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EditDyeingProgramActionPerformed(evt);
+            }
+        });
+        BgPanel.add(EditDyeingProgram, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 430, 40, 30));
+
+        SaveExit.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        SaveExit.setText("Save & Exit");
+        SaveExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SaveExitActionPerformed(evt);
+            }
+        });
+        BgPanel.add(SaveExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 520, 200, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -430,7 +466,7 @@ public class ReviewForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void SaveButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButActionPerformed
+    private void SavePrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SavePrintActionPerformed
         // TODO add your handling code here:
         JobHandler thisJobHandler = new JobHandler();
         thisJobHandler.AddNewJobOrder(thisJob);
@@ -445,7 +481,7 @@ public class ReviewForm extends javax.swing.JFrame {
         {
             
         }
-    }//GEN-LAST:event_SaveButActionPerformed
+    }//GEN-LAST:event_SavePrintActionPerformed
 
     private void CancelButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButActionPerformed
         // TODO add your handling code here:
@@ -557,6 +593,22 @@ public class ReviewForm extends javax.swing.JFrame {
     private void LiquidRatioDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LiquidRatioDropDownActionPerformed
         ComputeForVolume();
     }//GEN-LAST:event_LiquidRatioDropDownActionPerformed
+
+    private void SaveExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveExitActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SaveExitActionPerformed
+
+    private void EditDyeingProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditDyeingProgramActionPerformed
+        // TODO add your handling code here:
+        ViewDyeingProgram thisDyeingProgram = new ViewDyeingProgram();
+        thisDyeingProgram.setVisible(true);
+    }//GEN-LAST:event_EditDyeingProgramActionPerformed
+
+    private void EditResinProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditResinProgramActionPerformed
+        // TODO add your handling code here:
+        ViewResinProgram thisResinProgram = new ViewResinProgram();
+        thisResinProgram.setVisible(true);
+    }//GEN-LAST:event_EditResinProgramActionPerformed
 
     /**
      * @param args the command line arguments
@@ -734,13 +786,16 @@ public class ReviewForm extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> CustomerDropDownList;
     private javax.swing.JComboBox<String> DesignDropDownList;
     private javax.swing.JTextField DyeingProgramText;
+    private javax.swing.JButton EditDyeingProgram;
+    private javax.swing.JButton EditResinProgram;
     private javax.swing.JTextField JobOrder;
     private javax.swing.JComboBox<String> LiquidRatioDropDown;
     private javax.swing.JComboBox<String> MachineDropDownList;
     private javax.swing.JPanel MainPanel;
     private javax.swing.JTextField ResinProgramText;
     private javax.swing.JTextField RollLoad;
-    private javax.swing.JButton SaveBut;
+    private javax.swing.JButton SaveExit;
+    private javax.swing.JButton SavePrint;
     private javax.swing.JTextField VolumeTextField;
     private javax.swing.JTextField Weight;
     private javax.swing.JSpinner dateSpinner;

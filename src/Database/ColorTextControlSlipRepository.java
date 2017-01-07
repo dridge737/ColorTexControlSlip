@@ -1890,6 +1890,47 @@ public class ColorTextControlSlipRepository {
         return JobOrderID;
     }
     
+        public JobOrder GetJobOrderDetailsFromDrNumber(String DrNumber)
+    {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        JobOrder thisJobOrder = new JobOrder();
+        try{
+            conn = db.getConnection();
+            ps = conn.prepareStatement("SELECT * "
+                                 + "FROM job_order "
+                                 + "WHERE DrNumber = ? ");
+            
+            ps.setString(1, DrNumber);
+            
+            rs = ps.executeQuery();
+            if(rs.first())
+            {
+                thisJobOrder.setDrNumber(DrNumber);
+                thisJobOrder.setDrNumber( rs.getString("ID") );
+                thisJobOrder.setMachineID(rs.getInt("MachineID") );
+                thisJobOrder.setDesignID(rs.getInt("DesignID") );
+                thisJobOrder.setColorID(rs.getInt("ColorID"));
+                thisJobOrder.setCustomerID(rs.getInt("CustomerID"));
+                thisJobOrder.setJobDate(rs.getString("Date"));
+                thisJobOrder.setBatchNo(rs.getString("BatchNo"));
+                thisJobOrder.setWeight(rs.getFloat("Weight"));
+                thisJobOrder.setVolumeH20(rs.getFloat("VolH2O"));
+                thisJobOrder.setRollLoad(rs.getString("RollLoad"));
+                thisJobOrder.setRoll(rs.getFloat("Roll"));
+                thisJobOrder.setDyeingProgramID(rs.getInt("DyeingProgramID"));
+                thisJobOrder.setResinProgramID(rs.getInt("ResinProgramID"));
+            }
+        }
+        catch(SQLException ex){
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.closeConn(conn, ps, rs);
+        return thisJobOrder;
+    }
+    
     public JobOrder GetJobOrderDetailsFromJobOrderID(int ID)
     {
         DBConnection db = new DBConnection();
@@ -1908,6 +1949,7 @@ public class ColorTextControlSlipRepository {
             rs = ps.executeQuery();
             if(rs.first())
             {
+                thisJobOrder.setID(ID);
                 thisJobOrder.setDrNumber( rs.getString("DrNumber") );
                 thisJobOrder.setMachineID(rs.getInt("MachineID") );
                 thisJobOrder.setDesignID(rs.getInt("DesignID") );

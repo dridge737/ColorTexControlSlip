@@ -6,12 +6,17 @@
 package Forms;
 
 import DataEntities.Customer;
+import DataEntities.JobOrder;
 import DataEntities.JobOrderExtended;
 import Handlers.CustomerHandler;
 import Handlers.JobHandler;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -40,13 +45,15 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
 
         BgPanel = new javax.swing.JPanel();
         Header = new javax.swing.JLabel();
-        SaveBut = new javax.swing.JButton();
+        UseOrder = new javax.swing.JButton();
         CancelBut = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         JobOrderTable = new javax.swing.JTable();
         customerDropDown = new javax.swing.JComboBox();
+        SearchLabel = new javax.swing.JLabel();
+        SearchTextBox = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -60,14 +67,14 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
         Header.setText("Customer Order");
         BgPanel.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 22, 710, 50));
 
-        SaveBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
-        SaveBut.setText("Use Order");
-        SaveBut.addActionListener(new java.awt.event.ActionListener() {
+        UseOrder.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        UseOrder.setText("Use Order");
+        UseOrder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SaveButActionPerformed(evt);
+                UseOrderActionPerformed(evt);
             }
         });
-        BgPanel.add(SaveBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 470, 240, 40));
+        BgPanel.add(UseOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 510, 240, 40));
 
         CancelBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         CancelBut.setText("Cancel");
@@ -76,13 +83,13 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
                 CancelButActionPerformed(evt);
             }
         });
-        BgPanel.add(CancelBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 470, 240, 40));
+        BgPanel.add(CancelBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 510, 240, 40));
 
         jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("Customer :");
-        BgPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 85, 120, 34));
+        BgPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 85, 120, 34));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Order", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 22), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -90,7 +97,7 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
         jPanel3.setOpaque(false);
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        JobOrderTable.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        JobOrderTable.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         JobOrderTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -116,7 +123,7 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
 
         jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 39, 710, 270));
 
-        BgPanel.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 135, 730, 320));
+        BgPanel.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 730, 320));
 
         customerDropDown.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         customerDropDown.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Customer" }));
@@ -126,6 +133,20 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
             }
         });
         BgPanel.add(customerDropDown, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 85, 570, 34));
+
+        SearchLabel.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        SearchLabel.setForeground(new java.awt.Color(255, 255, 255));
+        SearchLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        SearchLabel.setText("Search  :");
+        BgPanel.add(SearchLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 130, 120, 34));
+
+        SearchTextBox.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        SearchTextBox.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                SearchTextBoxKeyReleased(evt);
+            }
+        });
+        BgPanel.add(SearchTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 130, 570, 34));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -160,11 +181,25 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
         }     
     }
     
-    private void SaveButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButActionPerformed
+    private void UseOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UseOrderActionPerformed
         // TODO add your handling code here:
-        
-
-    }//GEN-LAST:event_SaveButActionPerformed
+        if(JobOrderTable.getSelectedRowCount() > 0)
+        {
+            
+            int convertedRowNumber = JobOrderTable.convertRowIndexToModel(this.JobOrderTable.getSelectedRow());
+            String DrNumber = JobOrderTable.getModel().getValueAt(convertedRowNumber , 0).toString();
+            JobHandler thisJobOrderHandler = new JobHandler();
+            JobOrder thisJob =thisJobOrderHandler.GetJobOrderDetailsFromDrNumber(DrNumber);
+            ReviewForm orderReviewForm = new ReviewForm(thisJob, 3);
+            orderReviewForm.setVisible(true);
+            this.dispose();
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Please select a customer order.");
+            
+        }
+    }//GEN-LAST:event_UseOrderActionPerformed
 
     private void CancelButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButActionPerformed
         // TODO add your handling code here:
@@ -193,6 +228,25 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
         GetUpdatedTable();
     }//GEN-LAST:event_customerDropDownActionPerformed
 
+    private void SearchTextBoxKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SearchTextBoxKeyReleased
+        // TODO add your handling code here:
+        update_row_filter(SearchTextBox.getText());
+    }//GEN-LAST:event_SearchTextBoxKeyReleased
+
+    private void update_row_filter(String row_filter_text)
+    {
+        TableRowSorter<TableModel> rowSorter
+            = new TableRowSorter<>(this.JobOrderTable.getModel());
+        
+        this.JobOrderTable.setRowSorter(rowSorter);
+        
+        if (row_filter_text.trim().length() == 0) {
+            rowSorter.setRowFilter(null);
+        } else {
+            rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + row_filter_text));        
+        }
+    }
+    
     private void GetUpdatedTable()
     {
         model = getUpdatedTableModel();
@@ -260,7 +314,9 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
     private javax.swing.JButton CancelBut;
     private javax.swing.JLabel Header;
     private javax.swing.JTable JobOrderTable;
-    private javax.swing.JButton SaveBut;
+    private javax.swing.JLabel SearchLabel;
+    private javax.swing.JTextField SearchTextBox;
+    private javax.swing.JButton UseOrder;
     private javax.swing.JComboBox customerDropDown;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel3;

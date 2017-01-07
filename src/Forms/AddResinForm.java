@@ -350,11 +350,11 @@ public class AddResinForm extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Chemical :");
-        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 40, 97, 30));
-        jPanel3.add(ChemicalTextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 40, 210, 30));
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 97, 30));
+        jPanel3.add(ChemicalTextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(128, 40, 210, 30));
 
         GPLTextfield.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        jPanel3.add(GPLTextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 40, 110, 30));
+        jPanel3.add(GPLTextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(467, 40, 110, 30));
 
         AddtoTable.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         AddtoTable.setText("Add");
@@ -363,15 +363,15 @@ public class AddResinForm extends javax.swing.JFrame {
                 AddtoTableActionPerformed(evt);
             }
         });
-        jPanel3.add(AddtoTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(588, 40, 90, 30));
+        jPanel3.add(AddtoTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(585, 40, 90, 30));
 
         StateComboBox.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         StateComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "G", "L" }));
-        jPanel3.add(StateComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 40, 50, 30));
+        jPanel3.add(StateComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(343, 40, 40, 30));
 
         TypeComboBox.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         TypeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "GPL", "%" }));
-        jPanel3.add(TypeComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(395, 40, 70, 30));
+        jPanel3.add(TypeComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 40, 70, 30));
 
         BgPanel.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 135, 710, 320));
 
@@ -727,7 +727,18 @@ public class AddResinForm extends javax.swing.JFrame {
         String ChemicalName = ChemicalTextfield.getText().trim().toUpperCase();
         DefaultTableModel model = (DefaultTableModel) ChemicalTable.getModel();
         //model.addRow(new Object[] {ChemicalName, this.StateBox.getSelectedItem() , this.TypeBox.getSelectedItem().toString(),GPLTextfield.getText(), "Delete"} );
-        model.addRow(new Object[] {ChemicalTextfield.getText(), GPLTextfield.getText(), StateComboBox.getSelectedItem().toString(), TypeComboBox.getSelectedItem().toString(), "Delete"});
+        if(WindowType == 1)
+        {
+            model.addRow(new Object[] {
+                                        ChemicalTextfield.getText(), 
+                                        GPLTextfield.getText(), 
+                                        StateComboBox.getSelectedItem().toString(), 
+                                        TypeComboBox.getSelectedItem().toString(),
+                                        ComputeQuantityFromWeightOrVol(TypeComboBox.getSelectedItem().toString(), Float.parseFloat(GPLTextfield.getText())), 
+                                                "Delete"});
+        }
+        else
+            model.addRow(new Object[] {ChemicalTextfield.getText(), GPLTextfield.getText(), StateComboBox.getSelectedItem().toString(), TypeComboBox.getSelectedItem().toString(), "Delete"});
         //ChemicalList
         //After Adding Chemical to table add it to list to check if same chemical will be added
         this.AddedChemicalList.add(ChemicalName);
