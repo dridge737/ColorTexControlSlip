@@ -117,7 +117,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         ));
         DyeingTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         DyeingTable.setRowHeight(20);
-        DyeingTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        DyeingTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         jScrollPane1.setViewportView(DyeingTable);
 
         BgPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 123, 470, 280));
@@ -217,13 +217,14 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
     {
         model = getUpdatedTableModel();
         this.DyeingTable.setModel(model);
+        
     }
     
     public DefaultTableModel getUpdatedTableModel() {      
         
         DefaultTableModel model_original = new DefaultTableModel();
         model_original.addColumn("Program Name");
-        
+      
         ArrayList<String> DyeingList = new DyeingProgramNameHandler().GetAllDefaultDyeingProgramName();
         for (String DyeingList1 : DyeingList) {
             model_original.addRow(new Object[]{DyeingList1});

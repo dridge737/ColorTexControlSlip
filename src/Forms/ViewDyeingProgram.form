@@ -115,7 +115,7 @@
                 </Property>
                 <Property name="rowHeight" type="int" value="20"/>
                 <Property name="selectionModel" type="javax.swing.ListSelectionModel" editor="org.netbeans.modules.form.editors2.JTableSelectionModelEditor">
-                  <JTableSelectionModel selectionMode="0"/>
+                  <JTableSelectionModel selectionMode="1"/>
                 </Property>
               </Properties>
             </Component>

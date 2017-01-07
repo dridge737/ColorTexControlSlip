@@ -275,7 +275,7 @@ public class ReviewForm extends javax.swing.JFrame {
                 ColorDropDownListActionPerformed(evt);
             }
         });
-        MainPanel.add(ColorDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 110, 190, 30));
+        MainPanel.add(ColorDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 110, 190, 30));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
@@ -385,7 +385,7 @@ public class ReviewForm extends javax.swing.JFrame {
 
         dateSpinner.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         dateSpinner.setModel(new javax.swing.SpinnerDateModel());
-        MainPanel.add(dateSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 65, 190, 30));
+        MainPanel.add(dateSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 65, 190, 30));
         dateSpinner.setEditor(new JSpinner.DateEditor(dateSpinner, "MM/dd/yyyy"));
 
         jLabel11.setBackground(new java.awt.Color(255, 255, 255));
@@ -396,7 +396,7 @@ public class ReviewForm extends javax.swing.JFrame {
         MainPanel.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 65, 90, 30));
 
         BatchNo.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        MainPanel.add(BatchNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, 190, 30));
+        MainPanel.add(BatchNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 20, 190, 30));
 
         BgPanel.add(MainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 690, -1));
 
