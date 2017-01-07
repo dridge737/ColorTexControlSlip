@@ -77,7 +77,7 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
         BgPanel.add(UseOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 510, 240, 40));
 
         CancelBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
-        CancelBut.setText("Cancel");
+        CancelBut.setText("Back");
         CancelBut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CancelButActionPerformed(evt);

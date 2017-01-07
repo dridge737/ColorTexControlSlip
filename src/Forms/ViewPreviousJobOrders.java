@@ -42,7 +42,7 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
 
         BgPanel = new javax.swing.JPanel();
         Header = new javax.swing.JLabel();
-        SaveBut = new javax.swing.JButton();
+        UseBut = new javax.swing.JButton();
         CancelBut = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -62,17 +62,17 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
         Header.setText("Job Order");
         BgPanel.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 22, 710, 50));
 
-        SaveBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
-        SaveBut.setText("Use Job Order");
-        SaveBut.addActionListener(new java.awt.event.ActionListener() {
+        UseBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        UseBut.setText("Use Job Order");
+        UseBut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SaveButActionPerformed(evt);
+                UseButActionPerformed(evt);
             }
         });
-        BgPanel.add(SaveBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 480, 240, 40));
+        BgPanel.add(UseBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 480, 240, 40));
 
         CancelBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
-        CancelBut.setText("Cancel");
+        CancelBut.setText("Back");
         CancelBut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CancelButActionPerformed(evt);
@@ -126,7 +126,7 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void SaveButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButActionPerformed
+    private void UseButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UseButActionPerformed
         // TODO add your handling code here:
         if(JobOrderTable.getSelectedRowCount() > 0)
         {
@@ -140,11 +140,11 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
         }
         else
         {
-            JOptionPane.showMessageDialog(null, "Please select a current job order.");
+            JOptionPane.showMessageDialog(null, "Please select a job order.");
             
         }
 
-    }//GEN-LAST:event_SaveButActionPerformed
+    }//GEN-LAST:event_UseButActionPerformed
 
     private void CancelButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButActionPerformed
         // TODO add your handling code here:
@@ -245,8 +245,8 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
     private javax.swing.JButton CancelBut;
     private javax.swing.JLabel Header;
     private javax.swing.JTable JobOrderTable;
-    private javax.swing.JButton SaveBut;
     private javax.swing.JTextField SearchBox;
+    private javax.swing.JButton UseBut;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
