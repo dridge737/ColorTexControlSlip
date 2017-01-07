@@ -466,20 +466,86 @@ public class ReviewForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private boolean CheckJobOrderInformationFromTextBox()
+    {
+        boolean isSuccessful = true;
+        if(thisCustomer.getCustomerId() < 1)
+        {
+            isSuccessful = false;
+            JOptionPane.showMessageDialog(null, "Please check the Customer Name.");
+        }
+        else if(thisColor.getColorId() < 1)
+        {
+            isSuccessful = false;
+            JOptionPane.showMessageDialog(null, "Please check the Color name.");
+        }
+        else if(thisDesign.getDesignId() < 1)
+        {
+            isSuccessful = false;
+            JOptionPane.showMessageDialog(null, "Please check the Design name."); 
+        }
+        else if(thisMachine.getMachineId() < 1)
+        {
+            isSuccessful = false;
+            JOptionPane.showMessageDialog(null, "Please check the Machine details.");  
+        }
+        else if(JobOrder.getText().length() < 1)
+        {
+            isSuccessful = false;
+            JOptionPane.showMessageDialog(null, "Please check the Job Order number.");  
+        }
+        else if(this.BatchNo.getText().length() < 1)
+        {
+            isSuccessful = false;
+            JOptionPane.showMessageDialog(null, "Please check the Batch number.");
+        }
+        else if(this.VolumeTextField.getText().length() < 1)
+        {
+            isSuccessful = false;
+            JOptionPane.showMessageDialog(null, "Please check the value in Volume of Water."); 
+        }
+        else if(this.Weight.getText().length() < 1)
+        {
+            isSuccessful = false;
+            JOptionPane.showMessageDialog(null, "Please check the value in the Weight."); 
+        }
+        return isSuccessful;
+    }
+    private boolean AddTextToTextBox()
+    {
+        boolean isSuccessful = false;
+        //If all inputs are good
+        if(CheckJobOrderInformationFromTextBox())
+        {
+            thisJob.setCustomerID(thisCustomer.getCustomerId());
+            thisJob.setColorID(thisColor.getColorId());
+            thisJob.setDesignID(thisDesign.getDesignId());
+            thisJob.setMachineID(thisMachine.getMachineId());
+            thisJob.setDrNumber(JobOrder.getText());
+            thisJob.setJobDate(get_date_from_spinner(dateSpinner));
+            thisJob.setBatchNo(BatchNo.getText());
+            thisJob.setVolumeH20(Float.parseFloat(this.VolumeTextField.getText()));
+            thisJob.setWeight(Float.parseFloat(this.Weight.getText()));
+            thisJob.setRollLoad(RollLoad.getText());
+            
+            isSuccessful = true;
+        }                  
+        return isSuccessful;
+    }
     private void SavePrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SavePrintActionPerformed
         // TODO add your handling code here:
         JobHandler thisJobHandler = new JobHandler();
-        thisJobHandler.AddNewJobOrder(thisJob);
-                
-        
-        try
+        if(AddTextToTextBox())
         {
-            PrintHandler handler = new PrintHandler();
-            handler.createPDF(thisMachine, thisDesign, thisCustomer, thisColor, thisJob, thisDyeingProgram, VolumeTextField.getText());
-        }
-        catch(IOException | DocumentException e)
-        {
-            
+            thisJobHandler.AddNewJobOrder(thisJob);
+            try
+            {
+                PrintHandler handler = new PrintHandler();
+                handler.createPDF(thisMachine, thisDesign, thisCustomer, thisColor, thisJob, thisDyeingProgram, VolumeTextField.getText());
+            }
+            catch(IOException | DocumentException e)
+            {
+            }
         }
     }//GEN-LAST:event_SavePrintActionPerformed
 

@@ -529,7 +529,8 @@ public class JobOrderForm extends javax.swing.JFrame {
             
         return isSuccessful;
     }*/
-    private boolean SetJobOrderInformationFromTextBox()
+    
+    private boolean CheckJobOrderInformationFromTextBox()
     {
         boolean isSuccessful = true;
         if(thisCustomer.getCustomerId() < 1)
@@ -572,9 +573,14 @@ public class JobOrderForm extends javax.swing.JFrame {
             isSuccessful = false;
             JOptionPane.showMessageDialog(null, "Please check the value in the Weight."); 
         }
-         
+        return isSuccessful;
+    }
+    
+    private boolean SetJobOrderInformationFromTextBox()
+    {
+        boolean isSuccessful = false;
         //If all inputs are good
-        if(isSuccessful)
+        if(CheckJobOrderInformationFromTextBox())
         {
             thisJob.setCustomerID(thisCustomer.getCustomerId());
             thisJob.setColorID(thisColor.getColorId());
