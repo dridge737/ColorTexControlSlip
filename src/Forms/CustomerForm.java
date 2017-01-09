@@ -12,12 +12,14 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-
+import javax.swing.table.DefaultTableColumnModel;
+import javax.swing.table.TableColumn;
 /**
  *
  * @author Eldridge
@@ -395,9 +397,15 @@ public class CustomerForm extends javax.swing.JFrame {
     public DefaultTableModel getUpdatedCustomerTableModel() {      
         
         DefaultTableModel model_original = new DefaultTableModel();
+        //model_original.addColumn("Customer Name");
+        //DefaultTableColumnModel column_model = new DefaultTableColumnModel();
+        //column_model.
+        //TableColumn thisColumn = new TableColumn();
+        //thisColumn.setCellEditor(null);
+        //thisColumn.setHeaderValue("Customer Name");
+       
+        ArrayList<String> CustomerList = new CustomerHandler().GetAllCustomers();
         model_original.addColumn("Customer Name");
-        
-         ArrayList<String> CustomerList = new CustomerHandler().GetAllCustomers();
         for(int x=0; x<CustomerList.size(); x++)
         {
             model_original.addRow(new Object[]{CustomerList.get(x).toString()});
