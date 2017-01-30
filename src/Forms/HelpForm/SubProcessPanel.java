@@ -270,8 +270,8 @@ public class SubProcessPanel extends javax.swing.JPanel {
       */
      public void AddSubProcess(int DyeingProgramID, String Order)
      {
-            if(CheckIfTextIsReady())
-            {
+         //if(CheckIfTextIsReady())
+         //{
                  //SET All Dyeing Process Columns ID, NAME , ORDER
                 DyeingProcess ThisDyeingProcess = new DyeingProcess(DyeingProgramID,this.SubProcessText.getText(), Order );
                 //ThisDyeingProcess.setDyeingProgramId(DyeingProgramID);
@@ -286,7 +286,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
                                 ThisDyeingProcess));
                 //Add Chemicals After Adding Dyeing Process
                 AddChemicals(ThisDyeingProcess.getId());
-            }
+        //    }
      }
      
      /**
@@ -309,23 +309,22 @@ public class SubProcessPanel extends javax.swing.JPanel {
      public boolean UpdateSubProcess(int DyeingProcessID, String Order)
      {
          boolean isSuccessful = false;
-            if(CheckIfTextIsReady())
-            {
+         //if(CheckIfTextIsReady())
+         //   {
                 //SET All Dyeing Process Columns ID, NAME , ORDER
-                DyeingProcess ThisDyeingProcess = new DyeingProcess();
-                ThisDyeingProcess.setId(DyeingProcessID);
-                ThisDyeingProcess.setDyeingProcessName(this.SubProcessText.getText());
-                ThisDyeingProcess.setDyeingProcessOrder(Order);
-                DyeingProcessHandler ThisDyeingProcessHandler = new DyeingProcessHandler();
-                
+         DyeingProcess ThisDyeingProcess = new DyeingProcess();
+         ThisDyeingProcess.setId(DyeingProcessID);
+         ThisDyeingProcess.setDyeingProcessName(this.SubProcessText.getText());
+         ThisDyeingProcess.setDyeingProcessOrder(Order);
+         DyeingProcessHandler ThisDyeingProcessHandler = new DyeingProcessHandler();       
                 //USE Handler To Add Dyeing Process
-                if(ThisDyeingProcessHandler.UpdateDyeingProcess(ThisDyeingProcess) != -1)
-                //Add Chemicals After Adding Dyeing Process
-                {
-                    UpdateChemicals(ThisDyeingProcess.getId());
-                    isSuccessful = true;
-                } 
-            }
+         if(ThisDyeingProcessHandler.UpdateDyeingProcess(ThisDyeingProcess) != -1)
+             //Add Chemicals After Adding Dyeing Process
+         {
+             UpdateChemicals(ThisDyeingProcess.getId());
+             isSuccessful = true;
+         } 
+        //    }
             
             return isSuccessful;
      }

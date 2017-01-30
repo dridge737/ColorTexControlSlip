@@ -58,6 +58,7 @@ public class MainWindow extends javax.swing.JFrame {
         MachineBut = new javax.swing.JButton();
         NewDyeingProgram = new javax.swing.JButton();
         NewResinProgram = new javax.swing.JButton();
+        PreviousCustomerOrder = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Color Text Control Slip");
@@ -72,7 +73,7 @@ public class MainWindow extends javax.swing.JFrame {
                 ExitActionPerformed(evt);
             }
         });
-        jPanel1.add(Exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 330, 370, 50));
+        jPanel1.add(Exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 356, 370, 40));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -106,7 +107,7 @@ public class MainWindow extends javax.swing.JFrame {
                 DyeingFormActionPerformed(evt);
             }
         });
-        jPanel1.add(DyeingForm, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 130, 280, 30));
+        jPanel1.add(DyeingForm, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 128, 280, 30));
 
         ResinForm.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         ResinForm.setText("Change Resin Program");
@@ -115,7 +116,7 @@ public class MainWindow extends javax.swing.JFrame {
                 ResinFormActionPerformed(evt);
             }
         });
-        jPanel1.add(ResinForm, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 170, 280, 30));
+        jPanel1.add(ResinForm, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 166, 280, 30));
 
         ChemBut.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         ChemBut.setText("Chemical");
@@ -124,7 +125,7 @@ public class MainWindow extends javax.swing.JFrame {
                 ChemButActionPerformed(evt);
             }
         });
-        jPanel1.add(ChemBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 210, 180, 30));
+        jPanel1.add(ChemBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 242, 180, 30));
 
         ColorBut.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         ColorBut.setText("Color");
@@ -133,7 +134,7 @@ public class MainWindow extends javax.swing.JFrame {
                 ColorButActionPerformed(evt);
             }
         });
-        jPanel1.add(ColorBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 210, 180, 30));
+        jPanel1.add(ColorBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 242, 180, 30));
 
         CustomerBut.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         CustomerBut.setText("Customer");
@@ -142,7 +143,7 @@ public class MainWindow extends javax.swing.JFrame {
                 CustomerButActionPerformed(evt);
             }
         });
-        jPanel1.add(CustomerBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 250, 180, 30));
+        jPanel1.add(CustomerBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 280, 180, 30));
 
         DesignBut.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         DesignBut.setText("Design");
@@ -151,7 +152,7 @@ public class MainWindow extends javax.swing.JFrame {
                 DesignButActionPerformed(evt);
             }
         });
-        jPanel1.add(DesignBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 250, 180, 30));
+        jPanel1.add(DesignBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 280, 180, 30));
 
         MachineBut.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         MachineBut.setText("Machine");
@@ -160,7 +161,7 @@ public class MainWindow extends javax.swing.JFrame {
                 MachineButActionPerformed(evt);
             }
         });
-        jPanel1.add(MachineBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 290, 370, 30));
+        jPanel1.add(MachineBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 318, 370, 30));
 
         NewDyeingProgram.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         NewDyeingProgram.setText("New");
@@ -170,7 +171,7 @@ public class MainWindow extends javax.swing.JFrame {
                 NewDyeingProgramActionPerformed(evt);
             }
         });
-        jPanel1.add(NewDyeingProgram, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 130, 85, 30));
+        jPanel1.add(NewDyeingProgram, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 128, 85, 30));
 
         NewResinProgram.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         NewResinProgram.setText("New");
@@ -180,7 +181,17 @@ public class MainWindow extends javax.swing.JFrame {
                 NewResinProgramActionPerformed(evt);
             }
         });
-        jPanel1.add(NewResinProgram, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 170, 85, 30));
+        jPanel1.add(NewResinProgram, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 166, 85, 30));
+
+        PreviousCustomerOrder.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        PreviousCustomerOrder.setText("View Previous Customer Order");
+        PreviousCustomerOrder.setToolTipText("");
+        PreviousCustomerOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PreviousCustomerOrderActionPerformed(evt);
+            }
+        });
+        jPanel1.add(PreviousCustomerOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 204, 370, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -255,7 +266,6 @@ public class MainWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
         DyeingForm newAddDyeingForm = new DyeingForm();
         newAddDyeingForm.setVisible(true);
-        
     }//GEN-LAST:event_NewDyeingProgramActionPerformed
 
     private void NewResinProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewResinProgramActionPerformed
@@ -263,6 +273,12 @@ public class MainWindow extends javax.swing.JFrame {
          AddResinForm newResinForm  = new AddResinForm();
         newResinForm.setVisible(true);
     }//GEN-LAST:event_NewResinProgramActionPerformed
+
+    private void PreviousCustomerOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PreviousCustomerOrderActionPerformed
+        // TODO add your handling code here:
+        ViewCustomerOrder customerJobOrder = new ViewCustomerOrder();
+        customerJobOrder.setVisible(true);
+    }//GEN-LAST:event_PreviousCustomerOrderActionPerformed
 
     /**
      * @param args the command line arguments
@@ -357,6 +373,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton MachineBut;
     private javax.swing.JButton NewDyeingProgram;
     private javax.swing.JButton NewResinProgram;
+    private javax.swing.JButton PreviousCustomerOrder;
     private javax.swing.JButton ResinForm;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

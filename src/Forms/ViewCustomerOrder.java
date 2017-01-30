@@ -55,7 +55,7 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
         SearchLabel = new javax.swing.JLabel();
         SearchTextBox = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         BgPanel.setBackground(new java.awt.Color(102, 102, 102));
         BgPanel.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
@@ -117,8 +117,7 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
         JobOrderTable.setDropMode(javax.swing.DropMode.ON);
         JobOrderTable.setOpaque(false);
         JobOrderTable.setRowHeight(25);
-        JobOrderTable.setRowSelectionAllowed(false);
-        JobOrderTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        JobOrderTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         jScrollPane1.setViewportView(JobOrderTable);
 
         jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 39, 710, 270));
@@ -185,12 +184,11 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(JobOrderTable.getSelectedRowCount() > 0)
         {
-            
             int convertedRowNumber = JobOrderTable.convertRowIndexToModel(this.JobOrderTable.getSelectedRow());
             String DrNumber = JobOrderTable.getModel().getValueAt(convertedRowNumber , 0).toString();
             JobHandler thisJobOrderHandler = new JobHandler();
             JobOrder thisJob =thisJobOrderHandler.GetJobOrderDetailsFromDrNumber(DrNumber);
-            ReviewForm orderReviewForm = new ReviewForm(thisJob, 3);
+            ReviewForm orderReviewForm = new ReviewForm(thisJob, 4);
             orderReviewForm.setVisible(true);
             this.dispose();
         }
@@ -203,7 +201,7 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
 
     private void CancelButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButActionPerformed
         // TODO add your handling code here:
-        
+        this.dispose();
     }//GEN-LAST:event_CancelButActionPerformed
 
     private void customerDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerDropDownActionPerformed

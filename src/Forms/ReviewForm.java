@@ -65,19 +65,19 @@ public class ReviewForm extends javax.swing.JFrame {
     public ReviewForm(JobOrder currentJob, int setWindowType)
     {
         this();
+        WindowType = setWindowType;
         thisJob = currentJob;
         SetJobOrderDetails();
         SetDropDownDetails();
         SetDyeingProgramName();
-        WindowType = setWindowType;
         if(currentJob.getResinProgramID() > 0)
         {
             SetResinProgramName();
         }
-        if(WindowType == 3)
+        if(WindowType == 4)
         {
             JobOrder.setText("");
-            JobOrder.setEnabled(true);
+            JobOrder.setEditable(true);
         }
             
     }
@@ -124,12 +124,25 @@ public class ReviewForm extends javax.swing.JFrame {
         VolumeTextField.setText(Float.toString(thisJob.getVolumeH20()));
         RollLoad.setText(thisJob.getRollLoad());
         //Set Date to 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-        try {
-            dateSpinner.setValue(sdf.parse(thisJob.getJobDate()));
-        } catch (ParseException ex) {
-            Logger.getLogger(JobOrderForm.class.getName()).log(Level.SEVERE, null, ex);
+        if(WindowType == 4)
+        {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                dateSpinner.setValue(sdf.parse(thisJob.getJobDate()));
+            } catch (ParseException ex) {
+                Logger.getLogger(JobOrderForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+        else
+        {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+            try {
+                dateSpinner.setValue(sdf.parse(thisJob.getJobDate()));
+            } catch (ParseException ex) {
+                Logger.getLogger(JobOrderForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
         
         }
     private void SetDropDownDetails()
@@ -551,7 +564,11 @@ public class ReviewForm extends javax.swing.JFrame {
 
     private void CancelButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButActionPerformed
         // TODO add your handling code here:
-        if(thisJob.getResinProgramID() > 0)
+        if(this.WindowType == 4)
+        {
+            new ViewCustomerOrder().setVisible(true);
+        }
+        else if(thisJob.getResinProgramID() > 0)
         {
             new AddResinForm(thisJob).setVisible(true);
         }
@@ -570,7 +587,7 @@ public class ReviewForm extends javax.swing.JFrame {
 
         if(!CustomerDropDownList.getSelectedItem().toString().equals("Choose Customer"))
         {
-            customerName = MachineDropDownList.getSelectedItem().toString();
+            customerName = this.CustomerDropDownList.getSelectedItem().toString();
             thisCustomer.setCustomerName(customerName);
         }
 
@@ -612,7 +629,7 @@ public class ReviewForm extends javax.swing.JFrame {
         if(!colorName.equals(""))
         {
             colorId = handler.GetColorIDFromColorName(colorName);
-            thisCustomer.setCustomerId(colorId);
+            thisColor.setColorId(colorId);
         }
     }//GEN-LAST:event_ColorDropDownListActionPerformed
 
@@ -662,18 +679,30 @@ public class ReviewForm extends javax.swing.JFrame {
 
     private void SaveExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveExitActionPerformed
         // TODO add your handling code here:
+        JobHandler thisJobHandler = new JobHandler();
+        if(AddTextToTextBox())
+        {
+            if(thisJobHandler.AddNewJobOrder(thisJob)> 0)
+            {
+                this.dispose();
+            }
+            else
+                JOptionPane.showMessageDialog(null, "There is an error in adding the Job Order."); 
+        }
     }//GEN-LAST:event_SaveExitActionPerformed
 
     private void EditDyeingProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditDyeingProgramActionPerformed
         // TODO add your handling code here:
-        ViewDyeingProgram thisDyeingProgram = new ViewDyeingProgram();
+        ViewDyeingProgram thisDyeingProgram = new ViewDyeingProgram(this.thisJob, 4);
         thisDyeingProgram.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_EditDyeingProgramActionPerformed
 
     private void EditResinProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditResinProgramActionPerformed
         // TODO add your handling code here:
-        ViewResinProgram thisResinProgram = new ViewResinProgram();
+        ViewResinProgram thisResinProgram = new ViewResinProgram(thisJob, 4);
         thisResinProgram.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_EditResinProgramActionPerformed
 
     /**

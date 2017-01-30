@@ -361,8 +361,8 @@ public class JobOrderForm extends javax.swing.JFrame {
 
         BatchNo.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         BatchNo.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                BatchNoKeyTyped(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                BatchNoKeyReleased(evt);
             }
         });
         MainPanel.add(BatchNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(485, 90, 190, 30));
@@ -416,17 +416,19 @@ public class JobOrderForm extends javax.swing.JFrame {
     }//GEN-LAST:event_LiquidRatioDropDownActionPerformed
 
     private void WeightFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_WeightFocusLost
-        ComputeForVolume();
-        
         String weight = Weight.getText();
-        weight = weight.replaceAll("[^\\d.]", "");
-        Float ConvertedWeight = Float.parseFloat(weight);
-        if(ConvertedWeight > thisMachine.getMaxCapacity())
+        if(weight.length() > 0)
+        {
+            weight = weight.replaceAll("[^\\d.]", "");
+            Float ConvertedWeight = Float.parseFloat(weight);
+            if(ConvertedWeight > thisMachine.getMaxCapacity())
             Weight.setText(Float.toString(thisMachine.getMaxCapacity()));
-        else if(ConvertedWeight < thisMachine.getMinCapacity())
+            else if(ConvertedWeight < thisMachine.getMinCapacity())
             Weight.setText(Float.toString(thisMachine.getMinCapacity()));
         //else    
+            ComputeForVolume();
         //    Weight.setText(weight);
+        }
     }//GEN-LAST:event_WeightFocusLost
 
     private void MachineDropDownListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MachineDropDownListActionPerformed
@@ -499,8 +501,8 @@ public class JobOrderForm extends javax.swing.JFrame {
     
     private void ComputeForVolume()
     {
-        String weight = Weight.getText();    
-       String liquidRatio = LiquidRatioDropDown.getSelectedItem().toString();
+        String weight = Weight.getText();
+        String liquidRatio = LiquidRatioDropDown.getSelectedItem().toString();
         if(!weight.equals("") && !liquidRatio.equals("Liquid Ratio"))
         {
             computeForVolume();
@@ -630,13 +632,6 @@ public class JobOrderForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_CancelActionPerformed
 
-    private void BatchNoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BatchNoKeyTyped
-        // TODO add your handling code here:
-        String thisBatchNo = this.BatchNo.getText();
-        thisBatchNo = thisBatchNo.replaceAll("[^\\d.]", "");
-        this.BatchNo.setText(thisBatchNo);
-    }//GEN-LAST:event_BatchNoKeyTyped
-
     private void VolumeTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_VolumeTextFieldFocusLost
         // TODO add your handling code here:
         String Volume = this.VolumeTextField.getText();
@@ -649,6 +644,13 @@ public class JobOrderForm extends javax.swing.JFrame {
         //else
         //    this.VolumeTextField.setText(Volume);
     }//GEN-LAST:event_VolumeTextFieldFocusLost
+
+    private void BatchNoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BatchNoKeyReleased
+        // TODO add your handling code here:
+        String thisBatchNo = this.BatchNo.getText();
+        thisBatchNo = thisBatchNo.replaceAll("[^\\d.]", "");
+        this.BatchNo.setText(thisBatchNo);
+    }//GEN-LAST:event_BatchNoKeyReleased
     
     private void computeForVolume()
     {

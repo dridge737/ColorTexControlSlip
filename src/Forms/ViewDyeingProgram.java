@@ -41,14 +41,25 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
     }
     
     public ViewDyeingProgram(JobOrder currentJob) {
+        this(currentJob, 3);
+    }
+    
+    public ViewDyeingProgram(JobOrder currentJob, int currentType) {
         initComponents();
         SetToCenter();
         GetUpdatedTable();
         thisJob = currentJob;
-        Header.setText("Dyeing Control Slip : Page 2/6");
+        WindowType = currentType;
         BackBut.setText("Back");
         SelectBut.setText("Next");
-        WindowType = 3;
+        if(currentType == 3)
+        {
+            Header.setText("Dyeing Control Slip : Page 2/6");
+        }
+        else if(currentType == 4)
+        {
+            Header.setText("Choose Dyeing Program");
+        }
     }
 
     public void SetToCenter()
@@ -140,7 +151,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
                 SelectButActionPerformed(evt);
             }
         });
-        BgPanel.add(SelectBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 408, 220, 42));
+        BgPanel.add(SelectBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 408, 220, 40));
 
         SearchTextBox.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         SearchTextBox.setForeground(new java.awt.Color(204, 204, 204));
@@ -251,9 +262,9 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
             int convertedRowNumber = DyeingTable.convertRowIndexToModel(this.DyeingTable.getSelectedRow());
             String DyeingName = DyeingTable.getModel().getValueAt(convertedRowNumber , 0).toString();
             DyeingForm thisDyeingForm;
-            if(this.WindowType == 3)
+            if(this.WindowType > 2)
             {
-                thisDyeingForm = new DyeingForm(DyeingName, getThisJob());
+                thisDyeingForm = new DyeingForm(DyeingName, getThisJob(), WindowType);
             }
             else
                 thisDyeingForm = new DyeingForm(DyeingName);
@@ -272,6 +283,10 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         {
             JobOrderForm newJobOrderForm = new JobOrderForm(getThisJob());
             newJobOrderForm.setVisible(true);
+        }
+        else if(WindowType == 4)
+        {
+            new ReviewForm(thisJob, 4).setVisible(true);
         }
         this.dispose();
         

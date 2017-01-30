@@ -10,6 +10,7 @@ import DataEntities.DyeingProcess;
 import DataEntities.JobOrder;
 import Handlers.DyeingChemicalHandler;
 import Handlers.DyeingProcessHandler;
+import java.awt.Color;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,8 @@ public class ProcessPanel extends javax.swing.JPanel {
     private DyeingProcess ThisDyeingProcess = new DyeingProcess();
     int WindowType = 0;
     JobOrder thisJobOrder;
+    Color ColorError = new Color(232,228,42);
+    
     /**
      * Creates new form ProcessPanel
      */
@@ -259,18 +262,13 @@ public class ProcessPanel extends javax.swing.JPanel {
      public void UpdateThisPanelInDyeingProcess(int DyeingProgramID , int TabIndex)
     {
         //If This is a new Process Panel Then just add to the existing dyeing program
-        if(ThisDyeingProcess.getId() == 0)
-        {
-            if(ProcessText.getText().length()> 0)
+        //if(ProcessText.getText().length()> 0)
+        //{
+            if(ThisDyeingProcess.getId() == 0)
             {
-                AddThisPanelInDyeingProcess(DyeingProgramID, TabIndex);   
+                AddThisPanelInDyeingProcess(DyeingProgramID, TabIndex);
             }
             else
-                JOptionPane.showMessageDialog(null, "Process was not successfully updated Please check the Process Name.");
-        }
-        else
-        {
-            if(ProcessText.getText().length()> 0)
             {
                 DyeingProcessHandler ThisDyeingProcessHandler = new DyeingProcessHandler();
                 ThisDyeingProcess.setDyeingProcessName(this.ProcessText.getText());
@@ -291,8 +289,38 @@ public class ProcessPanel extends javax.swing.JPanel {
                         UpdateChemicalFromSubProcessPanel(ThisDyeingProcess.getId());
                 }
             }
-        }
+        //}
+        //else
+            //JOptionPane.showMessageDialog(null, "Process was not successfully updated Please check the Process Name.");   
     }
+     
+     public boolean CheckIfProccessAndSubProcessIsReady()
+     {
+         
+         boolean isReady = true;
+         if(ProcessText.getText().trim().length() == 0)
+         {
+             isReady = false;
+             JOptionPane.showMessageDialog(null, "Process was not successfully updated. Please check the process name.");
+             this.ProcessText.setBackground(ColorError);
+         }
+         else 
+         {
+             Component[] this_pane = this.subProcess.getComponents();
+             int subProcessNumber = 0;
+             for (Component c : this_pane)
+             {
+                 if (c instanceof SubProcessPanel)
+                 {
+                     SubProcessPanel ThisProcessPanel = ((SubProcessPanel)c);
+                     if(!ThisProcessPanel.CheckIfTextIsReady())
+                         isReady = false;
+                 }
+             }
+         }
+                
+         return isReady;
+     }
      
      public void UpdateThisSubProcessPanelInDyeingProcess(int DyeingProgramID, int TabIndex)
      {
@@ -314,8 +342,6 @@ public class ProcessPanel extends javax.swing.JPanel {
                 //Add the New Sub Process in the dyeing process table
                 AddThisSubProcessPanelInDyeingProcess(DyeingProgramID, TabIndex);
         
-            
-            
          }
          else
          {

@@ -31,6 +31,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
     ResinProgram thisResin = new ResinProgram();
     //ProcessOrder thisProcessOrder;
     JobOrder thisJob;
+    int WindowType = 1;
     /**
      * Creates new form ViewResinProgram
      */
@@ -47,6 +48,17 @@ public class ViewResinProgram extends javax.swing.JFrame {
         SelectBut1.setText("Next");
         DeleteBut.setVisible(false);
         Header.setText("Dyeing Control Slip : Page 4/6");
+        BackBut.setText("Back");
+    }
+    
+    public ViewResinProgram(JobOrder currentJob, int currentWindow)
+    {
+        this();
+        WindowType = currentWindow;
+        thisJob = currentJob;
+        SelectBut1.setText("Next");
+        DeleteBut.setVisible(false);
+        Header.setText("SelectResin");
         BackBut.setText("Back");
     }
 
@@ -298,7 +310,11 @@ public class ViewResinProgram extends javax.swing.JFrame {
 
     private void BackButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButActionPerformed
         // TODO add your handling code here:
-        if(BackBut.getText().equals("Back"))
+        if(WindowType == 4)
+        {
+            new ReviewForm(thisJob, 4).setVisible(true);
+        }
+        else if(BackBut.getText().equals("Back"))
         {
             DyeingForm thisDyeingForm = new DyeingForm(thisJob);
             thisDyeingForm.setVisible(true);

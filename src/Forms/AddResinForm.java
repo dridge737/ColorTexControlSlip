@@ -552,7 +552,7 @@ public class AddResinForm extends javax.swing.JFrame {
                         resinChemical.setChemicalID(chemicalId);
                         resinChemical.setGPLValue(Float.parseFloat(gpl.toString()));
                         resinChemical.setState(ChemicalTable.getModel().getValueAt(i, 2).toString());
-                    resinChemical.setType(ChemicalTable.getModel().getValueAt(i, 3).toString());
+                        resinChemical.setType(ChemicalTable.getModel().getValueAt(i, 3).toString());
                         isSuccessful = resinChemicalHandler.AddNewResinChemical(resinChemical);
 
                         if(isSuccessful == false)

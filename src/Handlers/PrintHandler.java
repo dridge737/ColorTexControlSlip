@@ -71,7 +71,7 @@ public class PrintHandler {
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(dest));
         
         document.setPageSize(PageSize.LETTER);
-        document.setMargins(72, 36, 36, 36);
+        document.setMargins(60, 36, 18, 36);
         document.open();
         
          ////////////////////////***************BEGIN FIRST SECTION***************////////////////////////
@@ -488,27 +488,153 @@ public class PrintHandler {
         ArrayList<DyeingChemical> dyeingChemicalList = null;
         int rows = 0;
         
-        for(int x=0; x<dyeingProcessList.size(); x++)
+        if(dyeingProcessList.size() > 1)
         {
-            if(rows%30 != 0 || rows == 0)
+            for(int x=0; x<dyeingProcessList.size(); x++)
             {
-                if (dyeingProcessList.get(x).getdyeingProcessOrder().matches("[0-9]+")){
-                    table.addCell(RomanNumber.toRoman(Integer.parseInt(dyeingProcessList.get(x).getdyeingProcessOrder())) + ". " + dyeingProcessList.get(x).getDyeingProcessName());
-                    table.addCell(" ");
-                    table.addCell(" ");
-                    table.addCell(" ");
-                    rows++;
+                if(rows%30 != 0 || rows == 0)
+                {
+                    if (dyeingProcessList.get(x).getdyeingProcessOrder().matches("[0-9]+")){
+                        table.addCell(RomanNumber.toRoman(Integer.parseInt(dyeingProcessList.get(x).getdyeingProcessOrder())) + ". " + dyeingProcessList.get(x).getDyeingProcessName());
+                        table.addCell(" ");
+                        table.addCell(" ");
+                        table.addCell(" ");
+                        rows++;
+                    }
+                    else if(!(dyeingProcessList.get(x).getdyeingProcessOrder().matches("[0-9]+"))){
+                        String dyeingSubProcessLetter = dyeingProcessList.get(x).getdyeingProcessOrder().replaceAll("[^A-Za-z]+", "");
+
+                        table.addCell("    " + dyeingSubProcessLetter.toUpperCase() + ". " + dyeingProcessList.get(x).getDyeingProcessName());
+                        table.addCell(" ");
+                        table.addCell(" ");
+                        table.addCell(" ");
+                        rows++;
+
+                        dyeingChemicalList = dChemHandler.GetAllDyeingChemicalFromDyeingProcessID(dyeingProcessList.get(x).getId());
+
+                        if(dyeingChemicalList.size() > 0)
+                        {
+                            Collections.sort(dyeingChemicalList, new Comparator<DyeingChemical>(){
+                                @Override
+                                public int compare(DyeingChemical o1, DyeingChemical o2){
+                                    int rollno1 = o1.getOrder();
+                                    int rollno2 = o2.getOrder();
+
+                                    /*For ascending order*/
+                                    return rollno1-rollno2;
+
+                                }                    
+                            });
+                        }
+
+                        for(int i = 0; i<dyeingChemicalList.size(); i++)
+                        {
+                            table.addCell("        " + dyeingChemicalList.get(i).getOrder() + ". " + chemHandler.GetChemicalNameFromChemicalID(dyeingChemicalList.get(i).getChemicalID()));
+                            if("GPL".equals(dyeingChemicalList.get(i).getType().toUpperCase())){
+                                table.addCell(String.valueOf(dyeingChemicalList.get(i).getValue()));
+                                table.addCell(" ");
+                            }
+                            else
+                            {
+                                table.addCell(" ");
+                                table.addCell(String.valueOf(dyeingChemicalList.get(i).getValue()));
+                            }
+
+                            if(dyeingChemicalList.get(i).getType()== "%")
+                            {
+                               Float quantity = jobOrderDetails.getWeight() * dyeingChemicalList.get(i).getValue();
+                               table.addCell(quantity.toString() + dyeingChemicalList.get(i).getState()); 
+                            }
+                            else
+                            {
+                                Float quantity = Float.parseFloat(volume) * dyeingChemicalList.get(i).getValue();
+                                table.addCell(quantity.toString() + dyeingChemicalList.get(i).getState());
+                            }
+
+                            rows++;
+                        }
+                    }
                 }
-                else if(!(dyeingProcessList.get(x).getdyeingProcessOrder().matches("[0-9]+"))){
-                    String dyeingSubProcessLetter = dyeingProcessList.get(x).getdyeingProcessOrder().replaceAll("[^A-Za-z]+", "");
+                else
+                {
+                    document.add(table);
+                    document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
+                    table = new PdfPTable(columnWidths);
+                    table.setWidthPercentage(100);
+                    table.getDefaultCell().setBorder(Rectangle.BOTTOM);
+                    table.getDefaultCell().setUseAscender(true);
+                    table.getDefaultCell().setUseDescender(true);
+                    cell = new PdfPCell();
+                    table.getDefaultCell().setBackgroundColor(new GrayColor(0.75f));
+                    table.addCell("Process Name");
+                    table.addCell("GPL");
+                    table.addCell("%");
+                    table.addCell("Quantity");
 
-                    table.addCell("    " + dyeingSubProcessLetter.toUpperCase() + ". " + dyeingProcessList.get(x).getDyeingProcessName());
+                    table.getDefaultCell().setBackgroundColor(GrayColor.GRAYWHITE);
+                    table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
+
+                    if (dyeingProcessList.get(x).getdyeingProcessOrder().contains("[a-zA-Z]+") == false){
+                        table.addCell(RomanNumber.toRoman(Integer.parseInt(dyeingProcessList.get(x).getdyeingProcessOrder())) + ". " + dyeingProcessList.get(x).getDyeingProcessName());
+                        table.addCell(" ");
+                        table.addCell(" ");
+                        table.addCell(" ");
+                        rows++;
+                    }
+                    else if(dyeingProcessList.get(x).getdyeingProcessOrder().contains("[a-zA-Z]+") == true){
+                        String dyeingSubProcessLetter = dyeingProcessList.get(x).getdyeingProcessOrder().replaceAll("[^A-Za-z]+", "");
+
+                        table.addCell("    " + dyeingSubProcessLetter.toUpperCase() + ". " + dyeingProcessList.get(x).getDyeingProcessName());
+                        table.addCell(" ");
+                        table.addCell(" ");
+                        table.addCell(" ");
+                        rows++;
+
+                        dyeingChemicalList = dChemHandler.GetAllDyeingChemicalFromDyeingProcessID(dyeingProcessList.get(x).getId());
+
+                        if(dyeingChemicalList.size() > 0)
+                        {
+                            Collections.sort(dyeingChemicalList, new Comparator<DyeingChemical>(){
+                                @Override
+                                public int compare(DyeingChemical o1, DyeingChemical o2){
+                                    int rollno1 = o1.getOrder();
+                                    int rollno2 = o2.getOrder();
+
+                                    /*For ascending order*/
+                                    return rollno1-rollno2;
+
+                                }                    
+                            });
+                        }
+
+                        for(int i = 0; i<dyeingChemicalList.size(); i++)
+                        {
+                            table.addCell("        " + dyeingChemicalList.get(i).getOrder() + ". " + chemHandler.GetChemicalNameFromChemicalID(dyeingChemicalList.get(i).getChemicalID()));
+                            if("GPL".equals(dyeingChemicalList.get(i).getType().toUpperCase())){
+                                table.addCell(String.valueOf(dyeingChemicalList.get(i).getValue()));
+                                table.addCell(" ");
+                            }
+                            else
+                            {
+                                table.addCell(" ");
+                                table.addCell(String.valueOf(dyeingChemicalList.get(i).getValue()));
+                            }
+                            table.addCell(String.valueOf(dyeingChemicalList.get(i).getValue() * jobOrderDetails.getVolumeH20()));
+                            rows++;
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (dyeingProcessList.get(0).getdyeingProcessOrder().matches("[0-9]+")){
+                    table.addCell(RomanNumber.toRoman(Integer.parseInt(dyeingProcessList.get(0).getdyeingProcessOrder())) + ". " + dyeingProcessList.get(0).getDyeingProcessName());
                     table.addCell(" ");
                     table.addCell(" ");
                     table.addCell(" ");
                     rows++;
-
-                    dyeingChemicalList = dChemHandler.GetAllDyeingChemicalFromDyeingProcessID(dyeingProcessList.get(x).getId());
+                    dyeingChemicalList = dChemHandler.GetAllDyeingChemicalFromDyeingProcessID(dyeingProcessList.get(0).getId());
 
                     if(dyeingChemicalList.size() > 0)
                     {
@@ -537,7 +663,7 @@ public class PrintHandler {
                             table.addCell(" ");
                             table.addCell(String.valueOf(dyeingChemicalList.get(i).getValue()));
                         }
-                        
+
                         if(dyeingChemicalList.get(i).getType()== "%")
                         {
                            Float quantity = jobOrderDetails.getWeight() * dyeingChemicalList.get(i).getValue();
@@ -548,80 +674,10 @@ public class PrintHandler {
                             Float quantity = Float.parseFloat(volume) * dyeingChemicalList.get(i).getValue();
                             table.addCell(quantity.toString() + dyeingChemicalList.get(i).getState());
                         }
-                        
+
                         rows++;
-                    }
                 }
-            }
-            else
-            {
-                document.add(table);
-                document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
-                table = new PdfPTable(columnWidths);
-                table.setWidthPercentage(100);
-                table.getDefaultCell().setBorder(Rectangle.BOTTOM);
-                table.getDefaultCell().setUseAscender(true);
-                table.getDefaultCell().setUseDescender(true);
-                cell = new PdfPCell();
-                table.getDefaultCell().setBackgroundColor(new GrayColor(0.75f));
-                table.addCell("Process Name");
-                table.addCell("GPL");
-                table.addCell("%");
-                table.addCell("Quantity");
-
-                table.getDefaultCell().setBackgroundColor(GrayColor.GRAYWHITE);
-                table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
-                
-                if (dyeingProcessList.get(x).getdyeingProcessOrder().contains("[a-zA-Z]+") == false){
-                    table.addCell(RomanNumber.toRoman(Integer.parseInt(dyeingProcessList.get(x).getdyeingProcessOrder())) + ". " + dyeingProcessList.get(x).getDyeingProcessName());
-                    table.addCell(" ");
-                    table.addCell(" ");
-                    table.addCell(" ");
-                    rows++;
                 }
-                else if(dyeingProcessList.get(x).getdyeingProcessOrder().contains("[a-zA-Z]+") == true){
-                    String dyeingSubProcessLetter = dyeingProcessList.get(x).getdyeingProcessOrder().replaceAll("[^A-Za-z]+", "");
-
-                    table.addCell("    " + dyeingSubProcessLetter.toUpperCase() + ". " + dyeingProcessList.get(x).getDyeingProcessName());
-                    table.addCell(" ");
-                    table.addCell(" ");
-                    table.addCell(" ");
-                    rows++;
-
-                    dyeingChemicalList = dChemHandler.GetAllDyeingChemicalFromDyeingProcessID(dyeingProcessList.get(x).getId());
-
-                    if(dyeingChemicalList.size() > 0)
-                    {
-                        Collections.sort(dyeingChemicalList, new Comparator<DyeingChemical>(){
-                            @Override
-                            public int compare(DyeingChemical o1, DyeingChemical o2){
-                                int rollno1 = o1.getOrder();
-                                int rollno2 = o2.getOrder();
-
-                                /*For ascending order*/
-                                return rollno1-rollno2;
-
-                            }                    
-                        });
-                    }
-
-                    for(int i = 0; i<dyeingChemicalList.size(); i++)
-                    {
-                        table.addCell("        " + dyeingChemicalList.get(i).getOrder() + ". " + chemHandler.GetChemicalNameFromChemicalID(dyeingChemicalList.get(i).getChemicalID()));
-                        if("GPL".equals(dyeingChemicalList.get(i).getType().toUpperCase())){
-                            table.addCell(String.valueOf(dyeingChemicalList.get(i).getValue()));
-                            table.addCell(" ");
-                        }
-                        else
-                        {
-                            table.addCell(" ");
-                            table.addCell(String.valueOf(dyeingChemicalList.get(i).getValue()));
-                        }
-                        table.addCell(String.valueOf(dyeingChemicalList.get(i).getValue() * jobOrderDetails.getVolumeH20()));
-                        rows++;
-                    }
-                }
-            }
         }
         
         document.add(table);
