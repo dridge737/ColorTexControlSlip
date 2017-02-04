@@ -11,7 +11,6 @@ import DataEntities.Design;
 import DataEntities.DyeingProgram;
 import DataEntities.JobOrder;
 import DataEntities.Machine;
-import DataEntities.ProcessOrder;
 import DataEntities.DyeingProcess;
 import DataEntities.DyeingChemical;
 import DataEntities.ResinChemical;
@@ -33,22 +32,15 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Desktop;
-import java.awt.print.PrinterJob;
  
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import javax.print.Doc;
-import javax.print.DocFlavor;
-import javax.print.DocPrintJob;
-import javax.print.PrintService;
-import javax.print.SimpleDoc;
-import javax.print.attribute.HashPrintRequestAttributeSet;
-import javax.print.attribute.PrintRequestAttributeSet;
 /**
  *
  * @author imbuenyson
@@ -667,16 +659,29 @@ public class PrintHandler {
                         if(dyeingChemicalList.get(i).getType()== "%")
                         {
                            Float quantity = jobOrderDetails.getWeight() * dyeingChemicalList.get(i).getValue();
+                           DecimalFormat df = new DecimalFormat("#,###.##");
+                            df.setRoundingMode(RoundingMode.CEILING);
+                            df.format(quantity);
                            table.addCell(quantity.toString() + dyeingChemicalList.get(i).getState()); 
                         }
                         else
                         {
                             Float quantity = Float.parseFloat(volume) * dyeingChemicalList.get(i).getValue();
+                            DecimalFormat df = new DecimalFormat("#,###.##");
+                            df.setRoundingMode(RoundingMode.CEILING);
+                            df.format(quantity);
                             table.addCell(quantity.toString() + dyeingChemicalList.get(i).getState());
                         }
-
+                        
+                        if(i == dyeingChemicalList.size() - 1)
+                        {
+                            table.addCell(" ");
+                            table.addCell(" ");
+                            table.addCell(" ");
+                            table.addCell(" ");
+                        }
                         rows++;
-                }
+                    }
                 }
         }
         
@@ -686,9 +691,10 @@ public class PrintHandler {
         
         table = new PdfPTable(3);
         
-        Paragraph rectangleText = new Paragraph("SAMPLE", controlSlipHeaderFont);
+        Paragraph masterRectangleText = new Paragraph("Master Sample", controlSlipHeaderFont);
+        Paragraph prodRectangleText = new Paragraph("Production Sample", controlSlipHeaderFont);
         
-        PdfPCell cellMasterSample = new PdfPCell(rectangleText);
+        PdfPCell cellMasterSample = new PdfPCell(masterRectangleText);
         cellMasterSample.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cellMasterSample.setHorizontalAlignment(Element.ALIGN_CENTER);
         cellMasterSample.setFixedHeight(80f);
@@ -699,7 +705,7 @@ public class PrintHandler {
         cellFiller.setBorder(Rectangle.NO_BORDER);
         table.addCell(cellFiller);
         
-        PdfPCell cellCottonDyeing = new PdfPCell(rectangleText);
+        PdfPCell cellCottonDyeing = new PdfPCell(prodRectangleText);
         cellCottonDyeing.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cellCottonDyeing.setHorizontalAlignment(Element.ALIGN_CENTER);
         cellCottonDyeing.setFixedHeight(80f);
@@ -707,25 +713,6 @@ public class PrintHandler {
         
         document.add(table);
         
-        document.add(Chunk.NEWLINE);
-        
-        table = new PdfPTable(3);
-        
-        PdfPCell cellPesDyeing = new PdfPCell(rectangleText);
-        cellPesDyeing.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cellPesDyeing.setHorizontalAlignment(Element.ALIGN_CENTER);
-        cellPesDyeing.setFixedHeight(80f);
-        table.addCell(cellPesDyeing);
-        
-        table.addCell(cellFiller);
-        
-        PdfPCell cellTreatment = new PdfPCell(rectangleText);
-        cellTreatment.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        cellTreatment.setHorizontalAlignment(Element.ALIGN_CENTER);
-        cellTreatment.setFixedHeight(80f);
-        table.addCell(cellTreatment);
-        
-        document.add(table);
         //document.add(chapter);
         
         return document;
@@ -822,7 +809,7 @@ public class PrintHandler {
     
     public Document AddThirdPage(Document document, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException 
     {
-        DyeingProgramNameHandler dyeingProgramNameHandler = new DyeingProgramNameHandler();
+        ResinProgramHandler resinProgramNameHandler = new ResinProgramHandler();
         Font companyHeaderFont = FontFactory.getFont(FontFactory.HELVETICA, 18, Font.BOLDITALIC);
         Paragraph companyHeader = new Paragraph("Colortex Processing Inc.", companyHeaderFont);
         companyHeader.setAlignment(Element.ALIGN_CENTER);
@@ -847,9 +834,9 @@ public class PrintHandler {
         chapter.add(table);
         
         Font dyeingProcessFont = FontFactory.getFont(FontFactory.HELVETICA, 13, Font.NORMAL);
-        Paragraph dyeingProcessHeader = new Paragraph(dyeingProgramNameHandler.GetDyeingProgramNameFromID(dyeingProgramDetails.getDyeingProgramNameID()), dyeingProcessFont);
-        dyeingProcessHeader.setAlignment(Element.ALIGN_CENTER);
-        chapter.add(dyeingProcessHeader);
+        Paragraph resinProgramHeader = new Paragraph(resinProgramNameHandler.GetResinProgramNameFromResinProgramID(jobOrderDetails.getResinProgramID()), dyeingProcessFont);
+        resinProgramHeader.setAlignment(Element.ALIGN_CENTER);
+        chapter.add(resinProgramHeader);
         
         table = new PdfPTable(2);
         table.getDefaultCell().setBorder(PdfPCell.NO_BORDER);
