@@ -50,6 +50,7 @@ public class PrintHandler {
  
     private int chapterNumber;
     
+    private Font fontAll = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12);
     
     public void createPDF(Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException {
         File file = new File(DEST);
@@ -67,14 +68,14 @@ public class PrintHandler {
         document.open();
         
          ////////////////////////***************BEGIN FIRST SECTION***************////////////////////////
-        Font companyHeaderFont = FontFactory.getFont(FontFactory.HELVETICA, 18, Font.BOLDITALIC);
+        Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 18, Font.BOLDITALIC);
         
         Paragraph companyHeader = new Paragraph("Colortex Processing Inc.", companyHeaderFont);
         companyHeader.setAlignment(Element.ALIGN_CENTER);
         Chapter chapter = new Chapter(companyHeader, 1);
         chapterNumber = 1;
         
-        Font controlSlipHeaderFont = FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL);
+        Font controlSlipHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
         Paragraph controlSlipHeader = new Paragraph("Pushcart Control Slip", controlSlipHeaderFont);
         controlSlipHeader.setAlignment(Element.ALIGN_CENTER);
         chapter.setNumberDepth(0);
@@ -373,7 +374,7 @@ public class PrintHandler {
     
     public Document AddSecondPage(Document document, PdfWriter writer, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume)  throws IOException, DocumentException 
     {
-        Font companyHeaderFont = FontFactory.getFont(FontFactory.HELVETICA, 18, Font.BOLDITALIC);
+        Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 18, Font.BOLDITALIC);
         Paragraph companyHeader = new Paragraph("Colortex Processing Inc.", companyHeaderFont);
         companyHeader.setAlignment(Element.ALIGN_CENTER);
         document.add(companyHeader);
@@ -382,7 +383,7 @@ public class PrintHandler {
         chapterNumber = 2;
         //chapter.setNumberDepth(0);
         
-        Font controlSlipHeaderFont = FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL);
+        Font controlSlipHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
         Paragraph controlSlipHeader = new Paragraph("Dyeing Control Slip", controlSlipHeaderFont);
         controlSlipHeader.setAlignment(Element.ALIGN_CENTER);
         document.add(controlSlipHeader);
@@ -397,7 +398,7 @@ public class PrintHandler {
         table.addCell(filler);
         document.add(table);
         
-        Font dyeingProcessFont = FontFactory.getFont(FontFactory.HELVETICA, 13, Font.NORMAL);
+        Font dyeingProcessFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 13, Font.NORMAL);
         Paragraph dyeingProcessHeader = new Paragraph(dyeingProgramNameHandler.GetDyeingProgramNameFromID(dyeingProgramDetails.getDyeingProgramNameID()), dyeingProcessFont);
         dyeingProcessHeader.setAlignment(Element.ALIGN_CENTER);
         document.add(dyeingProcessHeader);
@@ -777,7 +778,7 @@ public class PrintHandler {
     public Document AddSecondPageHeader(Document document, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException
     {
         DyeingProgramNameHandler dyeingProgramNameHandler = new DyeingProgramNameHandler();
-        Font companyHeaderFont = FontFactory.getFont(FontFactory.HELVETICA, 18, Font.BOLDITALIC);
+        Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 18, Font.BOLDITALIC);
         Paragraph companyHeader = new Paragraph("Colortex Processing Inc.", companyHeaderFont);
         companyHeader.setAlignment(Element.ALIGN_CENTER);
         document.add(companyHeader);
@@ -785,7 +786,7 @@ public class PrintHandler {
         chapterNumber = 2;
         //chapter.setNumberDepth(0);
         
-        Font controlSlipHeaderFont = FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL);
+        Font controlSlipHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
         Paragraph controlSlipHeader = new Paragraph("Dyeing Control Slip", controlSlipHeaderFont);
         controlSlipHeader.setAlignment(Element.ALIGN_CENTER);
         document.add(controlSlipHeader);
@@ -800,7 +801,7 @@ public class PrintHandler {
         table.addCell(filler);
         document.add(table);
         
-        Font dyeingProcessFont = FontFactory.getFont(FontFactory.HELVETICA, 13, Font.NORMAL);
+        Font dyeingProcessFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 13, Font.NORMAL);
         Paragraph dyeingProcessHeader = new Paragraph(dyeingProgramNameHandler.GetDyeingProgramNameFromID(dyeingProgramDetails.getDyeingProgramNameID()), dyeingProcessFont);
         dyeingProcessHeader.setAlignment(Element.ALIGN_CENTER);
         document.add(dyeingProcessHeader);
@@ -866,7 +867,7 @@ public class PrintHandler {
     public Document AddThirdPage(Document document, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException 
     {
         ResinProgramHandler resinProgramNameHandler = new ResinProgramHandler();
-        Font companyHeaderFont = FontFactory.getFont(FontFactory.HELVETICA, 18, Font.BOLDITALIC);
+        Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 18, Font.BOLDITALIC);
         Paragraph companyHeader = new Paragraph("Colortex Processing Inc.", companyHeaderFont);
         companyHeader.setAlignment(Element.ALIGN_CENTER);
         //document.add(companyHeader);
@@ -874,7 +875,7 @@ public class PrintHandler {
         chapterNumber = 3;
         chapter.setNumberDepth(0);
         
-        Font controlSlipHeaderFont = FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL);
+        Font controlSlipHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
         Paragraph controlSlipHeader = new Paragraph("Dyeing Control Slip", controlSlipHeaderFont);
         controlSlipHeader.setAlignment(Element.ALIGN_CENTER);
         chapter.add(controlSlipHeader);
@@ -889,7 +890,7 @@ public class PrintHandler {
         table.addCell(filler);
         chapter.add(table);
         
-        Font dyeingProcessFont = FontFactory.getFont(FontFactory.HELVETICA, 13, Font.NORMAL);
+        Font dyeingProcessFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 13, Font.NORMAL);
         Paragraph resinProgramHeader = new Paragraph(resinProgramNameHandler.GetResinProgramNameFromResinProgramID(jobOrderDetails.getResinProgramID()), dyeingProcessFont);
         resinProgramHeader.setAlignment(Element.ALIGN_CENTER);
         chapter.add(resinProgramHeader);
