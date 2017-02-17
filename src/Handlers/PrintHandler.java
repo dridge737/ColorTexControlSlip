@@ -15,7 +15,6 @@ import DataEntities.DyeingProcess;
 import DataEntities.DyeingChemical;
 import DataEntities.ResinChemical;
 import Helpers.RomanNumber;
-import com.itextpdf.text.BaseColor;
 import java.util.ArrayList;
 import com.itextpdf.text.Chapter;
 import com.itextpdf.text.Chunk;
@@ -41,6 +40,7 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.Comparator;
+import javafx.scene.control.Cell;
 /**
  *
  * @author imbuenyson
@@ -465,7 +465,7 @@ public class PrintHandler {
         table.getDefaultCell().setUseAscender(true);
         table.getDefaultCell().setUseDescender(true);
         PdfPCell cell = new PdfPCell();
-        table.getDefaultCell().setBackgroundColor(new GrayColor(0.75f));
+        //table.getDefaultCell().setBackgroundColor(new GrayColor(0.75f));
             table.addCell(" ");
             table.addCell("GPL");
             table.addCell("%");
@@ -592,7 +592,7 @@ public class PrintHandler {
                     table.getDefaultCell().setUseAscender(true);
                     table.getDefaultCell().setUseDescender(true);
                     cell = new PdfPCell();
-                    table.getDefaultCell().setBackgroundColor(new GrayColor(0.75f));
+                    //table.getDefaultCell().setBackgroundColor(new GrayColor(0.75f));
                     table.addCell("Process Name");
                     table.addCell("GPL");
                     table.addCell("%");
@@ -976,7 +976,7 @@ public class PrintHandler {
         table.getDefaultCell().setUseAscender(true);
         table.getDefaultCell().setUseDescender(true);
         PdfPCell cell = new PdfPCell();
-        table.getDefaultCell().setBackgroundColor(new GrayColor(0.75f));
+        //table.getDefaultCell().setBackgroundColor(new GrayColor(0.75f));
             table.addCell("Resin Chemical");
             table.addCell("GPL");
             table.addCell("%");
