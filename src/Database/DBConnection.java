@@ -20,8 +20,8 @@ public class DBConnection {
         url = "jdbc:mysql://localhost:3306/color_tex_processing";
         driver = "com.mysql.jdbc.Driver";
         username = "root";
+        //password = "";
         password = "";
-        //password = "password123";
     }
     public Connection getConnection()
     {
