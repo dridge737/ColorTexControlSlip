@@ -67,7 +67,7 @@ public class PrintHandler {
         document.open();
         
          ////////////////////////***************BEGIN FIRST SECTION***************////////////////////////
-        Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 18, Font.NORMAL);
+        Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
         
         Paragraph companyHeader = new Paragraph("Colortex Processing Inc.", companyHeaderFont);
         companyHeader.setAlignment(Element.ALIGN_CENTER);
@@ -195,17 +195,18 @@ public class PrintHandler {
         table.getDefaultCell().setBorder(PdfPCell.NO_BORDER);
         table.setWidthPercentage(100);
         
-        Phrase dyeingOperators = new Phrase("Dyeing Operators: 1)________________ 2)_________________ 3)_________________", f);
+        Phrase dyeingOperators = new Phrase("Dyeing Operators: 1)____________________ 2)_____________________ 3)_____________________", f);
         //dyeingOperators.add("Dyeing Operators: 1)_______________ 2)_______________ 3)_______________", f);
         pCell = new PdfPCell(dyeingOperators);
         table.addCell(dyeingOperators);
         
-        Phrase remarks = new Phrase("Remarks:___________________________________________________________________", f);
+        Phrase remarks = new Phrase("Remarks:", f);
         //remarks.add("Remarks:___________________________________________________________", f);
-        Phrase line = new Phrase("__________________________________________________________________________", f);
+        Phrase line = new Phrase("___________________________________________________________________________________", f);
         //line.add("__________________________________________________________________", f);
         pCell = new PdfPCell(remarks);
         table.addCell(remarks);
+        table.addCell(line);
         table.addCell(line);
         table.addCell(line);
         table.addCell(filler1);
@@ -338,17 +339,18 @@ public class PrintHandler {
         table.getDefaultCell().setBorder(PdfPCell.NO_BORDER);
         table.setWidthPercentage(100);
         
-        dyeingOperators = new Phrase("Dyeing Operators: 1)________________ 2)_________________ 3)_________________", f);
+        dyeingOperators = new Phrase("Dyeing Operators: 1)____________________ 2)_____________________ 3)_____________________", f);
         //dyeingOperators.add("Dyeing Operators: 1)_______________ 2)_______________ 3)_______________", f);
         pCell = new PdfPCell(dyeingOperators);
         table.addCell(dyeingOperators);
         
-        remarks = new Phrase("Remarks:___________________________________________________________________", f);
+        remarks = new Phrase("Remarks:", f);
         //remarks.add("Remarks:___________________________________________________________", f);
-        line = new Phrase("__________________________________________________________________________", f);
+        line = new Phrase("___________________________________________________________________________________", f);
         //line.add("__________________________________________________________________", f);
         pCell = new PdfPCell(remarks);
         table.addCell(remarks);
+        table.addCell(line);
         table.addCell(line);
         table.addCell(line);
         
@@ -373,7 +375,7 @@ public class PrintHandler {
     
     public Document AddSecondPage(Document document, PdfWriter writer, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume)  throws IOException, DocumentException 
     {
-        Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 18, Font.NORMAL);
+        Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
         Paragraph companyHeader = new Paragraph("Colortex Processing Inc.", companyHeaderFont);
         companyHeader.setAlignment(Element.ALIGN_CENTER);
         document.add(companyHeader);
@@ -397,7 +399,7 @@ public class PrintHandler {
         table.addCell(filler);
         document.add(table);
         
-        Font dyeingProcessFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 13, Font.NORMAL);
+        Font dyeingProcessFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
         Paragraph dyeingProcessHeader = new Paragraph(dyeingProgramNameHandler.GetDyeingProgramNameFromID(dyeingProgramDetails.getDyeingProgramNameID()), dyeingProcessFont);
         dyeingProcessHeader.setAlignment(Element.ALIGN_CENTER);
         document.add(dyeingProcessHeader);
@@ -777,7 +779,7 @@ public class PrintHandler {
     public Document AddSecondPageHeader(Document document, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException
     {
         DyeingProgramNameHandler dyeingProgramNameHandler = new DyeingProgramNameHandler();
-        Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 18, Font.NORMAL);
+        Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
         Paragraph companyHeader = new Paragraph("Colortex Processing Inc.", companyHeaderFont);
         companyHeader.setAlignment(Element.ALIGN_CENTER);
         document.add(companyHeader);
@@ -866,7 +868,7 @@ public class PrintHandler {
     public Document AddThirdPage(Document document, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException 
     {
         ResinProgramHandler resinProgramNameHandler = new ResinProgramHandler();
-        Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 18, Font.NORMAL);
+        Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
         Paragraph companyHeader = new Paragraph("Colortex Processing Inc.", companyHeaderFont);
         companyHeader.setAlignment(Element.ALIGN_CENTER);
         //document.add(companyHeader);
@@ -889,7 +891,7 @@ public class PrintHandler {
         table.addCell(filler);
         chapter.add(table);
         
-        Font dyeingProcessFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 13, Font.NORMAL);
+        Font dyeingProcessFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
         Paragraph resinProgramHeader = new Paragraph(resinProgramNameHandler.GetResinProgramNameFromResinProgramID(jobOrderDetails.getResinProgramID()), dyeingProcessFont);
         resinProgramHeader.setAlignment(Element.ALIGN_CENTER);
         chapter.add(resinProgramHeader);
@@ -963,7 +965,7 @@ public class PrintHandler {
         String resinProgramName = resinProgramHandler.GetResinProgramNameFromResinProgramID(jobOrderDetails.getResinProgramID());
         ArrayList<ResinChemical> resinChemicalList = resinChemicalHandler.GetResinChemicalsByResinProgramId(jobOrderDetails.getResinProgramID());
         
-        paragraph = new Paragraph(resinProgramName);
+        paragraph = new Paragraph(resinProgramName, dyeingProcessFont);
         paragraph.setAlignment(Element.ALIGN_CENTER);
         document.add(paragraph);
         document.add(Chunk.NEWLINE);
