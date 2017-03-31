@@ -409,6 +409,11 @@ public class ReviewForm extends javax.swing.JFrame {
         MainPanel.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 65, 90, 30));
 
         BatchNo.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        BatchNo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                BatchNoKeyReleased(evt);
+            }
+        });
         MainPanel.add(BatchNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 20, 190, 30));
 
         BgPanel.add(MainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 690, -1));
@@ -704,6 +709,13 @@ public class ReviewForm extends javax.swing.JFrame {
         thisResinProgram.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_EditResinProgramActionPerformed
+
+    private void BatchNoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BatchNoKeyReleased
+        // TODO add your handling code here:
+        String thisBatchNo = this.BatchNo.getText();
+        thisBatchNo = thisBatchNo.replaceAll("[^\\d.]", "");
+        this.BatchNo.setText(thisBatchNo);
+    }//GEN-LAST:event_BatchNoKeyReleased
 
     /**
      * @param args the command line arguments
