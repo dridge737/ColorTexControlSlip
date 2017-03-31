@@ -10,6 +10,8 @@ import DataEntities.JobOrder;
 import DataEntities.JobOrderExtended;
 import Handlers.CustomerHandler;
 import Handlers.JobHandler;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -32,6 +34,15 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
     public ViewCustomerOrder() {
         initComponents();
         populateCustomerDropDown();
+        SetToCenter();
+    }
+    
+    public void SetToCenter()
+    {
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
+        int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
+        this.setLocation(x,y);
     }
 
     /**
