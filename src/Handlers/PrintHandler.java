@@ -15,6 +15,7 @@ import DataEntities.DyeingProcess;
 import DataEntities.DyeingChemical;
 import DataEntities.ResinChemical;
 import Helpers.RomanNumber;
+import com.itextpdf.text.BaseColor;
 import java.util.ArrayList;
 import com.itextpdf.text.Chapter;
 import com.itextpdf.text.Chunk;
@@ -27,6 +28,7 @@ import com.itextpdf.text.Element;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.FontSelector;
 import com.itextpdf.text.pdf.GrayColor;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -40,7 +42,7 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.Comparator;
-import javafx.scene.control.Cell;
+//import javafx.scene.control.Cell;
 /**
  *
  * @author imbuenyson
@@ -85,6 +87,12 @@ public class PrintHandler {
         table.getDefaultCell().setBorder(PdfPCell.NO_BORDER);
         table.setWidthPercentage(100);
         
+        //Added Code
+        FontSelector selector1 = new FontSelector();
+        Font f1 = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12);
+        f1.setColor(BaseColor.BLUE);
+        selector1.addFont(f1);
+        
         Phrase pFiller1 = new Phrase();
         pFiller1.add(" ");
         PdfPCell pCell1 = new PdfPCell(pFiller1);
@@ -92,7 +100,8 @@ public class PrintHandler {
         table.addCell(pFiller1);
         
         Phrase p = new Phrase();
-        p.add("Customer: " + customerDetails.getCustomerName());
+        p = selector1.process("Customer: " + customerDetails.getCustomerName());
+        //p.add("Customer: " + customerDetails.getCustomerName());
         PdfPCell pCell = new PdfPCell(p);
         table.addCell(p);
         
@@ -107,8 +116,10 @@ public class PrintHandler {
         table.addCell(p3);
         
         Phrase p6 = new Phrase();
+        
         p6.add("Weight: " + jobOrderDetails.getWeight());
         pCell = new PdfPCell(p6);
+        
         table.addCell(p6);
         
         Phrase p5 = new Phrase();
@@ -593,6 +604,7 @@ public class PrintHandler {
                     table.getDefaultCell().setUseDescender(true);
                     cell = new PdfPCell();
                     //table.getDefaultCell().setBackgroundColor(new GrayColor(0.75f));
+                    
                     table.addCell("Process Name");
                     table.addCell("GPL");
                     table.addCell("%");
