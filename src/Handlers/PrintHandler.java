@@ -42,7 +42,6 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.Comparator;
-//import javafx.scene.control.Cell;
 /**
  *
  * @author imbuenyson
@@ -50,9 +49,9 @@ import java.util.Comparator;
 public class PrintHandler {
     public static final String DEST = "C:\\chapter_title.pdf";
  
+    private Font f  = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
     private int chapterNumber;
     
-    private Font fontAll = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12);
     
     public void createPDF(Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException {
         File file = new File(DEST);
@@ -70,7 +69,7 @@ public class PrintHandler {
         document.open();
         
          ////////////////////////***************BEGIN FIRST SECTION***************////////////////////////
-        Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 18, Font.BOLDITALIC);
+        Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
         
         Paragraph companyHeader = new Paragraph("Colortex Processing Inc.", companyHeaderFont);
         companyHeader.setAlignment(Element.ALIGN_CENTER);
@@ -99,31 +98,29 @@ public class PrintHandler {
         table.addCell(pFiller1);
         table.addCell(pFiller1);
         
-        Phrase p = new Phrase();
-        p = selector1.process("Customer: " + customerDetails.getCustomerName());
+        Phrase p = new Phrase("Customer: " + customerDetails.getCustomerName(), f);
         //p.add("Customer: " + customerDetails.getCustomerName());
         PdfPCell pCell = new PdfPCell(p);
         table.addCell(p);
         
-        Phrase p2 = new Phrase();
-        p2.add("Batch #: " + jobOrderDetails.getBatchNo());
+        Phrase p2 = new Phrase("Batch #: " + jobOrderDetails.getBatchNo(), f);
+        //p2.add("Batch #: " + jobOrderDetails.getBatchNo());
         pCell = new PdfPCell(p2);
         table.addCell(p2);
         
-        Phrase p3 = new Phrase();
-        p3.add("Job#/DR#: " + jobOrderDetails.getDrNumber());
+        Phrase p3 = new Phrase("Job#/DR#: " + jobOrderDetails.getDrNumber(), f);
+        //p3.add("Job#/DR#: " + jobOrderDetails.getDrNumber(), f);
         pCell = new PdfPCell(p3);
         table.addCell(p3);
         
-        Phrase p6 = new Phrase();
-        
-        p6.add("Weight: " + jobOrderDetails.getWeight());
+        Phrase p6 = new Phrase("Weight: " + jobOrderDetails.getWeight(), f);
+        //p6.add("Weight: " + jobOrderDetails.getWeight(), f);
         pCell = new PdfPCell(p6);
         
         table.addCell(p6);
         
-        Phrase p5 = new Phrase();
-        p5.add("Design: " + designDetails.getDesignName());
+        Phrase p5 = new Phrase("Design: " + designDetails.getDesignName(), f);
+        //p5.add("Design: " + designDetails.getDesignName(), f);
         pCell = new PdfPCell(p5);
         table.addCell(p5);
         
@@ -132,8 +129,8 @@ public class PrintHandler {
         pCell = new PdfPCell(p4);
         table.addCell(p4);
         
-        Phrase p7 = new Phrase();
-        p7.add("Color: " + chemicalDetails.getColorName());
+        Phrase p7 = new Phrase("Color: " + chemicalDetails.getColorName(), f);
+        //p7.add("Color: " + chemicalDetails.getColorName(), f);
         pCell = new PdfPCell(p7);
         table.addCell(p7);
         
@@ -154,50 +151,50 @@ public class PrintHandler {
         table.addCell(filler1);
         table.addCell(filler1);
         
-        Phrase dyeingType = new Phrase();
-        dyeingType.add("Dyeing Type:________________ ");
+        Phrase dyeingType = new Phrase("Dyeing Type:________________", f);
+        //dyeingType.add("Dyeing Type:________________ ", f);
         pCell = new PdfPCell(dyeingType);
         table.addCell(dyeingType);
         
-        Phrase numOfPushCartsUsed = new Phrase();
-        numOfPushCartsUsed.add("# of push carts used:___");
+        Phrase numOfPushCartsUsed = new Phrase("# of push carts used:___", f);
+        //numOfPushCartsUsed.add("# of push carts used:___", f);
         pCell = new PdfPCell(numOfPushCartsUsed);
         table.addCell(numOfPushCartsUsed);
         
-        Phrase greigeWidth = new Phrase();
-        greigeWidth.add("Greige Width:_______________");
+        Phrase greigeWidth = new Phrase("Greige Width:________________", f);
+        //greigeWidth.add("Greige Width:_______________", f);
         pCell = new PdfPCell(greigeWidth);
         table.addCell(greigeWidth);
         
-        Phrase pushCartNum = new Phrase();
-        pushCartNum.add("Push Cart #:____    # of Rolls: ____");
+        Phrase pushCartNum = new Phrase("Push Cart #:____    # of Rolls: ____", f);
+        //pushCartNum.add("Push Cart #:____    # of Rolls: ____", f);
         pCell = new PdfPCell(pushCartNum);
         table.addCell(pushCartNum);
         
-        Phrase finishedWidth = new Phrase();
-        finishedWidth.add("Finished Width:______________ ");
+        Phrase finishedWidth = new Phrase("Finished Width:______________ ", f);
+        //finishedWidth.add("Finished Width:______________ ", f);
         pCell = new PdfPCell(finishedWidth);
         table.addCell(finishedWidth);
         
         table.addCell(pushCartNum);
         
-        Phrase yield = new Phrase();
-        yield.add("Yield:____________________");
+        Phrase yield = new Phrase("Yield:______________________", f);
+        //yield.add("Yield:____________________", f);
         pCell = new PdfPCell(yield);
         table.addCell(yield);
         
-        Phrase preparedBy = new Phrase();
-        preparedBy.add("Prepared By:________________ ");
+        Phrase preparedBy = new Phrase("Prepared By:__________________", f);
+        //preparedBy.add("Prepared By:________________ ", f);
         pCell = new PdfPCell(preparedBy);
         table.addCell(preparedBy);
         
-        Phrase resin = new Phrase();
-        resin.add("Resin:___________________");
+        Phrase resin = new Phrase("Resin:______________________", f);
+        //resin.add("Resin:___________________", f);
         pCell = new PdfPCell(resin);
         table.addCell(resin);
         
-        Phrase checkedBy = new Phrase();
-        checkedBy.add("Checked By:________________ ");
+        Phrase checkedBy = new Phrase("Checked By:__________________", f);
+        //checkedBy.add("Checked By:________________ ", f);
         pCell = new PdfPCell(checkedBy);
         table.addCell(checkedBy);
         
@@ -207,17 +204,18 @@ public class PrintHandler {
         table.getDefaultCell().setBorder(PdfPCell.NO_BORDER);
         table.setWidthPercentage(100);
         
-        Phrase dyeingOperators = new Phrase();
-        dyeingOperators.add("Dyeing Operators: 1)_______________ 2)_______________ 3)_______________");
+        Phrase dyeingOperators = new Phrase("Dyeing Operators: 1)____________________ 2)_____________________ 3)_____________________", f);
+        //dyeingOperators.add("Dyeing Operators: 1)_______________ 2)_______________ 3)_______________", f);
         pCell = new PdfPCell(dyeingOperators);
         table.addCell(dyeingOperators);
         
-        Phrase remarks = new Phrase();
-        remarks.add("Remarks:___________________________________________________________");
-        Phrase line = new Phrase();
-        line.add("__________________________________________________________________");
+        Phrase remarks = new Phrase("Remarks:", f);
+        //remarks.add("Remarks:___________________________________________________________", f);
+        Phrase line = new Phrase("___________________________________________________________________________________", f);
+        //line.add("__________________________________________________________________", f);
         pCell = new PdfPCell(remarks);
         table.addCell(remarks);
+        table.addCell(line);
         table.addCell(line);
         table.addCell(line);
         table.addCell(filler1);
@@ -245,28 +243,28 @@ public class PrintHandler {
         table.addCell(pFiller1);
         table.addCell(pFiller1);
         
-        p = new Phrase();
-        p.add("Customer: " + customerDetails.getCustomerName());
+        p = new Phrase("Customer: " + customerDetails.getCustomerName(), f);
+        //p.add("Customer: " + customerDetails.getCustomerName(), f);
         pCell = new PdfPCell(p);
         table.addCell(p);
         
-        p2 = new Phrase();
-        p2.add("Batch #: " + jobOrderDetails.getBatchNo());
+        p2 = new Phrase("Batch #: " + jobOrderDetails.getBatchNo(), f);
+        //p2.add("Batch #: " + jobOrderDetails.getBatchNo(), f);
         pCell = new PdfPCell(p2);
         table.addCell(p2);
         
-        p3 = new Phrase();
-        p3.add("Job#/DR#: " + jobOrderDetails.getDrNumber());
+        p3 = new Phrase("Job#/DR#: " + jobOrderDetails.getDrNumber(), f);
+        //p3.add("Job#/DR#: " + jobOrderDetails.getDrNumber(), f);
         pCell = new PdfPCell(p3);
         table.addCell(p3);
         
-        p6 = new Phrase();
-        p6.add("Weight: " + jobOrderDetails.getWeight());
+        p6 = new Phrase("Weight: " + jobOrderDetails.getWeight(), f);
+        //p6.add("Weight: " + jobOrderDetails.getWeight(), f);
         pCell = new PdfPCell(p6);
         table.addCell(p6);
         
-        p5 = new Phrase();
-        p5.add("Design: " + designDetails.getDesignName());
+        p5 = new Phrase("Design: " + designDetails.getDesignName(), f);
+        //p5.add("Design: " + designDetails.getDesignName(), f);
         pCell = new PdfPCell(p5);
         table.addCell(p5);
         
@@ -275,8 +273,8 @@ public class PrintHandler {
         pCell = new PdfPCell(p4);
         table.addCell(p4);
         
-        p7 = new Phrase();
-        p7.add("Color: " + chemicalDetails.getColorName());
+        p7 = new Phrase("Color: " + chemicalDetails.getColorName(), f);
+        //p7.add("Color: " + chemicalDetails.getColorName(), f);
         pCell = new PdfPCell(p7);
         table.addCell(p7);
         
@@ -297,50 +295,50 @@ public class PrintHandler {
         table.addCell(filler1);
         table.addCell(filler1);
         
-        dyeingType = new Phrase();
-        dyeingType.add("Dyeing Type:________________ ");
+        dyeingType = new Phrase("Dyeing Type:________________ ", f);
+        //dyeingType.add("Dyeing Type:________________ ", f);
         pCell = new PdfPCell(dyeingType);
         table.addCell(dyeingType);
         
-        numOfPushCartsUsed = new Phrase();
-        numOfPushCartsUsed.add("# of push carts used:___");
+        numOfPushCartsUsed = new Phrase("# of push carts used:___", f);
+        //numOfPushCartsUsed.add("# of push carts used:___", f);
         pCell = new PdfPCell(numOfPushCartsUsed);
         table.addCell(numOfPushCartsUsed);
         
-        greigeWidth = new Phrase();
-        greigeWidth.add("Greige Width:_______________");
+        greigeWidth = new Phrase("Greige Width:________________", f);
+        //greigeWidth.add("Greige Width:_______________", f);
         pCell = new PdfPCell(greigeWidth);
         table.addCell(greigeWidth);
         
-        pushCartNum = new Phrase();
-        pushCartNum.add("Push Cart #:____    # of Rolls: ____");
+        pushCartNum = new Phrase("Push Cart #:____    # of Rolls: ____", f);
+        //pushCartNum.add("Push Cart #:____    # of Rolls: ____", f);
         pCell = new PdfPCell(pushCartNum);
         table.addCell(pushCartNum);
         
-        finishedWidth = new Phrase();
-        finishedWidth.add("Finished Width:______________ ");
+        finishedWidth = new Phrase("Finished Width:______________ ",f);
+        //finishedWidth.add("Finished Width:______________ ",f);
         pCell = new PdfPCell(finishedWidth);
         table.addCell(finishedWidth);
         
         table.addCell(pushCartNum);
         
-        yield = new Phrase();
-        yield.add("Yield:____________________");
+        yield = new Phrase("Yield:______________________", f);
+        //yield.add("Yield:____________________", f);
         pCell = new PdfPCell(yield);
         table.addCell(yield);
         
-        preparedBy = new Phrase();
-        preparedBy.add("Prepared By:________________ ");
+        preparedBy = new Phrase("Prepared By:__________________", f);
+        //preparedBy.add("Prepared By:________________ ", f);
         pCell = new PdfPCell(preparedBy);
         table.addCell(preparedBy);
         
-        resin = new Phrase();
-        resin.add("Resin:___________________");
+        resin = new Phrase("Resin:______________________", f);
+        //resin.add("Resin:___________________", f);
         pCell = new PdfPCell(resin);
         table.addCell(resin);
         
-        checkedBy = new Phrase();
-        checkedBy.add("Checked By:________________ ");
+        checkedBy = new Phrase("Checked By:__________________", f);
+        //checkedBy.add("Checked By:________________ ", f);
         pCell = new PdfPCell(checkedBy);
         table.addCell(checkedBy);
         
@@ -350,17 +348,18 @@ public class PrintHandler {
         table.getDefaultCell().setBorder(PdfPCell.NO_BORDER);
         table.setWidthPercentage(100);
         
-        dyeingOperators = new Phrase();
-        dyeingOperators.add("Dyeing Operators: 1)_______________ 2)_______________ 3)_______________");
+        dyeingOperators = new Phrase("Dyeing Operators: 1)____________________ 2)_____________________ 3)_____________________", f);
+        //dyeingOperators.add("Dyeing Operators: 1)_______________ 2)_______________ 3)_______________", f);
         pCell = new PdfPCell(dyeingOperators);
         table.addCell(dyeingOperators);
         
-        remarks = new Phrase();
-        remarks.add("Remarks:___________________________________________________________");
-        line = new Phrase();
-        line.add("__________________________________________________________________");
+        remarks = new Phrase("Remarks:", f);
+        //remarks.add("Remarks:___________________________________________________________", f);
+        line = new Phrase("___________________________________________________________________________________", f);
+        //line.add("__________________________________________________________________", f);
         pCell = new PdfPCell(remarks);
         table.addCell(remarks);
+        table.addCell(line);
         table.addCell(line);
         table.addCell(line);
         
@@ -385,7 +384,7 @@ public class PrintHandler {
     
     public Document AddSecondPage(Document document, PdfWriter writer, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume)  throws IOException, DocumentException 
     {
-        Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 18, Font.BOLDITALIC);
+        Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
         Paragraph companyHeader = new Paragraph("Colortex Processing Inc.", companyHeaderFont);
         companyHeader.setAlignment(Element.ALIGN_CENTER);
         document.add(companyHeader);
@@ -409,7 +408,7 @@ public class PrintHandler {
         table.addCell(filler);
         document.add(table);
         
-        Font dyeingProcessFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 13, Font.NORMAL);
+        Font dyeingProcessFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
         Paragraph dyeingProcessHeader = new Paragraph(dyeingProgramNameHandler.GetDyeingProgramNameFromID(dyeingProgramDetails.getDyeingProgramNameID()), dyeingProcessFont);
         dyeingProcessHeader.setAlignment(Element.ALIGN_CENTER);
         document.add(dyeingProcessHeader);
@@ -422,50 +421,50 @@ public class PrintHandler {
         table.addCell(filler);
         table.addCell(filler);
         
-        Phrase p = new Phrase();
-        p.add("Customer: " + customerDetails.getCustomerName());
+        Phrase p = new Phrase("Customer: " + customerDetails.getCustomerName(), f);
+        //p.add("Customer: " + customerDetails.getCustomerName(), f);
         PdfPCell pCell = new PdfPCell(p);
         table.addCell(p);
         
-        Phrase p2 = new Phrase();
-        p2.add("Batch #: " + jobOrderDetails.getBatchNo());
+        Phrase p2 = new Phrase("Batch #: " + jobOrderDetails.getBatchNo(), f);
+        //p2.add("Batch #: " + jobOrderDetails.getBatchNo(), f);
         pCell = new PdfPCell(p2);
         table.addCell(p2);
         
-        Phrase p3 = new Phrase();
-        p3.add("Job#/DR#: " + jobOrderDetails.getDrNumber());
+        Phrase p3 = new Phrase("Job#/DR#: " + jobOrderDetails.getDrNumber(), f);
+        //p3.add("Job#/DR#: " + jobOrderDetails.getDrNumber(), f);
         pCell = new PdfPCell(p3);
         table.addCell(p3);
         
-        Phrase p6 = new Phrase();
-        p6.add("Machine: " + machineDetails.getMachineName());
+        Phrase p6 = new Phrase("Machine: " + machineDetails.getMachineName(), f);
+        //p6.add("Machine: " + machineDetails.getMachineName(), f);
         pCell = new PdfPCell(p6);
         table.addCell(p6);
         
-        Phrase p5 = new Phrase();
-        p5.add("Design #: " + designDetails.getDesignName());
+        Phrase p5 = new Phrase("Design #: " + designDetails.getDesignName(), f);
+        //p5.add("Design #: " + designDetails.getDesignName(), f);
         pCell = new PdfPCell(p5);
         table.addCell(p5);
         
-        Phrase p4 = new Phrase();
-        p4.add("Weight: " + jobOrderDetails.getWeight());
+        Phrase p4 = new Phrase("Weight: " + jobOrderDetails.getWeight(), f);
+        //p4.add("Weight: " + jobOrderDetails.getWeight(), f);
         pCell = new PdfPCell(p4);
         table.addCell(p4);
         
-        Phrase p7 = new Phrase();
-        p7.add("Color: " + chemicalDetails.getColorName());
+        Phrase p7 = new Phrase("Color: " + chemicalDetails.getColorName(), f);
+        //p7.add("Color: " + chemicalDetails.getColorName(), f);
         pCell = new PdfPCell(p7);
         table.addCell(p7);
         
-        Phrase p8 = new Phrase();
-        p8.add("Vol. of Water: " + volume);
+        Phrase p8 = new Phrase("Vol. of Water: " + volume, f);
+        //p8.add("Vol. of Water: " + volume, f);
         pCell = new PdfPCell(p8);
         table.addCell(p8);
         table.addCell(filler);
         table.addCell(filler);
         document.add(table);
         
-        Paragraph paragraph = new Paragraph("Supervisor:_________ Drugman:_________ Operator:_________ Date:_________");
+        Paragraph paragraph = new Paragraph("Supervisor:_____________ Drugman:_____________ Operator:_____________ Date:_____________", f);
         document.add(paragraph);
         document.add(Chunk.NEWLINE);
         
@@ -478,9 +477,9 @@ public class PrintHandler {
         PdfPCell cell = new PdfPCell();
         //table.getDefaultCell().setBackgroundColor(new GrayColor(0.75f));
             table.addCell(" ");
-            table.addCell("GPL");
-            table.addCell("%");
-            table.addCell("Quantity");
+            table.addCell(new Phrase("GPL", f));
+            table.addCell(new Phrase("%", f));
+            table.addCell(new Phrase("Quantity", f));
             
         table.getDefaultCell().setBackgroundColor(GrayColor.GRAYWHITE);
         table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -499,7 +498,7 @@ public class PrintHandler {
                 if(rows%30 != 0 || rows == 0)
                 {
                     if (dyeingProcessList.get(x).getdyeingProcessOrder().matches("[0-9]+")){
-                        table.addCell(RomanNumber.toRoman(Integer.parseInt(dyeingProcessList.get(x).getdyeingProcessOrder())) + ". " + dyeingProcessList.get(x).getDyeingProcessName());
+                        table.addCell(new Phrase(RomanNumber.toRoman(Integer.parseInt(dyeingProcessList.get(x).getdyeingProcessOrder())) + ". " + dyeingProcessList.get(x).getDyeingProcessName(), f));
                         table.addCell(" ");
                         table.addCell(" ");
                         table.addCell(" ");
@@ -508,7 +507,7 @@ public class PrintHandler {
                     else if(!(dyeingProcessList.get(x).getdyeingProcessOrder().matches("[0-9]+"))){
                         String dyeingSubProcessLetter = dyeingProcessList.get(x).getdyeingProcessOrder().replaceAll("[^A-Za-z]+", "");
 
-                        table.addCell("    " + dyeingSubProcessLetter.toUpperCase() + ". " + dyeingProcessList.get(x).getDyeingProcessName());
+                        table.addCell(new Phrase("    " + dyeingSubProcessLetter.toUpperCase() + ". " + dyeingProcessList.get(x).getDyeingProcessName(), f));
                         table.addCell(" ");
                         table.addCell(" ");
                         table.addCell(" ");
@@ -533,15 +532,15 @@ public class PrintHandler {
 
                         for(int i = 0; i<dyeingChemicalList.size(); i++)
                         {
-                            table.addCell("        " + dyeingChemicalList.get(i).getOrder() + ". " + chemHandler.GetChemicalNameFromChemicalID(dyeingChemicalList.get(i).getChemicalID()));
+                            table.addCell(new Phrase("        " + dyeingChemicalList.get(i).getOrder() + ". " + chemHandler.GetChemicalNameFromChemicalID(dyeingChemicalList.get(i).getChemicalID()), f));
                             if("GPL".equals(dyeingChemicalList.get(i).getType().toUpperCase())){
-                                table.addCell(String.valueOf(dyeingChemicalList.get(i).getValue()));
+                                table.addCell(new Phrase(String.valueOf(dyeingChemicalList.get(i).getValue()), f));
                                 table.addCell(" ");
                             }
                             else
                             {
                                 table.addCell(" ");
-                                table.addCell(String.valueOf(dyeingChemicalList.get(i).getValue()));
+                                table.addCell(new Phrase(String.valueOf(dyeingChemicalList.get(i).getValue()),f ));
                             }
 
                             if(dyeingChemicalList.get(i).getType()== "%")
@@ -552,14 +551,14 @@ public class PrintHandler {
                                 {
                                     DecimalFormat df = new DecimalFormat("#,###.00");
                                     df.setRoundingMode(RoundingMode.CEILING);
-                                    table.addCell(df.format(quantity) + dyeingChemicalList.get(i).getState()); 
+                                    table.addCell(new Phrase(df.format(quantity) + dyeingChemicalList.get(i).getState(), f)); 
                                     
                                 }
                                 else
                                 {
                                     DecimalFormat df = new DecimalFormat("#,###.##");
                                     df.setRoundingMode(RoundingMode.CEILING);
-                                    table.addCell(df.format(quantity) + dyeingChemicalList.get(i).getState()); 
+                                    table.addCell(new Phrase(df.format(quantity) + dyeingChemicalList.get(i).getState(), f)); 
                                 }
                             }
                             else
@@ -569,7 +568,7 @@ public class PrintHandler {
                                 {
                                     DecimalFormat df = new DecimalFormat("#,###.00");
                                     df.setRoundingMode(RoundingMode.CEILING);
-                                    table.addCell(df.format(quantity) + dyeingChemicalList.get(i).getState());
+                                    table.addCell(new Phrase(df.format(quantity) + dyeingChemicalList.get(i).getState(), f));
                                     
                                     
                                 }
@@ -577,7 +576,7 @@ public class PrintHandler {
                                 {
                                     DecimalFormat df = new DecimalFormat("#,###.##");
                                     df.setRoundingMode(RoundingMode.CEILING);
-                                    table.addCell(df.format(quantity)+ dyeingChemicalList.get(i).getState());
+                                    table.addCell(new Phrase(df.format(quantity)+ dyeingChemicalList.get(i).getState(), f));
                                 }
                             }
                             
@@ -604,17 +603,16 @@ public class PrintHandler {
                     table.getDefaultCell().setUseDescender(true);
                     cell = new PdfPCell();
                     //table.getDefaultCell().setBackgroundColor(new GrayColor(0.75f));
-                    
-                    table.addCell("Process Name");
-                    table.addCell("GPL");
-                    table.addCell("%");
-                    table.addCell("Quantity");
+                    table.addCell(new Phrase("Process Name", f));
+                    table.addCell(new Phrase("GPL", f));
+                    table.addCell(new Phrase("%", f));
+                    table.addCell(new Phrase("Quantity", f));
 
                     table.getDefaultCell().setBackgroundColor(GrayColor.GRAYWHITE);
                     table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
 
                     if (dyeingProcessList.get(x).getdyeingProcessOrder().contains("[a-zA-Z]+") == false){
-                        table.addCell(RomanNumber.toRoman(Integer.parseInt(dyeingProcessList.get(x).getdyeingProcessOrder())) + ". " + dyeingProcessList.get(x).getDyeingProcessName());
+                        table.addCell(new Phrase(RomanNumber.toRoman(Integer.parseInt(dyeingProcessList.get(x).getdyeingProcessOrder())) + ". " + dyeingProcessList.get(x).getDyeingProcessName(), f));
                         table.addCell(" ");
                         table.addCell(" ");
                         table.addCell(" ");
@@ -623,7 +621,7 @@ public class PrintHandler {
                     else if(dyeingProcessList.get(x).getdyeingProcessOrder().contains("[a-zA-Z]+") == true){
                         String dyeingSubProcessLetter = dyeingProcessList.get(x).getdyeingProcessOrder().replaceAll("[^A-Za-z]+", "");
 
-                        table.addCell("    " + dyeingSubProcessLetter.toUpperCase() + ". " + dyeingProcessList.get(x).getDyeingProcessName());
+                        table.addCell(new Phrase("    " + dyeingSubProcessLetter.toUpperCase() + ". " + dyeingProcessList.get(x).getDyeingProcessName(), f));
                         table.addCell(" ");
                         table.addCell(" ");
                         table.addCell(" ");
@@ -648,17 +646,17 @@ public class PrintHandler {
 
                         for(int i = 0; i<dyeingChemicalList.size(); i++)
                         {
-                            table.addCell("        " + dyeingChemicalList.get(i).getOrder() + ". " + chemHandler.GetChemicalNameFromChemicalID(dyeingChemicalList.get(i).getChemicalID()));
+                            table.addCell(new Phrase("        " + dyeingChemicalList.get(i).getOrder() + ". " + chemHandler.GetChemicalNameFromChemicalID(dyeingChemicalList.get(i).getChemicalID()), f));
                             if("GPL".equals(dyeingChemicalList.get(i).getType().toUpperCase())){
-                                table.addCell(String.valueOf(dyeingChemicalList.get(i).getValue()));
+                                table.addCell(new Phrase(String.valueOf(dyeingChemicalList.get(i).getValue()), f));
                                 table.addCell(" ");
                             }
                             else
                             {
                                 table.addCell(" ");
-                                table.addCell(String.valueOf(dyeingChemicalList.get(i).getValue()));
+                                table.addCell(new Phrase(String.valueOf(dyeingChemicalList.get(i).getValue()), f));
                             }
-                            table.addCell(String.valueOf(dyeingChemicalList.get(i).getValue() * jobOrderDetails.getVolumeH20()));
+                            table.addCell(new Phrase(String.valueOf(dyeingChemicalList.get(i).getValue() * jobOrderDetails.getVolumeH20()), f));
                             rows++;
                         }
                     }
@@ -668,7 +666,7 @@ public class PrintHandler {
         else
         {
             if (dyeingProcessList.get(0).getdyeingProcessOrder().matches("[0-9]+")){
-                    table.addCell(RomanNumber.toRoman(Integer.parseInt(dyeingProcessList.get(0).getdyeingProcessOrder())) + ". " + dyeingProcessList.get(0).getDyeingProcessName());
+                    table.addCell(new Phrase(RomanNumber.toRoman(Integer.parseInt(dyeingProcessList.get(0).getdyeingProcessOrder())) + ". " + dyeingProcessList.get(0).getDyeingProcessName(), f));
                     table.addCell(" ");
                     table.addCell(" ");
                     table.addCell(" ");
@@ -692,15 +690,15 @@ public class PrintHandler {
 
                     for(int i = 0; i<dyeingChemicalList.size(); i++)
                     {
-                        table.addCell("        " + dyeingChemicalList.get(i).getOrder() + ". " + chemHandler.GetChemicalNameFromChemicalID(dyeingChemicalList.get(i).getChemicalID()));
+                        table.addCell(new Phrase("        " + dyeingChemicalList.get(i).getOrder() + ". " + chemHandler.GetChemicalNameFromChemicalID(dyeingChemicalList.get(i).getChemicalID()), f));
                         if("GPL".equals(dyeingChemicalList.get(i).getType().toUpperCase())){
-                            table.addCell(String.valueOf(dyeingChemicalList.get(i).getValue()));
+                            table.addCell(new Phrase(String.valueOf(dyeingChemicalList.get(i).getValue()), f));
                             table.addCell(" ");
                         }
                         else
                         {
                             table.addCell(" ");
-                            table.addCell(String.valueOf(dyeingChemicalList.get(i).getValue()));
+                            table.addCell(new Phrase(String.valueOf(dyeingChemicalList.get(i).getValue()), f));
                         }
 
                         if(dyeingChemicalList.get(i).getType()== "%")
@@ -711,14 +709,14 @@ public class PrintHandler {
                            {
                                DecimalFormat df = new DecimalFormat("#,###.00");
                                 df.setRoundingMode(RoundingMode.CEILING);
-                                table.addCell(df.format(quantity).toString() + dyeingChemicalList.get(i).getState()); 
+                                table.addCell(new Phrase(df.format(quantity).toString() + dyeingChemicalList.get(i).getState(), f)); 
                                 
                            }
                            else
                            {
                                DecimalFormat df = new DecimalFormat("#,###.##");
                                 df.setRoundingMode(RoundingMode.CEILING);
-                                table.addCell(df.format(quantity).toString() + dyeingChemicalList.get(i).getState()); 
+                                table.addCell(new Phrase(df.format(quantity).toString() + dyeingChemicalList.get(i).getState(), f)); 
                            }
                            
                         }
@@ -730,14 +728,14 @@ public class PrintHandler {
                            {
                                DecimalFormat df = new DecimalFormat("#,###.00");
                             df.setRoundingMode(RoundingMode.CEILING);
-                            table.addCell(df.format(quantity).toString() + dyeingChemicalList.get(i).getState());
+                            table.addCell(new Phrase(df.format(quantity).toString() + dyeingChemicalList.get(i).getState(), f));
                                
                            }
                            else
                            {
                                DecimalFormat df = new DecimalFormat("#,###.##");
                             df.setRoundingMode(RoundingMode.CEILING);
-                            table.addCell(df.format(quantity).toString() + dyeingChemicalList.get(i).getState());
+                            table.addCell(new Phrase(df.format(quantity).toString() + dyeingChemicalList.get(i).getState(), f));
                            }
                             
                         }
@@ -790,7 +788,7 @@ public class PrintHandler {
     public Document AddSecondPageHeader(Document document, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException
     {
         DyeingProgramNameHandler dyeingProgramNameHandler = new DyeingProgramNameHandler();
-        Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 18, Font.BOLDITALIC);
+        Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
         Paragraph companyHeader = new Paragraph("Colortex Processing Inc.", companyHeaderFont);
         companyHeader.setAlignment(Element.ALIGN_CENTER);
         document.add(companyHeader);
@@ -826,50 +824,50 @@ public class PrintHandler {
         table.addCell(filler);
         table.addCell(filler);
         
-        Phrase p = new Phrase();
-        p.add("Customer: " + customerDetails.getCustomerName());
+        Phrase p = new Phrase("Customer: " + customerDetails.getCustomerName(), f);
+        //p.add("Customer: " + customerDetails.getCustomerName());
         PdfPCell pCell = new PdfPCell(p);
         table.addCell(p);
         
-        Phrase p2 = new Phrase();
-        p2.add("Batch #: " + jobOrderDetails.getBatchNo());
+        Phrase p2 = new Phrase("Batch #: " + jobOrderDetails.getBatchNo(), f);
+        //p2.add("Batch #: " + jobOrderDetails.getBatchNo(), f);
         pCell = new PdfPCell(p2);
         table.addCell(p2);
         
-        Phrase p3 = new Phrase();
-        p3.add("Job#/DR#: " + jobOrderDetails.getDrNumber());
+        Phrase p3 = new Phrase("Job#/DR#: " + jobOrderDetails.getDrNumber(), f);
+        //p3.add("Job#/DR#: " + jobOrderDetails.getDrNumber());
         pCell = new PdfPCell(p3);
         table.addCell(p3);
         
-        Phrase p6 = new Phrase();
-        p6.add("Machine: " + machineDetails.getMachineName());
+        Phrase p6 = new Phrase("Machine: " + machineDetails.getMachineName(), f);
+        //p6.add("Machine: " + machineDetails.getMachineName(), f);
         pCell = new PdfPCell(p6);
         table.addCell(p6);
         
-        Phrase p5 = new Phrase();
-        p5.add("Design: " + designDetails.getDesignName());
+        Phrase p5 = new Phrase("Design: " + designDetails.getDesignName(), f);
+        //p5.add("Design: " + designDetails.getDesignName(), f);
         pCell = new PdfPCell(p5);
         table.addCell(p5);
         
-        Phrase p4 = new Phrase();
-        p4.add("Weight: " + jobOrderDetails.getWeight());
+        Phrase p4 = new Phrase("Weight: " + jobOrderDetails.getWeight(), f);
+        //p4.add("Weight: " + jobOrderDetails.getWeight(), f);
         pCell = new PdfPCell(p4);
         table.addCell(p4);
         
-        Phrase p7 = new Phrase();
-        p7.add("Color: " + chemicalDetails.getColorName());
+        Phrase p7 = new Phrase("Color: " + chemicalDetails.getColorName(), f);
+        //p7.add("Color: " + chemicalDetails.getColorName(), f);
         pCell = new PdfPCell(p7);
         table.addCell(p7);
         
-        Phrase p8 = new Phrase();
-        p8.add("Vol. of Water: " + volume);
+        Phrase p8 = new Phrase("Vol. of Water: " + volume, f);
+        //p8.add("Vol. of Water: " + volume, f);
         pCell = new PdfPCell(p8);
         table.addCell(p8);
         table.addCell(filler);
         table.addCell(filler);
         document.add(table);
         
-        Paragraph paragraph = new Paragraph("Supervisor:_________ Drugman:_________ Operator:_________ Date:_________");
+        Paragraph paragraph = new Paragraph("Supervisor:_____________ Drugman:_____________ Operator:_____________ Date:_____________", f);
         document.add(paragraph);
         document.add(Chunk.NEWLINE);
         
@@ -879,7 +877,7 @@ public class PrintHandler {
     public Document AddThirdPage(Document document, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException 
     {
         ResinProgramHandler resinProgramNameHandler = new ResinProgramHandler();
-        Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 18, Font.BOLDITALIC);
+        Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
         Paragraph companyHeader = new Paragraph("Colortex Processing Inc.", companyHeaderFont);
         companyHeader.setAlignment(Element.ALIGN_CENTER);
         //document.add(companyHeader);
@@ -902,7 +900,7 @@ public class PrintHandler {
         table.addCell(filler);
         chapter.add(table);
         
-        Font dyeingProcessFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 13, Font.NORMAL);
+        Font dyeingProcessFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
         Paragraph resinProgramHeader = new Paragraph(resinProgramNameHandler.GetResinProgramNameFromResinProgramID(jobOrderDetails.getResinProgramID()), dyeingProcessFont);
         resinProgramHeader.setAlignment(Element.ALIGN_CENTER);
         chapter.add(resinProgramHeader);
@@ -915,53 +913,53 @@ public class PrintHandler {
         table.addCell(filler);
         table.addCell(filler);
         
-        Phrase p = new Phrase();
-        p.add("Customer: " + customerDetails.getCustomerName());
+        Phrase p = new Phrase("Customer: " + customerDetails.getCustomerName(), f);
+        //p.add("Customer: " + customerDetails.getCustomerName());
         PdfPCell pCell = new PdfPCell(p);
         table.addCell(p);
         
-        Phrase p2 = new Phrase();
-        p2.add("Batch #: " + jobOrderDetails.getBatchNo());
+        Phrase p2 = new Phrase("Batch #: " + jobOrderDetails.getBatchNo(), f);
+        //p2.add("Batch #: " + jobOrderDetails.getBatchNo(), f);
         pCell = new PdfPCell(p2);
         table.addCell(p2);
         
-        Phrase p3 = new Phrase();
-        p3.add("Job#/DR#: " + jobOrderDetails.getDrNumber());
+        Phrase p3 = new Phrase("Job#/DR#: " + jobOrderDetails.getDrNumber(), f);
+        //p3.add("Job#/DR#: " + jobOrderDetails.getDrNumber(), f);
         pCell = new PdfPCell(p3);
         table.addCell(p3);
         
-        Phrase p6 = new Phrase();
-        p6.add("Machine: " + machineDetails.getMachineName());
+        Phrase p6 = new Phrase("Machine: " + machineDetails.getMachineName(), f);
+        //p6.add("Machine: " + machineDetails.getMachineName(), f);
         pCell = new PdfPCell(p6);
         table.addCell(p6);
         
-        Phrase p5 = new Phrase();
-        p5.add("Design: " + designDetails.getDesignName());
+        Phrase p5 = new Phrase("Design: " + designDetails.getDesignName(), f);
+        //p5.add("Design: " + designDetails.getDesignName(), f);
         pCell = new PdfPCell(p5);
         table.addCell(p5);
         
-        Phrase p4 = new Phrase();
-        p4.add("Weight: " + jobOrderDetails.getWeight());
+        Phrase p4 = new Phrase("Weight: " + jobOrderDetails.getWeight(), f);
+        //p4.add("Weight: " + jobOrderDetails.getWeight(), f);
         pCell = new PdfPCell(p4);
         table.addCell(p4);
         
-        Phrase p7 = new Phrase();
-        p7.add("Color: " + chemicalDetails.getColorName());
+        Phrase p7 = new Phrase("Color: " + chemicalDetails.getColorName(), f);
+        //p7.add("Color: " + chemicalDetails.getColorName(), f);
         pCell = new PdfPCell(p7);
         table.addCell(p7);
         
-        Phrase p8 = new Phrase();
-        p8.add("Vol. of Water: " + volume);
+        Phrase p8 = new Phrase("Vol. of Water: " + volume, f);
+        //p8.add("Vol. of Water: " + volume, f);
         pCell = new PdfPCell(p8);
         table.addCell(p8);
         table.addCell(filler);
         table.addCell(filler);
         chapter.add(table);
         
-        Paragraph paragraph = new Paragraph("Supervisor:_________ Drugman:_________ Operator:_________ Date:_________");
+        Paragraph paragraph = new Paragraph("Supervisor:_____________ Drugman:_____________ Operator:_____________ Date:_____________", f);
         chapter.add(paragraph);
         
-        paragraph = new Paragraph("Loading Time:_______________________");
+        paragraph = new Paragraph("Loading Time:_______________________", f);
         paragraph.setAlignment(Element.ALIGN_CENTER);
         
         chapter.add(paragraph);
@@ -976,7 +974,7 @@ public class PrintHandler {
         String resinProgramName = resinProgramHandler.GetResinProgramNameFromResinProgramID(jobOrderDetails.getResinProgramID());
         ArrayList<ResinChemical> resinChemicalList = resinChemicalHandler.GetResinChemicalsByResinProgramId(jobOrderDetails.getResinProgramID());
         
-        paragraph = new Paragraph(resinProgramName);
+        paragraph = new Paragraph(resinProgramName, dyeingProcessFont);
         paragraph.setAlignment(Element.ALIGN_CENTER);
         document.add(paragraph);
         document.add(Chunk.NEWLINE);
@@ -989,10 +987,10 @@ public class PrintHandler {
         table.getDefaultCell().setUseDescender(true);
         PdfPCell cell = new PdfPCell();
         //table.getDefaultCell().setBackgroundColor(new GrayColor(0.75f));
-            table.addCell("Resin Chemical");
-            table.addCell("GPL");
-            table.addCell("%");
-            table.addCell("Quantity");
+            table.addCell(new Phrase("Resin Chemical", f));
+            table.addCell(new Phrase("GPL",f));
+            table.addCell(new Phrase("%",f));
+            table.addCell(new Phrase("Quantity",f));
 
             
         table.getDefaultCell().setBackgroundColor(GrayColor.GRAYWHITE);
@@ -1004,16 +1002,16 @@ public class PrintHandler {
             table.addCell(" ");
         
         for (int x = 0; x < resinChemicalList.size(); x++) {
-                table.addCell((x+1) + ".  " + chemicalHandler.GetChemicalNameFromChemicalID(resinChemicalList.get(x).getChemicalID()));
+                table.addCell(new Phrase((x+1) + ".  " + chemicalHandler.GetChemicalNameFromChemicalID(resinChemicalList.get(x).getChemicalID()), f));
                 //table.addCell(String.valueOf(resinChemicalList.get(x).getGPLValue()));
                 if("GPL".equals(resinChemicalList.get(x).getType().toUpperCase())){
-                    table.addCell(String.valueOf(resinChemicalList.get(x).getGPLValue()));
+                    table.addCell(new Phrase(String.valueOf(resinChemicalList.get(x).getGPLValue()), f));
                     table.addCell(" ");
                 }
                 else
                 {
                     table.addCell(" ");
-                    table.addCell(String.valueOf(resinChemicalList.get(x).getGPLValue()));
+                    table.addCell(new Phrase(String.valueOf(resinChemicalList.get(x).getGPLValue()), f));
                 }
                 //table.addCell(String.valueOf(jobOrderDetails.getVolumeH20() * resinChemicalList.get(x).getGPLValue()));
                 if(resinChemicalList.get(x).getType()== "%")
@@ -1024,14 +1022,14 @@ public class PrintHandler {
                     {
                         DecimalFormat df = new DecimalFormat("#,###.00");
                             df.setRoundingMode(RoundingMode.CEILING);
-                   table.addCell(df.format(quantity).toString() + resinChemicalList.get(x).getState()); 
+                   table.addCell(new Phrase(df.format(quantity).toString() + resinChemicalList.get(x).getState(), f)); 
 
                     }
                     else
                     {
                         DecimalFormat df = new DecimalFormat("#,###.##");
                             df.setRoundingMode(RoundingMode.CEILING);
-                   table.addCell(df.format(quantity).toString() + resinChemicalList.get(x).getState()); 
+                   table.addCell(new Phrase(df.format(quantity).toString() + resinChemicalList.get(x).getState(), f)); 
                     }
                                
                 }
@@ -1043,7 +1041,7 @@ public class PrintHandler {
                         DecimalFormat df = new DecimalFormat("#,###.00");
                             df.setRoundingMode(RoundingMode.CEILING);
                             
-                    table.addCell(df.format(quantity).toString() + resinChemicalList.get(x).getState());
+                    table.addCell(new Phrase(df.format(quantity).toString() + resinChemicalList.get(x).getState(), f));
 
                     }
                     else
@@ -1051,7 +1049,7 @@ public class PrintHandler {
                         DecimalFormat df = new DecimalFormat("#,###.##");
                             df.setRoundingMode(RoundingMode.CEILING);
                             
-                    table.addCell(df.format(quantity).toString() + resinChemicalList.get(x).getState());
+                    table.addCell(new Phrase(df.format(quantity).toString() + resinChemicalList.get(x).getState(), f));
                     }
                                
                 }
