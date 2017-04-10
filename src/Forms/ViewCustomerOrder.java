@@ -65,6 +65,7 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
         customerDropDown = new javax.swing.JComboBox();
         SearchLabel = new javax.swing.JLabel();
         SearchTextBox = new javax.swing.JTextField();
+        ReviewBut = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -85,7 +86,7 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
                 UseOrderActionPerformed(evt);
             }
         });
-        BgPanel.add(UseOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 510, 240, 40));
+        BgPanel.add(UseOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 510, 210, 40));
 
         CancelBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         CancelBut.setText("Back");
@@ -94,7 +95,7 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
                 CancelButActionPerformed(evt);
             }
         });
-        BgPanel.add(CancelBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 510, 240, 40));
+        BgPanel.add(CancelBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 510, 210, 40));
 
         jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -158,6 +159,15 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
         });
         BgPanel.add(SearchTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 130, 570, 34));
 
+        ReviewBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        ReviewBut.setText("Review Order");
+        ReviewBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ReviewButActionPerformed(evt);
+            }
+        });
+        BgPanel.add(ReviewBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 510, 210, 40));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -206,7 +216,6 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
         else
         {
             JOptionPane.showMessageDialog(null, "Please select a customer order.");
-            
         }
     }//GEN-LAST:event_UseOrderActionPerformed
 
@@ -241,6 +250,24 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
         // TODO add your handling code here:
         update_row_filter(SearchTextBox.getText());
     }//GEN-LAST:event_SearchTextBoxKeyReleased
+
+    private void ReviewButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReviewButActionPerformed
+        // TODO add your handling code here:
+        if(JobOrderTable.getSelectedRowCount() > 0)
+        {
+            int convertedRowNumber = JobOrderTable.convertRowIndexToModel(this.JobOrderTable.getSelectedRow());
+            String DrNumber = JobOrderTable.getModel().getValueAt(convertedRowNumber , 0).toString();
+            JobHandler thisJobOrderHandler = new JobHandler();
+            JobOrder thisJob =thisJobOrderHandler.GetJobOrderDetailsFromDrNumber(DrNumber);
+            ReviewForm orderReviewForm = new ReviewForm(thisJob, 3);
+            orderReviewForm.setVisible(true);
+            this.dispose();
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Please select a customer order.");
+        }
+    }//GEN-LAST:event_ReviewButActionPerformed
 
     private void update_row_filter(String row_filter_text)
     {
@@ -323,6 +350,7 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
     private javax.swing.JButton CancelBut;
     private javax.swing.JLabel Header;
     private javax.swing.JTable JobOrderTable;
+    private javax.swing.JButton ReviewBut;
     private javax.swing.JLabel SearchLabel;
     private javax.swing.JTextField SearchTextBox;
     private javax.swing.JButton UseOrder;

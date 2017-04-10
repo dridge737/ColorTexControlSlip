@@ -569,7 +569,7 @@ public class ReviewForm extends javax.swing.JFrame {
 
     private void CancelButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButActionPerformed
         // TODO add your handling code here:
-        if(this.WindowType == 4)
+        if(this.WindowType == 4 || this.WindowType == 3)
         {
             new ViewCustomerOrder().setVisible(true);
         }
@@ -685,14 +685,21 @@ public class ReviewForm extends javax.swing.JFrame {
     private void SaveExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveExitActionPerformed
         // TODO add your handling code here:
         JobHandler thisJobHandler = new JobHandler();
-        if(AddTextToTextBox())
+        if(this.WindowType != 3)
         {
-            if(thisJobHandler.AddNewJobOrder(thisJob)> 0)
+            if(AddTextToTextBox())
             {
-                this.dispose();
+                if(thisJobHandler.AddNewJobOrder(thisJob)> 0)
+                {
+                    this.dispose();
+                }
+                else
+                    JOptionPane.showMessageDialog(null, "There is an error in adding the Job Order.");
             }
-            else
-                JOptionPane.showMessageDialog(null, "There is an error in adding the Job Order."); 
+        }
+        else
+        {
+            
         }
     }//GEN-LAST:event_SaveExitActionPerformed
 

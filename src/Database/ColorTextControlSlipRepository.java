@@ -1814,7 +1814,20 @@ public class ColorTextControlSlipRepository {
         try
         {
             conn = db.getConnection();
-            String query = "UPDATE job_order SET DrNumber = ?, MachineID = ? , DesignID = ?, ColorID = ?, CustomerID = ?, Date = ?, BatchNo = ? WHERE ID = ?";
+            String query = "UPDATE job_order SET DrNumber = ?, "
+                    + " MachineID = ? , "
+                    + " DesignID = ?, "
+                    + " ColorID = ?, "
+                    + " CustomerID = ?, "
+                    + " Date = ?, "
+                    + " BatchNo = ?, "
+                    + " Weight = ?, "
+                    + " VolH2O = ?, "
+                    + " RollLoad = ?, "
+                    + " Roll = ?, "
+                    + " DyeingProgramID = ?, "
+                    + " ResinProgramID = ? " 
+                    + " WHERE ID = ?";
             
             int itemNumber = 1;
             preparedStmt = conn.prepareStatement(query);
@@ -1825,6 +1838,12 @@ public class ColorTextControlSlipRepository {
             preparedStmt.setInt(itemNumber++, thisJobOrder.getCustomerID());
             preparedStmt.setString(itemNumber++, thisJobOrder.getJobDate());
             preparedStmt.setString(itemNumber++, thisJobOrder.getBatchNo());
+            preparedStmt.setFloat(itemNumber++, thisJobOrder.getWeight());
+            preparedStmt.setFloat(itemNumber++, thisJobOrder.getVolumeH20());
+            preparedStmt.setString(itemNumber++, thisJobOrder.getRollLoad());
+            preparedStmt.setFloat(itemNumber++, thisJobOrder.getRoll());
+            preparedStmt.setInt(itemNumber++, thisJobOrder.getDyeingProgramID());
+            preparedStmt.setInt(itemNumber++, thisJobOrder.getResinProgramID());
             preparedStmt.setInt(itemNumber++, thisJobOrder.getID());
             
             preparedStmt.executeUpdate();
