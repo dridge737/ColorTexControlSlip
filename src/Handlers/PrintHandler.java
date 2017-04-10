@@ -466,6 +466,13 @@ public class PrintHandler {
         
         Paragraph paragraph = new Paragraph("Supervisor:_____________ Drugman:_____________ Operator:_____________ Date:_____________", f);
         document.add(paragraph);
+        if(jobOrderDetails.getRollLoad().isEmpty() == false)
+        {
+            Paragraph rollLoad = new Paragraph("Number of Rolls: " + jobOrderDetails.getRollLoad(), f);
+            document.add(rollLoad);
+        }
+        
+        
         document.add(Chunk.NEWLINE);
         
         float[] columnWidths = {5, 2, 2, 2};
@@ -869,6 +876,11 @@ public class PrintHandler {
         
         Paragraph paragraph = new Paragraph("Supervisor:_____________ Drugman:_____________ Operator:_____________ Date:_____________", f);
         document.add(paragraph);
+        if(jobOrderDetails.getRollLoad().isEmpty() == false)
+        {
+            Paragraph rollLoad = new Paragraph("Number of Rolls: " + jobOrderDetails.getRollLoad(), f);
+            document.add(rollLoad);
+        }
         document.add(Chunk.NEWLINE);
         
         return document;
