@@ -124,7 +124,7 @@ public class ReviewForm extends javax.swing.JFrame {
         VolumeTextField.setText(Float.toString(thisJob.getVolumeH20()));
         RollLoad.setText(thisJob.getRollLoad());
         //Set Date to 
-        if(WindowType == 4)
+        if(WindowType == 4 || WindowType == 3)
         {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             try {
@@ -325,7 +325,6 @@ public class ReviewForm extends javax.swing.JFrame {
         jLabel6.setText("Batch No :");
         MainPanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 20, 90, 30));
 
-        JobOrder.setEditable(false);
         JobOrder.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         MainPanel.add(JobOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 195, 30));
 
@@ -529,7 +528,7 @@ public class ReviewForm extends javax.swing.JFrame {
         }
         return isSuccessful;
     }
-    private boolean AddTextToTextBox()
+    private boolean AddTextToJobOrderClass()
     {
         boolean isSuccessful = false;
         //If all inputs are good
@@ -553,7 +552,7 @@ public class ReviewForm extends javax.swing.JFrame {
     private void SavePrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SavePrintActionPerformed
         // TODO add your handling code here:
         JobHandler thisJobHandler = new JobHandler();
-        if(AddTextToTextBox())
+        if(AddTextToJobOrderClass())
         {
             thisJobHandler.AddNewJobOrder(thisJob);
             try
@@ -687,19 +686,29 @@ public class ReviewForm extends javax.swing.JFrame {
         JobHandler thisJobHandler = new JobHandler();
         if(this.WindowType != 3)
         {
-            if(AddTextToTextBox())
+            if(AddTextToJobOrderClass())
             {
                 if(thisJobHandler.AddNewJobOrder(thisJob)> 0)
                 {
+                    JOptionPane.showMessageDialog(null, "Job order has been added.");
                     this.dispose();
                 }
                 else
                     JOptionPane.showMessageDialog(null, "There is an error in adding the Job Order.");
             }
         }
-        else
+        else if(WindowType == 3)
         {
-            
+            if(AddTextToJobOrderClass())
+            {
+                 if(thisJobHandler.UpdateJobOrder(thisJob))
+                {
+                    JOptionPane.showMessageDialog(null, "Job order has been updated.");
+                    this.dispose();
+                }
+                else
+                    JOptionPane.showMessageDialog(null, "There is an error in updating the Job Order.");
+            }
         }
     }//GEN-LAST:event_SaveExitActionPerformed
 

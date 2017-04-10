@@ -289,7 +289,6 @@
             </Component>
             <Component class="javax.swing.JTextField" name="JobOrder">
               <Properties>
-                <Property name="editable" type="boolean" value="false"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Century Gothic" size="16" style="0"/>
                 </Property>

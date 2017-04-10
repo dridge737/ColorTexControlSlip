@@ -1928,7 +1928,7 @@ public class ColorTextControlSlipRepository {
             if(rs.first())
             {
                 thisJobOrder.setDrNumber(DrNumber);
-                thisJobOrder.setDrNumber( rs.getString("ID") );
+                thisJobOrder.setID(rs.getInt("ID") );
                 thisJobOrder.setMachineID(rs.getInt("MachineID") );
                 thisJobOrder.setDesignID(rs.getInt("DesignID") );
                 thisJobOrder.setColorID(rs.getInt("ColorID"));

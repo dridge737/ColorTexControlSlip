@@ -141,7 +141,6 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
         else
         {
             JOptionPane.showMessageDialog(null, "Please select a job order.");
-            
         }
 
     }//GEN-LAST:event_UseButActionPerformed
