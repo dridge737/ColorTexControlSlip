@@ -2078,8 +2078,10 @@ public class ColorTextControlSlipRepository {
                     " AND dProg.ID = DyeingProgramID " +
                     " AND dProg.ProgramNameID = dProgName.ID " +
                     " AND rProg.ID = ResinProgramID " +
-                    " AND rProg.ProgramNameID = rProgName.ID;");
+                    " AND rProg.ProgramNameID = rProgName.ID" + 
+                    " AND cus.ID = ?;");
             
+            ps.setInt(1, customerId);
             
             rs = ps.executeQuery();
             JobOrderExtended currentJobOrder = new JobOrderExtended();

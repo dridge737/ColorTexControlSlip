@@ -74,6 +74,7 @@ public class ReviewForm extends javax.swing.JFrame {
         {
             SetResinProgramName();
         }
+        
         if(WindowType == 4)
         {
             JobOrder.setText("");
@@ -554,7 +555,15 @@ public class ReviewForm extends javax.swing.JFrame {
         JobHandler thisJobHandler = new JobHandler();
         if(AddTextToJobOrderClass())
         {
-            thisJobHandler.AddNewJobOrder(thisJob);
+            if(WindowType == 3)
+            {
+                thisJobHandler.UpdateJobOrder(thisJob);
+            }
+            else if(WindowType == 4)
+            {
+                thisJobHandler.AddNewJobOrder(thisJob);
+            }
+            
             try
             {
                 PrintHandler handler = new PrintHandler();
@@ -564,6 +573,7 @@ public class ReviewForm extends javax.swing.JFrame {
             {
             }
         }
+        
     }//GEN-LAST:event_SavePrintActionPerformed
 
     private void CancelButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButActionPerformed
