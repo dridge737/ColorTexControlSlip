@@ -149,7 +149,7 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
         StateComboBox = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Color Text Control Slip");
+        setTitle("Control Slip");
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));

@@ -61,7 +61,7 @@ public class MainWindow extends javax.swing.JFrame {
         PreviousCustomerOrder = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Color Text Control Slip");
+        setTitle("Control Slip");
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -85,8 +85,9 @@ public class MainWindow extends javax.swing.JFrame {
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(485, 7, 250, -1));
 
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 22)); // NOI18N
-        jLabel1.setText("Colortex Processing Inc.");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(485, 27, 255, -1));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel1.setText("Relianz International Corp.");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 27, 320, -1));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 60));
 

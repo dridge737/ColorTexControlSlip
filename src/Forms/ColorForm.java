@@ -64,7 +64,7 @@ public class ColorForm extends javax.swing.JFrame {
         CloseButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Color Text Control Slip");
+        setTitle("Control Slip");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
@@ -147,17 +147,17 @@ public class ColorForm extends javax.swing.JFrame {
         ColorText.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
         ColorText.setForeground(new java.awt.Color(204, 204, 204));
         ColorText.setText("Color :");
+        ColorText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ColorTextActionPerformed(evt);
+            }
+        });
         ColorText.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 ColorTextFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 ColorTextFocusLost(evt);
-            }
-        });
-        ColorText.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ColorTextActionPerformed(evt);
             }
         });
         ColorText.addKeyListener(new java.awt.event.KeyAdapter() {

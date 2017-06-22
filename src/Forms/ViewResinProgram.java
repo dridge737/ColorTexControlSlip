@@ -82,7 +82,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
         NewBut = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Color Text Control Slip");
+        setTitle("Control Slip");
         setPreferredSize(new java.awt.Dimension(545, 460));
         addWindowFocusListener(new java.awt.event.WindowFocusListener() {
             public void windowGainedFocus(java.awt.event.WindowEvent evt) {

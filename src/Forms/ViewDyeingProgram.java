@@ -89,7 +89,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         NewBut = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Color Text Control Slip");
+        setTitle("Control Slip");
         setPreferredSize(new java.awt.Dimension(545, 490));
         setResizable(false);
         addWindowFocusListener(new java.awt.event.WindowFocusListener() {

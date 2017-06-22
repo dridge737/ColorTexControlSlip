@@ -188,7 +188,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         BatchNo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Color Text Control Slip");
+        setTitle("Control Slip");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         MainPanel.setBackground(new java.awt.Color(102, 102, 102));

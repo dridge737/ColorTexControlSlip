@@ -231,7 +231,7 @@ public class ReviewForm extends javax.swing.JFrame {
         SaveExit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Color Text Control Slip");
+        setTitle("Control Slip");
 
         BgPanel.setBackground(new java.awt.Color(102, 102, 102));
         BgPanel.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N

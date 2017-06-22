@@ -275,7 +275,7 @@ public class AddResinForm extends javax.swing.JFrame {
         TypeComboBox = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Color Text Control Slip");
+        setTitle("Control Slip");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         BgPanel.setBackground(new java.awt.Color(102, 102, 102));

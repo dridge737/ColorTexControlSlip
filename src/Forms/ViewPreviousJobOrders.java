@@ -50,6 +50,7 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
         SearchBox = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Control Slip");
         getContentPane().setLayout(null);
 
         BgPanel.setBackground(new java.awt.Color(102, 102, 102));

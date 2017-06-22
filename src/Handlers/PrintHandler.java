@@ -71,7 +71,7 @@ public class PrintHandler {
          ////////////////////////***************BEGIN FIRST SECTION***************////////////////////////
         Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
         
-        Paragraph companyHeader = new Paragraph("Colortex Processing Inc.", companyHeaderFont);
+        Paragraph companyHeader = new Paragraph("Relianz International Corporation", companyHeaderFont);
         companyHeader.setAlignment(Element.ALIGN_CENTER);
         Chapter chapter = new Chapter(companyHeader, 1);
         chapterNumber = 1;
@@ -228,7 +228,7 @@ public class PrintHandler {
         ////////////////////////***************END FIRST SECTION***************////////////////////////
         
         ////////////////////////***************BEGIN SECOND SECTION***************////////////////////////
-        companyHeader = new Paragraph("Colortex Processing Inc.", companyHeaderFont);
+        companyHeader = new Paragraph("Relianz International Corporation", companyHeaderFont);
         companyHeader.setAlignment(Element.ALIGN_CENTER);
         chapter.add(companyHeader);
         
@@ -385,7 +385,7 @@ public class PrintHandler {
     public Document AddSecondPage(Document document, PdfWriter writer, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume)  throws IOException, DocumentException 
     {
         Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
-        Paragraph companyHeader = new Paragraph("Colortex Processing Inc.", companyHeaderFont);
+        Paragraph companyHeader = new Paragraph("Relianz International Corporation", companyHeaderFont);
         companyHeader.setAlignment(Element.ALIGN_CENTER);
         document.add(companyHeader);
         DyeingProgramNameHandler dyeingProgramNameHandler = new DyeingProgramNameHandler();
@@ -796,7 +796,7 @@ public class PrintHandler {
     {
         DyeingProgramNameHandler dyeingProgramNameHandler = new DyeingProgramNameHandler();
         Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
-        Paragraph companyHeader = new Paragraph("Colortex Processing Inc.", companyHeaderFont);
+        Paragraph companyHeader = new Paragraph("Relianz International Corporation", companyHeaderFont);
         companyHeader.setAlignment(Element.ALIGN_CENTER);
         document.add(companyHeader);
         //Chapter chapter = new Chapter(companyHeader, 1);
@@ -890,7 +890,7 @@ public class PrintHandler {
     {
         ResinProgramHandler resinProgramNameHandler = new ResinProgramHandler();
         Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
-        Paragraph companyHeader = new Paragraph("Colortex Processing Inc.", companyHeaderFont);
+        Paragraph companyHeader = new Paragraph("Relianz International Corporation", companyHeaderFont);
         companyHeader.setAlignment(Element.ALIGN_CENTER);
         //document.add(companyHeader);
         Chapter chapter = new Chapter(companyHeader, 1);
