@@ -403,10 +403,10 @@ public class JobOrderForm extends javax.swing.JFrame {
         ReferenceLabel1.setForeground(new java.awt.Color(255, 255, 255));
         ReferenceLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         ReferenceLabel1.setText("Location :");
-        MainPanel.add(ReferenceLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 240, 110, 30));
+        MainPanel.add(ReferenceLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 240, 110, 30));
 
         Location.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        MainPanel.add(Location, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 240, 190, 30));
+        MainPanel.add(Location, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 240, 190, 30));
 
         getContentPane().add(MainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 520));
 
@@ -458,17 +458,17 @@ public class JobOrderForm extends javax.swing.JFrame {
 
     private void WeightFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_WeightFocusLost
         String weight = Weight.getText();
-        if(weight.length() > 0)
-        {
+        if (weight.length() > 0) {
             weight = weight.replaceAll("[^\\d.]", "");
             Float ConvertedWeight = Float.parseFloat(weight);
-            if(ConvertedWeight > thisMachine.getMaxCapacity())
-            Weight.setText(Float.toString(thisMachine.getMaxCapacity()));
-            else if(ConvertedWeight < thisMachine.getMinCapacity())
-            Weight.setText(Float.toString(thisMachine.getMinCapacity()));
-        //else    
+            if (ConvertedWeight > thisMachine.getMaxCapacity()) {
+                Weight.setText(Float.toString(thisMachine.getMaxCapacity()));
+            } else if (ConvertedWeight < thisMachine.getMinCapacity()) {
+                Weight.setText(Float.toString(thisMachine.getMinCapacity()));
+            }
+            //else    
             ComputeForVolume();
-        //    Weight.setText(weight);
+            //    Weight.setText(weight);
         }
     }//GEN-LAST:event_WeightFocusLost
 
@@ -601,11 +601,11 @@ public class JobOrderForm extends javax.swing.JFrame {
             isSuccessful = false;
             JOptionPane.showMessageDialog(null, "Please check the Job Order number.");  
         }
-        else if(this.BatchNo.getText().length() < 1)
+        /*else if(this.BatchNo.getText().length() < 1)
         {
             isSuccessful = false;
             JOptionPane.showMessageDialog(null, "Please check the Batch number.");
-        }
+        }*/
         else if(this.VolumeTextField.getText().length() < 1)
         {
             isSuccessful = false;
@@ -615,6 +615,21 @@ public class JobOrderForm extends javax.swing.JFrame {
         {
             isSuccessful = false;
             JOptionPane.showMessageDialog(null, "Please check the value in the Weight."); 
+        }
+        else if(this.Reference.getText().length() < 1)
+        {
+            isSuccessful = false;
+            JOptionPane.showMessageDialog(null, "Please check the the Reference."); 
+        }
+        else if(this.ProgramNumber.getText().length() < 1)
+        {
+            isSuccessful = false;
+            JOptionPane.showMessageDialog(null, "Please check the Program Number."); 
+        }
+        else if(this.Location.getText().length() < 1)
+        {
+            isSuccessful = false;
+            JOptionPane.showMessageDialog(null, "Please check the Location."); 
         }
         return isSuccessful;
     }
@@ -635,6 +650,9 @@ public class JobOrderForm extends javax.swing.JFrame {
             thisJob.setVolumeH20(Float.parseFloat(this.VolumeTextField.getText()));
             thisJob.setWeight(Float.parseFloat(this.Weight.getText()));
             thisJob.setRollLoad(RollLoad.getText());
+            thisJob.setReference(Reference.getText());
+            thisJob.setProgramNumber(this.ProgramNumber.getText());
+            thisJob.setLocation(this.Location.getText());
             /*
             JobHandler thisJobHandler = new JobHandler();
             if(WindowType == 1)

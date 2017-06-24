@@ -1771,8 +1771,11 @@ public class ColorTextControlSlipRepository {
                     + "RollLoad, "
                     + "Roll, "
                     + "DyeingProgramID, "
-                    //                         1  2  3  4  5  6  7  8  9  10 11 12 13
-                    + "ResinProgramID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    //                         1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16
+                    + "ResinProgramID, "
+                    + "Reference, "
+                    + "Program Number, "
+                    + "Location ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             preparedStmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             int itemNumber = 1;
@@ -1789,6 +1792,9 @@ public class ColorTextControlSlipRepository {
             preparedStmt.setFloat(itemNumber++, newJobOrder.getRoll());
             preparedStmt.setInt(itemNumber++, newJobOrder.getDyeingProgramID());
             preparedStmt.setInt(itemNumber++, newJobOrder.getResinProgramID());
+            preparedStmt.setString(itemNumber++, newJobOrder.getReference());
+            preparedStmt.setString(itemNumber++, newJobOrder.getProgramNumber());
+            preparedStmt.setString(itemNumber++, newJobOrder.getLocation());
             preparedStmt.execute();
             
             ResultSet generatedKeys = preparedStmt.getGeneratedKeys();
@@ -1829,7 +1835,10 @@ public class ColorTextControlSlipRepository {
                     + " RollLoad = ?, "
                     + " Roll = ?, "
                     + " DyeingProgramID = ?, "
-                    + " ResinProgramID = ? " 
+                    + " ResinProgramID = ?,"
+                    + " Reference = ?,"
+                    + " ProgramNumber = ?,"
+                    + " Location = ? " 
                     + " WHERE ID = ?";
             
             int itemNumber = 1;
@@ -1848,6 +1857,9 @@ public class ColorTextControlSlipRepository {
             preparedStmt.setInt(itemNumber++, thisJobOrder.getDyeingProgramID());
             preparedStmt.setInt(itemNumber++, thisJobOrder.getResinProgramID());
             preparedStmt.setInt(itemNumber++, thisJobOrder.getID());
+            preparedStmt.setString(itemNumber++, thisJobOrder.getReference());
+            preparedStmt.setString(itemNumber++, thisJobOrder.getProgramNumber());
+            preparedStmt.setString(itemNumber++, thisJobOrder.getLocation());
             
             preparedStmt.executeUpdate();
             isSuccessful = true;
