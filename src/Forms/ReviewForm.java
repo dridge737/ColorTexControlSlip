@@ -608,13 +608,13 @@ public class ReviewForm extends javax.swing.JFrame {
         JobHandler thisJobHandler = new JobHandler();
         if(AddTextToJobOrderObject())
         {
-            if(WindowType == 3)
+            if(ThisJobHasBeenAdded != true)
             {
-                thisJobHandler.UpdateJobOrder(thisJob);
-            }
-            else if((WindowType == 4 || WindowType == 1) && ThisJobHasBeenAdded == false)
-            {
-                thisJobHandler.AddNewJobOrder(thisJob);
+                if (WindowType == 3) {
+                    thisJobHandler.UpdateJobOrder(thisJob);
+                } else if ((WindowType == 4 || WindowType == 1)) {
+                    thisJobHandler.AddNewJobOrder(thisJob);
+                }
                 ThisJobHasBeenAdded = true;
             }
             
@@ -748,30 +748,30 @@ public class ReviewForm extends javax.swing.JFrame {
     private void SaveExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveExitActionPerformed
         // TODO add your handling code here:
         JobHandler thisJobHandler = new JobHandler();
-        if(this.WindowType != 3)
-        {
-            if(AddTextToJobOrderObject())
-            {
-                if(thisJobHandler.AddNewJobOrder(thisJob)> 0)
-                {
-                    JOptionPane.showMessageDialog(null, "Job order has been added.");
-                    this.dispose();
-                }
-                else
-                    JOptionPane.showMessageDialog(null, "There is an error in adding the Job Order.");
-            }
+        if (ThisJobHasBeenAdded == true) {
+            JOptionPane.showMessageDialog(null, "Job order has alreadybeen added.");
+            this.dispose();
         }
-        else if(WindowType == 3)
+        else
         {
-            if(AddTextToJobOrderObject())
-            {
-                 if(thisJobHandler.UpdateJobOrder(thisJob))
-                {
-                    JOptionPane.showMessageDialog(null, "Job order has been updated.");
-                    this.dispose();
+            if (this.WindowType != 3) {
+                if (AddTextToJobOrderObject()) {
+                    if (thisJobHandler.AddNewJobOrder(thisJob) > 0) {
+                        JOptionPane.showMessageDialog(null, "Job order has been added.");
+                        this.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "There is an error in adding the Job Order.");
+                    }
                 }
-                else
-                    JOptionPane.showMessageDialog(null, "There is an error in updating the Job Order.");
+            } else if (WindowType == 3) {
+                if (AddTextToJobOrderObject()) {
+                    if (thisJobHandler.UpdateJobOrder(thisJob)) {
+                        JOptionPane.showMessageDialog(null, "Job order has been updated.");
+                        this.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "There is an error in updating the Job Order.");
+                    }
+                }
             }
         }
     }//GEN-LAST:event_SaveExitActionPerformed
