@@ -96,7 +96,10 @@ public class JobOrderForm extends javax.swing.JFrame {
         //JobHandler JobOrderHandler = new JobHandler();
         //thisJob = JobOrderHandler.GetJobOrderDetailsFromJobId(thisJob.getID());
         JobOrder.setText(thisJob.getDrNumber());
-        BatchNo.setText(thisJob.getBatchNo());
+        BatchNo.setText(Integer.toString(thisJob.getBatchNo()));
+        Reference.setText(thisJob.getReference());
+        ProgramNumber.setText(thisJob.getProgramNumber());
+        Location.setText(thisJob.getLocation());
         //Set Date to 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
             try {
@@ -646,7 +649,11 @@ public class JobOrderForm extends javax.swing.JFrame {
             thisJob.setMachineID(thisMachine.getMachineId());
             thisJob.setDrNumber(JobOrder.getText());
             thisJob.setJobDate(get_date_from_spinner(dateSpinner));
-            thisJob.setBatchNo(BatchNo.getText());
+            if (this.BatchNo.getText().length() < 1) {
+                thisJob.setBatchNo(0);
+            } else {
+                thisJob.setBatchNo(Integer.parseInt(BatchNo.getText()));
+            }
             thisJob.setVolumeH20(Float.parseFloat(this.VolumeTextField.getText()));
             thisJob.setWeight(Float.parseFloat(this.Weight.getText()));
             thisJob.setRollLoad(RollLoad.getText());

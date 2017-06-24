@@ -48,6 +48,7 @@ public class ReviewForm extends javax.swing.JFrame {
     ProcessOrder thisProcessOrder = new ProcessOrder();
     int WindowType = 0;
     DyeingProgram thisDyeingProgram = new DyeingProgram();
+    boolean ThisJobHasBeenAdded = false;
     //int jobOrderType = 1;
     /**
      * Creates new form ReviewForm
@@ -120,10 +121,13 @@ public class ReviewForm extends javax.swing.JFrame {
         //JobHandler JobOrderHandler = new JobHandler();
         //thisJob = JobOrderHandler.GetJobOrderDetailsFromJobId(thisJob.getID());
         JobOrder.setText(thisJob.getDrNumber());
-        BatchNo.setText(thisJob.getBatchNo());
+        BatchNo.setText(Integer.toString(thisJob.getBatchNo()));
         Weight.setText(Float.toString(thisJob.getWeight()));
         VolumeTextField.setText(Float.toString(thisJob.getVolumeH20()));
         RollLoad.setText(thisJob.getRollLoad());
+        Reference.setText(thisJob.getReference());
+        ProgramNumber.setText(thisJob.getProgramNumber());
+        Location.setText(thisJob.getLocation());
         //Set Date to 
         if(WindowType == 4 || WindowType == 3)
         {
@@ -528,6 +532,7 @@ public class ReviewForm extends javax.swing.JFrame {
     private boolean CheckJobOrderInformationFromTextBox()
     {
         boolean isSuccessful = true;
+        
         if(thisCustomer.getCustomerId() < 1)
         {
             isSuccessful = false;
@@ -552,12 +557,12 @@ public class ReviewForm extends javax.swing.JFrame {
         {
             isSuccessful = false;
             JOptionPane.showMessageDialog(null, "Please check the Job Order number.");  
-        }
+        }/*
         else if(this.BatchNo.getText().length() < 1)
         {
             isSuccessful = false;
             JOptionPane.showMessageDialog(null, "Please check the Batch number.");
-        }
+        }*/
         else if(this.VolumeTextField.getText().length() < 1)
         {
             isSuccessful = false;
@@ -582,7 +587,11 @@ public class ReviewForm extends javax.swing.JFrame {
             thisJob.setMachineID(thisMachine.getMachineId());
             thisJob.setDrNumber(JobOrder.getText());
             thisJob.setJobDate(get_date_from_spinner(dateSpinner));
-            thisJob.setBatchNo(BatchNo.getText());
+            if (this.BatchNo.getText().length() < 1) {
+                thisJob.setBatchNo(0);
+            } else {
+                thisJob.setBatchNo(Integer.parseInt(BatchNo.getText()));
+            }
             thisJob.setVolumeH20(Float.parseFloat(this.VolumeTextField.getText()));
             thisJob.setWeight(Float.parseFloat(this.Weight.getText()));
             thisJob.setRollLoad(RollLoad.getText());
@@ -603,9 +612,10 @@ public class ReviewForm extends javax.swing.JFrame {
             {
                 thisJobHandler.UpdateJobOrder(thisJob);
             }
-            else if(WindowType == 4)
+            else if((WindowType == 4 || WindowType == 1) && ThisJobHasBeenAdded == false)
             {
                 thisJobHandler.AddNewJobOrder(thisJob);
+                ThisJobHasBeenAdded = true;
             }
             
             try

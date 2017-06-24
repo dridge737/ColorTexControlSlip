@@ -1760,23 +1760,23 @@ public class ColorTextControlSlipRepository {
         try {
             conn = db.getConnection();
             String query = "INSERT INTO job_order (DrNumber, "
-                    + "MachineID, "
-                    + "DesignID, "
-                    + "ColorID, "
-                    + "CustomerID, "
-                    + "Date, "
-                    + "BatchNo, "
-                    + "Weight, "
-                    + "VolH2O, "
-                    + "RollLoad, "
-                    + "Roll, "
-                    + "DyeingProgramID, "
+                    + " MachineID, "
+                    + " DesignID, "
+                    + " ColorID, "
+                    + " CustomerID, "
+                    + " Date, "
+                    + " BatchNo, "
+                    + " Weight, "
+                    + " VolH2O, "
+                    + " RollLoad, "
+                    + " Roll, "
+                    + " DyeingProgramID, "
                     //                         1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16
-                    + "ResinProgramID, "
-                    + "Reference, "
-                    + "Program Number, "
-                    + "Location ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
+                    + " ResinProgramID, "
+                    + " Reference, "
+                    + " ProgramNumber, "
+                    + " Location ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            
             preparedStmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             int itemNumber = 1;
             preparedStmt.setString(itemNumber++ , newJobOrder.getDrNumber().toUpperCase());
@@ -1785,7 +1785,7 @@ public class ColorTextControlSlipRepository {
             preparedStmt.setInt(itemNumber++ , newJobOrder.getColorID());
             preparedStmt.setInt(itemNumber++ , newJobOrder.getCustomerID());
             preparedStmt.setString(itemNumber++ , newJobOrder.getJobDate());
-            preparedStmt.setString(itemNumber++ , newJobOrder.getBatchNo());
+            preparedStmt.setInt(itemNumber++ , newJobOrder.getBatchNo());
             preparedStmt.setFloat(itemNumber++, newJobOrder.getWeight());
             preparedStmt.setFloat(itemNumber++, newJobOrder.getVolumeH20());
             preparedStmt.setString(itemNumber++, newJobOrder.getRollLoad());
@@ -1849,7 +1849,7 @@ public class ColorTextControlSlipRepository {
             preparedStmt.setInt(itemNumber++, thisJobOrder.getColorID());
             preparedStmt.setInt(itemNumber++, thisJobOrder.getCustomerID());
             preparedStmt.setString(itemNumber++, thisJobOrder.getJobDate());
-            preparedStmt.setString(itemNumber++, thisJobOrder.getBatchNo());
+            preparedStmt.setInt(itemNumber++, thisJobOrder.getBatchNo());
             preparedStmt.setFloat(itemNumber++, thisJobOrder.getWeight());
             preparedStmt.setFloat(itemNumber++, thisJobOrder.getVolumeH20());
             preparedStmt.setString(itemNumber++, thisJobOrder.getRollLoad());
@@ -1949,7 +1949,7 @@ public class ColorTextControlSlipRepository {
                 thisJobOrder.setColorID(rs.getInt("ColorID"));
                 thisJobOrder.setCustomerID(rs.getInt("CustomerID"));
                 thisJobOrder.setJobDate(rs.getString("Date"));
-                thisJobOrder.setBatchNo(rs.getString("BatchNo"));
+                thisJobOrder.setBatchNo(rs.getInt("BatchNo"));
                 thisJobOrder.setWeight(rs.getFloat("Weight"));
                 thisJobOrder.setVolumeH20(rs.getFloat("VolH2O"));
                 thisJobOrder.setRollLoad(rs.getString("RollLoad"));
@@ -1990,7 +1990,7 @@ public class ColorTextControlSlipRepository {
                 thisJobOrder.setColorID(rs.getInt("ColorID"));
                 thisJobOrder.setCustomerID(rs.getInt("CustomerID"));
                 thisJobOrder.setJobDate(rs.getString("Date"));
-                thisJobOrder.setBatchNo(rs.getString("BatchNo"));
+                thisJobOrder.setBatchNo(rs.getInt("BatchNo"));
                 thisJobOrder.setWeight(rs.getFloat("Weight"));
                 thisJobOrder.setVolumeH20(rs.getFloat("VolH2O"));
                 thisJobOrder.setRollLoad(rs.getString("RollLoad"));
@@ -3447,7 +3447,7 @@ public class ColorTextControlSlipRepository {
                 thisJobOrder.setDesignID(rs.getInt("DesignID"));
                 thisJobOrder.setColorID(rs.getInt("ColorID"));
                 thisJobOrder.setCustomerID(rs.getInt("CustomerID"));
-                thisJobOrder.setBatchNo(rs.getString("BatchNo"));
+                thisJobOrder.setBatchNo(rs.getInt("BatchNo"));
                 thisJobOrder.setWeight(rs.getFloat("Weight"));
                 thisJobOrder.setVolumeH20(rs.getInt("VolH2O"));
                 thisJobOrder.setRollLoad(rs.getString("RollLoad"));
@@ -3490,7 +3490,7 @@ public class ColorTextControlSlipRepository {
                 thisJobOrder.setDesignID(rs.getInt("DesignID"));
                 thisJobOrder.setColorID(rs.getInt("ColorID"));
                 thisJobOrder.setCustomerID(rs.getInt("CustomerID"));
-                thisJobOrder.setBatchNo(rs.getString("BatchNo"));
+                thisJobOrder.setBatchNo(rs.getInt("BatchNo"));
                 thisJobOrder.setWeight(rs.getFloat("Weight"));
                 thisJobOrder.setVolumeH20(rs.getInt("VolH2O"));
                 thisJobOrder.setRollLoad(rs.getString("RollLoad"));

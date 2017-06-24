@@ -15,14 +15,10 @@ import java.util.ArrayList;
  * @author Eldridge
  */
 public class JobHandler {
-    public int AddNewJobOrder(JobOrder newJobOrder)
-    {
+    public int AddNewJobOrder(JobOrder newJobOrder) {
         //boolean isSuccessful = false;
-        
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
-        
         return repo.AddJobOrder(newJobOrder);
-        
     }
     
     public boolean UpdateJobOrder(JobOrder thisJobOrder)

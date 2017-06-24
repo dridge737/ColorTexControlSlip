@@ -19,7 +19,7 @@ public class JobOrder {
     private int ColorID;
     private int CustomerID;
     private String jobDate;
-    private String BatchNo;
+    private int BatchNo;
     private float Weight;
     private float VolumeH20;
     private String RollLoad;
@@ -120,14 +120,15 @@ public class JobOrder {
     /**
      * @return the BatchNo
      */
-    public String getBatchNo() {
+    public int getBatchNo() {
         return BatchNo;
     }
 
     /**
      * @param BatchNo the BatchNo to set
      */
-    public void setBatchNo(String BatchNo) {
+    public void setBatchNo(int BatchNo) {
+        
         this.BatchNo = BatchNo;
     }
 
