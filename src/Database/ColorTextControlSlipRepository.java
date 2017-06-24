@@ -975,6 +975,7 @@ public class ColorTextControlSlipRepository {
                 machine.setMinCapacity(rs.getInt("MinCapacity"));
                 machine.setMaxVolume(rs.getInt("MaxVolume"));
                 machine.setMinVolume(rs.getInt("MinVolume"));
+                machine.setNumOfLoad(rs.getInt("NumOfLoad"));
                 
                 MachineList.add(machine);
             }
@@ -996,7 +997,7 @@ public class ColorTextControlSlipRepository {
         boolean added = false;
         try {
             conn = db.getConnection();
-            String query = "INSERT INTO machine (Name, MaxCapacity, MinCapacity, MaxVolume, MinVolume) VALUES (?, ?, ?, ? ,?)";
+            String query = "INSERT INTO machine (Name, MaxCapacity, MinCapacity, MaxVolume, MinVolume, NumOfLoad) VALUES (?, ?, ?, ? ,?, ?)";
 
             preparedStmt = conn.prepareStatement(query);
             preparedStmt.setString(1, newMachine.getMachineName().toUpperCase());
@@ -1004,6 +1005,7 @@ public class ColorTextControlSlipRepository {
             preparedStmt.setInt(3, newMachine.getMinCapacity());
             preparedStmt.setInt(4, newMachine.getMaxVolume());
             preparedStmt.setInt(5, newMachine.getMinVolume());
+            preparedStmt.setInt(6, newMachine.getNumOfLoad());
             preparedStmt.execute();
             
             added = true;
@@ -1025,7 +1027,7 @@ public class ColorTextControlSlipRepository {
         try
         {
             conn = db.getConnection();
-            String query = "UPDATE machine SET Name = ?, MaxCapacity = ?, MinCapacity = ?, MaxVolume = ?, MinVolume = ?  WHERE ID = ?";
+            String query = "UPDATE machine SET Name = ?, MaxCapacity = ?, MinCapacity = ?, MaxVolume = ?, MinVolume = ?, NumOfLoad = ? WHERE ID = ?";
 
             preparedStmt = conn.prepareStatement(query);
             preparedStmt.setString(1, machine.getMachineName().toUpperCase());
@@ -1033,7 +1035,8 @@ public class ColorTextControlSlipRepository {
             preparedStmt.setInt(3, machine.getMinCapacity());
             preparedStmt.setInt(4, machine.getMaxVolume());
             preparedStmt.setInt(5, machine.getMinVolume());
-            preparedStmt.setInt(6, machine.getMachineId());
+            preparedStmt.setInt(6, machine.getNumOfLoad());
+            preparedStmt.setInt(7, machine.getMachineId());
             preparedStmt.executeUpdate();
             
             isSuccessful = true;

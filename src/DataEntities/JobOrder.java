@@ -26,6 +26,10 @@ public class JobOrder {
     private float Roll;
     private int DyeingProgramID;
     private int ResinProgramID;
+    private String Reference;
+    private String ProgramNumber;
+    private String Location;
+    
 
     /**
      * @return the ID
@@ -223,6 +227,48 @@ public class JobOrder {
      */
     public void setJobDate(String jobDate) {
         this.jobDate = jobDate;
+    }
+
+    /**
+     * @return the Reference
+     */
+    public String getReference() {
+        return Reference;
+    }
+
+    /**
+     * @param Reference the Reference to set
+     */
+    public void setReference(String Reference) {
+        this.Reference = Reference;
+    }
+
+    /**
+     * @return the ProgramNumber
+     */
+    public String getProgramNumber() {
+        return ProgramNumber;
+    }
+
+    /**
+     * @param ProgramNumber the ProgramNumber to set
+     */
+    public void setProgramNumber(String ProgramNumber) {
+        this.ProgramNumber = ProgramNumber;
+    }
+
+    /**
+     * @return the Location
+     */
+    public String getLocation() {
+        return Location;
+    }
+
+    /**
+     * @param Location the Location to set
+     */
+    public void setLocation(String Location) {
+        this.Location = Location;
     }
 
     

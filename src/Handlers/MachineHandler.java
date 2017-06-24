@@ -74,10 +74,10 @@ public class MachineHandler {
             isSuccessful = repo.AddMachine(newMachine);
         }
         
-        if(isSuccessful == false)
-        {
+        //if(isSuccessful == false)
+        //{
             //enter validation 
-        }
+        //}
         
         return isSuccessful;
     }
@@ -93,10 +93,11 @@ public class MachineHandler {
             isSuccessful = repo.UpdateMachineByMachineId(machine);
         }
         
-        if(isSuccessful == false)
-        {
+        
+        //if(isSuccessful == false)
+        //{
             //enter validation 
-        }
+        //}
         
         return isSuccessful;
     }
@@ -112,10 +113,10 @@ public class MachineHandler {
             isSuccessful = repo.DeleteMachineByMachineId(machineId);
         }
         
-        if(isSuccessful == false)
-        {
+        //if(isSuccessful == false)
+        //{
             //enter validation 
-        }
+        //}
         
         return isSuccessful;
     }

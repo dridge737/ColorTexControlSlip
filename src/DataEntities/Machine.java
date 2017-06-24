@@ -18,6 +18,7 @@ public class Machine {
     private int minCapacity;
     private int maxVolume;
     private int minVolume;
+    private int NumOfLoad;
     
     public int getMachineId() {
         return machineId;
@@ -74,5 +75,19 @@ public class Machine {
     
     public int getMinVolume(){
         return minVolume;
+    }
+
+    /**
+     * @return the NumOfLoad
+     */
+    public int getNumOfLoad() {
+        return NumOfLoad;
+    }
+
+    /**
+     * @param NumOfLoad the NumOfLoad to set
+     */
+    public void setNumOfLoad(int NumOfLoad) {
+        this.NumOfLoad = NumOfLoad;
     }
 }

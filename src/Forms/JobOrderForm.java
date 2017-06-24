@@ -165,11 +165,11 @@ public class JobOrderForm extends javax.swing.JFrame {
         CustomerDropDownList = new javax.swing.JComboBox<String>();
         DesignDropDownList = new javax.swing.JComboBox<String>();
         ColorDropDownList = new javax.swing.JComboBox<String>();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        ColorLabel = new javax.swing.JLabel();
+        customerLabel = new javax.swing.JLabel();
+        designLabel = new javax.swing.JLabel();
+        JobLabel = new javax.swing.JLabel();
+        DateLabel = new javax.swing.JLabel();
         JobOrder = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         MachineDropDownList = new javax.swing.JComboBox<String>();
@@ -184,8 +184,14 @@ public class JobOrderForm extends javax.swing.JFrame {
         NextButton = new javax.swing.JButton();
         ChemicalHeader = new javax.swing.JLabel();
         dateSpinner = new javax.swing.JSpinner();
-        jLabel10 = new javax.swing.JLabel();
+        BatchLabel = new javax.swing.JLabel();
         BatchNo = new javax.swing.JTextField();
+        ReferenceLabel = new javax.swing.JLabel();
+        Reference = new javax.swing.JTextField();
+        ProgramNumberLabel = new javax.swing.JLabel();
+        ProgramNumber = new javax.swing.JTextField();
+        ReferenceLabel1 = new javax.swing.JLabel();
+        Location = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Control Slip");
@@ -201,7 +207,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                 CustomerDropDownListActionPerformed(evt);
             }
         });
-        MainPanel.add(CustomerDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, 190, 30));
+        MainPanel.add(CustomerDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, 190, 30));
 
         DesignDropDownList.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         DesignDropDownList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Design" }));
@@ -210,7 +216,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                 DesignDropDownListActionPerformed(evt);
             }
         });
-        MainPanel.add(DesignDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, 190, 30));
+        MainPanel.add(DesignDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 160, 190, 30));
 
         ColorDropDownList.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         ColorDropDownList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Color" }));
@@ -219,48 +225,48 @@ public class JobOrderForm extends javax.swing.JFrame {
                 ColorDropDownListActionPerformed(evt);
             }
         });
-        MainPanel.add(ColorDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(485, 190, 190, 30));
+        MainPanel.add(ColorDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 160, 190, 30));
 
-        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel1.setText("Color :");
-        MainPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(372, 190, 100, 30));
+        ColorLabel.setBackground(new java.awt.Color(255, 255, 255));
+        ColorLabel.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        ColorLabel.setForeground(new java.awt.Color(255, 255, 255));
+        ColorLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        ColorLabel.setText("Color :");
+        MainPanel.add(ColorLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(372, 160, 120, 30));
 
-        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel2.setText("Customer :");
-        MainPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 140, 110, 30));
+        customerLabel.setBackground(new java.awt.Color(255, 255, 255));
+        customerLabel.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        customerLabel.setForeground(new java.awt.Color(255, 255, 255));
+        customerLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        customerLabel.setText("Customer :");
+        MainPanel.add(customerLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 120, 110, 30));
 
-        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel3.setText("Design :");
-        MainPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 190, 110, 30));
+        designLabel.setBackground(new java.awt.Color(255, 255, 255));
+        designLabel.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        designLabel.setForeground(new java.awt.Color(255, 255, 255));
+        designLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        designLabel.setText("Design :");
+        MainPanel.add(designLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 160, 110, 30));
 
-        jLabel4.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel4.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel4.setText("Job Order :");
-        MainPanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 90, 110, 30));
+        JobLabel.setBackground(new java.awt.Color(255, 255, 255));
+        JobLabel.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        JobLabel.setForeground(new java.awt.Color(255, 255, 255));
+        JobLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        JobLabel.setText("Job Order :");
+        MainPanel.add(JobLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 80, 110, 30));
 
-        jLabel6.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel6.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel6.setText("Date :");
-        MainPanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(372, 140, 100, 30));
+        DateLabel.setBackground(new java.awt.Color(255, 255, 255));
+        DateLabel.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        DateLabel.setForeground(new java.awt.Color(255, 255, 255));
+        DateLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        DateLabel.setText("Date :");
+        MainPanel.add(DateLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(372, 120, 120, 30));
 
         JobOrder.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        MainPanel.add(JobOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 90, 190, 30));
+        MainPanel.add(JobOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 80, 190, 30));
 
         jPanel2.setBackground(new java.awt.Color(102, 102, 102));
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Machine", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 24), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Machine", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 22), new java.awt.Color(255, 255, 255))); // NOI18N
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         MachineDropDownList.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
@@ -270,21 +276,21 @@ public class JobOrderForm extends javax.swing.JFrame {
                 MachineDropDownListActionPerformed(evt);
             }
         });
-        jPanel2.add(MachineDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 41, 628, -1));
+        jPanel2.add(MachineDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 36, 628, -1));
 
         jLabel7.setBackground(new java.awt.Color(255, 255, 255));
         jLabel7.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel7.setText("Weight :");
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 85, 80, 30));
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 74, 80, 30));
 
         jLabel8.setBackground(new java.awt.Color(255, 255, 255));
         jLabel8.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel8.setText("Volume of Water :");
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 130, -1, 30));
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 112, -1, 30));
 
         Weight.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         Weight.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -292,7 +298,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                 WeightFocusLost(evt);
             }
         });
-        jPanel2.add(Weight, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 86, 150, 30));
+        jPanel2.add(Weight, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 74, 150, 30));
 
         VolumeTextField.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         VolumeTextField.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -300,7 +306,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                 VolumeTextFieldFocusLost(evt);
             }
         });
-        jPanel2.add(VolumeTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(184, 131, 460, -1));
+        jPanel2.add(VolumeTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(184, 112, 460, -1));
 
         LiquidRatioDropDown.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         LiquidRatioDropDown.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Liquid Ratio" }));
@@ -309,19 +315,19 @@ public class JobOrderForm extends javax.swing.JFrame {
                 LiquidRatioDropDownActionPerformed(evt);
             }
         });
-        jPanel2.add(LiquidRatioDropDown, new org.netbeans.lib.awtextra.AbsoluteConstraints(254, 86, 390, 30));
+        jPanel2.add(LiquidRatioDropDown, new org.netbeans.lib.awtextra.AbsoluteConstraints(254, 74, 390, 30));
 
         jLabel9.setBackground(new java.awt.Color(255, 255, 255));
         jLabel9.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel9.setText("Roll Load :");
-        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 175, -1, 30));
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 150, -1, 30));
 
         RollLoad.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        jPanel2.add(RollLoad, new org.netbeans.lib.awtextra.AbsoluteConstraints(129, 176, 515, -1));
+        jPanel2.add(RollLoad, new org.netbeans.lib.awtextra.AbsoluteConstraints(129, 150, 515, -1));
 
-        MainPanel.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 660, 220));
+        MainPanel.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 660, 190));
 
         Cancel.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         Cancel.setText("Cancel");
@@ -349,15 +355,15 @@ public class JobOrderForm extends javax.swing.JFrame {
 
         dateSpinner.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         dateSpinner.setModel(new javax.swing.SpinnerDateModel());
-        MainPanel.add(dateSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(485, 140, 190, 30));
+        MainPanel.add(dateSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 120, 190, 30));
         dateSpinner.setEditor(new JSpinner.DateEditor(dateSpinner, "MM/dd/yyyy"));
 
-        jLabel10.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel10.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel10.setText("Batch No :");
-        MainPanel.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(372, 90, 100, 30));
+        BatchLabel.setBackground(new java.awt.Color(255, 255, 255));
+        BatchLabel.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        BatchLabel.setForeground(new java.awt.Color(255, 255, 255));
+        BatchLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        BatchLabel.setText("Batch No :");
+        MainPanel.add(BatchLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(372, 80, 120, 30));
 
         BatchNo.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         BatchNo.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -365,7 +371,42 @@ public class JobOrderForm extends javax.swing.JFrame {
                 BatchNoKeyReleased(evt);
             }
         });
-        MainPanel.add(BatchNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(485, 90, 190, 30));
+        MainPanel.add(BatchNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 80, 190, 30));
+
+        ReferenceLabel.setBackground(new java.awt.Color(255, 255, 255));
+        ReferenceLabel.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        ReferenceLabel.setForeground(new java.awt.Color(255, 255, 255));
+        ReferenceLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        ReferenceLabel.setText("Reference :");
+        MainPanel.add(ReferenceLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 200, 110, 30));
+
+        Reference.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        MainPanel.add(Reference, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 190, 30));
+
+        ProgramNumberLabel.setBackground(new java.awt.Color(255, 255, 255));
+        ProgramNumberLabel.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        ProgramNumberLabel.setForeground(new java.awt.Color(255, 255, 255));
+        ProgramNumberLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        ProgramNumberLabel.setText("Program # :");
+        MainPanel.add(ProgramNumberLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(372, 200, 120, 30));
+
+        ProgramNumber.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        ProgramNumber.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                ProgramNumberKeyReleased(evt);
+            }
+        });
+        MainPanel.add(ProgramNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 200, 190, 30));
+
+        ReferenceLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        ReferenceLabel1.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        ReferenceLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        ReferenceLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        ReferenceLabel1.setText("Location :");
+        MainPanel.add(ReferenceLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 240, 110, 30));
+
+        Location.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        MainPanel.add(Location, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 240, 190, 30));
 
         getContentPane().add(MainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 520));
 
@@ -651,6 +692,10 @@ public class JobOrderForm extends javax.swing.JFrame {
         thisBatchNo = thisBatchNo.replaceAll("[^\\d.]", "");
         this.BatchNo.setText(thisBatchNo);
     }//GEN-LAST:event_BatchNoKeyReleased
+
+    private void ProgramNumberKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ProgramNumberKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ProgramNumberKeyReleased
     
     private void computeForVolume()
     {
@@ -813,27 +858,33 @@ public class JobOrderForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel BatchLabel;
     private javax.swing.JTextField BatchNo;
     private javax.swing.JButton Cancel;
     private javax.swing.JLabel ChemicalHeader;
     private javax.swing.JComboBox<String> ColorDropDownList;
+    private javax.swing.JLabel ColorLabel;
     private javax.swing.JComboBox<String> CustomerDropDownList;
+    private javax.swing.JLabel DateLabel;
     private javax.swing.JComboBox<String> DesignDropDownList;
+    private javax.swing.JLabel JobLabel;
     private javax.swing.JTextField JobOrder;
     private javax.swing.JComboBox<String> LiquidRatioDropDown;
+    private javax.swing.JTextField Location;
     private javax.swing.JComboBox<String> MachineDropDownList;
     private javax.swing.JPanel MainPanel;
     private javax.swing.JButton NextButton;
+    private javax.swing.JTextField ProgramNumber;
+    private javax.swing.JLabel ProgramNumberLabel;
+    private javax.swing.JTextField Reference;
+    private javax.swing.JLabel ReferenceLabel;
+    private javax.swing.JLabel ReferenceLabel1;
     private javax.swing.JTextField RollLoad;
     private javax.swing.JTextField VolumeTextField;
     private javax.swing.JTextField Weight;
+    private javax.swing.JLabel customerLabel;
     private javax.swing.JSpinner dateSpinner;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel designLabel;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
