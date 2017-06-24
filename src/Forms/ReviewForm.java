@@ -749,7 +749,7 @@ public class ReviewForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         JobHandler thisJobHandler = new JobHandler();
         if (ThisJobHasBeenAdded == true) {
-            JOptionPane.showMessageDialog(null, "Job order has alreadybeen added.");
+            JOptionPane.showMessageDialog(null, "Job order has already been added.");
             this.dispose();
         }
         else
