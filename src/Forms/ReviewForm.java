@@ -728,6 +728,7 @@ public class ReviewForm extends javax.swing.JFrame {
         thisMachine.setMaxVolume(machineDetails.getMaxVolume());
         thisMachine.setMinCapacity(machineDetails.getMinCapacity());
         thisMachine.setMinVolume(machineDetails.getMinVolume());
+        thisMachine.setNumOfLoad(machineDetails.getNumOfLoad());
     }//GEN-LAST:event_MachineDropDownListActionPerformed
 
     private void WeightFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_WeightFocusLost

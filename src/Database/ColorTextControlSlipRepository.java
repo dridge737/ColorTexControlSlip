@@ -1126,6 +1126,7 @@ public class ColorTextControlSlipRepository {
                 machineDetails.setMinCapacity(resultSet.getInt("MinCapacity"));
                 machineDetails.setMaxVolume(resultSet.getInt("MaxVolume"));
                 machineDetails.setMinVolume(resultSet.getInt("MinVolume"));
+                machineDetails.setNumOfLoad(resultSet.getInt("NumOfLoad"));
             }
         } 
         catch (SQLException ex) {

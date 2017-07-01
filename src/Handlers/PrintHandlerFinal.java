@@ -181,6 +181,9 @@ public class PrintHandlerFinal {
         fillerCell.setBorder(PdfPCell.NO_BORDER);
         rootTable.addCell(fillerCell);
         
+        MachineHandler machineHandler = new MachineHandler();
+        machineDetails = machineHandler.GetMachineDetailsById(machineDetails.getMachineId());
+        
         float[] columnWidths = new float[machineDetails.getNumOfLoad() + 1];
         columnWidths[0] = 4;
         for (int i = 0; i < machineDetails.getNumOfLoad(); i++) {
@@ -200,11 +203,17 @@ public class PrintHandlerFinal {
                 
                 if((loadingArrangement - (int)loadingArrangement ) != 0)
                 {
-                    loadTable.addCell(Integer.toString((int)Math.floor(loadingArrangement)));
+                    cellOne = new PdfPCell(new Phrase(Integer.toString((int)Math.floor(loadingArrangement)), f1));
+                    cellOne.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                    cellOne.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    loadTable.addCell(cellOne);
                 }
                 else
                 {
-                    loadTable.addCell(Integer.toString((int)loadingArrangement));
+                    cellOne = new PdfPCell(new Phrase(Integer.toString((int)loadingArrangement), f1));
+                    cellOne.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                    cellOne.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    loadTable.addCell(cellOne);
                 }
             
         }
