@@ -12,8 +12,6 @@ import DataEntities.DyeingProgram;
 import DataEntities.JobOrder;
 import DataEntities.Machine;
 import DataEntities.ProcessOrder;
-import DataEntities.ResinProgram;
-import Handlers.PrintHandler;
 import Handlers.ColorHandler;
 import Handlers.CustomerHandler;
 import Handlers.DesignHandler;
@@ -21,6 +19,7 @@ import Handlers.DyeingProgramHandler;
 import Handlers.DyeingProgramNameHandler;
 import Handlers.JobHandler;
 import Handlers.MachineHandler;
+import Handlers.PrintHandlerFinal;
 import Handlers.ResinProgramHandler;
 import com.itextpdf.text.DocumentException;
 import java.awt.Dimension;
@@ -620,7 +619,7 @@ public class ReviewForm extends javax.swing.JFrame {
             
             try
             {
-                PrintHandler handler = new PrintHandler();
+                PrintHandlerFinal handler = new PrintHandlerFinal();
                 handler.createPDF(thisMachine, thisDesign, thisCustomer, thisColor, thisJob, thisDyeingProgram, VolumeTextField.getText());
             }
             catch(IOException | DocumentException e)
