@@ -261,6 +261,7 @@ public class PrintHandlerFinal {
         ArrayList<DyeingProcess> dyeingProcessList = dProcessHandler.GetAllDyeingProcessAndSubProcessByDyeingProgramId(dyeingProgramDetails.getID());
         ArrayList<DyeingChemical> dyeingChemicalList = null;
         int rows = 0;
+        int rowLimit = 20;
         for(int x=0; x<dyeingProcessList.size(); x++)
             {
                     if (dyeingProcessList.get(x).getdyeingProcessOrder().matches("[0-9]+")){
@@ -269,6 +270,24 @@ public class PrintHandlerFinal {
                         table.addCell(" ");
                         table.addCell(" ");
                         rows++;
+                        if(rows >= rowLimit)
+                        {
+                            document.add(table);
+                            document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
+                            rows = 0;
+                            table = new PdfPTable(columnWidths);
+                            table.setWidthPercentage(100);
+                            table.getDefaultCell().setBorder(Rectangle.BOTTOM);
+                            table.getDefaultCell().setUseAscender(true);
+                            table.getDefaultCell().setUseDescender(true);
+                                table.addCell(" ");
+                                table.addCell(new Phrase("GPL", f));
+                                table.addCell(new Phrase("%", f));
+                                table.addCell(new Phrase("Quantity", f));
+
+                            table.getDefaultCell().setBackgroundColor(GrayColor.GRAYWHITE);
+                            table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
+                        }
                         dyeingChemicalList = dChemHandler.GetAllDyeingChemicalFromDyeingProcessID(dyeingProcessList.get(x).getId());
                         if(dyeingChemicalList.size() > 0)
                         {
@@ -343,9 +362,46 @@ public class PrintHandlerFinal {
                                     table.addCell(" ");
                                     table.addCell(" ");
                                     table.addCell(" ");
+                                    rows++;
+                                    if(rows >= 19)
+                                    {
+                                        document.add(table);
+                                        document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
+                                        rows = 0;
+                                        table = new PdfPTable(columnWidths);
+                                        table.setWidthPercentage(100);
+                                        table.getDefaultCell().setBorder(Rectangle.BOTTOM);
+                                        table.getDefaultCell().setUseAscender(true);
+                                        table.getDefaultCell().setUseDescender(true);
+                                            table.addCell(" ");
+                                            table.addCell(new Phrase("GPL", f));
+                                            table.addCell(new Phrase("%", f));
+                                            table.addCell(new Phrase("Quantity", f));
+
+                                        table.getDefaultCell().setBackgroundColor(GrayColor.GRAYWHITE);
+                                        table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
+                                    }
                                 }
 
                                 rows++;
+                                if(rows >= rowLimit)
+                                {
+                                    document.add(table);
+                                    document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
+                                    rows = 0;
+                                    table = new PdfPTable(columnWidths);
+                                    table.setWidthPercentage(100);
+                                    table.getDefaultCell().setBorder(Rectangle.BOTTOM);
+                                    table.getDefaultCell().setUseAscender(true);
+                                    table.getDefaultCell().setUseDescender(true);
+                                        table.addCell(" ");
+                                        table.addCell(new Phrase("GPL", f));
+                                        table.addCell(new Phrase("%", f));
+                                        table.addCell(new Phrase("Quantity", f));
+
+                                    table.getDefaultCell().setBackgroundColor(GrayColor.GRAYWHITE);
+                                    table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
+                                }
                             }
                         }
                     }
@@ -357,7 +413,24 @@ public class PrintHandlerFinal {
                         table.addCell(" ");
                         table.addCell(" ");
                         rows++;
+                        if(rows >= rowLimit)
+                        {
+                            document.add(table);
+                            document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
+                            rows = 0;
+                            table = new PdfPTable(columnWidths);
+                            table.setWidthPercentage(100);
+                            table.getDefaultCell().setBorder(Rectangle.BOTTOM);
+                            table.getDefaultCell().setUseAscender(true);
+                            table.getDefaultCell().setUseDescender(true);
+                                table.addCell(" ");
+                                table.addCell(new Phrase("GPL", f));
+                                table.addCell(new Phrase("%", f));
+                                table.addCell(new Phrase("Quantity", f));
 
+                            table.getDefaultCell().setBackgroundColor(GrayColor.GRAYWHITE);
+                            table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
+                        }
                         dyeingChemicalList = dChemHandler.GetAllDyeingChemicalFromDyeingProcessID(dyeingProcessList.get(x).getId());
 
                         if(dyeingChemicalList.size() > 0)
@@ -431,9 +504,46 @@ public class PrintHandlerFinal {
                                 table.addCell(" ");
                                 table.addCell(" ");
                                 table.addCell(" ");
+                                rows++;
+                                if(rows >= 21)
+                                {
+                                    document.add(table);
+                                    document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
+                                    rows = 0;
+                                    table = new PdfPTable(columnWidths);
+                                    table.setWidthPercentage(100);
+                                    table.getDefaultCell().setBorder(Rectangle.BOTTOM);
+                                    table.getDefaultCell().setUseAscender(true);
+                                    table.getDefaultCell().setUseDescender(true);
+                                        table.addCell(" ");
+                                        table.addCell(new Phrase("GPL", f));
+                                        table.addCell(new Phrase("%", f));
+                                        table.addCell(new Phrase("Quantity", f));
+
+                                    table.getDefaultCell().setBackgroundColor(GrayColor.GRAYWHITE);
+                                    table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
+                                }
                             }
                             
                             rows++;
+                            if(rows >= rowLimit)
+                            {
+                                document.add(table);
+                                document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
+                                rows = 0;
+                                table = new PdfPTable(columnWidths);
+                                table.setWidthPercentage(100);
+                                table.getDefaultCell().setBorder(Rectangle.BOTTOM);
+                                table.getDefaultCell().setUseAscender(true);
+                                table.getDefaultCell().setUseDescender(true);
+                                    table.addCell(" ");
+                                    table.addCell(new Phrase("GPL", f));
+                                    table.addCell(new Phrase("%", f));
+                                    table.addCell(new Phrase("Quantity", f));
+
+                                table.getDefaultCell().setBackgroundColor(GrayColor.GRAYWHITE);
+                                table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
+                            }
                         }
                     }
             }
