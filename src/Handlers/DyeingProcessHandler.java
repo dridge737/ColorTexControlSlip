@@ -114,15 +114,16 @@ public class DyeingProcessHandler {
         boolean isSuccessful = false;
         int ID = -1;
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
-        
-        if(!repo.CheckIfDyeingProcessExists(newDyeingProcess))
+        ID = repo.AddDyeingProcess(newDyeingProcess);
+
+        /*if(!repo.CheckIfDyeingProcessExists(newDyeingProcess))
         {
-            ID = repo.AddDyeingProcess(newDyeingProcess);
         }
         if(ID == -1)
         {
             JOptionPane.showMessageDialog(null, "Process was not added.");
         }
+                */
         return ID;
         //if(isSuccessful == false)
         //enter validation 

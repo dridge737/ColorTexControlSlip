@@ -611,7 +611,7 @@ public class ReviewForm extends javax.swing.JFrame {
             {
                 if (WindowType == 3) {
                     thisJobHandler.UpdateJobOrder(thisJob);
-                } else if ((WindowType == 4 || WindowType == 1)) {
+                } else if ((WindowType == 4 || WindowType == 2 || WindowType == 1)) {
                     thisJobHandler.AddNewJobOrder(thisJob);
                 }
                 ThisJobHasBeenAdded = true;

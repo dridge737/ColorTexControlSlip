@@ -277,6 +277,8 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void PreviousCustomerOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PreviousCustomerOrderActionPerformed
         // TODO add your handling code here:
+        /*ViewPreviousJobOrders prevJobOrder = new ViewPreviousJobOrders();
+        prevJobOrder.setVisible(true)*/
         ViewCustomerOrder customerJobOrder = new ViewCustomerOrder();
         customerJobOrder.setVisible(true);
     }//GEN-LAST:event_PreviousCustomerOrderActionPerformed
