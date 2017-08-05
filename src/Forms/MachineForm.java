@@ -331,8 +331,8 @@ public class MachineForm extends javax.swing.JFrame {
         thisMachine.setNumOfLoad(Integer.parseInt(this.MachineListTable.getModel().getValueAt(this.MachineListTable.getSelectedRow(), 5).toString()));
         thisMachine.setMachineType(Integer.parseInt(this.MachineListTable.getModel().getValueAt(this.MachineListTable.getSelectedRow(), 5).toString()));
         thisMachine.setMachineId(new MachineHandler().GetMachineIdByName(thisMachine.getMachineName()));
-
     }
+    
     private void EditMachineButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditMachineButtonActionPerformed
         
         if (EditMachineButton.getText().equals("Edit")) {

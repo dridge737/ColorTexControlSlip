@@ -998,7 +998,7 @@ public class ColorTextControlSlipRepository {
         boolean added = false;
         try {
             conn = db.getConnection();
-            String query = "INSERT INTO machine (Name, MaxCapacity, MinCapacity, MaxVolume, MinVolume, NumOfLoad) VALUES (?, ?, ?, ? ,?, ?)";
+            String query = "INSERT INTO machine (Name, MaxCapacity, MinCapacity, MaxVolume, MinVolume, NumOfLoad, MachineType) VALUES (?, ?, ?, ? ,?, ?, ?)";
 
             preparedStmt = conn.prepareStatement(query);
             preparedStmt.setString(1, newMachine.getMachineName().toUpperCase());
@@ -1007,6 +1007,7 @@ public class ColorTextControlSlipRepository {
             preparedStmt.setInt(4, newMachine.getMaxVolume());
             preparedStmt.setInt(5, newMachine.getMinVolume());
             preparedStmt.setInt(6, newMachine.getNumOfLoad());
+            preparedStmt.setInt(7, newMachine.getMachineType());
             preparedStmt.execute();
             
             added = true;
@@ -1028,7 +1029,7 @@ public class ColorTextControlSlipRepository {
         try
         {
             conn = db.getConnection();
-            String query = "UPDATE machine SET Name = ?, MaxCapacity = ?, MinCapacity = ?, MaxVolume = ?, MinVolume = ?, NumOfLoad = ? WHERE ID = ?";
+            String query = "UPDATE machine SET Name = ?, MaxCapacity = ?, MinCapacity = ?, MaxVolume = ?, MinVolume = ?, NumOfLoad = ?, MachineType = ? WHERE ID = ?";
 
             preparedStmt = conn.prepareStatement(query);
             preparedStmt.setString(1, machine.getMachineName().toUpperCase());
@@ -1037,7 +1038,9 @@ public class ColorTextControlSlipRepository {
             preparedStmt.setInt(4, machine.getMaxVolume());
             preparedStmt.setInt(5, machine.getMinVolume());
             preparedStmt.setInt(6, machine.getNumOfLoad());
-            preparedStmt.setInt(7, machine.getMachineId());
+            preparedStmt.setInt(7, machine.getMachineType());
+            preparedStmt.setInt(8, machine.getMachineId());
+            
             preparedStmt.executeUpdate();
             
             isSuccessful = true;
