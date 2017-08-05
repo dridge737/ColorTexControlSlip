@@ -14,8 +14,6 @@ import java.sql.Date;
 public class JobOrderExtended {
     private int ID;
     private String DrNumber;
-    private int MachineID;
-    private String MachineName;
     private int DesignID;
     private String DesignName;
     private int ColorID;
@@ -24,8 +22,14 @@ public class JobOrderExtended {
     private String CustomerName;
     private String jobDate;
     private String BatchNo;
-    private float Weight;
-    private float VolumeH20;
+    private int DyeingMachineID;
+    private String DyeingMachineName;
+    private float DyeingWeight;
+    private float DyeingVolumeH20;
+    private int ResinMachineID;
+    private String ResinMachineName;
+    private float ResinWeight;
+    private float ResinVolumeH20;
     private String RollLoad;
     private float Roll;
     private int DyeingProgramID;
@@ -62,17 +66,17 @@ public class JobOrderExtended {
     }
 
     /**
-     * @return the MachineID
+     * @return the DyeingMachineID
      */
     public int getMachineID() {
-        return MachineID;
+        return DyeingMachineID;
     }
 
     /**
-     * @param MachineID the MachineID to set
+     * @param MachineID the DyeingMachineID to set
      */
     public void setMachineID(int MachineID) {
-        this.MachineID = MachineID;
+        this.DyeingMachineID = MachineID;
     }
 
     /**
@@ -134,31 +138,31 @@ public class JobOrderExtended {
     }
 
     /**
-     * @return the Weight
+     * @return the DyeingWeight
      */
     public float getWeight() {
-        return Weight;
+        return DyeingWeight;
     }
 
     /**
-     * @param Weight the Weight to set
+     * @param Weight the DyeingWeight to set
      */
     public void setWeight(float Weight) {
-        this.Weight = Weight;
+        this.DyeingWeight = Weight;
     }
 
     /**
-     * @return the VolumeH20
+     * @return the DyeingVolumeH20
      */
     public float getVolumeH20() {
-        return VolumeH20;
+        return DyeingVolumeH20;
     }
 
     /**
-     * @param VolumeH20 the VolumeH20 to set
+     * @param VolumeH20 the DyeingVolumeH20 to set
      */
     public void setVolumeH20(float VolumeH20) {
-        this.VolumeH20 = VolumeH20;
+        this.DyeingVolumeH20 = VolumeH20;
     }
 
     /**
@@ -232,17 +236,17 @@ public class JobOrderExtended {
     }
 
     /**
-     * @return the MachineName
+     * @return the DyeingMachineName
      */
     public String getMachineName() {
-        return MachineName;
+        return DyeingMachineName;
     }
 
     /**
-     * @param MachineName the MachineName to set
+     * @param MachineName the DyeingMachineName to set
      */
     public void setMachineName(String MachineName) {
-        this.MachineName = MachineName;
+        this.DyeingMachineName = MachineName;
     }
 
     /**
@@ -313,6 +317,62 @@ public class JobOrderExtended {
      */
     public void setResinProgramName(String ResinProgramName) {
         this.ResinProgramName = ResinProgramName;
+    }
+
+    /**
+     * @return the ResinMachineID
+     */
+    public int getResinMachineID() {
+        return ResinMachineID;
+    }
+
+    /**
+     * @param ResinMachineID the ResinMachineID to set
+     */
+    public void setResinMachineID(int ResinMachineID) {
+        this.ResinMachineID = ResinMachineID;
+    }
+
+    /**
+     * @return the ResinMachineName
+     */
+    public String getResinMachineName() {
+        return ResinMachineName;
+    }
+
+    /**
+     * @param ResinMachineName the ResinMachineName to set
+     */
+    public void setResinMachineName(String ResinMachineName) {
+        this.ResinMachineName = ResinMachineName;
+    }
+
+    /**
+     * @return the ResinWeight
+     */
+    public float getResinWeight() {
+        return ResinWeight;
+    }
+
+    /**
+     * @param ResinWeight the ResinWeight to set
+     */
+    public void setResinWeight(float ResinWeight) {
+        this.ResinWeight = ResinWeight;
+    }
+
+    /**
+     * @return the ResinVolumeH20
+     */
+    public float getResinVolumeH20() {
+        return ResinVolumeH20;
+    }
+
+    /**
+     * @param ResinVolumeH20 the ResinVolumeH20 to set
+     */
+    public void setResinVolumeH20(float ResinVolumeH20) {
+        this.ResinVolumeH20 = ResinVolumeH20;
     }
 
     

@@ -353,7 +353,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         ChemicalHeader.setBackground(new java.awt.Color(255, 255, 255));
         ChemicalHeader.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
         ChemicalHeader.setForeground(new java.awt.Color(255, 255, 255));
-        ChemicalHeader.setText("Dyeing Control Slip : Page 1/6");
+        ChemicalHeader.setText("Control Slip : Page 1/6");
         MainPanel.add(ChemicalHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 22, -1, -1));
 
         dateSpinner.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N

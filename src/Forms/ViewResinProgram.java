@@ -47,7 +47,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
         thisJob = currentJob;
         SelectBut1.setText("Next");
         DeleteBut.setVisible(false);
-        Header.setText("Dyeing Control Slip : Page 4/6");
+        Header.setText("Control Slip : Page 4/6");
         BackBut.setText("Back");
     }
     

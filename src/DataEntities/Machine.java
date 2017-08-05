@@ -19,6 +19,7 @@ public class Machine {
     private int maxVolume;
     private int minVolume;
     private int NumOfLoad;
+    private int MachineType;
     
     public int getMachineId() {
         return machineId;
@@ -89,5 +90,19 @@ public class Machine {
      */
     public void setNumOfLoad(int NumOfLoad) {
         this.NumOfLoad = NumOfLoad;
+    }
+
+    /**
+     * @return the MachineType
+     */
+    public int getMachineType() {
+        return MachineType;
+    }
+
+    /**
+     * @param MachineType the MachineType to set
+     */
+    public void setMachineType(int MachineType) {
+        this.MachineType = MachineType;
     }
 }

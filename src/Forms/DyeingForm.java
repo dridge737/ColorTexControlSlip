@@ -124,7 +124,7 @@ public class DyeingForm extends javax.swing.JFrame {
             Header.setText("Dyeing Program");
             SaveBut.setText("Next");
             CancelBut.setText("Back");
-            Header.setText("Dyeing Control Slip : Page 3/6");
+            Header.setText("Control Slip : Page 3/6");
             ProgramNameText.setEnabled(false);
             ProgramNameText.setBackground(Color.LIGHT_GRAY);
         }

@@ -94,7 +94,7 @@ public class AddResinForm extends javax.swing.JFrame {
     public void InitializeWindowForControlSlip(String ResinProgramName, JobOrder thisJobOrder)
     {
         thisJob = thisJobOrder;
-        Header.setText("Dyeing Control Slip : Page 5/6");
+        Header.setText("Control Slip : Page 5/6");
         this.SaveBut.setText("Next");
         this.CancelBut.setText("Back");
         this.setResinProgramDetails(ResinProgramName);

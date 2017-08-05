@@ -976,6 +976,7 @@ public class ColorTextControlSlipRepository {
                 machine.setMaxVolume(rs.getInt("MaxVolume"));
                 machine.setMinVolume(rs.getInt("MinVolume"));
                 machine.setNumOfLoad(rs.getInt("NumOfLoad"));
+                machine.setMachineType(rs.getInt("MachineType"));
                 
                 MachineList.add(machine);
             }

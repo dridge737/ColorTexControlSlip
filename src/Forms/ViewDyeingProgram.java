@@ -54,7 +54,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         SelectBut.setText("Next");
         if(currentType == 3)
         {
-            Header.setText("Dyeing Control Slip : Page 2/6");
+            Header.setText("Control Slip : Page 2/6");
         }
         else if(currentType == 4)
         {
@@ -303,7 +303,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
 
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
         // TODO add your handling code here:
-        getUpdatedTableModel();
+        GetUpdatedTable();
     }//GEN-LAST:event_formWindowGainedFocus
 
     /**
