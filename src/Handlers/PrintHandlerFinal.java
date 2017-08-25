@@ -197,20 +197,30 @@ public class PrintHandlerFinal {
                 cellOne.setBorder(PdfPCell.NO_BORDER);
                 loadTable.addCell(cellOne);
             
+        float loadingArrangement = Float.parseFloat(Integer.toString(machineDetails.getNumOfLoad())) / Float.parseFloat(jobOrderDetails.getRollLoad());
+        int loadArrangementDisplay;
+        if((loadingArrangement - (int)loadingArrangement ) != 0)
+        {
+            loadArrangementDisplay = (int)Math.floor(loadingArrangement);
+        }
+        else
+        {
+            loadArrangementDisplay = (int)loadingArrangement;
+        }
+        
         for (int i = 0; i < machineDetails.getNumOfLoad(); i++) {
             
-                float loadingArrangement = Float.parseFloat(Integer.toString(machineDetails.getNumOfLoad())) / Float.parseFloat(jobOrderDetails.getRollLoad());
                 
                 if((loadingArrangement - (int)loadingArrangement ) != 0)
                 {
-                    cellOne = new PdfPCell(new Phrase(Integer.toString((int)Math.floor(loadingArrangement)), f1));
+                    cellOne = new PdfPCell(new Phrase(Integer.toString(loadArrangementDisplay), f1));
                     cellOne.setVerticalAlignment(Element.ALIGN_MIDDLE);
                     cellOne.setHorizontalAlignment(Element.ALIGN_CENTER);
                     loadTable.addCell(cellOne);
                 }
                 else
                 {
-                    cellOne = new PdfPCell(new Phrase(Integer.toString((int)loadingArrangement), f1));
+                    cellOne = new PdfPCell(new Phrase(Integer.toString(loadArrangementDisplay), f1));
                     cellOne.setVerticalAlignment(Element.ALIGN_MIDDLE);
                     cellOne.setHorizontalAlignment(Element.ALIGN_CENTER);
                     loadTable.addCell(cellOne);
@@ -321,8 +331,9 @@ public class PrintHandlerFinal {
 
                                 if(dyeingChemicalList.get(i).getType()== "%")
                                 {
-                                    Float fQuantity = jobOrderDetails.getWeight() * dyeingChemicalList.get(i).getValue();
-                                    Double quantity = Double.parseDouble(fQuantity.toString());
+                                    //Float fQuantity = jobOrderDetails.getWeight() * dyeingChemicalList.get(i).getValue();
+                                    //Double quantity = Double.parseDouble(fQuantity.toString());
+                                    Double quantity = Double.parseDouble(volume) * dyeingChemicalList.get(i).getValue();
                                     if(quantity.toString().contains(".0") == true)
                                     {
                                         DecimalFormat df = new DecimalFormat("#,###.00");
@@ -339,7 +350,9 @@ public class PrintHandlerFinal {
                                 }
                                 else
                                 {
-                                    Double quantity = Double.parseDouble(volume) * dyeingChemicalList.get(i).getValue();
+                                    //Double quantity = Double.parseDouble(volume) * dyeingChemicalList.get(i).getValue();
+                                    Float fQuantity = jobOrderDetails.getWeight() * dyeingChemicalList.get(i).getValue();
+                                    Double quantity = Double.parseDouble(fQuantity.toString());
                                     if(quantity.toString().contains(".0") == true)
                                     {
                                         DecimalFormat df = new DecimalFormat("#,###.00");
@@ -463,8 +476,9 @@ public class PrintHandlerFinal {
 
                             if(dyeingChemicalList.get(i).getType()== "%")
                             {
-                                Float fQuantity = jobOrderDetails.getWeight() * dyeingChemicalList.get(i).getValue();
-                                Double quantity = Double.parseDouble(fQuantity.toString());
+                                Double quantity = Double.parseDouble(volume) * dyeingChemicalList.get(i).getValue();
+                                //Float fQuantity = jobOrderDetails.getWeight() * dyeingChemicalList.get(i).getValue();
+                                //Double quantity = Double.parseDouble(fQuantity.toString());
                                 if(quantity.toString().contains(".0") == true)
                                 {
                                     DecimalFormat df = new DecimalFormat("#,###.00");
@@ -481,7 +495,9 @@ public class PrintHandlerFinal {
                             }
                             else
                             {
-                                Double quantity = Double.parseDouble(volume) * dyeingChemicalList.get(i).getValue();
+                                Float fQuantity = jobOrderDetails.getWeight() * dyeingChemicalList.get(i).getValue();
+                                Double quantity = Double.parseDouble(fQuantity.toString());
+                                //Double quantity = Double.parseDouble(volume) * dyeingChemicalList.get(i).getValue();
                                 if(quantity.toString().contains(".0") == true)
                                 {
                                     DecimalFormat df = new DecimalFormat("#,###.00");
@@ -823,8 +839,9 @@ public class PrintHandlerFinal {
                 //table.addCell(String.valueOf(jobOrderDetails.getVolumeH20() * resinChemicalList.get(x).getGPLValue()));
                 if(resinChemicalList.get(x).getType()== "%")
                 {
-                    Float fQuantity= jobOrderDetails.getWeight() * resinChemicalList.get(x).getGPLValue();
-                   Double quantity = Double.parseDouble(fQuantity.toString());
+                    Double quantity = Double.parseDouble(volume) * resinChemicalList.get(x).getGPLValue();
+                    //Float fQuantity= jobOrderDetails.getWeight() * resinChemicalList.get(x).getGPLValue();
+                   //Double quantity = Double.parseDouble(fQuantity.toString());
                    if(quantity.toString().contains(".0"))
                     {
                         DecimalFormat df = new DecimalFormat("#,###.00");
@@ -842,7 +859,9 @@ public class PrintHandlerFinal {
                 }
                 else
                 {
-                    Double quantity = Double.parseDouble(volume) * resinChemicalList.get(x).getGPLValue();
+                    //Double quantity = Double.parseDouble(volume) * resinChemicalList.get(x).getGPLValue();
+                    Float fQuantity= jobOrderDetails.getWeight() * resinChemicalList.get(x).getGPLValue();
+                   Double quantity = Double.parseDouble(fQuantity.toString());
                     if(quantity.toString().contains(".0"))
                     {
                         DecimalFormat df = new DecimalFormat("#,###.00");
