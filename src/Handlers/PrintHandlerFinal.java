@@ -308,7 +308,7 @@ public class PrintHandlerFinal {
 
                             for(int i = 0; i<dyeingChemicalList.size(); i++)
                             {
-                                table.addCell(new Phrase("        " + dyeingChemicalList.get(i).getOrder() + ". " + chemHandler.GetChemicalNameFromChemicalID(dyeingChemicalList.get(i).getChemicalID()), f));
+                                table.addCell(new Phrase("        " + dyeingChemicalList.get(i).getOrder() + ". " + chemHandler.GetChemicalNameFromChemicalID(dyeingChemicalList.get(i).getChemicalId()), f));
                                 if("GPL".equals(dyeingChemicalList.get(i).getType().toUpperCase())){
                                     table.addCell(new Phrase(String.valueOf(dyeingChemicalList.get(i).getValue()), f));
                                     table.addCell(" ");
@@ -321,6 +321,7 @@ public class PrintHandlerFinal {
 
                                 if(dyeingChemicalList.get(i).getType()== "%")
                                 {
+                                    //FIX HERE
                                     Float fQuantity = jobOrderDetails.getWeight() * dyeingChemicalList.get(i).getValue();
                                     Double quantity = Double.parseDouble(fQuantity.toString());
                                     if(quantity.toString().contains(".0") == true)
@@ -339,13 +340,13 @@ public class PrintHandlerFinal {
                                 }
                                 else
                                 {
+                                    //FIX HERE
                                     Double quantity = Double.parseDouble(volume) * dyeingChemicalList.get(i).getValue();
                                     if(quantity.toString().contains(".0") == true)
                                     {
                                         DecimalFormat df = new DecimalFormat("#,###.00");
                                         df.setRoundingMode(RoundingMode.CEILING);
                                         table.addCell(new Phrase(df.format(quantity) + dyeingChemicalList.get(i).getState(), f));
-
 
                                     }
                                     else
@@ -450,7 +451,7 @@ public class PrintHandlerFinal {
 
                         for(int i = 0; i<dyeingChemicalList.size(); i++)
                         {
-                            table.addCell(new Phrase("        " + dyeingChemicalList.get(i).getOrder() + ". " + chemHandler.GetChemicalNameFromChemicalID(dyeingChemicalList.get(i).getChemicalID()), f));
+                            table.addCell(new Phrase("        " + dyeingChemicalList.get(i).getOrder() + ". " + chemHandler.GetChemicalNameFromChemicalID(dyeingChemicalList.get(i).getChemicalId()), f));
                             if("GPL".equals(dyeingChemicalList.get(i).getType().toUpperCase())){
                                 table.addCell(new Phrase(String.valueOf(dyeingChemicalList.get(i).getValue()), f));
                                 table.addCell(" ");

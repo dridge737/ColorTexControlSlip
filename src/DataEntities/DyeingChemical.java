@@ -9,10 +9,9 @@ package DataEntities;
  *
  * @author Eldridge
  */
-public class DyeingChemical {
+public class DyeingChemical extends Chemical{
     private int ID;
     private int DyeingProcessID;
-    private int ChemicalID;
     private String Type;
     private float Value;
     private int Order;
@@ -44,20 +43,6 @@ public class DyeingChemical {
      */
     public void setDyeingProcessID(int DyeingProcessID) {
         this.DyeingProcessID = DyeingProcessID;
-    }
-
-    /**
-     * @return the ChemicalID
-     */
-    public int getChemicalID() {
-        return ChemicalID;
-    }
-
-    /**
-     * @param ChemicalID the ChemicalID to set
-     */
-    public void setChemicalID(int ChemicalID) {
-        this.ChemicalID = ChemicalID;
     }
 
     /**

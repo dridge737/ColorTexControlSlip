@@ -98,7 +98,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
         Header.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
         Header.setForeground(new java.awt.Color(255, 255, 255));
         Header.setText("Resin Program");
-        BgPanel.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 19, 470, 40));
+        BgPanel.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 470, 40));
         Header.getAccessibleContext().setAccessibleName("ResinProgram");
 
         jScrollPane1.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
@@ -120,7 +120,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
         ResinTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(ResinTable);
 
-        BgPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 115, 470, 250));
+        BgPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 125, 470, 230));
 
         BackBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         BackBut.setText("Close");
@@ -160,7 +160,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
                 SearchTextBoxKeyReleased(evt);
             }
         });
-        BgPanel.add(SearchTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 360, 30));
+        BgPanel.add(SearchTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 360, 34));
 
         SelectBut1.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         SelectBut1.setText("Select");
@@ -180,7 +180,7 @@ public class ViewResinProgram extends javax.swing.JFrame {
                 NewButActionPerformed(evt);
             }
         });
-        BgPanel.add(NewBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 80, 98, 30));
+        BgPanel.add(NewBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 80, 98, 34));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

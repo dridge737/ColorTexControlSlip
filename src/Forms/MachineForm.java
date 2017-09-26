@@ -77,8 +77,6 @@ public class MachineForm extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Control Slip");
         setMaximumSize(null);
-        setMinimumSize(new java.awt.Dimension(825, 590));
-        getContentPane().setLayout(null);
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -91,7 +89,7 @@ public class MachineForm extends javax.swing.JFrame {
                 AddMachineButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(AddMachineButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 540, 185, 32));
+        jPanel1.add(AddMachineButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 500, 250, 35));
 
         EditMachineButton.setBackground(new java.awt.Color(220, 220, 220));
         EditMachineButton.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
@@ -101,7 +99,7 @@ public class MachineForm extends javax.swing.JFrame {
                 EditMachineButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(EditMachineButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 290, 365, 30));
+        jPanel1.add(EditMachineButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 247, 365, 30));
 
         DeleteMachineButton.setBackground(new java.awt.Color(220, 220, 220));
         DeleteMachineButton.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
@@ -111,7 +109,7 @@ public class MachineForm extends javax.swing.JFrame {
                 DeleteMachineButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(DeleteMachineButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(415, 290, 365, 30));
+        jPanel1.add(DeleteMachineButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 247, 365, 30));
 
         MachineName.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         MachineName.setForeground(new java.awt.Color(204, 204, 204));
@@ -127,7 +125,7 @@ public class MachineForm extends javax.swing.JFrame {
                 MachineNameKeyReleased(evt);
             }
         });
-        jPanel1.add(MachineName, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 365, 365, 30));
+        jPanel1.add(MachineName, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 320, 365, 30));
 
         MachineListTable.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         MachineListTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -143,12 +141,12 @@ public class MachineForm extends javax.swing.JFrame {
         ));
         MachineTable.setViewportView(MachineListTable);
 
-        jPanel1.add(MachineTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 73, 740, 212));
+        jPanel1.add(MachineTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 740, 160));
 
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Machine");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 18, 228, 44));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 228, 44));
 
         DeleteMachineButton1.setBackground(new java.awt.Color(220, 220, 220));
         DeleteMachineButton1.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
@@ -158,7 +156,7 @@ public class MachineForm extends javax.swing.JFrame {
                 DeleteMachineButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(DeleteMachineButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 540, 185, 32));
+        jPanel1.add(DeleteMachineButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 500, 250, 35));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Capacity", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 18), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -186,7 +184,7 @@ public class MachineForm extends javax.swing.JFrame {
         });
         jPanel2.add(MachineMinimumCapacity, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 30, 350, 30));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 394, 740, 70));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 740, 70));
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Volume", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 18), new java.awt.Color(255, 255, 255))); // NOI18N
         jPanel3.setOpaque(false);
@@ -212,7 +210,7 @@ public class MachineForm extends javax.swing.JFrame {
         });
         jPanel3.add(MachineMaximumVolume, new org.netbeans.lib.awtextra.AbsoluteConstraints(375, 25, 350, 30));
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 460, 740, 70));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 420, 740, 70));
 
         LoadingArrangement.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         LoadingArrangement.setForeground(new java.awt.Color(204, 204, 204));
@@ -223,14 +221,27 @@ public class MachineForm extends javax.swing.JFrame {
                 LoadingArrangementFocusGained(evt);
             }
         });
-        jPanel1.add(LoadingArrangement, new org.netbeans.lib.awtextra.AbsoluteConstraints(415, 365, 365, 30));
+        jPanel1.add(LoadingArrangement, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 320, 365, 30));
 
         MachineTypeComboBox.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         MachineTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Dyeing Machine", "Resin Machine" }));
-        jPanel1.add(MachineTypeComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 327, 735, 30));
+        MachineTypeComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MachineTypeComboBoxActionPerformed(evt);
+            }
+        });
+        jPanel1.add(MachineTypeComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 285, 738, 30));
 
-        getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 820, 580);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 820, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -421,14 +432,7 @@ public class MachineForm extends javax.swing.JFrame {
     {   
         boolean DetailsValid = true;
         //Check if machine is a dyeing or resin machine
-        if(MachineTypeComboBox.getSelectedItem().toString().equals("Dyeing Machine") == true)
-        {
-            //Machine is for Dyeing
-            thisMachine.setMachineType(0);
-        }
-        else
-            //Machine is for Resin
-            thisMachine.setMachineType(1);
+        thisMachine.setMachineType(new MachineHandler().GetMachineTypeInt( MachineTypeComboBox.getSelectedItem().toString() ) );
         
         //Machine newMachineDetails = new Machine();
         if(MachineName.getText().length() > 0 && !MachineName.getText().equals("Name"))
@@ -578,6 +582,11 @@ public class MachineForm extends javax.swing.JFrame {
         
     }//GEN-LAST:event_LoadingArrangementFocusGained
 
+    private void MachineTypeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MachineTypeComboBoxActionPerformed
+        // TODO add your handling code here:
+        UpdateRowFilter(this.MachineTypeComboBox.getSelectedItem().toString());
+    }//GEN-LAST:event_MachineTypeComboBoxActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -629,6 +638,7 @@ public class MachineForm extends javax.swing.JFrame {
         ArrayList<Machine> MachineList = new MachineHandler().GetAllMachines();
         for(int x=0; x<MachineList.size(); x++)
         {
+            
             model_original.addRow(new Object[]{
                 MachineList.get(x).getMachineName(), 
                 MachineList.get(x).getMinCapacity(), 
@@ -636,7 +646,8 @@ public class MachineForm extends javax.swing.JFrame {
                 MachineList.get(x).getMinVolume(), 
                 MachineList.get(x).getMaxVolume(),
                 MachineList.get(x).getNumOfLoad(),
-                MachineList.get(x).getMachineType()});
+                new MachineHandler().GetMachineTypeText(MachineList.get(x).getMachineType())
+            });
             
         }
         

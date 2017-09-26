@@ -354,7 +354,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         ChemicalHeader.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
         ChemicalHeader.setForeground(new java.awt.Color(255, 255, 255));
         ChemicalHeader.setText("Control Slip : Page 1/6");
-        MainPanel.add(ChemicalHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 22, -1, -1));
+        MainPanel.add(ChemicalHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
 
         dateSpinner.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         dateSpinner.setModel(new javax.swing.SpinnerDateModel());
@@ -456,7 +456,7 @@ public class JobOrderForm extends javax.swing.JFrame {
     }//GEN-LAST:event_ColorDropDownListActionPerformed
 
     private void LiquidRatioDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LiquidRatioDropDownActionPerformed
-        ComputeForVolume();     
+        CheckValuesAndComputeForVolume();     
     }//GEN-LAST:event_LiquidRatioDropDownActionPerformed
 
     private void WeightFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_WeightFocusLost
@@ -470,7 +470,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                 Weight.setText(Float.toString(thisMachine.getMinCapacity()));
             }
             //else    
-            ComputeForVolume();
+            CheckValuesAndComputeForVolume();
             //    Weight.setText(weight);
         }
     }//GEN-LAST:event_WeightFocusLost
@@ -543,7 +543,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         return formater.format(this_spinner.getValue());
     }
     
-    private void ComputeForVolume()
+    private void CheckValuesAndComputeForVolume()
     {
         String weight = Weight.getText();
         String liquidRatio = LiquidRatioDropDown.getSelectedItem().toString();
@@ -552,6 +552,40 @@ public class JobOrderForm extends javax.swing.JFrame {
             computeForVolume();
         } 
     }
+    
+    private void computeForVolume()
+    {
+        int weightMultiplier = 0;
+        
+        String selected = LiquidRatioDropDown.getSelectedItem().toString();
+        float weight = Float.parseFloat(Weight.getText());
+        
+        if(selected.equals("1:6"))
+        {
+            weightMultiplier = 6;
+        }
+        else if(selected.equals("1:8"))
+        {
+            weightMultiplier = 8;
+        }
+        else if(selected.equals("1:9"))
+        {
+            weightMultiplier = 9;
+        }
+        else if(selected.equals("1:10"))
+        {
+            weightMultiplier = 10;
+        }
+        else if(selected.equals("1:12"))
+        {
+            weightMultiplier = 12;
+        }
+        
+        int volume = (((int) (weight * weightMultiplier)) + 9) / 10 * 10;
+        
+        VolumeTextField.setText(Double.toString(volume));
+    }
+    
     /*
     private boolean SetProcessOrderInformation()
     {
@@ -722,38 +756,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ProgramNumberKeyReleased
     
-    private void computeForVolume()
-    {
-        int weightMultiplier = 0;
-        
-        String selected = LiquidRatioDropDown.getSelectedItem().toString();
-        float weight = Float.parseFloat(Weight.getText());
-        
-        if(selected.equals("1:6"))
-        {
-            weightMultiplier = 6;
-        }
-        else if(selected.equals("1:8"))
-        {
-            weightMultiplier = 8;
-        }
-        else if(selected.equals("1:9"))
-        {
-            weightMultiplier = 9;
-        }
-        else if(selected.equals("1:10"))
-        {
-            weightMultiplier = 10;
-        }
-        else if(selected.equals("1:12"))
-        {
-            weightMultiplier = 12;
-        }
-        
-        int volume = (((int) (weight * weightMultiplier)) + 9) / 10 * 10;
-        
-        VolumeTextField.setText(Double.toString(volume));
-    }
+    
     
     private void populateLiquoRatioDropDown()
     {

@@ -539,7 +539,7 @@ public class PrintHandler {
 
                         for(int i = 0; i<dyeingChemicalList.size(); i++)
                         {
-                            table.addCell(new Phrase("        " + dyeingChemicalList.get(i).getOrder() + ". " + chemHandler.GetChemicalNameFromChemicalID(dyeingChemicalList.get(i).getChemicalID()), f));
+                            table.addCell(new Phrase("        " + dyeingChemicalList.get(i).getOrder() + ". " + chemHandler.GetChemicalNameFromChemicalID(dyeingChemicalList.get(i).getChemicalId()), f));
                             if("GPL".equals(dyeingChemicalList.get(i).getType().toUpperCase())){
                                 table.addCell(new Phrase(String.valueOf(dyeingChemicalList.get(i).getValue()), f));
                                 table.addCell(" ");
@@ -653,7 +653,7 @@ public class PrintHandler {
 
                         for(int i = 0; i<dyeingChemicalList.size(); i++)
                         {
-                            table.addCell(new Phrase("        " + dyeingChemicalList.get(i).getOrder() + ". " + chemHandler.GetChemicalNameFromChemicalID(dyeingChemicalList.get(i).getChemicalID()), f));
+                            table.addCell(new Phrase("        " + dyeingChemicalList.get(i).getOrder() + ". " + chemHandler.GetChemicalNameFromChemicalID(dyeingChemicalList.get(i).getChemicalId()), f));
                             if("GPL".equals(dyeingChemicalList.get(i).getType().toUpperCase())){
                                 table.addCell(new Phrase(String.valueOf(dyeingChemicalList.get(i).getValue()), f));
                                 table.addCell(" ");
@@ -697,7 +697,7 @@ public class PrintHandler {
 
                     for(int i = 0; i<dyeingChemicalList.size(); i++)
                     {
-                        table.addCell(new Phrase("        " + dyeingChemicalList.get(i).getOrder() + ". " + chemHandler.GetChemicalNameFromChemicalID(dyeingChemicalList.get(i).getChemicalID()), f));
+                        table.addCell(new Phrase("        " + dyeingChemicalList.get(i).getOrder() + ". " + chemHandler.GetChemicalNameFromChemicalID(dyeingChemicalList.get(i).getChemicalId()), f));
                         if("GPL".equals(dyeingChemicalList.get(i).getType().toUpperCase())){
                             table.addCell(new Phrase(String.valueOf(dyeingChemicalList.get(i).getValue()), f));
                             table.addCell(" ");

@@ -5,6 +5,7 @@
  */
 package Handlers;
 
+import DataEntities.DyeingChemical;
 import DataEntities.JobOrder;
 import DataEntities.JobOrderExtended;
 import Database.ColorTextControlSlipRepository;
@@ -101,5 +102,29 @@ public class JobHandler {
         }
         return isExisting;
     }
+    
+    public float ComputeQuantityFromWeightOrVol(DyeingChemical thisDyeingChemical, JobOrder thisJobOrder)
+     {
+         Float quantity;
+         if(thisDyeingChemical.getType().equals("%"))
+         {
+             //Old Computation
+             //quantity = thisJobOrder.getWeight() * Value;
+             //New Computation
+             quantity = thisJobOrder.getWeight() * thisDyeingChemical.getValue() * 10;
+         }
+         else
+         {
+             if(thisDyeingChemical.getState().equals("G"))
+                 quantity = thisJobOrder.getVolumeH20() * thisDyeingChemical.getValue();
+             else
+                 // Formula = Quantity in ml = Chemical Values in GPL * Vol of Water /1.5 
+                 //           Change to Liter = /1000 
+                 //           Final formula to get liters = (ChemVal * VolOfWater) / (1.5 * 1000)
+                 quantity = thisJobOrder.getVolumeH20() * thisDyeingChemical.getValue() / (float) 1500;
+                 
+         }
+         return quantity;
+     }
 
 }

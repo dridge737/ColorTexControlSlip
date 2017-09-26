@@ -109,7 +109,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         Header.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
         Header.setForeground(new java.awt.Color(255, 255, 255));
         Header.setText("Dyeing Program");
-        BgPanel.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 19, 470, -1));
+        BgPanel.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 470, -1));
         Header.getAccessibleContext().setAccessibleName("ResinProgram");
 
         jScrollPane1.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
@@ -131,7 +131,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
         DyeingTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         jScrollPane1.setViewportView(DyeingTable);
 
-        BgPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 123, 470, 280));
+        BgPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 123, 470, 280));
 
         BackBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         BackBut.setText("Cancel");
@@ -141,7 +141,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
                 BackButActionPerformed(evt);
             }
         });
-        BgPanel.add(BackBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(288, 408, 220, 42));
+        BgPanel.add(BackBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(278, 410, 220, 42));
 
         SelectBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         SelectBut.setText("Select");
@@ -151,7 +151,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
                 SelectButActionPerformed(evt);
             }
         });
-        BgPanel.add(SelectBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 408, 220, 40));
+        BgPanel.add(SelectBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 408, 220, 40));
 
         SearchTextBox.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         SearchTextBox.setForeground(new java.awt.Color(204, 204, 204));
@@ -169,7 +169,7 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
                 SearchTextBoxKeyReleased(evt);
             }
         });
-        BgPanel.add(SearchTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 330, 37));
+        BgPanel.add(SearchTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 330, 34));
 
         NewBut.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         NewBut.setText("New");
@@ -179,17 +179,17 @@ public class ViewDyeingProgram extends javax.swing.JFrame {
                 NewButActionPerformed(evt);
             }
         });
-        BgPanel.add(NewBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 80, 128, 37));
+        BgPanel.add(NewBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 80, 128, 34));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(BgPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(BgPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 525, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(BgPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(BgPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
         );
 
         pack();

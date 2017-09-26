@@ -3223,7 +3223,7 @@ public class ColorTextControlSlipRepository {
             String query = "INSERT INTO dyeing_chemical (ChemicalID, DyeingProcessID, Type, Value, dyeing_chemical.order, State) VALUES (?, ?, ?, ?, ?, ?)";
 
             preparedStmt = conn.prepareStatement(query);
-            preparedStmt.setInt(1, thisDyeingChemical.getChemicalID() );
+            preparedStmt.setInt(1, thisDyeingChemical.getChemicalId() );
             preparedStmt.setInt(2, thisDyeingChemical.getDyeingProcessID() );
             preparedStmt.setString(3, thisDyeingChemical.getType());
             preparedStmt.setFloat(4, thisDyeingChemical.getValue());
@@ -3254,7 +3254,7 @@ public class ColorTextControlSlipRepository {
 
             preparedStmt = conn.prepareStatement(query);
             int item = 1;
-            preparedStmt.setInt( item++, thisDyeingChemical.getChemicalID());
+            preparedStmt.setInt( item++, thisDyeingChemical.getChemicalId());
             preparedStmt.setString( item++, thisDyeingChemical.getType() );
             preparedStmt.setFloat( item++, thisDyeingChemical.getValue());
             preparedStmt.setInt( item++, thisDyeingChemical.getDyeingProcessID());
@@ -3340,7 +3340,7 @@ public class ColorTextControlSlipRepository {
             {
                 DyeingChemical thisDyeingChemical = new DyeingChemical();
                 thisDyeingChemical.setID(rs.getInt("ID"));
-                thisDyeingChemical.setChemicalID(rs.getInt("ChemicalID"));
+                thisDyeingChemical.setChemicalId(rs.getInt("ChemicalID"));
                 thisDyeingChemical.setType(rs.getString("Type"));
                 thisDyeingChemical.setValue(rs.getFloat("Value"));
                 thisDyeingChemical.setState(rs.getString("State"));
@@ -3373,7 +3373,7 @@ public class ColorTextControlSlipRepository {
                     + " AS 'CheckTest'");
 
             int item = 1;
-            ps.setInt(item++, ThisDyeingChemical.getChemicalID());
+            ps.setInt(item++, ThisDyeingChemical.getChemicalId());
             ps.setInt(item++, ThisDyeingChemical.getDyeingProcessID());
             rs = ps.executeQuery();
             if(rs.first())
@@ -3433,7 +3433,7 @@ public class ColorTextControlSlipRepository {
                     + " AS 'CheckTest'");
 
             int item = 1;
-            ps.setInt(item++, ThisDyeingChemical.getChemicalID());
+            ps.setInt(item++, ThisDyeingChemical.getChemicalId());
             ps.setInt(item++, ThisDyeingChemical.getDyeingProcessID());
             ps.setInt(item++, ThisDyeingChemical.getID());
             rs = ps.executeQuery();

@@ -12,6 +12,7 @@ import DataEntities.JobOrder;
 import Handlers.ChemicalHandler;
 import Handlers.DyeingChemicalHandler;
 import Handlers.DyeingProcessHandler;
+import Handlers.JobHandler;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -171,21 +172,31 @@ public class SubProcessPanel extends javax.swing.JPanel {
          this.SubProcessText.setText(ThisDyeingProcess.getDyeingProcessName());
          SetChemicalListFromDyeingProcessID(SubProcessID);
      }
-    
-     public float ComputeQuantityFromWeightOrVol(String Type, Float Value)
+    /*
+     public float ComputeQuantityFromWeightOrVol(DyeingChemical thisDyeingChemical)
      {
          Float quantity;
-         if(Type.equals("%"))
+         if(thisDyeingChemical.getType().equals("%"))
          {
-             quantity = thisJobOrder.getWeight() * Value;
+             //Old Computation
+             //quantity = thisJobOrder.getWeight() * Value;
+             //New Computation
+             quantity = thisJobOrder.getWeight() * thisDyeingChemical.getValue() * 10;
          }
          else
          {
-             quantity = thisJobOrder.getVolumeH20() * Value;
+             if(thisDyeingChemical.getState().equals("G"))
+                 quantity = thisJobOrder.getVolumeH20() * thisDyeingChemical.getValue();
+             else
+                 // Formula = Quantity in ml = Chemical Values in GPL * Vol of Water /1.5 
+                 //           Change to Liter = /1000 
+                 //           Final formula to get liters = (ChemVal * VolOfWater) / (1.5 * 1000)
+                 quantity = thisJobOrder.getVolumeH20() * thisDyeingChemical.getValue() / (float) 1500;
+                 
          }
          return quantity;
      }
-     
+     */
      public void SetChemicalListFromDyeingProcessID(int DyeingProcessID)
      {
          ArrayList<DyeingChemical> ThisDyeingChemical;
@@ -196,8 +207,9 @@ public class SubProcessPanel extends javax.swing.JPanel {
          for(DyeingChemical thisDyeingChemical : ThisDyeingChemical)
          {
              //Add Chemical and its details to the Table
-             String ChemicalName = getChemicalNameFromID(thisDyeingChemical.getChemicalID());
-             Float Quantity = ComputeQuantityFromWeightOrVol(thisDyeingChemical.getType(), thisDyeingChemical.getValue());
+             String ChemicalName = getChemicalNameFromID(thisDyeingChemical.getChemicalId());
+             //Float Quantity = ComputeQuantityFromWeightOrVol(thisDyeingChemical);
+             Float Quantity = new JobHandler().ComputeQuantityFromWeightOrVol(thisDyeingChemical, thisJobOrder);
              if(WindowType == 3)
              {
                  
@@ -362,6 +374,18 @@ public class SubProcessPanel extends javax.swing.JPanel {
         }
      }
      
+     private DyeingChemical GetTextFromTextBox()
+     {
+         DyeingChemical ThisDyeingChemical = new DyeingChemical();
+         ThisDyeingChemical.setChemicalName(ChemicalTextfield.getText().trim().toUpperCase());
+         ThisDyeingChemical.setState(this.StateBox.getSelectedItem().toString());
+         ThisDyeingChemical.setType(this.TypeBox.getSelectedItem().toString());
+         ThisDyeingChemical.setValue(Float.parseFloat(ValueText.getText()));
+         
+         
+         return ThisDyeingChemical;
+     }
+     
      private DyeingChemical GetThisRowOfValues(int rowNumber, int DyeingProcessID)
      {
          Chemical ThisChemical  = new Chemical();
@@ -376,8 +400,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
             {
                 ThisChemical.setChemicalName(Chemical);
                 ThisChemical.setChemicalId(ChemicalHandler.GetChemicalIDFromChemicalName(ThisChemical.getChemicalName()));
-                ThisDyeingChemical.setChemicalID(rowNumber);
-                ThisDyeingChemical.setChemicalID(ThisChemical.getChemicalId());
+                ThisDyeingChemical.setChemicalId(ThisChemical.getChemicalId());
                 ThisDyeingChemical.setDyeingProcessID(DyeingProcessID);
                 ThisDyeingChemical.setType(Type);
                 ThisDyeingChemical.setValue(Float.parseFloat(Value));
@@ -599,22 +622,26 @@ public class SubProcessPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Please check your Chemical Name input and GPL value.");
     }//GEN-LAST:event_AddtoTableActionPerformed
 
+    //Can be updated to add data to a list.
     private void AddTextToTable()
     {
-        String ChemicalName = ChemicalTextfield.getText().trim().toUpperCase();
+        //String ChemicalName = ChemicalTextfield.getText().trim().toUpperCase();
         DefaultTableModel model = (DefaultTableModel) ChemicalTable.getModel();
+        DyeingChemical thisDyeingChemical = GetTextFromTextBox();
         
         if(WindowType == 3)
         {
-            float Quantity = this.ComputeQuantityFromWeightOrVol(this.TypeBox.getSelectedItem().toString(), Float.parseFloat(ValueText.getText()));
-            model.addRow(new Object[] {ChemicalName, this.StateBox.getSelectedItem(),this.TypeBox.getSelectedItem().toString(), ValueText.getText(),Quantity, "Delete"});
+            Float Quantity = new JobHandler().ComputeQuantityFromWeightOrVol(thisDyeingChemical, thisJobOrder);
+            //float Quantity = this.ComputeQuantityFromWeightOrVol(thisDyeingChemical);
+            model.addRow(new Object[] {thisDyeingChemical.getChemicalName(), thisDyeingChemical.getState(),thisDyeingChemical.getType(), thisDyeingChemical.getValue(),Quantity, "Delete"});
         }
         else
-            model.addRow(new Object[] {ChemicalName, this.StateBox.getSelectedItem(),this.TypeBox.getSelectedItem().toString(), ValueText.getText(), "Delete"});
+            //model.addRow(new Object[] {ChemicalName, this.StateBox.getSelectedItem(),this.TypeBox.getSelectedItem().toString(), ValueText.getText(), "Delete"});
+            model.addRow(new Object[] {thisDyeingChemical.getChemicalName(), thisDyeingChemical.getState(),thisDyeingChemical.getType(), thisDyeingChemical.getValue(), "Delete"});
         
         //ChemicalList
         //After Adding Chemical to table add it to list to check if same chemical will be added
-        this.AddedChemicalList.add(ChemicalName);
+        this.AddedChemicalList.add(thisDyeingChemical.getChemicalName());
         this.ChemicalTextfield.setText(null);
         ValueText.setText(null);
     }

@@ -300,7 +300,6 @@ public class DyeingForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Control Slip");
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(102, 102, 102));
         jPanel2.setToolTipText("");
@@ -313,39 +312,48 @@ public class DyeingForm extends javax.swing.JFrame {
         Header.setText("Add Dyeing Program");
         jPanel2.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 710, 40));
 
-        SaveBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        SaveBut.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         SaveBut.setText("Add Dyeing Program");
         SaveBut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SaveButActionPerformed(evt);
             }
         });
-        jPanel2.add(SaveBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 650, 280, 40));
+        jPanel2.add(SaveBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(165, 650, 250, 40));
 
         GUITabbedPaneProcess.setBackground(new java.awt.Color(255, 255, 255));
         GUITabbedPaneProcess.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jPanel2.add(GUITabbedPaneProcess, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 770, 500));
 
-        ProgramNameLabel.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        ProgramNameLabel.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         ProgramNameLabel.setForeground(new java.awt.Color(255, 255, 255));
         ProgramNameLabel.setText("Program Name :");
         jPanel2.add(ProgramNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 165, 34));
 
-        ProgramNameText.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        ProgramNameText.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         ProgramNameText.setToolTipText("");
         ProgramNameText.setDisabledTextColor(new java.awt.Color(51, 51, 51));
-        jPanel2.add(ProgramNameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 90, 580, 34));
+        jPanel2.add(ProgramNameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, 600, 34));
 
-        CancelBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        CancelBut.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         CancelBut.setText("Cancel");
         CancelBut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CancelButActionPerformed(evt);
             }
         });
-        jPanel2.add(CancelBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 650, 280, 40));
+        jPanel2.add(CancelBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 650, 250, 40));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 710));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 850, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 710, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

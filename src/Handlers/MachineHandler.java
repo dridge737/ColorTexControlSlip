@@ -30,6 +30,26 @@ import javax.swing.table.DefaultTableModel;
  */
 public class MachineHandler {
     
+    public String GetMachineTypeText(int MachineType)
+    {
+        if(MachineType == 0)
+            return "Dyeing Machine";
+        else
+            return "Resin Machine";
+    }
+    
+    public int GetMachineTypeInt(String MachineTypeString)
+    {
+        if(MachineTypeString.equals("Dyeing Machine") == true)
+        {
+            //Machine is for Dyeing
+            return 0;
+        }
+        else
+            //Machine is for Resin
+            return 1;
+                    
+    }
     public ArrayList<Machine> GetAllMachines()
     {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
