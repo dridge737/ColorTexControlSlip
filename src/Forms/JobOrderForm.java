@@ -181,8 +181,6 @@ public class JobOrderForm extends javax.swing.JFrame {
         Weight = new javax.swing.JTextField();
         VolumeTextField = new javax.swing.JTextField();
         LiquidRatioDropDown = new javax.swing.JComboBox<String>();
-        jLabel9 = new javax.swing.JLabel();
-        RollLoad = new javax.swing.JTextField();
         Cancel = new javax.swing.JButton();
         NextButton = new javax.swing.JButton();
         ChemicalHeader = new javax.swing.JLabel();
@@ -195,6 +193,8 @@ public class JobOrderForm extends javax.swing.JFrame {
         ProgramNumber = new javax.swing.JTextField();
         ReferenceLabel1 = new javax.swing.JLabel();
         Location = new javax.swing.JTextField();
+        RollLoad = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Control Slip");
@@ -269,7 +269,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         MainPanel.add(JobOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 80, 190, 30));
 
         jPanel2.setBackground(new java.awt.Color(102, 102, 102));
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Machine", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 22), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dyeing Machine", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 22), new java.awt.Color(255, 255, 255))); // NOI18N
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         MachineDropDownList.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
@@ -320,17 +320,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         });
         jPanel2.add(LiquidRatioDropDown, new org.netbeans.lib.awtextra.AbsoluteConstraints(254, 74, 390, 30));
 
-        jLabel9.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel9.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel9.setText("Roll Load :");
-        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 150, -1, 30));
-
-        RollLoad.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        jPanel2.add(RollLoad, new org.netbeans.lib.awtextra.AbsoluteConstraints(129, 150, 515, -1));
-
-        MainPanel.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 660, 190));
+        MainPanel.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 660, 150));
 
         Cancel.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         Cancel.setText("Cancel");
@@ -339,7 +329,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                 CancelActionPerformed(evt);
             }
         });
-        MainPanel.add(Cancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(425, 465, 205, 40));
+        MainPanel.add(Cancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 450, 205, 40));
 
         NextButton.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         NextButton.setText("Next");
@@ -348,7 +338,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                 NextButtonActionPerformed(evt);
             }
         });
-        MainPanel.add(NextButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 465, 205, 40));
+        MainPanel.add(NextButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 450, 205, 40));
 
         ChemicalHeader.setBackground(new java.awt.Color(255, 255, 255));
         ChemicalHeader.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
@@ -406,10 +396,20 @@ public class JobOrderForm extends javax.swing.JFrame {
         ReferenceLabel1.setForeground(new java.awt.Color(255, 255, 255));
         ReferenceLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         ReferenceLabel1.setText("Location :");
-        MainPanel.add(ReferenceLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 240, 110, 30));
+        MainPanel.add(ReferenceLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 240, 110, 30));
 
         Location.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        MainPanel.add(Location, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 240, 190, 30));
+        MainPanel.add(Location, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 240, 190, 30));
+
+        RollLoad.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        MainPanel.add(RollLoad, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 240, 190, 30));
+
+        jLabel9.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel9.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel9.setText("Roll Load :");
+        MainPanel.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 240, 110, 30));
 
         getContentPane().add(MainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 520));
 
@@ -531,6 +531,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(SetJobOrderInformationFromTextBox())
         {
+            //MachineSelection DyeingMachineSelection = new DyeingMachineSelection(thisJob);
             ViewDyeingProgram chooseDyeingProgram = new ViewDyeingProgram(thisJob);
             chooseDyeingProgram.setVisible(true);
             this.dispose();

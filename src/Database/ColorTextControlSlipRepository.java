@@ -2089,19 +2089,31 @@ public class ColorTextControlSlipRepository {
         try{
             conn = db.getConnection();
            
-            ps = conn.prepareStatement("SELECT DrNumber , Date , col.Name as coName, cus.Name as cName, " +
-                    "des.Name as dName , mach.Name as mName, " +
-                    "dProgName.Name as dpName, resin_program_name.Name as rpName " +
-                    " FROM color col, customer cus , design des, " +
-                    " job_order LEFT JOIN Resin_Program ON job_order.ResinProgramID = resin_program.ID" +
-                    " LEFT JOIN resin_program_name ON Resin_program.ProgramNameID = resin_program_name.ID" +
-                    " , machine mach, dyeing_program dProg, dyeing_program_name dProgName " +
-                    " WHERE col.ID = ColorID " +
-                    " AND cus.ID = CustomerID  " +
-                    " AND des.ID = designID " +
-                    " AND mach.ID = MachineID " +
-                    " AND dProg.ID = DyeingProgramID " +
-                    " AND dProg.ProgramNameID = dProgName.ID"
+            ps = conn.prepareStatement("SELECT DrNumber , "
+                    + "Date , "
+                    + "col.Name as coName, "
+                    + "cus.Name as cName, "
+                    + "des.Name as dName , "
+                    + "DyeMach.Name as DyeingMachineName, "
+                    + "ResMach.Name as ResinMachineName, "
+                    + "dProgName.Name as dpName, "
+                    + "resin_program_name.Name as rpName "
+                    + " FROM color col, "
+                    + "customer cus , "
+                    + "design des, "
+                    + " job_order LEFT JOIN Resin_Program ON job_order.ResinProgramID = resin_program.ID"
+                    + " LEFT JOIN resin_program_name ON Resin_program.ProgramNameID = resin_program_name.ID ,"
+                    + " machine DyeMach, "
+                    + " machine ResMach, "
+                    + "dyeing_program dProg, "
+                    + "dyeing_program_name dProgName "
+                    + " WHERE col.ID = ColorID "
+                    + " AND cus.ID = CustomerID  "
+                    + " AND des.ID = designID "
+                    + " AND DyeMach.ID = DyeingMachineID "
+                    + " AND ResMach.ID = ResinMachineID "
+                    + " AND dProg.ID = DyeingProgramID " 
+                    + " AND dProg.ProgramNameID = dProgName.ID "
                     + " AND cus.ID = ?;");
             
             /*ps = conn.prepareStatement("SELECT DrNumber , Date ,  resin_program_name.Name as rName " +
@@ -3470,13 +3482,18 @@ public class ColorTextControlSlipRepository {
                 JobOrder thisJobOrder = new JobOrder();
                 thisJobOrder.setID(rs.getInt("ID"));
                 thisJobOrder.setDrNumber(rs.getString("DrNumber"));
-                thisJobOrder.setMachineID(rs.getInt("MachineID"));
                 thisJobOrder.setDesignID(rs.getInt("DesignID"));
                 thisJobOrder.setColorID(rs.getInt("ColorID"));
                 thisJobOrder.setCustomerID(rs.getInt("CustomerID"));
                 thisJobOrder.setBatchNo(rs.getInt("BatchNo"));
-                thisJobOrder.setWeight(rs.getFloat("Weight"));
-                thisJobOrder.setVolumeH20(rs.getInt("VolH2O"));
+                
+                thisJobOrder.setDyeingMachineID(rs.getInt("DyeingMachineID"));
+                thisJobOrder.setDyeingWeight(rs.getFloat("DyeingWeight"));
+                thisJobOrder.setDyeingVolumeH20(rs.getInt("DyeingVolH2O"));
+                
+                thisJobOrder.setResinMachineID(rs.getInt("ResinMachineID"));
+                thisJobOrder.setResinWeight(rs.getFloat("ResinWeight"));
+                thisJobOrder.setResinVolumeH20(rs.getInt("ResinVolH2O"));
                 thisJobOrder.setRollLoad(rs.getString("RollLoad"));
                 thisJobOrder.setRoll(rs.getInt("Roll"));
                 thisJobOrder.setDyeingProgramID(rs.getInt("DyeingProgramID"));

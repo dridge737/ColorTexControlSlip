@@ -62,19 +62,6 @@ public class JobOrder {
         this.DrNumber = DrNumber.toUpperCase();
     }
 
-    /**
-     * @return the DyeingMachineID
-     */
-    public int getMachineID() {
-        return DyeingMachineID;
-    }
-
-    /**
-     * @param MachineID the DyeingMachineID to set
-     */
-    public void setMachineID(int MachineID) {
-        this.DyeingMachineID = MachineID;
-    }
 
     /**
      * @return the DesignID
@@ -133,34 +120,6 @@ public class JobOrder {
     public void setBatchNo(int BatchNo) {
         
         this.BatchNo = BatchNo;
-    }
-
-    /**
-     * @return the DyeingWeight
-     */
-    public float getWeight() {
-        return DyeingWeight;
-    }
-
-    /**
-     * @param Weight the DyeingWeight to set
-     */
-    public void setWeight(float Weight) {
-        this.DyeingWeight = Weight;
-    }
-
-    /**
-     * @return the DyeingVolumeH20
-     */
-    public float getVolumeH20() {
-        return DyeingVolumeH20;
-    }
-
-    /**
-     * @param VolumeH20 the DyeingVolumeH20 to set
-     */
-    public void setVolumeH20(float VolumeH20) {
-        this.DyeingVolumeH20 = VolumeH20;
     }
 
     /**
@@ -315,6 +274,48 @@ public class JobOrder {
      */
     public void setResinWeight(float ResinWeight) {
         this.ResinWeight = ResinWeight;
+    }
+
+    /**
+     * @return the DyeingMachineID
+     */
+    public int getDyeingMachineID() {
+        return DyeingMachineID;
+    }
+
+    /**
+     * @param DyeingMachineID the DyeingMachineID to set
+     */
+    public void setDyeingMachineID(int DyeingMachineID) {
+        this.DyeingMachineID = DyeingMachineID;
+    }
+
+    /**
+     * @return the DyeingVolumeH20
+     */
+    public float getDyeingVolumeH20() {
+        return DyeingVolumeH20;
+    }
+
+    /**
+     * @param DyeingVolumeH20 the DyeingVolumeH20 to set
+     */
+    public void setDyeingVolumeH20(float DyeingVolumeH20) {
+        this.DyeingVolumeH20 = DyeingVolumeH20;
+    }
+
+    /**
+     * @return the DyeingWeight
+     */
+    public float getDyeingWeight() {
+        return DyeingWeight;
+    }
+
+    /**
+     * @param DyeingWeight the DyeingWeight to set
+     */
+    public void setDyeingWeight(float DyeingWeight) {
+        this.DyeingWeight = DyeingWeight;
     }
 
     

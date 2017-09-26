@@ -213,15 +213,6 @@ public class ReviewForm extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         JobOrder = new javax.swing.JTextField();
-        jPanel2 = new javax.swing.JPanel();
-        MachineDropDownList = new javax.swing.JComboBox<String>();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        Weight = new javax.swing.JTextField();
-        VolumeTextField = new javax.swing.JTextField();
-        LiquidRatioDropDown = new javax.swing.JComboBox<String>();
-        jLabel9 = new javax.swing.JLabel();
-        RollLoad = new javax.swing.JTextField();
         dateSpinner = new javax.swing.JSpinner();
         jLabel11 = new javax.swing.JLabel();
         BatchNo = new javax.swing.JTextField();
@@ -231,6 +222,8 @@ public class ReviewForm extends javax.swing.JFrame {
         ProgramNumber = new javax.swing.JTextField();
         ReferenceLabel1 = new javax.swing.JLabel();
         Location = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        RollLoad = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         DyeingProgramText = new javax.swing.JTextField();
@@ -238,6 +231,20 @@ public class ReviewForm extends javax.swing.JFrame {
         EditResinProgram = new javax.swing.JButton();
         EditDyeingProgram = new javax.swing.JButton();
         SaveExit = new javax.swing.JButton();
+        DyeingMachinePanel = new javax.swing.JPanel();
+        MachineDropDownList = new javax.swing.JComboBox<String>();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        Weight = new javax.swing.JTextField();
+        VolumeTextField = new javax.swing.JTextField();
+        LiquidRatioDropDown = new javax.swing.JComboBox<String>();
+        ResinMachinePanel = new javax.swing.JPanel();
+        MachineDropDownList1 = new javax.swing.JComboBox<String>();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        Weight1 = new javax.swing.JTextField();
+        VolumeTextField1 = new javax.swing.JTextField();
+        LiquidRatioDropDown1 = new javax.swing.JComboBox<String>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Control Slip");
@@ -280,7 +287,7 @@ public class ReviewForm extends javax.swing.JFrame {
                 CustomerDropDownListActionPerformed(evt);
             }
         });
-        MainPanel.add(CustomerDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 60, 195, 30));
+        MainPanel.add(CustomerDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 60, 195, 30));
 
         DesignDropDownList.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         DesignDropDownList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Design" }));
@@ -289,7 +296,7 @@ public class ReviewForm extends javax.swing.JFrame {
                 DesignDropDownListActionPerformed(evt);
             }
         });
-        MainPanel.add(DesignDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 100, 195, 30));
+        MainPanel.add(DesignDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, 195, 30));
 
         ColorDropDownList.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         ColorDropDownList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Color" }));
@@ -298,49 +305,167 @@ public class ReviewForm extends javax.swing.JFrame {
                 ColorDropDownListActionPerformed(evt);
             }
         });
-        MainPanel.add(ColorDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 100, 190, 30));
+        MainPanel.add(ColorDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 100, 190, 30));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel1.setText("Color :");
-        MainPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 100, 90, 30));
+        MainPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 100, 90, 30));
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Customer :");
-        MainPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 60, 100, 30));
+        MainPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 60, 100, 30));
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("Design :");
-        MainPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 100, 100, 30));
+        MainPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 100, 100, 30));
 
         jLabel4.setBackground(new java.awt.Color(255, 255, 255));
         jLabel4.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel4.setText("Job Order :");
-        MainPanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 20, 100, 30));
+        MainPanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 20, 100, 30));
 
         jLabel6.setBackground(new java.awt.Color(255, 255, 255));
         jLabel6.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel6.setText("Batch No :");
-        MainPanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 20, 90, 30));
+        MainPanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, 90, 30));
 
         JobOrder.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        MainPanel.add(JobOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 195, 30));
+        MainPanel.add(JobOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 195, 30));
 
-        jPanel2.setBackground(new java.awt.Color(102, 102, 102));
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Machine", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 20), new java.awt.Color(255, 255, 255))); // NOI18N
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        dateSpinner.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        dateSpinner.setModel(new javax.swing.SpinnerDateModel());
+        MainPanel.add(dateSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 60, 190, 30));
+        dateSpinner.setEditor(new JSpinner.DateEditor(dateSpinner, "MM/dd/yyyy"));
+
+        jLabel11.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel11.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel11.setText("Date :");
+        MainPanel.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 60, 90, 30));
+
+        BatchNo.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        BatchNo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                BatchNoKeyReleased(evt);
+            }
+        });
+        MainPanel.add(BatchNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 20, 190, 30));
+
+        ReferenceLabel.setBackground(new java.awt.Color(255, 255, 255));
+        ReferenceLabel.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        ReferenceLabel.setForeground(new java.awt.Color(255, 255, 255));
+        ReferenceLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        ReferenceLabel.setText("Reference :");
+        MainPanel.add(ReferenceLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 140, 100, 30));
+
+        Reference.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        MainPanel.add(Reference, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 140, 195, 30));
+
+        ProgramNumberLabel.setBackground(new java.awt.Color(255, 255, 255));
+        ProgramNumberLabel.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        ProgramNumberLabel.setForeground(new java.awt.Color(255, 255, 255));
+        ProgramNumberLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        ProgramNumberLabel.setText("Program # :");
+        MainPanel.add(ProgramNumberLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 140, 90, 30));
+
+        ProgramNumber.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        ProgramNumber.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                ProgramNumberKeyReleased(evt);
+            }
+        });
+        MainPanel.add(ProgramNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 140, 190, 30));
+
+        ReferenceLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        ReferenceLabel1.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        ReferenceLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        ReferenceLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        ReferenceLabel1.setText("Location :");
+        MainPanel.add(ReferenceLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 180, 100, 30));
+
+        Location.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        MainPanel.add(Location, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 180, 195, 30));
+
+        jLabel9.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel9.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel9.setText("Roll Load :");
+        MainPanel.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 180, 90, 30));
+
+        RollLoad.setEditable(false);
+        RollLoad.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        MainPanel.add(RollLoad, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 180, 190, 30));
+
+        BgPanel.add(MainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 650, 220));
+
+        jLabel5.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel5.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel5.setText("Resin Program :");
+        jLabel5.setToolTipText("");
+        BgPanel.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 490, 140, 30));
+
+        jLabel10.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel10.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel10.setText("Dyeing Program :");
+        BgPanel.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 390, 140, 30));
+
+        DyeingProgramText.setEditable(false);
+        DyeingProgramText.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        BgPanel.add(DyeingProgramText, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 390, 440, 30));
+
+        ResinProgramText.setEditable(false);
+        ResinProgramText.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        BgPanel.add(ResinProgramText, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 490, 440, 30));
+
+        EditResinProgram.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        EditResinProgram.setText("...");
+        EditResinProgram.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EditResinProgramActionPerformed(evt);
+            }
+        });
+        BgPanel.add(EditResinProgram, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 490, 40, 30));
+
+        EditDyeingProgram.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        EditDyeingProgram.setText("...");
+        EditDyeingProgram.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EditDyeingProgramActionPerformed(evt);
+            }
+        });
+        BgPanel.add(EditDyeingProgram, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 390, 40, 30));
+
+        SaveExit.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        SaveExit.setText("Save & Exit");
+        SaveExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SaveExitActionPerformed(evt);
+            }
+        });
+        BgPanel.add(SaveExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 540, 200, 40));
+
+        DyeingMachinePanel.setBackground(new java.awt.Color(102, 102, 102));
+        DyeingMachinePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Machine", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 20), new java.awt.Color(255, 255, 255))); // NOI18N
+        DyeingMachinePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         MachineDropDownList.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         MachineDropDownList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Machine" }));
@@ -349,21 +474,21 @@ public class ReviewForm extends javax.swing.JFrame {
                 MachineDropDownListActionPerformed(evt);
             }
         });
-        jPanel2.add(MachineDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 628, -1));
+        DyeingMachinePanel.add(MachineDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 280, -1));
 
         jLabel7.setBackground(new java.awt.Color(255, 255, 255));
         jLabel7.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel7.setText("Weight :");
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 65, 80, 30));
+        DyeingMachinePanel.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 65, 80, 30));
 
         jLabel8.setBackground(new java.awt.Color(255, 255, 255));
         jLabel8.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel8.setText("Volume of Water :");
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, -1, 30));
+        DyeingMachinePanel.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 65, -1, 30));
 
         Weight.setEditable(false);
         Weight.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
@@ -377,11 +502,11 @@ public class ReviewForm extends javax.swing.JFrame {
                 WeightKeyReleased(evt);
             }
         });
-        jPanel2.add(Weight, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 65, 119, 30));
+        DyeingMachinePanel.add(Weight, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 65, 200, 30));
 
         VolumeTextField.setEditable(false);
         VolumeTextField.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        jPanel2.add(VolumeTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 100, 477, 30));
+        DyeingMachinePanel.add(VolumeTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 65, 170, 30));
 
         LiquidRatioDropDown.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         LiquidRatioDropDown.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Liquid Ratio" }));
@@ -390,133 +515,71 @@ public class ReviewForm extends javax.swing.JFrame {
                 LiquidRatioDropDownActionPerformed(evt);
             }
         });
-        jPanel2.add(LiquidRatioDropDown, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 65, 417, -1));
+        DyeingMachinePanel.add(LiquidRatioDropDown, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, 320, -1));
 
-        jLabel9.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel9.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel9.setText("Roll Load :");
-        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, 30));
+        BgPanel.add(DyeingMachinePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 275, 660, 110));
 
-        RollLoad.setEditable(false);
-        RollLoad.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        jPanel2.add(RollLoad, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 140, 517, 30));
+        ResinMachinePanel.setBackground(new java.awt.Color(102, 102, 102));
+        ResinMachinePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Machine", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 20), new java.awt.Color(255, 255, 255))); // NOI18N
+        ResinMachinePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        MainPanel.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 660, 180));
+        MachineDropDownList1.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        MachineDropDownList1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Machine" }));
+        MachineDropDownList1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MachineDropDownList1ActionPerformed(evt);
+            }
+        });
+        ResinMachinePanel.add(MachineDropDownList1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 280, -1));
 
-        dateSpinner.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        dateSpinner.setModel(new javax.swing.SpinnerDateModel());
-        MainPanel.add(dateSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 60, 190, 30));
-        dateSpinner.setEditor(new JSpinner.DateEditor(dateSpinner, "MM/dd/yyyy"));
+        jLabel12.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel12.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel12.setText("Weight :");
+        ResinMachinePanel.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 65, 80, 30));
 
-        jLabel11.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel11.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel11.setText("Date :");
-        MainPanel.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 60, 90, 30));
+        jLabel13.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel13.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel13.setText("Volume of Water :");
+        ResinMachinePanel.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 65, -1, 30));
 
-        BatchNo.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        BatchNo.addKeyListener(new java.awt.event.KeyAdapter() {
+        Weight1.setEditable(false);
+        Weight1.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        Weight1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                Weight1FocusLost(evt);
+            }
+        });
+        Weight1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                BatchNoKeyReleased(evt);
+                Weight1KeyReleased(evt);
             }
         });
-        MainPanel.add(BatchNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 20, 190, 30));
+        ResinMachinePanel.add(Weight1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 65, 200, 30));
 
-        ReferenceLabel.setBackground(new java.awt.Color(255, 255, 255));
-        ReferenceLabel.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        ReferenceLabel.setForeground(new java.awt.Color(255, 255, 255));
-        ReferenceLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        ReferenceLabel.setText("Reference :");
-        MainPanel.add(ReferenceLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 140, 100, 30));
+        VolumeTextField1.setEditable(false);
+        VolumeTextField1.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        ResinMachinePanel.add(VolumeTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 65, 170, 30));
 
-        Reference.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        MainPanel.add(Reference, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 195, 30));
-
-        ProgramNumberLabel.setBackground(new java.awt.Color(255, 255, 255));
-        ProgramNumberLabel.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        ProgramNumberLabel.setForeground(new java.awt.Color(255, 255, 255));
-        ProgramNumberLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        ProgramNumberLabel.setText("Program # :");
-        MainPanel.add(ProgramNumberLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 140, 90, 30));
-
-        ProgramNumber.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        ProgramNumber.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                ProgramNumberKeyReleased(evt);
-            }
-        });
-        MainPanel.add(ProgramNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(455, 140, 190, 30));
-
-        ReferenceLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        ReferenceLabel1.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        ReferenceLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        ReferenceLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        ReferenceLabel1.setText("Location :");
-        MainPanel.add(ReferenceLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 180, 100, 30));
-
-        Location.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        MainPanel.add(Location, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 180, 195, 30));
-
-        BgPanel.add(MainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 690, 390));
-
-        jLabel5.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel5.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel5.setText("Resin Program :");
-        jLabel5.setToolTipText("");
-        BgPanel.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 495, 140, 30));
-
-        jLabel10.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel10.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel10.setText("Dyeing Program :");
-        BgPanel.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 455, 140, 30));
-
-        DyeingProgramText.setEditable(false);
-        DyeingProgramText.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        BgPanel.add(DyeingProgramText, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 455, 440, 30));
-
-        ResinProgramText.setEditable(false);
-        ResinProgramText.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        BgPanel.add(ResinProgramText, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 495, 440, 30));
-
-        EditResinProgram.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        EditResinProgram.setText("...");
-        EditResinProgram.addActionListener(new java.awt.event.ActionListener() {
+        LiquidRatioDropDown1.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        LiquidRatioDropDown1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Liquid Ratio" }));
+        LiquidRatioDropDown1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EditResinProgramActionPerformed(evt);
+                LiquidRatioDropDown1ActionPerformed(evt);
             }
         });
-        BgPanel.add(EditResinProgram, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 495, 40, 30));
+        ResinMachinePanel.add(LiquidRatioDropDown1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, 320, -1));
 
-        EditDyeingProgram.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        EditDyeingProgram.setText("...");
-        EditDyeingProgram.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EditDyeingProgramActionPerformed(evt);
-            }
-        });
-        BgPanel.add(EditDyeingProgram, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 455, 40, 30));
-
-        SaveExit.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
-        SaveExit.setText("Save & Exit");
-        SaveExit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SaveExitActionPerformed(evt);
-            }
-        });
-        BgPanel.add(SaveExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 540, 200, 40));
+        BgPanel.add(ResinMachinePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 420, 660, 110));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(BgPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 760, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(BgPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -801,6 +864,22 @@ public class ReviewForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ProgramNumberKeyReleased
 
+    private void MachineDropDownList1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MachineDropDownList1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MachineDropDownList1ActionPerformed
+
+    private void Weight1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Weight1FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Weight1FocusLost
+
+    private void Weight1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Weight1KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Weight1KeyReleased
+
+    private void LiquidRatioDropDown1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LiquidRatioDropDown1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_LiquidRatioDropDown1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -976,29 +1055,37 @@ public class ReviewForm extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> ColorDropDownList;
     private javax.swing.JComboBox<String> CustomerDropDownList;
     private javax.swing.JComboBox<String> DesignDropDownList;
+    private javax.swing.JPanel DyeingMachinePanel;
     private javax.swing.JTextField DyeingProgramText;
     private javax.swing.JButton EditDyeingProgram;
     private javax.swing.JButton EditResinProgram;
     private javax.swing.JTextField JobOrder;
     private javax.swing.JComboBox<String> LiquidRatioDropDown;
+    private javax.swing.JComboBox<String> LiquidRatioDropDown1;
     private javax.swing.JTextField Location;
     private javax.swing.JComboBox<String> MachineDropDownList;
+    private javax.swing.JComboBox<String> MachineDropDownList1;
     private javax.swing.JPanel MainPanel;
     private javax.swing.JTextField ProgramNumber;
     private javax.swing.JLabel ProgramNumberLabel;
     private javax.swing.JTextField Reference;
     private javax.swing.JLabel ReferenceLabel;
     private javax.swing.JLabel ReferenceLabel1;
+    private javax.swing.JPanel ResinMachinePanel;
     private javax.swing.JTextField ResinProgramText;
     private javax.swing.JTextField RollLoad;
     private javax.swing.JButton SaveExit;
     private javax.swing.JButton SavePrint;
     private javax.swing.JTextField VolumeTextField;
+    private javax.swing.JTextField VolumeTextField1;
     private javax.swing.JTextField Weight;
+    private javax.swing.JTextField Weight1;
     private javax.swing.JSpinner dateSpinner;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1007,6 +1094,5 @@ public class ReviewForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }

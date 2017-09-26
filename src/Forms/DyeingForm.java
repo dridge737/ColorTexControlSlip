@@ -522,6 +522,9 @@ public class DyeingForm extends javax.swing.JFrame {
                 case 3:
                     if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Do you want to include a RESIN PROGRAM with this Job?","Add Resin Program?", JOptionPane.YES_NO_OPTION))
                     {//Show the Resin Form
+                        //Show Machine Selection Form
+                        MachineSelection thisMachineSelection = new MachineSelection(thisJob);
+                        thisMachineSelection.setVisible(true);
                         ViewResinProgram thisResinProgram = new ViewResinProgram(thisJob);
                         thisResinProgram.setVisible(true);
                     }
