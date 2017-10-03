@@ -103,7 +103,17 @@ public class JobHandler {
         return isExisting;
     }
     
-    public float ComputeQuantityFromWeightOrVol(DyeingChemical thisDyeingChemical, JobOrder thisJobOrder)
+    public float ComputeDyeingQuantity(DyeingChemical thisDyeingChemical, JobOrder thisJobOrder)
+    {
+        return ComputeQuantityFromWeightOrVol(thisDyeingChemical, thisJobOrder.getDyeingWeight(), thisJobOrder.getDyeingVolumeH20());
+    }
+    
+    public float ComputerResinQuantity(DyeingChemical thisDyeingChemical, JobOrder thisJobOrder)
+    {
+        return ComputeQuantityFromWeightOrVol(thisDyeingChemical, thisJobOrder.getResinWeight(), thisJobOrder.getResinVolumeH20());
+    }
+    
+    public float ComputeQuantityFromWeightOrVol(DyeingChemical thisDyeingChemical, float Weight, float VolumeH20)
      {
          Float quantity;
          if(thisDyeingChemical.getType().equals("%"))
@@ -111,17 +121,20 @@ public class JobHandler {
              //Old Computation
              //quantity = thisJobOrder.getWeight() * Value;
              //New Computation
-             quantity = thisJobOrder.getWeight() * thisDyeingChemical.getValue() * 10;
+             //quantity = thisJobOrder.getWeight() * thisDyeingChemical.getValue() * 10;
+             quantity = Weight * thisDyeingChemical.getValue() * 10;
          }
          else
          {
              if(thisDyeingChemical.getState().equals("G"))
-                 quantity = thisJobOrder.getVolumeH20() * thisDyeingChemical.getValue();
+                 //quantity = thisJobOrder.getVolumeH20() * thisDyeingChemical.getValue();
+                 quantity = VolumeH20 * thisDyeingChemical.getValue();
              else
                  // Formula = Quantity in ml = Chemical Values in GPL * Vol of Water /1.5 
                  //           Change to Liter = /1000 
                  //           Final formula to get liters = (ChemVal * VolOfWater) / (1.5 * 1000)
-                 quantity = thisJobOrder.getVolumeH20() * thisDyeingChemical.getValue() / (float) 1500;
+                 //quantity = thisJobOrder.getVolumeH20() * thisDyeingChemical.getValue() / (float) 1500;
+                 quantity = VolumeH20 * thisDyeingChemical.getValue() / (float) 1500;
                  
          }
          return quantity;

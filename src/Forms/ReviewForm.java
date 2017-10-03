@@ -121,8 +121,8 @@ public class ReviewForm extends javax.swing.JFrame {
         //thisJob = JobOrderHandler.GetJobOrderDetailsFromJobId(thisJob.getID());
         JobOrder.setText(thisJob.getDrNumber());
         BatchNo.setText(Integer.toString(thisJob.getBatchNo()));
-        Weight.setText(Float.toString(thisJob.getWeight()));
-        VolumeTextField.setText(Float.toString(thisJob.getVolumeH20()));
+        Weight.setText(Float.toString(thisJob.getDyeingWeight()));
+        VolumeTextField.setText(Float.toString(thisJob.getDyeingVolumeH20()));
         RollLoad.setText(thisJob.getRollLoad());
         Reference.setText(thisJob.getReference());
         ProgramNumber.setText(thisJob.getProgramNumber());
@@ -167,7 +167,7 @@ public class ReviewForm extends javax.swing.JFrame {
     
     private void SetMachineNameDropDown()
     {
-        thisMachine.setMachineId(thisJob.getMachineID());
+        thisMachine.setMachineId(thisJob.getDyeingMachineID());
         MachineHandler thisMachineHandler = new MachineHandler();
         thisMachine = thisMachineHandler.GetMachineDetailsById(thisMachine.getMachineId());
         MachineDropDownList.setSelectedItem(thisMachine.getMachineName());
@@ -646,7 +646,7 @@ public class ReviewForm extends javax.swing.JFrame {
             thisJob.setCustomerID(thisCustomer.getCustomerId());
             thisJob.setColorID(thisColor.getColorId());
             thisJob.setDesignID(thisDesign.getDesignId());
-            thisJob.setMachineID(thisMachine.getMachineId());
+            thisJob.setDyeingMachineID(thisMachine.getMachineId());
             thisJob.setDrNumber(JobOrder.getText());
             thisJob.setJobDate(get_date_from_spinner(dateSpinner));
             if (this.BatchNo.getText().length() < 1) {
@@ -654,8 +654,8 @@ public class ReviewForm extends javax.swing.JFrame {
             } else {
                 thisJob.setBatchNo(Integer.parseInt(BatchNo.getText()));
             }
-            thisJob.setVolumeH20(Float.parseFloat(this.VolumeTextField.getText()));
-            thisJob.setWeight(Float.parseFloat(this.Weight.getText()));
+            thisJob.setDyeingVolumeH20(Float.parseFloat(this.VolumeTextField.getText()));
+            thisJob.setDyeingWeight(Float.parseFloat(this.Weight.getText()));
             thisJob.setRollLoad(RollLoad.getText());
             thisJob.setReference(Reference.getText());
             thisJob.setProgramNumber(this.ProgramNumber.getText());

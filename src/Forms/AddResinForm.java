@@ -176,11 +176,13 @@ public class AddResinForm extends javax.swing.JFrame {
          Float quantity;
          if(Type.equals("%"))
          {
-             quantity = thisJob.getWeight() * Value;
+             //quantity = thisJob.getWeight() * Value;
+             quantity = thisJob.getResinWeight()* Value;
          }
          else
          {
-             quantity = thisJob.getVolumeH20() * Value;
+             //quantity = thisJob.getVolumeH20() * Value;
+             quantity = thisJob.getResinVolumeH20() * Value;
          }
          return quantity;
      }

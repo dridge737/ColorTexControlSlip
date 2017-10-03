@@ -209,10 +209,9 @@ public class SubProcessPanel extends javax.swing.JPanel {
              //Add Chemical and its details to the Table
              String ChemicalName = getChemicalNameFromID(thisDyeingChemical.getChemicalId());
              //Float Quantity = ComputeQuantityFromWeightOrVol(thisDyeingChemical);
-             Float Quantity = new JobHandler().ComputeQuantityFromWeightOrVol(thisDyeingChemical, thisJobOrder);
+             Float Quantity = new JobHandler().ComputeDyeingQuantity(thisDyeingChemical, thisJobOrder);
              if(WindowType == 3)
              {
-                 
                  model.addRow(new Object[] {ChemicalName, thisDyeingChemical.getState(),thisDyeingChemical.getType(), thisDyeingChemical.getValue(),Quantity, "Delete"});                 
              }
              else
@@ -631,7 +630,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
         
         if(WindowType == 3)
         {
-            Float Quantity = new JobHandler().ComputeQuantityFromWeightOrVol(thisDyeingChemical, thisJobOrder);
+            Float Quantity = new JobHandler().ComputeDyeingQuantity(thisDyeingChemical, thisJobOrder);
             //float Quantity = this.ComputeQuantityFromWeightOrVol(thisDyeingChemical);
             model.addRow(new Object[] {thisDyeingChemical.getChemicalName(), thisDyeingChemical.getState(),thisDyeingChemical.getType(), thisDyeingChemical.getValue(),Quantity, "Delete"});
         }
