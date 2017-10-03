@@ -367,7 +367,8 @@ public class JobOrderPanel extends javax.swing.JPanel {
                     if(thisMachine.getMachineId() > 0)
                     {
                         //Edit this to set for dyeing or Resin
-                        thisJob.setMachineID(thisMachine.getMachineId());
+                        //thisJob.setMachineID(thisMachine.getMachineId());
+                        thisJob.setDyeingMachineID(thisMachine.getMachineId());
                         if(JobOrder.getText().length() > 0)
                         {
                             thisJob.setDrNumber(JobOrder.getText());

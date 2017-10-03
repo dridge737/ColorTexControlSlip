@@ -32,6 +32,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
+import javax.swing.JTextField;
 
 /**
  *
@@ -121,8 +122,8 @@ public class ReviewForm extends javax.swing.JFrame {
         //thisJob = JobOrderHandler.GetJobOrderDetailsFromJobId(thisJob.getID());
         JobOrder.setText(thisJob.getDrNumber());
         BatchNo.setText(Integer.toString(thisJob.getBatchNo()));
-        Weight.setText(Float.toString(thisJob.getDyeingWeight()));
-        VolumeTextField.setText(Float.toString(thisJob.getDyeingVolumeH20()));
+        DyeingWeight.setText(Float.toString(thisJob.getDyeingWeight()));
+        DyeingVolumeTextField.setText(Float.toString(thisJob.getDyeingVolumeH20()));
         RollLoad.setText(thisJob.getRollLoad());
         Reference.setText(thisJob.getReference());
         ProgramNumber.setText(thisJob.getProgramNumber());
@@ -170,7 +171,7 @@ public class ReviewForm extends javax.swing.JFrame {
         thisMachine.setMachineId(thisJob.getDyeingMachineID());
         MachineHandler thisMachineHandler = new MachineHandler();
         thisMachine = thisMachineHandler.GetMachineDetailsById(thisMachine.getMachineId());
-        MachineDropDownList.setSelectedItem(thisMachine.getMachineName());
+        DyeingMachineDropDown.setSelectedItem(thisMachine.getMachineName());
     }
     
     private void SetCustomerNameDropDown()
@@ -227,30 +228,31 @@ public class ReviewForm extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         DyeingProgramText = new javax.swing.JTextField();
-        ResinProgramText = new javax.swing.JTextField();
         EditResinProgram = new javax.swing.JButton();
+        ResinProgramText = new javax.swing.JTextField();
         EditDyeingProgram = new javax.swing.JButton();
         SaveExit = new javax.swing.JButton();
         DyeingMachinePanel = new javax.swing.JPanel();
-        MachineDropDownList = new javax.swing.JComboBox<String>();
+        DyeingMachineDropDown = new javax.swing.JComboBox<String>();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        Weight = new javax.swing.JTextField();
-        VolumeTextField = new javax.swing.JTextField();
-        LiquidRatioDropDown = new javax.swing.JComboBox<String>();
+        DyeingWeight = new javax.swing.JTextField();
+        DyeingVolumeTextField = new javax.swing.JTextField();
+        DyeingMachineLiquidRatioDropDown = new javax.swing.JComboBox<String>();
         ResinMachinePanel = new javax.swing.JPanel();
-        MachineDropDownList1 = new javax.swing.JComboBox<String>();
+        ResinMachineDropDown = new javax.swing.JComboBox<String>();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        Weight1 = new javax.swing.JTextField();
-        VolumeTextField1 = new javax.swing.JTextField();
-        LiquidRatioDropDown1 = new javax.swing.JComboBox<String>();
+        ResinWeight = new javax.swing.JTextField();
+        ResinVolumeTextField = new javax.swing.JTextField();
+        ResinMachineLiquidRatioDropDown = new javax.swing.JComboBox<String>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Control Slip");
 
         BgPanel.setBackground(new java.awt.Color(102, 102, 102));
         BgPanel.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        BgPanel.setPreferredSize(new java.awt.Dimension(730, 620));
         BgPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         ChemicalHeader.setBackground(new java.awt.Color(255, 255, 255));
@@ -259,23 +261,23 @@ public class ReviewForm extends javax.swing.JFrame {
         ChemicalHeader.setText("Dyeing Control Slip : Review");
         BgPanel.add(ChemicalHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 22, 690, 50));
 
-        SavePrint.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        SavePrint.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         SavePrint.setText("Save & Print");
         SavePrint.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SavePrintActionPerformed(evt);
             }
         });
-        BgPanel.add(SavePrint, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 540, 200, 40));
+        BgPanel.add(SavePrint, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 570, 200, 35));
 
-        CancelBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        CancelBut.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         CancelBut.setText("Back");
         CancelBut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CancelButActionPerformed(evt);
             }
         });
-        BgPanel.add(CancelBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 540, 200, 40));
+        BgPanel.add(CancelBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 570, 200, 35));
 
         MainPanel.setBackground(new java.awt.Color(102, 102, 102));
         MainPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -411,7 +413,7 @@ public class ReviewForm extends javax.swing.JFrame {
         RollLoad.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         MainPanel.add(RollLoad, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 180, 190, 30));
 
-        BgPanel.add(MainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 650, 220));
+        BgPanel.add(MainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 650, 210));
 
         jLabel5.setBackground(new java.awt.Color(255, 255, 255));
         jLabel5.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
@@ -419,22 +421,18 @@ public class ReviewForm extends javax.swing.JFrame {
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel5.setText("Resin Program :");
         jLabel5.setToolTipText("");
-        BgPanel.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 490, 140, 30));
+        BgPanel.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 528, 140, 30));
 
         jLabel10.setBackground(new java.awt.Color(255, 255, 255));
         jLabel10.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel10.setText("Dyeing Program :");
-        BgPanel.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 390, 140, 30));
+        BgPanel.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 385, 140, 30));
 
         DyeingProgramText.setEditable(false);
         DyeingProgramText.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        BgPanel.add(DyeingProgramText, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 390, 440, 30));
-
-        ResinProgramText.setEditable(false);
-        ResinProgramText.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        BgPanel.add(ResinProgramText, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 490, 440, 30));
+        BgPanel.add(DyeingProgramText, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 385, 440, 30));
 
         EditResinProgram.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         EditResinProgram.setText("...");
@@ -443,7 +441,11 @@ public class ReviewForm extends javax.swing.JFrame {
                 EditResinProgramActionPerformed(evt);
             }
         });
-        BgPanel.add(EditResinProgram, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 490, 40, 30));
+        BgPanel.add(EditResinProgram, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 528, 40, 30));
+
+        ResinProgramText.setEditable(false);
+        ResinProgramText.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        BgPanel.add(ResinProgramText, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 528, 440, 30));
 
         EditDyeingProgram.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         EditDyeingProgram.setText("...");
@@ -452,36 +454,36 @@ public class ReviewForm extends javax.swing.JFrame {
                 EditDyeingProgramActionPerformed(evt);
             }
         });
-        BgPanel.add(EditDyeingProgram, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 390, 40, 30));
+        BgPanel.add(EditDyeingProgram, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 385, 40, 30));
 
-        SaveExit.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        SaveExit.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         SaveExit.setText("Save & Exit");
         SaveExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SaveExitActionPerformed(evt);
             }
         });
-        BgPanel.add(SaveExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 540, 200, 40));
+        BgPanel.add(SaveExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 570, 200, 35));
 
         DyeingMachinePanel.setBackground(new java.awt.Color(102, 102, 102));
-        DyeingMachinePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Machine", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 20), new java.awt.Color(255, 255, 255))); // NOI18N
+        DyeingMachinePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dyeing Machine", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 18), new java.awt.Color(255, 255, 255))); // NOI18N
         DyeingMachinePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        MachineDropDownList.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        MachineDropDownList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Machine" }));
-        MachineDropDownList.addActionListener(new java.awt.event.ActionListener() {
+        DyeingMachineDropDown.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        DyeingMachineDropDown.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Machine" }));
+        DyeingMachineDropDown.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MachineDropDownListActionPerformed(evt);
+                DyeingMachineDropDownActionPerformed(evt);
             }
         });
-        DyeingMachinePanel.add(MachineDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 280, -1));
+        DyeingMachinePanel.add(DyeingMachineDropDown, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 280, -1));
 
         jLabel7.setBackground(new java.awt.Color(255, 255, 255));
         jLabel7.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel7.setText("Weight :");
-        DyeingMachinePanel.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 65, 80, 30));
+        DyeingMachinePanel.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 65, 80, 30));
 
         jLabel8.setBackground(new java.awt.Color(255, 255, 255));
         jLabel8.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
@@ -490,54 +492,59 @@ public class ReviewForm extends javax.swing.JFrame {
         jLabel8.setText("Volume of Water :");
         DyeingMachinePanel.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 65, -1, 30));
 
-        Weight.setEditable(false);
-        Weight.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        Weight.addFocusListener(new java.awt.event.FocusAdapter() {
+        DyeingWeight.setEditable(false);
+        DyeingWeight.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        DyeingWeight.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                WeightFocusLost(evt);
+                DyeingWeightFocusLost(evt);
             }
         });
-        Weight.addKeyListener(new java.awt.event.KeyAdapter() {
+        DyeingWeight.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                WeightKeyReleased(evt);
+                DyeingWeightKeyReleased(evt);
             }
         });
-        DyeingMachinePanel.add(Weight, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 65, 200, 30));
+        DyeingMachinePanel.add(DyeingWeight, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 65, 200, 30));
 
-        VolumeTextField.setEditable(false);
-        VolumeTextField.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        DyeingMachinePanel.add(VolumeTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 65, 170, 30));
+        DyeingVolumeTextField.setEditable(false);
+        DyeingVolumeTextField.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        DyeingVolumeTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                DyeingVolumeTextFieldKeyReleased(evt);
+            }
+        });
+        DyeingMachinePanel.add(DyeingVolumeTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 65, 170, 30));
 
-        LiquidRatioDropDown.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        LiquidRatioDropDown.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Liquid Ratio" }));
-        LiquidRatioDropDown.addActionListener(new java.awt.event.ActionListener() {
+        DyeingMachineLiquidRatioDropDown.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        DyeingMachineLiquidRatioDropDown.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Liquid Ratio" }));
+        DyeingMachineLiquidRatioDropDown.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LiquidRatioDropDownActionPerformed(evt);
+                DyeingMachineLiquidRatioDropDownActionPerformed(evt);
             }
         });
-        DyeingMachinePanel.add(LiquidRatioDropDown, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, 320, -1));
+        DyeingMachinePanel.add(DyeingMachineLiquidRatioDropDown, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, 320, -1));
 
-        BgPanel.add(DyeingMachinePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 275, 660, 110));
+        BgPanel.add(DyeingMachinePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 270, 660, 110));
 
         ResinMachinePanel.setBackground(new java.awt.Color(102, 102, 102));
-        ResinMachinePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Machine", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 20), new java.awt.Color(255, 255, 255))); // NOI18N
+        ResinMachinePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Resin Machine", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 18), new java.awt.Color(255, 255, 255))); // NOI18N
         ResinMachinePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        MachineDropDownList1.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        MachineDropDownList1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Machine" }));
-        MachineDropDownList1.addActionListener(new java.awt.event.ActionListener() {
+        ResinMachineDropDown.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        ResinMachineDropDown.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Machine" }));
+        ResinMachineDropDown.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MachineDropDownList1ActionPerformed(evt);
+                ResinMachineDropDownActionPerformed(evt);
             }
         });
-        ResinMachinePanel.add(MachineDropDownList1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 280, -1));
+        ResinMachinePanel.add(ResinMachineDropDown, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 280, -1));
 
         jLabel12.setBackground(new java.awt.Color(255, 255, 255));
         jLabel12.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel12.setText("Weight :");
-        ResinMachinePanel.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 65, 80, 30));
+        ResinMachinePanel.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 65, 80, 30));
 
         jLabel13.setBackground(new java.awt.Color(255, 255, 255));
         jLabel13.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
@@ -546,34 +553,39 @@ public class ReviewForm extends javax.swing.JFrame {
         jLabel13.setText("Volume of Water :");
         ResinMachinePanel.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 65, -1, 30));
 
-        Weight1.setEditable(false);
-        Weight1.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        Weight1.addFocusListener(new java.awt.event.FocusAdapter() {
+        ResinWeight.setEditable(false);
+        ResinWeight.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        ResinWeight.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                Weight1FocusLost(evt);
+                ResinWeightFocusLost(evt);
             }
         });
-        Weight1.addKeyListener(new java.awt.event.KeyAdapter() {
+        ResinWeight.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                Weight1KeyReleased(evt);
+                ResinWeightKeyReleased(evt);
             }
         });
-        ResinMachinePanel.add(Weight1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 65, 200, 30));
+        ResinMachinePanel.add(ResinWeight, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 65, 200, 30));
 
-        VolumeTextField1.setEditable(false);
-        VolumeTextField1.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        ResinMachinePanel.add(VolumeTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 65, 170, 30));
+        ResinVolumeTextField.setEditable(false);
+        ResinVolumeTextField.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        ResinVolumeTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                ResinVolumeTextFieldKeyReleased(evt);
+            }
+        });
+        ResinMachinePanel.add(ResinVolumeTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 65, 170, 30));
 
-        LiquidRatioDropDown1.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        LiquidRatioDropDown1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Liquid Ratio" }));
-        LiquidRatioDropDown1.addActionListener(new java.awt.event.ActionListener() {
+        ResinMachineLiquidRatioDropDown.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        ResinMachineLiquidRatioDropDown.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Liquid Ratio" }));
+        ResinMachineLiquidRatioDropDown.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LiquidRatioDropDown1ActionPerformed(evt);
+                ResinMachineLiquidRatioDropDownActionPerformed(evt);
             }
         });
-        ResinMachinePanel.add(LiquidRatioDropDown1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, 320, -1));
+        ResinMachinePanel.add(ResinMachineLiquidRatioDropDown, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, 320, -1));
 
-        BgPanel.add(ResinMachinePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 420, 660, 110));
+        BgPanel.add(ResinMachinePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 413, 660, 110));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -583,9 +595,7 @@ public class ReviewForm extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(BgPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(BgPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -625,17 +635,28 @@ public class ReviewForm extends javax.swing.JFrame {
             isSuccessful = false;
             JOptionPane.showMessageDialog(null, "Please check the Batch number.");
         }*/
-        else if(this.VolumeTextField.getText().length() < 1)
+        else if(this.DyeingVolumeTextField.getText().length() < 1)
         {
             isSuccessful = false;
             JOptionPane.showMessageDialog(null, "Please check the value in Volume of Water."); 
         }
-        else if(this.Weight.getText().length() < 1)
+        else if(this.DyeingWeight.getText().length() < 1)
         {
             isSuccessful = false;
             JOptionPane.showMessageDialog(null, "Please check the value in the Weight."); 
         }
         return isSuccessful;
+    }
+    
+    public boolean CheckTextBoxIsParseValid(JTextField thisTextField)
+    {
+        if(thisTextField.getText().length() < 1)
+        {
+            return false;
+        }
+            return true;
+        
+     
     }
     private boolean AddTextToJobOrderObject()
     {
@@ -654,8 +675,8 @@ public class ReviewForm extends javax.swing.JFrame {
             } else {
                 thisJob.setBatchNo(Integer.parseInt(BatchNo.getText()));
             }
-            thisJob.setDyeingVolumeH20(Float.parseFloat(this.VolumeTextField.getText()));
-            thisJob.setDyeingWeight(Float.parseFloat(this.Weight.getText()));
+            thisJob.setDyeingVolumeH20(Float.parseFloat(this.DyeingVolumeTextField.getText()));
+            thisJob.setDyeingWeight(Float.parseFloat(this.DyeingWeight.getText()));
             thisJob.setRollLoad(RollLoad.getText());
             thisJob.setReference(Reference.getText());
             thisJob.setProgramNumber(this.ProgramNumber.getText());
@@ -683,7 +704,7 @@ public class ReviewForm extends javax.swing.JFrame {
             try
             {
                 PrintHandlerFinal handler = new PrintHandlerFinal();
-                handler.createPDF(thisMachine, thisDesign, thisCustomer, thisColor, thisJob, thisDyeingProgram, VolumeTextField.getText());
+                handler.createPDF(thisMachine, thisDesign, thisCustomer, thisColor, thisJob, thisDyeingProgram, DyeingVolumeTextField.getText());
             }
             catch(IOException | DocumentException e)
             {
@@ -763,16 +784,16 @@ public class ReviewForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_ColorDropDownListActionPerformed
 
-    private void MachineDropDownListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MachineDropDownListActionPerformed
+    private void DyeingMachineDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DyeingMachineDropDownActionPerformed
 
         Machine machineDetails = new Machine();
         MachineHandler handler = new MachineHandler();
         int machineId = -1;
         String machineName = "";
 
-        if(!MachineDropDownList.getSelectedItem().toString().equals("Choose Machine"))
+        if(!DyeingMachineDropDown.getSelectedItem().toString().equals("Choose Machine"))
         {
-            machineName = MachineDropDownList.getSelectedItem().toString();
+            machineName = DyeingMachineDropDown.getSelectedItem().toString();
         }
 
         if(!machineName.equals(""))
@@ -792,21 +813,23 @@ public class ReviewForm extends javax.swing.JFrame {
         thisMachine.setMinCapacity(machineDetails.getMinCapacity());
         thisMachine.setMinVolume(machineDetails.getMinVolume());
         thisMachine.setNumOfLoad(machineDetails.getNumOfLoad());
-    }//GEN-LAST:event_MachineDropDownListActionPerformed
+    }//GEN-LAST:event_DyeingMachineDropDownActionPerformed
 
-    private void WeightFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_WeightFocusLost
-        ComputeForVolume();
-    }//GEN-LAST:event_WeightFocusLost
+    private void DyeingWeightFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_DyeingWeightFocusLost
+        ComputeForDyeingVolume();
+    }//GEN-LAST:event_DyeingWeightFocusLost
 
-    private void WeightKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_WeightKeyReleased
-        String weight = Weight.getText().toString();
+    private void DyeingWeightKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DyeingWeightKeyReleased
+        String weight = DyeingWeight.getText().toString();
         weight = weight.replaceAll("[^\\d.]", "");
-        Weight.setText(weight);
-    }//GEN-LAST:event_WeightKeyReleased
+        DyeingWeight.setText(weight);
+        if(this.CheckTextBoxIsParseValid(DyeingWeight))
+            thisJob.setDyeingWeight(Float.parseFloat(weight));
+    }//GEN-LAST:event_DyeingWeightKeyReleased
 
-    private void LiquidRatioDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LiquidRatioDropDownActionPerformed
-        ComputeForVolume();
-    }//GEN-LAST:event_LiquidRatioDropDownActionPerformed
+    private void DyeingMachineLiquidRatioDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DyeingMachineLiquidRatioDropDownActionPerformed
+        ComputeForDyeingVolume();
+    }//GEN-LAST:event_DyeingMachineLiquidRatioDropDownActionPerformed
 
     private void SaveExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveExitActionPerformed
         // TODO add your handling code here:
@@ -864,21 +887,45 @@ public class ReviewForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ProgramNumberKeyReleased
 
-    private void MachineDropDownList1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MachineDropDownList1ActionPerformed
+    private void ResinMachineDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResinMachineDropDownActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_MachineDropDownList1ActionPerformed
+    }//GEN-LAST:event_ResinMachineDropDownActionPerformed
 
-    private void Weight1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Weight1FocusLost
+    private void ResinWeightFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ResinWeightFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_Weight1FocusLost
+        ComputeForResinVolume();
+    }//GEN-LAST:event_ResinWeightFocusLost
 
-    private void Weight1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Weight1KeyReleased
+    private void ResinWeightKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ResinWeightKeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_Weight1KeyReleased
+        String weight = ResinWeight.getText().toString();
+        weight = weight.replaceAll("[^\\d.]", "");
+        ResinWeight.setText(weight);
+        if(this.CheckTextBoxIsParseValid(ResinWeight))
+            thisJob.setResinWeight(Float.parseFloat(weight));
+    }//GEN-LAST:event_ResinWeightKeyReleased
 
-    private void LiquidRatioDropDown1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LiquidRatioDropDown1ActionPerformed
+    private void ResinMachineLiquidRatioDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResinMachineLiquidRatioDropDownActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_LiquidRatioDropDown1ActionPerformed
+    }//GEN-LAST:event_ResinMachineLiquidRatioDropDownActionPerformed
+
+    private void DyeingVolumeTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DyeingVolumeTextFieldKeyReleased
+        // TODO add your handling code here:
+        String volume = this.DyeingVolumeTextField.getText().toString();
+        volume = volume.replaceAll("[^\\d.]", "");
+        DyeingVolumeTextField.setText(volume);
+        if(this.CheckTextBoxIsParseValid(DyeingVolumeTextField))
+            thisJob.setDyeingVolumeH20(Float.parseFloat(volume));
+    }//GEN-LAST:event_DyeingVolumeTextFieldKeyReleased
+
+    private void ResinVolumeTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ResinVolumeTextFieldKeyReleased
+        // TODO add your handling code here:
+        String volume = this.ResinVolumeTextField.getText().toString();
+        volume = volume.replaceAll("[^\\d.]", "");
+        ResinVolumeTextField.setText(volume);
+        if(this.CheckTextBoxIsParseValid(ResinVolumeTextField))
+            thisJob.setResinVolumeH20(Float.parseFloat(volume));
+    }//GEN-LAST:event_ResinVolumeTextFieldKeyReleased
 
     /**
      * @param args the command line arguments
@@ -930,48 +977,56 @@ public class ReviewForm extends javax.swing.JFrame {
         return formater.format(this_spinner.getValue());
     }
     
-    private void ComputeForVolume()
+    private void ComputeForResinVolume()
     {
-        String weight = Weight.getText();    
-       String liquidRatio = LiquidRatioDropDown.getSelectedItem().toString();
-        if(!weight.equals("") && !liquidRatio.equals("Liquid Ratio"))
-        {
-            computeForVolume();
-        } 
+        String weight = ResinWeight.getText();
+        String liquidRatio = this.ResinMachineLiquidRatioDropDown.getSelectedItem().toString();
+        if (!weight.equals("") && !liquidRatio.equals("Liquid Ratio")) {
+            //String selected = DyeingMachineLiquidRatioDropDown.getSelectedItem().toString();
+            ResinVolumeTextField.setText(computeForVolume(Integer.parseInt(weight), liquidRatio));
+        }
     }
     
-    private void computeForVolume()
+    private void ComputeForDyeingVolume()
+    {
+        String weight = DyeingWeight.getText();
+        String liquidRatio = DyeingMachineLiquidRatioDropDown.getSelectedItem().toString();
+        if (!weight.equals("") && !liquidRatio.equals("Liquid Ratio")) {
+            //String selected = DyeingMachineLiquidRatioDropDown.getSelectedItem().toString();
+            DyeingVolumeTextField.setText(computeForVolume(Integer.parseInt(weight), liquidRatio));
+        }
+    }
+    
+    private String computeForVolume(int weight, String LiquidRatio)
     {
         int weightMultiplier = 0;
         double volume = 0;
         
-        String selected = LiquidRatioDropDown.getSelectedItem().toString();
-        int weight = Integer.parseInt(Weight.getText());
-        
-        if(selected.equals("1:6"))
+        if(LiquidRatio.equals("1:6"))
         {
             weightMultiplier = 6;
         }
-        else if(selected.equals("1:8"))
+        else if(LiquidRatio.equals("1:8"))
         {
             weightMultiplier = 8;
         }
-        else if(selected.equals("1:9"))
+        else if(LiquidRatio.equals("1:9"))
         {
             weightMultiplier = 9;
         }
-        else if(selected.equals("1:10"))
+        else if(LiquidRatio.equals("1:10"))
         {
             weightMultiplier = 10;
         }
-        else if(selected.equals("1:12"))
+        else if(LiquidRatio.equals("1:12"))
         {
             weightMultiplier = 12;
         }
         
         volume = weight * weightMultiplier;
         
-        VolumeTextField.setText(Double.toString(volume));
+        //DyeingVolumeTextField.setText(Double.toString(volume));
+        return Double.toString(volume);
     }
     
     private void populateLiquoRatioDropDown()
@@ -986,7 +1041,7 @@ public class ReviewForm extends javax.swing.JFrame {
         
         for(int x=0; x<LiquidRatioList.size(); x++)
         {
-            LiquidRatioDropDown.addItem(LiquidRatioList.get(x));
+            DyeingMachineLiquidRatioDropDown.addItem(LiquidRatioList.get(x));
         }
 
     }
@@ -1008,7 +1063,7 @@ public class ReviewForm extends javax.swing.JFrame {
         if(MachineList != null){
             for(int x=0; x<MachineList.size(); x++)
             {
-                MachineDropDownList.addItem(MachineList.get(x).getMachineName());
+                DyeingMachineDropDown.addItem(MachineList.get(x).getMachineName());
             }
         }  
         
@@ -1055,31 +1110,31 @@ public class ReviewForm extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> ColorDropDownList;
     private javax.swing.JComboBox<String> CustomerDropDownList;
     private javax.swing.JComboBox<String> DesignDropDownList;
+    private javax.swing.JComboBox<String> DyeingMachineDropDown;
+    private javax.swing.JComboBox<String> DyeingMachineLiquidRatioDropDown;
     private javax.swing.JPanel DyeingMachinePanel;
     private javax.swing.JTextField DyeingProgramText;
+    private javax.swing.JTextField DyeingVolumeTextField;
+    private javax.swing.JTextField DyeingWeight;
     private javax.swing.JButton EditDyeingProgram;
     private javax.swing.JButton EditResinProgram;
     private javax.swing.JTextField JobOrder;
-    private javax.swing.JComboBox<String> LiquidRatioDropDown;
-    private javax.swing.JComboBox<String> LiquidRatioDropDown1;
     private javax.swing.JTextField Location;
-    private javax.swing.JComboBox<String> MachineDropDownList;
-    private javax.swing.JComboBox<String> MachineDropDownList1;
     private javax.swing.JPanel MainPanel;
     private javax.swing.JTextField ProgramNumber;
     private javax.swing.JLabel ProgramNumberLabel;
     private javax.swing.JTextField Reference;
     private javax.swing.JLabel ReferenceLabel;
     private javax.swing.JLabel ReferenceLabel1;
+    private javax.swing.JComboBox<String> ResinMachineDropDown;
+    private javax.swing.JComboBox<String> ResinMachineLiquidRatioDropDown;
     private javax.swing.JPanel ResinMachinePanel;
     private javax.swing.JTextField ResinProgramText;
+    private javax.swing.JTextField ResinVolumeTextField;
+    private javax.swing.JTextField ResinWeight;
     private javax.swing.JTextField RollLoad;
     private javax.swing.JButton SaveExit;
     private javax.swing.JButton SavePrint;
-    private javax.swing.JTextField VolumeTextField;
-    private javax.swing.JTextField VolumeTextField1;
-    private javax.swing.JTextField Weight;
-    private javax.swing.JTextField Weight1;
     private javax.swing.JSpinner dateSpinner;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
