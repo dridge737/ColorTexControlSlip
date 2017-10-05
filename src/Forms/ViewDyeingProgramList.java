@@ -5,63 +5,74 @@
  */
 package Forms;
 
+import DataEntities.DyeingProgram;
 import DataEntities.JobOrder;
 import DataEntities.ProcessOrder;
-import DataEntities.ResinProgram;
-import Handlers.ColorHandler;
-import Handlers.ResinProgramHandler;
-import Handlers.ResinChemicalHandler;
+import Handlers.DyeingProgramHandler;
+import Handlers.DyeingProgramNameHandler;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import javax.swing.JOptionPane;
 
 /**
- *
+ * Three usages 
+ * WindowType 1 = Editing Dyeing Program
+ * WindowType 3 = For job Order
+ * WindowType 4 = For jump from Review form
  * @author Eldridge
  */
-public class ViewResinProgram extends javax.swing.JFrame {
+public class ViewDyeingProgramList extends javax.swing.JFrame {
 
     DefaultTableModel model = new DefaultTableModel();
-    ResinProgram thisResin = new ResinProgram();
-    //ProcessOrder thisProcessOrder;
-    JobOrder thisJob;
+    DyeingProgram thisDyeingProgram = new DyeingProgram();
+    //ProcessOrder thisProcessOrder = new ProcessOrder();
+    private JobOrder thisJob = new JobOrder();
     int WindowType = 1;
     /**
      * Creates new form ViewResinProgram
      */
-    public ViewResinProgram() {
+    public ViewDyeingProgramList() {
         initComponents();
-        this.set_to_center();
-        this.GetUpdatedTable();
+        SetToCenter();
+        GetUpdatedTable();
     }
     
-    
-    public ViewResinProgram(JobOrder currentJob) {
-        this();
-        thisJob = currentJob;
-        SelectBut1.setText("Next");
-        DeleteBut.setVisible(false);
-        Header.setText("Control Slip : Page 4/6");
-        BackBut.setText("Back");
+    public ViewDyeingProgramList(JobOrder currentJob) {
+        this(currentJob, 3);
     }
     
-    public ViewResinProgram(JobOrder currentJob, int currentWindow)
-    {
-        this();
-        WindowType = currentWindow;
+    public ViewDyeingProgramList(JobOrder currentJob, int currentType) {
+        initComponents();
+        SetToCenter();
+        GetUpdatedTable();
         thisJob = currentJob;
-        SelectBut1.setText("Next");
-        DeleteBut.setVisible(false);
-        Header.setText("SelectResin");
+        WindowType = currentType;
         BackBut.setText("Back");
+        SelectBut.setText("Next");
+        if(currentType == 3)
+        {
+            Header.setText("Control Slip : Page 2/6");
+        }
+        else if(currentType == 4)
+        {
+            Header.setText("Choose Dyeing Program");
+        }
     }
 
+    public void SetToCenter()
+    {
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
+        int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
+        this.setLocation(x,y);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -74,15 +85,16 @@ public class ViewResinProgram extends javax.swing.JFrame {
         BgPanel = new javax.swing.JPanel();
         Header = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        ResinTable = new javax.swing.JTable();
+        DyeingTable = new javax.swing.JTable();
         BackBut = new javax.swing.JButton();
-        DeleteBut = new javax.swing.JButton();
+        SelectBut = new javax.swing.JButton();
         SearchTextBox = new javax.swing.JTextField();
-        SelectBut1 = new javax.swing.JButton();
         NewBut = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Control Slip");
+        setPreferredSize(new java.awt.Dimension(545, 490));
+        setResizable(false);
         addWindowFocusListener(new java.awt.event.WindowFocusListener() {
             public void windowGainedFocus(java.awt.event.WindowEvent evt) {
                 formWindowGainedFocus(evt);
@@ -92,19 +104,21 @@ public class ViewResinProgram extends javax.swing.JFrame {
         });
 
         BgPanel.setBackground(new java.awt.Color(102, 102, 102));
+        BgPanel.setMinimumSize(new java.awt.Dimension(545, 469));
+        BgPanel.setPreferredSize(new java.awt.Dimension(545, 480));
         BgPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Header.setBackground(new java.awt.Color(255, 255, 255));
         Header.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
         Header.setForeground(new java.awt.Color(255, 255, 255));
-        Header.setText("Resin Program");
-        BgPanel.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 470, 40));
+        Header.setText("Dyeing Program");
+        BgPanel.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 470, -1));
         Header.getAccessibleContext().setAccessibleName("ResinProgram");
 
         jScrollPane1.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
 
-        ResinTable.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        ResinTable.setModel(new javax.swing.table.DefaultTableModel(
+        DyeingTable.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        DyeingTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -115,36 +129,34 @@ public class ViewResinProgram extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        ResinTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        ResinTable.setRowHeight(20);
-        ResinTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane1.setViewportView(ResinTable);
+        DyeingTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        DyeingTable.setRowHeight(20);
+        DyeingTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        jScrollPane1.setViewportView(DyeingTable);
 
-        BgPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 125, 470, 230));
+        BgPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 123, 470, 280));
 
         BackBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
-        BackBut.setText("Close");
+        BackBut.setText("Cancel");
         BackBut.setToolTipText("");
-        BackBut.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        BackBut.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         BackBut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BackButActionPerformed(evt);
             }
         });
-        BgPanel.add(BackBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(352, 370, 145, 42));
+        BgPanel.add(BackBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(278, 410, 220, 42));
 
-        DeleteBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
-        DeleteBut.setText("Delete");
-        DeleteBut.setToolTipText("");
-        DeleteBut.addActionListener(new java.awt.event.ActionListener() {
+        SelectBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        SelectBut.setText("Select");
+        SelectBut.setToolTipText("");
+        SelectBut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DeleteButActionPerformed(evt);
+                SelectButActionPerformed(evt);
             }
         });
-        BgPanel.add(DeleteBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 370, 145, 42));
+        BgPanel.add(SelectBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 408, 220, 40));
 
-        SearchTextBox.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
+        SearchTextBox.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         SearchTextBox.setForeground(new java.awt.Color(204, 204, 204));
         SearchTextBox.setText("Search :");
         SearchTextBox.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -160,19 +172,9 @@ public class ViewResinProgram extends javax.swing.JFrame {
                 SearchTextBoxKeyReleased(evt);
             }
         });
-        BgPanel.add(SearchTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 360, 34));
+        BgPanel.add(SearchTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 330, 34));
 
-        SelectBut1.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
-        SelectBut1.setText("Select");
-        SelectBut1.setToolTipText("");
-        SelectBut1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SelectBut1ActionPerformed(evt);
-            }
-        });
-        BgPanel.add(SelectBut1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, 145, 42));
-
-        NewBut.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        NewBut.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         NewBut.setText("New");
         NewBut.setToolTipText("");
         NewBut.addActionListener(new java.awt.event.ActionListener() {
@@ -180,17 +182,17 @@ public class ViewResinProgram extends javax.swing.JFrame {
                 NewButActionPerformed(evt);
             }
         });
-        BgPanel.add(NewBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 80, 98, 34));
+        BgPanel.add(NewBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 80, 128, 34));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(BgPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
+            .addComponent(BgPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 525, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(BgPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(BgPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
         );
 
         pack();
@@ -208,23 +210,15 @@ public class ViewResinProgram extends javax.swing.JFrame {
     private void SearchTextBoxFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_SearchTextBoxFocusLost
         // TODO add your handling code here:
         if(SearchTextBox.getText().equals(""))
-        this.ResetResinText();
+        this.ResetDyeingText();
     }//GEN-LAST:event_SearchTextBoxFocusLost
 
-    public void set_to_center()
-    {
-        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-        int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
-        int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
-        this.setLocation(x,y);
-    }
-    
     private void UpdateRowFilter(String row_filter_text)
     {
         TableRowSorter<TableModel> rowSorter
-            = new TableRowSorter<>(this.ResinTable.getModel());
+            = new TableRowSorter<>(this.DyeingTable.getModel());
         
-        this.ResinTable.setRowSorter(rowSorter);
+        this.DyeingTable.setRowSorter(rowSorter);
         
         if (row_filter_text.trim().length() == 0) {
             rowSorter.setRowFilter(null);
@@ -235,24 +229,24 @@ public class ViewResinProgram extends javax.swing.JFrame {
     
     private void GetUpdatedTable()
     {
-        model = getUpdatedResinTableModel();
-        this.ResinTable.setModel(model);
+        model = getUpdatedTableModel();
+        this.DyeingTable.setModel(model);
+        
     }
     
-    public DefaultTableModel getUpdatedResinTableModel() {      
+    public DefaultTableModel getUpdatedTableModel() {      
         
         DefaultTableModel model_original = new DefaultTableModel();
         model_original.addColumn("Program Name");
-        
-        ArrayList<String> ResinList = new ResinProgramHandler().GetAllResinProgram();
-        for(int x=0; x<ResinList.size(); x++)
-        {
-            model_original.addRow(new Object[]{ResinList.get(x).toString()});
+      
+        ArrayList<String> DyeingList = new DyeingProgramNameHandler().GetAllDefaultDyeingProgramName();
+        for (String DyeingList1 : DyeingList) {
+            model_original.addRow(new Object[]{DyeingList1});
         }
         return model_original;
     }
     
-    public void ResetResinText()
+    public void ResetDyeingText()
     {
         this.SearchTextBox.setText("Search :");
         SearchTextBox.setForeground(new Color(204,204,204));
@@ -261,62 +255,43 @@ public class ViewResinProgram extends javax.swing.JFrame {
     private void SearchTextBoxKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SearchTextBoxKeyReleased
         // TODO add your handling code here:
         UpdateRowFilter(this.SearchTextBox.getText());
-
     }//GEN-LAST:event_SearchTextBoxKeyReleased
-
-    private void DeleteButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButActionPerformed
-        if(ResinTable.getSelectedRowCount() > 0 )
+    
+    private void SelectButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectButActionPerformed
+        // TODO add your handling code here:
+        if(DyeingTable.getSelectedRowCount() > 0)
         {
-            int CloseorNoreply = JOptionPane.showConfirmDialog(null,"Delete this Program? "
-                  ,"Delete Resin Program?", JOptionPane.YES_NO_OPTION);
-            if(CloseorNoreply == JOptionPane.YES_OPTION)
+            //int DyeingProgramID = new DyeingProgramHandler().GetDyeingProgramIDfromName(DyeingTable.getModel().getValueAt(selectedRow, 0).toString());
+            int convertedRowNumber = DyeingTable.convertRowIndexToModel(this.DyeingTable.getSelectedRow());
+            String DyeingName = DyeingTable.getModel().getValueAt(convertedRowNumber , 0).toString();
+            DyeingForm thisDyeingForm;
+            if(this.WindowType > 2)
             {
-                String resinProgramName = this.ResinTable.getModel().getValueAt(this.ResinTable.getSelectedRow(), 0).toString();
-                thisResin.setID(new ResinProgramHandler().GetResinProgramIDFromResinProgramName(resinProgramName));
-                new ResinChemicalHandler().DeleteResinChemicalByResinProgramId(thisResin.getID());
-                new ResinProgramHandler().DeleteResinProgram(thisResin.getID());
-                this.GetUpdatedTable();
-            }
-        }else
-        {
-            JOptionPane.showMessageDialog(null, "Please select an Item in the table to be deleted.");
-        }
-    }//GEN-LAST:event_DeleteButActionPerformed
-       
-    private void SelectBut1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectBut1ActionPerformed
-        if(ResinTable.getSelectedRowCount() > 0)
-        {
-            int updatedRowNumber = ResinTable.convertRowIndexToModel(this.ResinTable.getSelectedRow());
-            String resinProgramName = ResinTable.getModel().getValueAt(updatedRowNumber,0).toString();
-            if(!resinProgramName.isEmpty())
-            {
-                if(SelectBut1.getText().equals("Next"))
-                {
-                    new AddResinForm(resinProgramName, thisJob).setVisible(true);
-                }
-                else
-                    new ViewResinProgramChemicals(resinProgramName).setVisible(true);
-                this.dispose();
+                //For job order 
+                thisDyeingForm = new DyeingForm(DyeingName, getThisJob(), WindowType);
             }
             else
-            {
-                JOptionPane.showMessageDialog(this, "Please select a resin program to be used.");
-            }
+                //For Changing Dyeing program
+                thisDyeingForm = new DyeingForm(DyeingName);
+            thisDyeingForm.setVisible(true);
+            this.dispose();
         }
-        
-        
-    }//GEN-LAST:event_SelectBut1ActionPerformed
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Please select a Dyeing program to be used.");
+        }
+    }//GEN-LAST:event_SelectButActionPerformed
 
     private void BackButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButActionPerformed
         // TODO add your handling code here:
-        if(WindowType == 4)
+        if(WindowType == 3)
+        {
+            JobOrderForm newJobOrderForm = new JobOrderForm(getThisJob());
+            newJobOrderForm.setVisible(true);
+        }
+        else if(WindowType == 4)
         {
             new ReviewForm(thisJob, 4).setVisible(true);
-        }
-        else if(BackBut.getText().equals("Back"))
-        {
-            DyeingForm thisDyeingForm = new DyeingForm(thisJob);
-            thisDyeingForm.setVisible(true);
         }
         this.dispose();
         
@@ -324,9 +299,10 @@ public class ViewResinProgram extends javax.swing.JFrame {
 
     private void NewButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewButActionPerformed
         // TODO add your handling code here:
-        AddResinForm newResinForm  = new AddResinForm();
-        newResinForm.setVisible(true);
+        DyeingForm newAddDyeingForm = new DyeingForm();
+        newAddDyeingForm.setVisible(true);
         //this.dispose();
+        
                 
     }//GEN-LAST:event_NewButActionPerformed
 
@@ -352,20 +328,35 @@ public class ViewResinProgram extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ViewResinProgram.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewDyeingProgramList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ViewResinProgram.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewDyeingProgramList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ViewResinProgram.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewDyeingProgramList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ViewResinProgram.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ViewDyeingProgramList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ViewResinProgram().setVisible(true);
+                new ViewDyeingProgramList().setVisible(true);
             }
         });
     }
@@ -373,12 +364,27 @@ public class ViewResinProgram extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackBut;
     private javax.swing.JPanel BgPanel;
-    private javax.swing.JButton DeleteBut;
+    private javax.swing.JTable DyeingTable;
     private javax.swing.JLabel Header;
     private javax.swing.JButton NewBut;
-    private javax.swing.JTable ResinTable;
     private javax.swing.JTextField SearchTextBox;
-    private javax.swing.JButton SelectBut1;
+    private javax.swing.JButton SelectBut;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the thisJob
+     */
+    public JobOrder getThisJob() {
+        return thisJob;
+    }
+
+    /**
+     * @param thisJob the thisJob to set
+     */
+    public void setThisJob(JobOrder thisJob) {
+        this.thisJob = thisJob;
+    }
+
+   
 }

@@ -45,7 +45,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
-                  <Component id="SelectBut1" min="-2" pref="145" max="-2" attributes="0"/>
+                  <Component id="SelectBut" min="-2" pref="145" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
                   <Component id="BackBut" min="-2" pref="145" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -102,7 +102,7 @@
                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="BackBut" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
-                      <Component id="SelectBut1" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
+                      <Component id="SelectBut" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -210,7 +210,7 @@
             <Property name="text" type="java.lang.String" value="Volume of Water :"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="SelectBut1">
+        <Component class="javax.swing.JButton" name="SelectBut">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Century Gothic" size="20" style="0"/>
@@ -219,7 +219,7 @@
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SelectBut1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SelectButActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="BackBut">

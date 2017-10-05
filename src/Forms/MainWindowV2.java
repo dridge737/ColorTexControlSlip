@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package DataEntities;
+package Forms;
 
 import Forms.*;
 import java.awt.Dimension;
@@ -207,7 +207,7 @@ public class MainWindowV2 extends javax.swing.JFrame {
 
     private void ResinFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResinFormActionPerformed
         // TODO add your handling code here:
-        ViewResinProgram newResinForm = new ViewResinProgram();
+        ViewResinProgramList newResinForm = new ViewResinProgramList();
         newResinForm.setVisible(true);
     }//GEN-LAST:event_ResinFormActionPerformed
 
@@ -255,7 +255,7 @@ public class MainWindowV2 extends javax.swing.JFrame {
 
     private void DyeingFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DyeingFormActionPerformed
         // TODO add your handling code here:
-        ViewDyeingProgram newDyeingForm = new ViewDyeingProgram();
+        ViewDyeingProgramList newDyeingForm = new ViewDyeingProgramList();
         newDyeingForm.setVisible(true);
     }//GEN-LAST:event_DyeingFormActionPerformed
 

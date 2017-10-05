@@ -166,12 +166,18 @@ public class AddResinForm extends javax.swing.JFrame {
         for(int x=0; x<ThisChemicalList.size(); x++)
         {
             String chemicalName = chemicalHandler.GetChemicalNameFromChemicalID(ThisChemicalList.get(x).getChemicalID());
-            model_original.addRow(new Object[]{chemicalName, ThisChemicalList.get(x).getGPLValue(), ThisChemicalList.get(x).getState(), ThisChemicalList.get(x).getType(), ComputeQuantityFromWeightOrVol(ThisChemicalList.get(x).getType(), ThisChemicalList.get(x).getGPLValue()), "Delete"});
+            model_original.addRow(new Object[]{chemicalName, 
+                ThisChemicalList.get(x).getGPLValue(), 
+                ThisChemicalList.get(x).getState(), 
+                ThisChemicalList.get(x).getType(), 
+                //ComputeQuantityFromWeightOrVol(ThisChemicalList.get(x).getType(), ThisChemicalList.get(x).getGPLValue())
+                new JobHandler().ComputerResinQuantity(ThisChemicalList.get(x), thisJob),
+                 "Delete"});
         }
         return model_original;
     }
     
-    public float ComputeQuantityFromWeightOrVol(String Type, Float Value)
+    /*public float ComputeQuantityFromWeightOrVol(String Type, Float Value)
      {
          Float quantity;
          if(Type.equals("%"))
@@ -185,7 +191,7 @@ public class AddResinForm extends javax.swing.JFrame {
              quantity = thisJob.getResinVolumeH20() * Value;
          }
          return quantity;
-     }
+     }*/
     
     public void setTableModel()
     {
@@ -386,7 +392,7 @@ public class AddResinForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(CancelBut.getText().equals("Back"))
         {
-            new ViewResinProgram(thisJob).setVisible(true);
+            new ViewResinProgramList(thisJob).setVisible(true);
             this.dispose();
         }
         else
@@ -728,16 +734,23 @@ public class AddResinForm extends javax.swing.JFrame {
     {
         String ChemicalName = ChemicalTextfield.getText().trim().toUpperCase();
         DefaultTableModel model = (DefaultTableModel) ChemicalTable.getModel();
+        ResinChemical thisResinChemical = new ResinChemical();
+        thisResinChemical.setGPLValue(Float.parseFloat(GPLTextfield.getText()));
+        thisResinChemical.setState(StateComboBox.getSelectedItem().toString());
+        thisResinChemical.setType(TypeComboBox.getSelectedItem().toString());
         //model.addRow(new Object[] {ChemicalName, this.StateBox.getSelectedItem() , this.TypeBox.getSelectedItem().toString(),GPLTextfield.getText(), "Delete"} );
         if(WindowType == 1)
         {
             model.addRow(new Object[] {
-                                        ChemicalTextfield.getText(), 
-                                        GPLTextfield.getText(), 
-                                        StateComboBox.getSelectedItem().toString(), 
-                                        TypeComboBox.getSelectedItem().toString(),
-                                        ComputeQuantityFromWeightOrVol(TypeComboBox.getSelectedItem().toString(), Float.parseFloat(GPLTextfield.getText())), 
-                                                "Delete"});
+                                        ChemicalName, 
+                                        thisResinChemical.getGPLValue(), 
+                                        thisResinChemical.getState(),
+                                        thisResinChemical.getType(),
+                                        //StateComboBox.getSelectedItem().toString(), 
+                                        //TypeComboBox.getSelectedItem().toString(),
+                                        //ComputeQuantityFromWeightOrVol(TypeComboBox.getSelectedItem().toString(), Float.parseFloat(GPLTextfield.getText())), 
+                                        new JobHandler().ComputerResinQuantity(thisResinChemical, thisJob),
+                                        "Delete"});
         }
         else
             model.addRow(new Object[] {ChemicalTextfield.getText(), GPLTextfield.getText(), StateComboBox.getSelectedItem().toString(), TypeComboBox.getSelectedItem().toString(), "Delete"});

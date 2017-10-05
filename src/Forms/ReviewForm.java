@@ -76,7 +76,15 @@ public class ReviewForm extends javax.swing.JFrame {
             SetResinProgramName();
         }
         
-        if(WindowType == 4)
+        //If only Dyeing Program is added.
+        if(WindowType == 1)
+        {
+            ResinMachinePanel.setVisible(false);
+            ResinLabel.setVisible(false);
+            ResinProgramText.setVisible(false);
+            EditResinProgram.setVisible(false);
+        }
+        else if(WindowType == 4)
         {
             JobOrder.setText("");
             JobOrder.setEditable(true);
@@ -225,7 +233,7 @@ public class ReviewForm extends javax.swing.JFrame {
         Location = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         RollLoad = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
+        ResinLabel = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         DyeingProgramText = new javax.swing.JTextField();
         EditResinProgram = new javax.swing.JButton();
@@ -253,13 +261,11 @@ public class ReviewForm extends javax.swing.JFrame {
         BgPanel.setBackground(new java.awt.Color(102, 102, 102));
         BgPanel.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         BgPanel.setPreferredSize(new java.awt.Dimension(730, 620));
-        BgPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         ChemicalHeader.setBackground(new java.awt.Color(255, 255, 255));
         ChemicalHeader.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
         ChemicalHeader.setForeground(new java.awt.Color(255, 255, 255));
         ChemicalHeader.setText("Dyeing Control Slip : Review");
-        BgPanel.add(ChemicalHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 22, 690, 50));
 
         SavePrint.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         SavePrint.setText("Save & Print");
@@ -268,7 +274,6 @@ public class ReviewForm extends javax.swing.JFrame {
                 SavePrintActionPerformed(evt);
             }
         });
-        BgPanel.add(SavePrint, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 570, 200, 35));
 
         CancelBut.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         CancelBut.setText("Back");
@@ -277,7 +282,6 @@ public class ReviewForm extends javax.swing.JFrame {
                 CancelButActionPerformed(evt);
             }
         });
-        BgPanel.add(CancelBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 570, 200, 35));
 
         MainPanel.setBackground(new java.awt.Color(102, 102, 102));
         MainPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -413,26 +417,21 @@ public class ReviewForm extends javax.swing.JFrame {
         RollLoad.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         MainPanel.add(RollLoad, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 180, 190, 30));
 
-        BgPanel.add(MainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 650, 210));
-
-        jLabel5.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel5.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel5.setText("Resin Program :");
-        jLabel5.setToolTipText("");
-        BgPanel.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 528, 140, 30));
+        ResinLabel.setBackground(new java.awt.Color(255, 255, 255));
+        ResinLabel.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        ResinLabel.setForeground(new java.awt.Color(255, 255, 255));
+        ResinLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        ResinLabel.setText("Resin Program :");
+        ResinLabel.setToolTipText("");
 
         jLabel10.setBackground(new java.awt.Color(255, 255, 255));
         jLabel10.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel10.setText("Dyeing Program :");
-        BgPanel.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 385, 140, 30));
 
         DyeingProgramText.setEditable(false);
         DyeingProgramText.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        BgPanel.add(DyeingProgramText, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 385, 440, 30));
 
         EditResinProgram.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         EditResinProgram.setText("...");
@@ -441,11 +440,9 @@ public class ReviewForm extends javax.swing.JFrame {
                 EditResinProgramActionPerformed(evt);
             }
         });
-        BgPanel.add(EditResinProgram, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 528, 40, 30));
 
         ResinProgramText.setEditable(false);
         ResinProgramText.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        BgPanel.add(ResinProgramText, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 528, 440, 30));
 
         EditDyeingProgram.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         EditDyeingProgram.setText("...");
@@ -454,7 +451,6 @@ public class ReviewForm extends javax.swing.JFrame {
                 EditDyeingProgramActionPerformed(evt);
             }
         });
-        BgPanel.add(EditDyeingProgram, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 385, 40, 30));
 
         SaveExit.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         SaveExit.setText("Save & Exit");
@@ -463,7 +459,6 @@ public class ReviewForm extends javax.swing.JFrame {
                 SaveExitActionPerformed(evt);
             }
         });
-        BgPanel.add(SaveExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 570, 200, 35));
 
         DyeingMachinePanel.setBackground(new java.awt.Color(102, 102, 102));
         DyeingMachinePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dyeing Machine", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 18), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -524,8 +519,6 @@ public class ReviewForm extends javax.swing.JFrame {
         });
         DyeingMachinePanel.add(DyeingMachineLiquidRatioDropDown, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, 320, -1));
 
-        BgPanel.add(DyeingMachinePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 270, 660, 110));
-
         ResinMachinePanel.setBackground(new java.awt.Color(102, 102, 102));
         ResinMachinePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Resin Machine", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 18), new java.awt.Color(255, 255, 255))); // NOI18N
         ResinMachinePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -585,7 +578,75 @@ public class ReviewForm extends javax.swing.JFrame {
         });
         ResinMachinePanel.add(ResinMachineLiquidRatioDropDown, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, 320, -1));
 
-        BgPanel.add(ResinMachinePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 413, 660, 110));
+        javax.swing.GroupLayout BgPanelLayout = new javax.swing.GroupLayout(BgPanel);
+        BgPanel.setLayout(BgPanelLayout);
+        BgPanelLayout.setHorizontalGroup(
+            BgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(BgPanelLayout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addGroup(BgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(MainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ChemicalHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 690, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(BgPanelLayout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(DyeingMachinePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(BgPanelLayout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addGroup(BgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(BgPanelLayout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ResinMachinePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(BgPanelLayout.createSequentialGroup()
+                        .addGap(165, 165, 165)
+                        .addComponent(DyeingProgramText, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(BgPanelLayout.createSequentialGroup()
+                        .addGap(605, 605, 605)
+                        .addComponent(EditDyeingProgram, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
+            .addGroup(BgPanelLayout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addComponent(ResinLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(ResinProgramText, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(EditResinProgram, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(BgPanelLayout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addComponent(SavePrint, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(SaveExit, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(CancelBut, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        BgPanelLayout.setVerticalGroup(
+            BgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(BgPanelLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(BgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(BgPanelLayout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(MainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ChemicalHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(DyeingMachinePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addGroup(BgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(BgPanelLayout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(ResinMachinePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(DyeingProgramText, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(EditDyeingProgram, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(5, 5, 5)
+                .addGroup(BgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ResinLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ResinProgramText, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(EditResinProgram, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addGroup(BgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(SavePrint, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SaveExit, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CancelBut, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -864,14 +925,14 @@ public class ReviewForm extends javax.swing.JFrame {
 
     private void EditDyeingProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditDyeingProgramActionPerformed
         // TODO add your handling code here:
-        ViewDyeingProgram thisDyeingProgram = new ViewDyeingProgram(this.thisJob, 4);
+        ViewDyeingProgramList thisDyeingProgram = new ViewDyeingProgramList(this.thisJob, 4);
         thisDyeingProgram.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_EditDyeingProgramActionPerformed
 
     private void EditResinProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditResinProgramActionPerformed
         // TODO add your handling code here:
-        ViewResinProgram thisResinProgram = new ViewResinProgram(thisJob, 4);
+        ViewResinProgramList thisResinProgram = new ViewResinProgramList(thisJob, 4);
         thisResinProgram.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_EditResinProgramActionPerformed
@@ -1126,6 +1187,7 @@ public class ReviewForm extends javax.swing.JFrame {
     private javax.swing.JTextField Reference;
     private javax.swing.JLabel ReferenceLabel;
     private javax.swing.JLabel ReferenceLabel1;
+    private javax.swing.JLabel ResinLabel;
     private javax.swing.JComboBox<String> ResinMachineDropDown;
     private javax.swing.JComboBox<String> ResinMachineLiquidRatioDropDown;
     private javax.swing.JPanel ResinMachinePanel;
@@ -1144,7 +1206,6 @@ public class ReviewForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;

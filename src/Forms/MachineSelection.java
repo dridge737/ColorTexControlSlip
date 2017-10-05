@@ -47,7 +47,7 @@ public class MachineSelection extends javax.swing.JFrame {
         LiquidRatioDropDown = new javax.swing.JComboBox<String>();
         VolumeTextField = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        SelectBut1 = new javax.swing.JButton();
+        SelectBut = new javax.swing.JButton();
         BackBut = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -101,12 +101,12 @@ public class MachineSelection extends javax.swing.JFrame {
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel8.setText("Volume of Water :");
 
-        SelectBut1.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
-        SelectBut1.setText("Next");
-        SelectBut1.setToolTipText("");
-        SelectBut1.addActionListener(new java.awt.event.ActionListener() {
+        SelectBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        SelectBut.setText("Next");
+        SelectBut.setToolTipText("");
+        SelectBut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SelectBut1ActionPerformed(evt);
+                SelectButActionPerformed(evt);
             }
         });
 
@@ -127,7 +127,7 @@ public class MachineSelection extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(85, 85, 85)
-                .addComponent(SelectBut1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(SelectBut, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(65, 65, 65)
                 .addComponent(BackBut, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -172,7 +172,7 @@ public class MachineSelection extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BackBut, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SelectBut1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(SelectBut, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -302,11 +302,14 @@ public class MachineSelection extends javax.swing.JFrame {
 
     private void BackButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButActionPerformed
         // TODO add your handling code here:
+        
+        //For Dyeing Machine if it will be used
         if(WindowType == 1)
         {
             JobOrderForm newJobOrderForm = new JobOrderForm(thisJob);
             newJobOrderForm.setVisible(true);
         }
+        //Return to Dyeing Form if used as resin machine selector
         else if(WindowType == 2)
         {
             DyeingForm thisDyeingForm = new DyeingForm(thisJob);
@@ -316,11 +319,20 @@ public class MachineSelection extends javax.swing.JFrame {
 
     }//GEN-LAST:event_BackButActionPerformed
 
-    private void SelectBut1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectBut1ActionPerformed
+    private void SelectButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectButActionPerformed
         // TODO add your handling code here:
-        
-    }//GEN-LAST:event_SelectBut1ActionPerformed
+        addDataToJobOrder();
+        ViewResinProgramList thisResinProgram = new ViewResinProgramList(thisJob , 3);
+        thisResinProgram.setVisible(true);
+    }//GEN-LAST:event_SelectButActionPerformed
 
+    private void addDataToJobOrder()
+    {
+        thisJob.setResinMachineID(thisMachine.getMachineId());
+        thisJob.setResinVolumeH20(Float.parseFloat(this.VolumeTextField.getText()));
+        thisJob.setResinWeight(Float.parseFloat(this.Weight.getText()));
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -361,7 +373,7 @@ public class MachineSelection extends javax.swing.JFrame {
     private javax.swing.JLabel Header;
     private javax.swing.JComboBox<String> LiquidRatioDropDown;
     private javax.swing.JComboBox<String> MachineDropDownList;
-    private javax.swing.JButton SelectBut1;
+    private javax.swing.JButton SelectBut;
     private javax.swing.JTextField VolumeTextField;
     private javax.swing.JTextField Weight;
     private javax.swing.JLabel jLabel7;

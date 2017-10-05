@@ -97,18 +97,21 @@ public class DyeingForm extends javax.swing.JFrame {
         initComponents();
         SetToCenter();
         WindowProcessType = WindowType;
+        //For Adding new Dyeing Program
         if(WindowProcessType == 1)
         {
             GUITabbedPaneProcess.add(new ProcessPanel(), "Process 1", NumberOfProcessTabs++);
             Header.setText("Add Dyeing Program");
             SaveBut.setText("Save");
         }
+        //For Updating previously added dyeing program
         else if(WindowProcessType == 2)
         {
             SetDefaultDyeingProgramFromProgramName(DyeingProgramName);
             Header.setText("Update Dyeing Program");
             SaveBut.setText("Update");
         }
+        //For dyeing program to job order
         else //if(WindowProcessType == 3)
         {
             thisJob = currentJob;
@@ -484,28 +487,30 @@ public class DyeingForm extends javax.swing.JFrame {
         boolean CloseWindow = false;
         if(this.CheckDyeingFormProcessAndSubProcessIfReady())
         {
-            switch(WindowProcessType)
-            {
-            case 1:
-                CloseWindow = AddDyeingProgramNameAndDyeingProgram();
-                break;
-            case 2:
-                CloseWindow = UpdateDyeingProgram();
-                break;
-            case 3:
-            case 4:
-                //if Default program then add, else update.
-                if(thisDyeingProgram.getProgramDefault() == 1)
-                {
-                    thisDyeingProgram.setProgramDefault(0);
-                    CloseWindow = this.AddDyeingProgram();
-                }
-                else{
+            switch (WindowProcessType) {
+                //For Adding Dyeing Program
+                case 1:
+                    CloseWindow = AddDyeingProgramNameAndDyeingProgram();
+                    break;
+                //For Updating Dyeing program
+                case 2:
                     CloseWindow = UpdateDyeingProgram();
-                }
-                
-                thisJob.setDyeingProgramID(thisDyeingProgram.getID());
-                break;
+                    break;
+                //For Job Order
+                case 3:
+                case 4:
+                    //if Default program then add, else update.
+                    if (thisDyeingProgram.getProgramDefault() == 1) {
+                        thisDyeingProgram.setProgramDefault(0);
+                        //If there is no program added for the current customer
+                        CloseWindow = this.AddDyeingProgram();
+                    } else {
+                        //Else just update the program added for the current customer
+                        CloseWindow = UpdateDyeingProgram();
+                    }
+
+                    thisJob.setDyeingProgramID(thisDyeingProgram.getID());
+                    break;
             }
         }
         
@@ -522,11 +527,12 @@ public class DyeingForm extends javax.swing.JFrame {
                 case 3:
                     if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Do you want to include a RESIN PROGRAM with this Job?","Add Resin Program?", JOptionPane.YES_NO_OPTION))
                     {//Show the Resin Form
+                        //IF a user wants to add Resin program to the job order
                         //Show Machine Selection Form
                         MachineSelection thisMachineSelection = new MachineSelection(thisJob);
                         thisMachineSelection.setVisible(true);
-                        ViewResinProgram thisResinProgram = new ViewResinProgram(thisJob);
-                        thisResinProgram.setVisible(true);
+                        //ViewResinProgramList thisResinProgram = new ViewResinProgramList(thisJob);
+                        //thisResinProgram.setVisible(true);
                     }
                     else
                     {
@@ -552,7 +558,7 @@ public class DyeingForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(this.WindowProcessType == 3)
         {
-            ViewDyeingProgram chooseDyeingProgram = new ViewDyeingProgram(thisJob);
+            ViewDyeingProgramList chooseDyeingProgram = new ViewDyeingProgramList(thisJob);
             chooseDyeingProgram.setVisible(true);
             this.dispose();
         }

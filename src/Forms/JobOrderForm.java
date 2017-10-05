@@ -532,7 +532,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         if(SetJobOrderInformationFromTextBox())
         {
             //MachineSelection DyeingMachineSelection = new DyeingMachineSelection(thisJob);
-            ViewDyeingProgram chooseDyeingProgram = new ViewDyeingProgram(thisJob);
+            ViewDyeingProgramList chooseDyeingProgram = new ViewDyeingProgramList(thisJob);
             chooseDyeingProgram.setVisible(true);
             this.dispose();
         }
@@ -681,7 +681,6 @@ public class JobOrderForm extends javax.swing.JFrame {
             thisJob.setCustomerID(thisCustomer.getCustomerId());
             thisJob.setColorID(thisColor.getColorId());
             thisJob.setDesignID(thisDesign.getDesignId());
-            thisJob.setDyeingMachineID(thisMachine.getMachineId());
             thisJob.setDrNumber(JobOrder.getText());
             thisJob.setJobDate(get_date_from_spinner(dateSpinner));
             if (this.BatchNo.getText().length() < 1) {
@@ -689,12 +688,15 @@ public class JobOrderForm extends javax.swing.JFrame {
             } else {
                 thisJob.setBatchNo(Integer.parseInt(BatchNo.getText()));
             }
-            thisJob.setDyeingVolumeH20(Float.parseFloat(this.VolumeTextField.getText()));
-            thisJob.setDyeingWeight(Float.parseFloat(this.Weight.getText()));
             thisJob.setRollLoad(RollLoad.getText());
             thisJob.setReference(Reference.getText());
             thisJob.setProgramNumber(this.ProgramNumber.getText());
             thisJob.setLocation(this.Location.getText());
+            
+            thisJob.setDyeingMachineID(thisMachine.getMachineId());
+            thisJob.setDyeingVolumeH20(Float.parseFloat(this.VolumeTextField.getText()));
+            thisJob.setDyeingWeight(Float.parseFloat(this.Weight.getText()));
+
             /*
             JobHandler thisJobHandler = new JobHandler();
             if(WindowType == 1)
