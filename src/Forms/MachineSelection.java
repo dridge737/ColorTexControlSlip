@@ -8,6 +8,7 @@ package Forms;
 import DataEntities.JobOrder;
 import DataEntities.Machine;
 import Handlers.MachineHandler;
+import java.util.ArrayList;
 
 /**
  *
@@ -27,7 +28,23 @@ public class MachineSelection extends javax.swing.JFrame {
     
     public MachineSelection(JobOrder currentJob)
     {
+        this();
         thisJob = currentJob;
+        populateResinMachineDropDown();
+    }
+    
+    private void populateResinMachineDropDown(){
+        //PopulateList(new MachineHandler().GetAllDyeingMachines() , MachineDropDownList);
+        
+        ArrayList<Machine> MachineList = new MachineHandler().GetAllResinMachines();
+        
+        if(MachineList != null){
+            for(int x=0; x<MachineList.size(); x++)
+            {
+                MachineDropDownList.addItem(MachineList.get(x).getMachineName());
+            }
+        }  
+        
     }
 
     /**

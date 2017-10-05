@@ -50,12 +50,33 @@ public class MachineHandler {
             return 1;
                     
     }
+    
     public ArrayList<Machine> GetAllMachines()
     {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         ArrayList<Machine> machineList = new ArrayList<>();
         
-        machineList = repo.GetAllMachine();
+        machineList = repo.GetAllMachine(null);
+        
+        return machineList;
+    }
+    
+    public ArrayList<Machine> GetAllDyeingMachines()
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        ArrayList<Machine> machineList = new ArrayList<>();
+        
+        machineList = repo.GetAllDyeingMachine();
+        
+        return machineList;
+    }
+    
+    public ArrayList<Machine> GetAllResinMachines()
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        ArrayList<Machine> machineList = new ArrayList<>();
+        
+        machineList = repo.GetAllResinMachine();
         
         return machineList;
     }

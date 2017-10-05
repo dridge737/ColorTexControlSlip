@@ -635,7 +635,7 @@ public class MachineForm extends javax.swing.JFrame {
         model_original.addColumn("Machine Type");
         
        
-        ArrayList<Machine> MachineList = new MachineHandler().GetAllMachines();
+        ArrayList<Machine> MachineList = new MachineHandler().GetAllDyeingMachines();
         for(int x=0; x<MachineList.size(); x++)
         {
             

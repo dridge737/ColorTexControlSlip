@@ -884,7 +884,7 @@ public class ColorTextControlSlipRepository {
 
     //END CUSTOMER REPOSITORY METHODS
     //BEGIN MACHINE REPOSITORY METHODS
-    public ArrayList<Machine> GetAllMachine() {
+    public ArrayList<Machine> GetAllMachine(String query) {
         DBConnection dbc = new DBConnection();
         Connection conn = null;
         PreparedStatement ps = null;
@@ -892,7 +892,11 @@ public class ColorTextControlSlipRepository {
         ArrayList<Machine> MachineList = new ArrayList<>();
         try {
             conn = dbc.getConnection();
-            ps = conn.prepareStatement("SELECT * FROM machine");
+            if(query == null)
+                ps = conn.prepareStatement("SELECT * FROM machine");
+            else 
+                ps = conn.prepareCall(query);
+            
             rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -915,6 +919,18 @@ public class ColorTextControlSlipRepository {
 
         this.closeConn(conn, ps, rs);
         return MachineList;
+    }
+    
+    public ArrayList<Machine> GetAllDyeingMachine()
+    {
+        String Query = "SELECT * FROM machine where MachineType = 0";
+        return GetAllMachine(Query);
+    }
+    
+    public ArrayList<Machine> GetAllResinMachine()
+    {
+        String Query = "SELECT * FROM machine where MachineType = 1";
+        return GetAllMachine(Query);
     }
 
     public boolean AddMachine(Machine newMachine) {

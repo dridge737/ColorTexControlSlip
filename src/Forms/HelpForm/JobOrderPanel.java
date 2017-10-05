@@ -480,7 +480,7 @@ public class JobOrderPanel extends javax.swing.JPanel {
     }
     */
     private void populateMachineDropDown(){
-        ArrayList<Machine> MachineList = new MachineHandler().GetAllMachines();
+        ArrayList<Machine> MachineList = new MachineHandler().GetAllDyeingMachines();
         
         if(MachineList != null){
             for(int x=0; x<MachineList.size(); x++)

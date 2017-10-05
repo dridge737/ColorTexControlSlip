@@ -65,7 +65,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         populateCustomerDropDown();
         populateDesignDropDown();
         populateColorDropDown();
-        populateMachineDropDown();
+        populateDyeingMachineDropDown();
         populateLiquoRatioDropDown();
         SetToCenter();
     }
@@ -789,10 +789,10 @@ public class JobOrderForm extends javax.swing.JFrame {
         
     }
     */
-    private void populateMachineDropDown(){
-        //PopulateList(new MachineHandler().GetAllMachines() , MachineDropDownList);
+    private void populateDyeingMachineDropDown(){
+        //PopulateList(new MachineHandler().GetAllDyeingMachines() , MachineDropDownList);
         
-        ArrayList<Machine> MachineList = new MachineHandler().GetAllMachines();
+        ArrayList<Machine> MachineList = new MachineHandler().GetAllDyeingMachines();
         
         if(MachineList != null){
             for(int x=0; x<MachineList.size(); x++)
