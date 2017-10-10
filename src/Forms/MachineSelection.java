@@ -8,7 +8,10 @@ package Forms;
 import DataEntities.JobOrder;
 import DataEntities.Machine;
 import Handlers.MachineHandler;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -24,6 +27,15 @@ public class MachineSelection extends javax.swing.JFrame {
      */
     public MachineSelection() {
         initComponents();
+        SetToCenter();
+    }
+    
+    public void SetToCenter()
+    {
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
+        int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
+        this.setLocation(x,y);
     }
     
     public MachineSelection(JobOrder currentJob)
@@ -67,7 +79,7 @@ public class MachineSelection extends javax.swing.JFrame {
         SelectBut = new javax.swing.JButton();
         BackBut = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
 
@@ -338,11 +350,35 @@ public class MachineSelection extends javax.swing.JFrame {
 
     private void SelectButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectButActionPerformed
         // TODO add your handling code here:
-        addDataToJobOrder();
-        ViewResinProgramList thisResinProgram = new ViewResinProgramList(thisJob , 3);
-        thisResinProgram.setVisible(true);
+        if (CheckIfMachineDetailsIsValid()) {
+            addDataToJobOrder();
+            ViewResinProgramList thisResinProgram = new ViewResinProgramList(thisJob, 3);
+            thisResinProgram.setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_SelectButActionPerformed
 
+    private boolean CheckIfMachineDetailsIsValid()
+    {
+        boolean isSuccessful = true;
+        if(thisMachine.getMachineId() < 1)
+        {
+            isSuccessful = false;
+            JOptionPane.showMessageDialog(null, "Please check the Machine details.");  
+        }
+        else if(this.VolumeTextField.getText().length() < 1)
+        {
+            isSuccessful = false;
+            JOptionPane.showMessageDialog(null, "Please check the value in Volume of Water."); 
+        }
+        else if(this.Weight.getText().length() < 1)
+        {
+            isSuccessful = false;
+            JOptionPane.showMessageDialog(null, "Please check the value in the Weight."); 
+        }
+        
+        return isSuccessful;
+    }
     private void addDataToJobOrder()
     {
         thisJob.setResinMachineID(thisMachine.getMachineId());

@@ -138,13 +138,8 @@ public class ReviewForm extends javax.swing.JFrame {
         //thisJob = JobOrderHandler.GetJobOrderDetailsFromJobId(thisJob.getID());
         JobOrder.setText(thisJob.getDrNumber());
         BatchNo.setText(Integer.toString(thisJob.getBatchNo()));
-        DyeingWeight.setText(Float.toString(thisJob.getDyeingWeight()));
-        DyeingVolumeTextField.setText(Float.toString(thisJob.getDyeingVolumeH20()));
-        if(thisJob.getResinProgramID() > 0)
-        {
-            ResinWeight.setText(Float.toString(thisJob.getResinWeight()));
-            ResinVolumeTextField.setText(Float.toString(thisJob.getResinVolumeH20()));
-        }
+        
+        
         RollLoad.setText(thisJob.getRollLoad());
         Reference.setText(thisJob.getReference());
         ProgramNumber.setText(thisJob.getProgramNumber());
@@ -175,6 +170,7 @@ public class ReviewForm extends javax.swing.JFrame {
     {
         SetDesignNameDropDown();
         SetDyeingMachineNameDropDown();
+        
         SetCustomerNameDropDown();
         SetColorNameDropDown();
     }
@@ -193,14 +189,18 @@ public class ReviewForm extends javax.swing.JFrame {
         MachineHandler thisMachineHandler = new MachineHandler();
         thisDyeingMachine = thisMachineHandler.GetMachineDetailsById(thisDyeingMachine.getMachineId());
         DyeingMachineDropDown.setSelectedItem(thisDyeingMachine.getMachineName());
+        DyeingWeight.setText(Float.toString(thisJob.getDyeingWeight()));
+        DyeingVolumeTextField.setText(Float.toString(thisJob.getDyeingVolumeH20()));
     }
     
     private void SetResinMachineNameDropDown()
     {
         thisResinMachine.setMachineId(thisJob.getResinMachineID());
         MachineHandler thisMachineHandler = new MachineHandler();
-        thisDyeingMachine = new MachineHandler().GetMachineDetailsById(thisResinMachine.getMachineId());
+        thisResinMachine = new MachineHandler().GetMachineDetailsById(thisResinMachine.getMachineId());
         ResinMachineDropDown.setSelectedItem(thisResinMachine.getMachineName());
+        ResinWeight.setText(Float.toString(thisJob.getResinWeight()));
+        ResinVolumeTextField.setText(Float.toString(thisJob.getResinVolumeH20()));
     }
     
     private void SetCustomerNameDropDown()
@@ -965,14 +965,14 @@ public class ReviewForm extends javax.swing.JFrame {
 
     private void EditDyeingProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditDyeingProgramActionPerformed
         // TODO add your handling code here:
-        ViewDyeingProgramList thisDyeingProgram = new ViewDyeingProgramList(this.thisJob, 4);
+        ViewDyeingProgramList thisDyeingProgram = new ViewDyeingProgramList(this.thisJob, this.WindowType);
         thisDyeingProgram.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_EditDyeingProgramActionPerformed
 
     private void EditResinProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditResinProgramActionPerformed
         // TODO add your handling code here:
-        ViewResinProgramList thisResinProgram = new ViewResinProgramList(thisJob, 4);
+        ViewResinProgramList thisResinProgram = new ViewResinProgramList(thisJob, this.WindowType);
         thisResinProgram.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_EditResinProgramActionPerformed

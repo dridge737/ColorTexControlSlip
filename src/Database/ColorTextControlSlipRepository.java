@@ -1669,11 +1669,11 @@ public class ColorTextControlSlipRepository {
                     + " RollLoad, "
                     + " Roll, "
                     + " DyeingProgramID, "
-                    //                         1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16
                     + " ResinProgramID, "
                     + " Reference, "
                     + " ProgramNumber, "
-                    + " Location ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    //                     1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18
+                    + " Location ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? , ?)";
         
         return setJobOrderAndExecuteStatement(newJobOrder, query, 1);
         
@@ -1731,32 +1731,33 @@ public class ColorTextControlSlipRepository {
         //boolean added = false;
         int JobOrderID = -1;
         try {
+            conn = db.getConnection();
             int itemNumber = 1;
             preparedStmt = conn.prepareStatement(query);
-            preparedStmt.setString(itemNumber++, thisJobOrder.getDrNumber());
-            preparedStmt.setInt(itemNumber++, thisJobOrder.getDesignID());
-            preparedStmt.setInt(itemNumber++, thisJobOrder.getColorID());
-            preparedStmt.setInt(itemNumber++, thisJobOrder.getCustomerID());
-            preparedStmt.setString(itemNumber++, thisJobOrder.getJobDate());
-            preparedStmt.setInt(itemNumber++, thisJobOrder.getBatchNo());
+            preparedStmt.setString(itemNumber++, thisJobOrder.getDrNumber()); //1
+            preparedStmt.setInt(itemNumber++, thisJobOrder.getDesignID()); //2
+            preparedStmt.setInt(itemNumber++, thisJobOrder.getColorID()); //3
+            preparedStmt.setInt(itemNumber++, thisJobOrder.getCustomerID()); //4
+            preparedStmt.setString(itemNumber++, thisJobOrder.getJobDate()); //5
+            preparedStmt.setInt(itemNumber++, thisJobOrder.getBatchNo()); //6
 
-            preparedStmt.setInt(itemNumber++, thisJobOrder.getDyeingMachineID());
-            preparedStmt.setFloat(itemNumber++, thisJobOrder.getDyeingWeight());
-            preparedStmt.setFloat(itemNumber++, thisJobOrder.getDyeingVolumeH20());
+            preparedStmt.setInt(itemNumber++, thisJobOrder.getDyeingMachineID()); //7
+            preparedStmt.setFloat(itemNumber++, thisJobOrder.getDyeingWeight());  //8
+            preparedStmt.setFloat(itemNumber++, thisJobOrder.getDyeingVolumeH20()); //9
 
-            preparedStmt.setInt(itemNumber++, thisJobOrder.getResinMachineID());
-            preparedStmt.setFloat(itemNumber++, thisJobOrder.getResinWeight());
-            preparedStmt.setFloat(itemNumber++, thisJobOrder.getResinVolumeH20());
+            preparedStmt.setInt(itemNumber++, thisJobOrder.getResinMachineID()); //10
+            preparedStmt.setFloat(itemNumber++, thisJobOrder.getResinWeight()); //11
+            preparedStmt.setFloat(itemNumber++, thisJobOrder.getResinVolumeH20()); //12
 
-            preparedStmt.setString(itemNumber++, thisJobOrder.getRollLoad());
-            preparedStmt.setFloat(itemNumber++, thisJobOrder.getRoll());
-            preparedStmt.setInt(itemNumber++, thisJobOrder.getDyeingProgramID());
-            preparedStmt.setInt(itemNumber++, thisJobOrder.getResinProgramID());
-            preparedStmt.setInt(itemNumber++, thisJobOrder.getID());
-            preparedStmt.setString(itemNumber++, thisJobOrder.getReference());
-            preparedStmt.setString(itemNumber++, thisJobOrder.getProgramNumber());
-            preparedStmt.setString(itemNumber++, thisJobOrder.getLocation());
+            preparedStmt.setString(itemNumber++, thisJobOrder.getRollLoad()); //13
+            preparedStmt.setFloat(itemNumber++, thisJobOrder.getRoll());      //14
+            preparedStmt.setInt(itemNumber++, thisJobOrder.getDyeingProgramID()); //15
+            preparedStmt.setInt(itemNumber++, thisJobOrder.getResinProgramID());  //16
             
+            preparedStmt.setString(itemNumber++, thisJobOrder.getReference());    //17
+            preparedStmt.setString(itemNumber++, thisJobOrder.getProgramNumber());//18
+            preparedStmt.setString(itemNumber++, thisJobOrder.getLocation());     //19
+           
             //IF type ==2 == update
             if(type == 2)
             {

@@ -81,6 +81,7 @@ public class AddResinForm extends javax.swing.JFrame {
         String ResinProgramName = new ResinProgramHandler().GetResinProgramNameFromResinProgramID(currentJob.getResinProgramID());
         InitializeWindowForControlSlip(ResinProgramName, currentJob);
         ResinProcessName.setEnabled(false);
+        ResinProcessName.setForeground(Color.BLACK);
     }
     
     public AddResinForm(String ResinProgramName , JobOrder currentJob)
@@ -89,6 +90,7 @@ public class AddResinForm extends javax.swing.JFrame {
         InitializeWindowForControlSlip(ResinProgramName, currentJob);
         AddDeleteColumn(); 
         ResinProcessName.setEnabled(false);
+        ResinProcessName.setForeground(Color.BLACK);
     }
     
     public void InitializeWindowForControlSlip(String ResinProgramName, JobOrder thisJobOrder)

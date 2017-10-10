@@ -628,11 +628,7 @@ public class JobOrderForm extends javax.swing.JFrame {
             isSuccessful = false;
             JOptionPane.showMessageDialog(null, "Please check the Design name."); 
         }
-        else if(thisMachine.getMachineId() < 1)
-        {
-            isSuccessful = false;
-            JOptionPane.showMessageDialog(null, "Please check the Machine details.");  
-        }
+        
         else if(JobOrder.getText().length() < 1)
         {
             isSuccessful = false;
@@ -643,6 +639,11 @@ public class JobOrderForm extends javax.swing.JFrame {
             isSuccessful = false;
             JOptionPane.showMessageDialog(null, "Please check the Batch number.");
         }*/
+        else if(thisMachine.getMachineId() < 1)
+        {
+            isSuccessful = false;
+            JOptionPane.showMessageDialog(null, "Please check the Machine details.");  
+        }
         else if(this.VolumeTextField.getText().length() < 1)
         {
             isSuccessful = false;
