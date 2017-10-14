@@ -748,13 +748,7 @@ public class ReviewForm extends javax.swing.JFrame {
     
     public boolean CheckTextBoxIsParseValid(JTextField thisTextField)
     {
-        if(thisTextField.getText().length() < 1)
-        {
-            return false;
-        }
-            return true;
-        
-     
+            return thisTextField.getText().length() >= 1;
     }
     private boolean AddTextToJobOrderObject()
     {
@@ -834,7 +828,7 @@ public class ReviewForm extends javax.swing.JFrame {
     private void CustomerDropDownListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CustomerDropDownListActionPerformed
         Customer customerDetails = new Customer();
         CustomerHandler handler = new CustomerHandler();
-        int customerId = -1;
+        //int customerId = -1;
         String customerName = "";
 
         if(!CustomerDropDownList.getSelectedItem().toString().equals("Choose Customer"))
@@ -845,15 +839,15 @@ public class ReviewForm extends javax.swing.JFrame {
 
         if(!customerName.equals(""))
         {
-            customerId = handler.GetCustomerIDFromCustomerName(customerName);
-            thisCustomer.setCustomerId(customerId);
+            //customerId = handler.GetCustomerIDFromCustomerName(customerName);
+            thisCustomer.setCustomerId(handler.GetCustomerIDFromCustomerName(customerName));
         }
     }//GEN-LAST:event_CustomerDropDownListActionPerformed
 
     private void DesignDropDownListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DesignDropDownListActionPerformed
         Design designDetails = new Design();
         DesignHandler handler = new DesignHandler();
-        int designId = -1;
+        //int designId = -1;
 
         //if(!designName.equals(""))
         if(!DesignDropDownList.getSelectedItem().toString().equals("Choose Design")
@@ -861,15 +855,15 @@ public class ReviewForm extends javax.swing.JFrame {
         {
             String designName = DesignDropDownList.getSelectedItem().toString();
             thisDesign.setDesignName(designName);
-            designId = handler.GetDesignIDFromName(designName);
-            thisDesign.setDesignId(designId);
+            //designId = handler.GetDesignIDFromName(designName);
+            thisDesign.setDesignId(handler.GetDesignIDFromName(designName));
         }
     }//GEN-LAST:event_DesignDropDownListActionPerformed
 
     private void ColorDropDownListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ColorDropDownListActionPerformed
         ChemicalColor colorDetails = new ChemicalColor();
         ColorHandler handler = new ColorHandler();
-        int colorId = -1;
+        //int colorId = -1;
         String colorName = "";
 
         if(!ColorDropDownList.getSelectedItem().toString().equals("Choose Color"))
@@ -880,8 +874,8 @@ public class ReviewForm extends javax.swing.JFrame {
 
         if(!colorName.equals(""))
         {
-            colorId = handler.GetColorIDFromColorName(colorName);
-            thisColor.setColorId(colorId);
+            //colorId = handler.GetColorIDFromColorName(colorName);
+            thisColor.setColorId(handler.GetColorIDFromColorName(colorName));
         }
     }//GEN-LAST:event_ColorDropDownListActionPerformed
 
@@ -921,7 +915,7 @@ public class ReviewForm extends javax.swing.JFrame {
     }//GEN-LAST:event_DyeingWeightFocusLost
 
     private void DyeingWeightKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DyeingWeightKeyReleased
-        String weight = DyeingWeight.getText().toString();
+        String weight = DyeingWeight.getText();
         weight = weight.replaceAll("[^\\d.]", "");
         DyeingWeight.setText(weight);
         if(this.CheckTextBoxIsParseValid(DyeingWeight))
@@ -964,9 +958,9 @@ public class ReviewForm extends javax.swing.JFrame {
     }//GEN-LAST:event_SaveExitActionPerformed
 
     private void EditDyeingProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditDyeingProgramActionPerformed
-        // TODO add your handling code here:
-        ViewDyeingProgramList thisDyeingProgram = new ViewDyeingProgramList(this.thisJob, this.WindowType);
-        thisDyeingProgram.setVisible(true);
+        ViewDyeingProgramList thisDyeingProgramListWindow;
+        thisDyeingProgramListWindow = new ViewDyeingProgramList(this.thisJob, this.WindowType);
+        thisDyeingProgramListWindow.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_EditDyeingProgramActionPerformed
 
@@ -1026,7 +1020,7 @@ public class ReviewForm extends javax.swing.JFrame {
 
     private void ResinWeightKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ResinWeightKeyReleased
         // TODO add your handling code here:
-        String weight = ResinWeight.getText().toString();
+        String weight = ResinWeight.getText();
         weight = weight.replaceAll("[^\\d.]", "");
         ResinWeight.setText(weight);
         if(this.CheckTextBoxIsParseValid(ResinWeight))
@@ -1039,7 +1033,7 @@ public class ReviewForm extends javax.swing.JFrame {
 
     private void DyeingVolumeTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DyeingVolumeTextFieldKeyReleased
         // TODO add your handling code here:
-        String volume = this.DyeingVolumeTextField.getText().toString();
+        String volume = this.DyeingVolumeTextField.getText();
         volume = volume.replaceAll("[^\\d.]", "");
         DyeingVolumeTextField.setText(volume);
         if(this.CheckTextBoxIsParseValid(DyeingVolumeTextField))
@@ -1048,7 +1042,7 @@ public class ReviewForm extends javax.swing.JFrame {
 
     private void ResinVolumeTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ResinVolumeTextFieldKeyReleased
         // TODO add your handling code here:
-        String volume = this.ResinVolumeTextField.getText().toString();
+        String volume = this.ResinVolumeTextField.getText();
         volume = volume.replaceAll("[^\\d.]", "");
         ResinVolumeTextField.setText(volume);
         if(this.CheckTextBoxIsParseValid(ResinVolumeTextField))
@@ -1128,7 +1122,6 @@ public class ReviewForm extends javax.swing.JFrame {
     private String computeForVolume(int weight, String LiquidRatio)
     {
         int weightMultiplier = 0;
-        double volume = 0;
         
         if(LiquidRatio.equals("1:6"))
         {
@@ -1151,7 +1144,7 @@ public class ReviewForm extends javax.swing.JFrame {
             weightMultiplier = 12;
         }
         
-        volume = weight * weightMultiplier;
+        double volume = weight * weightMultiplier;
         
         //DyeingVolumeTextField.setText(Double.toString(volume));
         return Double.toString(volume);
@@ -1234,9 +1227,8 @@ public class ReviewForm extends javax.swing.JFrame {
         ArrayList<String> CustomerList = new CustomerHandler().GetAllCustomers();
         
         if(CustomerList != null){
-            for(int x=0; x<CustomerList.size(); x++)
-            {
-                CustomerDropDownList.addItem(CustomerList.get(x));
+            for (String CustomerList1 : CustomerList) {
+                CustomerDropDownList.addItem(CustomerList1);
             }
         }     
     }

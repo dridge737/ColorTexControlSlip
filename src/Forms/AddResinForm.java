@@ -93,6 +93,16 @@ public class AddResinForm extends javax.swing.JFrame {
         ResinProcessName.setForeground(Color.BLACK);
     }
     
+    public AddResinForm(String ResinProgramName , JobOrder currentJob, int thisWindowType)
+    {
+        this();
+        WindowType = thisWindowType;
+        InitializeWindowForControlSlip(ResinProgramName, currentJob);
+        AddDeleteColumn(); 
+        ResinProcessName.setEnabled(false);
+        ResinProcessName.setForeground(Color.BLACK);
+    }
+    
     public void InitializeWindowForControlSlip(String ResinProgramName, JobOrder thisJobOrder)
     {
         thisJob = thisJobOrder;
@@ -425,7 +435,7 @@ public class AddResinForm extends javax.swing.JFrame {
             if(resinProgramId != -1)
             {
                 thisJob.setResinProgramID(resinProgramId);
-                ReviewForm thisForm = new ReviewForm(thisJob, 2);
+                ReviewForm thisForm = new ReviewForm(thisJob, this.WindowType);
                 thisForm.setVisible(true);
                 this.dispose();
             }

@@ -24,20 +24,6 @@ public class JobOrderExtended extends JobOrder{
 
     
     /**
-     * @return the DyeingMachineName
-     */
-    public String getMachineName() {
-        return DyeingMachineName;
-    }
-
-    /**
-     * @param MachineName the DyeingMachineName to set
-     */
-    public void setMachineName(String MachineName) {
-        this.DyeingMachineName = MachineName;
-    }
-
-    /**
      * @return the DyeingProgramName
      */
     public String getDyeingProgramName() {
@@ -119,6 +105,20 @@ public class JobOrderExtended extends JobOrder{
      */
     public void setCustomerName(String CustomerName) {
         this.CustomerName = CustomerName;
+    }
+
+    /**
+     * @return the DyeingMachineName
+     */
+    public String getDyeingMachineName() {
+        return DyeingMachineName;
+    }
+
+    /**
+     * @param DyeingMachineName the DyeingMachineName to set
+     */
+    public void setDyeingMachineName(String DyeingMachineName) {
+        this.DyeingMachineName = DyeingMachineName;
     }
    
 

@@ -66,7 +66,7 @@ public class MachineHandler {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         ArrayList<Machine> machineList = new ArrayList<>();
         
-        machineList = repo.GetAllDyeingMachine();
+        machineList = repo.GetAllMachine(null);
         
         return machineList;
     }

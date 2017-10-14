@@ -110,7 +110,7 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
         jPanel3.setOpaque(false);
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        JobOrderTable.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        JobOrderTable.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         JobOrderTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -297,16 +297,26 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
         model_original.addColumn("Design");
         model_original.addColumn("Color");
         model_original.addColumn("Customer");
-        model_original.addColumn("Machine");
         model_original.addColumn("Date");
         model_original.addColumn("Dyeing Program");
         model_original.addColumn("Resin Program");
+        model_original.addColumn("Dyeing Machine");
+        model_original.addColumn("Resin Machine");
         
         ArrayList<JobOrderExtended> JobOrderList = new JobHandler().GetAllExtendedJobOrderDetails(thisCustomer.getCustomerId());
         
         for(int x=0; x<JobOrderList.size(); x++)
         {
-            model_original.addRow(new Object[]{JobOrderList.get(x).getDrNumber().toString(), JobOrderList.get(x).getDesignName().toString(), JobOrderList.get(x).getColorName().toString(), thisCustomer.getCustomerName().toString(), JobOrderList.get(x).getMachineName().toString(), JobOrderList.get(x).getJobDate().toString(), JobOrderList.get(x).getDyeingProgramName().toString(), JobOrderList.get(x).getResinProgramName().toString()});
+            model_original.addRow(new Object[]{JobOrderList.get(x).getDrNumber().toString(), 
+                JobOrderList.get(x).getDesignName().toString(), 
+                JobOrderList.get(x).getColorName().toString(), 
+                thisCustomer.getCustomerName().toString(), 
+                JobOrderList.get(x).getJobDate().toString(),
+                JobOrderList.get(x).getDyeingProgramName().toString(), 
+                JobOrderList.get(x).getResinProgramName().toString(), 
+                JobOrderList.get(x).getDyeingMachineName().toString(),  
+                JobOrderList.get(x).getResinMachineName().toString()
+            });
         }
         return model_original;
     }

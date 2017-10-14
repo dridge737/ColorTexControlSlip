@@ -185,8 +185,9 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
         model_original.addColumn("Customer");
         model_original.addColumn("Date");
         model_original.addColumn("Dyeing Program");
-        model_original.addColumn("Machine");
         model_original.addColumn("Resin Program");
+        model_original.addColumn("Dyeing Machine");
+        model_original.addColumn("Resin Machine");
         
         ArrayList<JobOrderExtended> JobOrderList = new JobHandler().GetAllExtendedJobOrderDetails();
         
@@ -198,8 +199,9 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
                                                JobOrderList.get(x).getCustomerName(),
                                                JobOrderList.get(x).getJobDate(),
                                                JobOrderList.get(x).getDyeingProgramName(),
-                                               JobOrderList.get(x).getMachineName(),
-                                               JobOrderList.get(x).getResinProgramName()
+                                               JobOrderList.get(x).getResinProgramName(),
+                                               JobOrderList.get(x).getDyeingMachineName(),
+                                               JobOrderList.get(x).getResinMachineName()
             });
         }
         return model_original;

@@ -340,7 +340,7 @@ public class MachineForm extends javax.swing.JFrame {
         thisMachine.setMinVolume(Integer.parseInt(this.MachineListTable.getModel().getValueAt(this.MachineListTable.getSelectedRow(), 3).toString()));
         thisMachine.setMaxVolume(Integer.parseInt(this.MachineListTable.getModel().getValueAt(this.MachineListTable.getSelectedRow(), 4).toString()));
         thisMachine.setNumOfLoad(Integer.parseInt(this.MachineListTable.getModel().getValueAt(this.MachineListTable.getSelectedRow(), 5).toString()));
-        thisMachine.setMachineType(Integer.parseInt(this.MachineListTable.getModel().getValueAt(this.MachineListTable.getSelectedRow(), 5).toString()));
+        thisMachine.setMachineType(new MachineHandler().GetMachineTypeInt(this.MachineListTable.getModel().getValueAt(this.MachineListTable.getSelectedRow(), 6).toString()));
         thisMachine.setMachineId(new MachineHandler().GetMachineIdByName(thisMachine.getMachineName()));
     }
     
@@ -351,9 +351,10 @@ public class MachineForm extends javax.swing.JFrame {
                 
                 setTextForegroundColor(TypingColor);
                 SetMachineObjectFromSelectedTableIndex();
+                model.removeRow(this.MachineListTable.getSelectedRow());
+                
                 SetFormTextFromMachineObject();
                 
-                model.removeRow(this.MachineListTable.getSelectedRow());
 
                 this.EditMachineButton.setText("Save");
                 this.DeleteMachineButton.setText("Cancel");

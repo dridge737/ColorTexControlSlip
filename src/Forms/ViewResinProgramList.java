@@ -302,7 +302,7 @@ public class ViewResinProgramList extends javax.swing.JFrame {
             {
                 if(SelectBut1.getText().equals("Next"))
                 {
-                    new AddResinForm(resinProgramName, thisJob).setVisible(true);
+                    new AddResinForm(resinProgramName, thisJob, this.WindowType).setVisible(true);
                 }
                 else
                     new ViewResinProgramChemicals(resinProgramName).setVisible(true);
