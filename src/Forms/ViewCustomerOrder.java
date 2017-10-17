@@ -303,8 +303,11 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
         model_original.addColumn("Dyeing Machine");
         model_original.addColumn("Resin Machine");
         
-        ArrayList<JobOrderExtended> JobOrderList = new JobHandler().GetAllExtendedJobOrderDetails(thisCustomer.getCustomerId());
         
+        ArrayList<JobOrderExtended> JobOrderList = 
+               // new JobHandler().GetAllExtendedJobOrderDetails(thisCustomer.getCustomerId());
+                new JobHandler().GetAllExtendedJobOrderDetails();
+        //ArrayList
         for(int x=0; x<JobOrderList.size(); x++)
         {
             model_original.addRow(new Object[]{JobOrderList.get(x).getDrNumber().toString(), 

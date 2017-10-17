@@ -2017,7 +2017,7 @@ public class ColorTextControlSlipRepository {
         ArrayList<JobOrderExtended> thisJobOrder = new ArrayList<>();
         try {
             conn = db.getConnection();
-
+Error
             ps = conn.prepareStatement("SELECT "
                     + " DrNumber , "
                     + " Date , "
@@ -2025,18 +2025,21 @@ public class ColorTextControlSlipRepository {
                     + " cus.Name as cName, "
                     + " des.Name as dName , "
                     + " DyeingMach.Name as DyeingMachineName, " 
-                    + " ResinMach.Name as ResinMachineName, "
+                    + " ResMach.Name as ResinMachineName, "
                     + " dProgName.Name as dpName, "
                     + " resin_program_name.Name as rpName "
                     + " FROM color col, customer cus , design des, "
-                    + " job_order LEFT JOIN Resin_Program ON job_order.ResinProgramID = resin_program.ID"
-                    + " LEFT JOIN resin_program_name ON Resin_program.ProgramNameID = resin_program_name.ID"
-                    + " , machine DyeingMach, machine ResinMach, dyeing_program_name dProgName "
+                    + " job_order LEFT JOIN Resin_Program ON job_order.ResinProgramID = resin_program.ID "
+                    + " LEFT JOIN resin_program_name ON Resin_program.ProgramNameID = resin_program_name.ID "
+                    + " LEFT JOIN machine as ResMach ON ResMach.ID = ResinMachineID "
+                    + " , machine DyeingMach, "
+                    //+ " machine ResinMach, "
+                    + " dyeing_program_name dProgName "
                     + " WHERE col.ID = ColorID "
                     + " AND cus.ID = CustomerID  "
                     + " AND des.ID = designID "
                     + " AND DyeingMach.ID = DyeingMachineID "
-                    + " AND ResinMach.ID = ResinMachineID"
+                    //+ " AND ResinMach.ID = ResinMachineID"
                     + " AND dProg.ID = DyeingProgramID "
                     + " AND dProg.ProgramNameID = dProgName.ID;");
 
