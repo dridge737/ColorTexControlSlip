@@ -1807,53 +1807,44 @@ public class ColorTextControlSlipRepository {
                     + " Location = ? "
                     + " WHERE ID = ?";
         
-        if(setJobOrderAndExecuteStatement(thisJobOrder, query, 2) != -1)
-            return true;
-        else
-            return false;
-
+        return setJobOrderAndExecuteStatement(thisJobOrder, query, 2) != -1; 
+        
         /*
         DBConnection db = new DBConnection();
         Connection conn = null;
         PreparedStatement preparedStmt = null;
         boolean isSuccessful = false;
         try {
-            conn = db.getConnection();
-            
-            int itemNumber = 1;
-            preparedStmt = conn.prepareStatement(query);
-            preparedStmt.setString(itemNumber++, thisJobOrder.getDrNumber());
-            preparedStmt.setInt(itemNumber++, thisJobOrder.getDesignID());
-            preparedStmt.setInt(itemNumber++, thisJobOrder.getColorID());
-            preparedStmt.setInt(itemNumber++, thisJobOrder.getCustomerID());
-            preparedStmt.setString(itemNumber++, thisJobOrder.getJobDate());
-            preparedStmt.setInt(itemNumber++, thisJobOrder.getBatchNo());
-
-            preparedStmt.setInt(itemNumber++, thisJobOrder.getDyeingMachineID());
-            preparedStmt.setFloat(itemNumber++, thisJobOrder.getDyeingWeight());
-            preparedStmt.setFloat(itemNumber++, thisJobOrder.getDyeingVolumeH20());
-
-            preparedStmt.setInt(itemNumber++, thisJobOrder.getResinMachineID());
-            preparedStmt.setFloat(itemNumber++, thisJobOrder.getResinWeight());
-            preparedStmt.setFloat(itemNumber++, thisJobOrder.getResinVolumeH20());
-
-            preparedStmt.setString(itemNumber++, thisJobOrder.getRollLoad());
-            preparedStmt.setFloat(itemNumber++, thisJobOrder.getRoll());
-            preparedStmt.setInt(itemNumber++, thisJobOrder.getDyeingProgramID());
-            preparedStmt.setInt(itemNumber++, thisJobOrder.getResinProgramID());
-            preparedStmt.setString(itemNumber++, thisJobOrder.getReference());
-            preparedStmt.setString(itemNumber++, thisJobOrder.getProgramNumber());
-            preparedStmt.setString(itemNumber++, thisJobOrder.getLocation());
-            preparedStmt.setInt(itemNumber++, thisJobOrder.getID());
-
-            preparedStmt.executeUpdate();
-            isSuccessful = true;
+        conn = db.getConnection();
+        int itemNumber = 1;
+        preparedStmt = conn.prepareStatement(query);
+        preparedStmt.setString(itemNumber++, thisJobOrder.getDrNumber());
+        preparedStmt.setInt(itemNumber++, thisJobOrder.getDesignID());
+        preparedStmt.setInt(itemNumber++, thisJobOrder.getColorID());
+        preparedStmt.setInt(itemNumber++, thisJobOrder.getCustomerID());
+        preparedStmt.setString(itemNumber++, thisJobOrder.getJobDate());
+        preparedStmt.setInt(itemNumber++, thisJobOrder.getBatchNo());
+        preparedStmt.setInt(itemNumber++, thisJobOrder.getDyeingMachineID());
+        preparedStmt.setFloat(itemNumber++, thisJobOrder.getDyeingWeight());
+        preparedStmt.setFloat(itemNumber++, thisJobOrder.getDyeingVolumeH20());
+        preparedStmt.setInt(itemNumber++, thisJobOrder.getResinMachineID());
+        preparedStmt.setFloat(itemNumber++, thisJobOrder.getResinWeight());
+        preparedStmt.setFloat(itemNumber++, thisJobOrder.getResinVolumeH20());
+        preparedStmt.setString(itemNumber++, thisJobOrder.getRollLoad());
+        preparedStmt.setFloat(itemNumber++, thisJobOrder.getRoll());
+        preparedStmt.setInt(itemNumber++, thisJobOrder.getDyeingProgramID());
+        preparedStmt.setInt(itemNumber++, thisJobOrder.getResinProgramID());
+        preparedStmt.setString(itemNumber++, thisJobOrder.getReference());
+        preparedStmt.setString(itemNumber++, thisJobOrder.getProgramNumber());
+        preparedStmt.setString(itemNumber++, thisJobOrder.getLocation());
+        preparedStmt.setInt(itemNumber++, thisJobOrder.getID());
+        preparedStmt.executeUpdate();
+        isSuccessful = true;
         } catch (SQLException ex) {
-            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         this.closeConn(conn, preparedStmt);
-        */
+         */
         
     }
 
@@ -2017,7 +2008,7 @@ public class ColorTextControlSlipRepository {
         ArrayList<JobOrderExtended> thisJobOrder = new ArrayList<>();
         try {
             conn = db.getConnection();
-Error
+
             ps = conn.prepareStatement("SELECT "
                     + " DrNumber , "
                     + " Date , "
@@ -2031,9 +2022,9 @@ Error
                     + " FROM color col, customer cus , design des, "
                     + " job_order LEFT JOIN Resin_Program ON job_order.ResinProgramID = resin_program.ID "
                     + " LEFT JOIN resin_program_name ON Resin_program.ProgramNameID = resin_program_name.ID "
-                    + " LEFT JOIN machine as ResMach ON ResMach.ID = ResinMachineID "
-                    + " , machine DyeingMach, "
-                    //+ " machine ResinMach, "
+                    + " LEFT JOIN machine ResMach ON ResMach.ID = job_order.ResinMachineID ," 
+                    + " machine DyeingMach, "
+                    + " dyeing_program dProg, "
                     + " dyeing_program_name dProgName "
                     + " WHERE col.ID = ColorID "
                     + " AND cus.ID = CustomerID  "
@@ -2043,38 +2034,31 @@ Error
                     + " AND dProg.ID = DyeingProgramID "
                     + " AND dProg.ProgramNameID = dProgName.ID;");
 
-            /*ps = conn.prepareStatement("SELECT DrNumber , Date ,  resin_program_name.Name as rName " +
-             " FROM job_order LEFT JOIN Resin_Program ON job_order.ResinProgramID = resin_program.ID " +
-             " Left JOIN resin_program_name ON Resin_program.ProgramNameID = resin_program_name.ID;");
-            
-             ps = conn.prepareStatement("SELECT DrNumber , Date , col.Name as \"Color Name\", cus.Name as \"Customer Name\", des.Name as \"Design Name\" , mach.Name as \"Machine Name\", " +
-             " dProgName.Name as \"Dyeing Program Name\", rProgName.Name as \"Resin Program Name\" " +
-             " FROM color col, customer cus , design des, job_order, machine mach, " +
-             " dyeing_program dProg, dyeing_program_name dProgName, resin_program rProg, resin_program_name rProgName " +
-             " WHERE col.ID = ColorID " +
-             " AND cus.ID = CustomerID " +
-             " AND des.ID = designID " +
-             " AND mach.ID = MachineID " +
-             " AND dProg.ID = DyeingProgramID " +
-             " AND dProg.ProgramNameID = dProgName.ID " +
-             " AND rProg.ID = ResinProgramID " +
-             " AND rProg.ProgramNameID = rProgName.ID;");
-             */
             rs = ps.executeQuery();
-            JobOrderExtended currentJobOrder = new JobOrderExtended();
-
+            thisJobOrder = SetJobOrderArrayListFromResultSet(rs);
+            /*
+            JobOrderExtended currentJobOrder;
             while (rs.next()) {
+                currentJobOrder = new JobOrderExtended();
                 currentJobOrder.setDrNumber(rs.getString("DrNumber"));
                 currentJobOrder.setJobDate(rs.getString("Date"));
                 currentJobOrder.setColorName(rs.getString("coName"));
                 currentJobOrder.setCustomerName(rs.getString("cName"));
                 currentJobOrder.setDesignName(rs.getString("dName"));
+                currentJobOrder.setDyeingMachineName(rs.getString("DyeingMachineName"));
                 currentJobOrder.setDyeingProgramName(rs.getString("dpName"));
-                currentJobOrder.setDyeingMachineName(rs.getString("mName"));
-                currentJobOrder.setResinProgramName(rs.getString("rpName"));
+                
+                if (rs.getString("rpName") == null || rs.getString("ResinMachineName") == null) {
+                    currentJobOrder.setResinProgramName("");
+                    currentJobOrder.setResinMachineName("");
+                } else {
+                    currentJobOrder.setResinMachineName(rs.getString("ResinMachineName"));
+                    currentJobOrder.setResinProgramName(rs.getString("rpName"));
+                    
+                }
                 thisJobOrder.add(currentJobOrder);
             }
-
+*/
         } catch (SQLException ex) {
             Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -2082,7 +2066,7 @@ Error
         return thisJobOrder;
 
     }
-
+    
     public ArrayList<JobOrderExtended> GetConnectedJobOrderDetails(int customerId) {
         DBConnection db = new DBConnection();
         Connection conn = null;
@@ -2102,19 +2086,20 @@ Error
                     + "dProgName.Name as dpName, "
                     + "resin_program_name.Name as rpName "
                     + " FROM color col, "
-                    + "customer cus , "
-                    + "design des, "
+                    + " customer cus , "
+                    + " design des, "
                     + " job_order LEFT JOIN Resin_Program ON job_order.ResinProgramID = resin_program.ID"
-                    + " LEFT JOIN resin_program_name ON Resin_program.ProgramNameID = resin_program_name.ID ,"
+                    + " LEFT JOIN resin_program_name ON Resin_program.ProgramNameID = resin_program_name.ID "
+                    + " LEFT JOIN machine ResMach ON ResMach.ID = job_order.ResinMachineID ," 
                     + " machine DyeMach, "
-                    + " machine ResMach, "
+                    //+ " machine ResMach, "
                     + "dyeing_program dProg, "
                     + "dyeing_program_name dProgName "
                     + " WHERE col.ID = ColorID "
                     + " AND cus.ID = CustomerID  "
                     + " AND des.ID = designID "
                     + " AND DyeMach.ID = DyeingMachineID "
-                    + " AND ResMach.ID = ResinMachineID "
+                    //+ " AND ResMach.ID = ResinMachineID "
                     + " AND dProg.ID = DyeingProgramID "
                     + " AND dProg.ProgramNameID = dProgName.ID "
                     + " AND cus.ID = ?;");
@@ -2140,7 +2125,8 @@ Error
              */
             ps.setInt(1, customerId);
             rs = ps.executeQuery();
-
+            thisJobOrder = SetJobOrderArrayListFromResultSet(rs);
+            /*
             while (rs.next()) {
                 JobOrderExtended currentJobOrder = new JobOrderExtended();
                 currentJobOrder.setDrNumber(rs.getString("DrNumber"));
@@ -2150,10 +2136,44 @@ Error
                 currentJobOrder.setDesignName(rs.getString("dName"));
                 currentJobOrder.setDyeingProgramName(rs.getString("dpName"));
                 currentJobOrder.setDyeingMachineName(rs.getString("DyeingMachineName"));
-                if (rs.getString("rpName") == null) {
-                    //currentJobOrder.setResinProgramName("");
-                    //currentJobOrder.setResinMachineName("");
-                } else {
+                if (rs.getString("rpName") == null || rs.getString("ResinMachineName") == null) 
+                {
+                    currentJobOrder.setResinProgramName("");
+                    currentJobOrder.setResinMachineName("");
+                } 
+                else {
+                    currentJobOrder.setResinMachineName(rs.getString("ResinMachineName"));
+                    currentJobOrder.setResinProgramName(rs.getString("rpName"));
+                }
+                thisJobOrder.add(currentJobOrder);
+            }*/
+        } catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.closeConn(conn, ps, rs);
+        return thisJobOrder;
+
+    }
+    
+    public ArrayList<JobOrderExtended> SetJobOrderArrayListFromResultSet(ResultSet rs)
+    {
+        ArrayList<JobOrderExtended> thisJobOrder = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                JobOrderExtended currentJobOrder = new JobOrderExtended();
+                currentJobOrder.setDrNumber(rs.getString("DrNumber"));
+                currentJobOrder.setJobDate(rs.getString("Date"));
+                currentJobOrder.setColorName(rs.getString("coName"));
+                currentJobOrder.setCustomerName(rs.getString("cName"));
+                currentJobOrder.setDesignName(rs.getString("dName"));
+                currentJobOrder.setDyeingProgramName(rs.getString("dpName"));
+                currentJobOrder.setDyeingMachineName(rs.getString("DyeingMachineName"));
+                if (rs.getString("rpName") == null || rs.getString("ResinMachineName") == null) 
+                {
+                    currentJobOrder.setResinProgramName("");
+                    currentJobOrder.setResinMachineName("");
+                } 
+                else {
                     currentJobOrder.setResinMachineName(rs.getString("ResinMachineName"));
                     currentJobOrder.setResinProgramName(rs.getString("rpName"));
                 }
@@ -2162,9 +2182,8 @@ Error
         } catch (SQLException ex) {
             Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.closeConn(conn, ps, rs);
+        
         return thisJobOrder;
-
     }
 
     public int CheckIfJobOrderExists(JobOrder thisJobOrder) {

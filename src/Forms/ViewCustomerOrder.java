@@ -34,6 +34,7 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
     public ViewCustomerOrder() {
         initComponents();
         populateCustomerDropDown();
+        GetUpdatedTable();
         SetToCenter();
     }
     
@@ -304,21 +305,21 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
         model_original.addColumn("Resin Machine");
         
         
-        ArrayList<JobOrderExtended> JobOrderList = 
-               // new JobHandler().GetAllExtendedJobOrderDetails(thisCustomer.getCustomerId());
-                new JobHandler().GetAllExtendedJobOrderDetails();
+        ArrayList<JobOrderExtended> JobOrderList = new JobHandler().GetExtendedJobOrderDetails(thisCustomer.getCustomerId());
+                //new JobHandler().GetCustomerSpecificExtendedJobOrderDetails(thisCustomer.getCustomerId());
+                //new JobHandler().GetAllExtendedJobOrderDetails();
         //ArrayList
-        for(int x=0; x<JobOrderList.size(); x++)
-        {
-            model_original.addRow(new Object[]{JobOrderList.get(x).getDrNumber().toString(), 
-                JobOrderList.get(x).getDesignName().toString(), 
-                JobOrderList.get(x).getColorName().toString(), 
-                thisCustomer.getCustomerName().toString(), 
-                JobOrderList.get(x).getJobDate().toString(),
-                JobOrderList.get(x).getDyeingProgramName().toString(), 
-                JobOrderList.get(x).getResinProgramName().toString(), 
-                JobOrderList.get(x).getDyeingMachineName().toString(),  
-                JobOrderList.get(x).getResinMachineName().toString()
+        for (JobOrderExtended JobOrderList1 : JobOrderList) {
+            model_original.addRow(new Object[]{
+                JobOrderList1.getDrNumber().toString(), 
+                JobOrderList1.getDesignName().toString(), 
+                JobOrderList1.getColorName().toString(), 
+                JobOrderList1.getCustomerName().toString(), 
+                JobOrderList1.getJobDate().toString(),
+                JobOrderList1.getDyeingProgramName().toString(),
+                JobOrderList1.getResinProgramName().toString(), 
+                JobOrderList1.getDyeingMachineName().toString(), 
+                JobOrderList1.getResinMachineName().toString()
             });
         }
         return model_original;

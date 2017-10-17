@@ -78,10 +78,21 @@ public class JobHandler {
         return repo.GetConnectedJobOrderDetails();
     }
     
-    public ArrayList<JobOrderExtended> GetAllExtendedJobOrderDetails(int customerId)
+    public ArrayList<JobOrderExtended> GetCustomerSpecificExtendedJobOrderDetails(int customerId)
     {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         return repo.GetConnectedJobOrderDetails(customerId);
+    }
+    
+    public ArrayList<JobOrderExtended> GetExtendedJobOrderDetails(int customerID)
+    {
+        ArrayList<JobOrderExtended> thisJobOrder = new ArrayList<>();
+        if(customerID != 0)
+            thisJobOrder =  GetCustomerSpecificExtendedJobOrderDetails(customerID);
+        else
+            thisJobOrder = GetAllExtendedJobOrderDetails();
+        
+        return thisJobOrder;
     }
     
     public boolean CheckIfResinNewToCustomer(int customerId, int resinProgramNameId)
