@@ -750,7 +750,10 @@ public class PrintHandlerFinal {
         pCell = new PdfPCell(p3);
         table.addCell(p3);
         
-        Phrase p6 = new Phrase("Machine: " + machineDetails.getMachineName(), f);
+        MachineHandler machineHandler = new MachineHandler();
+        Machine resinMachine = machineHandler.GetMachineDetailsById(jobOrderDetails.getResinMachineID());
+        
+        Phrase p6 = new Phrase("Machine: " + resinMachine.getMachineName(), f);
         //p6.add("Machine: " + machineDetails.getMachineName(), f);
         pCell = new PdfPCell(p6);
         table.addCell(p6);
