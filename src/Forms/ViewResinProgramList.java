@@ -320,9 +320,9 @@ public class ViewResinProgramList extends javax.swing.JFrame {
     private void BackButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButActionPerformed
         // TODO add your handling code here:
         //Resin list window from review form
-        if(WindowType == 4)
+        if(WindowType == 4 || WindowType == 5)
         {
-            new ReviewForm(thisJob, 4).setVisible(true);
+            new ReviewForm(thisJob, WindowType).setVisible(true);
         }
         //Resin List from Job order form
         else if(WindowType == 3)

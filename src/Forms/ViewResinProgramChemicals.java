@@ -268,7 +268,7 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
         StateComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "G", "L" }));
         jPanel1.add(StateComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(217, 340, 50, 30));
 
-        AddBut.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        AddBut.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
         AddBut.setText("Add");
         jPanel1.add(AddBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 340, -1, 30));
 
@@ -379,10 +379,21 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
                 this.BackButton.setEnabled(true);
                 this.AddChemicalButton.setEnabled(true);
                 GetUpdatedTable();
+                ClearTextBox();
             }
         
     }//GEN-LAST:event_EditChemicalButtonActionPerformed
 
+    private void ClearTextBox()
+    {
+        ChemicalComboBox.setSelectedIndex(0);
+        StateComboBox.setSelectedIndex(0);
+        TypeComboBox.setSelectedIndex(0);
+        GPLTextField.setForeground(new Color(204, 204, 204));
+        GPLTextField.setText("GPL Value");
+
+    }
+    
     private void DeleteChemicalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteChemicalButtonActionPerformed
         // TODO add your handling code here:
         
@@ -477,7 +488,6 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
 
     private void AddChemicalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddChemicalButtonActionPerformed
         // TODO add your handling code here:
-        boolean ready = CheckIfDataFieldInputReady();
         int CloseorNoreply; 
         ResinProgramHandler resinProgramHandler = new ResinProgramHandler();
         
@@ -493,47 +503,43 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
             }
         }
         
-        if(ready == true)
-        {
+        boolean ready = CheckIfDataFieldInputReady();
+        if (ready == true) {
             ResinChemicalHandler resinChemicalHandler = new ResinChemicalHandler();
-                ChemicalHandler chemicalHandler = new ChemicalHandler();
-                ResinChemical newResinChemical = new ResinChemical();
-                int chemicalId = -1;
-                int resinChemicalId = -1;
-                int currentChemicalId = -1;
+            ChemicalHandler chemicalHandler = new ChemicalHandler();
+            ResinChemical newResinChemical = new ResinChemical();
+            int chemicalId = -1;
+            int resinChemicalId = -1;
+            int currentChemicalId = -1;
 
-                String chemicalName = ChemicalComboBox.getSelectedItem().toString();
-                
-                int newResinChemicalId = resinChemicalHandler.GetResinChemicalIdByChemicalId(chemicalHandler.GetChemicalIDFromChemicalName(chemicalName), resinProgramHandler.GetResinProgramIDFromResinProgramName(ResinProgramLabel.getText()));
-                                
-                if(newResinChemicalId == -1)
-                {
-                    if(chemicalName != "Chemical")
-                    {                    
-                        newResinChemical.setChemicalID(chemicalHandler.GetChemicalIDFromChemicalName(chemicalName));
-                        newResinChemical.setGPLValue(Float.parseFloat(GPLTextField.getText()));
-                        newResinChemical.setState(StateComboBox.getSelectedItem().toString());
-                        newResinChemical.setType(TypeComboBox.getSelectedItem().toString());
-                        newResinChemical.setResinProgramID(resinProgramHandler.GetResinProgramIDFromResinProgramName(ResinProgramLabel.getText()));
-                    }
-                    resinChemicalHandler.AddNewResinChemical(newResinChemical);
+            String chemicalName = ChemicalComboBox.getSelectedItem().toString();
+
+            int newResinChemicalId = resinChemicalHandler.GetResinChemicalIdByChemicalId(chemicalHandler.GetChemicalIDFromChemicalName(chemicalName), resinProgramHandler.GetResinProgramIDFromResinProgramName(ResinProgramLabel.getText()));
+
+            if (newResinChemicalId == -1) {
+                if (chemicalName != "Chemical") {
+                    newResinChemical.setChemicalID(chemicalHandler.GetChemicalIDFromChemicalName(chemicalName));
+                    newResinChemical.setGPLValue(Float.parseFloat(GPLTextField.getText()));
+                    newResinChemical.setState(StateComboBox.getSelectedItem().toString());
+                    newResinChemical.setType(TypeComboBox.getSelectedItem().toString());
+                    newResinChemical.setResinProgramID(resinProgramHandler.GetResinProgramIDFromResinProgramName(ResinProgramLabel.getText()));
                 }
-                
-                if(newResinChemicalId > -1)
-                {
-                    resinChemicalHandler.DeleteResinChemical(newResinChemicalId);
-                    if(chemicalName != "Chemical")
-                    {                    
-                        newResinChemical.setChemicalID(chemicalHandler.GetChemicalIDFromChemicalName(chemicalName));
-                        newResinChemical.setState(StateComboBox.getSelectedItem().toString());
-                        newResinChemical.setType(TypeComboBox.getSelectedItem().toString());
-                        newResinChemical.setGPLValue(Float.parseFloat(GPLTextField.getText()));
-                        newResinChemical.setResinProgramID(resinProgramHandler.GetResinProgramIDFromResinProgramName(ResinProgramLabel.getText()));
-                    }
-                
-                    resinChemicalHandler.AddNewResinChemical(newResinChemical);
+                resinChemicalHandler.AddNewResinChemical(newResinChemical);
+            }
+
+            if (newResinChemicalId > -1) {
+                resinChemicalHandler.DeleteResinChemical(newResinChemicalId);
+                if (chemicalName != "Chemical") {
+                    newResinChemical.setChemicalID(chemicalHandler.GetChemicalIDFromChemicalName(chemicalName));
+                    newResinChemical.setState(StateComboBox.getSelectedItem().toString());
+                    newResinChemical.setType(TypeComboBox.getSelectedItem().toString());
+                    newResinChemical.setGPLValue(Float.parseFloat(GPLTextField.getText()));
+                    newResinChemical.setResinProgramID(resinProgramHandler.GetResinProgramIDFromResinProgramName(ResinProgramLabel.getText()));
                 }
-                GetUpdatedTable();
+
+                resinChemicalHandler.AddNewResinChemical(newResinChemical);
+            }
+            GetUpdatedTable();
         }
     }//GEN-LAST:event_AddChemicalButtonActionPerformed
 

@@ -303,7 +303,7 @@
         <Component class="javax.swing.JButton" name="AddBut">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Century Gothic" size="14" style="0"/>
+              <Font name="Century Gothic" size="15" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Add"/>
           </Properties>

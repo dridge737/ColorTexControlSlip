@@ -409,7 +409,7 @@ public class AddResinForm extends javax.swing.JFrame {
         }
         else
         {
-            if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Do you want to Cancel this Dyeing Program?","Cancel Dyeing Program?", JOptionPane.YES_NO_OPTION))
+            if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Do you want to Cancel this Resin Program?","Cancel Resin Program?", JOptionPane.YES_NO_OPTION))
             {
                 this.dispose();
             }
