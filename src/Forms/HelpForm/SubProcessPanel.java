@@ -106,7 +106,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
     private void setTableModel(int type)
     {
         String[] TableHeader;
-        if(type == 3)
+        if(type == 3 || type == 4 || type == 5)
         {
             TableHeader = new String [] {
                 "Chemical", "Gram/Liter", "Type", "Value" , "Quantity" ,"Delete"
@@ -209,9 +209,11 @@ public class SubProcessPanel extends javax.swing.JPanel {
              //Add Chemical and its details to the Table
              String ChemicalName = getChemicalNameFromID(thisDyeingChemical.getChemicalId());
              //Float Quantity = ComputeQuantityFromWeightOrVol(thisDyeingChemical);
-             Float Quantity = new JobHandler().ComputeDyeingQuantity(thisDyeingChemical, thisJobOrder);
-             if(WindowType == 3 || WindowType == 4)
+             Float Quantity;
+             if(WindowType == 3 || WindowType == 4 || WindowType == 5)
+             //if(thisJobOrder.getID() > 0)
              {
+                 Quantity = new JobHandler().ComputeDyeingQuantity(thisDyeingChemical, thisJobOrder);
                  model.addRow(new Object[] {ChemicalName, thisDyeingChemical.getState(),thisDyeingChemical.getType(), thisDyeingChemical.getValue(),Quantity, "Delete"});                 
              }
              else

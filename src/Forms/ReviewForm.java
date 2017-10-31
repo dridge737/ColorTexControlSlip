@@ -139,7 +139,7 @@ public class ReviewForm extends javax.swing.JFrame {
         ProgramNumber.setText(thisJob.getProgramNumber());
         Location.setText(thisJob.getLocation());
         //Set Date to 
-        if (WindowType == 4 || WindowType == 3) {
+        if (WindowType == 4 || WindowType == 3 || WindowType == 5) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             try {
                 dateSpinner.setValue(sdf.parse(thisJob.getJobDate()));
@@ -792,16 +792,21 @@ public class ReviewForm extends javax.swing.JFrame {
     private void CancelButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButActionPerformed
         // TODO add your handling code here:
         
-        if (this.WindowType == 4 || this.WindowType == 3) {
+        if (this.WindowType == 4 || this.WindowType == 3 || this.WindowType == 5) {
             if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Do you want to cancel using this Job Order?", "Exit?", JOptionPane.YES_NO_OPTION)) {
                 new ViewCustomerOrder().setVisible(true);
+                this.dispose();
             }
-        } else if (thisJob.getResinProgramID() > 0) {
-            new AddResinForm(thisJob).setVisible(true);
         } else {
-            new DyeingForm(thisJob).setVisible(true);
+            if (thisJob.getResinProgramID() > 0) {
+                new AddResinForm(thisJob).setVisible(true);
+            } else {
+                new DyeingForm(thisJob).setVisible(true);
+
+            }
+                this.dispose();
         }
-        this.dispose();
+        
     }//GEN-LAST:event_CancelButActionPerformed
 
     private void CustomerDropDownListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CustomerDropDownListActionPerformed
@@ -1115,7 +1120,7 @@ public class ReviewForm extends javax.swing.JFrame {
         String liquidRatio = this.ResinMachineLiquidRatioDropDown.getSelectedItem().toString();
         if (!weight.equals("") && !liquidRatio.equals("Liquid Ratio")) {
             //String selected = DyeingMachineLiquidRatioDropDown.getSelectedItem().toString();
-            ResinVolumeTextField.setText(computeForVolume(Integer.parseInt(weight), liquidRatio));
+            ResinVolumeTextField.setText(computeForVolume((int)Float.parseFloat(weight), liquidRatio));
         }
     }
 
@@ -1124,7 +1129,7 @@ public class ReviewForm extends javax.swing.JFrame {
         String liquidRatio = DyeingMachineLiquidRatioDropDown.getSelectedItem().toString();
         if (!weight.equals("") && !liquidRatio.equals("Liquid Ratio")) {
             //String selected = DyeingMachineLiquidRatioDropDown.getSelectedItem().toString();
-            DyeingVolumeTextField.setText(computeForVolume(Integer.parseInt(weight), liquidRatio));
+            DyeingVolumeTextField.setText(computeForVolume((int)Float.parseFloat(weight), liquidRatio));
         }
     }
 

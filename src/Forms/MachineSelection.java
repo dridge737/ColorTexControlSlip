@@ -55,8 +55,23 @@ public class MachineSelection extends javax.swing.JFrame {
             {
                 MachineDropDownList.addItem(MachineList.get(x).getMachineName());
             }
-        }  
-        
+        }   
+    }
+
+    private void populateLiquorRatioDropDown() {
+        ArrayList<String> LiquidRatioList = new ArrayList<String>();
+
+        LiquidRatioList.add("1:6");
+        LiquidRatioList.add("1:8");
+        LiquidRatioList.add("1:9");
+        LiquidRatioList.add("1:10");
+        LiquidRatioList.add("1:12");
+
+        for (int x = 0; x < LiquidRatioList.size(); x++) {
+
+            LiquidRatioDropDown.addItem(LiquidRatioList.get(x));
+        }
+
     }
 
     /**

@@ -10,6 +10,7 @@ import DataEntities.JobOrder;
 import DataEntities.JobOrderExtended;
 import DataEntities.ResinChemical;
 import Database.ColorTextControlSlipRepository;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -154,7 +155,9 @@ public class JobHandler {
                  //quantity = VolumeH20 * thisDyeingChemical.getValue() / (float) 1500;
                  
          }
-         return quantity;
+         //DecimalFormat f = new DecimalFormat("##.00");
+         //Math.round(quantity * 100) / 100
+         return Math.round(quantity * 100) / 100;
      }
 
 }

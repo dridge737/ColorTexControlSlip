@@ -45,7 +45,7 @@ public class DyeingForm extends javax.swing.JFrame {
     //1 for new Dyeing Program
     //2 For Update Dyeing Program
     //3 For ControlSlip Dyeing Program
-    JobOrder thisJob;
+    JobOrder thisJob = new JobOrder();
     Color ColorError = new Color(232,228,42);
     
     /**
@@ -255,7 +255,8 @@ public class DyeingForm extends javax.swing.JFrame {
     {
         //Declare the Tab to be added
         ProcessPanel this_panel;
-        if(WindowProcessType == 3)
+        if(WindowProcessType == 3 || WindowProcessType == 4 || WindowProcessType == 5 )
+        //if(thisJob.getID()>0 )
         this_panel = new ProcessPanel(thisProcess, WindowProcessType, thisJob);
         else
         this_panel = new ProcessPanel(thisProcess, WindowProcessType);
@@ -499,6 +500,7 @@ public class DyeingForm extends javax.swing.JFrame {
                 //For Job Order
                 case 3:
                 case 4:
+                case 5:
                     //if Default program then add, else update.
                     if (thisDyeingProgram.getProgramDefault() == 1) {
                         thisDyeingProgram.setProgramDefault(0);
@@ -545,6 +547,7 @@ public class DyeingForm extends javax.swing.JFrame {
                     }
                     break;
                 case 4:
+                case 5:
                     ReviewForm thisReviewForm = new ReviewForm(thisJob, this.WindowProcessType);
                         //Show Review Form and Ask to print
                     thisReviewForm.setVisible(true);

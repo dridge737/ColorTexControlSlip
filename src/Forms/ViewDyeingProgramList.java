@@ -268,7 +268,7 @@ public class ViewDyeingProgramList extends javax.swing.JFrame {
             if(this.WindowType > 2)
             {
                 //For job order 
-                thisDyeingForm = new DyeingForm(DyeingName, getThisJob(), WindowType);
+                thisDyeingForm = new DyeingForm(DyeingName, thisJob, WindowType);
             }
             else
                 //For Changing Dyeing program
@@ -286,12 +286,12 @@ public class ViewDyeingProgramList extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(WindowType == 3)
         {
-            JobOrderForm newJobOrderForm = new JobOrderForm(getThisJob());
+            JobOrderForm newJobOrderForm = new JobOrderForm(thisJob);
             newJobOrderForm.setVisible(true);
         }
         else if(WindowType == 4 || WindowType == 5)
         {
-            new ReviewForm(thisJob, 4).setVisible(true);
+            new ReviewForm(thisJob, WindowType).setVisible(true);
         }
         this.dispose();
         
@@ -372,19 +372,7 @@ public class ViewDyeingProgramList extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
-    /**
-     * @return the thisJob
-     */
-    public JobOrder getThisJob() {
-        return thisJob;
-    }
-
-    /**
-     * @param thisJob the thisJob to set
-     */
-    public void setThisJob(JobOrder thisJob) {
-        this.thisJob = thisJob;
-    }
+    
 
    
 }
