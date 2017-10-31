@@ -210,7 +210,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
              String ChemicalName = getChemicalNameFromID(thisDyeingChemical.getChemicalId());
              //Float Quantity = ComputeQuantityFromWeightOrVol(thisDyeingChemical);
              Float Quantity = new JobHandler().ComputeDyeingQuantity(thisDyeingChemical, thisJobOrder);
-             if(WindowType == 3)
+             if(WindowType == 3 || WindowType == 4)
              {
                  model.addRow(new Object[] {ChemicalName, thisDyeingChemical.getState(),thisDyeingChemical.getType(), thisDyeingChemical.getValue(),Quantity, "Delete"});                 
              }

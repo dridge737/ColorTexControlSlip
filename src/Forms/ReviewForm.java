@@ -22,6 +22,7 @@ import Handlers.MachineHandler;
 import Handlers.PrintHandlerFinal;
 import Handlers.ResinProgramHandler;
 import com.itextpdf.text.DocumentException;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.IOException;
@@ -124,7 +125,8 @@ public class ReviewForm extends javax.swing.JFrame {
         //thisJob = JobOrderHandler.GetJobOrderDetailsFromJobId(thisJob.getID());
         if (WindowType == 4) {
             //JobOrder.setText("");
-            JobOrder.setEditable(true);
+            JobOrder.setBackground(Color.WHITE);
+            JobOrder.setEnabled(true);
         }        
         else
         {
@@ -351,7 +353,9 @@ public class ReviewForm extends javax.swing.JFrame {
         jLabel6.setText("Batch No :");
         MainPanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, 90, 30));
 
+        JobOrder.setBackground(new java.awt.Color(204, 204, 204));
         JobOrder.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        JobOrder.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         JobOrder.setEnabled(false);
         MainPanel.add(JobOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 195, 30));
 
@@ -412,7 +416,6 @@ public class ReviewForm extends javax.swing.JFrame {
         jLabel9.setText("Roll Load :");
         MainPanel.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 180, 90, 30));
 
-        RollLoad.setEditable(false);
         RollLoad.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         MainPanel.add(RollLoad, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 180, 190, 30));
 
@@ -431,6 +434,7 @@ public class ReviewForm extends javax.swing.JFrame {
 
         DyeingProgramText.setEditable(false);
         DyeingProgramText.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        DyeingProgramText.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         DyeingProgramText.setEnabled(false);
 
         EditResinProgram.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
@@ -443,6 +447,7 @@ public class ReviewForm extends javax.swing.JFrame {
 
         ResinProgramText.setEditable(false);
         ResinProgramText.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        ResinProgramText.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         ResinProgramText.setEnabled(false);
 
         EditDyeingProgram.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
