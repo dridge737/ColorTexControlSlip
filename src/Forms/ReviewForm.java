@@ -50,6 +50,7 @@ public class ReviewForm extends javax.swing.JFrame {
     int WindowType = 0;
     DyeingProgram thisDyeingProgram = new DyeingProgram();
     boolean ThisJobHasBeenAdded = false;
+
     //int jobOrderType = 1;
     /**
      * Creates new form ReviewForm
@@ -64,98 +65,86 @@ public class ReviewForm extends javax.swing.JFrame {
         populateResinMachineDropDown();
         populateLiquorRatioDropDown();
     }
-    
-    public ReviewForm(JobOrder currentJob, int setWindowType)
-    {
+
+    public ReviewForm(JobOrder currentJob, int setWindowType) {
         this();
         WindowType = setWindowType;
         thisJob = currentJob;
         SetJobOrderDetails();
         SetDropDownDetails();
         SetDyeingProgramName();
-        if(currentJob.getResinProgramID() > 0)
-        {
+        if (currentJob.getResinProgramID() > 0) {
             SetResinProgramName();
             SetResinMachineNameDropDown();
+        } else {
+            //ResinMachinePanel.setEnabled(false);
+            //ResinProgramText.setEnabled(false);
+            //EditResinProgram.setEnabled(false);
         }
-        else
-        {
-            ResinMachinePanel.setVisible(false);
-            ResinLabel.setVisible(false);
-            ResinProgramText.setVisible(false);
-            EditResinProgram.setVisible(false);
-        }
-        
+
         //If only Dyeing Program is added.
         //if(WindowType == 1)
         //{
-           
         //}
         //else 
-        if(WindowType == 4)
-        {
-            JobOrder.setText("");
-            JobOrder.setEditable(true);
-        }
-            
+        
+
     }
-    
-    public void SetToCenter()
-    {
+
+    public void SetToCenter() {
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
         int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
-        this.setLocation(x,y);
+        this.setLocation(x, y);
     }
-    
 
-    private void SetDyeingProgramName()
-    {
-         thisDyeingProgram = 
-                 new DyeingProgramHandler().GetDyeingProgramDetailsById(thisJob.getDyeingProgramID());
-         
-         DyeingProgramNameHandler thisDyeingProgramName = new DyeingProgramNameHandler();
-         String DyeingProgramName = thisDyeingProgramName.GetDyeingProgramNameFromID(thisDyeingProgram.getDyeingProgramNameID());
-         
-         DyeingProgramText.setText(DyeingProgramName);
-         
+    private void SetDyeingProgramName() {
+        thisDyeingProgram
+                = new DyeingProgramHandler().GetDyeingProgramDetailsById(thisJob.getDyeingProgramID());
+
+        DyeingProgramNameHandler thisDyeingProgramName = new DyeingProgramNameHandler();
+        String DyeingProgramName = thisDyeingProgramName.GetDyeingProgramNameFromID(thisDyeingProgram.getDyeingProgramNameID());
+
+        DyeingProgramText.setText(DyeingProgramName);
+
     }
-    private void SetResinProgramName()
-    {
-        if(thisJob.getResinProgramID() > 0)
-        {
-            String ResinProgramName = 
-                new ResinProgramHandler().GetResinProgramNameFromResinProgramID(thisJob.getResinProgramID());            
+
+    private void SetResinProgramName() {
+        if (thisJob.getResinProgramID() > 0) {
+            String ResinProgramName
+                    = new ResinProgramHandler().GetResinProgramNameFromResinProgramID(thisJob.getResinProgramID());
             ResinProgramText.setText(ResinProgramName);
         }
-        
+
     }
-    
-     private void SetJobOrderDetails()
-    {
+
+    private void SetJobOrderDetails() {
         //thisJob.setID(thisProcessOrder.getJobOrderID());
         //JobHandler JobOrderHandler = new JobHandler();
         //thisJob = JobOrderHandler.GetJobOrderDetailsFromJobId(thisJob.getID());
-        JobOrder.setText(thisJob.getDrNumber());
+        if (WindowType == 4) {
+            //JobOrder.setText("");
+            JobOrder.setEditable(true);
+        }        
+        else
+        {
+            JobOrder.setText(thisJob.getDrNumber());
+        }
         BatchNo.setText(Integer.toString(thisJob.getBatchNo()));
-        
-        
+
         RollLoad.setText(thisJob.getRollLoad());
         Reference.setText(thisJob.getReference());
         ProgramNumber.setText(thisJob.getProgramNumber());
         Location.setText(thisJob.getLocation());
         //Set Date to 
-        if(WindowType == 4 || WindowType == 3)
-        {
+        if (WindowType == 4 || WindowType == 3) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             try {
                 dateSpinner.setValue(sdf.parse(thisJob.getJobDate()));
             } catch (ParseException ex) {
                 Logger.getLogger(JobOrderForm.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        else
-        {
+        } else {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
             try {
                 dateSpinner.setValue(sdf.parse(thisJob.getJobDate()));
@@ -163,28 +152,25 @@ public class ReviewForm extends javax.swing.JFrame {
                 Logger.getLogger(JobOrderForm.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
-        
-        }
-    private void SetDropDownDetails()
-    {
+
+    }
+
+    private void SetDropDownDetails() {
         SetDesignNameDropDown();
         SetDyeingMachineNameDropDown();
-        
+
         SetCustomerNameDropDown();
         SetColorNameDropDown();
     }
-    
-    private void SetDesignNameDropDown()
-    {
+
+    private void SetDesignNameDropDown() {
         thisDesign.setDesignId(thisJob.getDesignID());
         DesignHandler thisDesignHandler = new DesignHandler();
         thisDesign.setDesignName(thisDesignHandler.GetDesignNameFromID(thisDesign.getDesignId()));
         DesignDropDownList.setSelectedItem(thisDesign.getDesignName());
     }
-    
-    private void SetDyeingMachineNameDropDown()
-    {
+
+    private void SetDyeingMachineNameDropDown() {
         thisDyeingMachine.setMachineId(thisJob.getDyeingMachineID());
         MachineHandler thisMachineHandler = new MachineHandler();
         thisDyeingMachine = thisMachineHandler.GetMachineDetailsById(thisDyeingMachine.getMachineId());
@@ -192,9 +178,8 @@ public class ReviewForm extends javax.swing.JFrame {
         DyeingWeight.setText(Float.toString(thisJob.getDyeingWeight()));
         DyeingVolumeTextField.setText(Float.toString(thisJob.getDyeingVolumeH20()));
     }
-    
-    private void SetResinMachineNameDropDown()
-    {
+
+    private void SetResinMachineNameDropDown() {
         thisResinMachine.setMachineId(thisJob.getResinMachineID());
         MachineHandler thisMachineHandler = new MachineHandler();
         thisResinMachine = new MachineHandler().GetMachineDetailsById(thisResinMachine.getMachineId());
@@ -202,24 +187,21 @@ public class ReviewForm extends javax.swing.JFrame {
         ResinWeight.setText(Float.toString(thisJob.getResinWeight()));
         ResinVolumeTextField.setText(Float.toString(thisJob.getResinVolumeH20()));
     }
-    
-    private void SetCustomerNameDropDown()
-    {
+
+    private void SetCustomerNameDropDown() {
         thisCustomer.setCustomerId(thisJob.getCustomerID());
         CustomerHandler thisCustomerHandler = new CustomerHandler();
         thisCustomer.setCustomerName(thisCustomerHandler.GetCustomerNameFromCustomerID(thisCustomer.getCustomerId()));
         CustomerDropDownList.setSelectedItem(thisCustomer.getCustomerName());
     }
-    
-    private void SetColorNameDropDown()
-    {
+
+    private void SetColorNameDropDown() {
         thisColor.setColorId(thisJob.getColorID());
         ColorHandler thisColorHandler = new ColorHandler();
         thisColor.setColorName(thisColorHandler.GetColorNameFromColorID(thisColor.getColorId()));
         ColorDropDownList.setSelectedItem(thisColor.getColorName());
     }
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -370,6 +352,7 @@ public class ReviewForm extends javax.swing.JFrame {
         MainPanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, 90, 30));
 
         JobOrder.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        JobOrder.setEnabled(false);
         MainPanel.add(JobOrder, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 195, 30));
 
         dateSpinner.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
@@ -410,11 +393,6 @@ public class ReviewForm extends javax.swing.JFrame {
         MainPanel.add(ProgramNumberLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 140, 90, 30));
 
         ProgramNumber.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        ProgramNumber.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                ProgramNumberKeyReleased(evt);
-            }
-        });
         MainPanel.add(ProgramNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 140, 190, 30));
 
         ReferenceLabel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -453,6 +431,7 @@ public class ReviewForm extends javax.swing.JFrame {
 
         DyeingProgramText.setEditable(false);
         DyeingProgramText.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        DyeingProgramText.setEnabled(false);
 
         EditResinProgram.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         EditResinProgram.setText("...");
@@ -464,6 +443,7 @@ public class ReviewForm extends javax.swing.JFrame {
 
         ResinProgramText.setEditable(false);
         ResinProgramText.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        ResinProgramText.setEnabled(false);
 
         EditDyeingProgram.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         EditDyeingProgram.setText("...");
@@ -508,7 +488,6 @@ public class ReviewForm extends javax.swing.JFrame {
         jLabel8.setText("Volume of Water :");
         DyeingMachinePanel.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 65, -1, 30));
 
-        DyeingWeight.setEditable(false);
         DyeingWeight.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         DyeingWeight.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -522,7 +501,6 @@ public class ReviewForm extends javax.swing.JFrame {
         });
         DyeingMachinePanel.add(DyeingWeight, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 65, 200, 30));
 
-        DyeingVolumeTextField.setEditable(false);
         DyeingVolumeTextField.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         DyeingVolumeTextField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -567,7 +545,6 @@ public class ReviewForm extends javax.swing.JFrame {
         jLabel13.setText("Volume of Water :");
         ResinMachinePanel.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 65, -1, 30));
 
-        ResinWeight.setEditable(false);
         ResinWeight.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         ResinWeight.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -581,7 +558,6 @@ public class ReviewForm extends javax.swing.JFrame {
         });
         ResinMachinePanel.add(ResinWeight, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 65, 200, 30));
 
-        ResinVolumeTextField.setEditable(false);
         ResinVolumeTextField.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         ResinVolumeTextField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -683,79 +659,76 @@ public class ReviewForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private boolean CheckJobOrderInformationFromTextBox()
+    private boolean CheckCustomerAndJobOrderFromTextBox()
     {
         boolean isSuccessful = true;
         
-        if(thisCustomer.getCustomerId() < 1)
-        {
+        if (thisCustomer.getCustomerId() < 1) {
             isSuccessful = false;
             JOptionPane.showMessageDialog(null, "Please check the Customer Name.");
-        }
-        else if(thisColor.getColorId() < 1)
-        {
+        }  else if (JobOrder.getText().length() < 1) {
             isSuccessful = false;
-            JOptionPane.showMessageDialog(null, "Please check the Color name.");
-        }
-        else if(thisDesign.getDesignId() < 1)
-        {
-            isSuccessful = false;
-            JOptionPane.showMessageDialog(null, "Please check the Design name."); 
+            JOptionPane.showMessageDialog(null, "Please check the Job Order number.");
         }
         
-        else if(JobOrder.getText().length() < 1)
-        {
-            isSuccessful = false;
-            JOptionPane.showMessageDialog(null, "Please check the Job Order number.");  
-        }/*
-        else if(this.BatchNo.getText().length() < 1)
-        {
-            isSuccessful = false;
-            JOptionPane.showMessageDialog(null, "Please check the Batch number.");
-        }*/
-        else if(thisDyeingMachine.getMachineId() < 1)
-        {
-            isSuccessful = false;
-            JOptionPane.showMessageDialog(null, "Please check the Machine details.");  
-        }
-        else if(this.DyeingVolumeTextField.getText().length() < 1)
-        {
-            isSuccessful = false;
-            JOptionPane.showMessageDialog(null, "Please check the value in Volume of Water."); 
-        }
-        else if(this.DyeingWeight.getText().length() < 1)
-        {
-            isSuccessful = false;
-            JOptionPane.showMessageDialog(null, "Please check the value in the Weight."); 
-        }
-        else if(thisResinMachine.getMachineId() < 1)
-        {
-            isSuccessful = false;
-            JOptionPane.showMessageDialog(null, "Please check the Machine details.");  
-        }
-        else if(this.ResinVolumeTextField.getText().length() < 1)
-        {
-            isSuccessful = false;
-            JOptionPane.showMessageDialog(null, "Please check the value in Volume of Water."); 
-        }
-        else if(this.ResinWeight.getText().length() < 1)
-        {
-            isSuccessful = false;
-            JOptionPane.showMessageDialog(null, "Please check the value in the Weight."); 
-        }
         return isSuccessful;
+        
     }
     
-    public boolean CheckTextBoxIsParseValid(JTextField thisTextField)
-    {
-            return thisTextField.getText().length() >= 1;
+    private boolean CheckAllFormInformationFromTextBox() {
+        boolean isSuccessful = true;
+
+        if (!CheckCustomerAndJobOrderFromTextBox()) {
+            isSuccessful = false;
+            
+        } else if (thisColor.getColorId() < 1) {
+            isSuccessful = false;
+            JOptionPane.showMessageDialog(null, "Please check the Color name.");
+        } else if (thisDesign.getDesignId() < 1) {
+            isSuccessful = false;
+            JOptionPane.showMessageDialog(null, "Please check the Design name.");
+        } 
+        else if(this.Reference.getText().length() < 1)
+        {
+            isSuccessful = false;
+            JOptionPane.showMessageDialog(null, "Please check the the Reference."); 
+        }
+        else if(this.ProgramNumber.getText().length() < 1)
+        {
+            isSuccessful = false;
+            JOptionPane.showMessageDialog(null, "Please check the Program Number."); 
+        }
+        else if(this.Location.getText().length() < 1)
+        {
+            isSuccessful = false;
+            JOptionPane.showMessageDialog(null, "Please check the Location."); 
+        }
+        /*
+         else if(this.BatchNo.getText().length() < 1)
+         {
+         isSuccessful = false;
+         JOptionPane.showMessageDialog(null, "Please check the Batch number.");
+         }*/ 
+        else if(!CheckIfDyeingMachineHasInputs())
+        {
+            isSuccessful = false;
+        }
+        else if(thisResinMachine.getMachineId() > 0)
+        {
+            isSuccessful = CheckIfResinMachineHasInputs();
+        }
+        
+        return isSuccessful;
     }
-    private boolean AddTextToJobOrderObject()
-    {
+
+    public boolean CheckTextBoxIsParseValid(JTextField thisTextField) {
+        return thisTextField.getText().length() >= 1;
+    }
+
+    private boolean AddTextToJobOrderObject() {
         boolean isSuccessful = false;
         //If all inputs are good
-        if(CheckJobOrderInformationFromTextBox())
-        {
+        if (CheckAllFormInformationFromTextBox()) {
             thisJob.setCustomerID(thisCustomer.getCustomerId());
             thisJob.setColorID(thisColor.getColorId());
             thisJob.setDesignID(thisDesign.getDesignId());
@@ -769,25 +742,31 @@ public class ReviewForm extends javax.swing.JFrame {
             thisJob.setDyeingMachineID(thisDyeingMachine.getMachineId());
             thisJob.setDyeingVolumeH20(Float.parseFloat(this.DyeingVolumeTextField.getText()));
             thisJob.setDyeingWeight(Float.parseFloat(this.DyeingWeight.getText()));
-            thisJob.setResinMachineID(thisResinMachine.getMachineId());
-            thisJob.setResinVolumeH20(Float.parseFloat(this.ResinVolumeTextField.getText()));
-            thisJob.setResinWeight(Float.parseFloat(this.ResinWeight.getText()));
+            if (thisResinMachine.getMachineId() > 0) {
+                thisJob.setResinMachineID(thisResinMachine.getMachineId());
+                thisJob.setResinVolumeH20(Float.parseFloat(this.ResinVolumeTextField.getText()));
+                thisJob.setResinWeight(Float.parseFloat(this.ResinWeight.getText()));
+            }
+            else
+            {
+                //thisJob.setResinMachineID(thisResinMachine.getMachineId());
+                //thisJob.setResinVolumeH20(Float.parseFloat(this.ResinVolumeTextField.getText()));
+                //thisJob.setResinWeight(Float.parseFloat(this.ResinWeight.getText()));
+            }
             thisJob.setRollLoad(RollLoad.getText());
             thisJob.setReference(Reference.getText());
             thisJob.setProgramNumber(this.ProgramNumber.getText());
             thisJob.setLocation(this.Location.getText());
-            
+
             isSuccessful = true;
-        }                  
+        }
         return isSuccessful;
     }
     private void SavePrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SavePrintActionPerformed
         // TODO add your handling code here:
         JobHandler thisJobHandler = new JobHandler();
-        if(AddTextToJobOrderObject())
-        {
-            if(ThisJobHasBeenAdded != true)
-            {
+        if (AddTextToJobOrderObject()) {
+            if (ThisJobHasBeenAdded != true) {
                 if (WindowType == 3) {
                     thisJobHandler.UpdateJobOrder(thisJob);
                 } else if ((WindowType == 4 || WindowType == 2 || WindowType == 1)) {
@@ -795,31 +774,26 @@ public class ReviewForm extends javax.swing.JFrame {
                 }
                 ThisJobHasBeenAdded = true;
             }
-            
-            try
-            {
+
+            try {
                 PrintHandlerFinal handler = new PrintHandlerFinal();
                 handler.createPDF(thisDyeingMachine, thisDesign, thisCustomer, thisColor, thisJob, thisDyeingProgram, DyeingVolumeTextField.getText());
-            }
-            catch(IOException | DocumentException e)
-            {
+            } catch (IOException | DocumentException e) {
             }
         }
-        
+
     }//GEN-LAST:event_SavePrintActionPerformed
 
     private void CancelButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButActionPerformed
         // TODO add your handling code here:
-        if(this.WindowType == 4 || this.WindowType == 3)
-        {
-            new ViewCustomerOrder().setVisible(true);
-        }
-        else if(thisJob.getResinProgramID() > 0)
-        {
+        
+        if (this.WindowType == 4 || this.WindowType == 3) {
+            if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Do you want to cancel using this Job Order?", "Exit?", JOptionPane.YES_NO_OPTION)) {
+                new ViewCustomerOrder().setVisible(true);
+            }
+        } else if (thisJob.getResinProgramID() > 0) {
             new AddResinForm(thisJob).setVisible(true);
-        }
-        else
-        {
+        } else {
             new DyeingForm(thisJob).setVisible(true);
         }
         this.dispose();
@@ -831,14 +805,12 @@ public class ReviewForm extends javax.swing.JFrame {
         //int customerId = -1;
         String customerName = "";
 
-        if(!CustomerDropDownList.getSelectedItem().toString().equals("Choose Customer"))
-        {
+        if (!CustomerDropDownList.getSelectedItem().toString().equals("Choose Customer")) {
             customerName = this.CustomerDropDownList.getSelectedItem().toString();
             thisCustomer.setCustomerName(customerName);
         }
 
-        if(!customerName.equals(""))
-        {
+        if (!customerName.equals("")) {
             //customerId = handler.GetCustomerIDFromCustomerName(customerName);
             thisCustomer.setCustomerId(handler.GetCustomerIDFromCustomerName(customerName));
         }
@@ -850,9 +822,8 @@ public class ReviewForm extends javax.swing.JFrame {
         //int designId = -1;
 
         //if(!designName.equals(""))
-        if(!DesignDropDownList.getSelectedItem().toString().equals("Choose Design")
-            && !(DesignDropDownList.getSelectedItem().toString().length() > 1))
-        {
+        if (!DesignDropDownList.getSelectedItem().toString().equals("Choose Design")
+                && !(DesignDropDownList.getSelectedItem().toString().length() > 1)) {
             String designName = DesignDropDownList.getSelectedItem().toString();
             thisDesign.setDesignName(designName);
             //designId = handler.GetDesignIDFromName(designName);
@@ -866,14 +837,12 @@ public class ReviewForm extends javax.swing.JFrame {
         //int colorId = -1;
         String colorName = "";
 
-        if(!ColorDropDownList.getSelectedItem().toString().equals("Choose Color"))
-        {
+        if (!ColorDropDownList.getSelectedItem().toString().equals("Choose Color")) {
             colorName = ColorDropDownList.getSelectedItem().toString();
             thisColor.setColorName(colorName);
         }
 
-        if(!colorName.equals(""))
-        {
+        if (!colorName.equals("")) {
             //colorId = handler.GetColorIDFromColorName(colorName);
             thisColor.setColorId(handler.GetColorIDFromColorName(colorName));
         }
@@ -886,28 +855,26 @@ public class ReviewForm extends javax.swing.JFrame {
         int machineId = -1;
         String machineName = "";
 
-        if(!DyeingMachineDropDown.getSelectedItem().toString().equals("Choose Machine"))
-        {
+        if (!DyeingMachineDropDown.getSelectedItem().toString().equals("Choose Machine")) {
             machineName = DyeingMachineDropDown.getSelectedItem().toString();
-        }
 
-        if(!machineName.equals(""))
-        {
-            machineId = handler.GetMachineIdByName(machineName);
-        }
+            if (!machineName.equals("")) {
+                machineId = handler.GetMachineIdByName(machineName);
 
-        if(machineId > -1)
-        {
-            machineDetails = handler.GetMachineDetailsById(machineId);
-        }
+                if (machineId > -1) {
+                    machineDetails = handler.GetMachineDetailsById(machineId);
 
+                    
+                    thisDyeingMachine.setMaxCapacity(machineDetails.getMaxCapacity());
+                    thisDyeingMachine.setMaxVolume(machineDetails.getMaxVolume());
+                    thisDyeingMachine.setMinCapacity(machineDetails.getMinCapacity());
+                    thisDyeingMachine.setMinVolume(machineDetails.getMinVolume());
+                    thisDyeingMachine.setNumOfLoad(machineDetails.getNumOfLoad());
+                }
+            }
+        }
         thisDyeingMachine.setMachineId(machineId);
         thisDyeingMachine.setMachineName(machineDetails.getMachineName());
-        thisDyeingMachine.setMaxCapacity(machineDetails.getMaxCapacity());
-        thisDyeingMachine.setMaxVolume(machineDetails.getMaxVolume());
-        thisDyeingMachine.setMinCapacity(machineDetails.getMinCapacity());
-        thisDyeingMachine.setMinVolume(machineDetails.getMinVolume());
-        thisDyeingMachine.setNumOfLoad(machineDetails.getNumOfLoad());
     }//GEN-LAST:event_DyeingMachineDropDownActionPerformed
 
     private void DyeingWeightFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_DyeingWeightFocusLost
@@ -918,8 +885,9 @@ public class ReviewForm extends javax.swing.JFrame {
         String weight = DyeingWeight.getText();
         weight = weight.replaceAll("[^\\d.]", "");
         DyeingWeight.setText(weight);
-        if(this.CheckTextBoxIsParseValid(DyeingWeight))
+        if (this.CheckTextBoxIsParseValid(DyeingWeight)) {
             thisJob.setDyeingWeight(Float.parseFloat(weight));
+        }
     }//GEN-LAST:event_DyeingWeightKeyReleased
 
     private void DyeingMachineLiquidRatioDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DyeingMachineLiquidRatioDropDownActionPerformed
@@ -932,9 +900,7 @@ public class ReviewForm extends javax.swing.JFrame {
         if (ThisJobHasBeenAdded == true) {
             JOptionPane.showMessageDialog(null, "Job order has already been added.");
             this.dispose();
-        }
-        else
-        {
+        } else {
             if (this.WindowType != 3) {
                 if (AddTextToJobOrderObject()) {
                     if (thisJobHandler.AddNewJobOrder(thisJob) > 0) {
@@ -957,18 +923,69 @@ public class ReviewForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_SaveExitActionPerformed
 
+    private boolean CheckIfDyeingMachineHasInputs()
+    {
+        boolean isSuccessful = true;
+        
+        if(thisDyeingMachine.getMachineId() < 1)
+        {
+            isSuccessful = false;
+            JOptionPane.showMessageDialog(null, "Please choose a Dyeing Machine.");  
+        }
+        else if(this.DyeingVolumeTextField.getText().length() < 1)
+        {
+            isSuccessful = false;
+            JOptionPane.showMessageDialog(null, "Please check the value in Volume of Water in Dyeing Machine."); 
+        }
+        else if(this.DyeingWeight.getText().length() < 1)
+        {
+            isSuccessful = false;
+            JOptionPane.showMessageDialog(null, "Please check the value in the Weight in Dyeing Machine."); 
+        }
+        
+        return isSuccessful;
+    }
+    
     private void EditDyeingProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditDyeingProgramActionPerformed
-        ViewDyeingProgramList thisDyeingProgramListWindow;
-        thisDyeingProgramListWindow = new ViewDyeingProgramList(this.thisJob, this.WindowType);
-        thisDyeingProgramListWindow.setVisible(true);
-        this.dispose();
+        if (CheckIfDyeingMachineHasInputs() && CheckCustomerAndJobOrderFromTextBox()) {
+            ViewDyeingProgramList thisDyeingProgramListWindow;
+            thisDyeingProgramListWindow = new ViewDyeingProgramList(this.thisJob, 5);
+            thisDyeingProgramListWindow.setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_EditDyeingProgramActionPerformed
 
+    private boolean CheckIfResinMachineHasInputs()
+    {
+        boolean isSuccessful = true;
+        
+        if(thisResinMachine.getMachineId() < 1)
+        {
+            isSuccessful = false;
+            JOptionPane.showMessageDialog(null, "Please check the Resin Machine.");  
+        }
+        else if(this.ResinVolumeTextField.getText().length() < 1)
+        {
+            isSuccessful = false;
+            JOptionPane.showMessageDialog(null, "Please check the value in Volume of Water in Resin Machine."); 
+        }
+        else if(this.ResinWeight.getText().length() < 1)
+        {
+            isSuccessful = false;
+            JOptionPane.showMessageDialog(null, "Please check the value in the Weight in Resin Machine."); 
+        }
+        
+        return isSuccessful;
+    }
+    
     private void EditResinProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditResinProgramActionPerformed
         // TODO add your handling code here:
-        ViewResinProgramList thisResinProgram = new ViewResinProgramList(thisJob, this.WindowType);
-        thisResinProgram.setVisible(true);
-        this.dispose();
+        if (CheckIfResinMachineHasInputs() && CheckCustomerAndJobOrderFromTextBox()) {
+            ViewResinProgramList thisResinProgram;
+            thisResinProgram = new ViewResinProgramList(thisJob, 5);
+            thisResinProgram.setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_EditResinProgramActionPerformed
 
     private void BatchNoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BatchNoKeyReleased
@@ -978,10 +995,6 @@ public class ReviewForm extends javax.swing.JFrame {
         this.BatchNo.setText(thisBatchNo);
     }//GEN-LAST:event_BatchNoKeyReleased
 
-    private void ProgramNumberKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ProgramNumberKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ProgramNumberKeyReleased
-
     private void ResinMachineDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResinMachineDropDownActionPerformed
         // TODO add your handling code here:
         Machine machineDetails = new Machine();
@@ -989,28 +1002,27 @@ public class ReviewForm extends javax.swing.JFrame {
         int machineId = -1;
         String machineName = "";
 
-        if(!ResinMachineDropDown.getSelectedItem().toString().equals("Choose Machine"))
-        {
+        if (!ResinMachineDropDown.getSelectedItem().toString().equals("Choose Machine")) {
             machineName = ResinMachineDropDown.getSelectedItem().toString();
-        }
 
-        if(!machineName.equals(""))
-        {
-            machineId = handler.GetMachineIdByName(machineName);
-        }
+            if (!machineName.equals("")) {
+                machineId = handler.GetMachineIdByName(machineName);
 
-        if(machineId > -1)
-        {
-            machineDetails = handler.GetMachineDetailsById(machineId);
+                if (machineId > -1) {
+                    machineDetails = handler.GetMachineDetailsById(machineId);
+
+                    thisResinMachine.setMaxCapacity(machineDetails.getMaxCapacity());
+                    thisResinMachine.setMaxVolume(machineDetails.getMaxVolume());
+                    thisResinMachine.setMinCapacity(machineDetails.getMinCapacity());
+                    thisResinMachine.setMinVolume(machineDetails.getMinVolume());
+                    thisResinMachine.setNumOfLoad(machineDetails.getNumOfLoad());
+                }
+            }
         }
 
         thisResinMachine.setMachineId(machineId);
         thisResinMachine.setMachineName(machineDetails.getMachineName());
-        thisResinMachine.setMaxCapacity(machineDetails.getMaxCapacity());
-        thisResinMachine.setMaxVolume(machineDetails.getMaxVolume());
-        thisResinMachine.setMinCapacity(machineDetails.getMinCapacity());
-        thisResinMachine.setMinVolume(machineDetails.getMinVolume());
-        thisResinMachine.setNumOfLoad(machineDetails.getNumOfLoad());
+
     }//GEN-LAST:event_ResinMachineDropDownActionPerformed
 
     private void ResinWeightFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ResinWeightFocusLost
@@ -1023,12 +1035,14 @@ public class ReviewForm extends javax.swing.JFrame {
         String weight = ResinWeight.getText();
         weight = weight.replaceAll("[^\\d.]", "");
         ResinWeight.setText(weight);
-        if(this.CheckTextBoxIsParseValid(ResinWeight))
+        if (this.CheckTextBoxIsParseValid(ResinWeight)) {
             thisJob.setResinWeight(Float.parseFloat(weight));
+        }
     }//GEN-LAST:event_ResinWeightKeyReleased
 
     private void ResinMachineLiquidRatioDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResinMachineLiquidRatioDropDownActionPerformed
         // TODO add your handling code here:
+        ComputeForResinVolume();
     }//GEN-LAST:event_ResinMachineLiquidRatioDropDownActionPerformed
 
     private void DyeingVolumeTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DyeingVolumeTextFieldKeyReleased
@@ -1036,8 +1050,9 @@ public class ReviewForm extends javax.swing.JFrame {
         String volume = this.DyeingVolumeTextField.getText();
         volume = volume.replaceAll("[^\\d.]", "");
         DyeingVolumeTextField.setText(volume);
-        if(this.CheckTextBoxIsParseValid(DyeingVolumeTextField))
+        if (this.CheckTextBoxIsParseValid(DyeingVolumeTextField)) {
             thisJob.setDyeingVolumeH20(Float.parseFloat(volume));
+        }
     }//GEN-LAST:event_DyeingVolumeTextFieldKeyReleased
 
     private void ResinVolumeTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ResinVolumeTextFieldKeyReleased
@@ -1045,8 +1060,9 @@ public class ReviewForm extends javax.swing.JFrame {
         String volume = this.ResinVolumeTextField.getText();
         volume = volume.replaceAll("[^\\d.]", "");
         ResinVolumeTextField.setText(volume);
-        if(this.CheckTextBoxIsParseValid(ResinVolumeTextField))
+        if (this.CheckTextBoxIsParseValid(ResinVolumeTextField)) {
             thisJob.setResinVolumeH20(Float.parseFloat(volume));
+        }
     }//GEN-LAST:event_ResinVolumeTextFieldKeyReleased
 
     /**
@@ -1083,24 +1099,13 @@ public class ReviewForm extends javax.swing.JFrame {
             }
         });
     }
-    
-    
-    private void CancelActionPerformed(java.awt.event.ActionEvent evt) {                                       
-        // TODO add your handling code here:
-        if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Do you want to cancel this Job Order?","Exit?", JOptionPane.YES_NO_OPTION))
-        {
-            
-        }
-    }
-    
-    public String get_date_from_spinner(JSpinner this_spinner)
-    {
+
+    public String get_date_from_spinner(JSpinner this_spinner) {
         SimpleDateFormat formater = new SimpleDateFormat("yyyy/MM/dd");
         return formater.format(this_spinner.getValue());
     }
-    
-    private void ComputeForResinVolume()
-    {
+
+    private void ComputeForResinVolume() {
         String weight = ResinWeight.getText();
         String liquidRatio = this.ResinMachineLiquidRatioDropDown.getSelectedItem().toString();
         if (!weight.equals("") && !liquidRatio.equals("Liquid Ratio")) {
@@ -1108,9 +1113,8 @@ public class ReviewForm extends javax.swing.JFrame {
             ResinVolumeTextField.setText(computeForVolume(Integer.parseInt(weight), liquidRatio));
         }
     }
-    
-    private void ComputeForDyeingVolume()
-    {
+
+    private void ComputeForDyeingVolume() {
         String weight = DyeingWeight.getText();
         String liquidRatio = DyeingMachineLiquidRatioDropDown.getSelectedItem().toString();
         if (!weight.equals("") && !liquidRatio.equals("Liquid Ratio")) {
@@ -1118,119 +1122,106 @@ public class ReviewForm extends javax.swing.JFrame {
             DyeingVolumeTextField.setText(computeForVolume(Integer.parseInt(weight), liquidRatio));
         }
     }
-    
-    private String computeForVolume(int weight, String LiquidRatio)
-    {
+
+    private String computeForVolume(int weight, String LiquidRatio) {
         int weightMultiplier = 0;
-        
-        if(LiquidRatio.equals("1:6"))
-        {
+
+        if (LiquidRatio.equals("1:6")) {
             weightMultiplier = 6;
-        }
-        else if(LiquidRatio.equals("1:8"))
-        {
+        } else if (LiquidRatio.equals("1:8")) {
             weightMultiplier = 8;
-        }
-        else if(LiquidRatio.equals("1:9"))
-        {
+        } else if (LiquidRatio.equals("1:9")) {
             weightMultiplier = 9;
-        }
-        else if(LiquidRatio.equals("1:10"))
-        {
+        } else if (LiquidRatio.equals("1:10")) {
             weightMultiplier = 10;
-        }
-        else if(LiquidRatio.equals("1:12"))
-        {
+        } else if (LiquidRatio.equals("1:12")) {
             weightMultiplier = 12;
         }
-        
+
         double volume = weight * weightMultiplier;
-        
+
         //DyeingVolumeTextField.setText(Double.toString(volume));
         return Double.toString(volume);
     }
-    
-    private void populateLiquorRatioDropDown()
-    {
+
+    private void populateLiquorRatioDropDown() {
         ArrayList<String> LiquidRatioList = new ArrayList<String>();
-        
+
         LiquidRatioList.add("1:6");
         LiquidRatioList.add("1:8");
         LiquidRatioList.add("1:9");
         LiquidRatioList.add("1:10");
         LiquidRatioList.add("1:12");
-        
-        for(int x=0; x<LiquidRatioList.size(); x++)
-        {
+
+        for (int x = 0; x < LiquidRatioList.size(); x++) {
             DyeingMachineLiquidRatioDropDown.addItem(LiquidRatioList.get(x));
+            ResinMachineLiquidRatioDropDown.addItem(LiquidRatioList.get(x));
         }
 
     }
     /*
-    private void initTextFields(){
+     private void initTextFields(){
         
-        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-        Date date = new Date();
+     DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+     Date date = new Date();
         
-        VolumeTextField.setEditable(false);
-        CreatedDate.setEditable(false);
-        CreatedDate.setText(dateFormat.format(date).toString());
+     VolumeTextField.setEditable(false);
+     CreatedDate.setEditable(false);
+     CreatedDate.setText(dateFormat.format(date).toString());
         
-    }
-    */
-    private void populateDyeingMachineDropDown(){
+     }
+     */
+
+    private void populateDyeingMachineDropDown() {
         ArrayList<Machine> MachineList = new MachineHandler().GetAllDyeingMachines();
-        
-        if(MachineList != null){
-            for(int x=0; x<MachineList.size(); x++)
-            {
+
+        if (MachineList != null) {
+            for (int x = 0; x < MachineList.size(); x++) {
                 DyeingMachineDropDown.addItem(MachineList.get(x).getMachineName());
             }
-        }  
-        
+        }
+
     }
-    private void populateResinMachineDropDown(){
+
+    private void populateResinMachineDropDown() {
         ArrayList<Machine> MachineList = new MachineHandler().GetAllResinMachines();
-        
-        if(MachineList != null){
-            for(int x=0; x<MachineList.size(); x++)
-            {
+
+        if (MachineList != null) {
+            for (int x = 0; x < MachineList.size(); x++) {
                 ResinMachineDropDown.addItem(MachineList.get(x).getMachineName());
             }
-        }  
-        
+        }
+
     }
-    
-    private void populateColorDropDown(){
+
+    private void populateColorDropDown() {
         ArrayList<String> ColorList = new ColorHandler().GetAllColor();
-        
-        if(ColorList != null){
-            for(int x=0; x<ColorList.size(); x++)
-            {
+
+        if (ColorList != null) {
+            for (int x = 0; x < ColorList.size(); x++) {
                 ColorDropDownList.addItem(ColorList.get(x));
             }
-        }  
+        }
     }
-    
-    private void populateDesignDropDown(){
+
+    private void populateDesignDropDown() {
         ArrayList<String> DesignList = new DesignHandler().GetAllDesigns();
-        
-        if(DesignList != null){
-            for(int x=0; x<DesignList.size(); x++)
-            {
+
+        if (DesignList != null) {
+            for (int x = 0; x < DesignList.size(); x++) {
                 DesignDropDownList.addItem(DesignList.get(x));
             }
-        }     
+        }
     }
-    
-    private void populateCustomerDropDown(){
+
+    private void populateCustomerDropDown() {
         ArrayList<String> CustomerList = new CustomerHandler().GetAllCustomers();
-        
-        if(CustomerList != null){
+
+        if (CustomerList != null) {
             for (String CustomerList1 : CustomerList) {
                 CustomerDropDownList.addItem(CustomerList1);
             }
-        }     
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

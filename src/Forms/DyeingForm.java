@@ -537,7 +537,7 @@ public class DyeingForm extends javax.swing.JFrame {
                     else
                     {
                         //thisProcessOrder.setResinProgramID(0);
-                        ReviewForm thisReviewForm = new ReviewForm(thisJob, 1);
+                        ReviewForm thisReviewForm = new ReviewForm(thisJob, this.WindowProcessType);
                         //Show Review Form and Ask to print
                         thisReviewForm.setVisible(true);
                         //ProcessOrderHandler thisProcess = new ProcessOrderHandler();
@@ -545,7 +545,7 @@ public class DyeingForm extends javax.swing.JFrame {
                     }
                     break;
                 case 4:
-                    ReviewForm thisReviewForm = new ReviewForm(thisJob, 1);
+                    ReviewForm thisReviewForm = new ReviewForm(thisJob, this.WindowProcessType);
                         //Show Review Form and Ask to print
                     thisReviewForm.setVisible(true);
                     break;
@@ -558,7 +558,7 @@ public class DyeingForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(this.WindowProcessType == 3)
         {
-            ViewDyeingProgramList chooseDyeingProgram = new ViewDyeingProgramList(thisJob);
+            ViewDyeingProgramList chooseDyeingProgram = new ViewDyeingProgramList(thisJob, this.WindowProcessType);
             chooseDyeingProgram.setVisible(true);
             this.dispose();
         }

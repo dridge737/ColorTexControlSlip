@@ -59,7 +59,7 @@ public class ViewDyeingProgramList extends javax.swing.JFrame {
         {
             Header.setText("Control Slip : Page 2/6");
         }
-        else if(currentType == 4)
+        else if(currentType == 4 || currentType == 5)
         {
             Header.setText("Choose Dyeing Program");
         }
@@ -188,7 +188,7 @@ public class ViewDyeingProgramList extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(BgPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 525, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(BgPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 525, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -289,7 +289,7 @@ public class ViewDyeingProgramList extends javax.swing.JFrame {
             JobOrderForm newJobOrderForm = new JobOrderForm(getThisJob());
             newJobOrderForm.setVisible(true);
         }
-        else if(WindowType == 4)
+        else if(WindowType == 4 || WindowType == 5)
         {
             new ReviewForm(thisJob, 4).setVisible(true);
         }

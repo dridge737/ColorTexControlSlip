@@ -1672,8 +1672,8 @@ public class ColorTextControlSlipRepository {
                     + " ResinProgramID, "
                     + " Reference, "
                     + " ProgramNumber, "
-                    //                     1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18
-                    + " Location ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? , ?)";
+                    //                     1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19
+                    + " Location ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? , ?, ?)";
         
         return setJobOrderAndExecuteStatement(newJobOrder, query, 1);
         
@@ -1733,7 +1733,7 @@ public class ColorTextControlSlipRepository {
         try {
             conn = db.getConnection();
             int itemNumber = 1;
-            preparedStmt = conn.prepareStatement(query);
+            preparedStmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStmt.setString(itemNumber++, thisJobOrder.getDrNumber()); //1
             preparedStmt.setInt(itemNumber++, thisJobOrder.getDesignID()); //2
             preparedStmt.setInt(itemNumber++, thisJobOrder.getColorID()); //3
@@ -1807,6 +1807,7 @@ public class ColorTextControlSlipRepository {
                     + " Location = ? "
                     + " WHERE ID = ?";
         
+        //Check if JobOrder has been updated. This will return !=1 if job Order has not yet been added.
         return setJobOrderAndExecuteStatement(thisJobOrder, query, 2) != -1; 
         
         /*
@@ -1979,6 +1980,9 @@ public class ColorTextControlSlipRepository {
             thisJobOrder.setCustomerID(rs.getInt("CustomerID"));
             thisJobOrder.setJobDate(rs.getString("Date"));
             thisJobOrder.setBatchNo(rs.getInt("BatchNo"));
+            thisJobOrder.setReference(rs.getString("Reference"));
+            thisJobOrder.setProgramNumber(rs.getString("ProgramNumber"));
+            thisJobOrder.setLocation(rs.getString("Location"));
 
             thisJobOrder.setDyeingMachineID(rs.getInt("DyeingMachineID"));
             thisJobOrder.setDyeingWeight(rs.getFloat("DyeingWeight"));

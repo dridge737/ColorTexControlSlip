@@ -34,6 +34,11 @@ public class MainWindow extends javax.swing.JFrame {
         this.setLocation(x,y);
     }
 
+    public void setCompanyName()
+    {
+        String CompanyName = "Relianz International Corp.";
+        //"Colortex Processing Inc."
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
