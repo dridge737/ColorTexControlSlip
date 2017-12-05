@@ -15,8 +15,10 @@ import DataEntities.Design;
 import DataEntities.JobOrder;
 import DataEntities.ProcessOrder;
 import Database.ColorTextControlSlipRepository;
+import Forms.HelpForm.auto_complete;
 import Handlers.DesignHandler;
 import Handlers.JobHandler;
+import Handlers.LiquidRatioHandler;
 import Handlers.ProcessOrderHandler;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -51,6 +53,7 @@ public class JobOrderForm extends javax.swing.JFrame {
     Customer thisCustomer = new Customer();
     ChemicalColor thisColor = new ChemicalColor();
     JobOrder thisJob = new JobOrder();
+    ArrayList<String> AllLiquidRatio = new ArrayList<String>();
     //ProcessOrder thisProcessOrder = new ProcessOrder();
     private final static int POINTS_PER_INCH = 72;
     private int WindowType = 0;
@@ -66,6 +69,8 @@ public class JobOrderForm extends javax.swing.JFrame {
         populateColorDropDown();
         populateDyeingMachineDropDown();
         populateLiquoRatioDropDown();
+        new LiquidRatioHandler().addLiquidRatioTextBoxAutoComplete(LiquidRatio);
+        //addLiquidRatioTextBoxAutoComplete();
         SetToCenter();
     }
     
@@ -85,6 +90,16 @@ public class JobOrderForm extends javax.swing.JFrame {
         //SetProcessOrderDetails();
         SetDropDownDetails();
         WindowType = 1;
+    }
+    
+    public void addLiquidRatioTextBoxAutoComplete()
+    {
+        //Chemical allChemicals = new Chemical();
+        LiquidRatioHandler newLiquidRatioHandler = new LiquidRatioHandler();
+        AllLiquidRatio = newLiquidRatioHandler.GetAllLiquidRatio();
+        auto_complete dropdownAutoComplete = new auto_complete();
+        dropdownAutoComplete.setupAutoComplete(this.LiquidRatio, AllLiquidRatio);
+        this.LiquidRatio.setColumns(30);
     }
     
     //private void SetProcessOrderDetails(){}
@@ -179,6 +194,8 @@ public class JobOrderForm extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         Weight = new javax.swing.JTextField();
         VolumeTextField = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        LiquidRatio = new javax.swing.JTextField();
         LiquidRatioDropDown = new javax.swing.JComboBox<String>();
         Cancel = new javax.swing.JButton();
         NextButton = new javax.swing.JButton();
@@ -310,6 +327,21 @@ public class JobOrderForm extends javax.swing.JFrame {
         });
         jPanel2.add(VolumeTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(184, 112, 460, -1));
 
+        jLabel10.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel10.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel10.setText("Liquid Ratio :");
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 74, 120, 30));
+
+        LiquidRatio.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        LiquidRatio.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                LiquidRatioFocusLost(evt);
+            }
+        });
+        jPanel2.add(LiquidRatio, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 74, 263, 30));
+
         LiquidRatioDropDown.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         LiquidRatioDropDown.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Liquid Ratio" }));
         LiquidRatioDropDown.addActionListener(new java.awt.event.ActionListener() {
@@ -317,7 +349,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                 LiquidRatioDropDownActionPerformed(evt);
             }
         });
-        jPanel2.add(LiquidRatioDropDown, new org.netbeans.lib.awtextra.AbsoluteConstraints(254, 74, 390, 30));
+        jPanel2.add(LiquidRatioDropDown, new org.netbeans.lib.awtextra.AbsoluteConstraints(624, 74, 20, 30));
 
         MainPanel.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 660, 150));
 
@@ -758,6 +790,10 @@ public class JobOrderForm extends javax.swing.JFrame {
     private void ProgramNumberKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ProgramNumberKeyReleased
         // TODO add your handling code here:
     }//GEN-LAST:event_ProgramNumberKeyReleased
+
+    private void LiquidRatioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_LiquidRatioFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_LiquidRatioFocusLost
     
     
     
@@ -900,6 +936,7 @@ public class JobOrderForm extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> DesignDropDownList;
     private javax.swing.JLabel JobLabel;
     private javax.swing.JTextField JobOrder;
+    private javax.swing.JTextField LiquidRatio;
     private javax.swing.JComboBox<String> LiquidRatioDropDown;
     private javax.swing.JTextField Location;
     private javax.swing.JComboBox<String> MachineDropDownList;
@@ -916,6 +953,7 @@ public class JobOrderForm extends javax.swing.JFrame {
     private javax.swing.JLabel customerLabel;
     private javax.swing.JSpinner dateSpinner;
     private javax.swing.JLabel designLabel;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;

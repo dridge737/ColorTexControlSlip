@@ -28,6 +28,8 @@ public class MachineSelection extends javax.swing.JFrame {
     public MachineSelection() {
         initComponents();
         SetToCenter();
+        this.populateLiquorRatioDropDown();
+        populateResinMachineDropDown();
     }
     
     public void SetToCenter()
@@ -42,7 +44,6 @@ public class MachineSelection extends javax.swing.JFrame {
     {
         this();
         thisJob = currentJob;
-        populateResinMachineDropDown();
     }
     
     private void populateResinMachineDropDown(){
@@ -56,6 +57,16 @@ public class MachineSelection extends javax.swing.JFrame {
                 MachineDropDownList.addItem(MachineList.get(x).getMachineName());
             }
         }   
+    }
+    
+    private void CheckValuesAndComputeForVolume()
+    {
+        String weight = Weight.getText();
+        String liquidRatio = LiquidRatioDropDown.getSelectedItem().toString();
+        if(!weight.equals("") && !liquidRatio.equals("Liquid Ratio"))
+        {
+            computeForVolume();
+        } 
     }
 
     private void populateLiquorRatioDropDown() {
@@ -284,16 +295,6 @@ public class MachineSelection extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_WeightFocusLost
 
-    private void CheckValuesAndComputeForVolume()
-    {
-        String weight = Weight.getText();
-        String liquidRatio = LiquidRatioDropDown.getSelectedItem().toString();
-        if(!weight.equals("") && !liquidRatio.equals("Liquid Ratio"))
-        {
-            computeForVolume();
-        } 
-    }
-    
     private void computeForVolume()
     {
         int weightMultiplier = 0;
@@ -342,6 +343,7 @@ public class MachineSelection extends javax.swing.JFrame {
 
     private void LiquidRatioDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LiquidRatioDropDownActionPerformed
         //ComputeForVolume();
+        CheckValuesAndComputeForVolume();
     }//GEN-LAST:event_LiquidRatioDropDownActionPerformed
 
     private void BackButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButActionPerformed

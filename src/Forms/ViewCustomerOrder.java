@@ -294,7 +294,7 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
     public DefaultTableModel getUpdatedTableModel() {      
         
         DefaultTableModel model_original = new DefaultTableModel();
-        model_original.addColumn("DR Number");
+        model_original.addColumn("Job Order");
         model_original.addColumn("Design");
         model_original.addColumn("Color");
         model_original.addColumn("Customer");

@@ -2036,7 +2036,8 @@ public class ColorTextControlSlipRepository {
                     + " AND DyeingMach.ID = DyeingMachineID "
                     //+ " AND ResinMach.ID = ResinMachineID"
                     + " AND dProg.ID = DyeingProgramID "
-                    + " AND dProg.ProgramNameID = dProgName.ID;");
+                    + " AND dProg.ProgramNameID = dProgName.ID"
+                    + " ORDER BY Date desc;");
 
             rs = ps.executeQuery();
             thisJobOrder = SetJobOrderArrayListFromResultSet(rs);
@@ -2106,7 +2107,8 @@ public class ColorTextControlSlipRepository {
                     //+ " AND ResMach.ID = ResinMachineID "
                     + " AND dProg.ID = DyeingProgramID "
                     + " AND dProg.ProgramNameID = dProgName.ID "
-                    + " AND cus.ID = ?;");
+                    + " AND cus.ID = ?"
+                    + " ORDER BY DATE desc;");
             
             //ps = conn.prepareStatement("SELECT DrNumber , Date , col.Name as coName, cus.Name as cName, \ndes.Name as dName , mach.Name as DyeingMachineName,  mach2.Name as ResinMachineName, \ndProgName.Name as dpName, resin_program_name.Name as rpName \nFROM color col, customer cus , design des, \njob_order LEFT JOIN Resin_Program ON job_order.ResinProgramID = resin_program.ID\nLEFT JOIN resin_program_name ON Resin_program.ProgramNameID = resin_program_name.ID,\nmachine mach, dyeing_program dProg, dyeing_program_name dProgName ,\nmachine mach2\nWHERE col.ID = ColorID \nAND cus.ID = CustomerID  \nAND des.ID = designID \nAND mach.ID = DyeingMachineID \nAND mach2.ID = ResinMachineID \nAND dProg.ID = DyeingProgramID \nAND dProg.ProgramNameID = dProgName.ID \nAND cus.ID = ?");
 
@@ -3540,4 +3542,100 @@ public class ColorTextControlSlipRepository {
         return resinProgramNameId;
     }
 
+    public boolean AddLiquidRatio(String newLiquidRatio) {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean added = false;
+        try {
+            conn = db.getConnection();
+            String query = "INSERT INTO liquid_ratio (liquid_ratio_value) VALUES (?)";
+
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setString(1, newLiquidRatio);
+            preparedStmt.executeUpdate();
+
+            added = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        this.closeConn(conn, preparedStmt);
+        return added;
+    }
+
+    public boolean DeleteLiquidRatioByLiquidRatioID(int LiquidRatioID) {
+
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean isSuccessful = false;
+        try {
+            conn = db.getConnection();
+            String query = "DELETE FROM liquid_ratio WHERE ID = ?";
+
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setInt(1, LiquidRatioID);
+            preparedStmt.executeUpdate();
+            isSuccessful = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        this.closeConn(conn, preparedStmt);
+        return isSuccessful;
+    }
+
+    public int CheckIfLiquidRatioExists(String LiquidRatio) {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int checkTest = 0;
+        try {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT EXISTS "
+                    + " (SELECT ID "
+                    + " FROM liquid_ratio WHERE "
+                    + " liquid_ratio_value = ?) "
+                    + " AS 'CheckTest'");
+
+            int item = 1;
+            ps.setString(item++, LiquidRatio);
+            rs = ps.executeQuery();
+            if (rs.first()) {
+                checkTest = rs.getInt("CheckTest");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        this.closeConn(conn, ps, rs);
+        return checkTest;
+    }
+    
+    public ArrayList<String> GetAllLiquidRatio() {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ArrayList<String> LiquidRatio = new ArrayList<>();
+        try {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT liquid_ratio_value FROM liquid_ratio");
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                LiquidRatio.add(rs.getString("liquid_ratio_value"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        this.closeConn(conn, ps, rs);
+        return LiquidRatio;
+
+    }
+    
 }

@@ -37,6 +37,8 @@ public class MachineForm extends javax.swing.JFrame {
         initComponents();
         this.get_updated_table();
         SetToCenter();
+        //Check if Machine type requires to be set via preference
+        //this.MachineTypeComboBox.setVisible(false);
     }
     
     public void SetToCenter()
@@ -79,7 +81,6 @@ public class MachineForm extends javax.swing.JFrame {
         setMaximumSize(null);
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         AddMachineButton.setBackground(new java.awt.Color(220, 220, 220));
         AddMachineButton.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
@@ -89,7 +90,6 @@ public class MachineForm extends javax.swing.JFrame {
                 AddMachineButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(AddMachineButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 500, 250, 35));
 
         EditMachineButton.setBackground(new java.awt.Color(220, 220, 220));
         EditMachineButton.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
@@ -99,7 +99,6 @@ public class MachineForm extends javax.swing.JFrame {
                 EditMachineButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(EditMachineButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 247, 365, 30));
 
         DeleteMachineButton.setBackground(new java.awt.Color(220, 220, 220));
         DeleteMachineButton.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
@@ -109,7 +108,6 @@ public class MachineForm extends javax.swing.JFrame {
                 DeleteMachineButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(DeleteMachineButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 247, 365, 30));
 
         MachineName.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         MachineName.setForeground(new java.awt.Color(204, 204, 204));
@@ -125,7 +123,6 @@ public class MachineForm extends javax.swing.JFrame {
                 MachineNameKeyReleased(evt);
             }
         });
-        jPanel1.add(MachineName, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 320, 365, 30));
 
         MachineListTable.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         MachineListTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -141,12 +138,9 @@ public class MachineForm extends javax.swing.JFrame {
         ));
         MachineTable.setViewportView(MachineListTable);
 
-        jPanel1.add(MachineTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, 740, 160));
-
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Machine");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 228, 44));
 
         DeleteMachineButton1.setBackground(new java.awt.Color(220, 220, 220));
         DeleteMachineButton1.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
@@ -156,7 +150,6 @@ public class MachineForm extends javax.swing.JFrame {
                 DeleteMachineButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(DeleteMachineButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 500, 250, 35));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Capacity", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 18), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -184,8 +177,6 @@ public class MachineForm extends javax.swing.JFrame {
         });
         jPanel2.add(MachineMinimumCapacity, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 30, 350, 30));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 740, 70));
-
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Volume", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 18), new java.awt.Color(255, 255, 255))); // NOI18N
         jPanel3.setOpaque(false);
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -210,8 +201,6 @@ public class MachineForm extends javax.swing.JFrame {
         });
         jPanel3.add(MachineMaximumVolume, new org.netbeans.lib.awtextra.AbsoluteConstraints(375, 25, 350, 30));
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 420, 740, 70));
-
         LoadingArrangement.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         LoadingArrangement.setForeground(new java.awt.Color(204, 204, 204));
         LoadingArrangement.setText("Number Of Loading Arrangement");
@@ -221,26 +210,88 @@ public class MachineForm extends javax.swing.JFrame {
                 LoadingArrangementFocusGained(evt);
             }
         });
-        jPanel1.add(LoadingArrangement, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 320, 365, 30));
 
         MachineTypeComboBox.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        MachineTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Dyeing Machine", "Resin Machine" }));
+        MachineTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "All Machines", "Dyeing Machine", "Resin Machine" }));
         MachineTypeComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MachineTypeComboBoxActionPerformed(evt);
             }
         });
-        jPanel1.add(MachineTypeComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 285, 738, 30));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(MachineTable, javax.swing.GroupLayout.PREFERRED_SIZE, 740, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(EditMachineButton, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5)
+                        .addComponent(DeleteMachineButton, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(MachineTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 738, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(MachineName, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5)
+                        .addComponent(LoadingArrangement, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 740, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 740, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(150, 150, 150)
+                        .addComponent(AddMachineButton, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(DeleteMachineButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(40, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addComponent(MachineTable, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(EditMachineButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DeleteMachineButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 8, 8)
+                .addComponent(MachineTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(MachineName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(LoadingArrangement, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(AddMachineButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DeleteMachineButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 820, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -340,7 +391,10 @@ public class MachineForm extends javax.swing.JFrame {
         thisMachine.setMinVolume(Integer.parseInt(this.MachineListTable.getModel().getValueAt(this.MachineListTable.getSelectedRow(), 3).toString()));
         thisMachine.setMaxVolume(Integer.parseInt(this.MachineListTable.getModel().getValueAt(this.MachineListTable.getSelectedRow(), 4).toString()));
         thisMachine.setNumOfLoad(Integer.parseInt(this.MachineListTable.getModel().getValueAt(this.MachineListTable.getSelectedRow(), 5).toString()));
+        //Check preference if it requires machine type then set
         thisMachine.setMachineType(new MachineHandler().GetMachineTypeInt(this.MachineListTable.getModel().getValueAt(this.MachineListTable.getSelectedRow(), 6).toString()));
+        //else do nothing
+        
         thisMachine.setMachineId(new MachineHandler().GetMachineIdByName(thisMachine.getMachineName()));
     }
     
@@ -405,6 +459,10 @@ public class MachineForm extends javax.swing.JFrame {
     
     private void UpdateRowFilter(String row_filter_text)
     {
+        if(row_filter_text.equals("All Machines"))
+        {
+            row_filter_text = "";
+        }
         TableRowSorter<TableModel> rowSorter
             = new TableRowSorter<>(this.MachineListTable.getModel());
         
@@ -432,8 +490,14 @@ public class MachineForm extends javax.swing.JFrame {
     private boolean GetMachineDetails()
     {   
         boolean DetailsValid = true;
+        //Check if Machine Type should be Chosen
         //Check if machine is a dyeing or resin machine
-        thisMachine.setMachineType(new MachineHandler().GetMachineTypeInt( MachineTypeComboBox.getSelectedItem().toString() ) );
+        //if(preference requires machine type)
+        if(MachineTypeComboBox.getSelectedIndex() != 0)
+        {
+            thisMachine.setMachineType(new MachineHandler().GetMachineTypeInt( MachineTypeComboBox.getSelectedItem().toString() ) );
+        }
+        //else setMachineType(0)
         
         //Machine newMachineDetails = new Machine();
         if(MachineName.getText().length() > 0 && !MachineName.getText().equals("Name"))
@@ -636,7 +700,7 @@ public class MachineForm extends javax.swing.JFrame {
         model_original.addColumn("Machine Type");
         
        
-        ArrayList<Machine> MachineList = new MachineHandler().GetAllDyeingMachines();
+        ArrayList<Machine> MachineList = new MachineHandler().GetAllMachines();
         for(int x=0; x<MachineList.size(); x++)
         {
             

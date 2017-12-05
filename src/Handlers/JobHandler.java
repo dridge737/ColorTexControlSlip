@@ -157,7 +157,7 @@ public class JobHandler {
          }
          //DecimalFormat f = new DecimalFormat("##.00");
          //Math.round(quantity * 100) / 100
-         return Math.round(quantity * 100) / 100;
+         return quantity;
      }
 
 }

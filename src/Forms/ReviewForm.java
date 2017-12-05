@@ -78,6 +78,7 @@ public class ReviewForm extends javax.swing.JFrame {
             SetResinProgramName();
             SetResinMachineNameDropDown();
         } else {
+            ResinMachinePanel.setVisible(false);
             //ResinMachinePanel.setEnabled(false);
             //ResinProgramText.setEnabled(false);
             //EditResinProgram.setEnabled(false);
@@ -139,7 +140,8 @@ public class ReviewForm extends javax.swing.JFrame {
         ProgramNumber.setText(thisJob.getProgramNumber());
         Location.setText(thisJob.getLocation());
         //Set Date to 
-        if (WindowType == 4 || WindowType == 3 || WindowType == 5) {
+        if(thisJob.getJobDate().contains("-"))
+        {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             try {
                 dateSpinner.setValue(sdf.parse(thisJob.getJobDate()));
@@ -238,12 +240,6 @@ public class ReviewForm extends javax.swing.JFrame {
         Location = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         RollLoad = new javax.swing.JTextField();
-        ResinLabel = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        DyeingProgramText = new javax.swing.JTextField();
-        EditResinProgram = new javax.swing.JButton();
-        ResinProgramText = new javax.swing.JTextField();
-        EditDyeingProgram = new javax.swing.JButton();
         SaveExit = new javax.swing.JButton();
         DyeingMachinePanel = new javax.swing.JPanel();
         DyeingMachineDropDown = new javax.swing.JComboBox<String>();
@@ -252,6 +248,9 @@ public class ReviewForm extends javax.swing.JFrame {
         DyeingWeight = new javax.swing.JTextField();
         DyeingVolumeTextField = new javax.swing.JTextField();
         DyeingMachineLiquidRatioDropDown = new javax.swing.JComboBox<String>();
+        jLabel10 = new javax.swing.JLabel();
+        DyeingProgramText = new javax.swing.JTextField();
+        EditDyeingProgram = new javax.swing.JButton();
         ResinMachinePanel = new javax.swing.JPanel();
         ResinMachineDropDown = new javax.swing.JComboBox<String>();
         jLabel12 = new javax.swing.JLabel();
@@ -259,6 +258,9 @@ public class ReviewForm extends javax.swing.JFrame {
         ResinWeight = new javax.swing.JTextField();
         ResinVolumeTextField = new javax.swing.JTextField();
         ResinMachineLiquidRatioDropDown = new javax.swing.JComboBox<String>();
+        ResinProgramText = new javax.swing.JTextField();
+        ResinLabel = new javax.swing.JLabel();
+        EditResinProgram = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Control Slip");
@@ -419,45 +421,6 @@ public class ReviewForm extends javax.swing.JFrame {
         RollLoad.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         MainPanel.add(RollLoad, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 180, 190, 30));
 
-        ResinLabel.setBackground(new java.awt.Color(255, 255, 255));
-        ResinLabel.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        ResinLabel.setForeground(new java.awt.Color(255, 255, 255));
-        ResinLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        ResinLabel.setText("Resin Program :");
-        ResinLabel.setToolTipText("");
-
-        jLabel10.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel10.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel10.setText("Dyeing Program :");
-
-        DyeingProgramText.setEditable(false);
-        DyeingProgramText.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        DyeingProgramText.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        DyeingProgramText.setEnabled(false);
-
-        EditResinProgram.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        EditResinProgram.setText("...");
-        EditResinProgram.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EditResinProgramActionPerformed(evt);
-            }
-        });
-
-        ResinProgramText.setEditable(false);
-        ResinProgramText.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        ResinProgramText.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        ResinProgramText.setEnabled(false);
-
-        EditDyeingProgram.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        EditDyeingProgram.setText("...");
-        EditDyeingProgram.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EditDyeingProgramActionPerformed(evt);
-            }
-        });
-
         SaveExit.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         SaveExit.setText("Save & Exit");
         SaveExit.addActionListener(new java.awt.event.ActionListener() {
@@ -467,7 +430,7 @@ public class ReviewForm extends javax.swing.JFrame {
         });
 
         DyeingMachinePanel.setBackground(new java.awt.Color(102, 102, 102));
-        DyeingMachinePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dyeing Machine", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 18), new java.awt.Color(255, 255, 255))); // NOI18N
+        DyeingMachinePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dyeing", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 18), new java.awt.Color(255, 255, 255))); // NOI18N
         DyeingMachinePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         DyeingMachineDropDown.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
@@ -523,8 +486,30 @@ public class ReviewForm extends javax.swing.JFrame {
         });
         DyeingMachinePanel.add(DyeingMachineLiquidRatioDropDown, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, 320, -1));
 
+        jLabel10.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel10.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel10.setText("Dyeing Program :");
+        DyeingMachinePanel.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 103, 140, 30));
+
+        DyeingProgramText.setEditable(false);
+        DyeingProgramText.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        DyeingProgramText.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        DyeingProgramText.setEnabled(false);
+        DyeingMachinePanel.add(DyeingProgramText, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 103, 440, 30));
+
+        EditDyeingProgram.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        EditDyeingProgram.setText("...");
+        EditDyeingProgram.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EditDyeingProgramActionPerformed(evt);
+            }
+        });
+        DyeingMachinePanel.add(EditDyeingProgram, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 103, 40, 30));
+
         ResinMachinePanel.setBackground(new java.awt.Color(102, 102, 102));
-        ResinMachinePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Resin Machine", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 18), new java.awt.Color(255, 255, 255))); // NOI18N
+        ResinMachinePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Resin", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 18), new java.awt.Color(255, 255, 255))); // NOI18N
         ResinMachinePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         ResinMachineDropDown.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
@@ -580,6 +565,29 @@ public class ReviewForm extends javax.swing.JFrame {
         });
         ResinMachinePanel.add(ResinMachineLiquidRatioDropDown, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, 320, -1));
 
+        ResinProgramText.setEditable(false);
+        ResinProgramText.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        ResinProgramText.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        ResinProgramText.setEnabled(false);
+        ResinMachinePanel.add(ResinProgramText, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 103, 440, 30));
+
+        ResinLabel.setBackground(new java.awt.Color(255, 255, 255));
+        ResinLabel.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        ResinLabel.setForeground(new java.awt.Color(255, 255, 255));
+        ResinLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        ResinLabel.setText("Resin Program :");
+        ResinLabel.setToolTipText("");
+        ResinMachinePanel.add(ResinLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 103, 140, 30));
+
+        EditResinProgram.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        EditResinProgram.setText("...");
+        EditResinProgram.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EditResinProgramActionPerformed(evt);
+            }
+        });
+        ResinMachinePanel.add(EditResinProgram, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 103, 40, 30));
+
         javax.swing.GroupLayout BgPanelLayout = new javax.swing.GroupLayout(BgPanel);
         BgPanel.setLayout(BgPanelLayout);
         BgPanelLayout.setHorizontalGroup(
@@ -594,24 +602,7 @@ public class ReviewForm extends javax.swing.JFrame {
                 .addComponent(DyeingMachinePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(BgPanelLayout.createSequentialGroup()
                 .addGap(35, 35, 35)
-                .addGroup(BgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(BgPanelLayout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(ResinMachinePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(BgPanelLayout.createSequentialGroup()
-                        .addGap(165, 165, 165)
-                        .addComponent(DyeingProgramText, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(BgPanelLayout.createSequentialGroup()
-                        .addGap(605, 605, 605)
-                        .addComponent(EditDyeingProgram, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
-            .addGroup(BgPanelLayout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(ResinLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(ResinProgramText, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(EditResinProgram, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(ResinMachinePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(BgPanelLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(SavePrint, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -629,21 +620,11 @@ public class ReviewForm extends javax.swing.JFrame {
                         .addGap(38, 38, 38)
                         .addComponent(MainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(ChemicalHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addComponent(DyeingMachinePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addGroup(BgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(BgPanelLayout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(ResinMachinePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(DyeingProgramText, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(EditDyeingProgram, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5)
-                .addGroup(BgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ResinLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ResinProgramText, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(EditResinProgram, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(DyeingMachinePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ResinMachinePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(BgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(SavePrint, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(SaveExit, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -991,8 +972,9 @@ public class ReviewForm extends javax.swing.JFrame {
     private void EditResinProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditResinProgramActionPerformed
         // TODO add your handling code here:
         if (CheckIfResinMachineHasInputs() && CheckCustomerAndJobOrderFromTextBox()) {
+            thisJob.setResinMachineID(thisResinMachine.getMachineId());
             ViewResinProgramList thisResinProgram;
-            thisResinProgram = new ViewResinProgramList(thisJob, 5);
+            thisResinProgram = new ViewResinProgramList(thisJob, 3);
             thisResinProgram.setVisible(true);
             this.dispose();
         }
@@ -1194,6 +1176,7 @@ public class ReviewForm extends javax.swing.JFrame {
     }
 
     private void populateResinMachineDropDown() {
+        
         ArrayList<Machine> MachineList = new MachineHandler().GetAllResinMachines();
 
         if (MachineList != null) {

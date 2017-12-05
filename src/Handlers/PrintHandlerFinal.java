@@ -196,8 +196,10 @@ public class PrintHandlerFinal {
                 PdfPCell cellOne = new PdfPCell(new Phrase("Loading Arrangment", f1));
                 cellOne.setBorder(PdfPCell.NO_BORDER);
                 loadTable.addCell(cellOne);
-            
-        float loadingArrangement = Float.parseFloat(Integer.toString(machineDetails.getNumOfLoad())) / Float.parseFloat(jobOrderDetails.getRollLoad());
+                
+        Machine dyeingMachine = machineHandler.GetMachineDetailsById(jobOrderDetails.getDyeingMachineID());
+        
+        float loadingArrangement = Float.parseFloat(jobOrderDetails.getRollLoad()) / Float.parseFloat(Integer.toString(dyeingMachine.getNumOfLoad()));
         int loadArrangementDisplay;
         if((loadingArrangement - (int)loadingArrangement ) != 0)
         {
@@ -673,7 +675,7 @@ public class PrintHandlerFinal {
         pCell = new PdfPCell(p7);
         table.addCell(p7);
         
-        Phrase p8 = new Phrase("Vol. of Water: " + volume, f);
+        Phrase p8 = new Phrase("Vol. of Water: " + jobOrderDetails.getDyeingVolumeH20(), f);
         //p8.add("Vol. of Water: " + volume, f);
         pCell = new PdfPCell(p8);
         table.addCell(p8);
@@ -708,7 +710,7 @@ public class PrintHandlerFinal {
         chapter.setNumberDepth(0);
         
         Font controlSlipHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
-        Paragraph controlSlipHeader = new Paragraph("Dyeing Control Slip", controlSlipHeaderFont);
+        Paragraph controlSlipHeader = new Paragraph("Resin Control Slip", controlSlipHeaderFont);
         controlSlipHeader.setAlignment(Element.ALIGN_CENTER);
         chapter.add(controlSlipHeader);
         
@@ -773,7 +775,7 @@ public class PrintHandlerFinal {
         pCell = new PdfPCell(p7);
         table.addCell(p7);
         
-        Phrase p8 = new Phrase("Vol. of Water: " + volume, f);
+        Phrase p8 = new Phrase("Vol. of Water: " + jobOrderDetails.getResinVolumeH20(), f);
         //p8.add("Vol. of Water: " + volume, f);
         pCell = new PdfPCell(p8);
         table.addCell(p8);

@@ -559,7 +559,7 @@ public class DyeingForm extends javax.swing.JFrame {
 
     private void CancelButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButActionPerformed
         // TODO add your handling code here:
-        if(this.WindowProcessType == 3)
+        if(this.WindowProcessType == 3 || WindowProcessType == 4 || WindowProcessType == 5)
         {
             ViewDyeingProgramList chooseDyeingProgram = new ViewDyeingProgramList(thisJob, this.WindowProcessType);
             chooseDyeingProgram.setVisible(true);

@@ -420,7 +420,7 @@ public class AddResinForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         boolean isResinNewToCustomer = CheckIfResinNewToCustomer(thisJob.getCustomerID(), resinProgram.getProgramNameID());
         int resinProgramId = -1;
-        if(WindowType == 1)
+        if(WindowType == 1 || WindowType == 3 || WindowType == 4 || WindowType == 5)
         {
             if(isResinNewToCustomer == true)
             {
@@ -435,7 +435,7 @@ public class AddResinForm extends javax.swing.JFrame {
             if(resinProgramId != -1)
             {
                 thisJob.setResinProgramID(resinProgramId);
-                ReviewForm thisForm = new ReviewForm(thisJob, this.WindowType);
+                ReviewForm thisForm = new ReviewForm(thisJob, 5);
                 thisForm.setVisible(true);
                 this.dispose();
             }
@@ -629,7 +629,7 @@ public class AddResinForm extends javax.swing.JFrame {
                 resinProgram.setProgramDefault(0);
                 resinProgramId = resinProgramHandler.AddNewResinProgram(resinProgram);
             }
-            this.dispose();
+            //this.dispose();
         }
 
         if(resinProgramId != -1)
@@ -751,7 +751,7 @@ public class AddResinForm extends javax.swing.JFrame {
         thisResinChemical.setState(StateComboBox.getSelectedItem().toString());
         thisResinChemical.setType(TypeComboBox.getSelectedItem().toString());
         //model.addRow(new Object[] {ChemicalName, this.StateBox.getSelectedItem() , this.TypeBox.getSelectedItem().toString(),GPLTextfield.getText(), "Delete"} );
-        if(WindowType == 1)
+        if(WindowType == 1 || WindowType == 3 || WindowType == 4 || WindowType == 5)
         {
             model.addRow(new Object[] {
                                         ChemicalName, 
