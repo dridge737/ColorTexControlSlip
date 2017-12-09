@@ -29,9 +29,20 @@ public class MainJava {
         //TestThisFrame.setVisible(true);
         //JobOrderForm thisJobForm = new JobOrderForm();
         //thisJobForm.setVisible(true);
-                
-        MainWindow thisMain = new MainWindow();
-        thisMain.setVisible(true);
+        PreferenceHandler initializePref = new PreferenceHandler();
+        boolean initialized = false;
+        if(initialized == initializePref.CheckIfInitialized())
+        {
+            initializePref.setPreference();
+            SettingForm newSettings = new SettingForm(true);
+            newSettings.setVisible(true);
+        }
+        else
+        {
+            MainWindow thisMain = new MainWindow();
+            thisMain.setVisible(true);
+        }
+        
     }
     
 }

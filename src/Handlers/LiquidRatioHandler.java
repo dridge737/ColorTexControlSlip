@@ -51,7 +51,7 @@ public class LiquidRatioHandler {
      }
     
     
-    public void addLiquidRatioTextBoxAutoComplete(JTextField LiquidRatioTextBox)
+    public ArrayList<String> addLiquidRatioTextBoxAutoComplete(JTextField LiquidRatioTextBox)
     {
         ArrayList<String> AllLiquidRatio = new ArrayList<String>();
         //Chemical allChemicals = new Chemical();
@@ -60,5 +60,7 @@ public class LiquidRatioHandler {
         auto_complete dropdownAutoComplete = new auto_complete();
         dropdownAutoComplete.setupAutoComplete(LiquidRatioTextBox, AllLiquidRatio);
         LiquidRatioTextBox.setColumns(30);
+        
+        return AllLiquidRatio;
     }
 }

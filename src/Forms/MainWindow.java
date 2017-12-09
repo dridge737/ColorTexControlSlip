@@ -24,6 +24,13 @@ public class MainWindow extends javax.swing.JFrame {
     public MainWindow() {
         initComponents();
         SetToCenter();
+        SetCompanyName();
+    }
+    
+    public void SetCompanyName()
+    {
+        PreferenceHandler thisPreference =  new PreferenceHandler();
+        CompanyLabel.setText(thisPreference.getCompanyPreference());
     }
     
     public void SetToCenter()
@@ -52,7 +59,8 @@ public class MainWindow extends javax.swing.JFrame {
         Exit = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        CompanyLabel = new javax.swing.JLabel();
+        SettingsButton = new javax.swing.JButton();
         ControlSlipButton = new javax.swing.JButton();
         DyeingForm = new javax.swing.JButton();
         ResinForm = new javax.swing.JButton();
@@ -87,12 +95,25 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Dyeing Control System");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(485, 7, 250, -1));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 7, 310, -1));
 
-        jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 22)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel1.setText("Relianz International Corp.");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 27, 320, -1));
+        CompanyLabel.setFont(new java.awt.Font("Century Gothic", 0, 22)); // NOI18N
+        CompanyLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        CompanyLabel.setText("Relianz International Corp.");
+        jPanel2.add(CompanyLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 25, 380, -1));
+
+        SettingsButton.setBackground(new java.awt.Color(255, 255, 255));
+        SettingsButton.setForeground(new java.awt.Color(255, 255, 255));
+        SettingsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/settings-work-tool.png"))); // NOI18N
+        SettingsButton.setBorderPainted(false);
+        SettingsButton.setContentAreaFilled(false);
+        SettingsButton.setFocusable(false);
+        SettingsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SettingsButtonActionPerformed(evt);
+            }
+        });
+        jPanel2.add(SettingsButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 16, 40, 30));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 60));
 
@@ -288,6 +309,13 @@ public class MainWindow extends javax.swing.JFrame {
         customerJobOrder.setVisible(true);
     }//GEN-LAST:event_PreviousCustomerOrderActionPerformed
 
+    private void SettingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SettingsButtonActionPerformed
+        // TODO add your handling code here:
+        SettingForm newSettingWindow = new SettingForm();
+        newSettingWindow.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_SettingsButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -373,6 +401,7 @@ public class MainWindow extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ChemBut;
     private javax.swing.JButton ColorBut;
+    private javax.swing.JLabel CompanyLabel;
     private javax.swing.JButton ControlSlipButton;
     private javax.swing.JButton CustomerBut;
     private javax.swing.JButton DesignBut;
@@ -383,7 +412,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton NewResinProgram;
     private javax.swing.JButton PreviousCustomerOrder;
     private javax.swing.JButton ResinForm;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton SettingsButton;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

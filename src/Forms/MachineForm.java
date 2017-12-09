@@ -35,10 +35,13 @@ public class MachineForm extends javax.swing.JFrame {
      */
     public MachineForm() {
         initComponents();
+        //Check if Machine type requires to be set via preference
+        if(!(new PreferenceHandler().getResinMachineInputPreference()))
+        {
+            this.MachineTypeComboBox.setVisible(false);
+        }
         this.get_updated_table();
         SetToCenter();
-        //Check if Machine type requires to be set via preference
-        //this.MachineTypeComboBox.setVisible(false);
     }
     
     public void SetToCenter()
@@ -372,16 +375,6 @@ public class MachineForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_DeleteMachineButtonActionPerformed
 
-    private void SetFormTextFromMachineObject()
-    {
-        MachineName.setText(thisMachine.getMachineName());
-        MachineMinimumCapacity.setText(Integer.toString(thisMachine.getMinCapacity()));
-        MachineMaximumCapacity.setText(Integer.toString(thisMachine.getMaxCapacity()));
-        MachineMinimumVolume.setText(Integer.toString(thisMachine.getMinVolume()));
-        MachineMaximumVolume.setText(Integer.toString(thisMachine.getMaxVolume()));
-        LoadingArrangement.setText(Integer.toString(thisMachine.getNumOfLoad()));
-        MachineTypeComboBox.setSelectedIndex(thisMachine.getMachineType());   
-    }
     
     private void SetMachineObjectFromSelectedTableIndex()
     {
@@ -418,7 +411,8 @@ public class MachineForm extends javax.swing.JFrame {
             }
         } else {
             MachineHandler handler = new MachineHandler();
-            if (GetMachineDetails()) {
+            if (CheckIfMachineDetailsIsValid()) {
+                this.SetMachineDetailsFromFormText();
                 if (handler.UpdateMachine(thisMachine)) {
                     JOptionPane.showMessageDialog(null, "Successfully updated the machine");
                     ResetText();
@@ -478,8 +472,10 @@ public class MachineForm extends javax.swing.JFrame {
     private void AddMachineButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddMachineButtonActionPerformed
         // TODO add your handling code here:
         //Machine newMachineDetails = GetMachineDetails();
-        if(GetMachineDetails())
+        //if(GetMachineDetails()) //Old Implementation
+        if(CheckIfMachineDetailsIsValid())
         {
+            this.SetMachineDetailsFromFormText();
             MachineHandler handler = new MachineHandler();
             handler.AddNewMachine(thisMachine);
             get_updated_table();
@@ -487,15 +483,98 @@ public class MachineForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_AddMachineButtonActionPerformed
 
+    private boolean CheckIfMachineDetailsIsValid()
+    {
+        boolean DetailsValid = true;
+        if(MachineTypeComboBox.isVisible())
+        {
+            if (MachineTypeComboBox.getSelectedIndex() == 0) {
+                DetailsValid = false;
+            }
+        }
+        else if(MachineName.getText().length() == 0 && MachineName.getText().equals("Name"))
+        {
+            JOptionPane.showMessageDialog(null, "Please input a machine name");
+            MachineName.setBackground(ColorError);
+            DetailsValid = false;
+        }
+        else if(LoadingArrangement.getText().matches("[0-9]+") == false)
+        {
+            if(LoadingArrangement.getText().equals("Number Of Loading Arrangement"))
+                JOptionPane.showMessageDialog(null, "Please input the number of loading arrangement");
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Please enter a valid number in the loading arrangement");
+            }
+            LoadingArrangement.setBackground(ColorError);
+            DetailsValid = false;
+        }
+        else if(!MachineMaximumCapacity.getText().matches("[0-9]+"))
+        {
+            if(MachineMaximumCapacity.getText().length() <= 0)
+            {
+                JOptionPane.showMessageDialog(null, "Please enter at least one number in the Machine's maximum capacity");
+            }
+            else
+                JOptionPane.showMessageDialog(null, "Please enter a valid number in the Machine's maximum capacity");
+            MachineMaximumCapacity.setBackground(ColorError);
+            DetailsValid = false; 
+        }
+        else if(!MachineMinimumCapacity.getText().matches("[0-9]+"))
+        {
+            if(MachineMinimumCapacity.getText().length() <= 0){
+                 JOptionPane.showMessageDialog(null, "Please enter at least one number in the Machine's minimum capacity");
+             }
+             else
+                 JOptionPane.showMessageDialog(null, "Please enter a valid number in the Machine's minimum capacity");
+            MachineMinimumCapacity.setBackground(ColorError);
+            DetailsValid = false;
+        }
+        
+        
+        return DetailsValid;
+    }
+    
+    private void SetFormTextFromMachineObject()
+    {
+        MachineName.setText(thisMachine.getMachineName());
+        MachineMinimumCapacity.setText(Integer.toString(thisMachine.getMinCapacity()));
+        MachineMaximumCapacity.setText(Integer.toString(thisMachine.getMaxCapacity()));
+        MachineMinimumVolume.setText(Integer.toString(thisMachine.getMinVolume()));
+        MachineMaximumVolume.setText(Integer.toString(thisMachine.getMaxVolume()));
+        LoadingArrangement.setText(Integer.toString(thisMachine.getNumOfLoad()));
+        if(this.MachineTypeComboBox.isVisible())
+            MachineTypeComboBox.setSelectedIndex(thisMachine.getMachineType());   
+        
+    }
+    
+    private void SetMachineDetailsFromFormText()
+    {
+        //if input machineType is still needed
+        if(this.MachineTypeComboBox.isVisible())
+        {
+            thisMachine.setMachineType(new MachineHandler().GetMachineTypeInt( MachineTypeComboBox.getSelectedItem().toString() ) );
+        }
+        thisMachine.setMachineName(MachineName.getText());
+        thisMachine.setNumOfLoad(Integer.parseInt(LoadingArrangement.getText()));
+        thisMachine.setMaxCapacity(Integer.parseInt(MachineMaximumCapacity.getText()));
+        thisMachine.setMinCapacity(Integer.parseInt(MachineMinimumCapacity.getText()));
+        thisMachine.setMaxVolume(Integer.parseInt(MachineMaximumVolume.getText()));
+        thisMachine.setMinVolume(Integer.parseInt(MachineMinimumVolume.getText()));
+    }
+    
     private boolean GetMachineDetails()
     {   
         boolean DetailsValid = true;
+        
         //Check if Machine Type should be Chosen
         //Check if machine is a dyeing or resin machine
         //if(preference requires machine type)
-        if(MachineTypeComboBox.getSelectedIndex() != 0)
+        if(this.MachineTypeComboBox.isVisible())
         {
-            thisMachine.setMachineType(new MachineHandler().GetMachineTypeInt( MachineTypeComboBox.getSelectedItem().toString() ) );
+            if (MachineTypeComboBox.getSelectedIndex() != 0) {
+                thisMachine.setMachineType(new MachineHandler().GetMachineTypeInt(MachineTypeComboBox.getSelectedItem().toString()));
+            }
         }
         //else setMachineType(0)
         
@@ -571,6 +650,7 @@ public class MachineForm extends javax.swing.JFrame {
         /* Maximum Volume Check */
         if(MachineMaximumVolume.getText().matches("[0-9]+") == true)
         {
+            
             thisMachine.setMaxVolume(Integer.parseInt(MachineMaximumVolume.getText()));
             //newMachineDetails.setMaxVolume(Integer.parseInt(MachineMaximumVolume.getText()));
         }
@@ -697,23 +777,41 @@ public class MachineForm extends javax.swing.JFrame {
         model_original.addColumn("Minimum Volume");
         model_original.addColumn("Maximum Volume");
         model_original.addColumn("Loading Arrangement");
-        model_original.addColumn("Machine Type");
         
-       
-        ArrayList<Machine> MachineList = new MachineHandler().GetAllMachines();
-        for(int x=0; x<MachineList.size(); x++)
+        ArrayList<Machine> MachineList;
+        if(MachineTypeComboBox.isVisible())
         {
-            
-            model_original.addRow(new Object[]{
-                MachineList.get(x).getMachineName(), 
-                MachineList.get(x).getMinCapacity(), 
-                MachineList.get(x).getMaxCapacity(), 
-                MachineList.get(x).getMinVolume(), 
-                MachineList.get(x).getMaxVolume(),
-                MachineList.get(x).getNumOfLoad(),
-                new MachineHandler().GetMachineTypeText(MachineList.get(x).getMachineType())
-            });
-            
+            model_original.addColumn("Machine Type");
+            MachineList = new MachineHandler().GetAllMachines();
+            for (int x = 0; x < MachineList.size(); x++) {
+
+                model_original.addRow(new Object[]{
+                    MachineList.get(x).getMachineName(),
+                    MachineList.get(x).getMinCapacity(),
+                    MachineList.get(x).getMaxCapacity(),
+                    MachineList.get(x).getMinVolume(),
+                    MachineList.get(x).getMaxVolume(),
+                    MachineList.get(x).getNumOfLoad(),
+                    new MachineHandler().GetMachineTypeText(MachineList.get(x).getMachineType())
+                });
+
+            }
+        }
+        else
+        {
+            MachineList = new MachineHandler().GetAllDyeingMachines();
+            for (int x = 0; x < MachineList.size(); x++) {
+
+                model_original.addRow(new Object[]{
+                    MachineList.get(x).getMachineName(),
+                    MachineList.get(x).getMinCapacity(),
+                    MachineList.get(x).getMaxCapacity(),
+                    MachineList.get(x).getMinVolume(),
+                    MachineList.get(x).getMaxVolume(),
+                    MachineList.get(x).getNumOfLoad()
+                });
+
+            }
         }
         
         //pigment_table.setTableHeader(null);

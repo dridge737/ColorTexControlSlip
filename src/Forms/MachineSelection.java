@@ -68,6 +68,16 @@ public class MachineSelection extends javax.swing.JFrame {
             computeForVolume();
         } 
     }
+    
+    private void CheckFabricChoiceAndComputeForVolume()
+    {
+        String weight = Weight.getText();
+        String FabricType = FabricDropDown.getSelectedItem().toString();
+        if(!weight.equals("") && !FabricType.equals("Fabric"))
+        {
+            computeForVolume();
+        } 
+    }
 
     private void populateLiquorRatioDropDown() {
         ArrayList<String> LiquidRatioList = new ArrayList<String>();
@@ -99,20 +109,23 @@ public class MachineSelection extends javax.swing.JFrame {
         MachineDropDownList = new javax.swing.JComboBox<String>();
         jLabel7 = new javax.swing.JLabel();
         Weight = new javax.swing.JTextField();
-        LiquidRatioDropDown = new javax.swing.JComboBox<String>();
         VolumeTextField = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         SelectBut = new javax.swing.JButton();
+        FabricDropDown = new javax.swing.JComboBox<String>();
+        LiquidRatioDropDown = new javax.swing.JComboBox<String>();
         BackBut = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Header.setBackground(new java.awt.Color(255, 255, 255));
         Header.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
         Header.setForeground(new java.awt.Color(255, 255, 255));
         Header.setText("Resin Machine Selection");
+        jPanel1.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 470, 40));
 
         MachineDropDownList.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         MachineDropDownList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Machine" }));
@@ -121,12 +134,14 @@ public class MachineSelection extends javax.swing.JFrame {
                 MachineDropDownListActionPerformed(evt);
             }
         });
+        jPanel1.add(MachineDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 78, 470, -1));
 
         jLabel7.setBackground(new java.awt.Color(255, 255, 255));
         jLabel7.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel7.setText("Weight :");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 117, 80, 30));
 
         Weight.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         Weight.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -134,14 +149,7 @@ public class MachineSelection extends javax.swing.JFrame {
                 WeightFocusLost(evt);
             }
         });
-
-        LiquidRatioDropDown.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        LiquidRatioDropDown.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Liquid Ratio" }));
-        LiquidRatioDropDown.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LiquidRatioDropDownActionPerformed(evt);
-            }
-        });
+        jPanel1.add(Weight, new org.netbeans.lib.awtextra.AbsoluteConstraints(128, 118, 140, 30));
 
         VolumeTextField.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         VolumeTextField.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -149,12 +157,14 @@ public class MachineSelection extends javax.swing.JFrame {
                 VolumeTextFieldFocusLost(evt);
             }
         });
+        jPanel1.add(VolumeTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(201, 159, 299, -1));
 
         jLabel8.setBackground(new java.awt.Color(255, 255, 255));
         jLabel8.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel8.setText("Volume of Water :");
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 158, -1, 30));
 
         SelectBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         SelectBut.setText("Next");
@@ -164,6 +174,25 @@ public class MachineSelection extends javax.swing.JFrame {
                 SelectButActionPerformed(evt);
             }
         });
+        jPanel1.add(SelectBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(85, 215, 145, 42));
+
+        FabricDropDown.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        FabricDropDown.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Fabric Type", "TC 0.3 +30 liters", "CVC 0.4 + 30 liters", "CC 0.5 + 30 liters", "Polyester and Spun 0.65 + 30 liters", "TC 0.5" }));
+        FabricDropDown.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FabricDropDownActionPerformed(evt);
+            }
+        });
+        jPanel1.add(FabricDropDown, new org.netbeans.lib.awtextra.AbsoluteConstraints(272, 117, 228, 30));
+
+        LiquidRatioDropDown.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        LiquidRatioDropDown.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Liquid Ratio" }));
+        LiquidRatioDropDown.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LiquidRatioDropDownActionPerformed(evt);
+            }
+        });
+        jPanel1.add(LiquidRatioDropDown, new org.netbeans.lib.awtextra.AbsoluteConstraints(272, 117, 228, 30));
 
         BackBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         BackBut.setText("Back");
@@ -175,61 +204,7 @@ public class MachineSelection extends javax.swing.JFrame {
                 BackButActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(85, 85, 85)
-                .addComponent(SelectBut, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(65, 65, 65)
-                .addComponent(BackBut, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(MachineDropDownList, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(LiquidRatioDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(VolumeTextField))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(Weight, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(174, 174, 174))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(Header, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(MachineDropDownList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(Weight, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(LiquidRatioDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(10, 10, 10)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(VolumeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BackBut, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SelectBut, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jPanel1.add(BackBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(295, 216, 145, 42));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -295,6 +270,33 @@ public class MachineSelection extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_WeightFocusLost
 
+    private void computeForVolumeByFabric()
+    {
+       String selected = LiquidRatioDropDown.getSelectedItem().toString();
+        float weight = Float.parseFloat(Weight.getText());
+        float volume = 0;
+        switch(LiquidRatioDropDown.getSelectedIndex())
+        {
+            case 1:
+                volume = (float) ((weight * 0.3) + 30);
+                break;
+            case 2:
+                volume = (float) ((weight * 0.4) + 30);
+                break;
+            case 3:
+                volume = (float) ((weight * 0.5) + 30);
+                break;
+            case 4:
+                volume = (float) ((weight * 0.65) + 30);
+                break;
+            case 5:
+                volume = (float) ((weight * 0.5));
+                break;
+        }
+        
+        VolumeTextField.setText(Float.toString(volume));
+            
+    }
     private void computeForVolume()
     {
         int weightMultiplier = 0;
@@ -375,6 +377,10 @@ public class MachineSelection extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_SelectButActionPerformed
 
+    private void FabricDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FabricDropDownActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_FabricDropDownActionPerformed
+
     private boolean CheckIfMachineDetailsIsValid()
     {
         boolean isSuccessful = true;
@@ -440,6 +446,7 @@ public class MachineSelection extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackBut;
+    private javax.swing.JComboBox<String> FabricDropDown;
     private javax.swing.JLabel Header;
     private javax.swing.JComboBox<String> LiquidRatioDropDown;
     private javax.swing.JComboBox<String> MachineDropDownList;

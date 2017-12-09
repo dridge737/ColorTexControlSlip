@@ -176,4 +176,11 @@ public class MachineHandler {
         return isExisting;
      }
     
+    public void AddDryerAndStenterMachine()
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+       //  if(repo.)
+       
+    }
+    
 }
