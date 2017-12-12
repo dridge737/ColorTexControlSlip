@@ -5,6 +5,7 @@
  */
 package Forms;
 
+import Handlers.PreferenceHandler;
 import Handlers.MachineHandler;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -87,7 +88,7 @@ public class SettingForm extends javax.swing.JFrame {
         jLabel2.setText("Settings");
 
         CompanyPreference.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        CompanyPreference.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Evergrande Greenwood Int'l Corp.", "Mayer Knitting Corp.", "Relianz Int't Corp" }));
+        CompanyPreference.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Evergrande Greenwood Int'l Corp.", "Mayer Knitting Corp.", "Relianz Int't Corp", "Colortex Processing Inc." }));
 
         SaveButton.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         SaveButton.setText("Save");
@@ -174,8 +175,14 @@ public class SettingForm extends javax.swing.JFrame {
     private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed
         // TODO add your handling code here:
         //PreferenceHandler newPreference = new PreferenceHandler();
+        boolean ResinType = newPreference.getResinMachineBooleanConversion(ResinMachineInputPreference.getSelectedItem().toString());
         newPreference.setCompanyPreference(CompanyPreference.getSelectedItem().toString());
-        newPreference.setResinMachineInputPreference(ResinMachineInputPreference.getSelectedItem().toString());
+        
+        if(ResinType != newPreference.getResinMachineInputPreference())
+        {
+            newPreference.setResinMachineInputPreference(ResinType);
+            newPreference.fixResinMachineDatabase();
+        }
         CloseThisWindowOpenMainWindow();
     }//GEN-LAST:event_SaveButtonActionPerformed
 

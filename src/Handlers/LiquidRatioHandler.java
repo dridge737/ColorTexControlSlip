@@ -8,6 +8,7 @@ package Handlers;
 import Database.ColorTextControlSlipRepository;
 import Forms.HelpForm.auto_complete;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 import javax.swing.JTextField;
 
 /**
@@ -55,12 +56,36 @@ public class LiquidRatioHandler {
     {
         ArrayList<String> AllLiquidRatio = new ArrayList<String>();
         //Chemical allChemicals = new Chemical();
-        LiquidRatioHandler newLiquidRatioHandler = new LiquidRatioHandler();
-        AllLiquidRatio = newLiquidRatioHandler.GetAllLiquidRatio();
+        //LiquidRatioHandler newLiquidRatioHandler = new LiquidRatioHandler();
+        AllLiquidRatio = this.GetAllLiquidRatio();
         auto_complete dropdownAutoComplete = new auto_complete();
         dropdownAutoComplete.setupAutoComplete(LiquidRatioTextBox, AllLiquidRatio);
         LiquidRatioTextBox.setColumns(30);
         
         return AllLiquidRatio;
+    }
+    
+    public boolean CheckIfLiquidRatioHasBeenAdded(String LiquidRatio)
+    {
+        boolean isExisting = true;
+
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+
+        if (repo.CheckIfLiquidRatioExists(LiquidRatio) == 0) {
+            isExisting = false;
+        }
+
+        return isExisting;
+
+    }
+    
+    public boolean CheckIfPatternMatchesLiquidRatio(String LiquidRatio)
+    {
+        boolean PatternGood = false;
+        
+        if(Pattern.matches("\\d+:\\d+", LiquidRatio))
+            PatternGood = true;
+            
+        return PatternGood;
     }
 }

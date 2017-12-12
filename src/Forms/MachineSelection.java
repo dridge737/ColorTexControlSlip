@@ -8,6 +8,7 @@ package Forms;
 import DataEntities.JobOrder;
 import DataEntities.Machine;
 import Handlers.MachineHandler;
+import Handlers.PreferenceHandler;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
@@ -28,8 +29,14 @@ public class MachineSelection extends javax.swing.JFrame {
     public MachineSelection() {
         initComponents();
         SetToCenter();
-        this.populateLiquorRatioDropDown();
+        //this.populateLiquorRatioDropDown();
         populateResinMachineDropDown();
+    }
+    
+    public MachineSelection(JobOrder currentJob)
+    {
+        this();
+        thisJob = currentJob;
     }
     
     public void SetToCenter()
@@ -40,16 +47,18 @@ public class MachineSelection extends javax.swing.JFrame {
         this.setLocation(x,y);
     }
     
-    public MachineSelection(JobOrder currentJob)
-    {
-        this();
-        thisJob = currentJob;
-    }
-    
     private void populateResinMachineDropDown(){
         //PopulateList(new MachineHandler().GetAllDyeingMachines() , MachineDropDownList);
+        ArrayList<Machine> MachineList;
+        //Return true if manual
+        if(new PreferenceHandler().getResinMachineInputPreference())
+        {
+            MachineList = new MachineHandler().GetAllManualResinMachines();
+        }
+        else
+            MachineList = new MachineHandler().GetAllAutomaticResinMachines();
         
-        ArrayList<Machine> MachineList = new MachineHandler().GetAllResinMachines();
+        //ArrayList<Machine> MachineList = new MachineHandler().GetAllResinMachines();
         
         if(MachineList != null){
             for(int x=0; x<MachineList.size(); x++)
@@ -59,40 +68,14 @@ public class MachineSelection extends javax.swing.JFrame {
         }   
     }
     
-    private void CheckValuesAndComputeForVolume()
-    {
-        String weight = Weight.getText();
-        String liquidRatio = LiquidRatioDropDown.getSelectedItem().toString();
-        if(!weight.equals("") && !liquidRatio.equals("Liquid Ratio"))
-        {
-            computeForVolume();
-        } 
-    }
-    
-    private void CheckFabricChoiceAndComputeForVolume()
+    private void CheckValuesAndComputeForVolumeUsingFabricStyle()
     {
         String weight = Weight.getText();
         String FabricType = FabricDropDown.getSelectedItem().toString();
-        if(!weight.equals("") && !FabricType.equals("Fabric"))
+        if(!weight.isEmpty() && !FabricType.equals("Fabric"))
         {
-            computeForVolume();
+            this.computeForVolumeByFabric();
         } 
-    }
-
-    private void populateLiquorRatioDropDown() {
-        ArrayList<String> LiquidRatioList = new ArrayList<String>();
-
-        LiquidRatioList.add("1:6");
-        LiquidRatioList.add("1:8");
-        LiquidRatioList.add("1:9");
-        LiquidRatioList.add("1:10");
-        LiquidRatioList.add("1:12");
-
-        for (int x = 0; x < LiquidRatioList.size(); x++) {
-
-            LiquidRatioDropDown.addItem(LiquidRatioList.get(x));
-        }
-
     }
 
     /**
@@ -149,7 +132,7 @@ public class MachineSelection extends javax.swing.JFrame {
                 WeightFocusLost(evt);
             }
         });
-        jPanel1.add(Weight, new org.netbeans.lib.awtextra.AbsoluteConstraints(128, 118, 140, 30));
+        jPanel1.add(Weight, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 118, 140, 30));
 
         VolumeTextField.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         VolumeTextField.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -214,7 +197,7 @@ public class MachineSelection extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
         );
 
         pack();
@@ -235,20 +218,22 @@ public class MachineSelection extends javax.swing.JFrame {
             //if(!machineName.equals(""))
             //{}
 
-            if(machineId > -1)
-            {
-                machineDetails = handler.GetMachineDetailsById(machineId);
-            }
-
             thisMachine.setMachineId(machineId);
-            thisMachine.setMachineName(machineDetails.getMachineName());
-            thisMachine.setMaxCapacity(machineDetails.getMaxCapacity());
-            thisMachine.setMaxVolume(machineDetails.getMaxVolume());
-            thisMachine.setMinCapacity(machineDetails.getMinCapacity());
-            thisMachine.setMinVolume(machineDetails.getMinVolume());
+            
+            if (new PreferenceHandler().getResinMachineInputPreference()) {
+                if (machineId > -1) {
+                    machineDetails = handler.GetMachineDetailsById(machineId);
+                }
 
-            VolumeTextField.setText(Float.toString(thisMachine.getMaxVolume()));
-            Weight.setText(Float.toString(thisMachine.getMaxCapacity()));
+                thisMachine.setMachineName(machineDetails.getMachineName());
+                thisMachine.setMaxCapacity(machineDetails.getMaxCapacity());
+                thisMachine.setMaxVolume(machineDetails.getMaxVolume());
+                thisMachine.setMinCapacity(machineDetails.getMinCapacity());
+                thisMachine.setMinVolume(machineDetails.getMinVolume());
+
+                VolumeTextField.setText(Float.toString(thisMachine.getMaxVolume()));
+                Weight.setText(Float.toString(thisMachine.getMaxCapacity()));
+            }
 
         }
 
@@ -256,48 +241,90 @@ public class MachineSelection extends javax.swing.JFrame {
 
     private void WeightFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_WeightFocusLost
         String weight = Weight.getText();
-        if (weight.length() > 0) {
+        if (!weight.isEmpty()) {
             weight = weight.replaceAll("[^\\d.]", "");
             Float ConvertedWeight = Float.parseFloat(weight);
-            if (ConvertedWeight > thisMachine.getMaxCapacity()) {
-                Weight.setText(Float.toString(thisMachine.getMaxCapacity()));
-            } else if (ConvertedWeight < thisMachine.getMinCapacity()) {
-                Weight.setText(Float.toString(thisMachine.getMinCapacity()));
+            if (new PreferenceHandler().getResinMachineInputPreference()) {
+                if (ConvertedWeight > thisMachine.getMaxCapacity()) {
+                    Weight.setText(Float.toString(thisMachine.getMaxCapacity()));
+                } else if (ConvertedWeight < thisMachine.getMinCapacity()) {
+                    Weight.setText(Float.toString(thisMachine.getMinCapacity()));
+                }
             }
             //else
-            CheckValuesAndComputeForVolume();
+            computeForVolumeByFabric();
             //    Weight.setText(weight);
         }
     }//GEN-LAST:event_WeightFocusLost
 
     private void computeForVolumeByFabric()
     {
-       String selected = LiquidRatioDropDown.getSelectedItem().toString();
-        float weight = Float.parseFloat(Weight.getText());
-        float volume = 0;
-        switch(LiquidRatioDropDown.getSelectedIndex())
-        {
-            case 1:
-                volume = (float) ((weight * 0.3) + 30);
-                break;
-            case 2:
-                volume = (float) ((weight * 0.4) + 30);
-                break;
-            case 3:
-                volume = (float) ((weight * 0.5) + 30);
-                break;
-            case 4:
-                volume = (float) ((weight * 0.65) + 30);
-                break;
-            case 5:
-                volume = (float) ((weight * 0.5));
-                break;
+        if (this.FabricDropDown.getSelectedIndex() != 0) {
+            String selected = FabricDropDown.getSelectedItem().toString();
+            float weight = Float.parseFloat(Weight.getText());
+            float volume = 0;
+
+            String[] WeightMultiplier = selected.split("\\+");
+            float multiplier = Float.parseFloat(WeightMultiplier[0].replaceAll("[^0-9\\.]", ""));
+            if (WeightMultiplier.length > 1) {
+                volume = (float) (weight * multiplier + Float.parseFloat(WeightMultiplier[1].replaceAll("[^0-9]", "")));
+            } else {
+                volume = (float) (weight * multiplier);
+            }
+
+            VolumeTextField.setText(Float.toString(volume));
         }
-        
-        VolumeTextField.setText(Float.toString(volume));
-            
     }
-    private void computeForVolume()
+    
+    private void VolumeTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_VolumeTextFieldFocusLost
+        // TODO add your handling code here:
+        String Volume = this.VolumeTextField.getText();
+        Volume = Volume.replaceAll("[^\\d.]", "");
+        this.VolumeTextField.setText(Volume);
+        if (new PreferenceHandler().getResinMachineInputPreference()) {
+            Float ConvertedVolume = Float.parseFloat(Volume);
+            if (ConvertedVolume > thisMachine.getMaxVolume()) {
+                this.VolumeTextField.setText(Float.toString(thisMachine.getMaxVolume()));
+            } else if (ConvertedVolume < thisMachine.getMinVolume()) {
+                this.VolumeTextField.setText(Float.toString(thisMachine.getMinVolume()));
+            }
+        }
+        //else
+        //    this.VolumeTextField.setText(Volume);
+    }//GEN-LAST:event_VolumeTextFieldFocusLost
+
+    private void LiquidRatioDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LiquidRatioDropDownActionPerformed
+        //ComputeForVolume();
+        this.computeForVolumeWithLiquidRatio();
+    }//GEN-LAST:event_LiquidRatioDropDownActionPerformed
+
+    //Old Method
+    private void CheckValuesAndComputeForVolumeUsingLiquidRatio()
+    {
+        String weight = Weight.getText();
+        String liquidRatio = LiquidRatioDropDown.getSelectedItem().toString();
+        if(!weight.equals("") && !liquidRatio.equals("Liquid Ratio"))
+        {
+            computeForVolumeWithLiquidRatio();
+        } 
+    }
+    
+    private void populateLiquorRatioDropDown() {
+        ArrayList<String> LiquidRatioList = new ArrayList<String>();
+
+        LiquidRatioList.add("1:6");
+        LiquidRatioList.add("1:8");
+        LiquidRatioList.add("1:9");
+        LiquidRatioList.add("1:10");
+        LiquidRatioList.add("1:12");
+
+        for (int x = 0; x < LiquidRatioList.size(); x++) {
+
+            LiquidRatioDropDown.addItem(LiquidRatioList.get(x));
+        }
+    }
+
+    private void computeForVolumeWithLiquidRatio()
     {
         int weightMultiplier = 0;
         
@@ -330,24 +357,6 @@ public class MachineSelection extends javax.swing.JFrame {
         VolumeTextField.setText(Double.toString(volume));
     }
     
-    private void VolumeTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_VolumeTextFieldFocusLost
-        // TODO add your handling code here:
-        String Volume = this.VolumeTextField.getText();
-        Volume = Volume.replaceAll("[^\\d.]", "");
-        Float ConvertedVolume = Float.parseFloat(Volume);
-        if(ConvertedVolume > thisMachine.getMaxVolume())
-        this.VolumeTextField.setText(Float.toString(thisMachine.getMaxVolume()));
-        else if(ConvertedVolume < thisMachine.getMinVolume())
-        this.VolumeTextField.setText(Float.toString(thisMachine.getMinVolume()));
-        //else
-        //    this.VolumeTextField.setText(Volume);
-    }//GEN-LAST:event_VolumeTextFieldFocusLost
-
-    private void LiquidRatioDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LiquidRatioDropDownActionPerformed
-        //ComputeForVolume();
-        CheckValuesAndComputeForVolume();
-    }//GEN-LAST:event_LiquidRatioDropDownActionPerformed
-
     private void BackButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButActionPerformed
         // TODO add your handling code here:
         
@@ -356,6 +365,7 @@ public class MachineSelection extends javax.swing.JFrame {
         {
             JobOrderForm newJobOrderForm = new JobOrderForm(thisJob);
             newJobOrderForm.setVisible(true);
+            newJobOrderForm.SetCustomerAndDesignDetails();
         }
         //Return to Dyeing Form if used as resin machine selector
         else if(WindowType == 2)
@@ -379,6 +389,7 @@ public class MachineSelection extends javax.swing.JFrame {
 
     private void FabricDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FabricDropDownActionPerformed
         // TODO add your handling code here:
+       this.CheckValuesAndComputeForVolumeUsingFabricStyle();
     }//GEN-LAST:event_FabricDropDownActionPerformed
 
     private boolean CheckIfMachineDetailsIsValid()

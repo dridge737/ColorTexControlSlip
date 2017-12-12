@@ -7,8 +7,10 @@ package Handlers;
 
 import DataEntities.ChemicalColor;
 import Database.ColorTextControlSlipRepository;
+import Forms.HelpForm.auto_complete;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -72,5 +74,18 @@ public class ColorHandler {
     {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         return repo.GetAllColors();
+    }
+    
+    public ArrayList<String> addColorTextBoxAutoComplete(JTextField ColorTextBox)
+    {
+        ArrayList<String> AllColors = new ArrayList<String>();
+        //Chemical allChemicals = new Chemical();
+        //LiquidRatioHandler newLiquidRatioHandler = new LiquidRatioHandler();
+        AllColors = this.GetAllColor();
+        auto_complete dropdownAutoComplete = new auto_complete();
+        dropdownAutoComplete.setupAutoComplete(ColorTextBox, AllColors);
+        ColorTextBox.setColumns(30);
+        
+        return AllColors;
     }
 }

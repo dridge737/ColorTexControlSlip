@@ -42,6 +42,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javax.swing.JComboBox;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 
 /**
@@ -69,12 +71,80 @@ public class JobOrderForm extends javax.swing.JFrame {
         populateDesignDropDown();
         populateColorDropDown();
         populateDyeingMachineDropDown();
-        AddLiquidRatio();
-        
+        AddLiquidRatioAutoComplete();
+        AddColorTextBoxAutoComplete();
+        AddDesignTextBoxAutoComplete();
         SetToCenter();
+        
+        LiquidRatioTextField.getDocument().addDocumentListener(new DocumentListener() 
+        {
+            
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                ComputeVolume();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                ComputeVolume();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                ComputeVolume();
+            }
+        });
+        
+        ColorTextField.getDocument().addDocumentListener(new DocumentListener() 
+        {
+            
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                SetAndUpdateColorID();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                SetAndUpdateColorID();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                SetAndUpdateColorID();
+            }
+        });
+        
+        DesignTextField.getDocument().addDocumentListener(new DocumentListener() 
+        {
+            
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                SetAndUpdateDesignID();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                SetAndUpdateDesignID();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                SetAndUpdateDesignID();
+            }
+        });
+        
+    }
+    public void AddColorTextBoxAutoComplete()
+    {
+        new ColorHandler().addColorTextBoxAutoComplete(ColorTextField);
     }
     
-    public void AddLiquidRatio()
+    public void AddDesignTextBoxAutoComplete()
+    {
+        new DesignHandler().addDesignTextBoxAutoComplete(DesignTextField);
+    }
+    
+    public void AddLiquidRatioAutoComplete()
     {
        //populateLiquoRatioDropDown();
        //Add All Liquid Ratio for Checking later and
@@ -138,6 +208,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         DesignHandler thisDesignHandler = new DesignHandler();
         thisDesign.setDesignName(thisDesignHandler.GetDesignNameFromID(thisDesign.getDesignId()));
         DesignDropDownList.setSelectedItem(thisDesign.getDesignName());
+        //DesignTextField.setText(thisDesign.getDesignName());
     }
     
     private void SetMachineNameDropDown()
@@ -146,6 +217,22 @@ public class JobOrderForm extends javax.swing.JFrame {
         MachineHandler thisMachineHandler = new MachineHandler();
         thisMachine = thisMachineHandler.GetMachineDetailsById(thisMachine.getMachineId());
         MachineDropDownList.setSelectedItem(thisMachine.getMachineName());
+    }
+    
+    public void SetCustomerAndDesignDetails()
+    {
+        thisColor.setColorId(thisJob.getColorID());
+        ColorHandler thisColorHandler = new ColorHandler();
+        thisColor.setColorName(thisColorHandler.GetColorNameFromColorID(thisColor.getColorId()));
+        //ColorDropDownList.setSelectedItem(thisColor.getColorName());
+        ColorTextField.setText(thisColor.getColorName());
+        
+        thisDesign.setDesignId(thisJob.getDesignID());
+        DesignHandler thisDesignHandler = new DesignHandler();
+        thisDesign.setDesignName(thisDesignHandler.GetDesignNameFromID(thisDesign.getDesignId()));
+        //DesignDropDownList.setSelectedItem(thisDesign.getDesignName());
+        DesignTextField.setText(thisDesign.getDesignName());
+        
     }
     
     private void SetCustomerNameDropDown()
@@ -162,6 +249,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         ColorHandler thisColorHandler = new ColorHandler();
         thisColor.setColorName(thisColorHandler.GetColorNameFromColorID(thisColor.getColorId()));
         ColorDropDownList.setSelectedItem(thisColor.getColorName());
+        //ColorTextField.setText(thisColor.getColorName());
     }
     
     //--- Private instances declarations
@@ -178,7 +266,9 @@ public class JobOrderForm extends javax.swing.JFrame {
 
         MainPanel = new javax.swing.JPanel();
         CustomerDropDownList = new javax.swing.JComboBox<String>();
+        DesignTextField = new javax.swing.JTextField();
         DesignDropDownList = new javax.swing.JComboBox<String>();
+        ColorTextField = new javax.swing.JTextField();
         ColorDropDownList = new javax.swing.JComboBox<String>();
         ColorLabel = new javax.swing.JLabel();
         customerLabel = new javax.swing.JLabel();
@@ -205,7 +295,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         Reference = new javax.swing.JTextField();
         ProgramNumberLabel = new javax.swing.JLabel();
         ProgramNumber = new javax.swing.JTextField();
-        ReferenceLabel1 = new javax.swing.JLabel();
+        LocationLabel = new javax.swing.JLabel();
         Location = new javax.swing.JTextField();
         RollLoad = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
@@ -226,6 +316,9 @@ public class JobOrderForm extends javax.swing.JFrame {
         });
         MainPanel.add(CustomerDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, 190, 30));
 
+        DesignTextField.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        MainPanel.add(DesignTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 160, 190, 30));
+
         DesignDropDownList.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         DesignDropDownList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Design" }));
         DesignDropDownList.addActionListener(new java.awt.event.ActionListener() {
@@ -233,7 +326,10 @@ public class JobOrderForm extends javax.swing.JFrame {
                 DesignDropDownListActionPerformed(evt);
             }
         });
-        MainPanel.add(DesignDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 160, 190, 30));
+        MainPanel.add(DesignDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 160, 40, 30));
+
+        ColorTextField.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        MainPanel.add(ColorTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 160, 190, 30));
 
         ColorDropDownList.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         ColorDropDownList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Color" }));
@@ -242,7 +338,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                 ColorDropDownListActionPerformed(evt);
             }
         });
-        MainPanel.add(ColorDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 160, 190, 30));
+        MainPanel.add(ColorDropDownList, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 160, 40, 30));
 
         ColorLabel.setBackground(new java.awt.Color(255, 255, 255));
         ColorLabel.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
@@ -333,11 +429,6 @@ public class JobOrderForm extends javax.swing.JFrame {
         jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 72, 120, 30));
 
         LiquidRatioTextField.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        LiquidRatioTextField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                LiquidRatioTextFieldKeyReleased(evt);
-            }
-        });
         jPanel2.add(LiquidRatioTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(403, 72, 240, 30));
 
         LiquidRatioDropDown.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
@@ -413,19 +504,14 @@ public class JobOrderForm extends javax.swing.JFrame {
         MainPanel.add(ProgramNumberLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(372, 200, 120, 30));
 
         ProgramNumber.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        ProgramNumber.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                ProgramNumberKeyReleased(evt);
-            }
-        });
         MainPanel.add(ProgramNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 200, 190, 30));
 
-        ReferenceLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        ReferenceLabel1.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        ReferenceLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        ReferenceLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        ReferenceLabel1.setText("Location :");
-        MainPanel.add(ReferenceLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 240, 110, 30));
+        LocationLabel.setBackground(new java.awt.Color(255, 255, 255));
+        LocationLabel.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        LocationLabel.setForeground(new java.awt.Color(255, 255, 255));
+        LocationLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        LocationLabel.setText("Location :");
+        MainPanel.add(LocationLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 240, 110, 30));
 
         Location.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         MainPanel.add(Location, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 240, 190, 30));
@@ -470,7 +556,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         ColorHandler handler = new ColorHandler();
         int colorId = -1;
         String colorName = "";
-                
+                /*
         if(!ColorDropDownList.getSelectedItem().toString().equals("Choose Color"))
         {
             colorName = ColorDropDownList.getSelectedItem().toString();
@@ -482,6 +568,7 @@ public class JobOrderForm extends javax.swing.JFrame {
             colorId = handler.GetColorIDFromColorName(colorName);
             thisColor.setColorId(colorId);
         }
+        */
     }//GEN-LAST:event_ColorDropDownListActionPerformed
 
     private void LiquidRatioDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LiquidRatioDropDownActionPerformed
@@ -538,7 +625,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_MachineDropDownListActionPerformed
-
+    
     private void DesignDropDownListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DesignDropDownListActionPerformed
         Design designDetails = new Design();
         DesignHandler handler = new DesignHandler();
@@ -560,6 +647,12 @@ public class JobOrderForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(SetJobOrderInformationFromTextBox())
         {
+            LiquidRatioHandler LiquidHandler = new LiquidRatioHandler();
+            if(LiquidHandler.CheckIfPatternMatchesLiquidRatio(LiquidRatioTextField.getText()) &&
+                    !LiquidHandler.CheckIfLiquidRatioHasBeenAdded(LiquidRatioTextField.getText()))
+            {
+                LiquidHandler.AddNewLiquidRatio(LiquidRatioTextField.getText());
+            }
             //MachineSelection DyeingMachineSelection = new DyeingMachineSelection(thisJob);
             ViewDyeingProgramList chooseDyeingProgram = new ViewDyeingProgramList(thisJob);
             chooseDyeingProgram.setVisible(true);
@@ -785,17 +878,50 @@ public class JobOrderForm extends javax.swing.JFrame {
         this.BatchNo.setText(thisBatchNo);
     }//GEN-LAST:event_BatchNoKeyReleased
 
-    private void ProgramNumberKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ProgramNumberKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ProgramNumberKeyReleased
-
-    private void LiquidRatioTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_LiquidRatioTextFieldKeyReleased
-        // TODO add your handling code here:
+    private void SetAndUpdateColorID()
+    {
+        ChemicalColor colorDetails = new ChemicalColor();
+        ColorHandler handler = new ColorHandler();
+        int colorId = -1;
+        String colorName = "";
+                
+        if(!this.ColorTextField.getText().equals("Choose Color"))
+        {
+            colorName = ColorTextField.getText();
+            thisColor.setColorName(colorName);
+        }        
         
-        //Pattern.matches("\\d+:\\d+", LiquidRatio.getText())
+        if(!colorName.equals(""))
+        {
+            colorId = handler.GetColorIDFromColorName(colorName);
+            thisColor.setColorId(colorId);
+        }
+    }
+    
+    private void SetAndUpdateDesignID()
+    {
+        Design designDetails = new Design();
+        DesignHandler handler = new DesignHandler();
+        int designId = -1;
+                
+        //if(!designName.equals(""))
+        if(!DesignTextField.getText().equals("Choose Design") 
+                && (DesignTextField.getText().length() > 0))
+        {
+            String designName = DesignTextField.getText();
+            thisDesign.setDesignName(designName);
+            designId = handler.GetDesignIDFromName(designName);
+            thisDesign.setDesignId(designId);
+        }  
+    }
+    
+    
+    
+    private void ComputeVolume()
+    {
         String weight = Weight.getText();
         
-        if(Pattern.matches("\\d+:\\d+", LiquidRatioTextField.getText()) &&  !weight.equals(""))
+        if(new LiquidRatioHandler().CheckIfPatternMatchesLiquidRatio(this.LiquidRatioTextField.getText().toString()) &&  !weight.equals(""))
         {
             //String liquidRatio = LiquidRatioTextField.toString();
             String[] RatioSplit = LiquidRatioTextField.getText().split(":", 2);
@@ -805,9 +931,8 @@ public class JobOrderForm extends javax.swing.JFrame {
             VolumeTextField.setText(Double.toString(volume));
 
         }
-        
-    }//GEN-LAST:event_LiquidRatioTextFieldKeyReleased
-
+    }
+    
     
     private void populateLiquoRatioDropDown()
     {
@@ -943,14 +1068,17 @@ public class JobOrderForm extends javax.swing.JFrame {
     private javax.swing.JLabel ChemicalHeader;
     private javax.swing.JComboBox<String> ColorDropDownList;
     private javax.swing.JLabel ColorLabel;
+    private javax.swing.JTextField ColorTextField;
     private javax.swing.JComboBox<String> CustomerDropDownList;
     private javax.swing.JLabel DateLabel;
     private javax.swing.JComboBox<String> DesignDropDownList;
+    private javax.swing.JTextField DesignTextField;
     private javax.swing.JLabel JobLabel;
     private javax.swing.JTextField JobOrder;
     private javax.swing.JComboBox<String> LiquidRatioDropDown;
     private javax.swing.JTextField LiquidRatioTextField;
     private javax.swing.JTextField Location;
+    private javax.swing.JLabel LocationLabel;
     private javax.swing.JComboBox<String> MachineDropDownList;
     private javax.swing.JPanel MainPanel;
     private javax.swing.JButton NextButton;
@@ -958,7 +1086,6 @@ public class JobOrderForm extends javax.swing.JFrame {
     private javax.swing.JLabel ProgramNumberLabel;
     private javax.swing.JTextField Reference;
     private javax.swing.JLabel ReferenceLabel;
-    private javax.swing.JLabel ReferenceLabel1;
     private javax.swing.JTextField RollLoad;
     private javax.swing.JTextField VolumeTextField;
     private javax.swing.JTextField Weight;

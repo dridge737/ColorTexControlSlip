@@ -5,6 +5,7 @@
  */
 package Forms;
 
+import Handlers.PreferenceHandler;
 import DataEntities.Machine;
 import Handlers.MachineHandler;
 import java.awt.Color;

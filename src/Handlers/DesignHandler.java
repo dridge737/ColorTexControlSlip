@@ -7,7 +7,9 @@ package Handlers;
 
 import DataEntities.Design;
 import Database.ColorTextControlSlipRepository;
+import Forms.HelpForm.auto_complete;
 import java.util.ArrayList;
+import javax.swing.JTextField;
 
 /**
  *
@@ -73,5 +75,18 @@ public class DesignHandler {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
         return repo.GetAllDesign();
+    }
+    
+    public ArrayList<String> addDesignTextBoxAutoComplete(JTextField DesignTextBox)
+    {
+        ArrayList<String> AllDesign = new ArrayList<String>();
+        //Chemical allChemicals = new Chemical();
+        //LiquidRatioHandler newLiquidRatioHandler = new LiquidRatioHandler();
+        AllDesign = this.GetAllDesigns();
+        auto_complete dropdownAutoComplete = new auto_complete();
+        dropdownAutoComplete.setupAutoComplete(DesignTextBox, AllDesign);
+        DesignTextBox.setColumns(30);
+        
+        return AllDesign;
     }
 }

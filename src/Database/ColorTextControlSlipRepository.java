@@ -882,6 +882,18 @@ public class ColorTextControlSlipRepository {
 
     }
 
+    public ArrayList<Machine> GetAllAutomaticInputResinMachine()
+    {
+        String query =  ("SELECT * FROM machine WHERE  (NAME Like 'Dryer' OR NAME LIKE 'Stenter') AND MachineType = 1;");
+        return GetAllMachine(query);
+    }
+    
+    public ArrayList<Machine> GetAllManualInputResinMachine()
+    {
+         String query =  ("SELECT * FROM machine WHERE  (NAME NOT LIKE 'Dryer' AND NAME NOT LIKE 'Stenter') AND MachineType = 1;");
+        return GetAllMachine(query);
+    }
+    
     //END CUSTOMER REPOSITORY METHODS
     //BEGIN MACHINE REPOSITORY METHODS
     public ArrayList<Machine> GetAllMachine(String query) {
@@ -931,6 +943,27 @@ public class ColorTextControlSlipRepository {
     {
         String Query = "SELECT * FROM machine where MachineType = 1";
         return GetAllMachine(Query);
+    }
+    
+    public boolean AddDryerAndStenter()
+    {
+        boolean isSuccess = true;
+        Machine ResinMachines = new Machine();
+        ResinMachines.setMachineType(1);
+        ResinMachines.setMinVolume(1);
+        ResinMachines.setMaxVolume(1);
+        ResinMachines.setMinCapacity(0);
+        ResinMachines.setMaxCapacity(0);
+        //Machine StenterMachine = ResinMachines;
+        ResinMachines.setMachineName("Dryer");
+        if(!AddMachine(ResinMachines))
+            isSuccess = false;
+        
+        ResinMachines.setMachineName("Stenter");
+        if(!AddMachine(ResinMachines))
+            isSuccess = false;
+        
+        return isSuccess;
     }
 
     public boolean AddMachine(Machine newMachine) {
@@ -1028,6 +1061,34 @@ public class ColorTextControlSlipRepository {
                     + " AS 'CheckTest'");
 
             ps.setInt(1, machineId);
+            rs = ps.executeQuery();
+            if (rs.first()) {
+                checkTest = rs.getInt("CheckTest");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        this.closeConn(conn, ps, rs);
+        return checkTest;
+    }
+    
+    public int CheckIfMachineNameExists(String MachineName) {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int checkTest = 0;
+        try {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT EXISTS "
+                    + " (SELECT ID "
+                    + " FROM machine WHERE "
+                    + " name = ?) "
+                    + " AS 'CheckTest'");
+
+            ps.setString(1, MachineName);
             rs = ps.executeQuery();
             if (rs.first()) {
                 checkTest = rs.getInt("CheckTest");

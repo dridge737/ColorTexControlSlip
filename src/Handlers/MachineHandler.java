@@ -81,6 +81,22 @@ public class MachineHandler {
         return machineList;
     }
     
+    public ArrayList<Machine> GetAllManualResinMachines()
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        //ArrayList<Machine> machineList = new ArrayList<>();
+        
+        return repo.GetAllManualInputResinMachine();
+    }
+    
+    public ArrayList<Machine> GetAllAutomaticResinMachines()
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        //ArrayList<Machine> machineList = new ArrayList<>();
+        
+        return repo.GetAllAutomaticInputResinMachine();
+    }
+    
     
     public Machine GetMachineDetailsById(int machineId)
     {
@@ -179,8 +195,52 @@ public class MachineHandler {
     public void AddDryerAndStenterMachine()
     {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
-       //  if(repo.)
+        if(repo.CheckIfMachineNameExists("Dryer") == 0)
+            repo.AddDryerAndStenter();
        
+    }
+    
+    public float ComputeVolumeOfWaterFromWeight(float Weight, String SelectedItem)
+    {
+        
+        //String selected = FabricDropDown.getSelectedItem().toString();
+        //float weight = Float.parseFloat(Weight.getText());
+        float volume = 0;
+
+        String[] WeightMultiplier = SelectedItem.split("\\+");
+        float multiplier = Float.parseFloat(WeightMultiplier[0].replaceAll("[^0-9\\.]", ""));
+        if (WeightMultiplier.length > 1) {
+            volume = (float) (Weight * multiplier + Float.parseFloat(WeightMultiplier[1].replaceAll("[^0-9]", "")));
+        } else {
+            volume = (float) (Weight * multiplier);
+        }
+
+            
+        return volume;
+        //int thisResinWeight = Integer.parseInt(Weight);
+        /*
+        float ComputedVolume = 0;
+        switch(SelectedIndex)
+        {
+            case 1:
+                ComputedVolume = (float) ((Weight * 0.3) + 30);
+                break;
+            case 2:
+                ComputedVolume = (float) ((Weight * 0.4) + 30);
+                break;
+            case 3:
+                ComputedVolume = (float) ((Weight * 0.5) + 30);
+                break;
+            case 4:
+                ComputedVolume = (float) ((Weight * 0.65) + 30);
+                break;
+            case 5:
+                ComputedVolume = (float) (Weight * 0.5);
+                break;
+            
+        }
+        
+        return ComputedVolume;*/
     }
     
 }

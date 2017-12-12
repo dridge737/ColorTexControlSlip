@@ -21,8 +21,8 @@ public class DBConnection {
         url = "jdbc:mysql://localhost:3306/colortex";
         driver = "com.mysql.jdbc.Driver";
         username = "root";
-        //password = "password123";
-        password = "";
+        password = "password123";
+        //password = "";
     }
     public Connection getConnection()
     {

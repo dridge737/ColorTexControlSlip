@@ -20,6 +20,7 @@ import Handlers.DyeingProgramNameHandler;
 import Handlers.JobHandler;
 import Handlers.LiquidRatioHandler;
 import Handlers.MachineHandler;
+import Handlers.PreferenceHandler;
 import Handlers.PrintHandlerFinal;
 import Handlers.ResinProgramHandler;
 import com.itextpdf.text.DocumentException;
@@ -268,7 +269,7 @@ public class ReviewForm extends javax.swing.JFrame {
         ResinProgramText = new javax.swing.JTextField();
         ResinLabel = new javax.swing.JLabel();
         EditResinProgram = new javax.swing.JButton();
-        ResinMachineDropDown1 = new javax.swing.JComboBox<String>();
+        ResinFabricTypeDropDown = new javax.swing.JComboBox<String>();
         FabricTypeLabel = new javax.swing.JLabel();
         ResinMachineLiquidRatioDropDown = new javax.swing.JComboBox<String>();
 
@@ -604,14 +605,14 @@ public class ReviewForm extends javax.swing.JFrame {
         });
         ResinMachinePanel.add(EditResinProgram, new org.netbeans.lib.awtextra.AbsoluteConstraints(595, 103, 40, 30));
 
-        ResinMachineDropDown1.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        ResinMachineDropDown1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Fabric Type" }));
-        ResinMachineDropDown1.addActionListener(new java.awt.event.ActionListener() {
+        ResinFabricTypeDropDown.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        ResinFabricTypeDropDown.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Fabric Type", "TC 0.3 + 30 liters", "CVC 0.4 + 30 liters", "CC 0.5 + 30 liters", "Polyester and Spun 0.65 + 30 liters", "TC 0.5" }));
+        ResinFabricTypeDropDown.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ResinMachineDropDown1ActionPerformed(evt);
+                ResinFabricTypeDropDownActionPerformed(evt);
             }
         });
-        ResinMachinePanel.add(ResinMachineDropDown1, new org.netbeans.lib.awtextra.AbsoluteConstraints(467, 30, 170, 30));
+        ResinMachinePanel.add(ResinFabricTypeDropDown, new org.netbeans.lib.awtextra.AbsoluteConstraints(467, 30, 170, 30));
 
         FabricTypeLabel.setBackground(new java.awt.Color(255, 255, 255));
         FabricTypeLabel.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
@@ -1063,7 +1064,7 @@ public class ReviewForm extends javax.swing.JFrame {
 
     private void ResinWeightFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ResinWeightFocusLost
         // TODO add your handling code here:
-        ComputeForResinVolume();
+        
     }//GEN-LAST:event_ResinWeightFocusLost
 
     private void ResinWeightKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ResinWeightKeyReleased
@@ -1073,6 +1074,7 @@ public class ReviewForm extends javax.swing.JFrame {
         ResinWeight.setText(weight);
         if (this.CheckTextBoxIsParseValid(ResinWeight)) {
             thisJob.setResinWeight(Float.parseFloat(weight));
+            ComputeForResinVolume();
         }
     }//GEN-LAST:event_ResinWeightKeyReleased
 
@@ -1105,7 +1107,7 @@ public class ReviewForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         String weight = DyeingWeight.getText();
         
-        if(Pattern.matches("\\d+:\\d+", DyeingLiquidRatioText.getText()) &&  !weight.equals(""))
+        if(Pattern.matches("\\d+:\\d+", DyeingLiquidRatioText.getText()) &&  !weight.isEmpty())
         {
             //String liquidRatio = LiquidRatioTextField.toString();
             String[] RatioSplit = DyeingLiquidRatioText.getText().split(":", 2);
@@ -1117,10 +1119,42 @@ public class ReviewForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_DyeingLiquidRatioTextKeyReleased
 
-    private void ResinMachineDropDown1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResinMachineDropDown1ActionPerformed
+    private void ResinFabricTypeDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResinFabricTypeDropDownActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ResinMachineDropDown1ActionPerformed
+        if(!ResinWeight.getText().isEmpty() && this.ResinFabricTypeDropDown.getSelectedIndex() != 0)
+        {
+            ResinVolumeTextField.setText(
+                                    Float.toString(
+                                            new MachineHandler().ComputeVolumeOfWaterFromWeight(
+                                                    Float.parseFloat(ResinWeight.getText()), ResinFabricTypeDropDown.getSelectedItem().toString())));
+        }
+    }//GEN-LAST:event_ResinFabricTypeDropDownActionPerformed
 
+    /*private void ComputeVolumeOfWaterFromWeight()
+    {
+        float ComputedVolume = 0;
+        int thisResinWeight = Integer.parseInt(ResinWeight.getText());
+        switch(ResinFabricTypeDropDown.getSelectedIndex())
+        {
+            case 1:
+                ComputedVolume = (float) ((thisResinWeight * 0.3) + 30);
+                break;
+            case 2:
+                ComputedVolume = (float) (thisResinWeight * 0.4) + 30;
+                break;
+            case 3:
+                ComputedVolume = (float) (thisResinWeight * 0.5) + 30;
+                break;
+            case 4:
+                ComputedVolume = (float) (thisResinWeight * 0.65) + 30;
+                break;
+            case 5:
+                ComputedVolume = (float) (thisResinWeight * 0.5);
+                break;
+            
+        }
+    }
+    */
     /**
      * @param args the command line arguments
      */
@@ -1163,10 +1197,11 @@ public class ReviewForm extends javax.swing.JFrame {
 
     private void ComputeForResinVolume() {
         String weight = ResinWeight.getText();
-        String liquidRatio = this.ResinMachineLiquidRatioDropDown.getSelectedItem().toString();
-        if (!weight.equals("") && !liquidRatio.equals("Liquid Ratio")) {
+        //String liquidRatio = this.ResinMachineLiquidRatioDropDown.getSelectedItem().toString();
+        if (!weight.isEmpty() && ResinFabricTypeDropDown.getSelectedIndex()!= 0 )//liquidRatio.equals("Liquid Ratio"))
+        {
             //String selected = DyeingMachineLiquidRatioDropDown.getSelectedItem().toString();
-            ResinVolumeTextField.setText(computeForVolume((int)Float.parseFloat(weight), liquidRatio));
+            ResinVolumeTextField.setText(Float.toString(new MachineHandler().ComputeVolumeOfWaterFromWeight(Float.parseFloat(weight), ResinFabricTypeDropDown.getSelectedItem().toString())));
         }
     }
 
@@ -1243,7 +1278,15 @@ public class ReviewForm extends javax.swing.JFrame {
 
     private void populateResinMachineDropDown() {
         //if Resin requires custom Machine
-        ArrayList<Machine> MachineList = new MachineHandler().GetAllResinMachines();
+        ArrayList<Machine> MachineList;
+        if(new PreferenceHandler().getResinMachineInputPreference())
+        {
+            MachineList = new MachineHandler().GetAllManualResinMachines();
+        }
+        else
+            MachineList = new MachineHandler().GetAllAutomaticResinMachines();
+        
+        //ArrayList<Machine> MachineList = new MachineHandler().GetAllResinMachines();
 
         if (MachineList != null) {
             for (int x = 0; x < MachineList.size(); x++) {
@@ -1308,9 +1351,9 @@ public class ReviewForm extends javax.swing.JFrame {
     private javax.swing.JTextField Reference;
     private javax.swing.JLabel ReferenceLabel;
     private javax.swing.JLabel ReferenceLabel1;
+    private javax.swing.JComboBox<String> ResinFabricTypeDropDown;
     private javax.swing.JLabel ResinLabel;
     private javax.swing.JComboBox<String> ResinMachineDropDown;
-    private javax.swing.JComboBox<String> ResinMachineDropDown1;
     private javax.swing.JComboBox<String> ResinMachineLiquidRatioDropDown;
     private javax.swing.JPanel ResinMachinePanel;
     private javax.swing.JTextField ResinProgramText;

@@ -288,6 +288,7 @@ public class ViewDyeingProgramList extends javax.swing.JFrame {
         {
             JobOrderForm newJobOrderForm = new JobOrderForm(thisJob);
             newJobOrderForm.setVisible(true);
+            newJobOrderForm.SetCustomerAndDesignDetails();
         }
         else if(WindowType == 4 || WindowType == 5)
         {
