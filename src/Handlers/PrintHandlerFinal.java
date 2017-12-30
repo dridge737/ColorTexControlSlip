@@ -607,8 +607,9 @@ public class PrintHandlerFinal {
     public Document AddSecondPageHeader(Document document, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException
     {
         DyeingProgramNameHandler dyeingProgramNameHandler = new DyeingProgramNameHandler();
+        PreferenceHandler prefHandler = new PreferenceHandler();
         Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
-        Paragraph companyHeader = new Paragraph("Relianz International Corporation", companyHeaderFont);
+        Paragraph companyHeader = new Paragraph(prefHandler.getCompanyPreference(), companyHeaderFont);
         companyHeader.setAlignment(Element.ALIGN_CENTER);
         document.add(companyHeader);
         
@@ -923,7 +924,9 @@ public class PrintHandlerFinal {
     public Document addFirstPageSection(String dest, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume, Document document) throws IOException, DocumentException {
         Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
         
-        Paragraph companyHeader = new Paragraph("Relianz International Corporation", companyHeaderFont);
+        PreferenceHandler prefHandler = new PreferenceHandler();
+        
+        Paragraph companyHeader = new Paragraph(prefHandler.getCompanyPreference(), companyHeaderFont);
         companyHeader.setAlignment(Element.ALIGN_CENTER);
         document.add(companyHeader);
         
