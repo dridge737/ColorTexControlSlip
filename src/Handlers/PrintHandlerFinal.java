@@ -87,6 +87,7 @@ public class PrintHandlerFinal {
         PdfPTable table = new PdfPTable(20);
         table.setWidths(new int[]{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1});
         table.setWidthPercentage(100);
+        table.getDefaultCell().setFixedHeight(30f);
         table.addCell("1");
         table.addCell("2");
         table.addCell("3");
@@ -107,26 +108,6 @@ public class PrintHandlerFinal {
         table.addCell("18");
         table.addCell("19");
         table.addCell("20");
-        table.addCell(" ");
-        table.addCell(" ");
-        table.addCell(" ");
-        table.addCell(" ");
-        table.addCell(" ");
-        table.addCell(" ");
-        table.addCell(" ");
-        table.addCell(" ");
-        table.addCell(" ");
-        table.addCell(" ");
-        table.addCell(" ");
-        table.addCell(" ");
-        table.addCell(" ");
-        table.addCell(" ");
-        table.addCell(" ");
-        table.addCell(" ");
-        table.addCell(" ");
-        table.addCell(" ");
-        table.addCell(" ");
-        table.addCell(" ");
         table.addCell(" ");
         table.addCell(" ");
         table.addCell(" ");
@@ -334,7 +315,7 @@ public class PrintHandlerFinal {
         ArrayList<DyeingProcess> dyeingProcessList = dProcessHandler.GetAllDyeingProcessAndSubProcessByDyeingProgramId(dyeingProgramDetails.getID());
         ArrayList<DyeingChemical> dyeingChemicalList = null;
         int rows = 0;
-        int rowLimit = 18;
+        int rowLimit = 14;
         for(int x=0; x<dyeingProcessList.size(); x++)
             {
                     if (dyeingProcessList.get(x).getdyeingProcessOrder().matches("[0-9]+")){
