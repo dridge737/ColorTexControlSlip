@@ -87,7 +87,7 @@ public class PrintHandlerFinal {
         PdfPTable table = new PdfPTable(20);
         table.setWidths(new int[]{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1});
         table.setWidthPercentage(100);
-        table.getDefaultCell().setFixedHeight(60f);
+        
         table.addCell("1");
         table.addCell("2");
         table.addCell("3");
@@ -108,8 +108,29 @@ public class PrintHandlerFinal {
         table.addCell("18");
         table.addCell("19");
         table.addCell("20");
-        
+        table.getDefaultCell().setFixedHeight(60f);
         table.addCell(" ");
+        table.addCell(" ");
+        table.addCell(" ");
+        table.addCell(" ");
+        table.addCell(" ");
+        table.addCell(" ");
+        table.addCell(" ");
+        table.addCell(" ");
+        table.addCell(" ");
+        table.addCell(" ");
+        table.addCell(" ");
+        table.addCell(" ");
+        table.addCell(" ");
+        table.addCell(" ");
+        table.addCell(" ");
+        table.addCell(" ");
+        table.addCell(" ");
+        table.addCell(" ");
+        table.addCell(" ");
+        table.addCell(" ");
+        
+                table.addCell(" ");
         table.addCell(" ");
         table.addCell(" ");
         table.addCell(" ");
