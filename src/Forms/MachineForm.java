@@ -31,12 +31,14 @@ public class MachineForm extends javax.swing.JFrame {
     Color DefaultColor = new Color(220,220,220);
     Color ColorError = new Color(232,228,42);
     Color TypingColor = Color.BLACK;
+    String DefaultLoadingArrangementText;
     /**
      * Creates new form AddMachine
      */
     public MachineForm() {
         initComponents();
         //Check if Machine type requires to be set via preference
+        DefaultLoadingArrangementText = LoadingArrangement.getText();
         if(!(new PreferenceHandler().getResinMachineInputPreference()))
         {
             this.MachineTypeComboBox.setVisible(false);
@@ -207,7 +209,7 @@ public class MachineForm extends javax.swing.JFrame {
 
         LoadingArrangement.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         LoadingArrangement.setForeground(new java.awt.Color(204, 204, 204));
-        LoadingArrangement.setText("Number Of Loading Arrangement");
+        LoadingArrangement.setText("Tubes");
         LoadingArrangement.setToolTipText("");
         LoadingArrangement.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -448,7 +450,7 @@ public class MachineForm extends javax.swing.JFrame {
         this.MachineMaximumCapacity.setText("Max Capacity");
         this.MachineMinimumVolume.setText("Min Volume");
         this.MachineMaximumVolume.setText("Max Volume");
-        this.LoadingArrangement.setText("Number Of Loading Arrangement");
+        this.LoadingArrangement.setText(this.DefaultLoadingArrangementText);
         this.setTextForegroundColor(DefaultColor);
     }
     
@@ -501,11 +503,11 @@ public class MachineForm extends javax.swing.JFrame {
         }
         else if(LoadingArrangement.getText().matches("[0-9]+") == false)
         {
-            if(LoadingArrangement.getText().equals("Number Of Loading Arrangement"))
-                JOptionPane.showMessageDialog(null, "Please input the number of loading arrangement");
+            if(LoadingArrangement.getText().equals(this.DefaultLoadingArrangementText))
+                JOptionPane.showMessageDialog(null, "Please input the number of tubes");
             else
             {
-                JOptionPane.showMessageDialog(null, "Please enter a valid number in the loading arrangement");
+                JOptionPane.showMessageDialog(null, "Please enter a valid number in the tubes box");
             }
             LoadingArrangement.setBackground(ColorError);
             DetailsValid = false;
@@ -564,6 +566,12 @@ public class MachineForm extends javax.swing.JFrame {
         thisMachine.setMinVolume(Integer.parseInt(MachineMinimumVolume.getText()));
     }
     
+    public boolean CheckTubesTextBox()
+    {
+        boolean valid = true;
+        return valid;
+    }
+    
     private boolean GetMachineDetails()
     {   
         boolean DetailsValid = true;
@@ -598,11 +606,11 @@ public class MachineForm extends javax.swing.JFrame {
         }
         else
         {
-            if(LoadingArrangement.getText().equals("Number Of Loading Arrangement"))
-                JOptionPane.showMessageDialog(null, "Please input the number of loading arrangement");
+            if(LoadingArrangement.getText().equals(DefaultLoadingArrangementText))
+                JOptionPane.showMessageDialog(null, "Please input the number of tubes");
             else
             {
-                JOptionPane.showMessageDialog(null, "Please enter a valid number in the loading arrangement");
+                JOptionPane.showMessageDialog(null, "Please enter a valid number in the tubes");
             }
             LoadingArrangement.setBackground(ColorError);
             DetailsValid = false;
@@ -720,7 +728,7 @@ public class MachineForm extends javax.swing.JFrame {
 
     private void LoadingArrangementFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_LoadingArrangementFocusGained
         // TODO add your handling code here:
-        if(LoadingArrangement.getText().equals("Number Of Loading Arrangement"))
+        if(LoadingArrangement.getText().equals("Tubes"))
         {
             LoadingArrangement.setText("");
             LoadingArrangement.setForeground(TypingColor);

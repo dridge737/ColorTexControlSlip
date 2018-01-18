@@ -5,7 +5,7 @@
  */
 package Forms;
 
-import DataEntities.ChemicalColor;
+import DataEntities.DesignColor;
 import Handlers.ColorHandler;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -25,9 +25,9 @@ import javax.swing.table.TableRowSorter;
 public class ColorForm extends javax.swing.JFrame {
 
     DefaultTableModel model = new DefaultTableModel();
-    ChemicalColor thisColor = new ChemicalColor();
+    DesignColor thisColor = new DesignColor();
     /**
-     * Creates new Color Form
+     * Creates new DesignColor Form
      */
     public ColorForm() {
         initComponents();

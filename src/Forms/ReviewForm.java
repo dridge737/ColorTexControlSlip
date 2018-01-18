@@ -5,7 +5,7 @@
  */
 package Forms;
 
-import DataEntities.ChemicalColor;
+import DataEntities.DesignColor;
 import DataEntities.Customer;
 import DataEntities.Design;
 import DataEntities.DyeingProgram;
@@ -48,7 +48,7 @@ public class ReviewForm extends javax.swing.JFrame {
     Machine thisResinMachine = new Machine();
     Design thisDesign = new Design();
     Customer thisCustomer = new Customer();
-    ChemicalColor thisColor = new ChemicalColor();
+    DesignColor thisColor = new DesignColor();
     JobOrder thisJob = new JobOrder();
     ProcessOrder thisProcessOrder = new ProcessOrder();
     int WindowType = 0;
@@ -868,7 +868,7 @@ public class ReviewForm extends javax.swing.JFrame {
     }//GEN-LAST:event_DesignDropDownListActionPerformed
 
     private void ColorDropDownListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ColorDropDownListActionPerformed
-        ChemicalColor colorDetails = new ChemicalColor();
+        DesignColor colorDetails = new DesignColor();
         ColorHandler handler = new ColorHandler();
         //int colorId = -1;
         String colorName = "";
