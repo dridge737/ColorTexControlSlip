@@ -5,7 +5,7 @@
  */
 package Database;
 
-//import DataEntities.Color;
+//import DataEntities.DesignColor;
 //import DataEntities.Customer;
 import DataEntities.*;
 import java.sql.Connection;
@@ -299,7 +299,7 @@ public class ColorTextControlSlipRepository {
      * @param newColor
      * @return
      */
-    public boolean AddColor(ChemicalColor newColor) {
+    public boolean AddColor(DesignColor newColor) {
         DBConnection db = new DBConnection();
         Connection conn = null;
         PreparedStatement preparedStmt = null;
@@ -321,7 +321,7 @@ public class ColorTextControlSlipRepository {
         return added;
     }
 
-    public boolean UpdateColorByColorId(ChemicalColor thisColor) {
+    public boolean UpdateColorByColorId(DesignColor thisColor) {
         DBConnection db = new DBConnection();
         Connection conn = null;
         PreparedStatement preparedStmt = null;
@@ -2177,7 +2177,7 @@ public class ColorTextControlSlipRepository {
              " FROM job_order LEFT JOIN Resin_Program ON job_order.ResinProgramID = resin_program.ID " +
              " Left JOIN resin_program_name ON Resin_program.ProgramNameID = resin_program_name.ID;");
             
-             ps = conn.prepareStatement("SELECT DrNumber , Date , col.Name as \"Color Name\", cus.Name as \"Customer Name\", des.Name as \"Design Name\" , mach.Name as \"Machine Name\", " +
+             ps = conn.prepareStatement("SELECT DrNumber , Date , col.Name as \"DesignColor Name\", cus.Name as \"Customer Name\", des.Name as \"Design Name\" , mach.Name as \"Machine Name\", " +
              " dProgName.Name as \"Dyeing Program Name\", rProgName.Name as \"Resin Program Name\" " +
              " FROM color col, customer cus , design des, job_order, machine mach, " +
              " dyeing_program dProg, dyeing_program_name dProgName, resin_program rProg, resin_program_name rProgName " +

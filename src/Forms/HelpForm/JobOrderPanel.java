@@ -8,7 +8,7 @@ package Forms.HelpForm;
 import DataEntities.Customer;
 import DataEntities.Machine;
 import Handlers.MachineHandler;
-import DataEntities.ChemicalColor;
+import DataEntities.DesignColor;
 import Handlers.ColorHandler;
 import Handlers.CustomerHandler;
 import DataEntities.Customer;
@@ -36,7 +36,7 @@ public class JobOrderPanel extends javax.swing.JPanel {
     Machine thisMachine = new Machine();
     Design thisDesign = new Design();
     Customer thisCustomer = new Customer();
-    ChemicalColor thisColor = new ChemicalColor();
+    DesignColor thisColor = new DesignColor();
     JobOrder thisJob = new JobOrder();
     ProcessOrder thisProcessOrder = new ProcessOrder();
     /**
@@ -262,7 +262,7 @@ public class JobOrderPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_DesignDropDownListActionPerformed
 
     private void ColorDropDownListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ColorDropDownListActionPerformed
-        ChemicalColor colorDetails = new ChemicalColor();
+        DesignColor colorDetails = new DesignColor();
         ColorHandler handler = new ColorHandler();
         int colorId = -1;
         String colorName = "";

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package Handlers;
-import DataEntities.ChemicalColor;
+import DataEntities.DesignColor;
 import DataEntities.Customer;
 import DataEntities.Design;
 import DataEntities.DyeingChemical;
@@ -52,14 +52,14 @@ public class PrintHandlerFinal {
     private Font f  = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
     private Font f1  = FontFactory.getFont(FontFactory.TIMES_ROMAN, 10, Font.NORMAL);
     
-    public void createPDF(Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException {
+    public void createPDF(Machine machineDetails, Design designDetails, Customer customerDetails, DesignColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException {
         File file = new File(DEST);
         file.getParentFile().mkdirs();
         renderPDF(DEST, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
         printPDF();
     }
     
-    public void renderPDF(String dest, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException {
+    public void renderPDF(String dest, Machine machineDetails, Design designDetails, Customer customerDetails, DesignColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException {
         Document document = new Document();
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(dest));
         
@@ -244,7 +244,7 @@ public class PrintHandlerFinal {
         return document;
     }
             
-    public Document AddSecondPage(Document document, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException
+    public Document AddSecondPage(Document document, Machine machineDetails, Design designDetails, Customer customerDetails, DesignColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException
     {
         document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
         document = addCheckedByImage(document);
@@ -257,7 +257,7 @@ public class PrintHandlerFinal {
         return document;
     }
     
-    public Document AddDyeingProgramTable(Document document, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException
+    public Document AddDyeingProgramTable(Document document, Machine machineDetails, Design designDetails, Customer customerDetails, DesignColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException
     {
         float[] columnWidths = {5, 2, 2, 2};
         PdfPTable table = new PdfPTable(columnWidths);
@@ -715,7 +715,7 @@ public class PrintHandlerFinal {
         return document;
     }
     
-    public Document AddSecondPageHeader(Document document, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException
+    public Document AddSecondPageHeader(Document document, Machine machineDetails, Design designDetails, Customer customerDetails, DesignColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException
     {
         DyeingProgramNameHandler dyeingProgramNameHandler = new DyeingProgramNameHandler();
         PreferenceHandler prefHandler = new PreferenceHandler();
@@ -783,7 +783,7 @@ public class PrintHandlerFinal {
         table.addCell(p4);
         
         Phrase p7 = new Phrase("Color: " + chemicalDetails.getColorName(), f);
-        //p7.add("Color: " + chemicalDetails.getColorName(), f);
+        //p7.add("DesignColor: " + chemicalDetails.getColorName(), f);
         pCell = new PdfPCell(p7);
         table.addCell(p7);
         
@@ -812,7 +812,7 @@ public class PrintHandlerFinal {
         return document;
     }
     
-    public Document AddThirdPage(Document document, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException 
+    public Document AddThirdPage(Document document, Machine machineDetails, Design designDetails, Customer customerDetails, DesignColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException 
     {
         ResinProgramHandler resinProgramNameHandler = new ResinProgramHandler();
         DyeingProgramNameHandler dyeingProgramNameHandler = new DyeingProgramNameHandler();
@@ -888,7 +888,7 @@ public class PrintHandlerFinal {
         table.addCell(p4);
         
         Phrase p7 = new Phrase("Color: " + chemicalDetails.getColorName(), f);
-        //p7.add("Color: " + chemicalDetails.getColorName(), f);
+        //p7.add("DesignColor: " + chemicalDetails.getColorName(), f);
         pCell = new PdfPCell(p7);
         table.addCell(p7);
         
@@ -1099,7 +1099,7 @@ public class PrintHandlerFinal {
         return document;
     }
     
-    public Document addFirstPageSection(String dest, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume, Document document) throws IOException, DocumentException {
+    public Document addFirstPageSection(String dest, Machine machineDetails, Design designDetails, Customer customerDetails, DesignColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume, Document document) throws IOException, DocumentException {
         Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
         
         PreferenceHandler prefHandler = new PreferenceHandler();
@@ -1161,7 +1161,7 @@ public class PrintHandlerFinal {
         table.addCell(p4);
         
         Phrase p7 = new Phrase("Color: " + chemicalDetails.getColorName(), f);
-        //p7.add("Color: " + chemicalDetails.getColorName(), f);
+        //p7.add("DesignColor: " + chemicalDetails.getColorName(), f);
         pCell = new PdfPCell(p7);
         table.addCell(p7);
         

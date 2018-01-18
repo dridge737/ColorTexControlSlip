@@ -5,7 +5,7 @@
  */
 package Handlers;
 
-import DataEntities.ChemicalColor;
+import DataEntities.DesignColor;
 import Database.ColorTextControlSlipRepository;
 import Forms.HelpForm.auto_complete;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import javax.swing.JTextField;
  * @author Eldridge
  */
 public class ColorHandler {
-    public boolean AddNewColor(ChemicalColor newColor)
+    public boolean AddNewColor(DesignColor newColor)
     {
         boolean isSuccessful = false;
         
@@ -28,7 +28,7 @@ public class ColorHandler {
         return isSuccessful;
     }
     
-    public boolean UpdateColor(ChemicalColor thisColor)
+    public boolean UpdateColor(DesignColor thisColor)
     {
         boolean isSuccessful = false;
         
