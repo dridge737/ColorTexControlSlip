@@ -820,7 +820,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                 DesignList.add(DesignTextField.getText());
             } else {
                 JOptionPane.showMessageDialog(null, "Please change or add this design.");
-                DesignTextField.requestFocus();
+                DesignTextField.setText("");
             }
         }
                
@@ -839,7 +839,8 @@ public class JobOrderForm extends javax.swing.JFrame {
                 ColorList.add(ColorTextField.getText());
             } else {
                 JOptionPane.showMessageDialog(null, "Please change or add this color.");
-                ColorTextField.requestFocus();
+                ColorTextField.setText("");
+                //ColorTextField.requestFocus();
             }
         }
     }//GEN-LAST:event_ColorTextFieldFocusLost
