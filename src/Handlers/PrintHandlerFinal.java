@@ -389,7 +389,7 @@ public class PrintHandlerFinal {
                                         PdfPCell dyeingQuantityCell = new PdfPCell();
                                         DecimalFormat df = new DecimalFormat("#,###.00");
                                         df.setRoundingMode(RoundingMode.CEILING);
-                                        p = new Paragraph(df.format(quantity) + dyeingChemicalList.get(i).getState(), f);
+                                        p = new Paragraph(df.format(quantity) + " " + dyeingChemicalList.get(i).getState(), f);
                                         p.setLeading(8f, 0f);
                                         p.setAlignment(Element.ALIGN_RIGHT);
                                         dyeingQuantityCell.setBorder(Rectangle.BOTTOM);
@@ -402,7 +402,7 @@ public class PrintHandlerFinal {
                                         PdfPCell dyeingQuantityCell = new PdfPCell();
                                         DecimalFormat df = new DecimalFormat("#,###.00");
                                         df.setRoundingMode(RoundingMode.CEILING);
-                                        p = new Paragraph(df.format(quantity) + dyeingChemicalList.get(i).getState(), f);
+                                        p = new Paragraph(df.format(quantity) + " " + dyeingChemicalList.get(i).getState(), f);
                                         p.setLeading(8f, 0f);
                                         p.setAlignment(Element.ALIGN_RIGHT);
                                         dyeingQuantityCell.setBorder(Rectangle.BOTTOM);
@@ -422,7 +422,7 @@ public class PrintHandlerFinal {
                                         PdfPCell dyeingQuantityCell = new PdfPCell();
                                         DecimalFormat df = new DecimalFormat("#,###.00");
                                         df.setRoundingMode(RoundingMode.CEILING);
-                                        p = new Paragraph(df.format(quantity) + dyeingChemicalList.get(i).getState(), f);
+                                        p = new Paragraph(df.format(quantity) + " " + dyeingChemicalList.get(i).getState(), f);
                                         p.setLeading(8f, 0f);
                                         p.setAlignment(Element.ALIGN_RIGHT);
                                         dyeingQuantityCell.setBorder(Rectangle.BOTTOM);
@@ -434,7 +434,7 @@ public class PrintHandlerFinal {
                                         PdfPCell dyeingQuantityCell = new PdfPCell();
                                         DecimalFormat df = new DecimalFormat("#,###.##");
                                         df.setRoundingMode(RoundingMode.CEILING);
-                                        p = new Paragraph(df.format(quantity) + dyeingChemicalList.get(i).getState(), f);
+                                        p = new Paragraph(df.format(quantity) + " " + dyeingChemicalList.get(i).getState(), f);
                                         p.setLeading(8f, 0f);
                                         p.setAlignment(Element.ALIGN_RIGHT);
                                         dyeingQuantityCell.setBorder(Rectangle.BOTTOM);
@@ -580,7 +580,7 @@ public class PrintHandlerFinal {
                                     PdfPCell dyeingQuantityCell = new PdfPCell();
                                         DecimalFormat df = new DecimalFormat("#,###.00");
                                         df.setRoundingMode(RoundingMode.CEILING);
-                                        p = new Paragraph(df.format(quantity) + dyeingChemicalList.get(i).getState(), f);
+                                        p = new Paragraph(df.format(quantity)  + " " + dyeingChemicalList.get(i).getState(), f);
                                        p.setLeading(8f, 0f);
                                         p.setAlignment(Element.ALIGN_RIGHT);
                                         dyeingQuantityCell.setBorder(Rectangle.BOTTOM);
@@ -593,7 +593,7 @@ public class PrintHandlerFinal {
                                     PdfPCell dyeingQuantityCell = new PdfPCell();
                                         DecimalFormat df = new DecimalFormat("#,###.##");
                                         df.setRoundingMode(RoundingMode.CEILING);
-                                        p = new Paragraph(df.format(quantity) + dyeingChemicalList.get(i).getState(), f);
+                                        p = new Paragraph(df.format(quantity) + " " + dyeingChemicalList.get(i).getState(), f);
                                         p.setLeading(8f, 0f);
                                         p.setAlignment(Element.ALIGN_RIGHT);
                                         dyeingQuantityCell.setBorder(Rectangle.BOTTOM);
@@ -613,7 +613,7 @@ public class PrintHandlerFinal {
                                     PdfPCell dyeingQuantityCell = new PdfPCell();
                                         DecimalFormat df = new DecimalFormat("#,###.00");
                                         df.setRoundingMode(RoundingMode.CEILING);
-                                        p = new Paragraph(df.format(quantity) + dyeingChemicalList.get(i).getState(), f);
+                                        p = new Paragraph(df.format(quantity) + " " + dyeingChemicalList.get(i).getState(), f);
                                         p.setLeading(8f, 0f);
                                         p.setAlignment(Element.ALIGN_RIGHT);
                                         dyeingQuantityCell.setBorder(Rectangle.BOTTOM);
@@ -627,7 +627,7 @@ public class PrintHandlerFinal {
                                     PdfPCell dyeingQuantityCell = new PdfPCell();
                                         DecimalFormat df = new DecimalFormat("#,###.##");
                                         df.setRoundingMode(RoundingMode.CEILING);
-                                        p = new Paragraph(df.format(quantity) + dyeingChemicalList.get(i).getState(), f);
+                                        p = new Paragraph(df.format(quantity) + " " + dyeingChemicalList.get(i).getState(), f);
                                         p.setLeading(8f, 0f);
                                         p.setAlignment(Element.ALIGN_RIGHT);
                                         dyeingQuantityCell.setBorder(Rectangle.BOTTOM);
@@ -718,8 +718,9 @@ public class PrintHandlerFinal {
     public Document AddSecondPageHeader(Document document, Machine machineDetails, Design designDetails, Customer customerDetails, ChemicalColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException
     {
         DyeingProgramNameHandler dyeingProgramNameHandler = new DyeingProgramNameHandler();
-        PreferenceHandler prefHandler = new PreferenceHandler();
+        
         Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
+        PreferenceHandler prefHandler = new PreferenceHandler();
         Paragraph companyHeader = new Paragraph(prefHandler.getCompanyPreference(), companyHeaderFont);
         companyHeader.setAlignment(Element.ALIGN_CENTER);
         document.add(companyHeader);
@@ -817,7 +818,8 @@ public class PrintHandlerFinal {
         ResinProgramHandler resinProgramNameHandler = new ResinProgramHandler();
         DyeingProgramNameHandler dyeingProgramNameHandler = new DyeingProgramNameHandler();
         Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
-        Paragraph companyHeader = new Paragraph("Relianz International Corporation", companyHeaderFont);
+        PreferenceHandler prefHandler = new PreferenceHandler();
+        Paragraph companyHeader = new Paragraph(prefHandler.getCompanyPreference(), companyHeaderFont);
         companyHeader.setAlignment(Element.ALIGN_CENTER);
         Chapter chapter = new Chapter(companyHeader, 1);
         chapter.setNumberDepth(0);
@@ -948,21 +950,21 @@ public class PrintHandlerFinal {
             parag.setLeading(8f, 0f);
             parag.setAlignment(Element.ALIGN_RIGHT);
             gplHeader.setBorder(Rectangle.BOTTOM);
-            gplHeader.addElement(p);
+            gplHeader.addElement(parag);
             table.addCell(gplHeader);
             PdfPCell percentHeader = new PdfPCell();
             parag = new Paragraph("%",f );
             parag.setLeading(8f, 0f);
             parag.setAlignment(Element.ALIGN_RIGHT);
             percentHeader.setBorder(Rectangle.BOTTOM);
-            percentHeader.addElement(p);
+            percentHeader.addElement(parag);
             table.addCell(percentHeader);
             PdfPCell quantityHeader = new PdfPCell();
             parag = new Paragraph("Quantity",f );
             parag.setLeading(8f, 0f);
             parag.setAlignment(Element.ALIGN_RIGHT);
             quantityHeader.setBorder(Rectangle.BOTTOM);
-            quantityHeader.addElement(p);
+            quantityHeader.addElement(parag);
             table.addCell(quantityHeader);
 
             
@@ -987,7 +989,7 @@ public class PrintHandlerFinal {
                     parag.setLeading(8f, 0f);
                     parag.setAlignment(Element.ALIGN_RIGHT);
                     gplCell.setBorder(Rectangle.BOTTOM);
-                    gplCell.addElement(p);
+                    gplCell.addElement(parag);
                     table.addCell(gplCell);
                     table.addCell(" ");
                 }
@@ -1003,7 +1005,7 @@ public class PrintHandlerFinal {
                     parag.setLeading(8f, 0f);
                     parag.setAlignment(Element.ALIGN_RIGHT);
                     gplCell.setBorder(Rectangle.BOTTOM);
-                    gplCell.addElement(p);
+                    gplCell.addElement(parag);
                     table.addCell(gplCell);
                 }
                 //table.addCell(String.valueOf(jobOrderDetails.getVolumeH20() * resinChemicalList.get(x).getGPLValue()));
@@ -1015,27 +1017,27 @@ public class PrintHandlerFinal {
                    if(quantity.toString().contains(".0"))
                     {
                         DecimalFormat df = new DecimalFormat("#,###.00");
-                            df.setRoundingMode(RoundingMode.CEILING);
-                                        parag = new Paragraph(df.format(quantity) + resinChemicalList.get(x).getState(), f);
-                                        parag.setLeading(8f, 0f);
-                                        parag.setAlignment(Element.ALIGN_RIGHT);
-                                        PdfPCell resinQuantityCell = new PdfPCell();
-                                        resinQuantityCell.setBorder(Rectangle.BOTTOM);
-                                        resinQuantityCell.addElement(p);
-                                        table.addCell(resinQuantityCell);
+                        df.setRoundingMode(RoundingMode.CEILING);
+                        parag = new Paragraph(df.format(quantity) + resinChemicalList.get(x).getState(), f);
+                        parag.setLeading(8f, 0f);
+                        parag.setAlignment(Element.ALIGN_RIGHT);
+                        PdfPCell resinQuantityCell = new PdfPCell();
+                        resinQuantityCell.setBorder(Rectangle.BOTTOM);
+                        resinQuantityCell.addElement(parag);
+                        table.addCell(resinQuantityCell);
 
                     }
                     else
                     {
                         DecimalFormat df = new DecimalFormat("#,###.##");
-                            df.setRoundingMode(RoundingMode.CEILING);
-                   parag = new Paragraph(df.format(quantity) + resinChemicalList.get(x).getState(), f);
-                                        parag.setLeading(8f, 0f);
-                                        parag.setAlignment(Element.ALIGN_RIGHT);
-                                        PdfPCell resinQuantityCell = new PdfPCell();
-                                        resinQuantityCell.setBorder(Rectangle.BOTTOM);
-                                        resinQuantityCell.addElement(p);
-                                        table.addCell(resinQuantityCell);
+                        df.setRoundingMode(RoundingMode.CEILING);
+                        parag = new Paragraph(df.format(quantity) + resinChemicalList.get(x).getState(), f);
+                        parag.setLeading(8f, 0f);
+                        parag.setAlignment(Element.ALIGN_RIGHT);
+                        PdfPCell resinQuantityCell = new PdfPCell();
+                        resinQuantityCell.setBorder(Rectangle.BOTTOM);
+                        resinQuantityCell.addElement(parag);
+                        table.addCell(resinQuantityCell);
                     }
                                
                 }
@@ -1054,7 +1056,7 @@ public class PrintHandlerFinal {
                                         parag.setAlignment(Element.ALIGN_RIGHT);
                                         PdfPCell resinQuantityCell = new PdfPCell();
                                         resinQuantityCell.setBorder(Rectangle.BOTTOM);
-                                        resinQuantityCell.addElement(p);
+                                        resinQuantityCell.addElement(parag);
                                         table.addCell(resinQuantityCell);
 
                     }
@@ -1068,7 +1070,7 @@ public class PrintHandlerFinal {
                                         parag.setAlignment(Element.ALIGN_RIGHT);
                                         PdfPCell resinQuantityCell = new PdfPCell();
                                         resinQuantityCell.setBorder(Rectangle.BOTTOM);
-                                        resinQuantityCell.addElement(p);
+                                        resinQuantityCell.addElement(parag);
                                         table.addCell(resinQuantityCell);
                     }
                                
