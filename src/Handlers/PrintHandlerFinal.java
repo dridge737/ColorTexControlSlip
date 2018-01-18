@@ -1018,7 +1018,7 @@ public class PrintHandlerFinal {
                     {
                         DecimalFormat df = new DecimalFormat("#,###.00");
                         df.setRoundingMode(RoundingMode.CEILING);
-                        parag = new Paragraph(df.format(quantity) + resinChemicalList.get(x).getState(), f);
+                        parag = new Paragraph(df.format(quantity) + " " + resinChemicalList.get(x).getState(), f);
                         parag.setLeading(8f, 0f);
                         parag.setAlignment(Element.ALIGN_RIGHT);
                         PdfPCell resinQuantityCell = new PdfPCell();
@@ -1031,7 +1031,7 @@ public class PrintHandlerFinal {
                     {
                         DecimalFormat df = new DecimalFormat("#,###.##");
                         df.setRoundingMode(RoundingMode.CEILING);
-                        parag = new Paragraph(df.format(quantity) + resinChemicalList.get(x).getState(), f);
+                        parag = new Paragraph(df.format(quantity) + " " + resinChemicalList.get(x).getState(), f);
                         parag.setLeading(8f, 0f);
                         parag.setAlignment(Element.ALIGN_RIGHT);
                         PdfPCell resinQuantityCell = new PdfPCell();
@@ -1051,7 +1051,7 @@ public class PrintHandlerFinal {
                         DecimalFormat df = new DecimalFormat("#,###.00");
                             df.setRoundingMode(RoundingMode.CEILING);
                             
-                    parag = new Paragraph(df.format(quantity) + resinChemicalList.get(x).getState(), f);
+                    parag = new Paragraph(df.format(quantity) + " " + resinChemicalList.get(x).getState(), f);
                                         parag.setLeading(8f, 0f);
                                         parag.setAlignment(Element.ALIGN_RIGHT);
                                         PdfPCell resinQuantityCell = new PdfPCell();
@@ -1065,7 +1065,7 @@ public class PrintHandlerFinal {
                         DecimalFormat df = new DecimalFormat("#,###.##");
                             df.setRoundingMode(RoundingMode.CEILING);
                             
-                    parag = new Paragraph(df.format(quantity) + resinChemicalList.get(x).getState(), f);
+                    parag = new Paragraph(df.format(quantity) + " " + resinChemicalList.get(x).getState(), f);
                                         parag.setLeading(8f, 0f);
                                         parag.setAlignment(Element.ALIGN_RIGHT);
                                         PdfPCell resinQuantityCell = new PdfPCell();
