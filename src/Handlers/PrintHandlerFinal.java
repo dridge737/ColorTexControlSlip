@@ -949,21 +949,21 @@ public class PrintHandlerFinal {
             Paragraph parag = new Paragraph("GPL",f );
             parag.setLeading(8f, 0f);
             parag.setAlignment(Element.ALIGN_RIGHT);
-            gplHeader.setBorder(Rectangle.BOTTOM);
+            gplHeader.setBorder(Rectangle.NO_BORDER);
             gplHeader.addElement(parag);
             table.addCell(gplHeader);
             PdfPCell percentHeader = new PdfPCell();
             parag = new Paragraph("%",f );
             parag.setLeading(8f, 0f);
             parag.setAlignment(Element.ALIGN_RIGHT);
-            percentHeader.setBorder(Rectangle.BOTTOM);
+            percentHeader.setBorder(Rectangle.NO_BORDER);
             percentHeader.addElement(parag);
             table.addCell(percentHeader);
             PdfPCell quantityHeader = new PdfPCell();
             parag = new Paragraph("Quantity",f );
             parag.setLeading(8f, 0f);
             parag.setAlignment(Element.ALIGN_RIGHT);
-            quantityHeader.setBorder(Rectangle.BOTTOM);
+            quantityHeader.setBorder(Rectangle.NO_BORDER);
             quantityHeader.addElement(parag);
             table.addCell(quantityHeader);
 
@@ -988,7 +988,7 @@ public class PrintHandlerFinal {
                     parag = new Paragraph(df.format(gplDouble),f );
                     parag.setLeading(8f, 0f);
                     parag.setAlignment(Element.ALIGN_RIGHT);
-                    gplCell.setBorder(Rectangle.BOTTOM);
+                    gplCell.setBorder(Rectangle.NO_BORDER);
                     gplCell.addElement(parag);
                     table.addCell(gplCell);
                     table.addCell(" ");
@@ -1004,7 +1004,7 @@ public class PrintHandlerFinal {
                     parag = new Paragraph(df.format(gplDouble),f );
                     parag.setLeading(8f, 0f);
                     parag.setAlignment(Element.ALIGN_RIGHT);
-                    gplCell.setBorder(Rectangle.BOTTOM);
+                    gplCell.setBorder(Rectangle.NO_BORDER);
                     gplCell.addElement(parag);
                     table.addCell(gplCell);
                 }
@@ -1022,7 +1022,7 @@ public class PrintHandlerFinal {
                         parag.setLeading(8f, 0f);
                         parag.setAlignment(Element.ALIGN_RIGHT);
                         PdfPCell resinQuantityCell = new PdfPCell();
-                        resinQuantityCell.setBorder(Rectangle.BOTTOM);
+                        resinQuantityCell.setBorder(Rectangle.NO_BORDER);
                         resinQuantityCell.addElement(parag);
                         table.addCell(resinQuantityCell);
 
@@ -1035,7 +1035,7 @@ public class PrintHandlerFinal {
                         parag.setLeading(8f, 0f);
                         parag.setAlignment(Element.ALIGN_RIGHT);
                         PdfPCell resinQuantityCell = new PdfPCell();
-                        resinQuantityCell.setBorder(Rectangle.BOTTOM);
+                        resinQuantityCell.setBorder(Rectangle.NO_BORDER);
                         resinQuantityCell.addElement(parag);
                         table.addCell(resinQuantityCell);
                     }
@@ -1055,7 +1055,7 @@ public class PrintHandlerFinal {
                                         parag.setLeading(8f, 0f);
                                         parag.setAlignment(Element.ALIGN_RIGHT);
                                         PdfPCell resinQuantityCell = new PdfPCell();
-                                        resinQuantityCell.setBorder(Rectangle.BOTTOM);
+                                        resinQuantityCell.setBorder(Rectangle.NO_BORDER);
                                         resinQuantityCell.addElement(parag);
                                         table.addCell(resinQuantityCell);
 
@@ -1069,7 +1069,7 @@ public class PrintHandlerFinal {
                                         parag.setLeading(8f, 0f);
                                         parag.setAlignment(Element.ALIGN_RIGHT);
                                         PdfPCell resinQuantityCell = new PdfPCell();
-                                        resinQuantityCell.setBorder(Rectangle.BOTTOM);
+                                        resinQuantityCell.setBorder(Rectangle.NO_BORDER);
                                         resinQuantityCell.addElement(parag);
                                         table.addCell(resinQuantityCell);
                     }
