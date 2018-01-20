@@ -939,7 +939,7 @@ public class PrintHandlerFinal {
         float[] columnWidths = {5, 2, 2, 2};
         table = new PdfPTable(columnWidths);
         table.setWidthPercentage(100);
-        table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+        table.getDefaultCell().setBorder(Rectangle.BOTTOM);
         table.getDefaultCell().setUseAscender(true);
         table.getDefaultCell().setUseDescender(true);
         PdfPCell cell = new PdfPCell();
