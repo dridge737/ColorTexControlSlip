@@ -139,12 +139,12 @@ public class JobOrderForm extends javax.swing.JFrame {
     }
     public void AddColorTextBoxAutoComplete()
     {
-        new ColorHandler().addColorTextBoxAutoComplete(ColorTextField);
+        ColorList = new ColorHandler().addColorTextBoxAutoComplete(ColorTextField);
     }
     
     public void AddDesignTextBoxAutoComplete()
     {
-        new DesignHandler().addDesignTextBoxAutoComplete(DesignTextField);
+        DesignList = new DesignHandler().addDesignTextBoxAutoComplete(DesignTextField);
     }
     
     public void AddLiquidRatioAutoComplete()
@@ -600,8 +600,8 @@ public class JobOrderForm extends javax.swing.JFrame {
             thisMachine.setMinCapacity(machineDetails.getMinCapacity());
             thisMachine.setMinVolume(machineDetails.getMinVolume());
             
-            VolumeTextField.setText(Float.toString(thisMachine.getMaxVolume()));
-            Weight.setText(Float.toString(thisMachine.getMaxCapacity()));
+            //VolumeTextField.setText(Float.toString(thisMachine.getMaxVolume()));
+            //Weight.setText(Float.toString(thisMachine.getMaxCapacity()));
             
         }        
         
@@ -809,25 +809,29 @@ public class JobOrderForm extends javax.swing.JFrame {
 
     private void DesignTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_DesignTextFieldFocusLost
         // TODO add your handling code here:
-        if (DesignList.indexOf(DesignTextField.getText()) == -1) {
-            if (JOptionPane.YES_OPTION
-                    == JOptionPane.showConfirmDialog(null, "This design has not yet been added. Do you want to add it?", "Add this design?", JOptionPane.YES_NO_OPTION)) {
-                //Add the Chemicalname to the database
-                Design thisDesign = new Design();
-                thisDesign.setDesignName(DesignTextField.getText());
-                DesignHandler thisDesignHandler = new DesignHandler();
-                thisDesignHandler.AddNewDesign(thisDesign);
-                DesignList.add(DesignTextField.getText());
-            } else {
-                JOptionPane.showMessageDialog(null, "Please change or add this design.");
-                DesignTextField.setText("");
+        if (DesignTextField.getText().length() > 0) {
+            if (DesignList.indexOf(DesignTextField.getText()) == -1) {
+                if (JOptionPane.YES_OPTION
+                        == JOptionPane.showConfirmDialog(null, "This design has not yet been added. Do you want to add it?", "Add this design?", JOptionPane.YES_NO_OPTION)) {
+                    //Add the Chemicalname to the database
+                    Design thisDesign = new Design();
+                    thisDesign.setDesignName(DesignTextField.getText());
+                    DesignHandler thisDesignHandler = new DesignHandler();
+                    thisDesignHandler.AddNewDesign(thisDesign);
+                    DesignList.add(DesignTextField.getText());
+                    this.SetAndUpdateDesignID();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Please change or add this design.");
+                    DesignTextField.setText("");
+                }
             }
         }
-               
+
     }//GEN-LAST:event_DesignTextFieldFocusLost
 
     private void ColorTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ColorTextFieldFocusLost
         // TODO add your handling code here:
+        if(ColorTextField.getText().length() > 0)
          if (ColorList.indexOf(ColorTextField.getText()) == -1) {
             if (JOptionPane.YES_OPTION
                     == JOptionPane.showConfirmDialog(null, "This color has not yet been added. Do you want to add it?", "Add this color?", JOptionPane.YES_NO_OPTION)) {
@@ -837,6 +841,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                 ColorHandler thisColorHandler = new ColorHandler();
                 thisColorHandler.AddNewColor(CurrentDesignColor);
                 ColorList.add(ColorTextField.getText());
+                SetAndUpdateColorID();
             } else {
                 JOptionPane.showMessageDialog(null, "Please change or add this color.");
                 ColorTextField.setText("");
