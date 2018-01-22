@@ -250,9 +250,11 @@ public class PrintHandlerFinal {
         document = addCheckedByImage(document);
         PdfPTable twentyColTable = AddLongTable();
         document.add(twentyColTable);
-        document.add(Chunk.NEWLINE);
+        document.add(new Paragraph(" "));
+        //document.add(Chunk.NEWLINE);
         document = AddSecondPageOtherDetails(document, jobOrderDetails, machineDetails);
-        document.add(Chunk.NEWLINE);
+        document.add(new Paragraph(" "));
+        //document.add(Chunk.NEWLINE);
         document = AddDyeingProgramTable(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
         return document;
     }
@@ -298,14 +300,14 @@ public class PrintHandlerFinal {
         ArrayList<DyeingProcess> dyeingProcessList = dProcessHandler.GetAllDyeingProcessAndSubProcessByDyeingProgramId(dyeingProgramDetails.getID());
         ArrayList<DyeingChemical> dyeingChemicalList = null;
         int rows = 0;
-        int rowLimit = 14;
+        int rowLimit = 16;
         for(int x=0; x<dyeingProcessList.size(); x++)
             {
                     if (dyeingProcessList.get(x).getdyeingProcessOrder().matches("[0-9]+")){
                         table.addCell(new Phrase(RomanNumber.toRoman(Integer.parseInt(dyeingProcessList.get(x).getdyeingProcessOrder())) + ". " + dyeingProcessList.get(x).getDyeingProcessName(), f));
                         table.addCell(" ");
                         table.addCell(" ");
-                        table.addCell(" ");
+                        table.addCell(" ");                      
                         rows++;
                         if(rows >= rowLimit)
                         {
@@ -808,7 +810,8 @@ public class PrintHandlerFinal {
             Paragraph rollLoad = new Paragraph("Number of Rolls:_________", f);
             document.add(rollLoad);
         }
-        document.add(Chunk.NEWLINE);
+        document.add(new Paragraph(" "));
+        //document.add(Chunk.NEWLINE);
         
         return document;
     }
