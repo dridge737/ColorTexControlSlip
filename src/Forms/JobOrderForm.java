@@ -71,33 +71,16 @@ public class JobOrderForm extends javax.swing.JFrame {
         initComponents();
         //initTextFields();
         populateCustomerDropDown();
-        populateDesignDropDown();
-        populateColorDropDown();
         populateDyeingMachineDropDown();
         AddLiquidRatioAutoComplete();
         AddColorTextBoxAutoComplete();
         AddDesignTextBoxAutoComplete();
         SetToCenter();
         
-        LiquidRatioTextField.getDocument().addDocumentListener(new DocumentListener() 
-        {
-            
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                ComputeVolume();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                ComputeVolume();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                ComputeVolume();
-            }
-        });
-        
+    }
+    public void AddColorTextBoxAutoComplete()
+    {
+        ColorList = new ColorHandler().addColorTextBoxAutoComplete(ColorTextField);
         ColorTextField.getDocument().addDocumentListener(new DocumentListener() 
         {
             
@@ -116,7 +99,11 @@ public class JobOrderForm extends javax.swing.JFrame {
                 SetAndUpdateColorID();
             }
         });
-        
+    }
+    
+    public void AddDesignTextBoxAutoComplete()
+    {
+        DesignList = new DesignHandler().addDesignTextBoxAutoComplete(DesignTextField);
         DesignTextField.getDocument().addDocumentListener(new DocumentListener() 
         {
             
@@ -135,16 +122,6 @@ public class JobOrderForm extends javax.swing.JFrame {
                 SetAndUpdateDesignID();
             }
         });
-        
-    }
-    public void AddColorTextBoxAutoComplete()
-    {
-        ColorList = new ColorHandler().addColorTextBoxAutoComplete(ColorTextField);
-    }
-    
-    public void AddDesignTextBoxAutoComplete()
-    {
-        DesignList = new DesignHandler().addDesignTextBoxAutoComplete(DesignTextField);
     }
     
     public void AddLiquidRatioAutoComplete()
@@ -154,6 +131,24 @@ public class JobOrderForm extends javax.swing.JFrame {
        //Add Liquid Ratio auto complete in the text box
        AllLiquidRatio = new LiquidRatioHandler().addLiquidRatioTextBoxAutoComplete(LiquidRatioTextField); 
        //addLiquidRatioTextBoxAutoComplete();
+       LiquidRatioTextField.getDocument().addDocumentListener(new DocumentListener() 
+        {
+            
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                ComputeVolume();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                ComputeVolume();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                ComputeVolume();
+            }
+        });
     }
     public void SetToCenter()
     {
@@ -701,7 +696,7 @@ public class JobOrderForm extends javax.swing.JFrame {
             isSuccessful = false;
             JOptionPane.showMessageDialog(null, "Please check the value in the Weight."); 
         }
-        else if(this.Reference.getText().length() < 1)
+        /*else if(this.Reference.getText().length() < 1)
         {
             isSuccessful = false;
             JOptionPane.showMessageDialog(null, "Please check the the Reference."); 
@@ -716,6 +711,7 @@ public class JobOrderForm extends javax.swing.JFrame {
             isSuccessful = false;
             JOptionPane.showMessageDialog(null, "Please check the Location."); 
         }
+        */
         return isSuccessful;
     }
     
@@ -932,35 +928,6 @@ public class JobOrderForm extends javax.swing.JFrame {
             }
         }  
         
-    }
-    
-    private void populateColorDropDown(){
-        //PopulateList(new ColorHandler().GetAllColor() , ColorDropDownList);
-        
-        /*
-        ArrayList<String> ColorList = new ColorHandler().GetAllColor();
-        
-        if(ColorList != null){
-            for(int x=0; x<ColorList.size(); x++)
-            {
-                ColorDropDownList.addItem(ColorList.get(x));
-            }
-        }  
-        */
-    }
-    
-    private void populateDesignDropDown(){
-        //PopulateList(new thisDesignHandler().GetAllDesigns() , DesignDropDownList);
-        /*
-        ArrayList<String> DesignList = new thisDesignHandler().GetAllDesigns();
-        
-        if(DesignList != null){
-            for(int x=0; x<DesignList.size(); x++)
-            {
-                DesignDropDownList.addItem(DesignList.get(x));
-            }
-        }   
-        */
     }
     
     private void populateCustomerDropDown(){

@@ -261,7 +261,7 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
             String DrNumber = JobOrderTable.getModel().getValueAt(convertedRowNumber , 0).toString();
             JobHandler thisJobOrderHandler = new JobHandler();
             JobOrder thisJob =thisJobOrderHandler.GetJobOrderDetailsFromDrNumber(DrNumber);
-            ReviewForm orderReviewForm = new ReviewForm(thisJob, 3);
+            ReviewForm orderReviewForm = new ReviewForm(thisJob, 6);
             orderReviewForm.setVisible(true);
             this.dispose();
         }

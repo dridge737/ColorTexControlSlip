@@ -83,7 +83,7 @@ public class DyeingForm extends javax.swing.JFrame {
     //For Control Slip Form
     public DyeingForm(String DyeingProgramName,  JobOrder currentJob)
     {
-        this(DyeingProgramName, currentJob, 3);
+        this(DyeingProgramName, currentJob, 4);
         //initComponents();
         //WindowProcessType = 3;
         //thisJob = currentJob;

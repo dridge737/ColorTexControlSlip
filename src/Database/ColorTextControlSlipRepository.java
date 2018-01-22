@@ -278,7 +278,7 @@ public class ColorTextControlSlipRepository {
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                CustomerList.add(rs.getString("Name"));
+                CustomerList.add(rs.getString("Name").toUpperCase());
             }
         } catch (SQLException ex) {
             Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
