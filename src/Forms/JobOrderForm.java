@@ -785,14 +785,17 @@ public class JobOrderForm extends javax.swing.JFrame {
     private void VolumeTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_VolumeTextFieldFocusLost
         // TODO add your handling code here:
         String Volume = this.VolumeTextField.getText();
-        Volume = Volume.replaceAll("[^\\d.]", "");
-        Float ConvertedVolume = Float.parseFloat(Volume);
-        if(ConvertedVolume > thisMachine.getMaxVolume())
-            this.VolumeTextField.setText(Float.toString(thisMachine.getMaxVolume()));
-        else if(ConvertedVolume < thisMachine.getMinVolume())
-            this.VolumeTextField.setText(Float.toString(thisMachine.getMinVolume()));
+        if (Volume.length() > 0) {
+            Volume = Volume.replaceAll("[^\\d.]", "");
+            Float ConvertedVolume = Float.parseFloat(Volume);
+            if (ConvertedVolume > thisMachine.getMaxVolume()) {
+                this.VolumeTextField.setText(Float.toString(thisMachine.getMaxVolume()));
+            } else if (ConvertedVolume < thisMachine.getMinVolume()) {
+                this.VolumeTextField.setText(Float.toString(thisMachine.getMinVolume()));
+            }
         //else
-        //    this.VolumeTextField.setText(Volume);
+            //    this.VolumeTextField.setText(Volume);
+        }
     }//GEN-LAST:event_VolumeTextFieldFocusLost
 
     private void BatchNoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BatchNoKeyReleased
