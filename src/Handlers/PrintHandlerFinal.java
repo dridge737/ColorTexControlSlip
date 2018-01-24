@@ -203,36 +203,39 @@ public class PrintHandlerFinal {
                 
         Machine dyeingMachine = machineHandler.GetMachineDetailsById(jobOrderDetails.getDyeingMachineID());
         
-        float loadingArrangement = Float.parseFloat(jobOrderDetails.getRollLoad()) / Float.parseFloat(Integer.toString(dyeingMachine.getNumOfLoad()));
-        int loadArrangementDisplay;
-        if((loadingArrangement - (int)loadingArrangement ) != 0)
-        {
-            loadArrangementDisplay = (int)Math.floor(loadingArrangement);
-        }
-        else
-        {
-            loadArrangementDisplay = (int)loadingArrangement;
-        }
+//        float loadingArrangement = Float.parseFloat(jobOrderDetails.getRollLoad()) / Float.parseFloat(Integer.toString(dyeingMachine.getNumOfLoad()));
+//        int loadArrangementDisplay;
+//        if((loadingArrangement - (int)loadingArrangement ) != 0)
+//        {
+//            loadArrangementDisplay = (int)Math.floor(loadingArrangement);
+//        }
+//        else
+//        {
+//            loadArrangementDisplay = (int)loadingArrangement;
+//        }
         
         for (int i = 0; i < machineDetails.getNumOfLoad(); i++) {
             
-                
-                if((loadingArrangement - (int)loadingArrangement ) != 0)
-                {
-                    //cellOne = new PdfPCell(new Phrase(Integer.toString(loadArrangementDisplay), f1));
-                    cellOne = new PdfPCell(new Phrase(" ", f1));
+                cellOne = new PdfPCell(new Phrase(" ", f1));
                     cellOne.setVerticalAlignment(Element.ALIGN_MIDDLE);
                     cellOne.setHorizontalAlignment(Element.ALIGN_CENTER);
                     loadTable.addCell(cellOne);
-                }
-                else
-                {
-                    //cellOne = new PdfPCell(new Phrase(Integer.toString(loadArrangementDisplay), f1));
-                    cellOne = new PdfPCell(new Phrase(" ", f1));
-                    cellOne.setVerticalAlignment(Element.ALIGN_MIDDLE);
-                    cellOne.setHorizontalAlignment(Element.ALIGN_CENTER);
-                    loadTable.addCell(cellOne);
-                }
+//                if((loadingArrangement - (int)loadingArrangement ) != 0)
+//                {
+//                    //cellOne = new PdfPCell(new Phrase(Integer.toString(loadArrangementDisplay), f1));
+//                    cellOne = new PdfPCell(new Phrase(" ", f1));
+//                    cellOne.setVerticalAlignment(Element.ALIGN_MIDDLE);
+//                    cellOne.setHorizontalAlignment(Element.ALIGN_CENTER);
+//                    loadTable.addCell(cellOne);
+//                }
+//                else
+//                {
+//                    //cellOne = new PdfPCell(new Phrase(Integer.toString(loadArrangementDisplay), f1));
+//                    cellOne = new PdfPCell(new Phrase(" ", f1));
+//                    cellOne.setVerticalAlignment(Element.ALIGN_MIDDLE);
+//                    cellOne.setHorizontalAlignment(Element.ALIGN_CENTER);
+//                    loadTable.addCell(cellOne);
+//                }
             
         }
         
@@ -300,7 +303,7 @@ public class PrintHandlerFinal {
         ArrayList<DyeingProcess> dyeingProcessList = dProcessHandler.GetAllDyeingProcessAndSubProcessByDyeingProgramId(dyeingProgramDetails.getID());
         ArrayList<DyeingChemical> dyeingChemicalList = null;
         int rows = 0;
-        int rowLimit = 16;
+        int rowLimit = 17;
         for(int x=0; x<dyeingProcessList.size(); x++)
             {
                     if (dyeingProcessList.get(x).getdyeingProcessOrder().matches("[0-9]+")){
