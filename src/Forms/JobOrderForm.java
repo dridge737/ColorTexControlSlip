@@ -71,33 +71,16 @@ public class JobOrderForm extends javax.swing.JFrame {
         initComponents();
         //initTextFields();
         populateCustomerDropDown();
-        populateDesignDropDown();
-        populateColorDropDown();
         populateDyeingMachineDropDown();
         AddLiquidRatioAutoComplete();
         AddColorTextBoxAutoComplete();
         AddDesignTextBoxAutoComplete();
         SetToCenter();
         
-        LiquidRatioTextField.getDocument().addDocumentListener(new DocumentListener() 
-        {
-            
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                ComputeVolume();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                ComputeVolume();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                ComputeVolume();
-            }
-        });
-        
+    }
+    public void AddColorTextBoxAutoComplete()
+    {
+        ColorList = new ColorHandler().addColorTextBoxAutoComplete(ColorTextField);
         ColorTextField.getDocument().addDocumentListener(new DocumentListener() 
         {
             
@@ -116,7 +99,11 @@ public class JobOrderForm extends javax.swing.JFrame {
                 SetAndUpdateColorID();
             }
         });
-        
+    }
+    
+    public void AddDesignTextBoxAutoComplete()
+    {
+        DesignList = new DesignHandler().addDesignTextBoxAutoComplete(DesignTextField);
         DesignTextField.getDocument().addDocumentListener(new DocumentListener() 
         {
             
@@ -135,16 +122,6 @@ public class JobOrderForm extends javax.swing.JFrame {
                 SetAndUpdateDesignID();
             }
         });
-        
-    }
-    public void AddColorTextBoxAutoComplete()
-    {
-        new ColorHandler().addColorTextBoxAutoComplete(ColorTextField);
-    }
-    
-    public void AddDesignTextBoxAutoComplete()
-    {
-        new DesignHandler().addDesignTextBoxAutoComplete(DesignTextField);
     }
     
     public void AddLiquidRatioAutoComplete()
@@ -154,6 +131,24 @@ public class JobOrderForm extends javax.swing.JFrame {
        //Add Liquid Ratio auto complete in the text box
        AllLiquidRatio = new LiquidRatioHandler().addLiquidRatioTextBoxAutoComplete(LiquidRatioTextField); 
        //addLiquidRatioTextBoxAutoComplete();
+       LiquidRatioTextField.getDocument().addDocumentListener(new DocumentListener() 
+        {
+            
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                ComputeVolume();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                ComputeVolume();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                ComputeVolume();
+            }
+        });
     }
     public void SetToCenter()
     {
@@ -600,8 +595,8 @@ public class JobOrderForm extends javax.swing.JFrame {
             thisMachine.setMinCapacity(machineDetails.getMinCapacity());
             thisMachine.setMinVolume(machineDetails.getMinVolume());
             
-            VolumeTextField.setText(Float.toString(thisMachine.getMaxVolume()));
-            Weight.setText(Float.toString(thisMachine.getMaxCapacity()));
+            //VolumeTextField.setText(Float.toString(thisMachine.getMaxVolume()));
+            //Weight.setText(Float.toString(thisMachine.getMaxCapacity()));
             
         }        
         
@@ -701,7 +696,7 @@ public class JobOrderForm extends javax.swing.JFrame {
             isSuccessful = false;
             JOptionPane.showMessageDialog(null, "Please check the value in the Weight."); 
         }
-        else if(this.Reference.getText().length() < 1)
+        /*else if(this.Reference.getText().length() < 1)
         {
             isSuccessful = false;
             JOptionPane.showMessageDialog(null, "Please check the the Reference."); 
@@ -716,6 +711,7 @@ public class JobOrderForm extends javax.swing.JFrame {
             isSuccessful = false;
             JOptionPane.showMessageDialog(null, "Please check the Location."); 
         }
+        */
         return isSuccessful;
     }
     
@@ -785,14 +781,17 @@ public class JobOrderForm extends javax.swing.JFrame {
     private void VolumeTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_VolumeTextFieldFocusLost
         // TODO add your handling code here:
         String Volume = this.VolumeTextField.getText();
-        Volume = Volume.replaceAll("[^\\d.]", "");
-        Float ConvertedVolume = Float.parseFloat(Volume);
-        if(ConvertedVolume > thisMachine.getMaxVolume())
-            this.VolumeTextField.setText(Float.toString(thisMachine.getMaxVolume()));
-        else if(ConvertedVolume < thisMachine.getMinVolume())
-            this.VolumeTextField.setText(Float.toString(thisMachine.getMinVolume()));
+        if (Volume.length() > 0) {
+            Volume = Volume.replaceAll("[^\\d.]", "");
+            Float ConvertedVolume = Float.parseFloat(Volume);
+            if (ConvertedVolume > thisMachine.getMaxVolume()) {
+                this.VolumeTextField.setText(Float.toString(thisMachine.getMaxVolume()));
+            } else if (ConvertedVolume < thisMachine.getMinVolume()) {
+                this.VolumeTextField.setText(Float.toString(thisMachine.getMinVolume()));
+            }
         //else
-        //    this.VolumeTextField.setText(Volume);
+            //    this.VolumeTextField.setText(Volume);
+        }
     }//GEN-LAST:event_VolumeTextFieldFocusLost
 
     private void BatchNoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BatchNoKeyReleased
@@ -809,25 +808,29 @@ public class JobOrderForm extends javax.swing.JFrame {
 
     private void DesignTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_DesignTextFieldFocusLost
         // TODO add your handling code here:
-        if (DesignList.indexOf(DesignTextField.getText()) == -1) {
-            if (JOptionPane.YES_OPTION
-                    == JOptionPane.showConfirmDialog(null, "This design has not yet been added. Do you want to add it?", "Add this design?", JOptionPane.YES_NO_OPTION)) {
-                //Add the Chemicalname to the database
-                Design thisDesign = new Design();
-                thisDesign.setDesignName(DesignTextField.getText());
-                DesignHandler thisDesignHandler = new DesignHandler();
-                thisDesignHandler.AddNewDesign(thisDesign);
-                DesignList.add(DesignTextField.getText());
-            } else {
-                JOptionPane.showMessageDialog(null, "Please change or add this design.");
-                DesignTextField.setText("");
+        if (DesignTextField.getText().length() > 0) {
+            if (DesignList.indexOf(DesignTextField.getText()) == -1) {
+                if (JOptionPane.YES_OPTION
+                        == JOptionPane.showConfirmDialog(null, "This design has not yet been added. Do you want to add it?", "Add this design?", JOptionPane.YES_NO_OPTION)) {
+                    //Add the Chemicalname to the database
+                    Design thisDesign = new Design();
+                    thisDesign.setDesignName(DesignTextField.getText());
+                    DesignHandler thisDesignHandler = new DesignHandler();
+                    thisDesignHandler.AddNewDesign(thisDesign);
+                    DesignList.add(DesignTextField.getText());
+                    this.SetAndUpdateDesignID();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Please change or add this design.");
+                    DesignTextField.setText("");
+                }
             }
         }
-               
+
     }//GEN-LAST:event_DesignTextFieldFocusLost
 
     private void ColorTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ColorTextFieldFocusLost
         // TODO add your handling code here:
+        if(ColorTextField.getText().length() > 0)
          if (ColorList.indexOf(ColorTextField.getText()) == -1) {
             if (JOptionPane.YES_OPTION
                     == JOptionPane.showConfirmDialog(null, "This color has not yet been added. Do you want to add it?", "Add this color?", JOptionPane.YES_NO_OPTION)) {
@@ -837,6 +840,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                 ColorHandler thisColorHandler = new ColorHandler();
                 thisColorHandler.AddNewColor(CurrentDesignColor);
                 ColorList.add(ColorTextField.getText());
+                SetAndUpdateColorID();
             } else {
                 JOptionPane.showMessageDialog(null, "Please change or add this color.");
                 ColorTextField.setText("");
@@ -924,35 +928,6 @@ public class JobOrderForm extends javax.swing.JFrame {
             }
         }  
         
-    }
-    
-    private void populateColorDropDown(){
-        //PopulateList(new ColorHandler().GetAllColor() , ColorDropDownList);
-        
-        /*
-        ArrayList<String> ColorList = new ColorHandler().GetAllColor();
-        
-        if(ColorList != null){
-            for(int x=0; x<ColorList.size(); x++)
-            {
-                ColorDropDownList.addItem(ColorList.get(x));
-            }
-        }  
-        */
-    }
-    
-    private void populateDesignDropDown(){
-        //PopulateList(new thisDesignHandler().GetAllDesigns() , DesignDropDownList);
-        /*
-        ArrayList<String> DesignList = new thisDesignHandler().GetAllDesigns();
-        
-        if(DesignList != null){
-            for(int x=0; x<DesignList.size(); x++)
-            {
-                DesignDropDownList.addItem(DesignList.get(x));
-            }
-        }   
-        */
     }
     
     private void populateCustomerDropDown(){

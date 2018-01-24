@@ -798,9 +798,12 @@ public class ReviewForm extends javax.swing.JFrame {
         JobHandler thisJobHandler = new JobHandler();
         if (AddTextToJobOrderObject()) {
             if (ThisJobHasBeenAdded != true) {
-                if (WindowType == 3) {
+                //if (WindowType == 3) {
+                if (WindowType == 6) {
                     thisJobHandler.UpdateJobOrder(thisJob);
-                } else if ((WindowType == 4 || WindowType == 2 || WindowType == 1)) {
+                }
+                //else if ((WindowType == 5 || WindowType == 4 || WindowType == 2 || WindowType == 1)) {
+                else {
                     thisJobHandler.AddNewJobOrder(thisJob);
                 }
                 ThisJobHasBeenAdded = true;
@@ -818,7 +821,7 @@ public class ReviewForm extends javax.swing.JFrame {
     private void CancelButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButActionPerformed
         // TODO add your handling code here:
         
-        if (this.WindowType == 4 || this.WindowType == 3 || this.WindowType == 5) {
+        if (this.WindowType == 4 || this.WindowType == 6 || this.WindowType == 5) {
             if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Do you want to cancel using this Job Order?", "Exit?", JOptionPane.YES_NO_OPTION)) {
                 new ViewCustomerOrder().setVisible(true);
                 this.dispose();
@@ -937,7 +940,7 @@ public class ReviewForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Job order has already been added.");
             this.dispose();
         } else {
-            if (this.WindowType != 3) {
+            if (this.WindowType != 6) {
                 if (AddTextToJobOrderObject()) {
                     if (thisJobHandler.AddNewJobOrder(thisJob) > 0) {
                         JOptionPane.showMessageDialog(null, "Job order has been added.");
@@ -946,7 +949,7 @@ public class ReviewForm extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "There is an error in adding the Job Order.");
                     }
                 }
-            } else if (WindowType == 3) {
+            } else if (WindowType == 6) {
                 if (AddTextToJobOrderObject()) {
                     if (thisJobHandler.UpdateJobOrder(thisJob)) {
                         JOptionPane.showMessageDialog(null, "Job order has been updated.");
