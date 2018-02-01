@@ -10,13 +10,17 @@ import DataEntities.JobOrder;
 import DataEntities.JobOrderExtended;
 import Handlers.CustomerHandler;
 import Handlers.JobHandler;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -36,6 +40,8 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
         populateCustomerDropDown();
         GetUpdatedTable();
         SetToCenter();
+        
+        JobOrderTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     }
     
     public void SetToCenter()
@@ -62,7 +68,16 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        JobOrderTable = new javax.swing.JTable();
+        JobOrderTable = new JTable(){
+            @Override
+            public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+                Component component = super.prepareRenderer(renderer, row, column);
+                int rendererWidth = component.getPreferredSize().width;
+                TableColumn tableColumn = getColumnModel().getColumn(column);
+                tableColumn.setPreferredWidth(Math.max(rendererWidth + getIntercellSpacing().width, tableColumn.getPreferredWidth()));
+                return component;
+            }
+        };
         customerDropDown = new javax.swing.JComboBox();
         SearchLabel = new javax.swing.JLabel();
         SearchTextBox = new javax.swing.JTextField();
