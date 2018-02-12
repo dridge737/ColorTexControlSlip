@@ -719,7 +719,7 @@ public class ReviewForm extends javax.swing.JFrame {
             isSuccessful = false;
             JOptionPane.showMessageDialog(null, "Please check the Design name.");
         } 
-        else if(this.Reference.getText().length() < 1)
+        /*else if(this.Reference.getText().length() < 1)
         {
             isSuccessful = false;
             JOptionPane.showMessageDialog(null, "Please check the the Reference."); 
@@ -734,7 +734,7 @@ public class ReviewForm extends javax.swing.JFrame {
             isSuccessful = false;
             JOptionPane.showMessageDialog(null, "Please check the Location."); 
         }
-        /*
+        
          else if(this.BatchNo.getText().length() < 1)
          {
          isSuccessful = false;
