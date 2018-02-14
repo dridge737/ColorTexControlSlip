@@ -64,14 +64,14 @@ public class PrintHandlerFinal {
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(dest));
         
         document.setPageSize(PageSize.LETTER);
-        document.setMargins(60, 36, 18, 36);
+        document.setMargins(60, 36, 12, 30);
         document.open();
         
         document = addFirstPageSection(DEST, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume, document);
         document = addFirstPageSection(DEST, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume, document);
         //document = addCheckedByImage(document);
         document.add(Chunk.NEWLINE);
-        
+        document.add(Chunk.NEWLINE);
         document = AddSecondPage(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
         
         
@@ -314,6 +314,7 @@ public class PrintHandlerFinal {
                         rows++;
                         if(rows >= rowLimit)
                         {
+                            rowLimit = 33;
                             document.add(table);
                             document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
                             rows = 0;
@@ -455,8 +456,9 @@ public class PrintHandlerFinal {
                                     table.addCell(" ");
                                     table.addCell(" ");
                                     rows++;
-                                    if(rows >= 19)
+                                    if(rows >= rowLimit)
                                     {
+                                        rowLimit = 33;
                                         document.add(table);
                                         document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
                                         rows = 0;
@@ -478,6 +480,7 @@ public class PrintHandlerFinal {
                                 rows++;
                                 if(rows >= rowLimit)
                                 {
+                                    rowLimit = 33;
                                     document.add(table);
                                     document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
                                     rows = 0;
@@ -507,6 +510,7 @@ public class PrintHandlerFinal {
                         rows++;
                         if(rows >= rowLimit)
                         {
+                            rowLimit = 33;
                             document.add(table);
                             document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
                             rows = 0;
@@ -648,8 +652,9 @@ public class PrintHandlerFinal {
                                 table.addCell(" ");
                                 table.addCell(" ");
                                 rows++;
-                                if(rows >= 21)
+                                if(rows >= rowLimit)
                                 {
+                                    rowLimit = 33;
                                     document.add(table);
                                     document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
                                     rows = 0;
@@ -671,6 +676,7 @@ public class PrintHandlerFinal {
                             rows++;
                             if(rows >= rowLimit)
                             {
+                                rowLimit = 33;
                                 document.add(table);
                                 document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
                                 rows = 0;
