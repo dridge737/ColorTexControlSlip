@@ -308,7 +308,6 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="WeightFocusLost"/>
                 <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="WeightKeyReleased"/>
               </Events>
               <Constraints>

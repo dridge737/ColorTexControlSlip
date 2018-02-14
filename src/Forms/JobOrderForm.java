@@ -400,11 +400,6 @@ public class JobOrderForm extends javax.swing.JFrame {
         jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 110, -1, 30));
 
         Weight.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        Weight.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                WeightFocusLost(evt);
-            }
-        });
         Weight.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 WeightKeyReleased(evt);
@@ -564,10 +559,6 @@ public class JobOrderForm extends javax.swing.JFrame {
             //    Weight.setText(weight);
         }
     }
-    private void WeightFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_WeightFocusLost
-        CheckTextValuesAndComputeVolume();
-    }//GEN-LAST:event_WeightFocusLost
-
     private void MachineDropDownListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MachineDropDownListActionPerformed
         
         Machine machineDetails = new Machine();
@@ -784,11 +775,12 @@ public class JobOrderForm extends javax.swing.JFrame {
         if (Volume.length() > 0) {
             Volume = Volume.replaceAll("[^\\d.]", "");
             Float ConvertedVolume = Float.parseFloat(Volume);
-            if (ConvertedVolume > thisMachine.getMaxVolume()) {
+            /*if (ConvertedVolume > thisMachine.getMaxVolume()) {
                 this.VolumeTextField.setText(Float.toString(thisMachine.getMaxVolume()));
             } else if (ConvertedVolume < thisMachine.getMinVolume()) {
                 this.VolumeTextField.setText(Float.toString(thisMachine.getMinVolume()));
             }
+            */
         //else
             //    this.VolumeTextField.setText(Volume);
         }
@@ -803,7 +795,8 @@ public class JobOrderForm extends javax.swing.JFrame {
 
     private void WeightKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_WeightKeyReleased
         // TODO add your handling code here:
-        CheckTextValuesAndComputeVolume();
+        //CheckTextValuesAndComputeVolume();
+        ComputeVolume();
     }//GEN-LAST:event_WeightKeyReleased
 
     private void DesignTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_DesignTextFieldFocusLost
@@ -898,7 +891,7 @@ public class JobOrderForm extends javax.swing.JFrame {
             String[] RatioSplit = LiquidRatioTextField.getText().split(":", 2);
             int WeightMultiplier = Integer.parseInt(RatioSplit[1]) / Integer.parseInt(RatioSplit[0]);
 
-            int volume = (((int) (Float.parseFloat(weight) * WeightMultiplier)) + 9); // /10 * 10;
+            int volume = (((int) (Float.parseFloat(weight) * WeightMultiplier))); // /10 * 10;
             VolumeTextField.setText(Double.toString(volume));
 
         }

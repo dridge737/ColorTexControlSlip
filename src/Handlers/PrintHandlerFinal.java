@@ -353,7 +353,7 @@ public class PrintHandlerFinal {
                                 table.addCell(new Phrase("        " + dyeingChemicalList.get(i).getOrder() + ". " + chemHandler.GetChemicalNameFromChemicalID(dyeingChemicalList.get(i).getChemicalId()), f));
                                 if("GPL".equals(dyeingChemicalList.get(i).getType().toUpperCase())){
                                     PdfPCell gplCell = new PdfPCell();
-                                        DecimalFormat df = new DecimalFormat("#,###.00");
+                                        DecimalFormat df = new DecimalFormat("#,###.0000");
                                         df.setRoundingMode(RoundingMode.CEILING);
                                         Float gplFloat = dyeingChemicalList.get(i).getValue();
                                         Double gplDouble = Double.parseDouble(gplFloat.toString());
@@ -369,7 +369,7 @@ public class PrintHandlerFinal {
                                 {
                                     table.addCell(" ");
                                     PdfPCell gplCell = new PdfPCell();
-                                        DecimalFormat df = new DecimalFormat("#,###.00");
+                                        DecimalFormat df = new DecimalFormat("#,###.0000");
                                         df.setRoundingMode(RoundingMode.CEILING);
                                         Float gplFloat = dyeingChemicalList.get(i).getValue();
                                         Double gplDouble = Double.parseDouble(gplFloat.toString());
@@ -392,7 +392,7 @@ public class PrintHandlerFinal {
                                     if(quantity.toString().contains(".0") == true)
                                     {
                                         PdfPCell dyeingQuantityCell = new PdfPCell();
-                                        DecimalFormat df = new DecimalFormat("#,###.00");
+                                        DecimalFormat df = new DecimalFormat("#,###.0000");
                                         df.setRoundingMode(RoundingMode.CEILING);
                                         p = new Paragraph(df.format(quantity) + " " + dyeingChemicalList.get(i).getState(), f);
                                         p.setLeading(8f, 0f);
@@ -405,7 +405,7 @@ public class PrintHandlerFinal {
                                     else
                                     {
                                         PdfPCell dyeingQuantityCell = new PdfPCell();
-                                        DecimalFormat df = new DecimalFormat("#,###.00");
+                                        DecimalFormat df = new DecimalFormat("#,###.0000");
                                         df.setRoundingMode(RoundingMode.CEILING);
                                         p = new Paragraph(df.format(quantity) + " " + dyeingChemicalList.get(i).getState(), f);
                                         p.setLeading(8f, 0f);
@@ -425,7 +425,7 @@ public class PrintHandlerFinal {
                                     if(quantity.toString().contains(".0") == true)
                                     {
                                         PdfPCell dyeingQuantityCell = new PdfPCell();
-                                        DecimalFormat df = new DecimalFormat("#,###.00");
+                                        DecimalFormat df = new DecimalFormat("#,###.0000");
                                         df.setRoundingMode(RoundingMode.CEILING);
                                         p = new Paragraph(df.format(quantity) + " " + dyeingChemicalList.get(i).getState(), f);
                                         p.setLeading(8f, 0f);
@@ -437,7 +437,7 @@ public class PrintHandlerFinal {
                                     else
                                     {
                                         PdfPCell dyeingQuantityCell = new PdfPCell();
-                                        DecimalFormat df = new DecimalFormat("#,###.##");
+                                        DecimalFormat df = new DecimalFormat("#,###.0000");
                                         df.setRoundingMode(RoundingMode.CEILING);
                                         p = new Paragraph(df.format(quantity) + " " + dyeingChemicalList.get(i).getState(), f);
                                         p.setLeading(8f, 0f);
@@ -545,7 +545,7 @@ public class PrintHandlerFinal {
                             table.addCell(new Phrase("        " + dyeingChemicalList.get(i).getOrder() + ". " + chemHandler.GetChemicalNameFromChemicalID(dyeingChemicalList.get(i).getChemicalId()), f));
                             if("GPL".equals(dyeingChemicalList.get(i).getType().toUpperCase())){
                                 PdfPCell gplCell = new PdfPCell();
-                                        DecimalFormat df = new DecimalFormat("#,###.00");
+                                        DecimalFormat df = new DecimalFormat("#,###.0000");
                                         df.setRoundingMode(RoundingMode.CEILING);
                                         Float gplFloat = dyeingChemicalList.get(i).getValue();
                                         Double gplDouble = Double.parseDouble(gplFloat.toString());
@@ -561,7 +561,7 @@ public class PrintHandlerFinal {
                             {
                                 table.addCell(" ");
                                 PdfPCell gplCell = new PdfPCell();
-                                        DecimalFormat df = new DecimalFormat("#,###.00");
+                                        DecimalFormat df = new DecimalFormat("#,###.0000");
                                         df.setRoundingMode(RoundingMode.CEILING);
                                         Float gplFloat = dyeingChemicalList.get(i).getValue();
                                         Double gplDouble = Double.parseDouble(gplFloat.toString());
@@ -583,7 +583,7 @@ public class PrintHandlerFinal {
                                 if(quantity.toString().contains(".0") == true)
                                 {
                                     PdfPCell dyeingQuantityCell = new PdfPCell();
-                                        DecimalFormat df = new DecimalFormat("#,###.00");
+                                        DecimalFormat df = new DecimalFormat("#,###.0000");
                                         df.setRoundingMode(RoundingMode.CEILING);
                                         p = new Paragraph(df.format(quantity)  + " " + dyeingChemicalList.get(i).getState(), f);
                                        p.setLeading(8f, 0f);
@@ -596,7 +596,7 @@ public class PrintHandlerFinal {
                                 else
                                 {
                                     PdfPCell dyeingQuantityCell = new PdfPCell();
-                                        DecimalFormat df = new DecimalFormat("#,###.##");
+                                        DecimalFormat df = new DecimalFormat("#,###.00");
                                         df.setRoundingMode(RoundingMode.CEILING);
                                         p = new Paragraph(df.format(quantity) + " " + dyeingChemicalList.get(i).getState(), f);
                                         p.setLeading(8f, 0f);
@@ -616,7 +616,7 @@ public class PrintHandlerFinal {
                                 if(quantity.toString().contains(".0") == true)
                                 {
                                     PdfPCell dyeingQuantityCell = new PdfPCell();
-                                        DecimalFormat df = new DecimalFormat("#,###.00");
+                                        DecimalFormat df = new DecimalFormat("#,###.0000");
                                         df.setRoundingMode(RoundingMode.CEILING);
                                         p = new Paragraph(df.format(quantity) + " " + dyeingChemicalList.get(i).getState(), f);
                                         p.setLeading(8f, 0f);
@@ -630,7 +630,7 @@ public class PrintHandlerFinal {
                                 else
                                 {
                                     PdfPCell dyeingQuantityCell = new PdfPCell();
-                                        DecimalFormat df = new DecimalFormat("#,###.##");
+                                        DecimalFormat df = new DecimalFormat("#,###.0000");
                                         df.setRoundingMode(RoundingMode.CEILING);
                                         p = new Paragraph(df.format(quantity) + " " + dyeingChemicalList.get(i).getState(), f);
                                         p.setLeading(8f, 0f);
@@ -987,7 +987,7 @@ public class PrintHandlerFinal {
                 //table.addCell(String.valueOf(resinChemicalList.get(x).getGPLValue()));
                 if("GPL".equals(resinChemicalList.get(x).getType().toUpperCase())){
                     PdfPCell gplCell = new PdfPCell();
-                    DecimalFormat df = new DecimalFormat("#,###.00");
+                    DecimalFormat df = new DecimalFormat("#,###.0000");
                     df.setRoundingMode(RoundingMode.CEILING);
                     Float gplFloat = resinChemicalList.get(x).getGPLValue();
                     Double gplDouble = Double.parseDouble(gplFloat.toString());
@@ -1003,7 +1003,7 @@ public class PrintHandlerFinal {
                 {
                     table.addCell(" ");
                     PdfPCell gplCell = new PdfPCell();
-                    DecimalFormat df = new DecimalFormat("#,###.00");
+                    DecimalFormat df = new DecimalFormat("#,###.0000");
                     df.setRoundingMode(RoundingMode.CEILING);
                     Float gplFloat = resinChemicalList.get(x).getGPLValue();
                     Double gplDouble = Double.parseDouble(gplFloat.toString());
@@ -1022,7 +1022,7 @@ public class PrintHandlerFinal {
                     //Double quantity = Double.parseDouble(volume) * resinChemicalList.get(x).getGPLValue();
                    if(quantity.toString().contains(".0"))
                     {
-                        DecimalFormat df = new DecimalFormat("#,###.00");
+                        DecimalFormat df = new DecimalFormat("#,###.0000");
                         df.setRoundingMode(RoundingMode.CEILING);
                         parag = new Paragraph(df.format(quantity) + " " + resinChemicalList.get(x).getState(), f);
                         parag.setLeading(8f, 0f);
@@ -1035,7 +1035,7 @@ public class PrintHandlerFinal {
                     }
                     else
                     {
-                        DecimalFormat df = new DecimalFormat("#,###.##");
+                        DecimalFormat df = new DecimalFormat("#,###.0000");
                         df.setRoundingMode(RoundingMode.CEILING);
                         parag = new Paragraph(df.format(quantity) + " " + resinChemicalList.get(x).getState(), f);
                         parag.setLeading(8f, 0f);
@@ -1054,7 +1054,7 @@ public class PrintHandlerFinal {
                     Double quantity = Double.parseDouble(fquantity.toString());
                     if(quantity.toString().contains(".0"))
                     {
-                        DecimalFormat df = new DecimalFormat("#,###.00");
+                        DecimalFormat df = new DecimalFormat("#,###.0000");
                             df.setRoundingMode(RoundingMode.CEILING);
                             
                     parag = new Paragraph(df.format(quantity) + " " + resinChemicalList.get(x).getState(), f);
@@ -1068,7 +1068,7 @@ public class PrintHandlerFinal {
                     }
                     else
                     {
-                        DecimalFormat df = new DecimalFormat("#,###.##");
+                        DecimalFormat df = new DecimalFormat("#,###.0000");
                             df.setRoundingMode(RoundingMode.CEILING);
                             
                     parag = new Paragraph(df.format(quantity) + " " + resinChemicalList.get(x).getState(), f);

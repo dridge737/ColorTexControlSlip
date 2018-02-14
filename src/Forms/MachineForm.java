@@ -32,6 +32,7 @@ public class MachineForm extends javax.swing.JFrame {
     Color ColorError = new Color(232,228,42);
     Color TypingColor = Color.BLACK;
     String DefaultLoadingArrangementText;
+    boolean MachineWindowTypeManual;
     /**
      * Creates new form AddMachine
      */
@@ -42,6 +43,7 @@ public class MachineForm extends javax.swing.JFrame {
         if(!(new PreferenceHandler().getResinMachineInputPreference()))
         {
             this.MachineTypeComboBox.setVisible(false);
+            MachineWindowTypeManual = false;
         }
         this.get_updated_table();
         SetToCenter();
@@ -388,7 +390,8 @@ public class MachineForm extends javax.swing.JFrame {
         thisMachine.setMaxVolume(Integer.parseInt(this.MachineListTable.getModel().getValueAt(this.MachineListTable.getSelectedRow(), 4).toString()));
         thisMachine.setNumOfLoad(Integer.parseInt(this.MachineListTable.getModel().getValueAt(this.MachineListTable.getSelectedRow(), 5).toString()));
         //Check preference if it requires machine type then set
-        thisMachine.setMachineType(new MachineHandler().GetMachineTypeInt(this.MachineListTable.getModel().getValueAt(this.MachineListTable.getSelectedRow(), 6).toString()));
+        if(MachineWindowTypeManual)
+            thisMachine.setMachineType(new MachineHandler().GetMachineTypeInt(this.MachineListTable.getModel().getValueAt(this.MachineListTable.getSelectedRow(), 6).toString()));
         //else do nothing
         
         thisMachine.setMachineId(new MachineHandler().GetMachineIdByName(thisMachine.getMachineName()));
@@ -579,7 +582,7 @@ public class MachineForm extends javax.swing.JFrame {
         //Check if Machine Type should be Chosen
         //Check if machine is a dyeing or resin machine
         //if(preference requires machine type)
-        if(this.MachineTypeComboBox.isVisible())
+        if(MachineWindowTypeManual)
         {
             if (MachineTypeComboBox.getSelectedIndex() != 0) {
                 thisMachine.setMachineType(new MachineHandler().GetMachineTypeInt(MachineTypeComboBox.getSelectedItem().toString()));
@@ -788,7 +791,7 @@ public class MachineForm extends javax.swing.JFrame {
         model_original.addColumn("Loading Arrangement");
         
         ArrayList<Machine> MachineList;
-        if(MachineTypeComboBox.isVisible())
+        if(MachineWindowTypeManual)
         {
             model_original.addColumn("Machine Type");
             MachineList = new MachineHandler().GetAllMachines();
