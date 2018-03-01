@@ -7,6 +7,7 @@ package Forms;
 
 import DataEntities.JobOrder;
 import DataEntities.Machine;
+import Handlers.LiquidRatioHandler;
 import Handlers.MachineHandler;
 import Handlers.PreferenceHandler;
 import java.awt.Dimension;
@@ -244,13 +245,14 @@ public class MachineSelection extends javax.swing.JFrame {
         if (!weight.isEmpty()) {
             weight = weight.replaceAll("[^\\d.]", "");
             Float ConvertedWeight = Float.parseFloat(weight);
-            if (new PreferenceHandler().getResinMachineInputPreference()) {
+            /*if (new PreferenceHandler().getResinMachineInputPreference()) {
                 if (ConvertedWeight > thisMachine.getMaxCapacity()) {
                     Weight.setText(Float.toString(thisMachine.getMaxCapacity()));
                 } else if (ConvertedWeight < thisMachine.getMinCapacity()) {
                     Weight.setText(Float.toString(thisMachine.getMinCapacity()));
                 }
-            }
+            }*/
+            Weight.setText(new LiquidRatioHandler().RoundToHundreds(Float.parseFloat(Weight.getText())).toString());
             //else
             computeForVolumeByFabric();
             //    Weight.setText(weight);

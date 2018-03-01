@@ -138,7 +138,7 @@
             <Component class="javax.swing.JTable" name="ChemicalTable">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Century Gothic" size="14" style="0"/>
+                  <Font name="Century Gothic" size="12" style="0"/>
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="5" rowCount="0">
@@ -155,6 +155,7 @@
                 </Property>
               </Properties>
               <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JTable(){&#xd;&#xa;    @Override&#xd;&#xa;       public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {&#xd;&#xa;           Component component = super.prepareRenderer(renderer, row, column);&#xd;&#xa;           int rendererWidth = component.getPreferredSize().width;&#xd;&#xa;           TableColumn tableColumn = getColumnModel().getColumn(column);&#xd;&#xa;           tableColumn.setPreferredWidth(Math.max(rendererWidth + getIntercellSpacing().width, tableColumn.getPreferredWidth()));&#xd;&#xa;           return component;&#xd;&#xa;        }&#xd;&#xa;    };"/>
                 <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="SubProcessPanel_ChemicalTable"/>
               </AuxValues>
             </Component>

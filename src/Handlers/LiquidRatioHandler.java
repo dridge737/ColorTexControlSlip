@@ -88,4 +88,14 @@ public class LiquidRatioHandler {
             
         return PatternGood;
     }
+    
+    public Float RoundToHundreds(float NumberToRound)
+    {
+        if(NumberToRound < 100)
+        {
+            return NumberToRound;
+        }
+        else
+        return (float) Math.round(NumberToRound / 100) * 100;
+    }
 }
