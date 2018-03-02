@@ -31,6 +31,7 @@ import com.itextpdf.text.pdf.FontSelector;
 import com.itextpdf.text.pdf.GrayColor;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Desktop;
  
@@ -42,6 +43,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import static jdk.nashorn.internal.objects.NativeRegExp.source;
 /**
  *
  * @author imbuenyson
@@ -62,11 +64,11 @@ public class PrintHandlerFinal {
     public void renderPDF(String dest, Machine machineDetails, Design designDetails, Customer customerDetails, DesignColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException {
         Document document = new Document();
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(dest));
-        
-        document.setPageSize(PageSize.LETTER);
+        //612x756
+        Rectangle pageSize = new Rectangle(612,756);
+        document.setPageSize(pageSize);
         document.setMargins(60, 36, 12, 30);
         document.open();
-        
         document = addFirstPageSection(DEST, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume, document);
         document = addFirstPageSection(DEST, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume, document);
         //document = addCheckedByImage(document);
@@ -303,8 +305,8 @@ public class PrintHandlerFinal {
         ArrayList<DyeingProcess> dyeingProcessList = dProcessHandler.GetAllDyeingProcessAndSubProcessByDyeingProgramId(dyeingProgramDetails.getID());
         ArrayList<DyeingChemical> dyeingChemicalList = null;
         int rows = 0;
-        int rowLimit = 17;
-        int rowLimit2 = 33;
+        int rowLimit = 13;
+        int rowLimit2 = 31;
         for(int x=0; x<dyeingProcessList.size(); x++)
             {
                     if (dyeingProcessList.get(x).getdyeingProcessOrder().matches("[0-9]+")){
@@ -458,7 +460,7 @@ public class PrintHandlerFinal {
                                         rowLimit = rowLimit2;
                                         document.add(table);
                                         document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
-                                        rows = 0;
+                                        rows = 1;
                                         table = new PdfPTable(columnWidths);
                                         table.setWidthPercentage(100);
                                         table.getDefaultCell().setBorder(Rectangle.BOTTOM);
@@ -484,7 +486,7 @@ public class PrintHandlerFinal {
                                             rowLimit = rowLimit2;
                                             document.add(table);
                                             document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
-                                            rows = 0;
+                                            rows = 1;
                                             table = new PdfPTable(columnWidths);
                                             table.setWidthPercentage(100);
                                             table.getDefaultCell().setBorder(Rectangle.BOTTOM);
@@ -513,7 +515,7 @@ public class PrintHandlerFinal {
                                     rowLimit = rowLimit2;
                                     document.add(table);
                                     document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
-                                    rows = 0;
+                                    rows = 1;
                                     table = new PdfPTable(columnWidths);
                                     table.setWidthPercentage(100);
                                     table.getDefaultCell().setBorder(Rectangle.BOTTOM);
@@ -543,7 +545,7 @@ public class PrintHandlerFinal {
                             rowLimit = rowLimit2;
                             document.add(table);
                             document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
-                            rows = 0;
+                            rows = 1;
                             table = new PdfPTable(columnWidths);
                             table.setWidthPercentage(100);
                             table.getDefaultCell().setBorder(Rectangle.BOTTOM);
@@ -683,7 +685,7 @@ public class PrintHandlerFinal {
                                     rowLimit = rowLimit2;
                                     document.add(table);
                                     document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
-                                    rows = 0;
+                                    rows = 1;
                                     table = new PdfPTable(columnWidths);
                                     table.setWidthPercentage(100);
                                     table.getDefaultCell().setBorder(Rectangle.BOTTOM);
@@ -709,7 +711,7 @@ public class PrintHandlerFinal {
                                         rowLimit = rowLimit2;
                                         document.add(table);
                                         document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
-                                        rows = 0;
+                                        rows = 1;
                                         table = new PdfPTable(columnWidths);
                                         table.setWidthPercentage(100);
                                         table.getDefaultCell().setBorder(Rectangle.BOTTOM);
@@ -738,7 +740,7 @@ public class PrintHandlerFinal {
                                 rowLimit = rowLimit2;
                                 document.add(table);
                                 document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
-                                rows = 0;
+                                rows = 1;
                                 table = new PdfPTable(columnWidths);
                                 table.setWidthPercentage(100);
                                 table.getDefaultCell().setBorder(Rectangle.BOTTOM);
