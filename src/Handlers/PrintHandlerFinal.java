@@ -632,7 +632,7 @@ public class PrintHandlerFinal {
                                 else
                                 {
                                     PdfPCell dyeingQuantityCell = new PdfPCell();
-                                        DecimalFormat df = new DecimalFormat("#,##0.00000");
+                                        DecimalFormat df = new DecimalFormat("#,###.00");
                                         df.setRoundingMode(RoundingMode.CEILING);
                                         p = new Paragraph(df.format(quantity) + " " + dyeingChemicalList.get(i).getState(), f);
                                         p.setLeading(8f, 0f);
@@ -1165,7 +1165,7 @@ public class PrintHandlerFinal {
             image.scaleToFit(83, 100);
             image.setAbsolutePosition(
             (PageSize.LETTER.getWidth() - (image.getScaledWidth() + 10)),
-            (PageSize.LETTER.getHeight() - (image.getScaledWidth() + 30)));
+            (PageSize.LETTER.getHeight() - (image.getScaledWidth() + 10)));
             document.add(image);
         }
         catch (DocumentException | IOException e) {

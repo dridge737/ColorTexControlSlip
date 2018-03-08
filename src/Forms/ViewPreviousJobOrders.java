@@ -131,10 +131,14 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(JobOrderTable.getSelectedRowCount() > 0)
         {
+            JobOrder thisJob = new JobOrder();
             int convertedRowNumber = JobOrderTable.convertRowIndexToModel(this.JobOrderTable.getSelectedRow());
             String DrNumber = JobOrderTable.getModel().getValueAt(convertedRowNumber , 0).toString();
+            thisJob.setDrNumber(DrNumber);
+            thisJob.setJobDate(JobOrderTable.getModel().getValueAt(convertedRowNumber , 4).toString());
+            thisJob.setDyeingProgramID(Integer.parseInt(JobOrderTable.getModel().getValueAt(convertedRowNumber , 5).toString()));
             JobHandler thisJobOrderHandler = new JobHandler();
-            JobOrder thisJob =thisJobOrderHandler.GetJobOrderDetailsFromDrNumber(DrNumber);
+            thisJob = thisJobOrderHandler.GetJobOrderDetailsFromDrNumber(DrNumber);
             ReviewForm orderReviewForm = new ReviewForm(thisJob, 3);
             orderReviewForm.setVisible(true);
             this.dispose();
@@ -174,6 +178,7 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
     {
         model = getUpdatedTableModel();
         this.JobOrderTable.setModel(model);
+        JobOrderTable.removeColumn(JobOrderTable.getColumnModel().getColumn(10));
     }    
     
     public DefaultTableModel getUpdatedTableModel() {      
@@ -188,6 +193,7 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
         model_original.addColumn("Resin Program");
         model_original.addColumn("Dyeing Machine");
         model_original.addColumn("Resin Machine");
+        model_original.addColumn("ID");
         
         ArrayList<JobOrderExtended> JobOrderList = new JobHandler().GetAllExtendedJobOrderDetails();
         
@@ -201,7 +207,8 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
                                                JobOrderList.get(x).getDyeingProgramName(),
                                                JobOrderList.get(x).getResinProgramName(),
                                                JobOrderList.get(x).getDyeingMachineName(),
-                                               JobOrderList.get(x).getResinMachineName()
+                                               JobOrderList.get(x).getResinMachineName(),
+                                               JobOrderList.get(x).getDrNumber()
             });
         }
         return model_original;

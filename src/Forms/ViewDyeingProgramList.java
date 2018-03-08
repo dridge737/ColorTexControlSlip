@@ -59,7 +59,8 @@ public class ViewDyeingProgramList extends javax.swing.JFrame {
         {
             Header.setText("Control Slip : Page 2/6");
         }
-        else if(currentType == 4 || currentType == 5)
+        else 
+            //if(currentType == 4 || currentType == 5)
         {
             Header.setText("Choose Dyeing Program");
         }
@@ -290,7 +291,7 @@ public class ViewDyeingProgramList extends javax.swing.JFrame {
             newJobOrderForm.setVisible(true);
             newJobOrderForm.SetCustomerAndDesignDetails();
         }
-        else if(WindowType == 4 || WindowType == 5)
+        else if(WindowType > 3)
         {
             new ReviewForm(thisJob, WindowType).setVisible(true);
         }

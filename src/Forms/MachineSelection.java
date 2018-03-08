@@ -38,6 +38,19 @@ public class MachineSelection extends javax.swing.JFrame {
     {
         this();
         thisJob = currentJob;
+        if(thisJob.getResinMachineID()!= 0 )
+        SetValuesFromThisJob();
+    }
+    
+    public void SetValuesFromThisJob()
+    {
+        
+        MachineHandler tempResMachineHandler = new MachineHandler();
+        
+        MachineDropDownList.setSelectedItem(tempResMachineHandler.GetMachineDetailsById(thisJob.getResinMachineID()).getMachineName());
+        Weight.setText(Float.toString(thisJob.getResinWeight()));
+        VolumeTextField.setText(Float.toString(thisJob.getResinVolumeH20()));
+        
     }
     
     public void SetToCenter()

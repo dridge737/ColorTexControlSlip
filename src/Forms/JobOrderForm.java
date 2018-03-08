@@ -558,7 +558,13 @@ public class JobOrderForm extends javax.swing.JFrame {
         String CheckThisValue = thisTextBox.getText();
         if (CheckThisValue.length() > 0) {
             CheckThisValue = CheckThisValue.replaceAll("[^\\d.]", "");
+            try{
             Float ConvertedValue = Float.parseFloat(CheckThisValue);
+            }
+            catch(NumberFormatException e)
+            {
+                
+            }
             /*if (ConvertedWeight > thisMachine.getMaxCapacity()) {
                 Weight.setText(Float.toString(thisMachine.getMaxCapacity()));
             } else if (ConvertedWeight < thisMachine.getMinCapacity()) {

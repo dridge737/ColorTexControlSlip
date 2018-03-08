@@ -112,7 +112,7 @@ public class DyeingForm extends javax.swing.JFrame {
             SaveBut.setText("Update");
         }
         //For dyeing program to job order
-        else //if(WindowProcessType == 3)
+        else if(WindowProcessType > 2)
         {
             thisJob = currentJob;
             if(DyeingProgramName != null)
@@ -134,23 +134,9 @@ public class DyeingForm extends javax.swing.JFrame {
         
         GUITabbedPaneProcess.add(new JPanel(), "+", NumberOfProcessTabs++);
         GUITabbedPaneProcess.addChangeListener(changeListener);
-        setWindowForthisProcessType();
+        //setWindowForthisProcessType();
     }
     
-     public void setWindowForthisProcessType()
-    {
-        if(WindowProcessType == 1)
-        {
-            
-        }
-        else if(WindowProcessType == 2)
-        {
-        }
-        else if(WindowProcessType == 3)
-        {
-        }
-    }
-     
     public void SetToCenter()
     {
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -255,7 +241,7 @@ public class DyeingForm extends javax.swing.JFrame {
     {
         //Declare the Tab to be added
         ProcessPanel this_panel;
-        if(WindowProcessType == 3 || WindowProcessType == 4 || WindowProcessType == 5 )
+        if(WindowProcessType > 2 )
         //if(thisJob.getID()>0 )
         this_panel = new ProcessPanel(thisProcess, WindowProcessType, thisJob);
         else
@@ -498,9 +484,7 @@ public class DyeingForm extends javax.swing.JFrame {
                     CloseWindow = UpdateDyeingProgram();
                     break;
                 //For Job Order
-                case 3:
-                case 4:
-                case 5:
+                default:
                     //if Default program then add, else update.
                     if (thisDyeingProgram.getProgramDefault() == 1) {
                         thisDyeingProgram.setProgramDefault(0);
@@ -546,8 +530,7 @@ public class DyeingForm extends javax.swing.JFrame {
                         //thisProcess.AddNewProcessOrder(thisProcessOrder);
                     }
                     break;
-                case 4:
-                case 5:
+                default:
                     ReviewForm thisReviewForm = new ReviewForm(thisJob, this.WindowProcessType);
                         //Show Review Form and Ask to print
                     thisReviewForm.setVisible(true);
@@ -559,7 +542,7 @@ public class DyeingForm extends javax.swing.JFrame {
 
     private void CancelButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButActionPerformed
         // TODO add your handling code here:
-        if(this.WindowProcessType == 3 || WindowProcessType == 4 || WindowProcessType == 5)
+        if(this.WindowProcessType > 2)
         {
             ViewDyeingProgramList chooseDyeingProgram = new ViewDyeingProgramList(thisJob, this.WindowProcessType);
             chooseDyeingProgram.setVisible(true);

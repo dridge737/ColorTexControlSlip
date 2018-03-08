@@ -40,6 +40,12 @@ public class JobHandler {
         isSuccessful = repo.DeleteJobOrderByJobOrderID(JobOrderId);
     }
      
+     public JobOrder GetJobOrderDetailsFromJobOrderJODateJODyeingProgram(JobOrder thisJobOrder)
+     {
+         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        return repo.GetJobOrderDetailsFromJobOrder(thisJobOrder);
+     }
+     
      public JobOrder GetJobOrderDetailsFromJobId(int JobOrderID)
      {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
@@ -51,6 +57,13 @@ public class JobHandler {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         return repo.GetJobOrderDetailsFromDrNumber(DrNumber);
      }
+     
+     public JobOrder GetJobOrderDetailsFromJobOrderID(int JobOrderID)
+     {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        return repo.GetJobOrderDetailsFromJobOrderID(JobOrderID);
+     }
+
 
     public boolean CheckIfThisJobOrderHasBeenAdded(JobOrder thisJob) {
         boolean itExist = false;

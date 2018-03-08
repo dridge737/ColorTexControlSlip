@@ -1003,7 +1003,7 @@ public class ReviewForm extends javax.swing.JFrame {
     private void EditDyeingProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditDyeingProgramActionPerformed
         if (CheckIfDyeingMachineHasInputs() && CheckCustomerAndJobOrderFromTextBox()) {
             ViewDyeingProgramList thisDyeingProgramListWindow;
-            thisDyeingProgramListWindow = new ViewDyeingProgramList(this.thisJob, 5);
+            thisDyeingProgramListWindow = new ViewDyeingProgramList(this.thisJob, this.WindowType);
             thisDyeingProgramListWindow.setVisible(true);
             this.dispose();
         }
