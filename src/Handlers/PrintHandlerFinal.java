@@ -31,6 +31,7 @@ import com.itextpdf.text.pdf.FontSelector;
 import com.itextpdf.text.pdf.GrayColor;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Desktop;
  
@@ -42,6 +43,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import static jdk.nashorn.internal.objects.NativeRegExp.source;
 /**
  *
  * @author imbuenyson
@@ -62,14 +64,11 @@ public class PrintHandlerFinal {
     public void renderPDF(String dest, Machine machineDetails, Design designDetails, Customer customerDetails, DesignColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException {
         Document document = new Document();
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(dest));
-        //Rectangle thisSize;
-        //thisSize = new Rectangle((float)8.5, (float)10.5);
-        document.setPageSize(PageSize.LETTER);
-        //document.setPageSize(new Rectangle(612, 756));
-        //document.setPageSize(thisSize);
-        document.setMargins(30, 36, 12, 30);
+        //612x756
+        Rectangle pageSize = new Rectangle(612,756);
+        document.setPageSize(pageSize);
+        document.setMargins(60, 36, 12, 30);
         document.open();
-        
         document = addFirstPageSection(DEST, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume, document);
         document = addFirstPageSection(DEST, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume, document);
         //document = addCheckedByImage(document);
@@ -306,7 +305,8 @@ public class PrintHandlerFinal {
         ArrayList<DyeingProcess> dyeingProcessList = dProcessHandler.GetAllDyeingProcessAndSubProcessByDyeingProgramId(dyeingProgramDetails.getID());
         ArrayList<DyeingChemical> dyeingChemicalList = null;
         int rows = 0;
-        int rowLimit = 17;
+        int rowLimit = 13;
+        int rowLimit2 = 30;
         for(int x=0; x<dyeingProcessList.size(); x++)
             {
                     if (dyeingProcessList.get(x).getdyeingProcessOrder().matches("[0-9]+")){
@@ -317,7 +317,7 @@ public class PrintHandlerFinal {
                         rows++;
                         if(rows >= rowLimit)
                         {
-                            rowLimit = 33;
+                            rowLimit = rowLimit2;
                             document.add(table);
                             document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
                             rows = 0;
@@ -454,39 +454,68 @@ public class PrintHandlerFinal {
 
                                 if(i == dyeingChemicalList.size() - 1)
                                 {
-                                    table.addCell(" ");
-                                    table.addCell(" ");
-                                    table.addCell(" ");
-                                    table.addCell(" ");
-                                    rows++;
+//                                    rows++;
                                     if(rows >= rowLimit)
                                     {
-                                        rowLimit = 33;
+                                        rowLimit = rowLimit2;
                                         document.add(table);
                                         document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
-                                        rows = 0;
+                                        rows = 1;
                                         table = new PdfPTable(columnWidths);
                                         table.setWidthPercentage(100);
                                         table.getDefaultCell().setBorder(Rectangle.BOTTOM);
                                         table.getDefaultCell().setUseAscender(true);
                                         table.getDefaultCell().setUseDescender(true);
-                                            table.addCell(" ");
-                                            table.addCell(gplHeader);
-                                table.addCell(percentHeader);
-                                table.addCell(quantityHeader);
+                                        table.addCell(" ");
+                                        table.addCell(gplHeader);
+                                        table.addCell(percentHeader);
+                                        table.addCell(quantityHeader);
 
                                         table.getDefaultCell().setBackgroundColor(GrayColor.GRAYWHITE);
                                         table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
                                     }
+//                                    else
+//                                    {
+//                                        table.addCell(" ");
+//                                        table.addCell(" ");
+//                                        table.addCell(" ");
+//                                        table.addCell(" ");
+//                                        rows++;
+//                                        if(rows >= rowLimit)
+//                                        {
+//                                            rowLimit = rowLimit2;
+//                                            document.add(table);
+//                                            document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
+//                                            rows = 1;
+//                                            table = new PdfPTable(columnWidths);
+//                                            table.setWidthPercentage(100);
+//                                            table.getDefaultCell().setBorder(Rectangle.BOTTOM);
+//                                            table.getDefaultCell().setUseAscender(true);
+//                                            table.getDefaultCell().setUseDescender(true);
+//                                            table.addCell(" ");
+//                                            table.addCell(gplHeader);
+//                                            table.addCell(percentHeader);
+//                                            table.addCell(quantityHeader);
+//
+//                                            table.getDefaultCell().setBackgroundColor(GrayColor.GRAYWHITE);
+//                                            table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
+//                                        }
+//                                        else
+//                                        {
+//                                            rows--;
+//                                        }
+//                                    }
+                                    
+                                    
                                 }
 
                                 rows++;
                                 if(rows >= rowLimit)
                                 {
-                                    rowLimit = 33;
+                                    rowLimit = rowLimit2;
                                     document.add(table);
                                     document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
-                                    rows = 0;
+                                    rows = 1;
                                     table = new PdfPTable(columnWidths);
                                     table.setWidthPercentage(100);
                                     table.getDefaultCell().setBorder(Rectangle.BOTTOM);
@@ -513,10 +542,10 @@ public class PrintHandlerFinal {
                         rows++;
                         if(rows >= rowLimit)
                         {
-                            rowLimit = 33;
+                            rowLimit = rowLimit2;
                             document.add(table);
                             document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
-                            rows = 0;
+                            rows = 1;
                             table = new PdfPTable(columnWidths);
                             table.setWidthPercentage(100);
                             table.getDefaultCell().setBorder(Rectangle.BOTTOM);
@@ -650,17 +679,13 @@ public class PrintHandlerFinal {
                             
                             if(i == dyeingChemicalList.size() - 1)
                             {
-                                table.addCell(" ");
-                                table.addCell(" ");
-                                table.addCell(" ");
-                                table.addCell(" ");
-                                rows++;
+//                                rows++;
                                 if(rows >= rowLimit)
                                 {
-                                    rowLimit = 33;
+                                    rowLimit = rowLimit2;
                                     document.add(table);
                                     document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
-                                    rows = 0;
+                                    rows = 1;
                                     table = new PdfPTable(columnWidths);
                                     table.setWidthPercentage(100);
                                     table.getDefaultCell().setBorder(Rectangle.BOTTOM);
@@ -674,15 +699,48 @@ public class PrintHandlerFinal {
                                     table.getDefaultCell().setBackgroundColor(GrayColor.GRAYWHITE);
                                     table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
                                 }
+//                                else
+//                                {
+//                                    table.addCell(" ");
+//                                    table.addCell(" ");
+//                                    table.addCell(" ");
+//                                    table.addCell(" ");  
+//                                    rows++;
+//                                    if(rows >= rowLimit)
+//                                    {
+//                                        rowLimit = rowLimit2;
+//                                        document.add(table);
+//                                        document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
+//                                        rows = 1;
+//                                        table = new PdfPTable(columnWidths);
+//                                        table.setWidthPercentage(100);
+//                                        table.getDefaultCell().setBorder(Rectangle.BOTTOM);
+//                                        table.getDefaultCell().setUseAscender(true);
+//                                        table.getDefaultCell().setUseDescender(true);
+//                                        table.addCell(" ");
+//                                        table.addCell(gplHeader);
+//                                        table.addCell(percentHeader);
+//                                        table.addCell(quantityHeader);
+//
+//                                        table.getDefaultCell().setBackgroundColor(GrayColor.GRAYWHITE);
+//                                        table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
+//                                    }
+//                                    else
+//                                    {
+//                                        rows--;
+//                                    }
+//                                }
+                                
+                                
                             }
                             
                             rows++;
                             if(rows >= rowLimit)
                             {
-                                rowLimit = 33;
+                                rowLimit = rowLimit2;
                                 document.add(table);
                                 document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
-                                rows = 0;
+                                rows = 1;
                                 table = new PdfPTable(columnWidths);
                                 table.setWidthPercentage(100);
                                 table.getDefaultCell().setBorder(Rectangle.BOTTOM);
