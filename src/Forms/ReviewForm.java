@@ -807,6 +807,7 @@ public class ReviewForm extends javax.swing.JFrame {
                     thisJobHandler.AddNewJobOrder(thisJob);
                 }
                 ThisJobHasBeenAdded = true;
+                
             }
 
             try {
@@ -820,22 +821,26 @@ public class ReviewForm extends javax.swing.JFrame {
 
     private void CancelButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButActionPerformed
         // TODO add your handling code here:
-        
-        if (this.WindowType == 4 || this.WindowType == 6 || this.WindowType == 5) {
-            if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Do you want to cancel using this Job Order?", "Exit?", JOptionPane.YES_NO_OPTION)) {
-                new ViewCustomerOrder().setVisible(true);
-                this.dispose();
-            }
-        } else {
-            if (thisJob.getResinProgramID() > 0) {
-                new AddResinForm(thisJob).setVisible(true);
-            } else {
-                new DyeingForm(thisJob).setVisible(true);
-
-            }
-                this.dispose();
+        if(this.ThisJobHasBeenAdded)
+        {
+            this.dispose();
         }
-        
+        else {
+            if (this.WindowType == 4 || this.WindowType == 6 || this.WindowType == 5) {
+                if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Do you want to cancel using this Job Order?", "Exit?", JOptionPane.YES_NO_OPTION)) {
+                    new ViewCustomerOrder().setVisible(true);
+                    this.dispose();
+                }
+            } else {
+                if (thisJob.getResinProgramID() > 0) {
+                    new AddResinForm(thisJob).setVisible(true);
+                } else {
+                    new DyeingForm(thisJob).setVisible(true);
+
+                }
+                this.dispose();
+            }
+        }
     }//GEN-LAST:event_CancelButActionPerformed
 
     private void CustomerDropDownListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CustomerDropDownListActionPerformed
@@ -917,7 +922,14 @@ public class ReviewForm extends javax.swing.JFrame {
     }//GEN-LAST:event_DyeingMachineDropDownActionPerformed
 
     private void DyeingWeightFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_DyeingWeightFocusLost
-        ComputeForDyeingVolume();
+        //ComputeForDyeingVolume();
+        try{
+                //Float RoundTo = (float) Math.round(Float.parseFloat(Weight.getText()) / 100) * 100;
+            DyeingWeight.setText(new LiquidRatioHandler().RoundToHundreds(Float.parseFloat(DyeingWeight.getText())).toString());
+        }
+        catch (NumberFormatException formatException) {
+            JOptionPane.showMessageDialog(null, "Please change the value of the weight to a valid number.");
+        }
     }//GEN-LAST:event_DyeingWeightFocusLost
 
     private void DyeingWeightKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DyeingWeightKeyReleased
@@ -926,7 +938,10 @@ public class ReviewForm extends javax.swing.JFrame {
         DyeingWeight.setText(weight);
         if (this.CheckTextBoxIsParseValid(DyeingWeight)) {
             thisJob.setDyeingWeight(Float.parseFloat(weight));
+            if(new LiquidRatioHandler().CheckIfPatternMatchesLiquidRatio(this.DyeingLiquidRatioText.getText().toString()))
+                ComputerDyeingLiquidRatio();
         }
+        
     }//GEN-LAST:event_DyeingWeightKeyReleased
 
     private void DyeingMachineLiquidRatioDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DyeingMachineLiquidRatioDropDownActionPerformed
@@ -988,7 +1003,7 @@ public class ReviewForm extends javax.swing.JFrame {
     private void EditDyeingProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditDyeingProgramActionPerformed
         if (CheckIfDyeingMachineHasInputs() && CheckCustomerAndJobOrderFromTextBox()) {
             ViewDyeingProgramList thisDyeingProgramListWindow;
-            thisDyeingProgramListWindow = new ViewDyeingProgramList(this.thisJob, 5);
+            thisDyeingProgramListWindow = new ViewDyeingProgramList(this.thisJob, this.WindowType);
             thisDyeingProgramListWindow.setVisible(true);
             this.dispose();
         }
@@ -1106,20 +1121,26 @@ public class ReviewForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_ResinVolumeTextFieldKeyReleased
 
-    private void DyeingLiquidRatioTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DyeingLiquidRatioTextKeyReleased
-        // TODO add your handling code here:
+    private void ComputerDyeingLiquidRatio()
+    {
         String weight = DyeingWeight.getText();
         
-        if(Pattern.matches("\\d+:\\d+", DyeingLiquidRatioText.getText()) &&  !weight.isEmpty())
-        {
-            //String liquidRatio = LiquidRatioTextField.toString();
+        //String liquidRatio = LiquidRatioTextField.toString();
             String[] RatioSplit = DyeingLiquidRatioText.getText().split(":", 2);
             int WeightMultiplier = Integer.parseInt(RatioSplit[1]) / Integer.parseInt(RatioSplit[0]);
 
-            int volume = (((int) (Float.parseFloat(weight) * WeightMultiplier)) + 9); // /10 * 10;
+            int volume = (((int) (Float.parseFloat(weight) * WeightMultiplier))); // /10 * 10;
             DyeingVolumeTextField.setText(Double.toString(volume));
-
+    }
+    
+    private void DyeingLiquidRatioTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DyeingLiquidRatioTextKeyReleased
+        // TODO add your handling code here:
+       String weight = DyeingWeight.getText();
+        if(new LiquidRatioHandler().CheckIfPatternMatchesLiquidRatio(this.DyeingLiquidRatioText.getText().toString()) &&  !weight.isEmpty())
+        {
+            ComputerDyeingLiquidRatio();
         }
+        
     }//GEN-LAST:event_DyeingLiquidRatioTextKeyReleased
 
     private void ResinFabricTypeDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResinFabricTypeDropDownActionPerformed

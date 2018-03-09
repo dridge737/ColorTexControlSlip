@@ -42,6 +42,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javax.swing.JComboBox;
+import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -400,6 +401,11 @@ public class JobOrderForm extends javax.swing.JFrame {
         jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 110, -1, 30));
 
         Weight.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        Weight.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                WeightFocusLost(evt);
+            }
+        });
         Weight.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 WeightKeyReleased(evt);
@@ -411,6 +417,11 @@ public class JobOrderForm extends javax.swing.JFrame {
         VolumeTextField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 VolumeTextFieldFocusLost(evt);
+            }
+        });
+        VolumeTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                VolumeTextFieldKeyReleased(evt);
             }
         });
         jPanel2.add(VolumeTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(184, 110, 460, -1));
@@ -542,21 +553,27 @@ public class JobOrderForm extends javax.swing.JFrame {
         }      
     }//GEN-LAST:event_CustomerDropDownListActionPerformed
 
-    public void CheckTextValuesAndComputeVolume()
+    public void CheckTextValues(JTextField thisTextBox)
     {
-        String weight = Weight.getText();
-        if (weight.length() > 0) {
-            weight = weight.replaceAll("[^\\d.]", "");
-            Float ConvertedWeight = Float.parseFloat(weight);
-            if (ConvertedWeight > thisMachine.getMaxCapacity()) {
+        String CheckThisValue = thisTextBox.getText();
+        if (CheckThisValue.length() > 0) {
+            CheckThisValue = CheckThisValue.replaceAll("[^\\d.]", "");
+            try{
+            Float ConvertedValue = Float.parseFloat(CheckThisValue);
+            }
+            catch(NumberFormatException e)
+            {
+                
+            }
+            /*if (ConvertedWeight > thisMachine.getMaxCapacity()) {
                 Weight.setText(Float.toString(thisMachine.getMaxCapacity()));
             } else if (ConvertedWeight < thisMachine.getMinCapacity()) {
                 Weight.setText(Float.toString(thisMachine.getMinCapacity()));
-            }
+            }*/
             //else    
-            ComputeVolume();
+            //ComputeVolume();
             //CheckValuesAndComputeForVolume();
-            //    Weight.setText(weight);
+                thisTextBox.setText(CheckThisValue);
         }
     }
     private void MachineDropDownListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MachineDropDownListActionPerformed
@@ -775,6 +792,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         if (Volume.length() > 0) {
             Volume = Volume.replaceAll("[^\\d.]", "");
             Float ConvertedVolume = Float.parseFloat(Volume);
+                this.VolumeTextField.setText(Volume);
             /*if (ConvertedVolume > thisMachine.getMaxVolume()) {
                 this.VolumeTextField.setText(Float.toString(thisMachine.getMaxVolume()));
             } else if (ConvertedVolume < thisMachine.getMinVolume()) {
@@ -782,7 +800,6 @@ public class JobOrderForm extends javax.swing.JFrame {
             }
             */
         //else
-            //    this.VolumeTextField.setText(Volume);
         }
     }//GEN-LAST:event_VolumeTextFieldFocusLost
 
@@ -795,7 +812,7 @@ public class JobOrderForm extends javax.swing.JFrame {
 
     private void WeightKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_WeightKeyReleased
         // TODO add your handling code here:
-        //CheckTextValuesAndComputeVolume();
+        CheckTextValues(Weight);
         ComputeVolume();
     }//GEN-LAST:event_WeightKeyReleased
 
@@ -841,6 +858,25 @@ public class JobOrderForm extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_ColorTextFieldFocusLost
+
+    private void WeightFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_WeightFocusLost
+        // TODO add your handling code here:
+        if(!Weight.getText().isEmpty())
+        {
+            try{
+                //Float RoundTo = (float) Math.round(Float.parseFloat(Weight.getText()) / 100) * 100;
+                Weight.setText(new LiquidRatioHandler().RoundToHundreds(Float.parseFloat(Weight.getText())).toString());
+            }catch(NumberFormatException formatException)
+            {
+                JOptionPane.showMessageDialog(null, "Please change the value of the weight to a valid number.");
+            }
+        }
+    }//GEN-LAST:event_WeightFocusLost
+
+    private void VolumeTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_VolumeTextFieldKeyReleased
+        // TODO add your handling code here:
+        this.CheckTextValues(VolumeTextField);
+    }//GEN-LAST:event_VolumeTextFieldKeyReleased
 
     private void SetAndUpdateColorID()
     {

@@ -14,6 +14,7 @@ import Handlers.DyeingChemicalHandler;
 import Handlers.DyeingProcessHandler;
 import Handlers.JobHandler;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
@@ -57,7 +59,8 @@ public class SubProcessPanel extends javax.swing.JPanel {
         initComponents();
         addChemicalTextBoxAutoComplete();
         setTableModel(WindowType);
-        AddDeleteColumn();    
+        AddDeleteColumn();   
+        //ChemicalTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         //InitializeChemicalTable();
         //InitializeGPLandPercentColumn();
         //ChemicalTable.getModel().addTableModelListener(newTableListener);   
@@ -381,7 +384,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
          ThisDyeingChemical.setChemicalName(ChemicalTextfield.getText().trim().toUpperCase());
          ThisDyeingChemical.setState(this.StateBox.getSelectedItem().toString());
          ThisDyeingChemical.setType(this.TypeBox.getSelectedItem().toString());
-         ThisDyeingChemical.setValue(Float.parseFloat(ValueText.getText()));
+         ThisDyeingChemical.setValue(Float.valueOf((ValueText.getText())));
          
          
          return ThisDyeingChemical;
@@ -397,14 +400,14 @@ public class SubProcessPanel extends javax.swing.JPanel {
          String Type = ChemicalTable.getModel().getValueAt(rowNumber, TypeColumn).toString();
          String Value = ChemicalTable.getModel().getValueAt(rowNumber, ValueColumn).toString();
          String State = ChemicalTable.getModel().getValueAt(rowNumber, StateColumn).toString();
-            if(Chemical.length() > 0 && !CheckTextIfItsANumber(Value))
+            if(Chemical.length() > 0 )//&& !CheckTextIfItsANumber(Value))
             {
                 ThisChemical.setChemicalName(Chemical);
                 ThisChemical.setChemicalId(ChemicalHandler.GetChemicalIDFromChemicalName(ThisChemical.getChemicalName()));
                 ThisDyeingChemical.setChemicalId(ThisChemical.getChemicalId());
                 ThisDyeingChemical.setDyeingProcessID(DyeingProcessID);
                 ThisDyeingChemical.setType(Type);
-                ThisDyeingChemical.setValue(Float.parseFloat(Value));
+                ThisDyeingChemical.setValue(Float.valueOf(Value));//parseFloat(Value));
                 ThisDyeingChemical.setOrder(rowNumber+1);
                 ThisDyeingChemical.setState(State);
                 //TO Be FIXED: How to know if this will be Solid or Liquid. G or L               
@@ -429,7 +432,16 @@ public class SubProcessPanel extends javax.swing.JPanel {
         SubProcessText = new javax.swing.JTextField();
         ChemPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        ChemicalTable = new javax.swing.JTable();
+        ChemicalTable = new JTable(){
+            @Override
+            public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+                Component component = super.prepareRenderer(renderer, row, column);
+                int rendererWidth = component.getPreferredSize().width;
+                TableColumn tableColumn = getColumnModel().getColumn(column);
+                tableColumn.setPreferredWidth(Math.max(rendererWidth + getIntercellSpacing().width, tableColumn.getPreferredWidth()));
+                return component;
+            }
+        };
         jLabel1 = new javax.swing.JLabel();
         ChemicalTextfield = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -448,7 +460,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
         ChemPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chemicals", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 16))); // NOI18N
         ChemPanel1.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
 
-        ChemicalTable.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        ChemicalTable.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         ChemicalTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -648,6 +660,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
     }
     private void ValueTextKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ValueTextKeyReleased
         // TODO add your handling code here:
+        
         if(!this.ValueTextCheckerTriggered)    
         {
             if(CheckTextIfItsANumber(this.ValueText.getText())){
@@ -671,7 +684,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
       * @param this_text String to be checked
       * @return true if String is either empty or text is not a validText int or float variable
       */
-     public boolean CheckTextIfItsANumber(String this_text)
+      public boolean CheckTextIfItsANumber(String this_text)
     {
         if(this_text.isEmpty())
             return true;

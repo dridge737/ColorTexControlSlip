@@ -1957,6 +1957,37 @@ public class ColorTextControlSlipRepository {
         return JobOrderID;
     }
 
+    public JobOrder GetJobOrderDetailsFromJobOrder(JobOrder thisJO)
+    {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        JobOrder thisJobOrder = new JobOrder();
+        int x = 1;
+        try {
+            conn = db.getConnection();
+            ps = conn.prepareStatement("SELECT * "
+                    + "FROM job_order "
+                    + "WHERE DrNumber = ?"
+                    + "AND DATE = ?"
+                    + "AND DyeingMachineID = ? ");
+
+            ps.setString(x++, thisJO.getDrNumber());
+            ps.setString(x++, thisJO.getJobDate());
+            ps.setInt(x++, thisJO.getDyeingProgramID());
+
+            rs = ps.executeQuery();
+            if (rs.first()) {
+                thisJobOrder = GetJobOrderDataFromResultSet(rs);
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.closeConn(conn, ps, rs);
+        return thisJobOrder;
+    }
     public JobOrder GetJobOrderDetailsFromDrNumber(String DrNumber) {
         DBConnection db = new DBConnection();
         Connection conn = null;
@@ -1974,28 +2005,7 @@ public class ColorTextControlSlipRepository {
             rs = ps.executeQuery();
             if (rs.first()) {
                 thisJobOrder = GetJobOrderDataFromResultSet(rs);
-                /*
-                 thisJobOrder.setDrNumber(DrNumber);
-                 thisJobOrder.setID(rs.getInt("ID") );
-                 thisJobOrder.setDesignID(rs.getInt("DesignID") );
-                 thisJobOrder.setColorID(rs.getInt("ColorID"));
-                 thisJobOrder.setCustomerID(rs.getInt("CustomerID"));
-                 thisJobOrder.setJobDate(rs.getString("Date"));
-                 thisJobOrder.setBatchNo(rs.getInt("BatchNo"));
                 
-                 thisJobOrder.setDyeingMachineID(rs.getInt("DyeingMachineID") );
-                 thisJobOrder.setDyeingWeight(rs.getFloat("DyeingWeight"));
-                 thisJobOrder.setDyeingVolumeH20(rs.getFloat("DyeingVolH2O"));
-                
-                 thisJobOrder.setResinMachineID(rs.getInt("ResinMachineID") );
-                 thisJobOrder.setResinWeight(rs.getFloat("ResinWeight"));
-                 thisJobOrder.setResinVolumeH20(rs.getFloat("ResinVolH2O"));
-                
-                 thisJobOrder.setRollLoad(rs.getString("RollLoad"));
-                 thisJobOrder.setRoll(rs.getFloat("Roll"));
-                 thisJobOrder.setDyeingProgramID(rs.getInt("DyeingProgramID"));
-                 thisJobOrder.setResinProgramID(rs.getInt("ResinProgramID"));
-                 */
             }
         } catch (SQLException ex) {
             Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
@@ -2003,6 +2013,8 @@ public class ColorTextControlSlipRepository {
         this.closeConn(conn, ps, rs);
         return thisJobOrder;
     }
+    
+    
 
     public JobOrder GetJobOrderDetailsFromJobOrderID(int ID) {
         DBConnection db = new DBConnection();
@@ -2074,7 +2086,7 @@ public class ColorTextControlSlipRepository {
         try {
             conn = db.getConnection();
 
-            ps = conn.prepareStatement("SELECT "
+            ps = conn.prepareStatement("SELECT job_order.ID,"
                     + " DrNumber , "
                     + " Date , "
                     + " col.Name as coName, "
@@ -2142,7 +2154,8 @@ public class ColorTextControlSlipRepository {
         try {
             conn = db.getConnection();
 
-            ps = conn.prepareStatement("SELECT DrNumber , "
+            ps = conn.prepareStatement("SELECT job_order.ID ,"
+                    + "DrNumber , "
                     + "Date , "
                     + "col.Name as coName, "
                     + "cus.Name as cName, "
@@ -2228,6 +2241,7 @@ public class ColorTextControlSlipRepository {
         try {
             while (rs.next()) {
                 JobOrderExtended currentJobOrder = new JobOrderExtended();
+                currentJobOrder.setID(rs.getInt("job_order.ID"));
                 currentJobOrder.setDrNumber(rs.getString("DrNumber"));
                 currentJobOrder.setJobDate(rs.getString("Date"));
                 currentJobOrder.setColorName(rs.getString("coName"));
@@ -3327,7 +3341,7 @@ public class ColorTextControlSlipRepository {
         boolean isSuccessful = false;
         try {
             conn = db.getConnection();
-            String query = "SET SQL_SAFE_UPDATES = 0; DELETE FROM dyeing_chemical WHERE DyeingProcessID = ?; SET SQL_SAFE_UPDATES = 1;";
+            String query = "SET SQL_SAFE_UPDATES = 1; DELETE FROM dyeing_chemical WHERE DyeingProcessID = ?; SET SQL_SAFE_UPDATES = 0;";
 
             preparedStmt = conn.prepareStatement(query);
             preparedStmt.setInt(1, ThisDyeingChemical.getDyeingProcessID());
