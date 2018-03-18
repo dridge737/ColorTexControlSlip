@@ -1165,7 +1165,7 @@ public class PrintHandlerFinal {
             image.scaleToFit(83, 100);
             image.setAbsolutePosition(
             (PageSize.LETTER.getWidth() - (image.getScaledWidth() + 10)),
-            (PageSize.LETTER.getHeight() - (image.getScaledWidth() + 10)));
+            (PageSize.LETTER.getHeight() - (image.getScaledWidth() + 30)));
             document.add(image);
         }
         catch (DocumentException | IOException e) {
