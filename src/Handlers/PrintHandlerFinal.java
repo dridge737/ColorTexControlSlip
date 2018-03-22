@@ -706,13 +706,13 @@ public class PrintHandlerFinal {
     {
         DyeingProgramNameHandler dyeingProgramNameHandler = new DyeingProgramNameHandler();
         
-        Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
+        Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 13, Font.NORMAL);
         PreferenceHandler prefHandler = new PreferenceHandler();
 //        Paragraph companyHeader = new Paragraph(prefHandler.getCompanyPreference(), companyHeaderFont);
 //        companyHeader.setAlignment(Element.ALIGN_CENTER);
         //document.add(companyHeader);
         
-        Font controlSlipHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
+        Font controlSlipHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 13, Font.NORMAL);
         Paragraph controlSlipHeader = new Paragraph("Dyeing Control Slip", controlSlipHeaderFont);
         controlSlipHeader.setAlignment(Element.ALIGN_CENTER);
         //document.add(controlSlipHeader);
@@ -727,12 +727,12 @@ public class PrintHandlerFinal {
         fillerPhrase.add(" ");
         PdfPCell fillerTableHeaderCell = new PdfPCell(fillerPhrase);
         
-        Phrase companyHeaderPhrase = new Phrase(prefHandler.getCompanyPreference(), companyHeaderFont);
+        Phrase companyHeaderPhrase = new Phrase(prefHandler.getCompanyPreference().toUpperCase(), companyHeaderFont);
         PdfPCell companyHeaderTableHeaderCell = new PdfPCell(companyHeaderPhrase);
             companyHeaderTableHeaderCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
             companyHeaderTableHeaderCell.setHorizontalAlignment(Element.ALIGN_CENTER);
             
-        Phrase controlSlipHeaderPhrase = new Phrase("Dyeing Control Slip", controlSlipHeaderFont);
+        Phrase controlSlipHeaderPhrase = new Phrase("DYEING CONTROL SLIP", controlSlipHeaderFont);
         PdfPCell controlSlipHeaderTableHeaderCell = new PdfPCell(controlSlipHeaderPhrase);
         controlSlipHeaderTableHeaderCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
             controlSlipHeaderTableHeaderCell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -747,7 +747,7 @@ public class PrintHandlerFinal {
         checkedByHeaderTableHeaderCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         checkedByHeaderTableHeaderCell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 
-        Font dyeingProcessFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 13, Font.NORMAL);
+        Font dyeingProcessFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
         Paragraph dyeingProcessHeader = new Paragraph(dyeingProgramNameHandler.GetDyeingProgramNameFromID(dyeingProgramDetails.getDyeingProgramNameID()), dyeingProcessFont);
         dyeingProcessHeader.setAlignment(Element.ALIGN_CENTER);
         //document.add(dyeingProcessHeader);
@@ -872,13 +872,13 @@ public class PrintHandlerFinal {
     {
         DyeingProgramNameHandler dyeingProgramNameHandler = new DyeingProgramNameHandler();
         
-        Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
+        Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 13, Font.NORMAL);
         PreferenceHandler prefHandler = new PreferenceHandler();
 //        Paragraph companyHeader = new Paragraph(prefHandler.getCompanyPreference(), companyHeaderFont);
 //        companyHeader.setAlignment(Element.ALIGN_CENTER);
         //document.add(companyHeader);
-        
-        Font controlSlipHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
+        Font checkedByFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
+        Font controlSlipHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 13, Font.NORMAL);
         Paragraph controlSlipHeader = new Paragraph("Dyeing Control Slip", controlSlipHeaderFont);
         controlSlipHeader.setAlignment(Element.ALIGN_CENTER);
         //document.add(controlSlipHeader);
@@ -893,27 +893,27 @@ public class PrintHandlerFinal {
         fillerPhrase.add(" ");
         PdfPCell fillerTableHeaderCell = new PdfPCell(fillerPhrase);
         
-        Phrase companyHeaderPhrase = new Phrase(prefHandler.getCompanyPreference(), companyHeaderFont);
+        Phrase companyHeaderPhrase = new Phrase(prefHandler.getCompanyPreference().toUpperCase(), companyHeaderFont);
         PdfPCell companyHeaderTableHeaderCell = new PdfPCell(companyHeaderPhrase);
             companyHeaderTableHeaderCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
             companyHeaderTableHeaderCell.setHorizontalAlignment(Element.ALIGN_CENTER);
             
-        Phrase controlSlipHeaderPhrase = new Phrase("Dyeing Control Slip", controlSlipHeaderFont);
+        Phrase controlSlipHeaderPhrase = new Phrase("DYEING CONTROL SLIP", controlSlipHeaderFont);
         PdfPCell controlSlipHeaderTableHeaderCell = new PdfPCell(controlSlipHeaderPhrase);
         controlSlipHeaderTableHeaderCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
             controlSlipHeaderTableHeaderCell.setHorizontalAlignment(Element.ALIGN_CENTER);
             
-        Phrase preparedByPhrase = new Phrase("Prepared By", controlSlipHeaderFont);
+        Phrase preparedByPhrase = new Phrase("Prepared By", checkedByFont);
         PdfPCell preparedByHeaderTableHeaderCell = new PdfPCell(preparedByPhrase);
         preparedByHeaderTableHeaderCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         preparedByHeaderTableHeaderCell.setHorizontalAlignment(Element.ALIGN_CENTER);
         
-        Phrase checkedByPhrase = new Phrase("Checked By", controlSlipHeaderFont);
+        Phrase checkedByPhrase = new Phrase("Checked By", checkedByFont);
         PdfPCell checkedByHeaderTableHeaderCell = new PdfPCell(checkedByPhrase);
         checkedByHeaderTableHeaderCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         checkedByHeaderTableHeaderCell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 
-        Font dyeingProcessFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 13, Font.NORMAL);
+        Font dyeingProcessFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
         Paragraph dyeingProcessHeader = new Paragraph(dyeingProgramNameHandler.GetDyeingProgramNameFromID(dyeingProgramDetails.getDyeingProgramNameID()), dyeingProcessFont);
         dyeingProcessHeader.setAlignment(Element.ALIGN_CENTER);
         //document.add(dyeingProcessHeader);
@@ -1038,15 +1038,15 @@ public class PrintHandlerFinal {
     {
         ResinProgramHandler resinProgramNameHandler = new ResinProgramHandler();
         DyeingProgramNameHandler dyeingProgramNameHandler = new DyeingProgramNameHandler();
-        Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
+        Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 15, Font.NORMAL);
         PreferenceHandler prefHandler = new PreferenceHandler();
-        Paragraph companyHeader = new Paragraph(prefHandler.getCompanyPreference(), companyHeaderFont);
+        Paragraph companyHeader = new Paragraph(prefHandler.getCompanyPreference().toUpperCase(), companyHeaderFont);
         companyHeader.setAlignment(Element.ALIGN_CENTER);
         Chapter chapter = new Chapter(companyHeader, 1);
         chapter.setNumberDepth(0);
         
-        Font controlSlipHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
-        Paragraph controlSlipHeader = new Paragraph("Resin Control Slip", controlSlipHeaderFont);
+        Font controlSlipHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 15, Font.NORMAL);
+        Paragraph controlSlipHeader = new Paragraph("RESIN CONTROL SLIP", controlSlipHeaderFont);
         controlSlipHeader.setAlignment(Element.ALIGN_CENTER);
         chapter.add(controlSlipHeader);
         
@@ -1060,7 +1060,7 @@ public class PrintHandlerFinal {
         table.addCell(filler);
         chapter.add(table);
         
-        Font dyeingProcessFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 13, Font.NORMAL);
+        Font dyeingProcessFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
         Paragraph dyeingProcessHeader = new Paragraph(dyeingProgramNameHandler.GetDyeingProgramNameFromID(dyeingProgramDetails.getDyeingProgramNameID()), dyeingProcessFont);
         dyeingProcessHeader.setAlignment(Element.ALIGN_CENTER);
         chapter.add(dyeingProcessHeader);
@@ -1127,7 +1127,6 @@ public class PrintHandlerFinal {
         chapter.add(paragraph);
         
         paragraph = new Paragraph("Loading Time:_______________________", f);
-        paragraph.setAlignment(Element.ALIGN_CENTER);
         
         chapter.add(paragraph);
         
