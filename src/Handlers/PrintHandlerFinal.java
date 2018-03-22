@@ -711,7 +711,7 @@ public class PrintHandlerFinal {
 //        Paragraph companyHeader = new Paragraph(prefHandler.getCompanyPreference(), companyHeaderFont);
 //        companyHeader.setAlignment(Element.ALIGN_CENTER);
         //document.add(companyHeader);
-        
+        Font checkedByFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
         Font controlSlipHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 13, Font.NORMAL);
         Paragraph controlSlipHeader = new Paragraph("Dyeing Control Slip", controlSlipHeaderFont);
         controlSlipHeader.setAlignment(Element.ALIGN_CENTER);
@@ -737,12 +737,12 @@ public class PrintHandlerFinal {
         controlSlipHeaderTableHeaderCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
             controlSlipHeaderTableHeaderCell.setHorizontalAlignment(Element.ALIGN_CENTER);
             
-        Phrase preparedByPhrase = new Phrase("Prepared By", controlSlipHeaderFont);
+        Phrase preparedByPhrase = new Phrase("Prepared By", checkedByFont);
         PdfPCell preparedByHeaderTableHeaderCell = new PdfPCell(preparedByPhrase);
         preparedByHeaderTableHeaderCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         preparedByHeaderTableHeaderCell.setHorizontalAlignment(Element.ALIGN_CENTER);
         
-        Phrase checkedByPhrase = new Phrase("Checked By", controlSlipHeaderFont);
+        Phrase checkedByPhrase = new Phrase("Checked By", checkedByFont);
         PdfPCell checkedByHeaderTableHeaderCell = new PdfPCell(checkedByPhrase);
         checkedByHeaderTableHeaderCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         checkedByHeaderTableHeaderCell.setHorizontalAlignment(Element.ALIGN_CENTER);
