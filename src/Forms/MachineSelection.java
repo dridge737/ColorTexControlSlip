@@ -13,7 +13,10 @@ import Handlers.PreferenceHandler;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -103,14 +106,14 @@ public class MachineSelection extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         Header = new javax.swing.JLabel();
-        MachineDropDownList = new javax.swing.JComboBox<String>();
+        MachineDropDownList = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         Weight = new javax.swing.JTextField();
         VolumeTextField = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         SelectBut = new javax.swing.JButton();
-        FabricDropDown = new javax.swing.JComboBox<String>();
-        LiquidRatioDropDown = new javax.swing.JComboBox<String>();
+        FabricDropDown = new javax.swing.JComboBox<>();
+        LiquidRatioDropDown = new javax.swing.JComboBox<>();
         BackBut = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -125,7 +128,7 @@ public class MachineSelection extends javax.swing.JFrame {
         jPanel1.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 470, 40));
 
         MachineDropDownList.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        MachineDropDownList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Machine" }));
+        MachineDropDownList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose Machine" }));
         MachineDropDownList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MachineDropDownListActionPerformed(evt);
@@ -146,12 +149,22 @@ public class MachineSelection extends javax.swing.JFrame {
                 WeightFocusLost(evt);
             }
         });
+        Weight.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                WeightKeyReleased(evt);
+            }
+        });
         jPanel1.add(Weight, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 118, 140, 30));
 
         VolumeTextField.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         VolumeTextField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 VolumeTextFieldFocusLost(evt);
+            }
+        });
+        VolumeTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                VolumeTextFieldKeyReleased(evt);
             }
         });
         jPanel1.add(VolumeTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(201, 159, 299, -1));
@@ -174,7 +187,7 @@ public class MachineSelection extends javax.swing.JFrame {
         jPanel1.add(SelectBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(85, 215, 145, 42));
 
         FabricDropDown.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        FabricDropDown.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Fabric Type", "TC 0.3 +30 liters", "CVC 0.4 + 30 liters", "CC 0.5 + 30 liters", "Polyester and Spun 0.65 + 30 liters", "TC 0.5" }));
+        FabricDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fabric Type", "TC 0.3 +30 liters", "CVC 0.4 + 30 liters", "CC 0.5 + 30 liters", "Polyester and Spun 0.65 + 30 liters", "TC 0.5" }));
         FabricDropDown.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 FabricDropDownActionPerformed(evt);
@@ -183,7 +196,7 @@ public class MachineSelection extends javax.swing.JFrame {
         jPanel1.add(FabricDropDown, new org.netbeans.lib.awtextra.AbsoluteConstraints(272, 117, 228, 30));
 
         LiquidRatioDropDown.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        LiquidRatioDropDown.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Liquid Ratio" }));
+        LiquidRatioDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Liquid Ratio" }));
         LiquidRatioDropDown.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 LiquidRatioDropDownActionPerformed(evt);
@@ -265,7 +278,7 @@ public class MachineSelection extends javax.swing.JFrame {
                     Weight.setText(Float.toString(thisMachine.getMinCapacity()));
                 }
             }*/
-            Weight.setText(new LiquidRatioHandler().RoundToHundreds(Float.parseFloat(Weight.getText())).toString());
+            //Weight.setText(new LiquidRatioHandler().RoundToHundreds(Float.parseFloat(Weight.getText())).toString());
             //else
             computeForVolumeByFabric();
             //    Weight.setText(weight);
@@ -287,21 +300,29 @@ public class MachineSelection extends javax.swing.JFrame {
                 volume = (float) (weight * multiplier);
             }
 
-            VolumeTextField.setText(Float.toString(volume));
+            //VolumeTextField.setText(Float.toString(volume));
+            VolumeTextField.setText(new LiquidRatioHandler().RoundToHundreds(volume).toString());
         }
     }
     
     private void VolumeTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_VolumeTextFieldFocusLost
         // TODO add your handling code here:
         String Volume = this.VolumeTextField.getText();
-        Volume = Volume.replaceAll("[^\\d.]", "");
-        this.VolumeTextField.setText(Volume);
-        if (new PreferenceHandler().getResinMachineInputPreference()) {
-            Float ConvertedVolume = Float.parseFloat(Volume);
-            if (ConvertedVolume > thisMachine.getMaxVolume()) {
-                this.VolumeTextField.setText(Float.toString(thisMachine.getMaxVolume()));
-            } else if (ConvertedVolume < thisMachine.getMinVolume()) {
-                this.VolumeTextField.setText(Float.toString(thisMachine.getMinVolume()));
+        Pattern p = Pattern.compile("[^\\d.]");
+        Matcher m = p.matcher(Volume);
+        //boolean b = m.find();
+        if (Volume.length() > 0 && m.find()) {
+            Volume = Volume.replaceAll("[^\\d.]", "");
+            VolumeTextField.setText(new LiquidRatioHandler().RoundToHundreds(Float.parseFloat(Volume)).toString());
+
+            //this.VolumeTextField.setText(Volume);
+            if (new PreferenceHandler().getResinMachineInputPreference()) {
+                Float ConvertedVolume = Float.parseFloat(Volume);
+                if (ConvertedVolume > thisMachine.getMaxVolume()) {
+                    this.VolumeTextField.setText(Float.toString(thisMachine.getMaxVolume()));
+                } else if (ConvertedVolume < thisMachine.getMinVolume()) {
+                    this.VolumeTextField.setText(Float.toString(thisMachine.getMinVolume()));
+                }
             }
         }
         //else
@@ -407,6 +428,46 @@ public class MachineSelection extends javax.swing.JFrame {
        this.CheckValuesAndComputeForVolumeUsingFabricStyle();
     }//GEN-LAST:event_FabricDropDownActionPerformed
 
+    private void WeightKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_WeightKeyReleased
+        // TODO add your handling code here:
+        CheckTextValues(Weight);
+        computeForVolumeByFabric();
+    }//GEN-LAST:event_WeightKeyReleased
+
+    private void VolumeTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_VolumeTextFieldKeyReleased
+        // TODO add your handling code here:
+        CheckTextValues(VolumeTextField);
+    }//GEN-LAST:event_VolumeTextFieldKeyReleased
+
+    public void CheckTextValues(JTextField thisTextBox)
+    {
+        String CheckThisValue = thisTextBox.getText();
+        Pattern p = Pattern.compile("[^\\d.]");
+        Matcher m = p.matcher(CheckThisValue);
+        //boolean b = m.find();
+        if (CheckThisValue.length() > 0 && m.find()) {
+            
+            CheckThisValue = CheckThisValue.replaceAll("[^\\d.]", "");
+            //try{
+            
+            //    Float ConvertedValue = Float.parseFloat(CheckThisValue);
+            //}
+            //catch(NumberFormatException e)
+            //{
+                
+            //}
+            /*if (ConvertedWeight > thisMachine.getMaxCapacity()) {
+                Weight.setText(Float.toString(thisMachine.getMaxCapacity()));
+            } else if (ConvertedWeight < thisMachine.getMinCapacity()) {
+                Weight.setText(Float.toString(thisMachine.getMinCapacity()));
+            }*/
+            //else    
+            //ComputeVolume();
+            //CheckValuesAndComputeForVolume();
+                thisTextBox.setText(CheckThisValue);
+        }
+    }
+    
     private boolean CheckIfMachineDetailsIsValid()
     {
         boolean isSuccessful = true;
