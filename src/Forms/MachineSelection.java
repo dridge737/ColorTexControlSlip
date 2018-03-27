@@ -287,7 +287,7 @@ public class MachineSelection extends javax.swing.JFrame {
 
     private void computeForVolumeByFabric()
     {
-        if (this.FabricDropDown.getSelectedIndex() != 0) {
+        if (this.FabricDropDown.getSelectedIndex() != 0 && Weight.getText().length()> 0) {
             String selected = FabricDropDown.getSelectedItem().toString();
             float weight = Float.parseFloat(Weight.getText());
             float volume = 0;
@@ -301,7 +301,7 @@ public class MachineSelection extends javax.swing.JFrame {
             }
 
             //VolumeTextField.setText(Float.toString(volume));
-            VolumeTextField.setText(new LiquidRatioHandler().RoundToHundreds(volume).toString());
+            VolumeTextField.setText(new LiquidRatioHandler().RoundToTens(volume).toString());
         }
     }
     
@@ -313,7 +313,7 @@ public class MachineSelection extends javax.swing.JFrame {
         //boolean b = m.find();
         if (Volume.length() > 0 && m.find()) {
             Volume = Volume.replaceAll("[^\\d.]", "");
-            VolumeTextField.setText(new LiquidRatioHandler().RoundToHundreds(Float.parseFloat(Volume)).toString());
+            VolumeTextField.setText(new LiquidRatioHandler().RoundToTens(Float.parseFloat(Volume)).toString());
 
             //this.VolumeTextField.setText(Volume);
             if (new PreferenceHandler().getResinMachineInputPreference()) {
@@ -432,11 +432,14 @@ public class MachineSelection extends javax.swing.JFrame {
         // TODO add your handling code here:
         CheckTextValues(Weight);
         computeForVolumeByFabric();
+        
     }//GEN-LAST:event_WeightKeyReleased
 
     private void VolumeTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_VolumeTextFieldKeyReleased
         // TODO add your handling code here:
         CheckTextValues(VolumeTextField);
+        VolumeTextField.setText(new LiquidRatioHandler().RoundToTens(Float.parseFloat(VolumeTextField.getText())).toString());
+        
     }//GEN-LAST:event_VolumeTextFieldKeyReleased
 
     public void CheckTextValues(JTextField thisTextBox)
@@ -464,6 +467,7 @@ public class MachineSelection extends javax.swing.JFrame {
             //else    
             //ComputeVolume();
             //CheckValuesAndComputeForVolume();
+            
                 thisTextBox.setText(CheckThisValue);
         }
     }

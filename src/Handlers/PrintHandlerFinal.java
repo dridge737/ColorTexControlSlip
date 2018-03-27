@@ -1321,16 +1321,16 @@ public class PrintHandlerFinal {
     }
     
     public Document addFirstPageSection(String dest, Machine machineDetails, Design designDetails, Customer customerDetails, DesignColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume, Document document) throws IOException, DocumentException {
-        Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
+        Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 15, Font.NORMAL);
         
         PreferenceHandler prefHandler = new PreferenceHandler();
         
-        Paragraph companyHeader = new Paragraph(prefHandler.getCompanyPreference(), companyHeaderFont);
+        Paragraph companyHeader = new Paragraph(prefHandler.getCompanyPreference().toUpperCase(), companyHeaderFont);
         companyHeader.setAlignment(Element.ALIGN_CENTER);
         document.add(companyHeader);
         
-        Font controlSlipHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
-        Paragraph controlSlipHeader = new Paragraph("Pushcart Control Slip", controlSlipHeaderFont);
+        Font controlSlipHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 13, Font.NORMAL);
+        Paragraph controlSlipHeader = new Paragraph("PUSHCART CONTROL SLIP", controlSlipHeaderFont);
         controlSlipHeader.setAlignment(Element.ALIGN_CENTER);
         document.add(controlSlipHeader);
         
