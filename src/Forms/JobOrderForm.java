@@ -40,6 +40,7 @@ import java.util.logging.Logger;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
@@ -269,12 +270,12 @@ public class JobOrderForm extends javax.swing.JFrame {
         designLabel = new javax.swing.JLabel();
         JobLabel = new javax.swing.JLabel();
         DateLabel = new javax.swing.JLabel();
-        CustomerDropDownList = new javax.swing.JComboBox<String>();
+        CustomerDropDownList = new javax.swing.JComboBox<>();
         DesignTextField = new javax.swing.JTextField();
         ColorTextField = new javax.swing.JTextField();
         JobOrder = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
-        MachineDropDownList = new javax.swing.JComboBox<String>();
+        MachineDropDownList = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         Weight = new javax.swing.JTextField();
@@ -344,7 +345,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         MainPanel.add(DateLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(372, 120, 120, 30));
 
         CustomerDropDownList.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        CustomerDropDownList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Customer" }));
+        CustomerDropDownList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose Customer" }));
         CustomerDropDownList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CustomerDropDownListActionPerformed(evt);
@@ -376,7 +377,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         MachineDropDownList.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        MachineDropDownList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Choose Machine" }));
+        MachineDropDownList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose Machine" }));
         MachineDropDownList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MachineDropDownListActionPerformed(evt);
@@ -556,15 +557,20 @@ public class JobOrderForm extends javax.swing.JFrame {
     public void CheckTextValues(JTextField thisTextBox)
     {
         String CheckThisValue = thisTextBox.getText();
-        if (CheckThisValue.length() > 0) {
+        Pattern p = Pattern.compile("[^\\d.]");
+        Matcher m = p.matcher(CheckThisValue);
+        //boolean b = m.find();
+        if (CheckThisValue.length() > 0 && m.find()) {
+            
             CheckThisValue = CheckThisValue.replaceAll("[^\\d.]", "");
-            try{
-            Float ConvertedValue = Float.parseFloat(CheckThisValue);
-            }
-            catch(NumberFormatException e)
-            {
+            //try{
+            
+            //    Float ConvertedValue = Float.parseFloat(CheckThisValue);
+            //}
+            //catch(NumberFormatException e)
+            //{
                 
-            }
+            //}
             /*if (ConvertedWeight > thisMachine.getMaxCapacity()) {
                 Weight.setText(Float.toString(thisMachine.getMaxCapacity()));
             } else if (ConvertedWeight < thisMachine.getMinCapacity()) {
@@ -789,10 +795,21 @@ public class JobOrderForm extends javax.swing.JFrame {
     private void VolumeTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_VolumeTextFieldFocusLost
         // TODO add your handling code here:
         String Volume = this.VolumeTextField.getText();
-        if (Volume.length() > 0) {
-            Volume = Volume.replaceAll("[^\\d.]", "");
-            Float ConvertedVolume = Float.parseFloat(Volume);
-                this.VolumeTextField.setText(Volume);
+        if (!Volume.isEmpty()) {
+             Volume = Volume.replaceAll("[^\\d.]", "");
+            //    this.VolumeTextField.setText(Volume);
+            try
+            {
+                Float ConvertedVolume = Float.parseFloat(Volume);
+                //Float RoundTo = (float) Math.round(Float.parseFloat(Weight.getText()) / 100) * 100;
+                VolumeTextField.setText(new LiquidRatioHandler().RoundToHundreds(ConvertedVolume).toString());
+            }
+            catch(NumberFormatException formatException)
+            {
+                JOptionPane.showMessageDialog(null, "Please change the value of the weight to a valid number.");
+            }
+        
+           
             /*if (ConvertedVolume > thisMachine.getMaxVolume()) {
                 this.VolumeTextField.setText(Float.toString(thisMachine.getMaxVolume()));
             } else if (ConvertedVolume < thisMachine.getMinVolume()) {
@@ -864,13 +881,15 @@ public class JobOrderForm extends javax.swing.JFrame {
         if(!Weight.getText().isEmpty())
         {
             try{
+                Float.parseFloat(Weight.getText());
                 //Float RoundTo = (float) Math.round(Float.parseFloat(Weight.getText()) / 100) * 100;
-                Weight.setText(new LiquidRatioHandler().RoundToHundreds(Float.parseFloat(Weight.getText())).toString());
+                //Weight.setText(new LiquidRatioHandler().RoundToHundreds(Float.parseFloat(Weight.getText())).toString());
             }catch(NumberFormatException formatException)
             {
                 JOptionPane.showMessageDialog(null, "Please change the value of the weight to a valid number.");
             }
         }
+        
     }//GEN-LAST:event_WeightFocusLost
 
     private void VolumeTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_VolumeTextFieldKeyReleased
@@ -927,8 +946,9 @@ public class JobOrderForm extends javax.swing.JFrame {
             String[] RatioSplit = LiquidRatioTextField.getText().split(":", 2);
             int WeightMultiplier = Integer.parseInt(RatioSplit[1]) / Integer.parseInt(RatioSplit[0]);
 
-            int volume = (((int) (Float.parseFloat(weight) * WeightMultiplier))); // /10 * 10;
-            VolumeTextField.setText(Double.toString(volume));
+            float volume = (((float) (Float.parseFloat(weight) * WeightMultiplier))); // /10 * 10;
+            //VolumeTextField.setText(Double.toString(volume));
+            VolumeTextField.setText(new LiquidRatioHandler().RoundToHundreds(volume).toString());
 
         }
     }

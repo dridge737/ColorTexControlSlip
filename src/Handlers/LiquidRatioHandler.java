@@ -98,4 +98,13 @@ public class LiquidRatioHandler {
         else
         return (float) Math.round(NumberToRound / 100) * 100;
     }
+    
+    public Float RoundToTens(float NumberToRound)
+    {
+        if (NumberToRound < 10) {
+            return NumberToRound;
+        } else {
+            return (float) Math.round(NumberToRound / 10) * 10;
+        }
+    }
 }
