@@ -276,13 +276,17 @@ public class PrintHandlerFinal {
         int rows = 0;
         int rowLimit = 17;
         int rowLimit2 = 32;
+        PdfPCell dyeingCell;
+        dyeingCell = new PdfPCell(new Phrase("S/N"));
+        dyeingCell.setRowspan(4);
+
         for(int x=0; x<dyeingProcessList.size(); x++)
             {
                     if (dyeingProcessList.get(x).getdyeingProcessOrder().matches("[0-9]+")){
-                        table.addCell(new Phrase(RomanNumber.toRoman(Integer.parseInt(dyeingProcessList.get(x).getdyeingProcessOrder())) + ". " + dyeingProcessList.get(x).getDyeingProcessName(), f));
-                        table.addCell(" ");
-                        table.addCell(" ");
-                        table.addCell(" ");                      
+                        dyeingCell = new PdfPCell(new Phrase(RomanNumber.toRoman(Integer.parseInt(dyeingProcessList.get(x).getdyeingProcessOrder())) + ". " + dyeingProcessList.get(x).getDyeingProcessName(), f));
+                        dyeingCell.setColspan(4);
+                        dyeingCell.setBorder(Rectangle.BOTTOM);
+                        table.addCell(dyeingCell);               
                         rows++;
                         if(rows >= rowLimit)
                         {
@@ -507,10 +511,10 @@ public class PrintHandlerFinal {
                     else if(!(dyeingProcessList.get(x).getdyeingProcessOrder().matches("[0-9]+"))){
                         String dyeingSubProcessLetter = dyeingProcessList.get(x).getdyeingProcessOrder().replaceAll("[^A-Za-z]+", "");
 
-                        table.addCell(new Phrase("    " + dyeingSubProcessLetter.toUpperCase() + ". " + dyeingProcessList.get(x).getDyeingProcessName(), f));
-                        table.addCell(" ");
-                        table.addCell(" ");
-                        table.addCell(" ");
+                        dyeingCell = new PdfPCell(new Phrase("    " + dyeingSubProcessLetter.toUpperCase() + ". " + dyeingProcessList.get(x).getDyeingProcessName(), f));
+                        dyeingCell.setColspan(4);
+                        dyeingCell.setBorder(Rectangle.BOTTOM);
+                        table.addCell(dyeingCell);
                         rows++;
                         if(rows >= rowLimit)
                         {
