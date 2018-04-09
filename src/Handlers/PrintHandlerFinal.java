@@ -1378,12 +1378,9 @@ public class PrintHandlerFinal {
         Phrase p5 = new Phrase("Design: " + designDetails.getDesignName(), f);
         //p5.add("Design: " + designDetails.getDesignName(), f);
         pCell = new PdfPCell(p5);
-        table.addCell(p5);
-        
-        Phrase p4 = new Phrase();
-        p4.add(" ");
-        pCell = new PdfPCell(p4);
-        table.addCell(p4);
+        pCell.setColspan(2);
+        pCell.setBorder(Rectangle.NO_BORDER);
+        table.addCell(pCell);
         
         Phrase p7 = new Phrase("Color: " + chemicalDetails.getColorName(), f);
         //p7.add("DesignColor: " + chemicalDetails.getColorName(), f);
@@ -1466,7 +1463,9 @@ public class PrintHandlerFinal {
         }
         //resin.add("Resin:___________________", f);
         pCell = new PdfPCell(resin);
-        table.addCell(resin);
+        pCell.setColspan(2);
+        pCell.setBorder(Rectangle.NO_BORDER);
+        table.addCell(pCell);
         
         Phrase checkedBy = new Phrase("", f);
         //checkedBy.add("Checked By:________________ ", f);
