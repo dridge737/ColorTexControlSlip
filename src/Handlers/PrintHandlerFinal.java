@@ -276,13 +276,17 @@ public class PrintHandlerFinal {
         int rows = 0;
         int rowLimit = 17;
         int rowLimit2 = 32;
+        PdfPCell dyeingCell;
+        dyeingCell = new PdfPCell(new Phrase("S/N"));
+        dyeingCell.setRowspan(4);
+
         for(int x=0; x<dyeingProcessList.size(); x++)
             {
                     if (dyeingProcessList.get(x).getdyeingProcessOrder().matches("[0-9]+")){
-                        table.addCell(new Phrase(RomanNumber.toRoman(Integer.parseInt(dyeingProcessList.get(x).getdyeingProcessOrder())) + ". " + dyeingProcessList.get(x).getDyeingProcessName(), f));
-                        table.addCell(" ");
-                        table.addCell(" ");
-                        table.addCell(" ");                      
+                        dyeingCell = new PdfPCell(new Phrase(RomanNumber.toRoman(Integer.parseInt(dyeingProcessList.get(x).getdyeingProcessOrder())) + ". " + dyeingProcessList.get(x).getDyeingProcessName(), f));
+                        dyeingCell.setColspan(4);
+                        dyeingCell.setBorder(Rectangle.BOTTOM);
+                        table.addCell(dyeingCell);               
                         rows++;
                         if(rows >= rowLimit)
                         {
@@ -507,10 +511,10 @@ public class PrintHandlerFinal {
                     else if(!(dyeingProcessList.get(x).getdyeingProcessOrder().matches("[0-9]+"))){
                         String dyeingSubProcessLetter = dyeingProcessList.get(x).getdyeingProcessOrder().replaceAll("[^A-Za-z]+", "");
 
-                        table.addCell(new Phrase("    " + dyeingSubProcessLetter.toUpperCase() + ". " + dyeingProcessList.get(x).getDyeingProcessName(), f));
-                        table.addCell(" ");
-                        table.addCell(" ");
-                        table.addCell(" ");
+                        dyeingCell = new PdfPCell(new Phrase("    " + dyeingSubProcessLetter.toUpperCase() + ". " + dyeingProcessList.get(x).getDyeingProcessName(), f));
+                        dyeingCell.setColspan(4);
+                        dyeingCell.setBorder(Rectangle.BOTTOM);
+                        table.addCell(dyeingCell);
                         rows++;
                         if(rows >= rowLimit)
                         {
@@ -1374,12 +1378,9 @@ public class PrintHandlerFinal {
         Phrase p5 = new Phrase("Design: " + designDetails.getDesignName(), f);
         //p5.add("Design: " + designDetails.getDesignName(), f);
         pCell = new PdfPCell(p5);
-        table.addCell(p5);
-        
-        Phrase p4 = new Phrase();
-        p4.add(" ");
-        pCell = new PdfPCell(p4);
-        table.addCell(p4);
+        pCell.setColspan(2);
+        pCell.setBorder(Rectangle.NO_BORDER);
+        table.addCell(pCell);
         
         Phrase p7 = new Phrase("Color: " + chemicalDetails.getColorName(), f);
         //p7.add("DesignColor: " + chemicalDetails.getColorName(), f);
@@ -1462,7 +1463,9 @@ public class PrintHandlerFinal {
         }
         //resin.add("Resin:___________________", f);
         pCell = new PdfPCell(resin);
-        table.addCell(resin);
+        pCell.setColspan(2);
+        pCell.setBorder(Rectangle.NO_BORDER);
+        table.addCell(pCell);
         
         Phrase checkedBy = new Phrase("", f);
         //checkedBy.add("Checked By:________________ ", f);
