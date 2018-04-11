@@ -421,7 +421,7 @@ public class AddResinForm extends javax.swing.JFrame {
         boolean isResinNewToCustomer = CheckIfResinNewToCustomer(thisJob.getCustomerID(), resinProgram.getProgramNameID());
         int resinProgramId = -1;
         if (CheckIfResinInputIsReady()) {
-            if (WindowType != 2) {
+            if (WindowType != 0) {
                 if (isResinNewToCustomer == true) {
                     UpdateResinProgramWhenNotNewToCustomer();
                     resinProgramId = resinProgram.getID();

@@ -1800,7 +1800,7 @@ public class ColorTextControlSlipRepository {
             preparedStmt.setInt(itemNumber++, thisJobOrder.getColorID()); //3
             preparedStmt.setInt(itemNumber++, thisJobOrder.getCustomerID()); //4
             preparedStmt.setString(itemNumber++, thisJobOrder.getJobDate()); //5
-            preparedStmt.setInt(itemNumber++, thisJobOrder.getBatchNo()); //6
+            preparedStmt.setString(itemNumber++, thisJobOrder.getBatchNo()); //6
 
             preparedStmt.setInt(itemNumber++, thisJobOrder.getDyeingMachineID()); //7
             preparedStmt.setFloat(itemNumber++, thisJobOrder.getDyeingWeight());  //8
@@ -2052,7 +2052,7 @@ public class ColorTextControlSlipRepository {
             thisJobOrder.setColorID(rs.getInt("ColorID"));
             thisJobOrder.setCustomerID(rs.getInt("CustomerID"));
             thisJobOrder.setJobDate(rs.getString("Date"));
-            thisJobOrder.setBatchNo(rs.getInt("BatchNo"));
+            thisJobOrder.setBatchNo(rs.getString("BatchNo"));
             thisJobOrder.setReference(rs.getString("Reference"));
             thisJobOrder.setProgramNumber(rs.getString("ProgramNumber"));
             thisJobOrder.setLocation(rs.getString("Location"));
@@ -3499,7 +3499,7 @@ public class ColorTextControlSlipRepository {
                 thisJobOrder.setDesignID(rs.getInt("DesignID"));
                 thisJobOrder.setColorID(rs.getInt("ColorID"));
                 thisJobOrder.setCustomerID(rs.getInt("CustomerID"));
-                thisJobOrder.setBatchNo(rs.getInt("BatchNo"));
+                thisJobOrder.setBatchNo(rs.getString("BatchNo"));
 
                 thisJobOrder.setDyeingMachineID(rs.getInt("DyeingMachineID"));
                 thisJobOrder.setDyeingWeight(rs.getFloat("DyeingWeight"));
@@ -3544,7 +3544,7 @@ public class ColorTextControlSlipRepository {
                 thisJobOrder.setDesignID(rs.getInt("DesignID"));
                 thisJobOrder.setColorID(rs.getInt("ColorID"));
                 thisJobOrder.setCustomerID(rs.getInt("CustomerID"));
-                thisJobOrder.setBatchNo(rs.getInt("BatchNo"));
+                thisJobOrder.setBatchNo(rs.getString("BatchNo"));
 
                 thisJobOrder.setDyeingMachineID(rs.getInt("DyeingMachineID"));
                 thisJobOrder.setDyeingWeight(rs.getFloat("DyeingWeight"));

@@ -178,7 +178,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         //JobHandler JobOrderHandler = new JobHandler();
         //thisJob = JobOrderHandler.GetJobOrderDetailsFromJobId(thisJob.getID());
         JobOrder.setText(thisJob.getDrNumber());
-        BatchNo.setText(Integer.toString(thisJob.getBatchNo()));
+        BatchNo.setText(thisJob.getBatchNo());
         Reference.setText(thisJob.getReference());
         ProgramNumber.setText(thisJob.getProgramNumber());
         Location.setText(thisJob.getLocation());
@@ -478,6 +478,11 @@ public class JobOrderForm extends javax.swing.JFrame {
         MainPanel.add(BatchLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(372, 80, 120, 30));
 
         BatchNo.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        BatchNo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BatchNoActionPerformed(evt);
+            }
+        });
         BatchNo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 BatchNoKeyReleased(evt);
@@ -740,11 +745,13 @@ public class JobOrderForm extends javax.swing.JFrame {
             thisJob.setDesignID(thisDesign.getDesignId());
             thisJob.setDrNumber(JobOrder.getText());
             thisJob.setJobDate(get_date_from_spinner(dateSpinner));
-            if (this.BatchNo.getText().length() < 1) {
-                thisJob.setBatchNo(0);
+            /*if (this.BatchNo.getText().length() < 1) {
+                //thisJob.setBatchNo(0);
             } else {
                 thisJob.setBatchNo(Integer.parseInt(BatchNo.getText()));
-            }
+            }*/
+            
+            thisJob.setBatchNo(BatchNo.getText());
             thisJob.setRollLoad(RollLoad.getText());
             thisJob.setReference(Reference.getText());
             thisJob.setProgramNumber(this.ProgramNumber.getText());
@@ -823,7 +830,7 @@ public class JobOrderForm extends javax.swing.JFrame {
     private void BatchNoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BatchNoKeyReleased
         // TODO add your handling code here:
         String thisBatchNo = this.BatchNo.getText();
-        thisBatchNo = thisBatchNo.replaceAll("[^\\d.]", "");
+        //thisBatchNo = thisBatchNo.replaceAll("[^\\d.]", "");
         this.BatchNo.setText(thisBatchNo);
     }//GEN-LAST:event_BatchNoKeyReleased
 
@@ -896,6 +903,10 @@ public class JobOrderForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.CheckTextValues(VolumeTextField);
     }//GEN-LAST:event_VolumeTextFieldKeyReleased
+
+    private void BatchNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BatchNoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BatchNoActionPerformed
 
     private void SetAndUpdateColorID()
     {

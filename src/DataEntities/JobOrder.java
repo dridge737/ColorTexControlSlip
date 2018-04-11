@@ -12,13 +12,27 @@ import java.sql.Date;
  * @author Eldridge
  */
 public class JobOrder {
+
+    /**
+     * @return the BatchNo
+     */
+    public String getBatchNo() {
+        return BatchNo;
+    }
+
+    /**
+     * @param BatchNo the BatchNo to set
+     */
+    public void setBatchNo(String BatchNo) {
+        this.BatchNo = BatchNo;
+    }
     private int ID;
     private String DrNumber;
     private int DesignID;
     private int ColorID;
     private int CustomerID;
     private String jobDate;
-    private int BatchNo;
+    private String BatchNo;
     private int DyeingMachineID;
     private float DyeingVolumeH20;
     private float DyeingWeight;
@@ -105,23 +119,7 @@ public class JobOrder {
         this.CustomerID = CustomerID;
     }
 
-    
-
-    /**
-     * @return the BatchNo
-     */
-    public int getBatchNo() {
-        return BatchNo;
-    }
-
-    /**
-     * @param BatchNo the BatchNo to set
-     */
-    public void setBatchNo(int BatchNo) {
-        
-        this.BatchNo = BatchNo;
-    }
-
+  
     /**
      * @return the RollLoad
      */

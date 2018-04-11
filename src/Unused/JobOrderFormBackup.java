@@ -179,7 +179,7 @@ public class JobOrderFormBackup extends javax.swing.JFrame {
         //JobHandler JobOrderHandler = new JobHandler();
         //thisJob = JobOrderHandler.GetJobOrderDetailsFromJobId(thisJob.getID());
         JobOrder.setText(thisJob.getDrNumber());
-        BatchNo.setText(Integer.toString(thisJob.getBatchNo()));
+        BatchNo.setText(thisJob.getBatchNo());
         Reference.setText(thisJob.getReference());
         ProgramNumber.setText(thisJob.getProgramNumber());
         Location.setText(thisJob.getLocation());
@@ -808,11 +808,11 @@ public class JobOrderFormBackup extends javax.swing.JFrame {
             thisJob.setDesignID(thisDesign.getDesignId());
             thisJob.setDrNumber(JobOrder.getText());
             thisJob.setJobDate(get_date_from_spinner(dateSpinner));
-            if (this.BatchNo.getText().length() < 1) {
+            /*if (this.BatchNo.getText().length() < 1) {
                 thisJob.setBatchNo(0);
             } else {
                 thisJob.setBatchNo(Integer.parseInt(BatchNo.getText()));
-            }
+            }*/
             thisJob.setRollLoad(RollLoad.getText());
             thisJob.setReference(Reference.getText());
             thisJob.setProgramNumber(this.ProgramNumber.getText());

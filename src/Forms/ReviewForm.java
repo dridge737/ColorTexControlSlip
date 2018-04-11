@@ -140,7 +140,7 @@ public class ReviewForm extends javax.swing.JFrame {
         {
             JobOrder.setText(thisJob.getDrNumber());
         }
-        BatchNo.setText(Integer.toString(thisJob.getBatchNo()));
+        BatchNo.setText(thisJob.getBatchNo());
 
         RollLoad.setText(thisJob.getRollLoad());
         Reference.setText(thisJob.getReference());
@@ -765,11 +765,13 @@ public class ReviewForm extends javax.swing.JFrame {
             thisJob.setDesignID(thisDesign.getDesignId());
             thisJob.setDrNumber(JobOrder.getText());
             thisJob.setJobDate(get_date_from_spinner(dateSpinner));
-            if (this.BatchNo.getText().length() < 1) {
+            /*if (this.BatchNo.getText().length() < 1) {
                 thisJob.setBatchNo(0);
             } else {
                 thisJob.setBatchNo(Integer.parseInt(BatchNo.getText()));
             }
+            */
+            thisJob.setBatchNo(BatchNo.getText());
             thisJob.setDyeingMachineID(thisDyeingMachine.getMachineId());
             thisJob.setDyeingVolumeH20(Float.parseFloat(this.DyeingVolumeTextField.getText()));
             thisJob.setDyeingWeight(Float.parseFloat(this.DyeingWeight.getText()));
@@ -1045,9 +1047,9 @@ public class ReviewForm extends javax.swing.JFrame {
 
     private void BatchNoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BatchNoKeyReleased
         // TODO add your handling code here:
-        String thisBatchNo = this.BatchNo.getText();
-        thisBatchNo = thisBatchNo.replaceAll("[^\\d.]", "");
-        this.BatchNo.setText(thisBatchNo);
+        //String thisBatchNo = this.BatchNo.getText();
+        //thisBatchNo = thisBatchNo.replaceAll("[^\\d.]", "");
+        //this.BatchNo.setText(thisBatchNo);
     }//GEN-LAST:event_BatchNoKeyReleased
 
     private void ResinMachineDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResinMachineDropDownActionPerformed
