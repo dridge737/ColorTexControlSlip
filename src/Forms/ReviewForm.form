@@ -49,6 +49,9 @@
           <Dimension value="[730, 620]"/>
         </Property>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="&#xd;&#xa;Set forwardkeys = new HashSet(BgPanel&#xd;&#xa;        .getFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS));&#xd;&#xa;&#xd;&#xa;    forwardkeys.add(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0));&#xd;&#xa;    BgPanel.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, forwardkeys);&#xd;&#xa;&#xd;&#xa;&#xd;&#xa;"/>
+      </AuxValues>
 
       <Layout>
         <DimensionLayout dim="0">

@@ -62,7 +62,7 @@ public class auto_complete {
             @Override
             public void keyPressed(KeyEvent e) {
                 setAdjusting(cbInput, true);
-                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                if (e.getKeyCode() == KeyEvent.VK_ALT) {
                     if (cbInput.isPopupVisible()) {
                         e.setKeyCode(KeyEvent.VK_ENTER);
                     }

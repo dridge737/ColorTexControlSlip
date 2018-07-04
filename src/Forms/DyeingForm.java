@@ -20,9 +20,14 @@ import Handlers.DyeingProgramNameHandler;
 import Handlers.ProcessOrderHandler;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.KeyboardFocusManager;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -57,6 +62,16 @@ public class DyeingForm extends javax.swing.JFrame {
         //GUITabbedPaneProcess.add(new ProcessPanel(), "Process 1", NumberOfProcessTabs++);
         //setWindowForthisProcessType();
         this(null, null, 1);
+    }
+    
+     public void EnterForwardTraversal()
+    {
+        Set forwardkeys = new HashSet(BgPanel
+        .getFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS));
+
+        forwardkeys.add(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0));
+        BgPanel.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, forwardkeys);
+
     }
     
     //For Edit or View
@@ -135,6 +150,7 @@ public class DyeingForm extends javax.swing.JFrame {
         GUITabbedPaneProcess.add(new JPanel(), "+", NumberOfProcessTabs++);
         GUITabbedPaneProcess.addChangeListener(changeListener);
         //setWindowForthisProcessType();
+        EnterForwardTraversal();
     }
     
     public void SetToCenter()
@@ -280,7 +296,7 @@ public class DyeingForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
+        BgPanel = new javax.swing.JPanel();
         Header = new javax.swing.JLabel();
         SaveBut = new javax.swing.JButton();
         GUITabbedPaneProcess = new javax.swing.JTabbedPane();
@@ -291,16 +307,16 @@ public class DyeingForm extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Control Slip");
 
-        jPanel2.setBackground(new java.awt.Color(102, 102, 102));
-        jPanel2.setToolTipText("");
-        jPanel2.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        BgPanel.setBackground(new java.awt.Color(102, 102, 102));
+        BgPanel.setToolTipText("");
+        BgPanel.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        BgPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Header.setBackground(new java.awt.Color(255, 255, 255));
         Header.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
         Header.setForeground(new java.awt.Color(255, 255, 255));
         Header.setText("Add Dyeing Program");
-        jPanel2.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 710, 40));
+        BgPanel.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 710, 40));
 
         SaveBut.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         SaveBut.setText("Add Dyeing Program");
@@ -309,21 +325,21 @@ public class DyeingForm extends javax.swing.JFrame {
                 SaveButActionPerformed(evt);
             }
         });
-        jPanel2.add(SaveBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(165, 650, 250, 40));
+        BgPanel.add(SaveBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(165, 650, 250, 40));
 
         GUITabbedPaneProcess.setBackground(new java.awt.Color(255, 255, 255));
         GUITabbedPaneProcess.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        jPanel2.add(GUITabbedPaneProcess, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 770, 500));
+        BgPanel.add(GUITabbedPaneProcess, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 770, 500));
 
         ProgramNameLabel.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         ProgramNameLabel.setForeground(new java.awt.Color(255, 255, 255));
         ProgramNameLabel.setText("Program Name :");
-        jPanel2.add(ProgramNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 165, 34));
+        BgPanel.add(ProgramNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 165, 34));
 
         ProgramNameText.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         ProgramNameText.setToolTipText("");
         ProgramNameText.setDisabledTextColor(new java.awt.Color(51, 51, 51));
-        jPanel2.add(ProgramNameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, 600, 34));
+        BgPanel.add(ProgramNameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, 600, 34));
 
         CancelBut.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         CancelBut.setText("Cancel");
@@ -332,17 +348,17 @@ public class DyeingForm extends javax.swing.JFrame {
                 CancelButActionPerformed(evt);
             }
         });
-        jPanel2.add(CancelBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 650, 250, 40));
+        BgPanel.add(CancelBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 650, 250, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 850, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(BgPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 850, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 710, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(BgPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 710, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -719,13 +735,13 @@ public class DyeingForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel BgPanel;
     private javax.swing.JButton CancelBut;
     private javax.swing.JTabbedPane GUITabbedPaneProcess;
     private javax.swing.JLabel Header;
     private javax.swing.JLabel ProgramNameLabel;
     private javax.swing.JTextField ProgramNameText;
     private javax.swing.JButton SaveBut;
-    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }
 

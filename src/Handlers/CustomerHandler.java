@@ -7,7 +7,9 @@ package Handlers;
 
 import Database.ColorTextControlSlipRepository;
 import DataEntities.Customer;
+import Forms.HelpForm.auto_complete;
 import java.util.ArrayList;
+import javax.swing.JTextField;
 
 /**
  *
@@ -88,4 +90,17 @@ public class CustomerHandler {
          
          return repo.GetCustomerIdFromCustomerName(customerName);
      }
+     
+     public ArrayList<String> addCustomerTextBoxAutoComplete(JTextField CustomerTextBox)
+    {
+        ArrayList<String> AllCustomers = new ArrayList<String>();
+        //Chemical allChemicals = new Chemical();
+        //LiquidRatioHandler newLiquidRatioHandler = new LiquidRatioHandler();
+        AllCustomers = this.GetAllCustomers();
+        auto_complete dropdownAutoComplete = new auto_complete();
+        dropdownAutoComplete.setupAutoComplete(CustomerTextBox, AllCustomers);
+        CustomerTextBox.setColumns(30);
+        
+        return AllCustomers;
+    }
 }

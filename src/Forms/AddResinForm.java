@@ -26,13 +26,17 @@ import Forms.HelpForm.auto_complete;
 import Handlers.JobHandler;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.KeyboardFocusManager;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Pattern;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
@@ -60,11 +64,25 @@ public class AddResinForm extends javax.swing.JFrame {
     public AddResinForm() {
         initComponents();
         //InitializeChemicalTable();
+        EnterForwardTraversal();
         addChemicalTextBoxAutoComplete();
         setTableModel();
         AddDeleteColumn();  
         SetToCenter();
     }
+    
+    public void EnterForwardTraversal()
+    {
+        Set forwardkeys = new HashSet(BgPanel
+        .getFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS));
+
+        forwardkeys.add(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0));
+        BgPanel.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, forwardkeys);
+
+    }
+
+
+
     
     public void SetToCenter()
     {

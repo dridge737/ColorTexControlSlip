@@ -9,11 +9,16 @@ import Handlers.CustomerHandler;
 import DataEntities.Customer;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.KeyboardFocusManager;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Vector;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -35,7 +40,18 @@ public class CustomerForm extends javax.swing.JFrame {
         initComponents();
         this.set_to_center();
         this.GetUpdatedTable();
+        EnterForwardTraversal();
         
+    }
+    
+     public void EnterForwardTraversal()
+    {
+        Set forwardkeys = new HashSet(BgPanel
+        .getFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS));
+
+        forwardkeys.add(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0));
+        BgPanel.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, forwardkeys);
+
     }
 
     public void set_to_center()
@@ -54,7 +70,7 @@ public class CustomerForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        BgPanel = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         DeleteButton = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
@@ -70,14 +86,14 @@ public class CustomerForm extends javax.swing.JFrame {
         setTitle("Control Slip");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
-        jPanel1.setLayout(null);
+        BgPanel.setBackground(new java.awt.Color(102, 102, 102));
+        BgPanel.setLayout(null);
 
         jLabel8.setBackground(new java.awt.Color(255, 255, 255));
         jLabel8.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Customer");
-        jPanel1.add(jLabel8);
+        BgPanel.add(jLabel8);
         jLabel8.setBounds(20, 20, 360, 40);
 
         DeleteButton.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
@@ -88,7 +104,7 @@ public class CustomerForm extends javax.swing.JFrame {
                 DeleteButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(DeleteButton);
+        BgPanel.add(DeleteButton);
         DeleteButton.setBounds(212, 390, 100, 50);
 
         jLabel7.setBackground(new java.awt.Color(255, 255, 255));
@@ -97,7 +113,7 @@ public class CustomerForm extends javax.swing.JFrame {
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Customer List ");
         jLabel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 3));
-        jPanel1.add(jLabel7);
+        BgPanel.add(jLabel7);
         jLabel7.setBounds(10, 80, 400, 40);
 
         AddButton.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
@@ -108,7 +124,7 @@ public class CustomerForm extends javax.swing.JFrame {
                 AddButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(AddButton);
+        BgPanel.add(AddButton);
         AddButton.setBounds(7, 390, 100, 50);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 3));
@@ -142,7 +158,7 @@ public class CustomerForm extends javax.swing.JFrame {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
         );
 
-        jPanel1.add(jPanel2);
+        BgPanel.add(jPanel2);
         jPanel2.setBounds(10, 117, 400, 200);
 
         CustomerText.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
@@ -161,7 +177,7 @@ public class CustomerForm extends javax.swing.JFrame {
                 CustomerTextKeyReleased(evt);
             }
         });
-        jPanel1.add(CustomerText);
+        BgPanel.add(CustomerText);
         CustomerText.setBounds(10, 330, 400, 30);
 
         EditButton.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
@@ -172,7 +188,7 @@ public class CustomerForm extends javax.swing.JFrame {
                 EditButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(EditButton);
+        BgPanel.add(EditButton);
         EditButton.setBounds(110, 390, 100, 50);
 
         CloseButton.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
@@ -183,18 +199,18 @@ public class CustomerForm extends javax.swing.JFrame {
                 CloseButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(CloseButton);
+        BgPanel.add(CloseButton);
         CloseButton.setBounds(315, 390, 100, 50);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+            .addComponent(BgPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
+            .addComponent(BgPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
         );
 
         pack();
@@ -416,6 +432,7 @@ public class CustomerForm extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddButton;
+    private javax.swing.JPanel BgPanel;
     private javax.swing.JButton CloseButton;
     private javax.swing.JTable CustomerTable;
     private javax.swing.JTextField CustomerText;
@@ -423,7 +440,6 @@ public class CustomerForm extends javax.swing.JFrame {
     private javax.swing.JButton EditButton;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables

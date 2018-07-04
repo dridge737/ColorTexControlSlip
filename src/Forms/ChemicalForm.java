@@ -9,10 +9,15 @@ import DataEntities.Chemical;
 import Handlers.ChemicalHandler;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.KeyboardFocusManager;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -34,6 +39,17 @@ public class ChemicalForm extends javax.swing.JFrame {
         initComponents();
         this.SetToCenter();
         this.GetUpdatedTable();
+        EnterForwardTraversal();
+    }
+    
+     public void EnterForwardTraversal()
+    {
+        Set forwardkeys = new HashSet(BgPanel
+        .getFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS));
+
+        forwardkeys.add(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0));
+        BgPanel.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, forwardkeys);
+
     }
 
     public void SetToCenter()
@@ -52,7 +68,7 @@ public class ChemicalForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        BgPanel = new javax.swing.JPanel();
         ChemicalHeader = new javax.swing.JLabel();
         DeleteButton = new javax.swing.JButton();
         ChemicalLabel = new javax.swing.JLabel();
@@ -68,14 +84,14 @@ public class ChemicalForm extends javax.swing.JFrame {
         setTitle("Control Slip");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
-        jPanel1.setLayout(null);
+        BgPanel.setBackground(new java.awt.Color(102, 102, 102));
+        BgPanel.setLayout(null);
 
         ChemicalHeader.setBackground(new java.awt.Color(255, 255, 255));
         ChemicalHeader.setFont(new java.awt.Font("Century Gothic", 0, 30)); // NOI18N
         ChemicalHeader.setForeground(new java.awt.Color(255, 255, 255));
         ChemicalHeader.setText("Chemical");
-        jPanel1.add(ChemicalHeader);
+        BgPanel.add(ChemicalHeader);
         ChemicalHeader.setBounds(20, 20, 360, 40);
 
         DeleteButton.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
@@ -87,7 +103,7 @@ public class ChemicalForm extends javax.swing.JFrame {
                 DeleteButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(DeleteButton);
+        BgPanel.add(DeleteButton);
         DeleteButton.setBounds(212, 390, 100, 50);
 
         ChemicalLabel.setBackground(new java.awt.Color(255, 255, 255));
@@ -96,7 +112,7 @@ public class ChemicalForm extends javax.swing.JFrame {
         ChemicalLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         ChemicalLabel.setText("Chemical List");
         ChemicalLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 3));
-        jPanel1.add(ChemicalLabel);
+        BgPanel.add(ChemicalLabel);
         ChemicalLabel.setBounds(10, 80, 400, 40);
 
         AddButton.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
@@ -108,7 +124,7 @@ public class ChemicalForm extends javax.swing.JFrame {
                 AddButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(AddButton);
+        BgPanel.add(AddButton);
         AddButton.setBounds(7, 390, 100, 50);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 3));
@@ -142,7 +158,7 @@ public class ChemicalForm extends javax.swing.JFrame {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
         );
 
-        jPanel1.add(jPanel2);
+        BgPanel.add(jPanel2);
         jPanel2.setBounds(10, 117, 400, 200);
 
         ChemicalText.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
@@ -161,7 +177,7 @@ public class ChemicalForm extends javax.swing.JFrame {
                 ChemicalTextKeyReleased(evt);
             }
         });
-        jPanel1.add(ChemicalText);
+        BgPanel.add(ChemicalText);
         ChemicalText.setBounds(10, 330, 400, 30);
 
         EditButton.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
@@ -173,7 +189,7 @@ public class ChemicalForm extends javax.swing.JFrame {
                 EditButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(EditButton);
+        BgPanel.add(EditButton);
         EditButton.setBounds(110, 390, 100, 50);
 
         CloseButton.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
@@ -185,18 +201,18 @@ public class ChemicalForm extends javax.swing.JFrame {
                 CloseButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(CloseButton);
+        BgPanel.add(CloseButton);
         CloseButton.setBounds(315, 390, 100, 50);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+            .addComponent(BgPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
+            .addComponent(BgPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
         );
 
         pack();
@@ -434,6 +450,7 @@ public class ChemicalForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddButton;
+    private javax.swing.JPanel BgPanel;
     private javax.swing.JLabel ChemicalHeader;
     private javax.swing.JLabel ChemicalLabel;
     private javax.swing.JTable ChemicalTable;
@@ -441,7 +458,6 @@ public class ChemicalForm extends javax.swing.JFrame {
     private javax.swing.JButton CloseButton;
     private javax.swing.JButton DeleteButton;
     private javax.swing.JButton EditButton;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables

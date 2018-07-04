@@ -935,13 +935,13 @@ public class ColorTextControlSlipRepository {
     
     public ArrayList<Machine> GetAllDyeingMachine()
     {
-        String Query = "SELECT * FROM machine where MachineType = 0";
+        String Query = "SELECT * FROM machine WHERE MachineType = 0 ORDER BY Name ASC";
         return GetAllMachine(Query);
     }
     
     public ArrayList<Machine> GetAllResinMachine()
     {
-        String Query = "SELECT * FROM machine where MachineType = 1";
+        String Query = "SELECT * FROM machine WHERE MachineType = 1 ORDER BY Name ASC";
         return GetAllMachine(Query);
     }
     
