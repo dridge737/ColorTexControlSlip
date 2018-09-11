@@ -51,6 +51,7 @@ import java.util.Comparator;
 public class PrintHandlerFinal {
     public static final String DEST = "C:\\chapter_title.pdf";
  
+    private ComputeHelper computeHelper = new ComputeHelper();
     private Font f  = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
     private Font f1  = FontFactory.getFont(FontFactory.TIMES_ROMAN, 10, Font.NORMAL);
     
@@ -347,7 +348,7 @@ public class PrintHandlerFinal {
 
                         if(dyeingChemicalList.get(i).getType()== "%")
                         {
-                            Float fquantity = jHandler.ComputeDyeingQuantity(dyeingChemicalList.get(i), jobOrderDetails);
+                            Float fquantity = computeHelper.ComputeDyeingQuantity(dyeingChemicalList.get(i), jobOrderDetails);
                              Double quantity = Double.parseDouble(fquantity.toString());
                             //Float fQuantity = jobOrderDetails.getWeight() * dyeingChemicalList.get(i).getValue();
                             //Double quantity = Double.parseDouble(fQuantity.toString());
@@ -383,7 +384,7 @@ public class PrintHandlerFinal {
                             //Double quantity = Double.parseDouble(volume) * dyeingChemicalList.get(i).getValue();
                             //Float fQuantity = jobOrderDetails.getWeight() * dyeingChemicalList.get(i).getValue();
                             //Double quantity = Double.parseDouble(fQuantity.toString());
-                            Float fquantity = jHandler.ComputeDyeingQuantity(dyeingChemicalList.get(i), jobOrderDetails);
+                            Float fquantity = computeHelper.ComputeDyeingQuantity(dyeingChemicalList.get(i), jobOrderDetails);
                              Double quantity = Double.parseDouble(fquantity.toString());
                             if(quantity.toString().contains(".0") == true)
                             {
@@ -517,7 +518,7 @@ public class PrintHandlerFinal {
 
                     if(dyeingChemicalList.get(i).getType()== "%")
                     {
-                        Float fquantity = jHandler.ComputeDyeingQuantity(dyeingChemicalList.get(i), jobOrderDetails);
+                        Float fquantity = computeHelper.ComputeDyeingQuantity(dyeingChemicalList.get(i), jobOrderDetails);
                              Double quantity = Double.parseDouble(fquantity.toString());
                         //Double quantity = Double.parseDouble(volume) * dyeingChemicalList.get(i).getValue();
                         //Float fQuantity = jobOrderDetails.getWeight() * dyeingChemicalList.get(i).getValue();
@@ -550,7 +551,7 @@ public class PrintHandlerFinal {
                     }
                     else
                     {
-                        Float fquantity = jHandler.ComputeDyeingQuantity(dyeingChemicalList.get(i), jobOrderDetails);
+                        Float fquantity = computeHelper.ComputeDyeingQuantity(dyeingChemicalList.get(i), jobOrderDetails);
                              Double quantity = Double.parseDouble(fquantity.toString());
                         //Float fQuantity = jobOrderDetails.getWeight() * dyeingChemicalList.get(i).getValue();
                         //Double quantity = Double.parseDouble(fQuantity.toString());
@@ -762,7 +763,7 @@ public class PrintHandlerFinal {
                                 
                                 if(dyeingChemicalList.get(i).getType()== "%")
                                 {
-                                    Float fquantity = jHandler.ComputeDyeingQuantity(dyeingChemicalList.get(i), jobOrderDetails);
+                                    Float fquantity = computeHelper.ComputeDyeingQuantity(dyeingChemicalList.get(i), jobOrderDetails);
                                      Double quantity = Double.parseDouble(fquantity.toString());
                                     //Float fQuantity = jobOrderDetails.getWeight() * dyeingChemicalList.get(i).getValue();
                                     //Double quantity = Double.parseDouble(fQuantity.toString());
@@ -798,7 +799,7 @@ public class PrintHandlerFinal {
                                     //Double quantity = Double.parseDouble(volume) * dyeingChemicalList.get(i).getValue();
                                     //Float fQuantity = jobOrderDetails.getWeight() * dyeingChemicalList.get(i).getValue();
                                     //Double quantity = Double.parseDouble(fQuantity.toString());
-                                    Float fquantity = jHandler.ComputeDyeingQuantity(dyeingChemicalList.get(i), jobOrderDetails);
+                                    Float fquantity = computeHelper.ComputeDyeingQuantity(dyeingChemicalList.get(i), jobOrderDetails);
                                      Double quantity = Double.parseDouble(fquantity.toString());
                                     if(quantity.toString().contains(".0") == true)
                                     {
@@ -992,7 +993,7 @@ public class PrintHandlerFinal {
 
                             if(dyeingChemicalList.get(i).getType()== "%")
                             {
-                                Float fquantity = jHandler.ComputeDyeingQuantity(dyeingChemicalList.get(i), jobOrderDetails);
+                                Float fquantity = computeHelper.ComputeDyeingQuantity(dyeingChemicalList.get(i), jobOrderDetails);
                                      Double quantity = Double.parseDouble(fquantity.toString());
                                 //Double quantity = Double.parseDouble(volume) * dyeingChemicalList.get(i).getValue();
                                 //Float fQuantity = jobOrderDetails.getWeight() * dyeingChemicalList.get(i).getValue();
@@ -1025,7 +1026,7 @@ public class PrintHandlerFinal {
                             }
                             else
                             {
-                                Float fquantity = jHandler.ComputeDyeingQuantity(dyeingChemicalList.get(i), jobOrderDetails);
+                                Float fquantity = computeHelper.ComputeDyeingQuantity(dyeingChemicalList.get(i), jobOrderDetails);
                                      Double quantity = Double.parseDouble(fquantity.toString());
                                 //Float fQuantity = jobOrderDetails.getWeight() * dyeingChemicalList.get(i).getValue();
                                 //Double quantity = Double.parseDouble(fQuantity.toString());
@@ -1640,7 +1641,7 @@ public class PrintHandlerFinal {
                 //table.addCell(String.valueOf(jobOrderDetails.getVolumeH20() * resinChemicalList.get(x).getGPLValue()));
                 if(resinChemicalList.get(x).getType()== "%")
                 {
-                    Float fquantity = jHandler.ComputerResinQuantity(resinChemicalList.get(x), jobOrderDetails);
+                    Float fquantity = computeHelper.ComputeResinQuantity(resinChemicalList.get(x), resin);
                     Double quantity = Double.parseDouble(fquantity.toString());
                     //Double quantity = Double.parseDouble(volume) * resinChemicalList.get(x).getGPLValue();
                    if(quantity.toString().contains(".0"))
@@ -1673,7 +1674,7 @@ public class PrintHandlerFinal {
                 else
                 {
                     //Double quantity = Double.parseDouble(volume) * resinChemicalList.get(x).getGPLValue();
-                    Float fquantity = jHandler.ComputerResinQuantity(resinChemicalList.get(x), jobOrderDetails);
+                    Float fquantity = computeHelper.ComputeResinQuantity(resinChemicalList.get(x), resin);
                     Double quantity = Double.parseDouble(fquantity.toString());
                     if(quantity.toString().contains(".0"))
                     {
@@ -1730,7 +1731,7 @@ public class PrintHandlerFinal {
         return document;
     }
     
-    public Document addFirstPageSection(String dest, Machine machineDetails, Design designDetails, Customer customerDetails, DesignColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume, Document document) throws IOException, DocumentException {
+    public Document addFirstPageSection(String dest, Machine machineDetails, Design designDetails, Customer customerDetails, DesignColor chemicalDetails, JobOrderExtended jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume, Document document) throws IOException, DocumentException {
         Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 15, Font.NORMAL);
         
         PreferenceHandler prefHandler = new PreferenceHandler();
@@ -1860,10 +1861,16 @@ public class PrintHandlerFinal {
         table.addCell(preparedBy);
         
         Phrase resin = new Phrase("Resin:______________________", f);
-        if(jobOrderDetails.getResinProgramID() > 0)
+        ArrayList<ResinJob> resinList = jobOrderDetails.getThisResinJob();
+        if(resinList.size() > 0)
         {
             ResinProgramHandler resinProgramNameHandler = new ResinProgramHandler();
-            String resinProgName = resinProgramNameHandler.GetResinProgramNameFromResinProgramID(jobOrderDetails.getResinProgramID());
+            String resinProgName = resinProgramNameHandler.GetResinProgramNameFromResinProgramID(resinList.get(0).getResinProgramID());
+            
+            if(resinList.size() == 2)
+            {
+                resinProgName = resinProgName + " / " + resinProgramNameHandler.GetResinProgramNameFromResinProgramID(resinList.get(1).getResinProgramID());
+            }
             
             resin = new Phrase("Resin: "+resinProgName, f);
         }
