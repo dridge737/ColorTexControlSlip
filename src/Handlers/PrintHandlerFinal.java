@@ -81,6 +81,11 @@ public class PrintHandlerFinal {
         if(resinList.size() > 0)
         {
             document = AddThirdPage(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume, resinList.get(0));
+            if(resinList.size() == 2)
+            {
+                document.newPage();
+                document = AddThirdPage(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume, resinList.get(1));
+            }
         }
         document.close();
     }
