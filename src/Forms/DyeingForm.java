@@ -10,7 +10,7 @@ import java.awt.Component;
 import java.util.ArrayList;
 import DataEntities.DyeingProgram;
 import DataEntities.DyeingProgramName;
-import DataEntities.JobOrder;
+import DataEntities.JobOrderExtended;
 import DataEntities.ProcessOrder;
 import Forms.HelpForm.ProcessPanel;
 import Handlers.ChemicalHandler;
@@ -50,7 +50,7 @@ public class DyeingForm extends javax.swing.JFrame {
     //1 for new Dyeing Program
     //2 For Update Dyeing Program
     //3 For ControlSlip Dyeing Program
-    JobOrder thisJob = new JobOrder();
+    JobOrderExtended thisJob = new JobOrderExtended();
     Color ColorError = new Color(232,228,42);
     
     /**
@@ -77,26 +77,26 @@ public class DyeingForm extends javax.swing.JFrame {
     //For Edit or View
     public DyeingForm(String DyeingProgramName)
     {
-        this(DyeingProgramName, null, 2);
         //initComponents();
         //WindowProcessType = 2;
         //SetDefaultDyeingProgramFromProgramName(DyeingProgramName);
         //setWindowForthisProcessType();
+        this(DyeingProgramName, null, 2);
     }
     
     //Jumps From Review Form / Back from View Resin Form
-    public DyeingForm(JobOrder currentJob)
+    public DyeingForm(JobOrderExtended currentJob)
     {
-        this(null, currentJob, 3);
         //initComponents();
         //WindowProcessType = 3;
         //thisJob = currentJob;
         //this.SetDyeingProgramFromProgramID(currentJob.getDyeingProgramID());
         //setWindowForthisProcessType();
+        this(null, currentJob, 3);
     }
     
     //For Control Slip Form
-    public DyeingForm(String DyeingProgramName,  JobOrder currentJob)
+    public DyeingForm(String DyeingProgramName,  JobOrderExtended currentJob)
     {
         this(DyeingProgramName, currentJob, 4);
         //initComponents();
@@ -107,7 +107,7 @@ public class DyeingForm extends javax.swing.JFrame {
         //setWindowForthisProcessType();
     }
     
-    public DyeingForm(String DyeingProgramName, JobOrder currentJob, int WindowType)
+    public DyeingForm(String DyeingProgramName, JobOrderExtended currentJob, int WindowType)
     {
         initComponents();
         SetToCenter();
@@ -217,7 +217,8 @@ public class DyeingForm extends javax.swing.JFrame {
         this.ProgramNameText.setText(thisDyeingProgramName.getDyeingProgramName());
         
         thisDyeingProgram.setDyeingProgramNameID(thisDyeingProgramName.getID());
-        thisDyeingProgram = thisDyeingProgramHandler.getDefaultProgramIDForThisDyeingProgramNameID(thisDyeingProgram.getDyeingProgramNameID());
+        thisJob.setDyeingProgramID(thisDyeingProgram.getDyeingProgramNameID());
+        thisDyeingProgram = thisDyeingProgramHandler.getDefaultProgramIDForThisDyeingProgramNameID(thisJob);
         SetDyeingProgramProcessFromProgramID(thisDyeingProgram.getID());
     }
     
@@ -403,7 +404,9 @@ public class DyeingForm extends javax.swing.JFrame {
                     thisDyeingProgramNameHandler.AddDyeingProgramName(thisDyeingProgramName.getDyeingProgramName());
             thisDyeingProgram.setDyeingProgramNameID(thisDyeingProgramNameID);
                 //ADD and Set Dyeing Program ID
-            thisDyeingProgram.setProgramDefault(1);
+            thisDyeingProgram.setCustomerID(thisJob.getCustomerID());
+            thisDyeingProgram.setColorID(thisJob.getColorID());
+            thisDyeingProgram.setDesignID(thisJob.getDesignID());
                 //int DyeingProgramID = thisDyeingProgramHandler.GetDyeingProgramIDfromName(thisDyeingProgram.getDyeingProgramName());
                 //FIX THIS edit for Dyeing Program Name
                 //thisDyeingProgram.SetID(DyeingProgramID);
@@ -469,6 +472,7 @@ public class DyeingForm extends javax.swing.JFrame {
             else
                 SuccessfullyUpdated = false;
         }
+        
         if(SuccessfullyUpdated == true)
         {
             Component[] this_pane = this.GUITabbedPaneProcess.getComponents();
@@ -491,19 +495,22 @@ public class DyeingForm extends javax.swing.JFrame {
         if(this.CheckDyeingFormProcessAndSubProcessIfReady())
         {
             switch (WindowProcessType) {
-                //For Adding Dyeing Program
                 case 1:
+                //For Adding Dyeing Program
                     CloseWindow = AddDyeingProgramNameAndDyeingProgram();
                     break;
-                //For Updating Dyeing program
                 case 2:
+                //For Updating Dyeing program
                     CloseWindow = UpdateDyeingProgram();
                     break;
-                //For Job Order
                 default:
+                //For Job Order
                     //if Default program then add, else update.
-                    if (thisDyeingProgram.getProgramDefault() == 1) {
-                        thisDyeingProgram.setProgramDefault(0);
+                    // Dyeing program is default if there is no connected customer, color and design
+                    if (thisDyeingProgram.getCustomerID() == 0) {
+                        thisDyeingProgram.setCustomerID(thisJob.getCustomerID());
+                        thisDyeingProgram.setColorID(thisJob.getColorID());
+                        thisDyeingProgram.setDesignID(thisJob.getDesignID());
                         //If there is no program added for the current customer
                         CloseWindow = this.AddDyeingProgram();
                     } else {

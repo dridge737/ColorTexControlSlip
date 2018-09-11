@@ -6,6 +6,7 @@
 package Forms;
 
 import DataEntities.JobOrder;
+import DataEntities.JobOrderExtended;
 import DataEntities.ProcessOrder;
 import DataEntities.ResinProgram;
 import Handlers.ColorHandler;
@@ -30,7 +31,7 @@ public class ViewResinProgramList extends javax.swing.JFrame {
     DefaultTableModel model = new DefaultTableModel();
     ResinProgram thisResin = new ResinProgram();
     //ProcessOrder thisProcessOrder;
-    JobOrder thisJob;
+    JobOrderExtended thisJob;
     int WindowType = 1;
     /**
      * Creates new form ViewResinProgram
@@ -40,7 +41,7 @@ public class ViewResinProgramList extends javax.swing.JFrame {
     }
     
     
-    public ViewResinProgramList(JobOrder currentJob) {
+    public ViewResinProgramList(JobOrderExtended currentJob) {
         this(currentJob, 3);
         //thisJob = currentJob;
         //SelectBut1.setText("Next");
@@ -49,7 +50,7 @@ public class ViewResinProgramList extends javax.swing.JFrame {
         //BackBut.setText("Back");
     }
     
-    public ViewResinProgramList(JobOrder currentJob, int currentWindow)
+    public ViewResinProgramList(JobOrderExtended currentJob, int currentWindow)
     {
         initComponents();
         this.set_to_center();

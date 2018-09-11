@@ -20,9 +20,11 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import DataEntities.Chemical;
 import DataEntities.JobOrder;
+import DataEntities.JobOrderExtended;
 import DataEntities.ResinProgramName;
 import Forms.HelpForm.ButtonColumn;
 import Forms.HelpForm.auto_complete;
+import Handlers.ComputeHelper;
 import Handlers.JobHandler;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -51,7 +53,7 @@ public class AddResinForm extends javax.swing.JFrame {
     ResinProgramName resinProgramName = new ResinProgramName();
     DefaultTableModel model = new DefaultTableModel();
     //ProcessOrder thisProcessOrder = new ProcessOrder();
-    JobOrder thisJob = new JobOrder();
+    JobOrderExtended thisJob = new JobOrderExtended();
     //Chemical List to see if it is possible to add chemical to Chem Table
     ArrayList<String> AllChemical = new ArrayList<String>();
     //Chemical List to see if the Chemical has already been added to the table.
@@ -80,9 +82,6 @@ public class AddResinForm extends javax.swing.JFrame {
         BgPanel.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, forwardkeys);
 
     }
-
-
-
     
     public void SetToCenter()
     {
@@ -92,36 +91,33 @@ public class AddResinForm extends javax.swing.JFrame {
         this.setLocation(x,y);
     }
     //ERROR FIX
-    public AddResinForm(JobOrder currentJob)
+    public AddResinForm(JobOrderExtended currentJob)
     {
         this();
-        //Error
-        String ResinProgramName = new ResinProgramHandler().GetResinProgramNameFromResinProgramID(currentJob.getResinProgramID());
+        //Problem that will be encountered on the second resin window
+        String ResinProgramName = new ResinProgramHandler().
+                GetResinProgramNameFromResinProgramID(currentJob.getThisResinJob().get(currentJob.getThisResinJob().size()-1).getResinProgramID());
         InitializeWindowForControlSlip(ResinProgramName, currentJob);
-        ResinProcessName.setEnabled(false);
-        ResinProcessName.setForeground(Color.BLACK);
     }
     
-    public AddResinForm(String ResinProgramName , JobOrder currentJob)
+    public AddResinForm(String ResinProgramName , JobOrderExtended currentJob)
     {
         this();
         InitializeWindowForControlSlip(ResinProgramName, currentJob);
         AddDeleteColumn(); 
-        ResinProcessName.setEnabled(false);
-        ResinProcessName.setForeground(Color.BLACK);
+        
     }
     
-    public AddResinForm(String ResinProgramName , JobOrder currentJob, int thisWindowType)
+    public AddResinForm(String ResinProgramName , JobOrderExtended currentJob, int thisWindowType)
     {
         this();
         WindowType = thisWindowType;
         InitializeWindowForControlSlip(ResinProgramName, currentJob);
         AddDeleteColumn(); 
-        ResinProcessName.setEnabled(false);
-        ResinProcessName.setForeground(Color.BLACK);
+        
     }
     
-    public void InitializeWindowForControlSlip(String ResinProgramName, JobOrder thisJobOrder)
+    public void InitializeWindowForControlSlip(String ResinProgramName, JobOrderExtended thisJobOrder)
     {
         thisJob = thisJobOrder;
         Header.setText("Control Slip : Page 5/6");
@@ -130,6 +126,8 @@ public class AddResinForm extends javax.swing.JFrame {
         this.setResinProgramDetails(ResinProgramName);
         this.GetUpdatedTable();
         this.WindowType = 1;
+        ResinProgramNameTextbox.setEnabled(false);
+        ResinProgramNameTextbox.setForeground(Color.BLACK);
         //this.setResinChemicals(resinProgram.getID());
     }
     
@@ -141,17 +139,20 @@ public class AddResinForm extends javax.swing.JFrame {
     
     public void setResinProgramDetails(String ResinProgramName)
     {
-        ResinProcessName.setText(ResinProgramName);
-        if(new ResinProgramHandler().CheckIfResinProgramNameExistsForThisCustomer(ResinProgramName, thisJob.getCustomerID()))
+        ResinProgramNameTextbox.setText(ResinProgramName);
+        resinProgram.setColorID(thisJob.getColorID());
+        resinProgram.setCustomerID(thisJob.getCustomerID());
+        resinProgram.setDesignID(thisJob.getDesignID());
+        
+        if(new ResinProgramHandler().CheckIfResinProgramNameExistsForThisCustomer(ResinProgramName, resinProgram))
         {
-            resinProgram = new ResinProgramHandler().GetResinProgramDetailsForThisResinAndCustomer(ResinProgramName, thisJob.getCustomerID());
+            resinProgram = new ResinProgramHandler().GetResinProgramDetailsForThisResinAndCustomer(ResinProgramName, resinProgram);
         }
         else
         {
             resinProgram = new ResinProgramHandler().GetDefaultResinProgram(ResinProgramName);
         }
-    }
-            
+    }  
     
     public void AddDeleteColumn()
     {
@@ -201,28 +202,12 @@ public class AddResinForm extends javax.swing.JFrame {
                 ThisChemicalList.get(x).getState(), 
                 ThisChemicalList.get(x).getType(), 
                 //ComputeQuantityFromWeightOrVol(ThisChemicalList.get(x).getType(), ThisChemicalList.get(x).getGPLValue())
-                new JobHandler().ComputerResinQuantity(ThisChemicalList.get(x), thisJob),
+                new ComputeHelper().ComputeResinQuantity(ThisChemicalList.get(x), thisJob.getThisResinJob().get(0)),
                  "Delete"});
         }
         return model_original;
     }
-    
-    /*public float ComputeQuantityFromWeightOrVol(String Type, Float Value)
-     {
-         Float quantity;
-         if(Type.equals("%"))
-         {
-             //quantity = thisJob.getWeight() * Value;
-             quantity = thisJob.getResinWeight()* Value;
-         }
-         else
-         {
-             //quantity = thisJob.getVolumeH20() * Value;
-             quantity = thisJob.getResinVolumeH20() * Value;
-         }
-         return quantity;
-     }*/
-    
+   
     public void setTableModel()
     {
         model = new DefaultTableModel( new Object [][] {
@@ -301,7 +286,7 @@ public class AddResinForm extends javax.swing.JFrame {
         SaveBut = new javax.swing.JButton();
         CancelBut = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        ResinProcessName = new javax.swing.JTextField();
+        ResinProgramNameTextbox = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         ChemicalTable = new javax.swing.JTable();
@@ -347,12 +332,13 @@ public class AddResinForm extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Resin Process Name :");
+        jLabel3.setText("Resin Program Name :");
         BgPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(43, 85, -1, 34));
+        jLabel3.getAccessibleContext().setAccessibleName("Resin Program Name :");
 
-        ResinProcessName.setFont(new java.awt.Font("Century Gothic", 0, 22)); // NOI18N
-        ResinProcessName.setName(""); // NOI18N
-        BgPanel.add(ResinProcessName, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 85, 470, 34));
+        ResinProgramNameTextbox.setFont(new java.awt.Font("Century Gothic", 0, 22)); // NOI18N
+        ResinProgramNameTextbox.setName(""); // NOI18N
+        BgPanel.add(ResinProgramNameTextbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(265, 85, 470, 34));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Resin Chemicals", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 22), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -448,7 +434,8 @@ public class AddResinForm extends javax.swing.JFrame {
                 }
 
                 if (resinProgramId != -1) {
-                    thisJob.setResinProgramID(resinProgramId);
+                    
+                    thisJob.getThisResinJob().get(WindowType).setResinProgramID(resinProgramId);
                     ReviewForm thisForm = new ReviewForm(thisJob, this.WindowType);
                     thisForm.setVisible(true);
                     this.dispose();
@@ -458,20 +445,6 @@ public class AddResinForm extends javax.swing.JFrame {
             }
         }
         
-        
-        //if(WindowType == 1)
-        //{
-        //    if(CheckIfResinInputIsReady()){
-        //        ResinProgram thisResinProgram = new ResinProgram();
-        //        ResinProgramHandler thisResinProgramHandler = new ResinProgramHandler();
-        //        thisJob.setResinProgramID(thisResinProgramHandler.GetResinProgramIDFromResinProgramName( this.ResinProcessName.getText() ) );
-         //       ReviewForm thisForm = new ReviewForm(thisJob, 2);
-        //        thisForm.setVisible(true);
-        //        this.dispose();
-        //    }
-        //}
-        //else
-        //    AddResin();
             
     }//GEN-LAST:event_SaveButActionPerformed
 
@@ -487,7 +460,7 @@ public class AddResinForm extends javax.swing.JFrame {
         
         resinChemicalHandler.DeleteResinChemicalByResinProgramId(resinProgram.getID());
         
-        if(resinProgram.getProgramDefault() == 0)
+        if(resinProgram.getCustomerID() == 0)
         {
             for (int i = 0; i < ChemicalTable.getRowCount(); i++)
                 {
@@ -517,7 +490,7 @@ public class AddResinForm extends javax.swing.JFrame {
         JobHandler jobHandler = new JobHandler();
         boolean isExisting = false;
         
-        isExisting = jobHandler.CheckIfResinNewToCustomer(customerId, resinProgramNameId);
+        isExisting = resinProgramHandler.CheckIfResinNewToCustomer(customerId, resinProgramNameId);
         
         return isExisting;
     }
@@ -525,10 +498,10 @@ public class AddResinForm extends javax.swing.JFrame {
     private boolean CheckIfResinInputIsReady()
     {
         boolean Ready = true;
-        if(this.ResinProcessName.getText().trim().length() == 0 )
+        if(this.ResinProgramNameTextbox.getText().trim().length() == 0 )
         {
             JOptionPane.showMessageDialog(null, "Please check the Resin process name.");
-            ResinProcessName.setBackground(ColorError);
+            ResinProgramNameTextbox.setBackground(ColorError);
             Ready = false;
         }
         if(ChemicalTable.getRowCount() < 1)
@@ -550,7 +523,7 @@ public class AddResinForm extends javax.swing.JFrame {
         int resinProgramNameId = -1;
         int resinProgramId = -1;
         int chemicalId = -1;
-        String thisProcessName = ResinProcessName.getText().trim();
+        String thisProcessName = ResinProgramNameTextbox.getText().trim();
         
         boolean programNameExisting = resinProgramHandler.CheckIfResinProgramNameExists(thisProcessName);
         
@@ -565,7 +538,9 @@ public class AddResinForm extends javax.swing.JFrame {
                 if(resinProgramNameId != -1)
                 {
                     resinProgram.setProgramNameID(resinProgramNameId);
-                    resinProgram.setProgramDefault(1);
+                    resinProgram.setCustomerID(thisJob.getCustomerID());
+                    resinProgram.setColorID(thisJob.getColorID());
+                    resinProgram.setDesignID(thisJob.getDesignID());
                     resinProgramId = resinProgramHandler.AddNewResinProgram(resinProgram);
                 }
                 this.dispose();
@@ -581,14 +556,8 @@ public class AddResinForm extends javax.swing.JFrame {
 
                     if(chemicalId != -1 && gpl != null)
                     {
+                        //Set row value to resin chemical
                         resinChemical = AddFormValueToResinChemical(resinProgramId, chemicalId, gpl, i);
-                                /*
-                        resinChemical.setResinProgramID(resinProgramId);
-                        resinChemical.setChemicalID(chemicalId);
-                        resinChemical.setGPLValue(Float.valueOf(gpl.toString()));
-                        resinChemical.setState(ChemicalTable.getModel().getValueAt(i, 2).toString());
-                        resinChemical.setType(ChemicalTable.getModel().getValueAt(i, 3).toString());
-                                */
                         isSuccessful = resinChemicalHandler.AddNewResinChemical(resinChemical);
 
                         if(isSuccessful == false)
@@ -621,6 +590,11 @@ public class AddResinForm extends javax.swing.JFrame {
     }
     private ResinChemical AddFormValueToResinChemical(int resinProgramId, int chemicalId, Object gpl, int row)
     {
+        //resinChemical.setResinProgramID(resinProgramId);
+                    //resinChemical.setChemicalID(chemicalId);
+                    //resinChemical.setGPLValue(Float.valueOf(gpl.toString()));
+                    //resinChemical.setState(ChemicalTable.getModel().getValueAt(i, 2).toString());
+                    //resinChemical.setType(ChemicalTable.getModel().getValueAt(i, 3).toString());
         ResinChemical thisResinChemical = new ResinChemical();
         thisResinChemical.setResinProgramID(resinProgramId);
         thisResinChemical.setChemicalID(chemicalId);
@@ -641,7 +615,7 @@ public class AddResinForm extends javax.swing.JFrame {
         int resinProgramNameId = -1;
         int resinProgramId = -1;
         int chemicalId = -1;
-        String thisProcessName = ResinProcessName.getText().trim();
+        String thisProcessName = ResinProgramNameTextbox.getText().trim();
 
         resinProgramName.setName(thisProcessName);
 
@@ -649,7 +623,11 @@ public class AddResinForm extends javax.swing.JFrame {
 
         if (resinProgramNameId != -1) {
             resinProgram.setProgramNameID(resinProgramNameId);
-            resinProgram.setProgramDefault(0);
+            //Value has already been initialized at the start of the window
+            //resinProgram.setCustomerID();
+            //resinProgram.setColorID(0);
+            //resinProgram.setDesignID(0);
+            
             resinProgramId = resinProgramHandler.AddNewResinProgram(resinProgram);
         }
             //this.dispose();
@@ -663,12 +641,9 @@ public class AddResinForm extends javax.swing.JFrame {
 
                 if(chemicalId != -1 && gpl != null)
                 {
+                    //Set row value to resin chemical
                     resinChemical = AddFormValueToResinChemical(resinProgramId , chemicalId, gpl, i);
-                    //resinChemical.setResinProgramID(resinProgramId);
-                    //resinChemical.setChemicalID(chemicalId);
-                    //resinChemical.setGPLValue(Float.valueOf(gpl.toString()));
-                    //resinChemical.setState(ChemicalTable.getModel().getValueAt(i, 2).toString());
-                    //resinChemical.setType(ChemicalTable.getModel().getValueAt(i, 3).toString());
+                    
                     isSuccessful = resinChemicalHandler.AddNewResinChemical(resinChemical);
 
                     if(isSuccessful == false)
@@ -692,28 +667,9 @@ public class AddResinForm extends javax.swing.JFrame {
         return resinProgramId;
     }
 
-    //UNUSED
-    public void UnusedCodes()
-    {
-        /*
-        if(chemicalForResinProgram != null)
-                {
-                   chemicalId = chemicalHandler.GetChemicalIDFromChemicalName(chemicalForResinProgram.toString());
-                }
-                else
-                {
-                    JOptionPane.showMessageDialog(null, "Please enter a name for the resin program.");
-                }
-        
-        else if((chemicalForResinProgram == null && gpl != null) || (chemicalForResinProgram != null && gpl == null))
-                    {
-                        JOptionPane.showMessageDialog(null, "Please complete data for all rows.");
-                    }
-        */
-    }
     public void ClearAllData()
     {
-        ResinProcessName.setText("");
+        ResinProgramNameTextbox.setText("");
         resinChemicalList = new ArrayList<ResinChemical>();
         resinProgram = new ResinProgram();
         ((DefaultTableModel)ChemicalTable.getModel()).setRowCount(1);
@@ -783,7 +739,7 @@ public class AddResinForm extends javax.swing.JFrame {
                                         //StateComboBox.getSelectedItem().toString(), 
                                         //TypeComboBox.getSelectedItem().toString(),
                                         //ComputeQuantityFromWeightOrVol(TypeComboBox.getSelectedItem().toString(), Float.parseFloat(GPLTextfield.getText())), 
-                                        new JobHandler().ComputerResinQuantity(thisResinChemical, thisJob),
+                                        new ComputeHelper().ComputeResinQuantity(thisResinChemical, thisJob.getThisResinJob().get(thisJob.getThisResinJob().size()-1)),
                                         "Delete"});
         }
         else
@@ -878,7 +834,7 @@ public class AddResinForm extends javax.swing.JFrame {
     private javax.swing.JTextField ChemicalTextfield;
     private javax.swing.JTextField GPLTextfield;
     private javax.swing.JLabel Header;
-    private javax.swing.JTextField ResinProcessName;
+    private javax.swing.JTextField ResinProgramNameTextbox;
     private javax.swing.JButton SaveBut;
     private javax.swing.JComboBox StateComboBox;
     private javax.swing.JComboBox TypeComboBox;

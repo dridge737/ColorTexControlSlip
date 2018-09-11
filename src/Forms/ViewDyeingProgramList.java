@@ -7,6 +7,7 @@ package Forms;
 
 import DataEntities.DyeingProgram;
 import DataEntities.JobOrder;
+import DataEntities.JobOrderExtended;
 import DataEntities.ProcessOrder;
 import Handlers.DyeingProgramHandler;
 import Handlers.DyeingProgramNameHandler;
@@ -32,7 +33,7 @@ public class ViewDyeingProgramList extends javax.swing.JFrame {
     DefaultTableModel model = new DefaultTableModel();
     DyeingProgram thisDyeingProgram = new DyeingProgram();
     //ProcessOrder thisProcessOrder = new ProcessOrder();
-    private JobOrder thisJob = new JobOrder();
+    private JobOrderExtended thisJob = new JobOrderExtended();
     int WindowType = 1;
     /**
      * Creates new form ViewResinProgram
@@ -43,11 +44,11 @@ public class ViewDyeingProgramList extends javax.swing.JFrame {
         GetUpdatedTable();
     }
     
-    public ViewDyeingProgramList(JobOrder currentJob) {
+    public ViewDyeingProgramList(JobOrderExtended currentJob) {
         this(currentJob, 3);
     }
     
-    public ViewDyeingProgramList(JobOrder currentJob, int currentType) {
+    public ViewDyeingProgramList(JobOrderExtended currentJob, int currentType) {
         initComponents();
         SetToCenter();
         GetUpdatedTable();

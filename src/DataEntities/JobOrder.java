@@ -37,12 +37,12 @@ public class JobOrder {
     private float DyeingVolumeH20;
     private float DyeingWeight;
     private String RollLoad;
-    private int ResinMachineID;
-    private float ResinVolumeH20;
-    private float ResinWeight;
+    //private int ResinMachineID;
+    //private float ResinVolumeH20;
+    //private float ResinWeight;
     private float Roll;
     private int DyeingProgramID;
-    private int ResinProgramID;
+    //private int ResinProgramID;
     private String Reference;
     private String ProgramNumber;
     private String Location;
@@ -162,19 +162,7 @@ public class JobOrder {
         this.DyeingProgramID = DyeingProgramID;
     }
 
-    /**
-     * @return the ResinProgramID
-     */
-    public int getResinProgramID() {
-        return ResinProgramID;
-    }
 
-    /**
-     * @param ResinProgramID the ResinProgramID to set
-     */
-    public void setResinProgramID(int ResinProgramID) {
-        this.ResinProgramID = ResinProgramID;
-    }
 
     /**
      * @return the jobDate
@@ -232,47 +220,6 @@ public class JobOrder {
         this.Location = Location;
     }
 
-    /**
-     * @return the ResinMachineID
-     */
-    public int getResinMachineID() {
-        return ResinMachineID;
-    }
-
-    /**
-     * @param ResinMachineID the ResinMachineID to set
-     */
-    public void setResinMachineID(int ResinMachineID) {
-        this.ResinMachineID = ResinMachineID;
-    }
-
-    /**
-     * @return the ResinVolumeH20
-     */
-    public float getResinVolumeH20() {
-        return ResinVolumeH20;
-    }
-
-    /**
-     * @param ResinVolumeH20 the ResinVolumeH20 to set
-     */
-    public void setResinVolumeH20(float ResinVolumeH20) {
-        this.ResinVolumeH20 = ResinVolumeH20;
-    }
-
-    /**
-     * @return the ResinWeight
-     */
-    public float getResinWeight() {
-        return ResinWeight;
-    }
-
-    /**
-     * @param ResinWeight the ResinWeight to set
-     */
-    public void setResinWeight(float ResinWeight) {
-        this.ResinWeight = ResinWeight;
-    }
 
     /**
      * @return the DyeingMachineID

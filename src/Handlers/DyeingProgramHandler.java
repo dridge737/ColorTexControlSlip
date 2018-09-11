@@ -6,6 +6,7 @@
 package Handlers;
 
 import DataEntities.DyeingProgram;
+import DataEntities.JobOrder;
 import Database.ColorTextControlSlipRepository;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -26,11 +27,11 @@ public class DyeingProgramHandler {
         //}
             return repo.GetDyeingProgramDetailsById(dyeingProgramId);
     }
-    
-    public DyeingProgram getDefaultProgramIDForThisDyeingProgramNameID(int DyeingProgramNameID) {
+    //Requires values from DyeingProgramName ID, Customer ID, Color ID and Design ID
+    public DyeingProgram getDefaultProgramIDForThisDyeingProgramNameID(JobOrder thisJobOrder) {
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
-        return repo.getDefaultDyeingProgramForThisDyeingProgramID(DyeingProgramNameID);
+        return repo.getDefaultDyeingProgramForThisDyeingProgramID(thisJobOrder);
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

@@ -6,6 +6,7 @@
 package Forms;
 
 import DataEntities.JobOrder;
+import DataEntities.JobOrderExtended;
 import DataEntities.Machine;
 import Handlers.LiquidRatioHandler;
 import Handlers.MachineHandler;
@@ -31,7 +32,7 @@ public class MachineSelection extends javax.swing.JFrame {
 
     Machine thisMachine = new Machine();
     int WindowType = 1;
-    private JobOrder thisJob = new JobOrder();
+    private JobOrderExtended thisJob = new JobOrderExtended();
     /**
      * Creates new form MachineSelection
      */
@@ -43,12 +44,18 @@ public class MachineSelection extends javax.swing.JFrame {
         EnterForwardTraversal();
     }
     
-    public MachineSelection(JobOrder currentJob)
+    public MachineSelection(JobOrderExtended currentJob)
     {
         this();
         thisJob = currentJob;
-        if(thisJob.getResinMachineID()!= 0 )
-        SetValuesFromThisJob();
+        if( !thisJob.getThisResinJob().isEmpty() )
+            SetValuesFromThisJob();
+    }
+    
+    public MachineSelection(JobOrderExtended currentJob, int setWindow)
+    {
+        this(currentJob);
+        WindowType = setWindow;
     }
     
      public void EnterForwardTraversal()
@@ -65,10 +72,12 @@ public class MachineSelection extends javax.swing.JFrame {
     {
         
         MachineHandler tempResMachineHandler = new MachineHandler();
-        
-        MachineDropDownList.setSelectedItem(tempResMachineHandler.GetMachineDetailsById(thisJob.getResinMachineID()).getMachineName());
-        Weight.setText(Float.toString(thisJob.getResinWeight()));
-        VolumeTextField.setText(Float.toString(thisJob.getResinVolumeH20()));
+        if(WindowType == 1)
+        {
+            MachineDropDownList.setSelectedItem(tempResMachineHandler.GetMachineDetailsById(thisJob.getThisResinJob().get(0).getResinMachineID()).getMachineName());
+            Weight.setText(Float.toString(thisJob.getThisResinJob().get(0).getResinWeight()));
+            VolumeTextField.setText(Float.toString(thisJob.getThisResinJob().get(0).getResinVolH2O()));
+        }
         
     }
     
@@ -511,9 +520,12 @@ public class MachineSelection extends javax.swing.JFrame {
     }
     private void addDataToJobOrder()
     {
-        thisJob.setResinMachineID(thisMachine.getMachineId());
-        thisJob.setResinVolumeH20(Float.parseFloat(this.VolumeTextField.getText()));
-        thisJob.setResinWeight(Float.parseFloat(this.Weight.getText()));
+        if (WindowType == 1) {
+            thisJob.getThisResinJob().get(0).setResinMachineID(thisMachine.getMachineId());
+            thisJob.getThisResinJob().get(0).setResinWeight(Float.parseFloat(this.Weight.getText()));
+            thisJob.getThisResinJob().get(0).setResinVolH2O(Float.parseFloat(this.VolumeTextField.getText()));
+        }
+            
     }
     
     /**

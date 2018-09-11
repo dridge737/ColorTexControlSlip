@@ -103,19 +103,19 @@ public class ResinProgramHandler {
         return repo.CheckIfResinProgramNameExists(ResinName);
     }
     
-    public boolean CheckIfResinProgramNameExistsForThisCustomer(String ResinProgramName, int customerID)
+    public boolean CheckIfResinProgramNameExistsForThisCustomer(String ResinProgramName, ResinProgram thisResinProgram)
     {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
-        if(repo.CheckIfSpecificResinProgramExistsForThisCustomer(ResinProgramName, customerID) == 0)
+        if(repo.CheckIfSpecificResinProgramExistsForThisCustomer(ResinProgramName, thisResinProgram) == 0)
             return false;
         else
             return true;
     }
     
-    public ResinProgram GetResinProgramDetailsForThisResinAndCustomer(String ResinProgramName , int customerID)
+    public ResinProgram GetResinProgramDetailsForThisResinAndCustomer(String ResinProgramName , ResinProgram resinProgram)
     {
          ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
-         return repo.GetResinProgramDetailsFromResinProgramNameAndCustomerID(ResinProgramName, customerID);
+         return repo.GetResinProgramDetailsFromResinProgramNameAndCustomerID(ResinProgramName, resinProgram);
     }
     
     public ResinProgram GetDefaultResinProgram(String ResinProgramName)
@@ -135,4 +135,25 @@ public class ResinProgramHandler {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         return repo.GetResinProgramNameIdFromResinProgramName(resinProgramName);
     }
+    
+    public boolean CheckIfResinNewToCustomer(int customerId, int resinProgramNameId)
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        //ArrayList<JobOrder> jobOrderList = new ArrayList<JobOrder>();
+        boolean isExisting = false;
+        
+        //jobOrderList = repo.GetAllJobOrderHistoryByCustomerId(customerId);
+        
+        //for(int x=0; x<jobOrderList.size(); x++)
+        //{
+        //    int oldResinProgramNameId = repo.GetResinProgramNameIDByResinProgramID(jobOrderList.get(x).getResinProgramID());
+        //    if(resinProgramNameId == oldResinProgramNameId)
+        //    {
+        //        isExisting = true;
+        //        break;
+        //    }
+        //}
+        return isExisting;
+    }
+    
 }

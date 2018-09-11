@@ -1179,12 +1179,14 @@ public class ColorTextControlSlipRepository {
         int DyeingProgramID = -1;
         try {
             conn = db.getConnection();
-            String query = "INSERT INTO dyeing_program (ProgramNameID, ProgramDefault) VALUES (?, ?)";
+            String query = "INSERT INTO dyeing_program (ProgramNameID, CustomerID, ColorID, DesignID) VALUES (?, ?, ?, ?)";
 
             //preparedStmt = conn.prepareStatement(query);
             preparedStmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStmt.setInt(1, newDyeingProgram.getDyeingProgramNameID());
-            preparedStmt.setInt(2, newDyeingProgram.getProgramDefault());
+            preparedStmt.setInt(2, newDyeingProgram.getCustomerID());
+            preparedStmt.setInt(3, newDyeingProgram.getColorID());
+            preparedStmt.setInt(4, newDyeingProgram.getDesignID());
             preparedStmt.execute();
 
             ResultSet generatedKeys = preparedStmt.getGeneratedKeys();
@@ -1342,7 +1344,8 @@ public class ColorTextControlSlipRepository {
         ArrayList<String> DyeingList = new ArrayList<>();
         try {
             conn = dbc.getConnection();
-            ps = conn.prepareStatement("SELECT Name FROM dyeing_program WHERE default = 1;");
+            ps = conn.prepareStatement("SELECT Name FROM dyeing_program rp, resin_program_name rpn "
+                    + "WHERE CustomerID = 0 AND rpn.ID = rp.ProgramNameID;");
             rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -1436,7 +1439,9 @@ public class ColorTextControlSlipRepository {
             if (resultSet.first()) {
                 dyeingProgramDetails.SetID(resultSet.getInt("ID"));
                 dyeingProgramDetails.setDyeingProgramNameID(resultSet.getInt("ProgramNameID"));
-                dyeingProgramDetails.setProgramDefault(resultSet.getInt("ProgramDefault"));
+                dyeingProgramDetails.setCustomerID(resultSet.getInt("CustomerID"));
+                dyeingProgramDetails.setColorID(resultSet.getInt("ColorID"));
+                dyeingProgramDetails.setDesignID(resultSet.getInt("DesignID"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
@@ -1445,8 +1450,25 @@ public class ColorTextControlSlipRepository {
         this.closeConn(conn, preparedStmt);
         return dyeingProgramDetails;
     }
-
-    public DyeingProgram getDefaultDyeingProgramForThisDyeingProgramID(int ProgramNameID) {
+    public void PrintJobOrderDetailstToSystemLine(JobOrder thisJobOrder)
+    {
+        System.out.println("ID = "+ thisJobOrder.getID());
+        System.out.println("DR Number = "+ thisJobOrder.getDrNumber());
+        System.out.println("Design ID = "+ thisJobOrder.getDesignID());
+        System.out.println("Color ID = "+ thisJobOrder.getColorID());
+        System.out.println("Customer ID = "+ thisJobOrder.getCustomerID());
+        System.out.println("Date = "+ thisJobOrder.getJobDate());
+        System.out.println("Batch No = "+ thisJobOrder.getBatchNo());
+        System.out.println("Dyeing Machine ID = "+ thisJobOrder.getDyeingMachineID());
+        System.out.println("Dyeing Program ID = "+ thisJobOrder.getDyeingProgramID());
+        System.out.println("Dyeing Weight = "+ thisJobOrder.getDyeingWeight());
+        System.out.println("Dyeing Volume H2O= "+ thisJobOrder.getDyeingVolumeH20());
+        System.out.println("Roll = "+ thisJobOrder.getRoll());
+        System.out.println("Roll Load = "+ thisJobOrder.getRollLoad());
+        System.out.println("Reference = "+ thisJobOrder.getReference());
+        System.out.println("Program Number = "+ thisJobOrder.getProgramNumber());
+    }
+    public DyeingProgram getDefaultDyeingProgramForThisDyeingProgramID(JobOrder thisJobOrder) {
         DyeingProgram dyeingProgramDetails = new DyeingProgram();
         DBConnection db = new DBConnection();
         Connection conn = null;
@@ -1456,17 +1478,23 @@ public class ColorTextControlSlipRepository {
         try {
             conn = db.getConnection();
             ps = conn.prepareStatement(
-                    " SELECT ID, ProgramDefault FROM dyeing_program "
+                    " SELECT ID FROM dyeing_program "
                     + " WHERE ProgramNameID = ? "
-                    + " AND  ProgramDefault = 1;");
-
+                    + " AND  CustomerID = 0;"
+                    + " AND  ColorID = ?;"
+                    + " AND  DesignID = ?;"
+            );
+            
             int item = 1;
-            ps.setInt(item++, ProgramNameID);
+            ps.setInt(item++, thisJobOrder.getDyeingProgramID());
+            ps.setInt(item++, thisJobOrder.getColorID());
+            ps.setInt(item++, thisJobOrder.getDesignID());
             rs = ps.executeQuery();
             if (rs.first()) {
                 dyeingProgramDetails.SetID(rs.getInt("ID"));
-                dyeingProgramDetails.setDyeingProgramNameID(ProgramNameID);
-                dyeingProgramDetails.setProgramDefault(rs.getInt("ProgramDefault"));
+                dyeingProgramDetails.setDyeingProgramNameID(thisJobOrder.getDyeingProgramID());
+                dyeingProgramDetails.setColorID(thisJobOrder.getColorID());
+                dyeingProgramDetails.setDesignID(thisJobOrder.getDesignID());
             }
         } catch (SQLException ex) {
             Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
@@ -1724,17 +1752,20 @@ public class ColorTextControlSlipRepository {
                     + " DyeingMachineID, "
                     + " DyeingWeight, "
                     + " DyeingVolH2O, "
-                    + " ResinMachineID, "
-                    + " ResinWeight, "
-                    + " ResinVolH2O, "
+                    //+ " ResinMachineID, "
+                    //+ " ResinWeight, "
+                    //+ " ResinVolH2O, "
                     + " RollLoad, "
                     + " Roll, "
                     + " DyeingProgramID, "
-                    + " ResinProgramID, "
+                    //+ " ResinProgramID, "
                     + " Reference, "
                     + " ProgramNumber, "
                     //                     1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19
-                    + " Location ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? , ?, ?)";
+                    + " Location ) VALUES ("
+                //Removed 4 Resin Data to a new Table 
+                //+ "?, ?, ?, ?, "
+                + "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? , ?, ?)";
         
         return setJobOrderAndExecuteStatement(newJobOrder, query, 1);
         
@@ -1806,19 +1837,18 @@ public class ColorTextControlSlipRepository {
             preparedStmt.setFloat(itemNumber++, thisJobOrder.getDyeingWeight());  //8
             preparedStmt.setFloat(itemNumber++, thisJobOrder.getDyeingVolumeH20()); //9
 
-            preparedStmt.setInt(itemNumber++, thisJobOrder.getResinMachineID()); //10
-            preparedStmt.setFloat(itemNumber++, thisJobOrder.getResinWeight()); //11
-            preparedStmt.setFloat(itemNumber++, thisJobOrder.getResinVolumeH20()); //12
-
             preparedStmt.setString(itemNumber++, thisJobOrder.getRollLoad()); //13
             preparedStmt.setFloat(itemNumber++, thisJobOrder.getRoll());      //14
             preparedStmt.setInt(itemNumber++, thisJobOrder.getDyeingProgramID()); //15
-            preparedStmt.setInt(itemNumber++, thisJobOrder.getResinProgramID());  //16
             
             preparedStmt.setString(itemNumber++, thisJobOrder.getReference());    //17
             preparedStmt.setString(itemNumber++, thisJobOrder.getProgramNumber());//18
             preparedStmt.setString(itemNumber++, thisJobOrder.getLocation());     //19
            
+            //preparedStmt.setInt(itemNumber++, thisJobOrder.getResinMachineID()); //10
+            //preparedStmt.setFloat(itemNumber++, thisJobOrder.getResinWeight()); //11
+            //preparedStmt.setFloat(itemNumber++, thisJobOrder.getResinVolumeH20()); //12
+            //preparedStmt.setInt(itemNumber++, thisJobOrder.getResinProgramID());  //16
             //IF type ==2 == update
             if(type == 2)
             {
@@ -1856,13 +1886,13 @@ public class ColorTextControlSlipRepository {
                     + " DyeingMachineID = ? , "
                     + " DyeingWeight = ?, "
                     + " DyeingVolH2O = ?, "
-                    + " ResinMachineID = ? , "
-                    + " ResinWeight = ?, "
-                    + " ResinVolH2O = ?, "
+                    //+ " ResinMachineID = ? , "
+                    //+ " ResinWeight = ?, "
+                    //+ " ResinVolH2O = ?, "
                     + " RollLoad = ?, "
                     + " Roll = ?, "
                     + " DyeingProgramID = ?, "
-                    + " ResinProgramID = ?,"
+                    //+ " ResinProgramID = ?,"
                     + " Reference = ?,"
                     + " ProgramNumber = ?,"
                     + " Location = ? "
@@ -2046,30 +2076,29 @@ public class ColorTextControlSlipRepository {
     {
         JobOrder thisJobOrder = new JobOrder();
         try {
-            thisJobOrder.setID(rs.getInt("ID"));
-            thisJobOrder.setDrNumber(rs.getString("DrNumber"));
-            thisJobOrder.setDesignID(rs.getInt("DesignID"));
-            thisJobOrder.setColorID(rs.getInt("ColorID"));
-            thisJobOrder.setCustomerID(rs.getInt("CustomerID"));
-            thisJobOrder.setJobDate(rs.getString("Date"));
-            thisJobOrder.setBatchNo(rs.getString("BatchNo"));
-            thisJobOrder.setReference(rs.getString("Reference"));
-            thisJobOrder.setProgramNumber(rs.getString("ProgramNumber"));
-            thisJobOrder.setLocation(rs.getString("Location"));
+            thisJobOrder.setID(rs.getInt("ID"));//1
+            thisJobOrder.setDrNumber(rs.getString("DrNumber"));//2
+            thisJobOrder.setDesignID(rs.getInt("DesignID"));//3
+            thisJobOrder.setColorID(rs.getInt("ColorID"));//4
+            thisJobOrder.setCustomerID(rs.getInt("CustomerID"));//5
+            thisJobOrder.setJobDate(rs.getString("Date"));//6
+            thisJobOrder.setBatchNo(rs.getString("BatchNo"));//7
+            thisJobOrder.setReference(rs.getString("Reference"));//8
+            thisJobOrder.setProgramNumber(rs.getString("ProgramNumber"));//9
+            thisJobOrder.setLocation(rs.getString("Location"));//10
 
-            thisJobOrder.setDyeingMachineID(rs.getInt("DyeingMachineID"));
-            thisJobOrder.setDyeingWeight(rs.getFloat("DyeingWeight"));
-            thisJobOrder.setDyeingVolumeH20(rs.getFloat("DyeingVolH2O"));
+            thisJobOrder.setDyeingMachineID(rs.getInt("DyeingMachineID"));//11
+            thisJobOrder.setDyeingWeight(rs.getFloat("DyeingWeight"));//12
+            thisJobOrder.setDyeingVolumeH20(rs.getFloat("DyeingVolH2O"));//13
 
-            thisJobOrder.setResinMachineID(rs.getInt("ResinMachineID"));
-            thisJobOrder.setResinWeight(rs.getFloat("ResinWeight"));
-            thisJobOrder.setResinVolumeH20(rs.getFloat("ResinVolH2O"));
+            thisJobOrder.setRollLoad(rs.getString("RollLoad"));//14
+            thisJobOrder.setRoll(rs.getFloat("Roll"));//15
+            thisJobOrder.setDyeingProgramID(rs.getInt("DyeingProgramID"));//16
 
-            thisJobOrder.setRollLoad(rs.getString("RollLoad"));
-            thisJobOrder.setRoll(rs.getFloat("Roll"));
-            thisJobOrder.setDyeingProgramID(rs.getInt("DyeingProgramID"));
-            thisJobOrder.setResinProgramID(rs.getInt("ResinProgramID"));
-
+            //thisJobOrder.setResinMachineID(rs.getInt("ResinMachineID"));
+            //thisJobOrder.setResinWeight(rs.getFloat("ResinWeight"));
+            //thisJobOrder.setResinVolumeH20(rs.getFloat("ResinVolH2O"));
+            //thisJobOrder.setResinProgramID(rs.getInt("ResinProgramID"));
         } catch (SQLException ex) {
             Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -2347,11 +2376,13 @@ public class ColorTextControlSlipRepository {
         int resinProgramId = -1;
         try {
             conn = db.getConnection();
-            String query = "INSERT INTO resin_program (ProgramNameID, ProgramDefault) VALUES (?, ?)";
+            String query = "INSERT INTO resin_program (ProgramNameID, CustomerID, ColorID, DesignID) VALUES (?, ?, ? , ?)";
 
             preparedStmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStmt.setInt(1, newResinProgram.getProgramNameID());
-            preparedStmt.setInt(2, newResinProgram.getProgramDefault());
+            preparedStmt.setInt(2, newResinProgram.getCustomerID());
+            preparedStmt.setInt(3, newResinProgram.getColorID());
+            preparedStmt.setInt(4, newResinProgram.getDesignID());
             preparedStmt.execute();
 
             ResultSet generatedKeys = preparedStmt.getGeneratedKeys();
@@ -2518,6 +2549,47 @@ public class ColorTextControlSlipRepository {
         this.closeConn(conn, ps, rs);
         return ResinName;
     }
+    
+    public boolean CheckIfResinProgramExists(ResinProgram thisResinProgram) {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        boolean itExists = false;
+        int checkTest = 0;
+        try {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT EXISTS "
+                    + " (SELECT ID "
+                    + " FROM resin_program WHERE "
+                    + " ProgramNameID = ?, "
+                    + " CustomerID = ?,"
+                    + " ColorID = ?,"
+                    + " DesignID = ? ) "
+                    + " AS 'CheckTest'");
+
+            int item = 1;
+            ps.setInt(item++, thisResinProgram.getProgramNameID());
+            ps.setInt(item++, thisResinProgram.getCustomerID());
+            ps.setInt(item++, thisResinProgram.getColorID());
+            ps.setInt(item++, thisResinProgram.getDesignID());
+            rs = ps.executeQuery();
+
+            if (rs.first()) {
+                checkTest = rs.getInt("CheckTest");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        this.closeConn(conn, ps, rs);
+        if (checkTest == 1) {
+            itExists = true;
+        }
+
+        return itExists;
+    }
 
     public boolean CheckIfResinProgramNameExists(String ResinName) {
         DBConnection dbc = new DBConnection();
@@ -2554,7 +2626,7 @@ public class ColorTextControlSlipRepository {
         return itExists;
     }
 
-    public int CheckIfSpecificResinProgramExistsForThisCustomer(String ResinProgramName, int CustomerID) {
+    public int CheckIfSpecificResinProgramExistsForThisCustomer(String ResinProgramName, ResinProgram thisResinProgram) {
         DBConnection dbc = new DBConnection();
         Connection conn = null;
         PreparedStatement ps = null;
@@ -2567,14 +2639,17 @@ public class ColorTextControlSlipRepository {
                     + "(SELECT resin_program.ID "
                     + " FROM resin_program, resin_program_name "
                     + " WHERE Name = ? "
-                    + " AND ProgramNameID = resin_program_name.ID"
-                    + " AND resin_program.ID "
-                    + " IN (SELECT ResinProgramID FROM job_order WHERE CustomerId = ?))"
+                    + " AND CustomerID = ? "
+                    + " AND ColorID = ? "
+                    + " AND DesignID = ? "
+                    + " AND ProgramNameID = resin_program_name.ID)"
                     + " AS 'CheckTest'");
 
             int item = 1;
             ps.setString(item++, ResinProgramName);
-            ps.setInt(item++, CustomerID);
+            ps.setInt(item++, thisResinProgram.getCustomerID());
+            ps.setInt(item++, thisResinProgram.getColorID());
+            ps.setInt(item++, thisResinProgram.getDesignID());
 
             rs = ps.executeQuery();
             if (rs.first()) {
@@ -2588,7 +2663,7 @@ public class ColorTextControlSlipRepository {
         this.closeConn(conn, ps, rs);
         return checkTest;
     }
-
+//Error Change here
     public ResinProgram GetDefaultResinProgramForThisProgramName(String ResinProgramName) {
         DBConnection db = new DBConnection();
         Connection conn = null;
@@ -2598,9 +2673,11 @@ public class ColorTextControlSlipRepository {
         try {
             conn = db.getConnection();
             ps = conn.prepareStatement(
-                    " SELECT rProg.ID, ProgramNameID, ProgramDefault FROM resin_program rProg, resin_program_name rProgName"
+                    " SELECT rProg.ID, ProgramNameID, customerID, colorID, designID  FROM resin_program rProg, resin_program_name rProgName"
                     + " WHERE Name = ? "
-                    + " AND ProgramDefault = 1 "
+                    + " AND CustomerID = 0 "
+                    + " AND ColorID = 0 "
+                    + " AND DesignID = 0 "
                     + " AND ProgramNameID = rProgName.ID");
 
             int item = 1;
@@ -2609,7 +2686,10 @@ public class ColorTextControlSlipRepository {
             if (rs.first()) {
                 thisResinProgram.setID(rs.getInt("rProg.ID"));
                 thisResinProgram.setProgramNameID(rs.getInt("ProgramNameID"));
-                thisResinProgram.setProgramDefault(rs.getInt("ProgramDefault"));
+                //thisResinProgram.setProgramDefault(rs.getInt("ProgramDefault"));
+                thisResinProgram.setCustomerID(rs.getInt("customerID"));
+                thisResinProgram.setColorID(rs.getInt("colorID"));
+                thisResinProgram.setDesignID(rs.getInt("designID"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
@@ -2619,28 +2699,36 @@ public class ColorTextControlSlipRepository {
 
     }
 
-    public ResinProgram GetResinProgramDetailsFromResinProgramNameAndCustomerID(String ResinProgramName, int customerID) {
+    public ResinProgram GetResinProgramDetailsFromResinProgramNameAndCustomerID(String ResinProgramName, ResinProgram thisResinProgram) {
         DBConnection db = new DBConnection();
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        ResinProgram thisResinProgram = new ResinProgram();
+        //ResinProgram thisResinProgram = new ResinProgram();
         try {
             conn = db.getConnection();
             ps = conn.prepareStatement(
-                    " SELECT rProg.ID, ProgramNameID, ProgramDefault FROM resin_program rProg, resin_program_name rProgName"
-                    + " WHERE Name = ? "
-                    + " AND ProgramNameID = rProgName.ID"
-                    + " AND rProg.ID IN (SELECT DISTINCT(ResinProgramID) FROM job_order WHERE CustomerId = ?)");
+                    " SELECT rProg.ID, ProgramNameID, customerID, colorID, designID "
+                            + " FROM resin_program rProg, resin_program_name rProgName"
+                            + " WHERE rProgName.Name = ? "
+                            + " AND ProgramNameID = rProgName.ID"
+                            + " AND CustomerID = ?"
+                            + " AND ColorID = ?"
+                            + " AND DesignID = ?");
 
             int item = 1;
             ps.setString(item++, ResinProgramName);
-            ps.setInt(item++, customerID);
+            ps.setInt(item++, thisResinProgram.getCustomerID());
+            ps.setInt(item++, thisResinProgram.getColorID());
+            ps.setInt(item++, thisResinProgram.getDesignID());
             rs = ps.executeQuery();
+            
             if (rs.first()) {
                 thisResinProgram.setID(rs.getInt("rProg.ID"));
-                thisResinProgram.setProgramNameID(rs.getInt("ProgramNameID"));
-                thisResinProgram.setProgramDefault(rs.getInt("ProgramDefault"));
+                //thisResinProgram.setProgramNameID(rs.getInt("ProgramNameID"));
+                thisResinProgram.setCustomerID(rs.getInt("customerID"));
+                thisResinProgram.setColorID(rs.getInt("colorID"));
+                thisResinProgram.setDesignID(rs.getInt("designID"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
@@ -3503,16 +3591,17 @@ public class ColorTextControlSlipRepository {
 
                 thisJobOrder.setDyeingMachineID(rs.getInt("DyeingMachineID"));
                 thisJobOrder.setDyeingWeight(rs.getFloat("DyeingWeight"));
-                thisJobOrder.setDyeingVolumeH20(rs.getInt("DyeingVolH2O"));
+                thisJobOrder.setDyeingVolumeH20(rs.getFloat("DyeingVolH2O"));
 
-                thisJobOrder.setResinMachineID(rs.getInt("ResinMachineID"));
-                thisJobOrder.setResinWeight(rs.getFloat("ResinWeight"));
-                thisJobOrder.setResinVolumeH20(rs.getInt("ResinVolH2O"));
                 thisJobOrder.setRollLoad(rs.getString("RollLoad"));
                 thisJobOrder.setRoll(rs.getInt("Roll"));
                 thisJobOrder.setDyeingProgramID(rs.getInt("DyeingProgramID"));
-                thisJobOrder.setResinProgramID(rs.getInt("ResinProgramID"));
                 CustomerJobOrders.add(thisJobOrder);
+                
+                //thisJobOrder.setResinMachineID(rs.getInt("ResinMachineID"));
+                //thisJobOrder.setResinWeight(rs.getFloat("ResinWeight"));
+                //thisJobOrder.setResinVolumeH20(rs.getInt("ResinVolH2O"));
+                //thisJobOrder.setResinProgramID(rs.getInt("ResinProgramID"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
@@ -3548,17 +3637,17 @@ public class ColorTextControlSlipRepository {
 
                 thisJobOrder.setDyeingMachineID(rs.getInt("DyeingMachineID"));
                 thisJobOrder.setDyeingWeight(rs.getFloat("DyeingWeight"));
-                thisJobOrder.setDyeingVolumeH20(rs.getInt("DyeingVolH2O"));
-
-                thisJobOrder.setResinMachineID(rs.getInt("ResinMachineID"));
-                thisJobOrder.setResinWeight(rs.getFloat("ResinWeight"));
-                thisJobOrder.setResinVolumeH20(rs.getInt("ResinVolH2O"));
+                thisJobOrder.setDyeingVolumeH20(rs.getFloat("DyeingVolH2O"));
 
                 thisJobOrder.setRollLoad(rs.getString("RollLoad"));
                 thisJobOrder.setRoll(rs.getInt("Roll"));
                 thisJobOrder.setDyeingProgramID(rs.getInt("DyeingProgramID"));
-                thisJobOrder.setResinProgramID(rs.getInt("ResinProgramID"));
                 CustomerJobOrders.add(thisJobOrder);
+
+                //thisJobOrder.setResinMachineID(rs.getInt("ResinMachineID"));
+                //thisJobOrder.setResinWeight(rs.getFloat("ResinWeight"));
+                //thisJobOrder.setResinVolumeH20(rs.getInt("ResinVolH2O"));
+                //thisJobOrder.setResinProgramID(rs.getInt("ResinProgramID"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
@@ -3567,29 +3656,32 @@ public class ColorTextControlSlipRepository {
         return CustomerJobOrders;
     }
 
-    public int GetResinProgramNameIDByResinProgramID(int resinProgramId) {
+    public ResinProgram GetResinProgramDetailsByResinProgramID(int resinProgramId) {
         DBConnection db = new DBConnection();
         Connection conn = null;
         PreparedStatement preparedStmt = null;
         ResultSet resultSet = null;
-        int resinProgramNameId = -1;
+        ResinProgram thisResinProgram = new ResinProgram();
         try {
             conn = db.getConnection();
-            String query = "SELECT ProgramNameID FROM resin_program WHERE ID = ?";
+            String query = "SELECT * FROM resin_program WHERE ID = ?";
 
             preparedStmt = conn.prepareStatement(query);
             preparedStmt.setInt(1, resinProgramId);
             resultSet = preparedStmt.executeQuery();
 
             if (resultSet.first()) {
-                resinProgramNameId = resultSet.getInt("ProgramNameID");
+                thisResinProgram.setProgramNameID(resultSet.getInt("ProgramNameID"));
+                thisResinProgram.setCustomerID(resultSet.getInt("CustomerID"));
+                thisResinProgram.setColorID(resultSet.getInt("ColorID"));
+                thisResinProgram.setDesignID(resultSet.getInt("DesignID"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         this.closeConn(conn, preparedStmt, resultSet);
-        return resinProgramNameId;
+        return thisResinProgram;
     }
 
     public int GetResinProgramNameIdFromResinProgramName(String resinProgramName) {
@@ -3712,5 +3804,127 @@ public class ColorTextControlSlipRepository {
         return LiquidRatio;
 
     }
+    
+    /**    
+    * FOR RESIN JOB ORDER
+    * 
+    **/
+    public int AddResinJob(ResinJob thisResinJob)
+    {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        int addedID = -1;
+        try {
+            conn = db.getConnection();
+            String query = "INSERT INTO resin_job (ResinMachineID, ResinWeight, ResinVolH2O, ResinProgramID, JobOrderID) VALUES (?, ?, ?, ?, ?)";
+
+            preparedStmt = conn.prepareStatement(query);
+            int x = 1;
+            preparedStmt.setInt(x++, thisResinJob.getResinMachineID());
+            preparedStmt.setFloat(x++, thisResinJob.getResinWeight());
+            preparedStmt.setFloat(x++, thisResinJob.getResinVolH2O());
+            preparedStmt.setInt(x++, thisResinJob.getResinProgramID());
+            preparedStmt.setInt(x++, thisResinJob.getJobOrderID());
+            preparedStmt.execute();
+
+            ResultSet generatedKeys = preparedStmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                addedID = generatedKeys.getInt(1);
+            } else {
+                throw new SQLException("Creating user failed, no ID obtained.");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        this.closeConn(conn, preparedStmt);
+        return addedID;
+        
+    }
+    
+    public boolean UpdateResinJob(ResinJob thisResinJob)
+    {
+       DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean isSuccessful = false;
+        try {
+            conn = db.getConnection();
+            String query = "UPDATE resin_job SET ResinMachineID = ?, ResinWeight = ?, ResinVolH2O = ?, ResinProgramID = ?, JobOrderID = ? WHERE ID = ?";
+
+            int x = 1;
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setInt(x++, thisResinJob.getResinMachineID());
+            preparedStmt.setFloat(x++, thisResinJob.getResinWeight());
+            preparedStmt.setFloat(x++, thisResinJob.getResinVolH2O());
+            preparedStmt.setInt(x++, thisResinJob.getResinProgramID());
+            preparedStmt.setInt(x++, thisResinJob.getJobOrderID());
+            preparedStmt.setInt(x++, thisResinJob.getID());
+            preparedStmt.executeUpdate();
+            isSuccessful = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        this.closeConn(conn, preparedStmt);
+        return isSuccessful;
+    }
+    
+    public boolean DeleteResinJob(ResinJob thisResinJob)
+    {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean isSuccessful = false;
+        try {
+            conn = db.getConnection();
+            String query = "DELETE FROM ResinJob WHERE ID = ?";
+
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setInt(1, thisResinJob.getID());
+            preparedStmt.executeUpdate();
+            isSuccessful = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        this.closeConn(conn, preparedStmt);
+        return isSuccessful;
+    }
+    
+    public ResinJob GetResinJobFromJobID(ResinJob thisResinJob)
+    {
+        
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = db.getConnection();
+            ps = conn.prepareStatement("SELECT * "
+                    + " FROM resin_job "
+                    + " WHERE ID = ? ");
+
+            ps.setInt(1, thisResinJob.getID());
+
+            rs = ps.executeQuery();
+            if (rs.first()) {
+                thisResinJob.setID( rs.getInt("ID") );
+                thisResinJob.setResinMachineID(rs.getInt("ResinMachineID") );
+                thisResinJob.setResinWeight(rs.getFloat("ResinWeight") );
+                thisResinJob.setResinVolH2O(rs.getFloat("ResinVolH2O") );
+                thisResinJob.setResinProgramID(rs.getInt("ResinProgramID") );
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.closeConn(conn, ps, rs);
+        return thisResinJob;
+    
+    }
+    
+    
     
 }

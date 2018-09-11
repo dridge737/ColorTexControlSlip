@@ -6,6 +6,7 @@
 package DataEntities;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 /**
  *
@@ -21,6 +22,7 @@ public class JobOrderExtended extends JobOrder{
     private String ResinMachineName;
     private String DyeingProgramName;
     private String ResinProgramName;
+    private ArrayList<ResinJob> thisResinJob;
 
     
     /**
@@ -119,6 +121,20 @@ public class JobOrderExtended extends JobOrder{
      */
     public void setDyeingMachineName(String DyeingMachineName) {
         this.DyeingMachineName = DyeingMachineName;
+    }
+
+    /**
+     * @return the thisResinJob
+     */
+    public ArrayList<ResinJob> getThisResinJob() {
+        return thisResinJob;
+    }
+
+    /**
+     * @param thisResinJob the thisResinJob to set
+     */
+    public void setThisResinJob(ArrayList<ResinJob> thisResinJob) {
+        this.thisResinJob = thisResinJob;
     }
    
 

@@ -14,6 +14,7 @@ import Handlers.CustomerHandler;
 import DataEntities.Customer;
 import DataEntities.Design;
 import DataEntities.JobOrder;
+import DataEntities.JobOrderExtended;
 import DataEntities.ProcessOrder;
 import Database.ColorTextControlSlipRepository;
 import Forms.HelpForm.auto_complete;
@@ -56,7 +57,7 @@ public class JobOrderFormBackup extends javax.swing.JFrame {
     Design thisDesign = new Design();
     Customer thisCustomer = new Customer();
     DesignColor thisColor = new DesignColor();
-    JobOrder thisJob = new JobOrder();
+    JobOrderExtended thisJob = new JobOrderExtended();
     ArrayList<String> AllLiquidRatio = new ArrayList<String>();
     //ProcessOrder thisProcessOrder = new ProcessOrder();
     private final static int POINTS_PER_INCH = 72;
@@ -161,7 +162,7 @@ public class JobOrderFormBackup extends javax.swing.JFrame {
         this.setLocation(x,y);
     }
     
-    public JobOrderFormBackup(JobOrder thisJobOrder) {
+    public JobOrderFormBackup(JobOrderExtended thisJobOrder) {
         this();
         thisJob = thisJobOrder;
         //thisProcessOrder = ProcessOrder;

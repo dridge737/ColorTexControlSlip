@@ -13,6 +13,7 @@ import Handlers.CustomerHandler;
 import DataEntities.Customer;
 import DataEntities.Design;
 import DataEntities.JobOrder;
+import DataEntities.JobOrderExtended;
 import DataEntities.ProcessOrder;
 import Database.ColorTextControlSlipRepository;
 import Forms.HelpForm.auto_complete;
@@ -62,7 +63,7 @@ public class JobOrderForm extends javax.swing.JFrame {
     Design thisDesign = new Design();
     Customer thisCustomer = new Customer();
     DesignColor thisColor = new DesignColor();
-    JobOrder thisJob = new JobOrder();
+    JobOrderExtended thisJob = new JobOrderExtended();
     ArrayList<String> AllLiquidRatio = new ArrayList<String>();
     ArrayList<String> DesignList = new ArrayList<String>();
     ArrayList<String> ColorList = new ArrayList<String>();
@@ -193,7 +194,7 @@ public class JobOrderForm extends javax.swing.JFrame {
         this.setLocation(x,y);
     }
     
-    public JobOrderForm(JobOrder thisJobOrder) {
+    public JobOrderForm(JobOrderExtended thisJobOrder) {
         this();
         thisJob = thisJobOrder;
         //thisProcessOrder = ProcessOrder;

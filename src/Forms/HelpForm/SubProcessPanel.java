@@ -10,6 +10,7 @@ import DataEntities.DyeingChemical;
 import DataEntities.DyeingProcess;
 import DataEntities.JobOrder;
 import Handlers.ChemicalHandler;
+import Handlers.ComputeHelper;
 import Handlers.DyeingChemicalHandler;
 import Handlers.DyeingProcessHandler;
 import Handlers.JobHandler;
@@ -229,7 +230,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
              if(WindowType == 3 || WindowType == 4 || WindowType == 5)
              //if(thisJobOrder.getID() > 0)
              {
-                 Quantity = new JobHandler().ComputeDyeingQuantity(thisDyeingChemical, thisJobOrder);
+                 Quantity = new ComputeHelper().ComputeDyeingQuantity(thisDyeingChemical, thisJobOrder);
                  model.addRow(new Object[] { ChemicalName, thisDyeingChemical.getState(),thisDyeingChemical.getType(), thisDyeingChemical.getValue(),Quantity, "Delete" , thisDyeingChemical.getID()});                 
              }
              else
@@ -659,7 +660,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
         
         if(WindowType == 3 || WindowType == 4 || WindowType == 5)
         {
-            Float Quantity = new JobHandler().ComputeDyeingQuantity(thisDyeingChemical, thisJobOrder);
+            Float Quantity = new ComputeHelper().ComputeDyeingQuantity(thisDyeingChemical, thisJobOrder);
             //float Quantity = this.ComputeQuantityFromWeightOrVol(thisDyeingChemical);
             model.addRow(new Object[] {thisDyeingChemical.getChemicalName(), thisDyeingChemical.getState(),thisDyeingChemical.getType(), thisDyeingChemical.getValue(),Quantity, "Delete"});
         }
