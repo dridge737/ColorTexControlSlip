@@ -343,16 +343,16 @@ public class ResinPanel extends javax.swing.JPanel {
 
     private void EditResinProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditResinProgramActionPerformed
         // TODO add your handling code here:
-        if (CheckIfResinMachineHasInputs() && CheckCustomerAndJobOrderFromTextBox()) {
+        if (CheckIfResinMachineHasInputs() ) {
+                //&& CheckCustomerAndJobOrderFromTextBox()
             thisResinJob.setResinMachineID(machineDetails.getMachineId());
             ReviewFormV2 ReviewForm = (ReviewFormV2) this.getTopLevelAncestor();
             ReviewForm.AddTextToJobOrderObject();
             
             ViewResinProgramList thisResinProgram;
-            thisResinProgram = new ViewResinProgramList(thisResinJob, 3);
+            thisResinProgram = new ViewResinProgramList(ReviewForm.getThisJob(), 3);
             thisResinProgram.setVisible(true);
             ReviewForm.dispose();
-            ReviewForm.
         }
     }//GEN-LAST:event_EditResinProgramActionPerformed
 
