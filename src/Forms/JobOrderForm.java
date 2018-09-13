@@ -112,6 +112,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                 SetAndUpdateColorID();
             }
         });
+        ColorTextField.setFocusTraversalKeysEnabled(false);
     }
     
     public void AddDesignTextBoxAutoComplete()
@@ -119,7 +120,6 @@ public class JobOrderForm extends javax.swing.JFrame {
         DesignList = new DesignHandler().addDesignTextBoxAutoComplete(DesignTextField);
         DesignTextField.getDocument().addDocumentListener(new DocumentListener() 
         {
-            
             @Override
             public void insertUpdate(DocumentEvent e) {
                 SetAndUpdateDesignID();
@@ -135,6 +135,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                 SetAndUpdateDesignID();
             }
         });
+            DesignTextField.setFocusTraversalKeysEnabled(false);
     }
     
     public void AddCustomerTextBoxAutoComplete()
@@ -158,6 +159,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                 SetAndUpdateCustomerID();
             }
         });
+        CustomerTextField.setFocusTraversalKeysEnabled(false);
     }
     
     public void AddLiquidRatioAutoComplete()
@@ -462,6 +464,7 @@ public class JobOrderForm extends javax.swing.JFrame {
 
         CustomerDropDownList.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         CustomerDropDownList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose Customer" }));
+        CustomerDropDownList.setFocusable(false);
         CustomerDropDownList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CustomerDropDownListActionPerformed(evt);

@@ -61,6 +61,7 @@ public class auto_complete {
 
             @Override
             public void keyPressed(KeyEvent e) {
+                
                 setAdjusting(cbInput, true);
                 if (e.getKeyCode() == KeyEvent.VK_ALT) {
                     if (cbInput.isPopupVisible()) {
@@ -71,6 +72,7 @@ public class auto_complete {
                     e.setSource(cbInput);
                     cbInput.dispatchEvent(e);
                     if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                        if(cbInput.getSelectedItem().toString().length()>0)
                         txtInput.setText(cbInput.getSelectedItem().toString());
                         cbInput.setPopupVisible(false);
                     }
@@ -113,5 +115,6 @@ public class auto_complete {
         });
         txtInput.setLayout(new BorderLayout());
         txtInput.add(cbInput, BorderLayout.SOUTH);
+        
     }
 }
