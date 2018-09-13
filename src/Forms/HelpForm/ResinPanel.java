@@ -6,11 +6,16 @@
 package Forms.HelpForm;
 
 import DataEntities.Machine;
+import DataEntities.ResinJob;
+import Forms.ReviewFormV2;
+import Forms.ViewResinProgramList;
 import Handlers.MachineHandler;
 import Handlers.PreferenceHandler;
 import Handlers.ResinProgramHandler;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -18,6 +23,8 @@ import javax.swing.JOptionPane;
  */
 public class ResinPanel extends javax.swing.JPanel {
 
+    private Machine machineDetails = new Machine();
+    ResinJob thisResinJob;
     /**
      * @return the machineDetails
      */
@@ -32,12 +39,20 @@ public class ResinPanel extends javax.swing.JPanel {
         this.machineDetails = machineDetails;
     }
 
-    private Machine machineDetails = new Machine();
     /**
      * Creates new form ResinPanel
      */
     public ResinPanel() {
         initComponents();
+    }
+    
+    public ResinPanel(ResinJob currentResinJob)
+    {
+        this();
+        thisResinJob = currentResinJob;
+        SetResinProgramName(thisResinJob.getID());
+        populateResinMachineDropDown();
+        SetResinMachineNameDropDown();
     }
 
     /**
@@ -204,6 +219,43 @@ public class ResinPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void SetResinProgramName(int resinProgramID) {
+        if (resinProgramID > 0) {
+            String ResinProgramName
+                    = new ResinProgramHandler().GetResinProgramNameFromResinProgramID(resinProgramID);
+            ResinProgramText.setText(ResinProgramName);
+        }
+    }
+    
+    private void populateResinMachineDropDown() {
+        //if Resin requires custom Machine
+        ArrayList<Machine> MachineList;
+        if(new PreferenceHandler().getResinMachineInputPreference())
+        {
+            MachineList = new MachineHandler().GetAllManualResinMachines();
+        }
+        else
+            MachineList = new MachineHandler().GetAllAutomaticResinMachines();
+        
+        //ArrayList<Machine> MachineList = new MachineHandler().GetAllResinMachines();
+
+        if (MachineList != null) {
+            for (int x = 0; x < MachineList.size(); x++) {
+                ResinMachineDropDown.addItem(MachineList.get(x).getMachineName());
+            }
+        }
+    }
+    
+    private void SetResinMachineNameDropDown() 
+    {
+        //this.machineDetails.setMachineId(thisResinJob.getResinMachineID());
+        MachineHandler thisMachineHandler = new MachineHandler();
+        machineDetails = new MachineHandler().GetMachineDetailsById(thisResinJob.getResinMachineID());
+        ResinMachineDropDown.setSelectedItem(machineDetails.getMachineName());
+        ResinWeight.setText(Float.toString(thisResinJob.getResinWeight()));
+        ResinVolumeTextField.setText(Float.toString(thisResinJob.getResinVolH2O()));
+    }
+    
     private void ResinMachineDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResinMachineDropDownActionPerformed
         // TODO add your handling code here:
         
@@ -220,12 +272,6 @@ public class ResinPanel extends javax.swing.JPanel {
                 if (machineId > -1) {
                     setMachineDetails(handler.GetMachineDetailsById(machineId));
 
-                    //getMachineDetails().setMaxCapacity(getMachineDetails().getMaxCapacity());
-                    //getMachineDetails().setMaxVolume(getMachineDetails().getMaxVolume());
-                    //getMachineDetails().setMinCapacity(getMachineDetails().getMinCapacity());
-                    //getMachineDetails().setMinVolume(getMachineDetails().getMinVolume());
-                    //getMachineDetails().setNumOfLoad(getMachineDetails().getNumOfLoad());
-                    //getMachineDetails().setMachineId(machineId);
                 }
             }
         }
@@ -237,29 +283,11 @@ public class ResinPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_ResinWeightFocusLost
 
-    private void SetResinProgramName() {
-        if (thisJob.getResinProgramID() > 0) {
-            String ResinProgramName
-                    = new ResinProgramHandler().GetResinProgramNameFromResinProgramID(thisJob.getResinProgramID());
-            ResinProgramText.setText(ResinProgramName);
-        }
-
-    }
-    
-    private void SetResinMachineNameDropDown() {
-        thisResinMachine.setMachineId(thisJob.getThisResinJob().get(0).getResinMachineID());
-        MachineHandler thisMachineHandler = new MachineHandler();
-        thisResinMachine = new MachineHandler().GetMachineDetailsById(thisResinMachine.getMachineId());
-        ResinMachineDropDown.setSelectedItem(thisResinMachine.getMachineName());
-        ResinWeight.setText(Float.toString(thisJob.getResinWeight()));
-        ResinVolumeTextField.setText(Float.toString(thisJob.getResinVolumeH20()));
-    }
-    
     private boolean CheckIfResinMachineHasInputs()
     {
         boolean isSuccessful = true;
         
-        if(thisResinMachine.getMachineId() < 1)
+        if(this.machineDetails.getMachineId() < 1)
         {
             isSuccessful = false;
             JOptionPane.showMessageDialog(null, "Please check the Resin Machine.");  
@@ -288,23 +316,8 @@ public class ResinPanel extends javax.swing.JPanel {
         }
     }
      
-     private void populateResinMachineDropDown() {
-        //if Resin requires custom Machine
-        ArrayList<Machine> MachineList;
-        if(new PreferenceHandler().getResinMachineInputPreference())
-        {
-            MachineList = new MachineHandler().GetAllManualResinMachines();
-        }
-        else
-            MachineList = new MachineHandler().GetAllAutomaticResinMachines();
-        
-        //ArrayList<Machine> MachineList = new MachineHandler().GetAllResinMachines();
-
-        if (MachineList != null) {
-            for (int x = 0; x < MachineList.size(); x++) {
-                ResinMachineDropDown.addItem(MachineList.get(x).getMachineName());
-            }
-        }
+    private boolean CheckTextBoxIsParseValid(JTextField thisTextField) {
+        return thisTextField.getText().length() >= 1;
     }
     
     private void ResinWeightKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ResinWeightKeyReleased
@@ -313,7 +326,7 @@ public class ResinPanel extends javax.swing.JPanel {
         weight = weight.replaceAll("[^\\d.]", "");
         ResinWeight.setText(weight);
         if (this.CheckTextBoxIsParseValid(ResinWeight)) {
-            thisJob.setResinWeight(Float.parseFloat(weight));
+            thisResinJob.setResinWeight(Float.parseFloat(weight));
             ComputeForResinVolume();
         }
     }//GEN-LAST:event_ResinWeightKeyReleased
@@ -324,18 +337,22 @@ public class ResinPanel extends javax.swing.JPanel {
         volume = volume.replaceAll("[^\\d.]", "");
         ResinVolumeTextField.setText(volume);
         if (this.CheckTextBoxIsParseValid(ResinVolumeTextField)) {
-            thisJob.setResinVolumeH20(Float.parseFloat(volume));
+            thisResinJob.setResinVolH2O(Float.parseFloat(volume));
         }
     }//GEN-LAST:event_ResinVolumeTextFieldKeyReleased
 
     private void EditResinProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditResinProgramActionPerformed
         // TODO add your handling code here:
         if (CheckIfResinMachineHasInputs() && CheckCustomerAndJobOrderFromTextBox()) {
-            thisJob.setResinMachineID(thisResinMachine.getMachineId());
+            thisResinJob.setResinMachineID(machineDetails.getMachineId());
+            ReviewFormV2 ReviewForm = (ReviewFormV2) this.getTopLevelAncestor();
+            ReviewForm.AddTextToJobOrderObject();
+            
             ViewResinProgramList thisResinProgram;
-            thisResinProgram = new ViewResinProgramList(thisJob, 3);
+            thisResinProgram = new ViewResinProgramList(thisResinJob, 3);
             thisResinProgram.setVisible(true);
-            this.dispose();
+            ReviewForm.dispose();
+            ReviewForm.
         }
     }//GEN-LAST:event_EditResinProgramActionPerformed
 

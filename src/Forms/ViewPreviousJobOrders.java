@@ -7,7 +7,9 @@ package Forms;
 
 import DataEntities.JobOrder;
 import DataEntities.JobOrderExtended;
+import DataEntities.ResinJob;
 import Handlers.JobHandler;
+import Handlers.ResinJobHandler;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
@@ -131,14 +133,19 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(JobOrderTable.getSelectedRowCount() > 0)
         {
-            JobOrder thisJob = new JobOrder();
+            JobOrderExtended thisJob = new JobOrderExtended();
             int convertedRowNumber = JobOrderTable.convertRowIndexToModel(this.JobOrderTable.getSelectedRow());
             String DrNumber = JobOrderTable.getModel().getValueAt(convertedRowNumber , 0).toString();
             thisJob.setDrNumber(DrNumber);
             thisJob.setJobDate(JobOrderTable.getModel().getValueAt(convertedRowNumber , 4).toString());
             thisJob.setDyeingProgramID(Integer.parseInt(JobOrderTable.getModel().getValueAt(convertedRowNumber , 5).toString()));
             JobHandler thisJobOrderHandler = new JobHandler();
-            thisJob = thisJobOrderHandler.GetJobOrderDetailsFromDrNumber(DrNumber);
+            thisJob = (JobOrderExtended) thisJobOrderHandler.GetJobOrderDetailsFromDrNumber(DrNumber);
+            ResinJobHandler thisResinJobHandler = new ResinJobHandler();
+            ResinJob thisResinJob = new ResinJob();
+            thisResinJob.setJobOrderID(thisJob.getID());
+            thisResinJob = thisResinJobHandler.GetResinJobFromJobID(thisResinJob);
+            thisJob.getThisResinJob().add(thisResinJob);
             ReviewForm orderReviewForm = new ReviewForm(thisJob, 3);
             orderReviewForm.setVisible(true);
             this.dispose();

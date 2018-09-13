@@ -50,12 +50,26 @@ import javax.swing.KeyStroke;
  */
 public class ReviewFormV2 extends javax.swing.JFrame {
 
+    /**
+     * @return the thisJob
+     */
+    public JobOrderExtended getThisJob() {
+        return thisJob;
+    }
+
+    /**
+     * @param thisJob the thisJob to set
+     */
+    public void setThisJob(JobOrderExtended thisJob) {
+        this.thisJob = thisJob;
+    }
+
     Machine thisDyeingMachine = new Machine();
     Machine thisResinMachine = new Machine();
     Design thisDesign = new Design();
     Customer thisCustomer = new Customer();
     DesignColor thisColor = new DesignColor();
-    JobOrderExtended thisJob = new JobOrderExtended();
+    private JobOrderExtended thisJob = new JobOrderExtended();
     ProcessOrder thisProcessOrder = new ProcessOrder();
     int WindowType = 0;
     DyeingProgram thisDyeingProgram = new DyeingProgram();
@@ -121,7 +135,7 @@ public class ReviewFormV2 extends javax.swing.JFrame {
 
     private void SetDyeingProgramName() {
         thisDyeingProgram
-                = new DyeingProgramHandler().GetDyeingProgramDetailsById(thisJob.getDyeingProgramID());
+                = new DyeingProgramHandler().GetDyeingProgramDetailsById(getThisJob().getDyeingProgramID());
 
         DyeingProgramNameHandler thisDyeingProgramName = new DyeingProgramNameHandler();
         String DyeingProgramName = thisDyeingProgramName.GetDyeingProgramNameFromID(thisDyeingProgram.getDyeingProgramNameID());
@@ -141,27 +155,27 @@ public class ReviewFormV2 extends javax.swing.JFrame {
         }        
         else
         {
-            JobOrder.setText(thisJob.getDrNumber());
+            JobOrder.setText(getThisJob().getDrNumber());
         }
-        BatchNo.setText(thisJob.getBatchNo());
+        BatchNo.setText(getThisJob().getBatchNo());
 
-        RollLoad.setText(thisJob.getRollLoad());
-        Reference.setText(thisJob.getReference());
-        ProgramNumber.setText(thisJob.getProgramNumber());
-        Location.setText(thisJob.getLocation());
+        RollLoad.setText(getThisJob().getRollLoad());
+        Reference.setText(getThisJob().getReference());
+        ProgramNumber.setText(getThisJob().getProgramNumber());
+        Location.setText(getThisJob().getLocation());
         //Set Date to 
-        if(thisJob.getJobDate().contains("-"))
+        if(getThisJob().getJobDate().contains("-"))
         {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             try {
-                dateSpinner.setValue(sdf.parse(thisJob.getJobDate()));
+                dateSpinner.setValue(sdf.parse(getThisJob().getJobDate()));
             } catch (ParseException ex) {
                 Logger.getLogger(JobOrderForm.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
             try {
-                dateSpinner.setValue(sdf.parse(thisJob.getJobDate()));
+                dateSpinner.setValue(sdf.parse(getThisJob().getJobDate()));
             } catch (ParseException ex) {
                 Logger.getLogger(JobOrderForm.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -178,32 +192,32 @@ public class ReviewFormV2 extends javax.swing.JFrame {
     }
 
     private void SetDesignNameDropDown() {
-        thisDesign.setDesignId(thisJob.getDesignID());
+        thisDesign.setDesignId(getThisJob().getDesignID());
         DesignHandler thisDesignHandler = new DesignHandler();
         thisDesign.setDesignName(thisDesignHandler.GetDesignNameFromID(thisDesign.getDesignId()));
         DesignDropDownList.setSelectedItem(thisDesign.getDesignName());
     }
 
     private void SetDyeingMachineNameDropDown() {
-        thisDyeingMachine.setMachineId(thisJob.getDyeingMachineID());
+        thisDyeingMachine.setMachineId(getThisJob().getDyeingMachineID());
         MachineHandler thisMachineHandler = new MachineHandler();
         thisDyeingMachine = thisMachineHandler.GetMachineDetailsById(thisDyeingMachine.getMachineId());
         DyeingMachineDropDown.setSelectedItem(thisDyeingMachine.getMachineName());
-        DyeingWeight.setText(Float.toString(thisJob.getDyeingWeight()));
-        DyeingVolumeTextField.setText(Float.toString(thisJob.getDyeingVolumeH20()));
+        DyeingWeight.setText(Float.toString(getThisJob().getDyeingWeight()));
+        DyeingVolumeTextField.setText(Float.toString(getThisJob().getDyeingVolumeH20()));
     }
 
     
 
     private void SetCustomerNameDropDown() {
-        thisCustomer.setCustomerId(thisJob.getCustomerID());
+        thisCustomer.setCustomerId(getThisJob().getCustomerID());
         CustomerHandler thisCustomerHandler = new CustomerHandler();
         thisCustomer.setCustomerName(thisCustomerHandler.GetCustomerNameFromCustomerID(thisCustomer.getCustomerId()));
         CustomerDropDownList.setSelectedItem(thisCustomer.getCustomerName());
     }
 
     private void SetColorNameDropDown() {
-        thisColor.setColorId(thisJob.getColorID());
+        thisColor.setColorId(getThisJob().getColorID());
         ColorHandler thisColorHandler = new ColorHandler();
         thisColor.setColorName(thisColorHandler.GetColorNameFromColorID(thisColor.getColorId()));
         ColorDropDownList.setSelectedItem(thisColor.getColorName());
@@ -588,7 +602,7 @@ public class ReviewFormV2 extends javax.swing.JFrame {
     private void EditDyeingProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditDyeingProgramActionPerformed
         if (CheckIfDyeingMachineHasInputs() && CheckCustomerAndJobOrderFromTextBox()) {
             ViewDyeingProgramList thisDyeingProgramListWindow;
-            thisDyeingProgramListWindow = new ViewDyeingProgramList(this.thisJob, this.WindowType);
+            thisDyeingProgramListWindow = new ViewDyeingProgramList(this.getThisJob(), this.WindowType);
             thisDyeingProgramListWindow.setVisible(true);
             this.dispose();
         }
@@ -600,7 +614,7 @@ public class ReviewFormV2 extends javax.swing.JFrame {
         volume = volume.replaceAll("[^\\d.]", "");
         DyeingVolumeTextField.setText(volume);
         if (this.CheckTextBoxIsParseValid(DyeingVolumeTextField)) {
-            thisJob.setDyeingVolumeH20(Float.parseFloat(volume));
+            getThisJob().setDyeingVolumeH20(Float.parseFloat(volume));
         }
     }//GEN-LAST:event_DyeingVolumeTextFieldKeyReleased
 
@@ -609,7 +623,7 @@ public class ReviewFormV2 extends javax.swing.JFrame {
         weight = weight.replaceAll("[^\\d.]", "");
         DyeingWeight.setText(weight);
         if (this.CheckTextBoxIsParseValid(DyeingWeight)) {
-            thisJob.setDyeingWeight(Float.parseFloat(weight));
+            getThisJob().setDyeingWeight(Float.parseFloat(weight));
             if(new LiquidRatioHandler().CheckIfPatternMatchesLiquidRatio(this.DyeingLiquidRatioText.getText().toString()))
             ComputerDyeingLiquidRatio();
         }
@@ -664,7 +678,7 @@ public class ReviewFormV2 extends javax.swing.JFrame {
         } else {
             if (this.WindowType != 6) {
                 if (AddTextToJobOrderObject()) {
-                    if (thisJobHandler.AddNewJobOrder(thisJob) > 0) {
+                    if (thisJobHandler.AddNewJobOrder(getThisJob()) > 0) {
                         JOptionPane.showMessageDialog(null, "Job order has been added.");
                         this.dispose();
                     } else {
@@ -673,7 +687,7 @@ public class ReviewFormV2 extends javax.swing.JFrame {
                 }
             } else if (WindowType == 6) {
                 if (AddTextToJobOrderObject()) {
-                    if (thisJobHandler.UpdateJobOrder(thisJob)) {
+                    if (thisJobHandler.UpdateJobOrder(getThisJob())) {
                         JOptionPane.showMessageDialog(null, "Job order has been updated.");
                         this.dispose();
                     } else {
@@ -753,10 +767,10 @@ public class ReviewFormV2 extends javax.swing.JFrame {
                     this.dispose();
                 }
             } else {
-                if (thisJob.getThisResinJob().size() > 0) {
-                    new AddResinForm(thisJob).setVisible(true);
+                if (getThisJob().getThisResinJob().size() > 0) {
+                    new AddResinForm(getThisJob()).setVisible(true);
                 } else {
-                    new DyeingForm(thisJob).setVisible(true);
+                    new DyeingForm(getThisJob()).setVisible(true);
 
                 }
                 this.dispose();
@@ -771,11 +785,11 @@ public class ReviewFormV2 extends javax.swing.JFrame {
             if (ThisJobHasBeenAdded != true) {
                 //if (WindowType == 3) {
                     if (WindowType == 6) {
-                        thisJobHandler.UpdateJobOrder(thisJob);
+                        thisJobHandler.UpdateJobOrder(getThisJob());
                     }
                     //else if ((WindowType == 5 || WindowType == 4 || WindowType == 2 || WindowType == 1)) {
                         else {
-                            thisJobHandler.AddNewJobOrder(thisJob);
+                            thisJobHandler.AddNewJobOrder(getThisJob());
                         }
                         ThisJobHasBeenAdded = true;
 
@@ -783,7 +797,7 @@ public class ReviewFormV2 extends javax.swing.JFrame {
 
                     try {
                         PrintHandlerFinal handler = new PrintHandlerFinal();
-                        handler.createPDF(thisDyeingMachine, thisDesign, thisCustomer, thisColor, thisJob, thisDyeingProgram, DyeingVolumeTextField.getText());
+                        handler.createPDF(thisDyeingMachine, thisDesign, thisCustomer, thisColor, getThisJob(), thisDyeingProgram, DyeingVolumeTextField.getText());
                     } catch (IOException | DocumentException e) {
                     }
                 }
@@ -855,25 +869,26 @@ public class ReviewFormV2 extends javax.swing.JFrame {
         return thisTextField.getText().length() >= 1;
     }
 
-    private boolean AddTextToJobOrderObject() {
+    public boolean AddTextToJobOrderObject() {
         boolean isSuccessful = false;
         //If all inputs are good
         if (CheckAllFormInformationFromTextBox()) {
-            thisJob.setCustomerID(thisCustomer.getCustomerId());
-            thisJob.setColorID(thisColor.getColorId());
-            thisJob.setDesignID(thisDesign.getDesignId());
-            thisJob.setDrNumber(JobOrder.getText());
-            thisJob.setJobDate(get_date_from_spinner(dateSpinner));
+            getThisJob().setCustomerID(thisCustomer.getCustomerId());
+            getThisJob().setColorID(thisColor.getColorId());
+            getThisJob().setDesignID(thisDesign.getDesignId());
+            getThisJob().setDrNumber(JobOrder.getText());
+            getThisJob().setJobDate(get_date_from_spinner(dateSpinner));
             /*if (this.BatchNo.getText().length() < 1) {
                 thisJob.setBatchNo(0);
             } else {
                 thisJob.setBatchNo(Integer.parseInt(BatchNo.getText()));
             }
             */
-            thisJob.setBatchNo(BatchNo.getText());
-            thisJob.setDyeingMachineID(thisDyeingMachine.getMachineId());
-            thisJob.setDyeingVolumeH20(Float.parseFloat(this.DyeingVolumeTextField.getText()));
-            thisJob.setDyeingWeight(Float.parseFloat(this.DyeingWeight.getText()));
+            getThisJob().setBatchNo(BatchNo.getText());
+            getThisJob().setDyeingMachineID(thisDyeingMachine.getMachineId());
+            getThisJob().setDyeingVolumeH20(Float.parseFloat(this.DyeingVolumeTextField.getText()));
+            getThisJob().setDyeingWeight(Float.parseFloat(this.DyeingWeight.getText()));
+            
             //Add Resin Details to jobOrder here
             /*if (thisResinMachine.getMachineId() > 0) {
                 thisJob.setResinMachineID(thisResinMachine.getMachineId());
@@ -887,10 +902,10 @@ public class ReviewFormV2 extends javax.swing.JFrame {
                 //thisJob.setResinWeight(Float.parseFloat(this.ResinWeight.getText()));
             }
             */
-            thisJob.setRollLoad(RollLoad.getText());
-            thisJob.setReference(Reference.getText());
-            thisJob.setProgramNumber(this.ProgramNumber.getText());
-            thisJob.setLocation(this.Location.getText());
+            getThisJob().setRollLoad(RollLoad.getText());
+            getThisJob().setReference(Reference.getText());
+            getThisJob().setProgramNumber(this.ProgramNumber.getText());
+            getThisJob().setLocation(this.Location.getText());
 
             isSuccessful = true;
         }

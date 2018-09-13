@@ -225,7 +225,7 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
             int convertedRowNumber = JobOrderTable.convertRowIndexToModel(this.JobOrderTable.getSelectedRow());
             String DrNumber = JobOrderTable.getModel().getValueAt(convertedRowNumber , 0).toString();
             JobHandler thisJobOrderHandler = new JobHandler();
-            JobOrder thisJob =thisJobOrderHandler.GetJobOrderDetailsFromDrNumber(DrNumber);
+            JobOrderExtended thisJob = (JobOrderExtended) thisJobOrderHandler.GetJobOrderDetailsFromDrNumber(DrNumber);
             ReviewForm orderReviewForm = new ReviewForm(thisJob, 4);
             orderReviewForm.setVisible(true);
             this.dispose();
@@ -280,7 +280,7 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
             //JobOrder thisJob = thisJobOrderHandler.GetJobOrderDetailsFromDrNumber(DrNumber);
             
             JobOrder thisJob = thisJobOrderHandler.GetJobOrderDetailsFromJobOrderID(JobId);
-            ReviewForm orderReviewForm = new ReviewForm(thisJob, 6);
+            ReviewForm orderReviewForm = new ReviewForm((JobOrderExtended) thisJob, 6);
             orderReviewForm.setVisible(true);
             this.dispose();
         }
