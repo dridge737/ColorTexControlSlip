@@ -11,8 +11,10 @@ import DataEntities.DyeingChemical;
 import DataEntities.DyeingProcess;
 import DataEntities.DyeingProgram;
 import DataEntities.JobOrder;
+import DataEntities.JobOrderExtended;
 import DataEntities.Machine;
 import DataEntities.ResinChemical;
+import DataEntities.ResinJob;
 import Helpers.RomanNumber;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chapter;
@@ -29,7 +31,6 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.FontSelector;
 import com.itextpdf.text.pdf.GrayColor;
-import com.itextpdf.text.pdf.PdfLayer;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -50,18 +51,20 @@ import java.util.Comparator;
 public class PrintHandlerFinal {
     public static final String DEST = "C:\\chapter_title.pdf";
  
+    private ComputeHelper computeHelper = new ComputeHelper();
     private Font f  = FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.NORMAL);
     private Font f1  = FontFactory.getFont(FontFactory.TIMES_ROMAN, 10, Font.NORMAL);
     
-    public void createPDF(Machine machineDetails, Design designDetails, Customer customerDetails, DesignColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException {
+    public void createPDF(Machine machineDetails, Design designDetails, Customer customerDetails, DesignColor chemicalDetails, JobOrderExtended jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException {
         File file = new File(DEST);
         file.getParentFile().mkdirs();
         renderPDF(DEST, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
         printPDF();
     }
     
-    public void renderPDF(String dest, Machine machineDetails, Design designDetails, Customer customerDetails, DesignColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException {
+    public void renderPDF(String dest, Machine machineDetails, Design designDetails, Customer customerDetails, DesignColor chemicalDetails, JobOrderExtended jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException {
         Document document = new Document();
+        ArrayList<ResinJob> resinList = jobOrderDetails.getThisResinJob();
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(dest));
         //612x756
         Rectangle pageSize = new Rectangle(612,756);
@@ -75,10 +78,14 @@ public class PrintHandlerFinal {
         document = AddSecondPage(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
         document.newPage();
         
-        if(jobOrderDetails.getResinProgramID() > 0)
+        if(resinList.size() > 0)
         {
-            document = AddThirdPage(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
-            
+            document = AddThirdPage(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume, resinList.get(0));
+            if(resinList.size() == 2)
+            {
+                document.newPage();
+                document = AddThirdPage(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume, resinList.get(1));
+            }
         }
         document.close();
     }
@@ -229,7 +236,405 @@ public class PrintHandlerFinal {
         document = AddSecondPageOtherDetails(document, jobOrderDetails, machineDetails);
         document.add(new Paragraph(" "));
         //document.add(Chunk.NEWLINE);
-        document = AddDyeingProgramTable(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
+        document = AddDyeingProgramTableFinal(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
+        return document;
+    }
+    
+    public Document AddDyeingProgramTableFinal(Document document, Machine machineDetails, Design designDetails, Customer customerDetails, DesignColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException
+    {
+        float[] columnWidths = {5, 2, 2, 2};
+        PdfPTable table = new PdfPTable(columnWidths);
+        table.setWidthPercentage(100);
+        table.getDefaultCell().setBorder(Rectangle.BOTTOM);
+        table.getDefaultCell().setUseAscender(true);
+        table.getDefaultCell().setUseDescender(true);
+            table.addCell(" ");
+            PdfPCell gplHeader = new PdfPCell();
+            Paragraph p = new Paragraph("GPL",f );
+            p.setLeading(8f, 0f);
+            p.setAlignment(Element.ALIGN_RIGHT);
+            gplHeader.setBorder(Rectangle.BOTTOM);
+            gplHeader.addElement(p);
+            table.addCell(gplHeader);
+            PdfPCell percentHeader = new PdfPCell();
+            p = new Paragraph("%",f );
+            p.setLeading(8f, 0f);
+            p.setAlignment(Element.ALIGN_RIGHT);
+            percentHeader.setBorder(Rectangle.BOTTOM);
+            percentHeader.addElement(p);
+            table.addCell(percentHeader);
+            PdfPCell quantityHeader = new PdfPCell();
+            p = new Paragraph("Quantity",f );
+            p.setLeading(8f, 0f);
+            p.setAlignment(Element.ALIGN_RIGHT);
+            quantityHeader.setBorder(Rectangle.BOTTOM);
+            quantityHeader.addElement(p);
+            table.addCell(quantityHeader);
+                        
+        table.getDefaultCell().setBackgroundColor(GrayColor.GRAYWHITE);
+        table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
+        document.add(table);
+        DyeingChemicalHandler dChemHandler = new DyeingChemicalHandler();
+        DyeingProcessHandler dProcessHandler = new DyeingProcessHandler();
+        ChemicalHandler chemHandler = new ChemicalHandler();
+        JobHandler jHandler = new JobHandler();
+        ArrayList<DyeingProcess> dyeingProcessList = dProcessHandler.GetAllDyeingProcessAndSubProcessByDyeingProgramId(dyeingProgramDetails.getID());
+        ArrayList<DyeingChemical> dyeingChemicalList = null;
+        int rows = 1;
+        int rowLimit = 17;
+        int rowLimit2 = 32;
+        PdfPCell dyeingCell;
+        dyeingCell = new PdfPCell(new Phrase("S/N"));
+        dyeingCell.setRowspan(4);
+        PdfPTable processTable = new PdfPTable(columnWidths);
+        processTable.setWidthPercentage(100);
+        processTable.getDefaultCell().setBorder(Rectangle.BOTTOM);
+        processTable.getDefaultCell().setUseAscender(true);
+        processTable.getDefaultCell().setUseDescender(true);
+        for(int x=0; x<dyeingProcessList.size(); x++)
+        {
+            if (dyeingProcessList.get(x).getdyeingProcessOrder().matches("[0-9]+")){
+                dyeingCell = new PdfPCell(new Phrase(RomanNumber.toRoman(Integer.parseInt(dyeingProcessList.get(x).getdyeingProcessOrder())) + ". " + dyeingProcessList.get(x).getDyeingProcessName(), f));
+                dyeingCell.setColspan(4);
+                dyeingCell.setBorder(Rectangle.BOTTOM);
+                processTable.addCell(dyeingCell);      
+
+                dyeingChemicalList = dChemHandler.GetAllDyeingChemicalFromDyeingProcessID(dyeingProcessList.get(x).getId());
+                if(dyeingChemicalList.size() > 0)
+                {
+                    if(dyeingChemicalList.size() > 0)
+                    {
+                        Collections.sort(dyeingChemicalList, new Comparator<DyeingChemical>(){
+                            @Override
+                            public int compare(DyeingChemical o1, DyeingChemical o2){
+                                int rollno1 = o1.getOrder();
+                                int rollno2 = o2.getOrder();
+
+                                /*For ascending order*/
+                                return rollno1-rollno2;
+
+                            }                    
+                        });
+                    }
+
+                    for(int i = 0; i<dyeingChemicalList.size(); i++)
+                    {
+                        processTable.addCell(new Phrase("        " + dyeingChemicalList.get(i).getOrder() + ". " + chemHandler.GetChemicalNameFromChemicalID(dyeingChemicalList.get(i).getChemicalId()), f));
+                        if("GPL".equals(dyeingChemicalList.get(i).getType().toUpperCase())){
+                            PdfPCell gplCell = new PdfPCell();
+                                DecimalFormat df = new DecimalFormat("#,##0.00000");
+                                df.setRoundingMode(RoundingMode.CEILING);
+                                Float gplFloat = dyeingChemicalList.get(i).getValue();
+                                Double gplDouble = Double.parseDouble(gplFloat.toString());
+                                p = new Paragraph(df.format(gplDouble),f );
+                                p.setLeading(8f, 0f);
+                                p.setAlignment(Element.ALIGN_RIGHT);
+                                gplCell.setBorder(Rectangle.BOTTOM);
+                                gplCell.addElement(p);
+                                processTable.addCell(gplCell);
+                            processTable.addCell(" ");
+                        }
+                        else
+                        {
+                            processTable.addCell(" ");
+                            PdfPCell gplCell = new PdfPCell();
+                                DecimalFormat df = new DecimalFormat("#,##0.00000");
+                                df.setRoundingMode(RoundingMode.CEILING);
+                                Float gplFloat = dyeingChemicalList.get(i).getValue();
+                                Double gplDouble = Double.parseDouble(gplFloat.toString());
+                                p = new Paragraph(df.format(gplDouble),f );
+                                p.setLeading(8f, 0f);
+                                p.setAlignment(Element.ALIGN_RIGHT);
+                                gplCell.setBorder(Rectangle.BOTTOM);
+                                gplCell.addElement(p);
+                                processTable.addCell(gplCell);
+                        }
+
+
+                        if(dyeingChemicalList.get(i).getType()== "%")
+                        {
+                            Float fquantity = computeHelper.ComputeDyeingQuantity(dyeingChemicalList.get(i), jobOrderDetails);
+                             Double quantity = Double.parseDouble(fquantity.toString());
+                            //Float fQuantity = jobOrderDetails.getWeight() * dyeingChemicalList.get(i).getValue();
+                            //Double quantity = Double.parseDouble(fQuantity.toString());
+
+                            if(quantity.toString().contains(".0") == true)
+                            {
+                                PdfPCell dyeingQuantityCell = new PdfPCell();
+                                DecimalFormat df = new DecimalFormat("#,##0.00000");
+                                df.setRoundingMode(RoundingMode.CEILING);
+                                p = new Paragraph(df.format(quantity) + " " + dyeingChemicalList.get(i).getState(), f);
+                                p.setLeading(8f, 0f);
+                                p.setAlignment(Element.ALIGN_RIGHT);
+                                dyeingQuantityCell.setBorder(Rectangle.BOTTOM);
+                                dyeingQuantityCell.addElement(p);
+                                processTable.addCell(dyeingQuantityCell);
+
+                            }
+                            else
+                            {
+                                PdfPCell dyeingQuantityCell = new PdfPCell();
+                                DecimalFormat df = new DecimalFormat("#,##0.00000");
+                                df.setRoundingMode(RoundingMode.CEILING);
+                                p = new Paragraph(df.format(quantity) + " " + dyeingChemicalList.get(i).getState(), f);
+                                p.setLeading(8f, 0f);
+                                p.setAlignment(Element.ALIGN_RIGHT);
+                                dyeingQuantityCell.setBorder(Rectangle.BOTTOM);
+                                dyeingQuantityCell.addElement(p);
+                                processTable.addCell(dyeingQuantityCell);
+                            }
+                        }
+                        else
+                        {
+                            //Double quantity = Double.parseDouble(volume) * dyeingChemicalList.get(i).getValue();
+                            //Float fQuantity = jobOrderDetails.getWeight() * dyeingChemicalList.get(i).getValue();
+                            //Double quantity = Double.parseDouble(fQuantity.toString());
+                            Float fquantity = computeHelper.ComputeDyeingQuantity(dyeingChemicalList.get(i), jobOrderDetails);
+                             Double quantity = Double.parseDouble(fquantity.toString());
+                            if(quantity.toString().contains(".0") == true)
+                            {
+                                PdfPCell dyeingQuantityCell = new PdfPCell();
+                                DecimalFormat df = new DecimalFormat("#,##0.00000");
+                                df.setRoundingMode(RoundingMode.CEILING);
+                                p = new Paragraph(df.format(quantity) + " " + dyeingChemicalList.get(i).getState(), f);
+                                p.setLeading(8f, 0f);
+                                p.setAlignment(Element.ALIGN_RIGHT);
+                                dyeingQuantityCell.setBorder(Rectangle.BOTTOM);
+                                dyeingQuantityCell.addElement(p);
+                                processTable.addCell(dyeingQuantityCell);
+                            }
+                            else
+                            {
+                                PdfPCell dyeingQuantityCell = new PdfPCell();
+                                DecimalFormat df = new DecimalFormat("#,##0.00000");
+                                df.setRoundingMode(RoundingMode.CEILING);
+                                p = new Paragraph(df.format(quantity) + " " + dyeingChemicalList.get(i).getState(), f);
+                                p.setLeading(8f, 0f);
+                                p.setAlignment(Element.ALIGN_RIGHT);
+                                dyeingQuantityCell.setBorder(Rectangle.BOTTOM);
+                                dyeingQuantityCell.addElement(p);
+                                processTable.addCell(dyeingQuantityCell);
+                            }
+                        }
+                    }
+                    rows = rows + processTable.size();
+                    if(rows == rowLimit)
+                    {
+                        rowLimit = rowLimit2;
+                        document.add(processTable);
+                        
+                        rows = processTable.size() + 1;
+                        
+                        processTable = new PdfPTable(columnWidths);
+                        processTable.setWidthPercentage(100);
+                        processTable.getDefaultCell().setBorder(Rectangle.BOTTOM);
+                        processTable.getDefaultCell().setUseAscender(true);
+                        processTable.getDefaultCell().setUseDescender(true);
+                        
+                        document.newPage();
+                        document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
+                        document.add(table);
+                    }
+                    else if(rows > rowLimit)
+                    {
+                        rowLimit = rowLimit2;
+                        document.newPage();
+                        document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
+                        document.add(table);
+                        document.add(processTable);
+                        
+                        rows = processTable.size() + 1;
+                        
+                        processTable = new PdfPTable(columnWidths);
+                        processTable.setWidthPercentage(100);
+                        processTable.getDefaultCell().setBorder(Rectangle.BOTTOM);
+                        processTable.getDefaultCell().setUseAscender(true);
+                        processTable.getDefaultCell().setUseDescender(true);
+                    }
+                    else
+                    {
+                        document.add(processTable);
+                        
+                        processTable = new PdfPTable(columnWidths);
+                        processTable.setWidthPercentage(100);
+                        processTable.getDefaultCell().setBorder(Rectangle.BOTTOM);
+                        processTable.getDefaultCell().setUseAscender(true);
+                        processTable.getDefaultCell().setUseDescender(true);
+                    }
+                }
+            }
+            else if(!(dyeingProcessList.get(x).getdyeingProcessOrder().matches("[0-9]+"))){
+                String dyeingSubProcessLetter = dyeingProcessList.get(x).getdyeingProcessOrder().replaceAll("[^A-Za-z]+", "");
+
+                dyeingCell = new PdfPCell(new Phrase("    " + dyeingSubProcessLetter.toUpperCase() + ". " + dyeingProcessList.get(x).getDyeingProcessName(), f));
+                dyeingCell.setColspan(4);
+                dyeingCell.setBorder(Rectangle.BOTTOM);
+                processTable.addCell(dyeingCell);
+
+                dyeingChemicalList = dChemHandler.GetAllDyeingChemicalFromDyeingProcessID(dyeingProcessList.get(x).getId());
+
+                if(dyeingChemicalList.size() > 0)
+                {
+                    Collections.sort(dyeingChemicalList, new Comparator<DyeingChemical>(){
+                        @Override
+                        public int compare(DyeingChemical o1, DyeingChemical o2){
+                            int rollno1 = o1.getOrder();
+                            int rollno2 = o2.getOrder();
+
+                            /*For ascending order*/
+                            return rollno1-rollno2;
+
+                        }                    
+                    });
+                }
+
+                for(int i = 0; i<dyeingChemicalList.size(); i++)
+                {
+                    processTable.addCell(new Phrase("        " + dyeingChemicalList.get(i).getOrder() + ". " + chemHandler.GetChemicalNameFromChemicalID(dyeingChemicalList.get(i).getChemicalId()), f));
+                    if("GPL".equals(dyeingChemicalList.get(i).getType().toUpperCase())){
+                        PdfPCell gplCell = new PdfPCell();
+                                DecimalFormat df = new DecimalFormat("#,##0.00000");
+                                df.setRoundingMode(RoundingMode.CEILING);
+                                Float gplFloat = dyeingChemicalList.get(i).getValue();
+                                Double gplDouble = Double.parseDouble(gplFloat.toString());
+                                p = new Paragraph(df.format(gplDouble),f );
+                                p.setLeading(8f, 0f);
+                                p.setAlignment(Element.ALIGN_RIGHT);
+                                gplCell.setBorder(Rectangle.BOTTOM);
+                                gplCell.addElement(p);
+                                processTable.addCell(gplCell);
+                        processTable.addCell(" ");
+                    }
+                    else
+                    {
+                        processTable.addCell(" ");
+                        PdfPCell gplCell = new PdfPCell();
+                                DecimalFormat df = new DecimalFormat("#,##0.00000");
+                                df.setRoundingMode(RoundingMode.CEILING);
+                                Float gplFloat = dyeingChemicalList.get(i).getValue();
+                                Double gplDouble = Double.parseDouble(gplFloat.toString());
+                                p = new Paragraph(df.format(gplDouble),f );
+                                p.setLeading(8f, 0f);
+                                p.setAlignment(Element.ALIGN_RIGHT);
+                                gplCell.setBorder(Rectangle.BOTTOM);
+                                gplCell.addElement(p);
+                                processTable.addCell(gplCell);
+                    }
+
+                    if(dyeingChemicalList.get(i).getType()== "%")
+                    {
+                        Float fquantity = computeHelper.ComputeDyeingQuantity(dyeingChemicalList.get(i), jobOrderDetails);
+                             Double quantity = Double.parseDouble(fquantity.toString());
+                        //Double quantity = Double.parseDouble(volume) * dyeingChemicalList.get(i).getValue();
+                        //Float fQuantity = jobOrderDetails.getWeight() * dyeingChemicalList.get(i).getValue();
+                        //Double quantity = Double.parseDouble(fQuantity.toString());
+                        if(quantity.toString().contains(".0") == true)
+                        {
+                            PdfPCell dyeingQuantityCell = new PdfPCell();
+                                DecimalFormat df = new DecimalFormat("#,##0.00000");
+                                df.setRoundingMode(RoundingMode.CEILING);
+                                p = new Paragraph(df.format(quantity)  + " " + dyeingChemicalList.get(i).getState(), f);
+                               p.setLeading(8f, 0f);
+                                p.setAlignment(Element.ALIGN_RIGHT);
+                                dyeingQuantityCell.setBorder(Rectangle.BOTTOM);
+                                dyeingQuantityCell.addElement(p);
+                                processTable.addCell(dyeingQuantityCell);
+
+                        }
+                        else
+                        {
+                            PdfPCell dyeingQuantityCell = new PdfPCell();
+                                DecimalFormat df = new DecimalFormat("#,###.00");
+                                df.setRoundingMode(RoundingMode.CEILING);
+                                p = new Paragraph(df.format(quantity) + " " + dyeingChemicalList.get(i).getState(), f);
+                                p.setLeading(8f, 0f);
+                                p.setAlignment(Element.ALIGN_RIGHT);
+                                dyeingQuantityCell.setBorder(Rectangle.BOTTOM);
+                                dyeingQuantityCell.addElement(p);
+                                processTable.addCell(dyeingQuantityCell);
+                        }
+                    }
+                    else
+                    {
+                        Float fquantity = computeHelper.ComputeDyeingQuantity(dyeingChemicalList.get(i), jobOrderDetails);
+                             Double quantity = Double.parseDouble(fquantity.toString());
+                        //Float fQuantity = jobOrderDetails.getWeight() * dyeingChemicalList.get(i).getValue();
+                        //Double quantity = Double.parseDouble(fQuantity.toString());
+                        //Double quantity = Double.parseDouble(volume) * dyeingChemicalList.get(i).getValue();
+                        if(quantity.toString().contains(".0") == true)
+                        {
+                            PdfPCell dyeingQuantityCell = new PdfPCell();
+                                DecimalFormat df = new DecimalFormat("#,##0.00000");
+                                df.setRoundingMode(RoundingMode.CEILING);
+                                p = new Paragraph(df.format(quantity) + " " + dyeingChemicalList.get(i).getState(), f);
+                                p.setLeading(8f, 0f);
+                                p.setAlignment(Element.ALIGN_RIGHT);
+                                dyeingQuantityCell.setBorder(Rectangle.BOTTOM);
+                                dyeingQuantityCell.addElement(p);
+                                processTable.addCell(dyeingQuantityCell);
+
+
+                        }
+                        else
+                        {
+                            PdfPCell dyeingQuantityCell = new PdfPCell();
+                                DecimalFormat df = new DecimalFormat("#,##0.00000");
+                                df.setRoundingMode(RoundingMode.CEILING);
+                                p = new Paragraph(df.format(quantity) + " " + dyeingChemicalList.get(i).getState(), f);
+                                p.setLeading(8f, 0f);
+                                p.setAlignment(Element.ALIGN_RIGHT);
+                                dyeingQuantityCell.setBorder(Rectangle.BOTTOM);
+                                dyeingQuantityCell.addElement(p);
+                                processTable.addCell(dyeingQuantityCell);
+                        }
+                    }
+                }
+                rows = rows + processTable.size();
+                if(rows == rowLimit)
+                {
+                    rowLimit = rowLimit2;
+                    document.add(processTable);
+
+                    rows = processTable.size() + 1;
+
+                    processTable = new PdfPTable(columnWidths);
+                    processTable.setWidthPercentage(100);
+                    processTable.getDefaultCell().setBorder(Rectangle.BOTTOM);
+                    processTable.getDefaultCell().setUseAscender(true);
+                    processTable.getDefaultCell().setUseDescender(true);
+
+                    document.newPage();
+                    document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
+                    document.add(table);
+                }
+                else if(rows > rowLimit)
+                {
+                    rowLimit = rowLimit2;
+                    document.newPage();
+                    document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
+                    document.add(table);
+                    document.add(processTable);
+
+                    rows = processTable.size() + 1;
+
+                    processTable = new PdfPTable(columnWidths);
+                    processTable.setWidthPercentage(100);
+                    processTable.getDefaultCell().setBorder(Rectangle.BOTTOM);
+                    processTable.getDefaultCell().setUseAscender(true);
+                    processTable.getDefaultCell().setUseDescender(true);
+                }
+                else
+                {
+                    document.add(processTable);
+
+                    processTable = new PdfPTable(columnWidths);
+                    processTable.setWidthPercentage(100);
+                    processTable.getDefaultCell().setBorder(Rectangle.BOTTOM);
+                    processTable.getDefaultCell().setUseAscender(true);
+                    processTable.getDefaultCell().setUseDescender(true);
+                }
+            }
+        }
         return document;
     }
     
@@ -294,6 +699,7 @@ public class PrintHandlerFinal {
                             document.add(table);
                             document.newPage();
                             document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
+                            
                             rows = 1;
                             table = new PdfPTable(columnWidths);
                             table.setWidthPercentage(100);
@@ -362,7 +768,7 @@ public class PrintHandlerFinal {
                                 
                                 if(dyeingChemicalList.get(i).getType()== "%")
                                 {
-                                    Float fquantity = jHandler.ComputeDyeingQuantity(dyeingChemicalList.get(i), jobOrderDetails);
+                                    Float fquantity = computeHelper.ComputeDyeingQuantity(dyeingChemicalList.get(i), jobOrderDetails);
                                      Double quantity = Double.parseDouble(fquantity.toString());
                                     //Float fQuantity = jobOrderDetails.getWeight() * dyeingChemicalList.get(i).getValue();
                                     //Double quantity = Double.parseDouble(fQuantity.toString());
@@ -398,7 +804,7 @@ public class PrintHandlerFinal {
                                     //Double quantity = Double.parseDouble(volume) * dyeingChemicalList.get(i).getValue();
                                     //Float fQuantity = jobOrderDetails.getWeight() * dyeingChemicalList.get(i).getValue();
                                     //Double quantity = Double.parseDouble(fQuantity.toString());
-                                    Float fquantity = jHandler.ComputeDyeingQuantity(dyeingChemicalList.get(i), jobOrderDetails);
+                                    Float fquantity = computeHelper.ComputeDyeingQuantity(dyeingChemicalList.get(i), jobOrderDetails);
                                      Double quantity = Double.parseDouble(fquantity.toString());
                                     if(quantity.toString().contains(".0") == true)
                                     {
@@ -435,6 +841,8 @@ public class PrintHandlerFinal {
                                         document.add(table);
                                         document.newPage();
                                         document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
+                                        
+                                        
                                         rows = 1;
                                         table = new PdfPTable(columnWidths);
                                         table.setWidthPercentage(100);
@@ -491,6 +899,7 @@ public class PrintHandlerFinal {
                                     document.add(table);
                                     document.newPage();
                                     document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
+                                    
                                     rows = 1;
                                     table = new PdfPTable(columnWidths);
                                     table.setWidthPercentage(100);
@@ -522,6 +931,7 @@ public class PrintHandlerFinal {
                             document.add(table);
                             document.newPage();
                             document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
+                            
                             rows = 1;
                             table = new PdfPTable(columnWidths);
                             table.setWidthPercentage(100);
@@ -588,7 +998,7 @@ public class PrintHandlerFinal {
 
                             if(dyeingChemicalList.get(i).getType()== "%")
                             {
-                                Float fquantity = jHandler.ComputeDyeingQuantity(dyeingChemicalList.get(i), jobOrderDetails);
+                                Float fquantity = computeHelper.ComputeDyeingQuantity(dyeingChemicalList.get(i), jobOrderDetails);
                                      Double quantity = Double.parseDouble(fquantity.toString());
                                 //Double quantity = Double.parseDouble(volume) * dyeingChemicalList.get(i).getValue();
                                 //Float fQuantity = jobOrderDetails.getWeight() * dyeingChemicalList.get(i).getValue();
@@ -621,7 +1031,7 @@ public class PrintHandlerFinal {
                             }
                             else
                             {
-                                Float fquantity = jHandler.ComputeDyeingQuantity(dyeingChemicalList.get(i), jobOrderDetails);
+                                Float fquantity = computeHelper.ComputeDyeingQuantity(dyeingChemicalList.get(i), jobOrderDetails);
                                      Double quantity = Double.parseDouble(fquantity.toString());
                                 //Float fQuantity = jobOrderDetails.getWeight() * dyeingChemicalList.get(i).getValue();
                                 //Double quantity = Double.parseDouble(fQuantity.toString());
@@ -662,6 +1072,7 @@ public class PrintHandlerFinal {
                                     document.add(table);
                                     document.newPage();
                                     document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
+                                    
                                     rows = 1;
                                     table = new PdfPTable(columnWidths);
                                     table.setWidthPercentage(100);
@@ -685,6 +1096,7 @@ public class PrintHandlerFinal {
                                 document.add(table);
                                 document.newPage();
                                 document = AddSecondPageHeader(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
+                                
                                 rows = 1;
                                 table = new PdfPTable(columnWidths);
                                 table.setWidthPercentage(100);
@@ -1038,7 +1450,7 @@ public class PrintHandlerFinal {
         return document;
     }
     
-    public Document AddThirdPage(Document document, Machine machineDetails, Design designDetails, Customer customerDetails, DesignColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume) throws IOException, DocumentException 
+    public Document AddThirdPage(Document document, Machine machineDetails, Design designDetails, Customer customerDetails, DesignColor chemicalDetails, JobOrderExtended jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume, ResinJob resin) throws IOException, DocumentException 
     {
         ResinProgramHandler resinProgramNameHandler = new ResinProgramHandler();
         DyeingProgramNameHandler dyeingProgramNameHandler = new DyeingProgramNameHandler();
@@ -1069,7 +1481,7 @@ public class PrintHandlerFinal {
         dyeingProcessHeader.setAlignment(Element.ALIGN_CENTER);
         chapter.add(dyeingProcessHeader);
         
-        Paragraph resinProgramHeader = new Paragraph(resinProgramNameHandler.GetResinProgramNameFromResinProgramID(jobOrderDetails.getResinProgramID()), dyeingProcessFont);
+        Paragraph resinProgramHeader = new Paragraph(resinProgramNameHandler.GetResinProgramNameFromResinProgramID(resin.getResinProgramID()), dyeingProcessFont);
         resinProgramHeader.setAlignment(Element.ALIGN_CENTER);
         chapter.add(resinProgramHeader);
         
@@ -1097,7 +1509,7 @@ public class PrintHandlerFinal {
         table.addCell(p3);
         
         MachineHandler machineHandler = new MachineHandler();
-        Machine resinMachine = machineHandler.GetMachineDetailsById(jobOrderDetails.getResinMachineID());
+        Machine resinMachine = machineHandler.GetMachineDetailsById(resin.getResinMachineID());
         
         Phrase p6 = new Phrase("Machine: " + resinMachine.getMachineName(), f);
         //p6.add("Machine: " + machineDetails.getMachineName(), f);
@@ -1109,7 +1521,7 @@ public class PrintHandlerFinal {
         pCell = new PdfPCell(p5);
         table.addCell(p5);
         
-        Phrase p4 = new Phrase("Weight: " + jobOrderDetails.getResinWeight(), f);
+        Phrase p4 = new Phrase("Weight: " + resin.getResinWeight(), f);
         //p4.add("Weight: " + jobOrderDetails.getWeight(), f);
         pCell = new PdfPCell(p4);
         table.addCell(p4);
@@ -1119,7 +1531,7 @@ public class PrintHandlerFinal {
         pCell = new PdfPCell(p7);
         table.addCell(p7);
         
-        Phrase p8 = new Phrase("Vol. of Water: " + jobOrderDetails.getResinVolumeH20(), f);
+        Phrase p8 = new Phrase("Vol. of Water: " + resin.getResinVolH2O(), f);
         //p8.add("Vol. of Water: " + volume, f);
         pCell = new PdfPCell(p8);
         table.addCell(p8);
@@ -1152,8 +1564,8 @@ public class PrintHandlerFinal {
         ResinChemicalHandler resinChemicalHandler = new ResinChemicalHandler();
         ChemicalHandler chemicalHandler = new ChemicalHandler();
         JobHandler jHandler = new JobHandler();
-        String resinProgramName = resinProgramHandler.GetResinProgramNameFromResinProgramID(jobOrderDetails.getResinProgramID());
-        ArrayList<ResinChemical> resinChemicalList = resinChemicalHandler.GetResinChemicalsByResinProgramId(jobOrderDetails.getResinProgramID());
+        String resinProgramName = resinProgramHandler.GetResinProgramNameFromResinProgramID(resin.getResinProgramID());
+        ArrayList<ResinChemical> resinChemicalList = resinChemicalHandler.GetResinChemicalsByResinProgramId(resin.getResinProgramID());
         
         paragraph = new Paragraph(resinProgramName, dyeingProcessFont);
         paragraph.setAlignment(Element.ALIGN_CENTER);
@@ -1234,7 +1646,7 @@ public class PrintHandlerFinal {
                 //table.addCell(String.valueOf(jobOrderDetails.getVolumeH20() * resinChemicalList.get(x).getGPLValue()));
                 if(resinChemicalList.get(x).getType()== "%")
                 {
-                    Float fquantity = jHandler.ComputerResinQuantity(resinChemicalList.get(x), jobOrderDetails);
+                    Float fquantity = computeHelper.ComputeResinQuantity(resinChemicalList.get(x), resin);
                     Double quantity = Double.parseDouble(fquantity.toString());
                     //Double quantity = Double.parseDouble(volume) * resinChemicalList.get(x).getGPLValue();
                    if(quantity.toString().contains(".0"))
@@ -1267,7 +1679,7 @@ public class PrintHandlerFinal {
                 else
                 {
                     //Double quantity = Double.parseDouble(volume) * resinChemicalList.get(x).getGPLValue();
-                    Float fquantity = jHandler.ComputerResinQuantity(resinChemicalList.get(x), jobOrderDetails);
+                    Float fquantity = computeHelper.ComputeResinQuantity(resinChemicalList.get(x), resin);
                     Double quantity = Double.parseDouble(fquantity.toString());
                     if(quantity.toString().contains(".0"))
                     {
@@ -1324,7 +1736,7 @@ public class PrintHandlerFinal {
         return document;
     }
     
-    public Document addFirstPageSection(String dest, Machine machineDetails, Design designDetails, Customer customerDetails, DesignColor chemicalDetails, JobOrder jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume, Document document) throws IOException, DocumentException {
+    public Document addFirstPageSection(String dest, Machine machineDetails, Design designDetails, Customer customerDetails, DesignColor chemicalDetails, JobOrderExtended jobOrderDetails, DyeingProgram dyeingProgramDetails, String volume, Document document) throws IOException, DocumentException {
         Font companyHeaderFont = FontFactory.getFont(FontFactory.TIMES_ROMAN, 15, Font.NORMAL);
         
         PreferenceHandler prefHandler = new PreferenceHandler();
@@ -1454,10 +1866,16 @@ public class PrintHandlerFinal {
         table.addCell(preparedBy);
         
         Phrase resin = new Phrase("Resin:______________________", f);
-        if(jobOrderDetails.getResinProgramID() > 0)
+        ArrayList<ResinJob> resinList = jobOrderDetails.getThisResinJob();
+        if(resinList.size() > 0)
         {
             ResinProgramHandler resinProgramNameHandler = new ResinProgramHandler();
-            String resinProgName = resinProgramNameHandler.GetResinProgramNameFromResinProgramID(jobOrderDetails.getResinProgramID());
+            String resinProgName = resinProgramNameHandler.GetResinProgramNameFromResinProgramID(resinList.get(0).getResinProgramID());
+            
+            if(resinList.size() == 2)
+            {
+                resinProgName = resinProgName + " / " + resinProgramNameHandler.GetResinProgramNameFromResinProgramID(resinList.get(1).getResinProgramID());
+            }
             
             resin = new Phrase("Resin: "+resinProgName, f);
         }
