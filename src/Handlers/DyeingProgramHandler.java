@@ -16,25 +16,7 @@ import javax.swing.JOptionPane;
  * @author imbuenyson
  */
 public class DyeingProgramHandler {
-    public DyeingProgram GetDyeingProgramDetailsById(int dyeingProgramId)
-    {
-        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
-        //DyeingProgram dyeingProgramDetails = new DyeingProgram();
-                
-        //if(repo.CheckIfDyeingProgramExistsUsingID(dyeingProgramId) == 1)
-        //{
-        //    dyeingProgramDetails = repo.GetDyeingProgramDetailsById(dyeingProgramId);
-        // dyeingProgramDetails;
-        //}
-            return repo.GetDyeingProgramDetailsById(dyeingProgramId);
-    }
-    //Requires values from DyeingProgramName ID, Customer ID, Color ID and Design ID
-    public DyeingProgram getDefaultProgramIDForThisDyeingProgramNameID(JobOrder thisJobOrder) {
-        
-        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
-        return repo.getDefaultDyeingProgramForThisDyeingProgramID(thisJobOrder);
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
     
     public int AddDyeingProgram(DyeingProgram newDyeingProgram)
     {
@@ -83,6 +65,27 @@ public class DyeingProgramHandler {
     {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         return repo.GetDyeingProgramIDForThisCustomer(DyeingProgramName, thisJob);
+    }
+    
+    public DyeingProgram GetDyeingProgramDetailsById(int dyeingProgramId)
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        //DyeingProgram dyeingProgramDetails = new DyeingProgram();
+                
+        //if(repo.CheckIfDyeingProgramExistsUsingID(dyeingProgramId) == 1)
+        //{
+        //    dyeingProgramDetails = repo.GetDyeingProgramDetailsById(dyeingProgramId);
+        // dyeingProgramDetails;
+        //}
+            return repo.GetDyeingProgramDetailsById(dyeingProgramId);
+    }
+    
+    //Requires values from DyeingProgramName ID, Customer ID, Color ID and Design ID
+    public DyeingProgram getDefaultProgramIDForThisDyeingProgramNameID(JobOrder thisJobOrder) {
+        
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        return repo.getDefaultDyeingProgramForThisDyeingProgramID(thisJobOrder);
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     

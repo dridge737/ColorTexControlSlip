@@ -763,7 +763,7 @@ public class ReviewFormV2 extends javax.swing.JFrame {
                     this.dispose();
                 }
             } else {
-                if (getThisJob().getThisResinJob().size() > 0) {
+                if (getThisJob().getThisResinJob() != null) {
                     new AddResinForm(getThisJob()).setVisible(true);
                 } else {
                     new DyeingForm(getThisJob()).setVisible(true);

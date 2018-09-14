@@ -979,7 +979,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                         == JOptionPane.showConfirmDialog(null, "This customer has not yet been added. Do you want to add it?", "Add this customer?", JOptionPane.YES_NO_OPTION)) {
                     //Add the Chemicalname to the database
                     Customer thisCustomer = new Customer();
-                    thisDesign.setDesignName(CustomerTextField.getText());
+                    thisCustomer.setCustomerName(CustomerTextField.getText());
                     CustomerHandler thisCustomerHandler = new CustomerHandler();
                     thisCustomerHandler.AddNewCustomer(thisCustomer);
                     CustomerList.add(CustomerTextField.getText());

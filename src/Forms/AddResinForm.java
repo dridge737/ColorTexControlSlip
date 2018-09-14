@@ -95,9 +95,13 @@ public class AddResinForm extends javax.swing.JFrame {
     {
         this();
         //Problem that will be encountered on the second resin window
-        String ResinProgramName = new ResinProgramHandler().
+        if(currentJob.getThisResinJob()!=null)
+        {
+            String ResinProgramName = new ResinProgramHandler().
                 GetResinProgramNameFromResinProgramID(currentJob.getThisResinJob().get(currentJob.getThisResinJob().size()-1).getResinProgramID());
         InitializeWindowForControlSlip(ResinProgramName, currentJob);
+            
+        }
     }
     
     public AddResinForm(String ResinProgramName , JobOrderExtended currentJob)

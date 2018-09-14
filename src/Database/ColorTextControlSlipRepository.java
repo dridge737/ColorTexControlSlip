@@ -1420,8 +1420,9 @@ public class ColorTextControlSlipRepository {
                     + " WHERE Name = ?"
                     + " AND ColorID = ?"
                     + " AND DesignID = ?"
-                    + " AND ProgramNameID = dyeing_program_name.ID"
-                    + " AND dyeing_program.ID IN (SELECT DISTINCT(DyeingProgramID) FROM job_order WHERE CustomerId = ?)");
+                    + " AND CustomerID = ?"
+                    + " AND ProgramNameID = dyeing_program_name.ID");
+                   // + " AND dyeing_program.ID IN (SELECT DISTINCT(DyeingProgramID) FROM job_order WHERE CustomerId = ?)");
 
             int item = 1;
             ps.setString(item++, dyeingProgramName);
@@ -1512,8 +1513,9 @@ public class ColorTextControlSlipRepository {
             if (rs.first()) {
                 dyeingProgramDetails.SetID(rs.getInt("ID"));
                 dyeingProgramDetails.setDyeingProgramNameID(thisJobOrder.getDyeingProgramID());
-                dyeingProgramDetails.setColorID(thisJobOrder.getColorID());
-                dyeingProgramDetails.setDesignID(thisJobOrder.getDesignID());
+                dyeingProgramDetails.setColorID(0);
+                dyeingProgramDetails.setDesignID(0);
+                dyeingProgramDetails.setCustomerID(0);
             }
         } catch (SQLException ex) {
             Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
