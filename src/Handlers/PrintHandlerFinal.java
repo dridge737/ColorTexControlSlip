@@ -78,15 +78,19 @@ public class PrintHandlerFinal {
         document = AddSecondPage(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume);
         document.newPage();
         
-        if(resinList.size() > 0)
+        if(resinList != null)
         {
-            document = AddThirdPage(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume, resinList.get(0));
-            if(resinList.size() == 2)
+            if(resinList.size() > 0)
             {
-                document.newPage();
-                document = AddThirdPage(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume, resinList.get(1));
-            }
+                document = AddThirdPage(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume, resinList.get(0));
+                if(resinList.size() == 2)
+                {
+                    document.newPage();
+                    document = AddThirdPage(document, machineDetails, designDetails, customerDetails, chemicalDetails, jobOrderDetails, dyeingProgramDetails, volume, resinList.get(1));
+                }
+            }          
         }
+
         document.close();
     }
     public PdfPTable AddLongTable()throws IOException, DocumentException
@@ -1867,18 +1871,22 @@ public class PrintHandlerFinal {
         
         Phrase resin = new Phrase("Resin:______________________", f);
         ArrayList<ResinJob> resinList = jobOrderDetails.getThisResinJob();
-        if(resinList.size() > 0)
+        if(resinList != null)
         {
-            ResinProgramHandler resinProgramNameHandler = new ResinProgramHandler();
-            String resinProgName = resinProgramNameHandler.GetResinProgramNameFromResinProgramID(resinList.get(0).getResinProgramID());
-            
-//            if(resinList.size() == 2)
-//            {
-//                resinProgName = resinProgName + " / " + resinProgramNameHandler.GetResinProgramNameFromResinProgramID(resinList.get(1).getResinProgramID());
-//            }
-            
-            resin = new Phrase("Resin: "+resinProgName, f);
+            if(resinList.size() > 0)
+            {
+                ResinProgramHandler resinProgramNameHandler = new ResinProgramHandler();
+                String resinProgName = resinProgramNameHandler.GetResinProgramNameFromResinProgramID(resinList.get(0).getResinProgramID());
+
+    //            if(resinList.size() == 2)
+    //            {
+    //                resinProgName = resinProgName + " / " + resinProgramNameHandler.GetResinProgramNameFromResinProgramID(resinList.get(1).getResinProgramID());
+    //            }
+
+                resin = new Phrase("Resin: "+resinProgName, f);
+            }
         }
+        
         //resin.add("Resin:___________________", f);
         pCell = new PdfPCell(resin);
         pCell.setColspan(2);
