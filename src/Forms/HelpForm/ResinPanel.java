@@ -50,7 +50,7 @@ public class ResinPanel extends javax.swing.JPanel {
     {
         this();
         thisResinJob = currentResinJob;
-        SetResinProgramName(thisResinJob.getID());
+        SetResinProgramName(thisResinJob.getResinProgramID());
         populateResinMachineDropDown();
         SetResinMachineNameDropDown();
     }
@@ -74,7 +74,6 @@ public class ResinPanel extends javax.swing.JPanel {
         EditResinProgram = new javax.swing.JButton();
         ResinFabricTypeDropDown = new javax.swing.JComboBox<>();
         FabricTypeLabel = new javax.swing.JLabel();
-        ResinMachineLiquidRatioDropDown = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(102, 102, 102));
 
@@ -99,11 +98,6 @@ public class ResinPanel extends javax.swing.JPanel {
         jLabel13.setText("Volume of Water :");
 
         ResinWeight.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        ResinWeight.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                ResinWeightFocusLost(evt);
-            }
-        });
         ResinWeight.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 ResinWeightKeyReleased(evt);
@@ -151,14 +145,6 @@ public class ResinPanel extends javax.swing.JPanel {
         FabricTypeLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         FabricTypeLabel.setText("Fabric Type :");
 
-        ResinMachineLiquidRatioDropDown.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        ResinMachineLiquidRatioDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Liquid Ratio" }));
-        ResinMachineLiquidRatioDropDown.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ResinMachineLiquidRatioDropDownActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -171,11 +157,7 @@ public class ResinPanel extends javax.swing.JPanel {
                         .addGap(12, 12, 12)
                         .addComponent(FabricTypeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(143, 143, 143)
-                                .addComponent(ResinMachineLiquidRatioDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(ResinFabricTypeDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(ResinFabricTypeDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -202,7 +184,6 @@ public class ResinPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(ResinMachineDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(FabricTypeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ResinMachineLiquidRatioDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ResinFabricTypeDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(7, 7, 7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -278,10 +259,6 @@ public class ResinPanel extends javax.swing.JPanel {
 
         //thisResinMachine.setMachineName(getMachineDetails().getMachineName());
     }//GEN-LAST:event_ResinMachineDropDownActionPerformed
-
-    private void ResinWeightFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ResinWeightFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ResinWeightFocusLost
 
     private boolean CheckIfResinMachineHasInputs()
     {
@@ -367,11 +344,6 @@ public class ResinPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_ResinFabricTypeDropDownActionPerformed
 
-    private void ResinMachineLiquidRatioDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResinMachineLiquidRatioDropDownActionPerformed
-        // TODO add your handling code here:
-        ComputeForResinVolume();
-    }//GEN-LAST:event_ResinMachineLiquidRatioDropDownActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton EditResinProgram;
@@ -379,11 +351,24 @@ public class ResinPanel extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> ResinFabricTypeDropDown;
     private javax.swing.JLabel ResinLabel;
     private javax.swing.JComboBox<String> ResinMachineDropDown;
-    private javax.swing.JComboBox<String> ResinMachineLiquidRatioDropDown;
     private javax.swing.JTextField ResinProgramText;
     private javax.swing.JTextField ResinVolumeTextField;
     private javax.swing.JTextField ResinWeight;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     // End of variables declaration//GEN-END:variables
+
+    public void setResinJobDataFromPanel()
+    {
+        thisResinJob.setResinWeight(Float.parseFloat(ResinWeight.getText()));
+        thisResinJob.setResinVolH2O(Float.parseFloat(ResinVolumeTextField.getText()));
+        thisResinJob.setResinMachineID(machineDetails.getMachineId());
+        //thisResinJob.setResinProgramID(ERROR);
+    }
+    public ResinJob getDataInThisPanel() 
+    {
+        setResinJobDataFromPanel();
+        return thisResinJob;
+            //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

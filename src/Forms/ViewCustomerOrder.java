@@ -10,6 +10,7 @@ import DataEntities.JobOrder;
 import DataEntities.JobOrderExtended;
 import Handlers.CustomerHandler;
 import Handlers.JobHandler;
+import Handlers.ResinJobHandler;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -279,8 +280,9 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
             JobHandler thisJobOrderHandler = new JobHandler();
             //JobOrder thisJob = thisJobOrderHandler.GetJobOrderDetailsFromDrNumber(DrNumber);
             
-            JobOrder thisJob = thisJobOrderHandler.GetJobOrderDetailsFromJobOrderID(JobId);
-            ReviewFormV2 orderReviewForm = new ReviewFormV2((JobOrderExtended) thisJob, 6);
+            JobOrderExtended thisJob =  new JobOrderExtended(thisJobOrderHandler.GetJobOrderDetailsFromJobOrderID(JobId));
+            thisJob.setThisResinJob(new ResinJobHandler().GetResinJobListFromJobOrderID(thisJob.getID()));
+            ReviewFormV2 orderReviewForm = new ReviewFormV2( thisJob, 6);
             orderReviewForm.setVisible(true);
             this.dispose();
         }

@@ -24,6 +24,28 @@ public class JobOrderExtended extends JobOrder{
     private String ResinProgramName;
     private ArrayList<ResinJob> thisResinJob;
 
+    public JobOrderExtended(){}
+    
+    public JobOrderExtended(JobOrder JobOrderDetails) {
+        this.setID(JobOrderDetails.getID());
+        this.setDrNumber(JobOrderDetails.getDrNumber());
+        this.setDesignID(JobOrderDetails.getDesignID());
+        this.setColorID(JobOrderDetails.getColorID());
+        this.setCustomerID(JobOrderDetails.getCustomerID());
+        this.setJobDate(JobOrderDetails.getJobDate());
+        this.setBatchNo(JobOrderDetails.getBatchNo());
+        this.setDyeingMachineID(JobOrderDetails.getDyeingMachineID());
+        this.setDyeingWeight(JobOrderDetails.getDyeingWeight());
+        this.setDyeingVolumeH20(JobOrderDetails.getDyeingVolumeH20());
+        this.setRollLoad(JobOrderDetails.getRollLoad());
+        this.setRoll(JobOrderDetails.getRoll());
+        this.setDyeingProgramID(JobOrderDetails.getDyeingProgramID());
+        this.setLocation(JobOrderDetails.getLocation());
+        this.setReference(JobOrderDetails.getReference());
+        this.setLocation(JobOrderDetails.getLocation());
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     
     /**
      * @return the DyeingProgramName

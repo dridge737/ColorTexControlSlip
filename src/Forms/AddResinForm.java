@@ -25,6 +25,7 @@ import DataEntities.ResinProgramName;
 import Forms.HelpForm.ButtonColumn;
 import Forms.HelpForm.auto_complete;
 import Handlers.ComputeHelper;
+import Handlers.DesignHandler;
 import Handlers.JobHandler;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -439,9 +440,30 @@ public class AddResinForm extends javax.swing.JFrame {
 
                 if (resinProgramId != -1) {
                     
-                    thisJob.getThisResinJob().get(WindowType).setResinProgramID(resinProgramId);
-                    ReviewFormV2 thisForm = new ReviewFormV2(thisJob, this.WindowType);
-                    thisForm.setVisible(true);
+                    thisJob.getThisResinJob().get(thisJob.getThisResinJob().size()-1).setResinProgramID(resinProgramId);
+                    if(new DesignHandler().GetDesignNameFromID(thisJob.getDesignID()).endsWith("NL") &&
+                            thisJob.getThisResinJob().size() <2)
+                    {
+                        if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Do you want to include a second RESIN PROGRAM with this Job?", "Add 2nd Resin Program?", JOptionPane.YES_NO_OPTION)) {//Show the Resin Form
+                            //IF a user wants to add Resin program to the job order
+                            //Show Machine Selection Form
+                            MachineSelection thisMachineSelection = new MachineSelection(thisJob, 3);
+                            thisMachineSelection.setVisible(true);
+                            //ViewResinProgramList thisResinProgram = new ViewResinProgramList(thisJob);
+                            //thisResinProgram.setVisible(true);
+                        }
+                        else {
+
+                            ReviewFormV2 thisForm = new ReviewFormV2(thisJob, this.WindowType);
+                            thisForm.setVisible(true);
+                        }
+                        //Message if users wants to add another Resin
+                    }
+                    else {
+                        ReviewFormV2 thisForm = new ReviewFormV2(thisJob, this.WindowType);
+                        thisForm.setVisible(true);
+                    }
+                    
                     this.dispose();
                 }
             } else {

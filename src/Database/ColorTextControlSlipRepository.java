@@ -3856,7 +3856,7 @@ public class ColorTextControlSlipRepository {
             conn = db.getConnection();
             String query = "INSERT INTO resin_job (ResinMachineID, ResinWeight, ResinVolH2O, ResinProgramID, JobOrderID) VALUES (?, ?, ?, ?, ?)";
 
-            preparedStmt = conn.prepareStatement(query);
+            preparedStmt = conn.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
             int x = 1;
             preparedStmt.setInt(x++, thisResinJob.getResinMachineID());
             preparedStmt.setFloat(x++, thisResinJob.getResinWeight());
@@ -3866,6 +3866,7 @@ public class ColorTextControlSlipRepository {
             preparedStmt.execute();
 
             ResultSet generatedKeys = preparedStmt.getGeneratedKeys();
+            
             if (generatedKeys.next()) {
                 addedID = generatedKeys.getInt(1);
             } else {
@@ -3959,6 +3960,40 @@ public class ColorTextControlSlipRepository {
         }
         this.closeConn(conn, ps, rs);
         return thisResinJob;
+    
+    }
+    
+    public ArrayList<ResinJob> GetResinJobFromJobID(int JobOrderID)
+    {
+        
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ArrayList<ResinJob> thisResinJobList = new ArrayList<ResinJob>();
+        try {
+            conn = db.getConnection();
+            ps = conn.prepareStatement("SELECT * "
+                    + " FROM resin_job "
+                    + " WHERE JobOrderID = ? ");
+
+            ps.setInt(1, JobOrderID);
+
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                ResinJob thisResinJob = new ResinJob();
+                thisResinJob.setID( rs.getInt("ID") );
+                thisResinJob.setResinMachineID(rs.getInt("ResinMachineID") );
+                thisResinJob.setResinWeight(rs.getFloat("ResinWeight") );
+                thisResinJob.setResinVolH2O(rs.getFloat("ResinVolH2O") );
+                thisResinJob.setResinProgramID(rs.getInt("ResinProgramID") );
+                thisResinJobList.add(thisResinJob);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.closeConn(conn, ps, rs);
+        return thisResinJobList;
     
     }
     

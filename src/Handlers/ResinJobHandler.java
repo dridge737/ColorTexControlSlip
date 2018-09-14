@@ -8,6 +8,7 @@ package Handlers;
 import DataEntities.ResinChemical;
 import DataEntities.ResinJob;
 import Database.ColorTextControlSlipRepository;
+import java.util.ArrayList;
 
 /**
  *
@@ -20,6 +21,7 @@ public class ResinJobHandler {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         return repo.AddResinJob(thisResinJob);
     }
+    
     
     public boolean UpdateResinJob(ResinJob thisResinJob)
     {
@@ -40,6 +42,12 @@ public class ResinJobHandler {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         return repo.GetResinJobFromJobID(thisResinJob);
      
+    }
+    
+    public ArrayList<ResinJob> GetResinJobListFromJobOrderID(int JobOrderID)
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        return repo.GetResinJobFromJobID(JobOrderID);
     }
     
     

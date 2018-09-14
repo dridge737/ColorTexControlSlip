@@ -13,6 +13,8 @@ import DataEntities.JobOrder;
 import DataEntities.JobOrderExtended;
 import DataEntities.Machine;
 import DataEntities.ProcessOrder;
+import DataEntities.ResinJob;
+import Forms.HelpForm.ResinPanel;
 import Handlers.ColorHandler;
 import Handlers.CustomerHandler;
 import Handlers.DesignHandler;
@@ -23,9 +25,11 @@ import Handlers.LiquidRatioHandler;
 import Handlers.MachineHandler;
 import Handlers.PreferenceHandler;
 import Handlers.PrintHandlerFinal;
+import Handlers.ResinJobHandler;
 import Handlers.ResinProgramHandler;
 import com.itextpdf.text.DocumentException;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.KeyboardFocusManager;
 import java.awt.Toolkit;
@@ -102,6 +106,27 @@ public class ReviewFormV2 extends javax.swing.JFrame {
         if(currentJob.getThisResinJob() != null)
         {
             //Add a Resin Panel
+            ResinPanel thisResinPanel;
+            int index = 0;
+            for(ResinJob AllResinJob: currentJob.getThisResinJob())
+            {
+                thisResinPanel = new ResinPanel(AllResinJob);
+                DyeingResinTab.add(thisResinPanel, "Resin Program "+index+1);
+                index++;
+            }
+            
+            //ProcessPanel this_panel;
+        //if(WindowProcessType > 2 )
+        //if(thisJob.getID()>0 )
+        //this_panel = new ProcessPanel(thisProcess, WindowProcessType, thisJob);
+        //else
+        //this_panel = new ProcessPanel(thisProcess, WindowProcessType);
+        
+        //Add the Tab to the JtabbedPane
+        //GUITabbedPaneProcess.add(this_panel, "Process " + String.valueOf(NumberOfProcessTabs+1),
+        //            NumberOfProcessTabs);
+        //NumberOfProcessTabs++;
+            
             /*
             if (currentJob.getThisResinJob().get(0).getResinProgramID() > 0) {
                 SetResinProgramName();
@@ -672,18 +697,29 @@ public class ReviewFormV2 extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Job order has already been added.");
             this.dispose();
         } else {
-            if (this.WindowType != 6) {
-                if (AddTextToJobOrderObject()) {
-                    if (thisJobHandler.AddNewJobOrder(getThisJob()) > 0) {
+            if (AddTextToJobOrderObject()) {
+                if (this.WindowType != 6) {
+                    int jobOrderID = thisJobHandler.AddNewJobOrder(getThisJob());
+                    if ( jobOrderID > 0) {
+                        if (getThisJob().getThisResinJob() != null) {
+                            for (ResinJob thisResinJob : getThisJob().getThisResinJob()) {
+                                thisResinJob.setJobOrderID(jobOrderID);
+                                new ResinJobHandler().AddResinJob(thisResinJob);
+                            }
+                        }
                         JOptionPane.showMessageDialog(null, "Job order has been added.");
                         this.dispose();
                     } else {
                         JOptionPane.showMessageDialog(null, "There is an error in adding the Job Order.");
                     }
-                }
-            } else if (WindowType == 6) {
-                if (AddTextToJobOrderObject()) {
+
+                } else if (WindowType == 6) {
                     if (thisJobHandler.UpdateJobOrder(getThisJob())) {
+                        //Also Update Resin Program
+                        for (ResinJob thisResinJob : getThisJob().getThisResinJob()) {
+                                thisResinJob.setJobOrderID(getThisJob().getID());
+                                new ResinJobHandler().UpdateResinJob(thisResinJob);
+                        }
                         JOptionPane.showMessageDialog(null, "Job order has been updated.");
                         this.dispose();
                     } else {
@@ -880,10 +916,27 @@ public class ReviewFormV2 extends javax.swing.JFrame {
                 thisJob.setBatchNo(Integer.parseInt(BatchNo.getText()));
             }
             */
+            
             getThisJob().setBatchNo(BatchNo.getText());
             getThisJob().setDyeingMachineID(thisDyeingMachine.getMachineId());
             getThisJob().setDyeingVolumeH20(Float.parseFloat(this.DyeingVolumeTextField.getText()));
             getThisJob().setDyeingWeight(Float.parseFloat(this.DyeingWeight.getText()));
+            
+            Component[] this_pane = this.DyeingResinTab.getComponents();
+            int ResinPanelNumber = 1;
+            
+            ArrayList<ResinJob> thisResinJobList = new ArrayList<ResinJob>();
+            for (Component c : this_pane)
+            {
+                if (c instanceof ResinPanel) {
+                        ResinPanel thisResinPanel = ((ResinPanel)c);
+                        ResinJob thisResinJob = thisResinPanel.getDataInThisPanel();
+                        //thisResinJob.setJobOrderID(thisJob.getID());
+                        thisResinJobList.add(thisResinJob);
+                }
+            
+            }
+                thisJob.setThisResinJob(thisResinJobList);
             
             //Add Resin Details to jobOrder here
             /*if (thisResinMachine.getMachineId() > 0) {
