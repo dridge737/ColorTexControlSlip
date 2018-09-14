@@ -1872,10 +1872,10 @@ public class PrintHandlerFinal {
             ResinProgramHandler resinProgramNameHandler = new ResinProgramHandler();
             String resinProgName = resinProgramNameHandler.GetResinProgramNameFromResinProgramID(resinList.get(0).getResinProgramID());
             
-            if(resinList.size() == 2)
-            {
-                resinProgName = resinProgName + " / " + resinProgramNameHandler.GetResinProgramNameFromResinProgramID(resinList.get(1).getResinProgramID());
-            }
+//            if(resinList.size() == 2)
+//            {
+//                resinProgName = resinProgName + " / " + resinProgramNameHandler.GetResinProgramNameFromResinProgramID(resinList.get(1).getResinProgramID());
+//            }
             
             resin = new Phrase("Resin: "+resinProgName, f);
         }
