@@ -48,7 +48,7 @@ public class MachineSelection extends javax.swing.JFrame {
     {
         this();
         thisJob = currentJob;
-        if( !thisJob.getThisResinJob().isEmpty() )
+        if( thisJob.getThisResinJob() != null )
             SetValuesFromThisJob();
     }
     

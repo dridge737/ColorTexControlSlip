@@ -90,7 +90,7 @@ public class ReviewForm extends javax.swing.JFrame {
         SetJobOrderDetails();
         SetDropDownDetails();
         SetDyeingProgramName();
-        if (currentJob.getThisResinJob().size() > 0) {
+        if (currentJob.getThisResinJob() != null) {
             SetResinProgramName();
             SetResinMachineNameDropDown();
         } else {
@@ -131,7 +131,7 @@ public class ReviewForm extends javax.swing.JFrame {
     }
 
     private void SetResinProgramName() {
-        if (thisJob.getThisResinJob().get(0).getResinProgramID() > 0) {
+        if (thisJob.getThisResinJob() != null ) {
             String ResinProgramName
                     = new ResinProgramHandler().GetResinProgramNameFromResinProgramID(thisJob.getThisResinJob().get(0).getResinProgramID());
             ResinProgramText.setText(ResinProgramName);
@@ -852,7 +852,7 @@ public class ReviewForm extends javax.swing.JFrame {
                     this.dispose();
                 }
             } else {
-                if (thisJob.getThisResinJob().get(0).getResinProgramID() > 0) {
+                if (thisJob.getThisResinJob() != null) {
                     new AddResinForm(thisJob).setVisible(true);
                 } else {
                     new DyeingForm(thisJob).setVisible(true);
