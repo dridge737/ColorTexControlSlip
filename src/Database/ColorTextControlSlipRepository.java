@@ -1359,7 +1359,7 @@ public class ColorTextControlSlipRepository {
         return DyeingList;
     }
 
-    public int CheckIfSpecificDyeingProgramExistsForThisCustomer(String dyeingProgramName, int CustomerID) {
+    public int CheckIfSpecificDyeingProgramExistsForThisCustomer(String dyeingProgramName, JobOrderExtended thisJobOrder) {
         DBConnection dbc = new DBConnection();
         Connection conn = null;
         PreparedStatement ps = null;
@@ -1367,7 +1367,7 @@ public class ColorTextControlSlipRepository {
         int checkTest = 0;
         try {
             conn = dbc.getConnection();
-            ps = conn.prepareStatement(
+            /*ps = conn.prepareStatement(
                     " SELECT EXISTS "
                     + "(SELECT dyeing_program.ID "
                     + " FROM dyeing_program, dyeing_program_name "
@@ -1376,10 +1376,23 @@ public class ColorTextControlSlipRepository {
                     + " AND dyeing_program.ID "
                     + " IN (SELECT DyeingProgramID FROM job_order WHERE CustomerId = ?))"
                     + " AS 'CheckTest'");
-
+*/
+            ps = conn.prepareStatement(
+                    " SELECT EXISTS "
+                    + "(SELECT dyeing_program.ID "
+                    + " FROM dyeing_program, dyeing_program_name "
+                    + " WHERE Name = ? "
+                    + " AND ColorID = ?"
+                    + " AND DesignID = ?"
+                    + " AND CustomerID = ?"
+                    + " AND ProgramNameID = dyeing_program_name.ID ) "
+                    + " AS 'CheckTest'");
+            
             int item = 1;
             ps.setString(item++, dyeingProgramName);
-            ps.setInt(item++, CustomerID);
+            ps.setInt(item++, thisJobOrder.getColorID());
+            ps.setInt(item++, thisJobOrder.getDesignID());
+            ps.setInt(item++, thisJobOrder.getCustomerID());
 
             rs = ps.executeQuery();
             if (rs.first()) {
@@ -1394,7 +1407,7 @@ public class ColorTextControlSlipRepository {
         return checkTest;
     }
 
-    public int GetDyeingProgramIDForThisCustomer(String dyeingProgramName, int CustomerID) {
+    public int GetDyeingProgramIDForThisCustomer(String dyeingProgramName, JobOrderExtended thisJobOrder) {
         DBConnection db = new DBConnection();
         Connection conn = null;
         PreparedStatement ps = null;
@@ -1404,13 +1417,17 @@ public class ColorTextControlSlipRepository {
             conn = db.getConnection();
             ps = conn.prepareStatement(
                     " SELECT dyeing_program.ID FROM dyeing_program, dyeing_program_name "
-                    + " WHERE Name = ? "
+                    + " WHERE Name = ?"
+                    + " AND ColorID = ?"
+                    + " AND DesignID = ?"
                     + " AND ProgramNameID = dyeing_program_name.ID"
                     + " AND dyeing_program.ID IN (SELECT DISTINCT(DyeingProgramID) FROM job_order WHERE CustomerId = ?)");
 
             int item = 1;
             ps.setString(item++, dyeingProgramName);
-            ps.setInt(item++, CustomerID);
+            ps.setInt(item++, thisJobOrder.getColorID());
+            ps.setInt(item++, thisJobOrder.getDesignID());
+            ps.setInt(item++, thisJobOrder.getCustomerID());
             rs = ps.executeQuery();
             if (rs.first()) {
                 DyeingProgramID = rs.getInt("dyeing_program.ID");
@@ -1482,14 +1499,15 @@ public class ColorTextControlSlipRepository {
                     " SELECT ID FROM dyeing_program "
                     + " WHERE ProgramNameID = ? "
                     + " AND  CustomerID = 0 "
-                    + " AND  ColorID = ? "
-                    + " AND  DesignID = ?;"
+                    + " AND  ColorID = 0 "
+                    + " AND  DesignID = 0;"
             );
             
             int item = 1;
             ps.setInt(item++, thisJobOrder.getDyeingProgramID());
-            ps.setInt(item++, thisJobOrder.getColorID());
-            ps.setInt(item++, thisJobOrder.getDesignID());
+//            ps.setInt(item++, thisJobOrder.getCustomerID());
+//            ps.setInt(item++, thisJobOrder.getColorID());
+//            ps.setInt(item++, thisJobOrder.getDesignID());
             rs = ps.executeQuery();
             if (rs.first()) {
                 dyeingProgramDetails.SetID(rs.getInt("ID"));

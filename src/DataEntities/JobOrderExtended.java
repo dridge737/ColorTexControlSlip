@@ -38,6 +38,7 @@ public class JobOrderExtended extends JobOrder{
     public void setDyeingProgramName(String DyeingProgramName) {
         this.DyeingProgramName = DyeingProgramName;
     }
+    
 
     /**
      * @return the ResinProgramName

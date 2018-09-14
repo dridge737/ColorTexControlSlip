@@ -146,7 +146,7 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
             thisResinJob.setJobOrderID(thisJob.getID());
             thisResinJob = thisResinJobHandler.GetResinJobFromJobID(thisResinJob);
             thisJob.getThisResinJob().add(thisResinJob);
-            ReviewForm orderReviewForm = new ReviewForm(thisJob, 3);
+            ReviewFormV2 orderReviewForm = new ReviewFormV2(thisJob, 3);
             orderReviewForm.setVisible(true);
             this.dispose();
         }

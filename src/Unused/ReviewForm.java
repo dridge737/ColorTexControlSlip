@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Forms;
+package Unused;
 
 import DataEntities.DesignColor;
 import DataEntities.Customer;
@@ -13,6 +13,12 @@ import DataEntities.JobOrder;
 import DataEntities.JobOrderExtended;
 import DataEntities.Machine;
 import DataEntities.ProcessOrder;
+import Forms.AddResinForm;
+import Forms.DyeingForm;
+import Forms.JobOrderForm;
+import Forms.ViewCustomerOrder;
+import Forms.ViewDyeingProgramList;
+import Forms.ViewResinProgramList;
 import Handlers.ColorHandler;
 import Handlers.CustomerHandler;
 import Handlers.DesignHandler;
@@ -84,7 +90,7 @@ public class ReviewForm extends javax.swing.JFrame {
         SetJobOrderDetails();
         SetDropDownDetails();
         SetDyeingProgramName();
-        if (currentJob.getThisResinJob().get(0).getResinProgramID() > 0) {
+        if (currentJob.getThisResinJob().size() > 0) {
             SetResinProgramName();
             SetResinMachineNameDropDown();
         } else {

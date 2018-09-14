@@ -323,7 +323,7 @@ public class ViewResinProgramList extends javax.swing.JFrame {
         //Resin list window from review form
         if(WindowType == 4 || WindowType == 5)
         {
-            new ReviewForm(thisJob, WindowType).setVisible(true);
+            new ReviewFormV2(thisJob, WindowType).setVisible(true);
         }
         //Resin List from Job order form
         else if(WindowType == 3)

@@ -7,6 +7,7 @@ package Handlers;
 
 import DataEntities.DyeingProgram;
 import DataEntities.JobOrder;
+import DataEntities.JobOrderExtended;
 import Database.ColorTextControlSlipRepository;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -72,16 +73,16 @@ public class DyeingProgramHandler {
     //    return repo.GetDyeingProgramNameIDFromName(Name);
     //}
     
-    public boolean CheckIfSpecificDyeingProgramExistForThisCustomer(String DyeingProgramName , int CustomerID)
+    public boolean CheckIfSpecificDyeingProgramExistForThisCustomer(String DyeingProgramName , JobOrderExtended thisJob)
     {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
-        return repo.CheckIfSpecificDyeingProgramExistsForThisCustomer(DyeingProgramName, CustomerID) == 1;
+        return repo.CheckIfSpecificDyeingProgramExistsForThisCustomer(DyeingProgramName, thisJob) == 1;
     }
     
-    public int GetDyeingProgramIDForCustomerDyeingProgram(String DyeingProgramName , int CustomerID)
+    public int GetDyeingProgramIDForCustomerDyeingProgram(String DyeingProgramName , JobOrderExtended thisJob)
     {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
-        return repo.GetDyeingProgramIDForThisCustomer(DyeingProgramName, CustomerID);
+        return repo.GetDyeingProgramIDForThisCustomer(DyeingProgramName, thisJob);
     }
 
     

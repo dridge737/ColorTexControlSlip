@@ -187,6 +187,7 @@ public class JobOrderForm extends javax.swing.JFrame {
                 ComputeVolume();
             }
         });
+       LiquidRatioTextField.setFocusTraversalKeysEnabled(false);
     }
     public void SetToCenter()
     {
@@ -257,6 +258,11 @@ public class JobOrderForm extends javax.swing.JFrame {
     
     public void SetCustomerAndDesignDetails()
     {
+        thisCustomer.setCustomerId(thisJob.getCustomerID());
+        CustomerHandler thisCustomerHandler = new CustomerHandler();
+        thisCustomer.setCustomerName(thisCustomerHandler.GetCustomerNameFromCustomerID(thisCustomer.getCustomerId()));
+        CustomerTextField.setText(thisCustomer.getCustomerName());
+        
         thisColor.setColorId(thisJob.getColorID());
         ColorHandler thisColorHandler = new ColorHandler();
         thisColor.setColorName(thisColorHandler.GetColorNameFromColorID(thisColor.getColorId()));

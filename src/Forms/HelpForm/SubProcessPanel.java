@@ -278,6 +278,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
         auto_complete dropdownAutoComplete = new auto_complete();
         dropdownAutoComplete.setupAutoComplete(this.ChemicalTextfield, AllChemical);
         this.ChemicalTextfield.setColumns(30);
+        ChemicalTextfield.setFocusTraversalKeysEnabled(false);
     }
     
     public void HideText()

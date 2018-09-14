@@ -34,18 +34,18 @@ public class JobOrder {
     private String jobDate;
     private String BatchNo;
     private int DyeingMachineID;
+    private int DyeingProgramID;
     private float DyeingVolumeH20;
     private float DyeingWeight;
     private String RollLoad;
-    //private int ResinMachineID;
-    //private float ResinVolumeH20;
-    //private float ResinWeight;
     private float Roll;
-    private int DyeingProgramID;
-    //private int ResinProgramID;
     private String Reference;
     private String ProgramNumber;
     private String Location;
+    //private int ResinMachineID;
+    //private float ResinVolumeH20;
+    //private float ResinWeight;
+    //private int ResinProgramID;
     
 
     /**

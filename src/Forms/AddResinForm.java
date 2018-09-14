@@ -436,7 +436,7 @@ public class AddResinForm extends javax.swing.JFrame {
                 if (resinProgramId != -1) {
                     
                     thisJob.getThisResinJob().get(WindowType).setResinProgramID(resinProgramId);
-                    ReviewForm thisForm = new ReviewForm(thisJob, this.WindowType);
+                    ReviewFormV2 thisForm = new ReviewFormV2(thisJob, this.WindowType);
                     thisForm.setVisible(true);
                     this.dispose();
                 }

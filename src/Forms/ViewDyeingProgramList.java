@@ -294,7 +294,7 @@ public class ViewDyeingProgramList extends javax.swing.JFrame {
         }
         else if(WindowType > 3)
         {
-            new ReviewForm(thisJob, WindowType).setVisible(true);
+            new ReviewFormV2(thisJob, WindowType).setVisible(true);
         }
         this.dispose();
         

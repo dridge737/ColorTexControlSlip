@@ -166,11 +166,11 @@ public class DyeingForm extends javax.swing.JFrame {
         DyeingProgramHandler thisDyeingProgramHandler = new DyeingProgramHandler();
         thisDyeingProgramName.setDyeingProgramName(DyeingProgramName);
         if(thisDyeingProgramHandler.
-                CheckIfSpecificDyeingProgramExistForThisCustomer(DyeingProgramName, thisJob.getCustomerID()))
+                CheckIfSpecificDyeingProgramExistForThisCustomer(DyeingProgramName, thisJob))
         {
             this.ProgramNameText.setText(DyeingProgramName);
             thisDyeingProgram.SetID(
-                    thisDyeingProgramHandler.GetDyeingProgramIDForCustomerDyeingProgram(DyeingProgramName, thisJob.getCustomerID()));
+                    thisDyeingProgramHandler.GetDyeingProgramIDForCustomerDyeingProgram(DyeingProgramName, thisJob));
             //thisDyeingProgram = thisDyeingProgramHandler.GetDyeingProgramDetailsById();
             //SetDyeingProgramProcessFromProgramID(thisDyeingProgram.getID());
             SetDyeingProgramFromProgramID(thisDyeingProgram.getID());
@@ -546,7 +546,7 @@ public class DyeingForm extends javax.swing.JFrame {
                     else
                     {
                         //thisProcessOrder.setResinProgramID(0);
-                        ReviewForm thisReviewForm = new ReviewForm(thisJob, this.WindowProcessType);
+                        ReviewFormV2 thisReviewForm = new ReviewFormV2(thisJob, this.WindowProcessType);
                         //Show Review Form and Ask to print
                         thisReviewForm.setVisible(true);
                         //ProcessOrderHandler thisProcess = new ProcessOrderHandler();
@@ -554,7 +554,7 @@ public class DyeingForm extends javax.swing.JFrame {
                     }
                     break;
                 default:
-                    ReviewForm thisReviewForm = new ReviewForm(thisJob, this.WindowProcessType);
+                    ReviewFormV2 thisReviewForm = new ReviewFormV2(thisJob, this.WindowProcessType);
                         //Show Review Form and Ask to print
                     thisReviewForm.setVisible(true);
                     break;

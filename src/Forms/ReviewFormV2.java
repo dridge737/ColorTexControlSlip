@@ -99,7 +99,7 @@ public class ReviewFormV2 extends javax.swing.JFrame {
         SetDropDownDetails();
         SetDyeingProgramName();
         //if (currentJob.getResinProgramID() > 0) {
-        if(currentJob.getThisResinJob().size() == 1)
+        if(currentJob.getThisResinJob() != null)
         {
             //Add a Resin Panel
             /*
@@ -114,11 +114,6 @@ public class ReviewFormV2 extends javax.swing.JFrame {
             } */ 
         }
 
-        //If only Dyeing Program is added.
-        //if(WindowType == 1)
-        //{
-        //}
-        //else 
     }
     
     public void SetLiquidRatio()
@@ -444,6 +439,7 @@ public class ReviewFormV2 extends javax.swing.JFrame {
             }
         });
 
+        DyeingResinTab.setBackground(new java.awt.Color(255, 255, 255));
         DyeingResinTab.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
 
         DyeingMachinePanel.setBackground(new java.awt.Color(102, 102, 102));
@@ -483,7 +479,7 @@ public class ReviewFormV2 extends javax.swing.JFrame {
                 DyeingWeightKeyReleased(evt);
             }
         });
-        DyeingMachinePanel.add(DyeingWeight, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, 200, 30));
+        DyeingMachinePanel.add(DyeingWeight, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, 205, 30));
 
         DyeingVolumeTextField.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         DyeingVolumeTextField.addKeyListener(new java.awt.event.KeyAdapter() {
