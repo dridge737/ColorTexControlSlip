@@ -425,24 +425,27 @@ public class MachineSelection extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         //For Dyeing Machine if it will be used
-        if(WindowType == 1)
-        {
-            JobOrderForm newJobOrderForm = new JobOrderForm(thisJob);
-            newJobOrderForm.setVisible(true);
-            newJobOrderForm.SetCustomerAndDesignDetails();
-        }
+        //if(WindowType == 1)
+        //{
+        //    JobOrderForm newJobOrderForm = new JobOrderForm(thisJob);
+        //    newJobOrderForm.setVisible(true);
+        //    newJobOrderForm.SetCustomerAndDesignDetails();
+        //}
         //Return to Dyeing Form if used as resin machine selector
-        else if(WindowType == 2)
+        //else if(WindowType == 2)
+        if(thisJob.getThisResinJob() != null && WindowType == 3)
+        {
+           //if(thisJob.getThisResinJob()!= null)
+            //if (thisJob.getThisResinJob().size() == 2) {
+            //    thisJob.getThisResinJob().remove(thisJob.getThisResinJob().size() - 1);
+            //}
+            OpenResinProgramWindow();
+        }
+        else //if(WindowType == 3)
         {
             DyeingForm thisDyeingForm = new DyeingForm(thisJob);
             thisDyeingForm.setVisible(true);
-        }
-        else if(WindowType == 3)
-        {
-            if(thisJob.getThisResinJob()!= null)
-                if(thisJob.getThisResinJob().size() == 2)
-                    thisJob.getThisResinJob().remove(thisJob.getThisResinJob().size()-1);
-            OpenResinProgramWindow();;
+            
         }
         this.dispose();
 
@@ -535,7 +538,7 @@ public class MachineSelection extends javax.swing.JFrame {
     }
     private void addDataToJobOrder()
     {
-        if (WindowType == 1) {
+        //if (WindowType == 1) {
             ResinJob thisResinJob = new ResinJob();
             //thisJob.getThisResinJob().get(0).setResinMachineID(thisMachine.getMachineId());
             //thisJob.getThisResinJob().get(0).setResinWeight(Float.parseFloat(this.Weight.getText()));
@@ -543,21 +546,26 @@ public class MachineSelection extends javax.swing.JFrame {
             thisResinJob.setResinMachineID(thisMachine.getMachineId());
             thisResinJob.setResinWeight(Float.parseFloat(this.Weight.getText()));
             thisResinJob.setResinVolH2O(Float.parseFloat(this.VolumeTextField.getText()));
-            if(thisJob.getThisResinJob() == null)
+            ArrayList<ResinJob> ResinList;
+            if(thisJob.getThisResinJob() != null && WindowType == 3)
             {
-                ArrayList<ResinJob> ResinList = new ArrayList<ResinJob>();
-                ResinList.add(thisResinJob);
-                thisJob.setThisResinJob(ResinList);
+                ResinList = thisJob.getThisResinJob();
+            }
+            else if(thisJob.getThisResinJob() != null)
+            {
+                ResinList = thisJob.getThisResinJob();
+                ResinList.remove(thisJob.getThisResinJob().size()-1);
+                
             }
             else
             {
-                ArrayList<ResinJob> ResinList = thisJob.getThisResinJob();
-                ResinList.add(thisResinJob);
-                thisJob.setThisResinJob(ResinList);
+                ResinList = new ArrayList<ResinJob>();
             }
+            ResinList.add(thisResinJob);
+            thisJob.setThisResinJob(ResinList);
             //thisJob.getThisResinJob().add(thisResinJob);
             
-        }
+        //}
             
     }
     

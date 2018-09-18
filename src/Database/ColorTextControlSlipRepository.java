@@ -2181,7 +2181,7 @@ public class ColorTextControlSlipRepository {
                     + " AND DyeingMach.ID = DyeingMachineID "
                     + " AND dProg.ID = DyeingProgramID "
                     + " AND dProg.ProgramNameID = dProgName.ID"
-                    + " ORDER BY Date desc;");
+                    + " ORDER BY Date desc, job_order.ID desc;");
 
             rs = ps.executeQuery();
             thisJobOrder = SetJobOrderArrayListFromResultSet(rs);
@@ -2245,7 +2245,7 @@ public class ColorTextControlSlipRepository {
                     + " AND dProg.ID = DyeingProgramID "
                     + " AND dProg.ProgramNameID = dProgName.ID"
                     + " AND cus.ID = ?"
-                    + " ORDER BY Date desc;");
+                    + " ORDER BY Date desc, job_order.ID desc;");
             
             //ps = conn.prepareStatement("SELECT DrNumber , Date , col.Name as coName, cus.Name as cName, \ndes.Name as dName , mach.Name as DyeingMachineName,  mach2.Name as ResinMachineName, \ndProgName.Name as dpName, resin_program_name.Name as rpName \nFROM color col, customer cus , design des, \njob_order LEFT JOIN Resin_Program ON job_order.ResinProgramID = resin_program.ID\nLEFT JOIN resin_program_name ON Resin_program.ProgramNameID = resin_program_name.ID,\nmachine mach, dyeing_program dProg, dyeing_program_name dProgName ,\nmachine mach2\nWHERE col.ID = ColorID \nAND cus.ID = CustomerID  \nAND des.ID = designID \nAND mach.ID = DyeingMachineID \nAND mach2.ID = ResinMachineID \nAND dProg.ID = DyeingProgramID \nAND dProg.ProgramNameID = dProgName.ID \nAND cus.ID = ?");
 

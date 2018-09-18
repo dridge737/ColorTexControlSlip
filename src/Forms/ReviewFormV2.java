@@ -111,8 +111,8 @@ public class ReviewFormV2 extends javax.swing.JFrame {
             for(ResinJob AllResinJob: currentJob.getThisResinJob())
             {
                 thisResinPanel = new ResinPanel(AllResinJob);
-                DyeingResinTab.add(thisResinPanel, "Resin Program "+index+1);
                 index++;
+                DyeingResinTab.add(thisResinPanel, "Resin Program " +index);
             }
             
             //ProcessPanel this_panel;

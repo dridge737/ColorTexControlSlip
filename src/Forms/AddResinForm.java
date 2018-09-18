@@ -650,9 +650,9 @@ public class AddResinForm extends javax.swing.JFrame {
         if (resinProgramNameId != -1) {
             resinProgram.setProgramNameID(resinProgramNameId);
             //Value has already been initialized at the start of the window
-            //resinProgram.setCustomerID();
-            //resinProgram.setColorID(0);
-            //resinProgram.setDesignID(0);
+            resinProgram.setCustomerID(thisJob.getCustomerID());
+            resinProgram.setColorID(thisJob.getColorID());
+            resinProgram.setDesignID(thisJob.getDesignID());
             
             resinProgramId = resinProgramHandler.AddNewResinProgram(resinProgram);
         }

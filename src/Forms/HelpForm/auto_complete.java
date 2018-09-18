@@ -72,8 +72,11 @@ public class auto_complete {
                     e.setSource(cbInput);
                     cbInput.dispatchEvent(e);
                     if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                        if(cbInput.getSelectedItem().toString().length()>0)
-                        txtInput.setText(cbInput.getSelectedItem().toString());
+                        if (cbInput.getSelectedItem() != null) {
+                            if (cbInput.getSelectedItem().toString().length() > 0) {
+                                txtInput.setText(cbInput.getSelectedItem().toString());
+                            }
+                        }
                         cbInput.setPopupVisible(false);
                     }
                     
@@ -103,7 +106,7 @@ public class auto_complete {
                 String input = txtInput.getText();
                 if (!input.isEmpty()) {
                     for (String item : items) {
-                        if (item.toLowerCase().startsWith(input.toLowerCase())) {
+                        if (item.toLowerCase().contains(input.toLowerCase())) {
                             model.addElement(item);
                         }
                     }

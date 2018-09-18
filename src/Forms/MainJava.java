@@ -30,9 +30,9 @@ public class MainJava {
         //TestThisFrame.setVisible(true);
         //JobOrderForm thisJobForm = new JobOrderForm();
         //thisJobForm.setVisible(true);
-        JobOrderExtended thisExtension = new JobOrderExtended();
-        if(thisExtension.getThisResinJob() == null)
-            System.out.println("Hello");
+        //JobOrderExtended thisExtension = new JobOrderExtended();
+        //if(thisExtension.getThisResinJob() == null)
+        //    System.out.println("Hello");
         PreferenceHandler initializePref = new PreferenceHandler();
         boolean initialized = false;
         if(initialized == initializePref.CheckIfInitialized())

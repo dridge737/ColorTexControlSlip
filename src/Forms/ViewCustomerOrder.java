@@ -325,6 +325,7 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
         model_original.addColumn("Resin Program");
         model_original.addColumn("Dyeing Machine");
         model_original.addColumn("Resin Machine");
+        model_original.addColumn("Resin Machine 2");
         model_original.addColumn("ID");
         
         
@@ -343,6 +344,7 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
                 JobOrderList1.getResinProgramName().toString(), 
                 JobOrderList1.getDyeingMachineName().toString(), 
                 JobOrderList1.getResinMachineName().toString(),
+                //JobOrderList1.getSecondResinMachineName().toString(),
                 JobOrderList1.getID()
             });
         }
