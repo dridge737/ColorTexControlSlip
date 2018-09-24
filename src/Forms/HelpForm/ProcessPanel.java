@@ -12,19 +12,41 @@ import Handlers.DyeingChemicalHandler;
 import Handlers.DyeingProcessHandler;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Insets;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.border.EtchedBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.plaf.metal.MetalIconFactory;
 
 /**
  *
  * @author Eldridge
  */
 public class ProcessPanel extends javax.swing.JPanel {
+
+    /**
+     * @return the ThisDyeingProcess
+     */
+    public DyeingProcess getThisDyeingProcess() {
+        return ThisDyeingProcess;
+    }
+
+    /**
+     * @param ThisDyeingProcess the ThisDyeingProcess to set
+     */
+    public void setThisDyeingProcess(DyeingProcess ThisDyeingProcess) {
+        this.ThisDyeingProcess = ThisDyeingProcess;
+    }
     private int NumberOfTabs = 0;
     //private List<JTextField> subProcessName = new ArrayList<JTextField>();
     private DyeingProcess ThisDyeingProcess = new DyeingProcess();
@@ -36,11 +58,19 @@ public class ProcessPanel extends javax.swing.JPanel {
      * Creates new form ProcessPanel
      */
     public ProcessPanel() {
+        setOpaque(true);
+        JButton button = new JButton(MetalIconFactory.getInternalFrameCloseIcon(16));
+            button.setMargin(new Insets(0, 0, 0, 0));
+            //button.addMouseListener(new CloseListener(tab));
+        this.add(button);
+     
+//this.add(new CustomButton("x"));
         initComponents();
+        //setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        //setBorder(new EmptyBorder(5, 2, 2, 2));
         /* add new Sub Process tab */
         addSubProcessPanel();
-        
-    }
+     }
     
     public ProcessPanel(DyeingProcess thisProcess)
     {
@@ -88,17 +118,17 @@ public class ProcessPanel extends javax.swing.JPanel {
         //ArrayList<DyeingProcess> thisDyeingSubProcess;
         DyeingProcessHandler ProcessHandler = new DyeingProcessHandler();
         //thisDyeingProcess = ProcessHandler.GetAllDyeingProcessByDyeingProgramId(DyeingProgramID);
-        int TotalNumberOfSubProcess = ProcessHandler.CountNumberOfSubProcess(ThisDyeingProcess);
+        int TotalNumberOfSubProcess = ProcessHandler.CountNumberOfSubProcess(getThisDyeingProcess());
         
         if(TotalNumberOfSubProcess > 0)
         {
             ArrayList<DyeingProcess> thisDyeingSubProcess;
-            if(this.WindowType == 3)
-            {
-                thisDyeingSubProcess = ProcessHandler.GetDyeingSubProcessByDyeingProgramIdAndProcessOrder(ThisDyeingProcess);
-            }
-            else
-                thisDyeingSubProcess = ProcessHandler.GetDyeingSubProcessByDyeingProgramIdAndProcessOrder(ThisDyeingProcess);
+            //if(this.WindowType == 3)
+            //{
+            //    thisDyeingSubProcess = ProcessHandler.GetDyeingSubProcessByDyeingProgramIdAndProcessOrder(ThisDyeingProcess);
+            //}
+            //else
+                thisDyeingSubProcess = ProcessHandler.GetDyeingSubProcessByDyeingProgramIdAndProcessOrder(getThisDyeingProcess());
             
             
                 for(DyeingProcess CurrentDyeingSubProcess : thisDyeingSubProcess)
@@ -110,7 +140,7 @@ public class ProcessPanel extends javax.swing.JPanel {
         }
         else
         {
-            setNewTabForChemicals(ThisDyeingProcess);
+            setNewTabForChemicals(getThisDyeingProcess());
             //Just Add Chemical and hide Sub Process Textbox
         }
         addPlusTab();
@@ -208,13 +238,13 @@ public class ProcessPanel extends javax.swing.JPanel {
      public void AddThisPanelInDyeingProcess(int DyeingProgramID , int TabIndex)
      {
          DyeingProcessHandler ThisDyeingProcessHandler = new DyeingProcessHandler();
-         ThisDyeingProcess.setDyeingProgramId(DyeingProgramID);
-         ThisDyeingProcess.setDyeingProcessName(this.ProcessText.getText());
-         ThisDyeingProcess.setDyeingProcessOrder(Integer.toString(TabIndex));
+         getThisDyeingProcess().setDyeingProgramId(DyeingProgramID);
+         getThisDyeingProcess().setDyeingProcessName(this.ProcessText.getText());
+         getThisDyeingProcess().setDyeingProcessOrder(Integer.toString(TabIndex));
          
-         int ProcessID = ThisDyeingProcessHandler.AddDyeingProcess(ThisDyeingProcess);
+         int ProcessID = ThisDyeingProcessHandler.AddDyeingProcess(getThisDyeingProcess());
          //int ProcessID = ThisDyeingProcessHandler.GetDyeingProcessIdByDetails(ThisDyeingProcess);
-         ThisDyeingProcess.setId(ProcessID);
+         getThisDyeingProcess().setId(ProcessID);
          
         //The Dyeing Process was not added
          if (ProcessID == -1)
@@ -224,7 +254,7 @@ public class ProcessPanel extends javax.swing.JPanel {
              if(NumberOfTabs > 2)
                  AddThisSubProcessPanelInDyeingProcess(DyeingProgramID,TabIndex);
              else
-                 AddChemicalFromSubProcessPanel(ThisDyeingProcess.getId());
+                 AddChemicalFromSubProcessPanel(getThisDyeingProcess().getId());
          }
          
      }
@@ -265,18 +295,18 @@ public class ProcessPanel extends javax.swing.JPanel {
         //If This is a new Process Panel Then just add to the existing dyeing program
         //if(ProcessText.getText().length()> 0)
         //{
-            if(ThisDyeingProcess.getId() == 0)
+            if(getThisDyeingProcess().getId() == 0)
             {
                 AddThisPanelInDyeingProcess(DyeingProgramID, TabIndex);
             }
             else
             {
                 DyeingProcessHandler ThisDyeingProcessHandler = new DyeingProcessHandler();
-                ThisDyeingProcess.setDyeingProcessName(this.ProcessText.getText());
-                ThisDyeingProcess.setDyeingProcessOrder(Integer.toString(TabIndex));
+                getThisDyeingProcess().setDyeingProcessName(this.ProcessText.getText());
+                getThisDyeingProcess().setDyeingProcessOrder(Integer.toString(TabIndex));
                 
                 //The Dyeing Process was not added
-                if (ThisDyeingProcessHandler.UpdateDyeingProcess(ThisDyeingProcess) == -1)
+                if (ThisDyeingProcessHandler.UpdateDyeingProcess(getThisDyeingProcess()) == -1)
                 {
                     JOptionPane.showMessageDialog(null, "Process : " +ProcessText.getText()+ " was not successfully updated Please check the details.");
                 }
@@ -287,7 +317,7 @@ public class ProcessPanel extends javax.swing.JPanel {
                         UpdateThisSubProcessPanelInDyeingProcess(DyeingProgramID,TabIndex);
                     }
                     else
-                        UpdateChemicalFromSubProcessPanel(ThisDyeingProcess.getId());
+                        UpdateChemicalFromSubProcessPanel(getThisDyeingProcess().getId());
                 }
             }
         //}
@@ -326,16 +356,16 @@ public class ProcessPanel extends javax.swing.JPanel {
      public void UpdateThisSubProcessPanelInDyeingProcess(int DyeingProgramID, int TabIndex)
      {
          DyeingProcessHandler ProcessHandler = new DyeingProcessHandler();
-         int TotalNumberOfSubProcess = ProcessHandler.CountNumberOfSubProcess(ThisDyeingProcess);
+         int TotalNumberOfSubProcess = ProcessHandler.CountNumberOfSubProcess(getThisDyeingProcess());
          DyeingChemicalHandler DyeChemHandler = new DyeingChemicalHandler();
          DyeingChemical DyeChem = new DyeingChemical();
          //IF Previously there is no sub process for this process. Then relink dyeing chemical into sub process
          if(TotalNumberOfSubProcess == 0)
          {
-             if(ThisDyeingProcess.getId()!= 0)
+             if(getThisDyeingProcess().getId()!= 0)
              {
                 //Delete Chemicals previously Linked to this Dyeing Process
-                 DyeChem.setDyeingProcessID(ThisDyeingProcess.getId());
+                 DyeChem.setDyeingProcessID(getThisDyeingProcess().getId());
                  DyeChemHandler.DeleteDyeingChemicalByDyeingProcessID(DyeChem);
                  //Add SubProcess and Chemicals into the new sub process
              }
@@ -349,7 +379,7 @@ public class ProcessPanel extends javax.swing.JPanel {
              Component[] this_pane = this.subProcess.getComponents();
              int subProcessNumber = 0;
              ArrayList<DyeingProcess> thisDyeingProcess;
-                         thisDyeingProcess = ProcessHandler.GetDyeingSubProcessByDyeingProgramIdAndProcessOrder(ThisDyeingProcess);
+                         thisDyeingProcess = ProcessHandler.GetDyeingSubProcessByDyeingProgramIdAndProcessOrder(getThisDyeingProcess());
              for (Component c : this_pane)
              {
                  if (c instanceof SubProcessPanel)

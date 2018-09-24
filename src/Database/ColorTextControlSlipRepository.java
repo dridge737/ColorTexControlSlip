@@ -3459,18 +3459,17 @@ public class ColorTextControlSlipRepository {
     }
 
     public boolean DeleteDyeingChemicalByDyeingProcessID(DyeingChemical ThisDyeingChemical) {
-
+    
         DBConnection db = new DBConnection();
         Connection conn = null;
         PreparedStatement preparedStmt = null;
         boolean isSuccessful = false;
         try {
             conn = db.getConnection();
-            String query = "SET SQL_SAFE_UPDATES = 1; DELETE FROM dyeing_chemical WHERE DyeingProcessID = ?; SET SQL_SAFE_UPDATES = 0;";
+            String query = "DELETE FROM dyeing_chemical WHERE DyeingProcessID = ?";
 
             preparedStmt = conn.prepareStatement(query);
             preparedStmt.setInt(1, ThisDyeingChemical.getDyeingProcessID());
-            //preparedStmt.setInt(2, ThisDyeingChemical.getOrder());
             preparedStmt.executeUpdate();
             isSuccessful = true;
         } catch (SQLException ex) {
@@ -3480,6 +3479,8 @@ public class ColorTextControlSlipRepository {
         this.closeConn(conn, preparedStmt);
         return isSuccessful;
     }
+    
+    
 
     public ArrayList<DyeingChemical> GetAllDyeingChemicalsFromDyeingProcessID(int DyeingProcessID) {
         DBConnection db = new DBConnection();

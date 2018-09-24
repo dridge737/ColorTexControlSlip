@@ -5,6 +5,7 @@
  */
 package Forms;
 
+import DataEntities.DyeingChemical;
 import DataEntities.DyeingProcess;
 import java.awt.Component;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import DataEntities.JobOrderExtended;
 import DataEntities.ProcessOrder;
 import Forms.HelpForm.ProcessPanel;
 import Handlers.ChemicalHandler;
+import Handlers.DyeingChemicalHandler;
 import Handlers.DyeingProcessHandler;
 import Handlers.DyeingProgramHandler;
 import Handlers.DyeingProgramNameHandler;
@@ -47,6 +49,7 @@ public class DyeingForm extends javax.swing.JFrame {
     DyeingProgram thisDyeingProgram = new DyeingProgram();
     DyeingProgramName thisDyeingProgramName = new DyeingProgramName();
     private int WindowProcessType = 0;
+    ArrayList<Integer> ProcessToDelete = new ArrayList<>();
     //1 for new Dyeing Program
     //2 For Update Dyeing Program
     //3 For ControlSlip Dyeing Program
@@ -116,6 +119,7 @@ public class DyeingForm extends javax.swing.JFrame {
         if(WindowProcessType == 1)
         {
             GUITabbedPaneProcess.add(new ProcessPanel(), "Process 1", NumberOfProcessTabs++);
+            
             Header.setText("Add Dyeing Program");
             SaveBut.setText("Save");
         }
@@ -267,9 +271,10 @@ public class DyeingForm extends javax.swing.JFrame {
         //Add the Tab to the JtabbedPane
         GUITabbedPaneProcess.add(this_panel, "Process " + String.valueOf(NumberOfProcessTabs+1),
                     NumberOfProcessTabs);
-        NumberOfProcessTabs++;
-        
+        GUITabbedPaneProcess.setTabComponentAt(NumberOfProcessTabs, new CustomTabClose(this.GUITabbedPaneProcess));
+        NumberOfProcessTabs++;    
     }
+    
     private void addNewTabProcess() 
     {
         int index = NumberOfProcessTabs - 1;
@@ -280,6 +285,7 @@ public class DyeingForm extends javax.swing.JFrame {
             GUITabbedPaneProcess.add(this_panel, "Process " + String.valueOf(NumberOfProcessTabs),
                     index);
             /* set tab is custom tab */
+            GUITabbedPaneProcess.setTabComponentAt(NumberOfProcessTabs-1, new CustomTabClose(this.GUITabbedPaneProcess));
             GUITabbedPaneProcess.removeChangeListener(changeListener);
             GUITabbedPaneProcess.setSelectedIndex(index);
             GUITabbedPaneProcess.addChangeListener(changeListener);
@@ -287,6 +293,168 @@ public class DyeingForm extends javax.swing.JFrame {
         }
     }
     
+    public void removeTab(int index) {
+        
+        GUITabbedPaneProcess.setSelectedIndex(index);
+        ProcessPanel thisProcessPanel = (ProcessPanel) GUITabbedPaneProcess.getSelectedComponent();
+        int DeleteProcessID = thisProcessPanel.getThisDyeingProcess().getId();
+        if(DeleteProcessID != 0)
+            this.ProcessToDelete.add(DeleteProcessID);
+        
+        this.GUITabbedPaneProcess.remove(index);
+        NumberOfProcessTabs--;
+        
+ 
+        if (index == NumberOfProcessTabs - 1 && index > 0) {
+            GUITabbedPaneProcess.setSelectedIndex(NumberOfProcessTabs - 2);
+        } else {
+            GUITabbedPaneProcess.setSelectedIndex(index);
+        }
+ 
+        if (NumberOfProcessTabs == 1) {
+            addNewTabProcess();
+        }
+    }
+    
+    public boolean CheckDyeingFormProcessAndSubProcessIfReady()
+    {
+        boolean isSuccessful = true;
+        if(this.ProgramNameText.getText().trim().length() > 0)
+        {
+            Component[] this_pane = this.GUITabbedPaneProcess.getComponents();
+            int ProcessOrder = 1;
+            for (Component c : this_pane)
+            {
+                if (c instanceof ProcessPanel) {
+                    ProcessPanel ThisProcessPanel = ((ProcessPanel)c);
+                    if(!ThisProcessPanel.CheckIfProccessAndSubProcessIsReady())
+                        isSuccessful = false;
+                }
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Please input a dyeing program name.");
+            ProgramNameText.setBackground(ColorError);
+            isSuccessful = false;
+        }
+        return isSuccessful;
+    }
+    
+    public boolean AddDyeingProgramNameAndDyeingProgram()
+    {
+        boolean isSuccessful = false;
+        DyeingProgramNameHandler thisDyeingProgramNameHandler = new DyeingProgramNameHandler();
+        
+        thisDyeingProgramName.setDyeingProgramName(this.ProgramNameText.getText());
+        //thisDyeingProgram.setDyeingProgramName(this.ProgramNameText.getText());
+        
+        if(!thisDyeingProgramNameHandler.CheckIfDyeingProgramNameHasBeenAdded(thisDyeingProgramName.getDyeingProgramName()))
+        {
+            int thisDyeingProgramNameID =
+                    thisDyeingProgramNameHandler.AddDyeingProgramName(thisDyeingProgramName.getDyeingProgramName());
+            thisDyeingProgram.setDyeingProgramNameID(thisDyeingProgramNameID);
+                //ADD and Set Dyeing Program ID
+            thisDyeingProgram.setCustomerID(thisJob.getCustomerID());
+            thisDyeingProgram.setColorID(thisJob.getColorID());
+            thisDyeingProgram.setDesignID(thisJob.getDesignID());
+                //int DyeingProgramID = thisDyeingProgramHandler.GetDyeingProgramIDfromName(thisDyeingProgram.getDyeingProgramName());
+                //FIX THIS edit for Dyeing Program Name
+                //thisDyeingProgram.SetID(DyeingProgramID);
+            isSuccessful = AddDyeingProgram();
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Dyeing program name has already been added.");
+        }
+        
+        return isSuccessful;
+    }
+    
+    private boolean AddDyeingProgram()
+    {
+        boolean AddSuccess = false;
+        DyeingProgramHandler thisDyeingProgramHandler = new DyeingProgramHandler();
+        thisDyeingProgram.SetID(thisDyeingProgramHandler.AddDyeingProgram(thisDyeingProgram));
+        
+        if(thisDyeingProgram.getID() > 0)
+        {
+            AddDyeingProcessForThisDyeingProgram();
+            AddSuccess = true;
+        }    
+        return AddSuccess;
+    }
+    
+    private boolean AddDyeingProcessForThisDyeingProgram()
+    {
+        boolean isSuccessful = false;
+        if(thisDyeingProgram.getID() != -1)
+        {
+            Component[] this_pane = this.GUITabbedPaneProcess.getComponents();
+            int ProcessOrder = 1;
+            for (Component c : this_pane)
+            {
+                if (c instanceof ProcessPanel) {
+                    ProcessPanel ThisProcessPanel = ((ProcessPanel)c);
+                    ThisProcessPanel.AddThisPanelInDyeingProcess(thisDyeingProgram.getID(), ProcessOrder++);
+                }
+            }
+            isSuccessful = true;
+        }
+        return isSuccessful;
+    }
+    
+    private boolean UpdateDyeingProgram()
+    {
+        boolean SuccessfullyUpdated = true;
+        DyeingProgramHandler thisDyeingProgramHandler = new DyeingProgramHandler();
+        DyeingProgramNameHandler thisDyeingProgramNameHandler = new DyeingProgramNameHandler();
+        thisDyeingProgramName.setDyeingProgramName(this.ProgramNameText.getText());
+        //thisDyeingProgram.SetID();
+        
+        //Returns True If Update is Successful then proceed to update other
+        //if(thisDyeingProgramHandler.UpdateDyeingProgram(thisDyeingProgram))
+        if(WindowProcessType !=3)
+        {
+            if(!thisDyeingProgramNameHandler.CheckIfDyeingProgramNameHasBeenAddedtoOtherID(thisDyeingProgramName))
+            //if(thisDyeingProgramNameHandler.UpdateDyeingProgramName(thisDyeingProgramName.getDyeingProgramName()))
+            {
+                SuccessfullyUpdated = thisDyeingProgramNameHandler.UpdateDyeingProgramName(thisDyeingProgramName);
+            }
+            else
+                SuccessfullyUpdated = false;
+        }
+        
+        if(SuccessfullyUpdated == true)
+        {
+            Component[] this_pane = this.GUITabbedPaneProcess.getComponents();
+            int ProcessOrder = 1;
+        
+            for (Component c : this_pane)
+            {
+                //int<ArrayList> ProcessId = new int<ArrayList>();
+                if (c instanceof ProcessPanel) {
+                        ProcessPanel ThisProcessPanel = ((ProcessPanel)c);
+                        
+                        ThisProcessPanel.UpdateThisPanelInDyeingProcess(thisDyeingProgram.getID(), ProcessOrder++);
+                    }
+            }
+        }
+        return SuccessfullyUpdated;
+    }
+    
+    private void DeleteProcess()
+    {
+        for(int ProcessID : this.ProcessToDelete )
+        {
+            DyeingProcessHandler thisDyeingProcessHandler = new DyeingProcessHandler();
+            thisDyeingProcessHandler.DeleteDyeingProcessById(ProcessID);
+            DyeingChemicalHandler thisDyeingChemicalHandler = new DyeingChemicalHandler();
+            DyeingChemical thisDyeingChem = new DyeingChemical();
+            thisDyeingChem.setDyeingProcessID(ProcessID);
+            thisDyeingChemicalHandler.DeleteDyeingChemicalByDyeingProcessID(thisDyeingChem);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -365,129 +533,6 @@ public class DyeingForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public boolean CheckDyeingFormProcessAndSubProcessIfReady()
-    {
-        boolean isSuccessful = true;
-        if(this.ProgramNameText.getText().trim().length() > 0)
-        {
-            Component[] this_pane = this.GUITabbedPaneProcess.getComponents();
-            int ProcessOrder = 1;
-            for (Component c : this_pane)
-            {
-                if (c instanceof ProcessPanel) {
-                    ProcessPanel ThisProcessPanel = ((ProcessPanel)c);
-                    if(!ThisProcessPanel.CheckIfProccessAndSubProcessIsReady())
-                        isSuccessful = false;
-                }
-            }
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(null, "Please input a dyeing program name.");
-            ProgramNameText.setBackground(ColorError);
-            isSuccessful = false;
-        }
-        return isSuccessful;
-    }
-    
-    public boolean AddDyeingProgramNameAndDyeingProgram()
-    {
-        boolean isSuccessful = false;
-        DyeingProgramNameHandler thisDyeingProgramNameHandler = new DyeingProgramNameHandler();
-        
-        thisDyeingProgramName.setDyeingProgramName(this.ProgramNameText.getText());
-        //thisDyeingProgram.setDyeingProgramName(this.ProgramNameText.getText());
-        
-        if(!thisDyeingProgramNameHandler.CheckIfDyeingProgramNameHasBeenAdded(thisDyeingProgramName.getDyeingProgramName()))
-        {
-            int thisDyeingProgramNameID =
-                    thisDyeingProgramNameHandler.AddDyeingProgramName(thisDyeingProgramName.getDyeingProgramName());
-            thisDyeingProgram.setDyeingProgramNameID(thisDyeingProgramNameID);
-                //ADD and Set Dyeing Program ID
-            thisDyeingProgram.setCustomerID(thisJob.getCustomerID());
-            thisDyeingProgram.setColorID(thisJob.getColorID());
-            thisDyeingProgram.setDesignID(thisJob.getDesignID());
-                //int DyeingProgramID = thisDyeingProgramHandler.GetDyeingProgramIDfromName(thisDyeingProgram.getDyeingProgramName());
-                //FIX THIS edit for Dyeing Program Name
-                //thisDyeingProgram.SetID(DyeingProgramID);
-            isSuccessful = AddDyeingProgram();
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(null, "Dyeing program name has already been added.");
-        }
-        
-        return isSuccessful;
-    }
-    
-    private boolean AddDyeingProgram()
-    {
-        boolean AddSuccess = false;
-        DyeingProgramHandler thisDyeingProgramHandler = new DyeingProgramHandler();
-        thisDyeingProgram.SetID(thisDyeingProgramHandler.AddDyeingProgram(thisDyeingProgram));
-        if(thisDyeingProgram.getID() > 0)
-        {
-            AddDyeingProcessForThisDyeingProgram();
-            AddSuccess = true;
-        }    
-        return AddSuccess;
-    }
-    
-    private boolean AddDyeingProcessForThisDyeingProgram()
-    {
-        boolean isSuccessful = false;
-        if(thisDyeingProgram.getID() != -1)
-        {
-            Component[] this_pane = this.GUITabbedPaneProcess.getComponents();
-            int ProcessOrder = 1;
-            for (Component c : this_pane)
-            {
-                if (c instanceof ProcessPanel) {
-                    ProcessPanel ThisProcessPanel = ((ProcessPanel)c);
-                    ThisProcessPanel.AddThisPanelInDyeingProcess(thisDyeingProgram.getID(), ProcessOrder++);
-                }
-            }
-            isSuccessful = true;
-        }
-        return isSuccessful;
-    }
-    
-    private boolean UpdateDyeingProgram()
-    {
-        boolean SuccessfullyUpdated = true;
-        DyeingProgramHandler thisDyeingProgramHandler = new DyeingProgramHandler();
-        DyeingProgramNameHandler thisDyeingProgramNameHandler = new DyeingProgramNameHandler();
-        thisDyeingProgramName.setDyeingProgramName(this.ProgramNameText.getText());
-        //thisDyeingProgram.SetID();
-        
-        //Returns True If Update is Successful then proceed to update other
-        //if(thisDyeingProgramHandler.UpdateDyeingProgram(thisDyeingProgram))
-        if(WindowProcessType !=3)
-        {
-            if(!thisDyeingProgramNameHandler.CheckIfDyeingProgramNameHasBeenAddedtoOtherID(thisDyeingProgramName))
-            //if(thisDyeingProgramNameHandler.UpdateDyeingProgramName(thisDyeingProgramName.getDyeingProgramName()))
-            {
-                SuccessfullyUpdated = thisDyeingProgramNameHandler.UpdateDyeingProgramName(thisDyeingProgramName);
-            }
-            else
-                SuccessfullyUpdated = false;
-        }
-        
-        if(SuccessfullyUpdated == true)
-        {
-            Component[] this_pane = this.GUITabbedPaneProcess.getComponents();
-            int ProcessOrder = 1;
-        
-            for (Component c : this_pane)
-            {
-                if (c instanceof ProcessPanel) {
-                        ProcessPanel ThisProcessPanel = ((ProcessPanel)c);
-                        ThisProcessPanel.UpdateThisPanelInDyeingProcess(thisDyeingProgram.getID(), ProcessOrder++);
-                    }
-            }
-        }
-        return SuccessfullyUpdated;
-    }
     private void SaveButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButActionPerformed
         // TODO add your handling code here:
         //this.jPanel2.getComp
@@ -502,6 +547,7 @@ public class DyeingForm extends javax.swing.JFrame {
                 case 2:
                 //For Updating Dyeing program
                     CloseWindow = UpdateDyeingProgram();
+                    DeleteProcess();
                     break;
                 default:
                 //For Job Order
@@ -516,6 +562,7 @@ public class DyeingForm extends javax.swing.JFrame {
                     } else {
                         //Else just update the program added for the current customer
                         CloseWindow = UpdateDyeingProgram();
+                        DeleteProcess();
                     }
 
                     thisJob.setDyeingProgramID(thisDyeingProgram.getID());

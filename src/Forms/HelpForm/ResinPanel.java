@@ -324,6 +324,7 @@ public class ResinPanel extends javax.swing.JPanel {
                 //&& CheckCustomerAndJobOrderFromTextBox()
             thisResinJob.setResinMachineID(machineDetails.getMachineId());
             ReviewFormV2 ReviewForm = (ReviewFormV2) this.getTopLevelAncestor();
+            
             ReviewForm.AddTextToJobOrderObject();
             
             ViewResinProgramList thisResinProgram;

@@ -144,16 +144,16 @@ public class DyeingProcessHandler {
         
     }
     
-    public void DeleteDyeingProcessById(DyeingProcess ThisDyeingProcess)
+    public void DeleteDyeingProcessById(int ThisDyeingProcessID)
     {
         boolean isSuccessful = false;
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         
-        if(repo.CheckIfDyeingProcessExists(ThisDyeingProcess))
-        {
-            isSuccessful = repo.DeleteDyeingProcessByDyeingProcessID(ThisDyeingProcess.getId());
-        }
+        //if(repo.CheckIfDyeingProcessExists(ThisDyeingProcess))
+        //{
+            isSuccessful = repo.DeleteDyeingProcessByDyeingProcessID(ThisDyeingProcessID);
+        //}
         
     }
 }
