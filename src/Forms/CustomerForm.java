@@ -144,7 +144,7 @@ public class CustomerForm extends javax.swing.JFrame {
         ));
         CustomerTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         CustomerTable.setRowHeight(20);
-        CustomerTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        CustomerTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(CustomerTable);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);

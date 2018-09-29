@@ -139,7 +139,7 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
         ResinChemicalTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         ResinProgramTextBox = new javax.swing.JTextField();
-        ChemicalComboBox = new javax.swing.JComboBox<String>();
+        ChemicalComboBox = new javax.swing.JComboBox<>();
         GPLTextField = new javax.swing.JTextField();
         EditChemicalButton = new javax.swing.JButton();
         DeleteChemicalButton = new javax.swing.JButton();
@@ -182,6 +182,7 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
                 "Resin Chemical", "Value"
             }
         ));
+        ResinChemicalTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(ResinChemicalTable);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 485, 200));
@@ -204,7 +205,7 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
         jPanel1.add(ResinProgramTextBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(182, 385, 337, 28));
 
         ChemicalComboBox.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        ChemicalComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Chemical" }));
+        ChemicalComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chemical" }));
         jPanel1.add(ChemicalComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 340, 170, 30));
 
         GPLTextField.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N

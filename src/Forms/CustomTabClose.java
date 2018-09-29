@@ -38,6 +38,7 @@ public class CustomTabClose extends JPanel {
         setOpaque(false);
         addLabel();
         add(new CustomButton("x"));
+        
     }
  
     private void addLabel() {
@@ -91,6 +92,7 @@ public class CustomTabClose extends JPanel {
             if (index != -1) {
                 DyeingForm thisForm = (DyeingForm) customJTabbedPane.getTopLevelAncestor();
                 thisForm.removeTab(index);
+                thisForm.renameTabs();
             }
         }
  

@@ -119,7 +119,7 @@ public class DyeingForm extends javax.swing.JFrame {
         if(WindowProcessType == 1)
         {
             GUITabbedPaneProcess.add(new ProcessPanel(), "Process 1", NumberOfProcessTabs++);
-            
+            GUITabbedPaneProcess.setTabComponentAt(NumberOfProcessTabs-1, new CustomTabClose(this.GUITabbedPaneProcess));
             Header.setText("Add Dyeing Program");
             SaveBut.setText("Save");
         }
@@ -298,6 +298,7 @@ public class DyeingForm extends javax.swing.JFrame {
         GUITabbedPaneProcess.setSelectedIndex(index);
         ProcessPanel thisProcessPanel = (ProcessPanel) GUITabbedPaneProcess.getSelectedComponent();
         int DeleteProcessID = thisProcessPanel.getThisDyeingProcess().getId();
+        ProcessToDelete.addAll(thisProcessPanel.getAllDyeingSubProcessID());
         if(DeleteProcessID != 0)
             this.ProcessToDelete.add(DeleteProcessID);
         
@@ -316,19 +317,32 @@ public class DyeingForm extends javax.swing.JFrame {
         }
     }
     
+    public void renameTabs()
+    {
+        int x = 0;
+        while (x < GUITabbedPaneProcess.getTabCount() - 1) {
+            GUITabbedPaneProcess.setTitleAt(x, "Process " + ++x);
+        }
+    }
+    
     public boolean CheckDyeingFormProcessAndSubProcessIfReady()
     {
         boolean isSuccessful = true;
         if(this.ProgramNameText.getText().trim().length() > 0)
         {
             Component[] this_pane = this.GUITabbedPaneProcess.getComponents();
+           
             int ProcessOrder = 1;
             for (Component c : this_pane)
             {
+                
                 if (c instanceof ProcessPanel) {
                     ProcessPanel ThisProcessPanel = ((ProcessPanel)c);
-                    if(!ThisProcessPanel.CheckIfProccessAndSubProcessIsReady())
+                   
+                    if(!ThisProcessPanel.CheckIfProccessAndSubProcessIsReady()){
+                        //ThisProcessPanel
                         isSuccessful = false;
+                    }
                 }
             }
         }
@@ -494,7 +508,7 @@ public class DyeingForm extends javax.swing.JFrame {
                 SaveButActionPerformed(evt);
             }
         });
-        BgPanel.add(SaveBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(165, 650, 250, 40));
+        BgPanel.add(SaveBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 650, 250, 40));
 
         GUITabbedPaneProcess.setBackground(new java.awt.Color(255, 255, 255));
         GUITabbedPaneProcess.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N

@@ -11,6 +11,7 @@ import DataEntities.JobOrderExtended;
 import Handlers.CustomerHandler;
 import Handlers.JobHandler;
 import Handlers.ResinJobHandler;
+import Handlers.ResinProgramHandler;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -147,7 +148,7 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
         JobOrderTable.setDropMode(javax.swing.DropMode.ON);
         JobOrderTable.setOpaque(false);
         JobOrderTable.setRowHeight(25);
-        JobOrderTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        JobOrderTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(JobOrderTable);
 
         jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 39, 710, 270));
@@ -224,9 +225,16 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
         if(JobOrderTable.getSelectedRowCount() > 0)
         {
             int convertedRowNumber = JobOrderTable.convertRowIndexToModel(this.JobOrderTable.getSelectedRow());
-            String DrNumber = JobOrderTable.getModel().getValueAt(convertedRowNumber , 0).toString();
-            JobHandler thisJobOrderHandler = new JobHandler();
-            JobOrderExtended thisJob = (JobOrderExtended) thisJobOrderHandler.GetJobOrderDetailsFromDrNumber(DrNumber);
+            //String DrNumber = JobOrderTable.getModel().getValueAt(convertedRowNumber , 0).toString();
+            int JobId = Integer.parseInt(JobOrderTable.getModel().getValueAt(convertedRowNumber , 9).toString());
+            
+            //JobOrder thisJob = thisJobOrderHandler.GetJobOrderDetailsFromDrNumber(DrNumber);
+            
+            //JobHandler thisJobOrderHandler = new JobHandler();
+            JobOrderExtended thisJob =  new JobOrderExtended(new JobHandler().GetJobOrderDetailsFromJobOrderID(JobId));
+            
+            //JobOrderExtended thisJob = new JobOrderExtended(thisJobOrderHandler.GetJobOrderDetailsFromDrNumber(DrNumber));
+            thisJob.setThisResinJob( new ResinJobHandler().GetResinJobListFromJobOrderID(thisJob.getID()));
             ReviewFormV2 orderReviewForm = new ReviewFormV2(thisJob, 4);
             orderReviewForm.setVisible(true);
             this.dispose();

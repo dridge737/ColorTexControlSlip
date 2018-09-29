@@ -274,7 +274,7 @@ public class ColorTextControlSlipRepository {
         ArrayList<String> CustomerList = new ArrayList<>();
         try {
             conn = dbc.getConnection();
-            ps = conn.prepareStatement("SELECT Name FROM customer ");
+            ps = conn.prepareStatement("SELECT Name FROM customer ORDER BY NAME asc");
             rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -1304,6 +1304,11 @@ public class ColorTextControlSlipRepository {
         this.closeConn(conn, ps, rs);
         return checkTest;
     }
+    
+    public void CheckAndAddIfDryerAndStenterHasBeenAdded()
+    {
+        
+    }
 
     public int CheckIfDyeingProgramNameOnOtherIDExists(DyeingProgramName ThisDyeProgramName) {
         DBConnection dbc = new DBConnection();
@@ -2181,7 +2186,8 @@ public class ColorTextControlSlipRepository {
                     + " AND DyeingMach.ID = DyeingMachineID "
                     + " AND dProg.ID = DyeingProgramID "
                     + " AND dProg.ProgramNameID = dProgName.ID"
-                    + " ORDER BY Date desc, job_order.ID desc;");
+                    + " GROUP BY job_order.ID ORDER BY Date desc, job_order.ID desc"
+                    + " ;");
 
             rs = ps.executeQuery();
             thisJobOrder = SetJobOrderArrayListFromResultSet(rs);

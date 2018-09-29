@@ -58,13 +58,7 @@ public class ProcessPanel extends javax.swing.JPanel {
      * Creates new form ProcessPanel
      */
     public ProcessPanel() {
-        setOpaque(true);
-        JButton button = new JButton(MetalIconFactory.getInternalFrameCloseIcon(16));
-            button.setMargin(new Insets(0, 0, 0, 0));
-            //button.addMouseListener(new CloseListener(tab));
-        this.add(button);
-     
-//this.add(new CustomButton("x"));
+        
         initComponents();
         //setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
         //setBorder(new EmptyBorder(5, 2, 2, 2));
@@ -215,6 +209,24 @@ public class ProcessPanel extends javax.swing.JPanel {
     {
         subProcess.add(new JPanel(), "+", NumberOfTabs++);
         subProcess.addChangeListener(changeListener);
+    }
+    
+    public ArrayList<Integer> getAllDyeingSubProcessID()
+    {
+        ArrayList<Integer> DyeingSubProcessList = new ArrayList<Integer>();
+        if (this.NumberOfTabs > 2) {
+
+            Component[] this_pane = this.subProcess.getComponents();
+            int subProcessNumber = 1;
+            for (Component c : this_pane) {
+                if (c instanceof SubProcessPanel) {
+                    SubProcessPanel ThisProcessPanel = ((SubProcessPanel) c);
+                    DyeingSubProcessList.add(ThisProcessPanel.ThisDyeingProcess.getId());
+
+                }
+            }
+        }
+        return DyeingSubProcessList;
     }
     
     public void addTabToSubProcessTabbedPane(SubProcessPanel thisPanel, int index)
@@ -413,7 +425,8 @@ public class ProcessPanel extends javax.swing.JPanel {
              {
                  SubProcessPanel ThisProcessPanel = ((SubProcessPanel)c);
                  //ThisProcessPanel.AddSubProcess(DyeingProgramID, TOOL_TIP_TEXT_KEY);
-                 ThisProcessPanel.AddChemicals(DyeingProcessID);
+                 
+                 ThisProcessPanel.UpdateChemicals(DyeingProcessID);
              }
          }
      }

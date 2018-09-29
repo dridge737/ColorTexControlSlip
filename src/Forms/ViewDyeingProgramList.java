@@ -14,9 +14,15 @@ import Handlers.DyeingProgramNameHandler;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Optional;
+import javax.swing.DropMode;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
+import javax.swing.TransferHandler;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -42,6 +48,7 @@ public class ViewDyeingProgramList extends javax.swing.JFrame {
         initComponents();
         SetToCenter();
         GetUpdatedTable();
+        
     }
     
     public ViewDyeingProgramList(JobOrderExtended currentJob) {
@@ -122,18 +129,18 @@ public class ViewDyeingProgramList extends javax.swing.JFrame {
         DyeingTable.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         DyeingTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null},
+                {null},
+                {null},
+                {null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1"
             }
         ));
         DyeingTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         DyeingTable.setRowHeight(20);
-        DyeingTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        DyeingTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(DyeingTable);
 
         BgPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 123, 470, 280));
@@ -233,12 +240,17 @@ public class ViewDyeingProgramList extends javax.swing.JFrame {
     {
         model = getUpdatedTableModel();
         this.DyeingTable.setModel(model);
-        
+    
+        //DyeingTable.setDragEnabled(true);
+        //DyeingTable.setDropMode(DropMode.INSERT_ROWS);
+        //DyeingTable.setTransferHandler(new TableRowTransferHandler(DyeingTable));
     }
     
-    public DefaultTableModel getUpdatedTableModel() {      
+    public CurrentTableModel getUpdatedTableModel() {      
         
-        DefaultTableModel model_original = new DefaultTableModel();
+        CurrentTableModel model_original = new CurrentTableModel(){
+            
+        };
         model_original.addColumn("Program Name");
       
         ArrayList<String> DyeingList = new DyeingProgramNameHandler().GetAllDefaultDyeingProgramName();
@@ -294,7 +306,7 @@ public class ViewDyeingProgramList extends javax.swing.JFrame {
         }
         else if(WindowType > 3)
         {
-            new ReviewFormV2(thisJob, WindowType).setVisible(true);
+            new ReviewFormV2(thisJob, 4).setVisible(true);
         }
         this.dispose();
         

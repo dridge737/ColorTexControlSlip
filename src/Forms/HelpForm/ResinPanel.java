@@ -76,6 +76,7 @@ public class ResinPanel extends javax.swing.JPanel {
         FabricTypeLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(102, 102, 102));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         ResinMachineDropDown.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         ResinMachineDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose Machine" }));
@@ -84,18 +85,21 @@ public class ResinPanel extends javax.swing.JPanel {
                 ResinMachineDropDownActionPerformed(evt);
             }
         });
+        add(ResinMachineDropDown, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 275, -1));
 
         jLabel12.setBackground(new java.awt.Color(255, 255, 255));
         jLabel12.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel12.setText("Weight :");
+        add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 80, 30));
 
         jLabel13.setBackground(new java.awt.Color(255, 255, 255));
         jLabel13.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel13.setText("Volume of Water :");
+        add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 60, 145, 30));
 
         ResinWeight.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         ResinWeight.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -103,6 +107,7 @@ public class ResinPanel extends javax.swing.JPanel {
                 ResinWeightKeyReleased(evt);
             }
         });
+        add(ResinWeight, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, 205, 30));
 
         ResinVolumeTextField.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         ResinVolumeTextField.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -110,11 +115,13 @@ public class ResinPanel extends javax.swing.JPanel {
                 ResinVolumeTextFieldKeyReleased(evt);
             }
         });
+        add(ResinVolumeTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 60, 170, 30));
 
         ResinProgramText.setEditable(false);
         ResinProgramText.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         ResinProgramText.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         ResinProgramText.setEnabled(false);
+        add(ResinProgramText, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 100, 430, 30));
 
         ResinLabel.setBackground(new java.awt.Color(255, 255, 255));
         ResinLabel.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
@@ -122,6 +129,7 @@ public class ResinPanel extends javax.swing.JPanel {
         ResinLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         ResinLabel.setText("Resin Program :");
         ResinLabel.setToolTipText("");
+        add(ResinLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 140, 30));
 
         EditResinProgram.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         EditResinProgram.setText("...");
@@ -130,6 +138,7 @@ public class ResinPanel extends javax.swing.JPanel {
                 EditResinProgramActionPerformed(evt);
             }
         });
+        add(EditResinProgram, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 100, 40, 30));
 
         ResinFabricTypeDropDown.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         ResinFabricTypeDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fabric Type", "TC 0.3 + 30 liters", "CVC 0.4 + 30 liters", "CC 0.5 + 30 liters", "Polyester and Spun 0.65 + 30 liters", "TC 0.5" }));
@@ -138,66 +147,14 @@ public class ResinPanel extends javax.swing.JPanel {
                 ResinFabricTypeDropDownActionPerformed(evt);
             }
         });
+        add(ResinFabricTypeDropDown, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, 170, 30));
 
         FabricTypeLabel.setBackground(new java.awt.Color(255, 255, 255));
         FabricTypeLabel.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         FabricTypeLabel.setForeground(new java.awt.Color(255, 255, 255));
         FabricTypeLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         FabricTypeLabel.setText("Fabric Type :");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 26, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(ResinMachineDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(FabricTypeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(5, 5, 5)
-                        .addComponent(ResinFabricTypeDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(75, 75, 75)
-                                .addComponent(ResinWeight, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(12, 12, 12)
-                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(5, 5, 5)
-                        .addComponent(ResinVolumeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(565, 565, 565)
-                        .addComponent(EditResinProgram, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(ResinLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(130, 130, 130)
-                        .addComponent(ResinProgramText, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 27, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 21, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ResinMachineDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(FabricTypeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ResinFabricTypeDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(7, 7, 7)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ResinWeight, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ResinVolumeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(EditResinProgram, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ResinLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ResinProgramText, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 22, Short.MAX_VALUE))
-        );
+        add(FabricTypeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 20, 145, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void SetResinProgramName(int resinProgramID) {
