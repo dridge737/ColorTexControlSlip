@@ -1492,7 +1492,7 @@ public class ColorTextControlSlipRepository {
         System.out.println("Program Number = "+ thisJobOrder.getProgramNumber());
     }
     
-    public DyeingProgram getDefaultDyeingProgramForThisDyeingProgramID(JobOrder thisJobOrder) {
+    public DyeingProgram getDefaultDyeingProgramForThisDyeingProgramID(DyeingProgram thisDyeingProgram) {
         DyeingProgram dyeingProgramDetails = new DyeingProgram();
         DBConnection db = new DBConnection();
         Connection conn = null;
@@ -1510,14 +1510,14 @@ public class ColorTextControlSlipRepository {
             );
             
             int item = 1;
-            ps.setInt(item++, thisJobOrder.getDyeingProgramID());
+            ps.setInt(item++, thisDyeingProgram.getDyeingProgramNameID());
 //            ps.setInt(item++, thisJobOrder.getCustomerID());
 //            ps.setInt(item++, thisJobOrder.getColorID());
 //            ps.setInt(item++, thisJobOrder.getDesignID());
             rs = ps.executeQuery();
             if (rs.first()) {
                 dyeingProgramDetails.SetID(rs.getInt("ID"));
-                dyeingProgramDetails.setDyeingProgramNameID(thisJobOrder.getDyeingProgramID());
+                dyeingProgramDetails.setDyeingProgramNameID(thisDyeingProgram.getDyeingProgramNameID());
                 dyeingProgramDetails.setColorID(0);
                 dyeingProgramDetails.setDesignID(0);
                 dyeingProgramDetails.setCustomerID(0);
@@ -2439,18 +2439,18 @@ public class ColorTextControlSlipRepository {
         return resinProgramId;
     }
 
-    public boolean UpdateResinProgramName(String newResinProgramName, String oldResinProgramName) {
+    public boolean UpdateResinProgramName(String newResinProgramName, int ResinProgramID) {
         DBConnection db = new DBConnection();
         Connection conn = null;
         PreparedStatement preparedStmt = null;
         boolean isSuccessful = false;
         try {
             conn = db.getConnection();
-            String query = "UPDATE resin_program_name SET Name = ? WHERE Name = ?";
+            String query = "UPDATE resin_program_name SET Name = ? WHERE ID = ?";
 
             preparedStmt = conn.prepareStatement(query);
             preparedStmt.setString(1, newResinProgramName.toUpperCase());
-            preparedStmt.setString(2, oldResinProgramName.toUpperCase());
+            preparedStmt.setInt(2, ResinProgramID);
             preparedStmt.executeUpdate();
             isSuccessful = true;
         } catch (SQLException ex) {
@@ -2668,6 +2668,43 @@ public class ColorTextControlSlipRepository {
 
         return itExists;
     }
+    
+    public boolean CheckIfResinProgramNameExistsOnDifferentResinProgram(String ResinName, int ResinProgramID) {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        boolean itExists = false;
+        int checkTest = 0;
+        try {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT EXISTS "
+                    + " (SELECT ID "
+                    + " FROM resin_program_name WHERE "
+                    + " Name = ?"
+                    + " AND ID != ?) "
+                    + " AS 'CheckTest'");
+
+            int item = 1;
+            ps.setString(item++, ResinName);
+            ps.setInt(item++, ResinProgramID);
+            rs = ps.executeQuery();
+
+            if (rs.first()) {
+                checkTest = rs.getInt("CheckTest");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        this.closeConn(conn, ps, rs);
+        if (checkTest == 1) {
+            itExists = true;
+        }
+
+        return itExists;
+    }
 
     public int CheckIfSpecificResinProgramExistsForThisCustomer(String ResinProgramName, ResinProgram thisResinProgram) {
         DBConnection dbc = new DBConnection();
@@ -2768,7 +2805,7 @@ public class ColorTextControlSlipRepository {
             
             if (rs.first()) {
                 thisResinProgram.setID(rs.getInt("rProg.ID"));
-                //thisResinProgram.setProgramNameID(rs.getInt("ProgramNameID"));
+                thisResinProgram.setProgramNameID(rs.getInt("ProgramNameID"));
                 thisResinProgram.setCustomerID(rs.getInt("customerID"));
                 thisResinProgram.setColorID(rs.getInt("colorID"));
                 thisResinProgram.setDesignID(rs.getInt("designID"));
@@ -2842,7 +2879,7 @@ public class ColorTextControlSlipRepository {
         boolean added = false;
         try {
             conn = db.getConnection();
-            String query = "INSERT INTO resin_chemical (ChemicalID, ResinProgramID, ValueGPL, State, Type) VALUES (?, ?, ?, ?, ?)";
+            String query = "INSERT INTO resin_chemical (ChemicalID, ResinProgramID, ValueGPL, State, Type, resin_chemical.Order) VALUES (?, ?, ?, ?, ?, ?)";
 
             preparedStmt = conn.prepareStatement(query);
             preparedStmt.setInt(1, thisResinChemical.getChemicalID());
@@ -2850,6 +2887,7 @@ public class ColorTextControlSlipRepository {
             preparedStmt.setFloat(3, thisResinChemical.getGPLValue());
             preparedStmt.setString(4, thisResinChemical.getState());
             preparedStmt.setString(5, thisResinChemical.getType());
+            preparedStmt.setInt(6, thisResinChemical.getOrder());
 
             preparedStmt.executeUpdate();
 
@@ -2869,13 +2907,17 @@ public class ColorTextControlSlipRepository {
         boolean isSuccessful = false;
         try {
             conn = db.getConnection();
-            String query = "UPDATE resin_chemical SET ChemicalID = ?, ResinProgramID = ?, ValueGPL = ?  WHERE ID = ?";
+            String query = "UPDATE resin_chemical SET ChemicalID = ?, ResinProgramID = ?, ValueGPL = ? , State = ?, Type = ?,resin_chemical.Order = ? WHERE ID = ?";
 
             preparedStmt = conn.prepareStatement(query);
             preparedStmt.setInt(1, thisResinChemical.getChemicalID());
             preparedStmt.setInt(2, thisResinChemical.getResinProgramID());
             preparedStmt.setFloat(3, thisResinChemical.getGPLValue());
-            preparedStmt.setInt(4, thisResinChemical.getID());
+            preparedStmt.setString(4, thisResinChemical.getState());
+            preparedStmt.setString(5, thisResinChemical.getType());
+            preparedStmt.setInt(6, thisResinChemical.getOrder());
+            preparedStmt.setInt(7, thisResinChemical.getID());
+            
             preparedStmt.executeUpdate();
             isSuccessful = true;
         } catch (SQLException ex) {
@@ -2945,10 +2987,13 @@ public class ColorTextControlSlipRepository {
 
             while (rs.next()) {
                 ResinChemical resinChemical = new ResinChemical();
+                resinChemical.setID(rs.getInt("ID"));
                 resinChemical.setChemicalID(rs.getInt("ChemicalID"));
                 resinChemical.setGPLValue(rs.getFloat("ValueGPL"));
+                resinChemical.setResinProgramID(rs.getInt("ResinProgramID"));
                 resinChemical.setState(rs.getString("State"));
                 resinChemical.setType(rs.getString("Type"));
+                resinChemical.setOrder(rs.getInt("resin_chemical.Order"));
                 resinChemicals.add(resinChemical);
             }
         } catch (SQLException ex) {
@@ -3423,15 +3468,15 @@ public class ColorTextControlSlipRepository {
         boolean isSuccessful = false;
         try {
             conn = db.getConnection();
-            String query = "UPDATE dyeing_chemical SET ChemicalID = ?, Type = ?, Value = ? WHERE DyeingProcessID = ? AND dyeing_chemical.Order = ? LIMIT 1";
+            String query = "UPDATE dyeing_chemical SET ChemicalID = ?, Type = ?, Value = ? , dyeing_chemical.Order = ? WHERE ID = ? LIMIT 1";
 
             preparedStmt = conn.prepareStatement(query);
             int item = 1;
             preparedStmt.setInt(item++, thisDyeingChemical.getChemicalId());
             preparedStmt.setString(item++, thisDyeingChemical.getType());
             preparedStmt.setFloat(item++, thisDyeingChemical.getValue());
-            preparedStmt.setInt(item++, thisDyeingChemical.getDyeingProcessID());
             preparedStmt.setInt(item++, thisDyeingChemical.getOrder());
+            preparedStmt.setInt(item++, thisDyeingChemical.getID());
             preparedStmt.executeUpdate();
             isSuccessful = true;
         } catch (SQLException ex) {

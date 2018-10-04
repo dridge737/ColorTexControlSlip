@@ -109,12 +109,28 @@ public class SubProcessPanel extends javax.swing.JPanel {
         //thisColumn.setHeaderValue("Quantity");
         //ChemicalTable.addColumn(thisColumn);  
         //ChemicalTable.removeColumn(thisColumn);
+        ChemicalTable.getModel().addTableModelListener(new TableModelListener() {
+
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                if (ValueColumn == e.getColumn() && ValueColumn+1 != EditableCol) {
+                    ChemicalTable.getModel().setValueAt(computeQuantity(e.getFirstRow(), e.getColumn()),e.getFirstRow(),e.getColumn()+1);
+                    //System.out.println(ChemicalTable.getModel().getValueAt(e.getFirstRow(), e.getColumn()));
+                    //System.out.println(e.getColumn() + " " + e.getFirstRow() + " " + e.getSource().toString());
+
+                }
+            }
+        });
     }
-    
+    public float computeQuantity(int row, int column)
+    {
+         Float Quantity = new ComputeHelper().ComputeDyeingQuantity(GetThisRowOfValues(row), thisJobOrder);
+         return Quantity;  
+    }
     private void setTableModel(int type)
     {
         String[] TableHeader;
-        if(type == 3 || type == 4 || type == 5)
+        if(type == 3 || type == 4 || type == 5 || type == 6)
         {
             TableHeader = new String [] {
                 "Chemical", "Gram/Liter", "Type", "Value" , "Quantity" ,"Delete", "ID"
@@ -129,20 +145,21 @@ public class SubProcessPanel extends javax.swing.JPanel {
         }
         
         CurrentTableModel tableModel = new CurrentTableModel( ) {
-                @Override
-            public boolean isCellEditable(int row, int column) {
+         //    @Override
+         //   public boolean isCellEditable(int row, int column) {
             //Only the third column
-                return column == EditableCol;
-            }
+         //       return column == CellEditable;
+         //   }
         };
         for(String Headers : TableHeader)
-        tableModel.addColumn(Headers);
-        
+            tableModel.addColumn(Headers);
+       
         ChemicalTable.setDragEnabled(true);
         ChemicalTable.setDropMode(DropMode.INSERT_ROWS);
         ChemicalTable.setTransferHandler(new TableRowTransferHandler(ChemicalTable)); 
         ChemicalTable.setModel(tableModel);
         //ChemicalTable.remove(type);
+         
         ChemicalTable.removeColumn(ChemicalTable.getColumnModel().getColumn(EditableCol+1));
     }
     public void DeleteAllChemicaltoBeDeletedFromDB()
@@ -166,15 +183,15 @@ public class SubProcessPanel extends javax.swing.JPanel {
                 int modelRow = Integer.valueOf(e.getActionCommand());
                 if (JOptionPane.YES_OPTION
                         == JOptionPane.showConfirmDialog(null, "Do you want to delete Chemical: " + table.getModel().getValueAt(modelRow, 0) + " From this Process?", "DELETE this item?", JOptionPane.YES_NO_OPTION)) {
-
-                    ChemicalIDtoBeDeleted.add((int) table.getModel().getValueAt(modelRow, EditableCol + 1));
-
+                    
+                    
+                    
                     //ThisDyeingChemical.setID(ChemicalList.get(LastRow).getID());
                     //int convertedRowNumber = JobOrderTable.convertRowIndexToModel(this.JobOrderTable.getSelectedRow());
                     //String DrNumber = JobOrderTable.getModel().getValueAt(convertedRowNumber , 0).toString();
                     //int JobId = Integer.parseInt(JobOrderTable.getModel().getValueAt(convertedRowNumber , 9).toString());
                     AddedChemicalList.remove(table.getModel().getValueAt(modelRow, 0));
-                    ((DefaultTableModel) table.getModel()).removeRow(modelRow);
+                    ((CurrentTableModel) table.getModel()).removeRow(modelRow);
 
                 }
 
@@ -230,7 +247,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
      {
          ArrayList<DyeingChemical> ThisDyeingChemical;
          DyeingChemicalHandler ThisDyeingChemicalHandler = new DyeingChemicalHandler();
-         DefaultTableModel model = (DefaultTableModel) ChemicalTable.getModel();
+         CurrentTableModel model = (CurrentTableModel) ChemicalTable.getModel();
          ThisDyeingChemical = ThisDyeingChemicalHandler.GetAllDyeingChemicalFromDyeingProcessID(DyeingProcessID);
          
          for(DyeingChemical thisDyeingChemical : ThisDyeingChemical)
@@ -239,9 +256,10 @@ public class SubProcessPanel extends javax.swing.JPanel {
              String ChemicalName = getChemicalNameFromID(thisDyeingChemical.getChemicalId());
              //Float Quantity = ComputeQuantityFromWeightOrVol(thisDyeingChemical);
              Float Quantity;
-             if(WindowType == 3 || WindowType == 4 || WindowType == 5)
+             if(WindowType == 3 || WindowType == 4 || WindowType == 5 || WindowType == 6)
              //if(thisJobOrder.getID() > 0)
              {
+                 
                  Quantity = new ComputeHelper().ComputeDyeingQuantity(thisDyeingChemical, thisJobOrder);
                  model.addRow(new Object[] { ChemicalName, thisDyeingChemical.getState(),thisDyeingChemical.getType(), thisDyeingChemical.getValue(),Quantity, "Delete" , thisDyeingChemical.getID()});                 
              }
@@ -276,7 +294,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
                 Object quantity = ChemicalTable.getModel().getValueAt(ChemicalTable.getEditingRow(), 3);
                 if(gpl != null && chemical != null && value != null && quantity != null)
                 {
-                    ((DefaultTableModel)ChemicalTable.getModel()).addRow(new Object[]{});
+                    ((CurrentTableModel)ChemicalTable.getModel()).addRow(new Object[]{});
                 }
             }
         }
@@ -383,20 +401,27 @@ public class SubProcessPanel extends javax.swing.JPanel {
         ArrayList<DyeingChemical> ChemicalList = 
                 DyeingChemicalHandler.GetAllDyeingChemicalFromDyeingProcessID(DyeingProcessID);
         
-        for (int OrderNum = 0; OrderNum < ChemicalTable.getRowCount(); OrderNum++) {
-            DyeingChemical ThisDyeingChemical = GetThisRowOfValues(OrderNum, DyeingProcessID);
-            //IF Chemical Size is still within the number of row that has already been added
-                if(OrderNum < ChemicalList.size())
-                {
-                    ThisDyeingChemical.setID(ChemicalList.get(OrderNum).getID());
-                    DyeingChemicalHandler.UpdateDyeingChemical(ThisDyeingChemical);
-                }
-                else
-                    DyeingChemicalHandler.AddNewDyeingChemical(ThisDyeingChemical);
-                
-        }
-        this.DeleteAllChemicaltoBeDeletedFromDB();
-        /*
+         for (int OrderNum = 0; OrderNum < ChemicalTable.getRowCount(); OrderNum++) {
+             DyeingChemical ThisDyeingChemical = GetThisRowOfValues(OrderNum, DyeingProcessID);
+             //IF Chemical Size is still within the number of row that has already been added
+             if (OrderNum < ChemicalList.size()) {
+                 ThisDyeingChemical.setID(ChemicalList.get(OrderNum).getID());
+                 DyeingChemicalHandler.UpdateDyeingChemical(ThisDyeingChemical);
+             } else {
+                 DyeingChemicalHandler.AddNewDyeingChemical(ThisDyeingChemical);
+             }
+
+         }
+
+         for (int x = ChemicalTable.getRowCount(); x < ChemicalList.size(); x++) {
+             //if(table.getModel().getColumnCount() > EditableCol+1 && 
+             //            table.getModel().getValueAt(modelRow, EditableCol+1) != null)
+             ChemicalIDtoBeDeleted.add((int) ChemicalList.get(x).getID());
+
+         }
+         this.DeleteAllChemicaltoBeDeletedFromDB();
+         
+         /*
         //Delete All the Remaining Dyeing Chemical not included in the Update
         for(int LastRow = ChemicalTable.getRowCount(); LastRow < ChemicalList.size(); LastRow++ )
         {
@@ -419,6 +444,24 @@ public class SubProcessPanel extends javax.swing.JPanel {
          return ThisDyeingChemical;
      }
      
+     private DyeingChemical GetThisRowOfValues(int rowNumber)
+     {
+         DyeingChemical ThisDyeingChemical = new DyeingChemical();
+         ChemicalHandler ChemicalHandler = new ChemicalHandler();
+         
+         String Chemical = ChemicalTable.getModel().getValueAt(rowNumber, ChemicalColumn).toString();
+         String Type = ChemicalTable.getModel().getValueAt(rowNumber, TypeColumn).toString();
+         String Value = ChemicalTable.getModel().getValueAt(rowNumber, ValueColumn).toString();
+         String State = ChemicalTable.getModel().getValueAt(rowNumber, StateColumn).toString();
+         
+         //ThisDyeingChemical.setChemicalId(ThisChemical.getChemicalId());
+         //ThisDyeingChemical.setDyeingProcessID(DyeingProcessID);
+         ThisDyeingChemical.setType(Type);
+         ThisDyeingChemical.setValue(Float.valueOf(Value));//parseFloat(Value));
+         ThisDyeingChemical.setOrder(rowNumber + 1);
+         ThisDyeingChemical.setState(State);
+         return ThisDyeingChemical;
+     }
      private DyeingChemical GetThisRowOfValues(int rowNumber, int DyeingProcessID)
      {
          Chemical ThisChemical  = new Chemical();
@@ -429,22 +472,22 @@ public class SubProcessPanel extends javax.swing.JPanel {
          String Type = ChemicalTable.getModel().getValueAt(rowNumber, TypeColumn).toString();
          String Value = ChemicalTable.getModel().getValueAt(rowNumber, ValueColumn).toString();
          String State = ChemicalTable.getModel().getValueAt(rowNumber, StateColumn).toString();
-            if(Chemical.length() > 0 )//&& !CheckTextIfItsANumber(Value))
-            {
-                ThisChemical.setChemicalName(Chemical);
-                ThisChemical.setChemicalId(ChemicalHandler.GetChemicalIDFromChemicalName(ThisChemical.getChemicalName()));
-                ThisDyeingChemical.setChemicalId(ThisChemical.getChemicalId());
-                ThisDyeingChemical.setDyeingProcessID(DyeingProcessID);
-                ThisDyeingChemical.setType(Type);
-                ThisDyeingChemical.setValue(Float.valueOf(Value));//parseFloat(Value));
-                ThisDyeingChemical.setOrder(rowNumber+1);
-                ThisDyeingChemical.setState(State);
-                //TO Be FIXED: How to know if this will be Solid or Liquid. G or L               
-                //ThisDyeingChemical.setState(State);
-            }
-            else
-                return null;
-            
+         if (Chemical.length() > 0)//&& !CheckTextIfItsANumber(Value))
+         {
+             ThisChemical.setChemicalName(Chemical);
+             ThisChemical.setChemicalId(ChemicalHandler.GetChemicalIDFromChemicalName(ThisChemical.getChemicalName()));
+             ThisDyeingChemical.setChemicalId(ThisChemical.getChemicalId());
+             ThisDyeingChemical.setDyeingProcessID(DyeingProcessID);
+             ThisDyeingChemical.setType(Type);
+             ThisDyeingChemical.setValue(Float.valueOf(Value));//parseFloat(Value));
+             ThisDyeingChemical.setOrder(rowNumber + 1);
+             ThisDyeingChemical.setState(State);
+             //TO Be FIXED: How to know if this will be Solid or Liquid. G or L               
+             //ThisDyeingChemical.setState(State);
+         } else {
+             return null;
+         }
+
          return ThisDyeingChemical;
      }
      
@@ -668,7 +711,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
     private void AddTextToTable()
     {
         //String ChemicalName = ChemicalTextfield.getText().trim().toUpperCase();
-        DefaultTableModel model = (DefaultTableModel) ChemicalTable.getModel();
+        CurrentTableModel model = (CurrentTableModel) ChemicalTable.getModel();
         DyeingChemical thisDyeingChemical = GetTextFromTextBox();
         
         if(WindowType == 3 || WindowType == 4 || WindowType == 5)

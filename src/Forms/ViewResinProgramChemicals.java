@@ -493,7 +493,7 @@ public class ViewResinProgramChemicals extends javax.swing.JFrame {
                             ,"Update Resin Program Name", JOptionPane.YES_NO_OPTION);
             if(CloseorNoreply == JOptionPane.YES_OPTION)
             {
-                resinProgramHandler.UpdateResinProgramName(ResinProgramTextBox.getText(), this.resinProgramName);
+                //resinProgramHandler.UpdateResinProgramName(ResinProgramTextBox.getText(), this.resinProgramName);
                 ResinProgramLabel.setText(ResinProgramTextBox.getText());
                 this.resinProgramName = ResinProgramTextBox.getText();
             }

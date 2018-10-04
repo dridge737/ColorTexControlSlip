@@ -285,7 +285,7 @@ public class ResinPanel extends javax.swing.JPanel {
             ReviewForm.AddTextToJobOrderObject();
             
             ViewResinProgramList thisResinProgram;
-            thisResinProgram = new ViewResinProgramList(ReviewForm.getThisJob(), 3);
+            thisResinProgram = new ViewResinProgramList(ReviewForm.getThisJob(), ReviewForm.getWindowType());
             thisResinProgram.setVisible(true);
             ReviewForm.dispose();
         }

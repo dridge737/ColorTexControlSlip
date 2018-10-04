@@ -115,6 +115,7 @@ public class DyeingForm extends javax.swing.JFrame {
         initComponents();
         SetToCenter();
         WindowProcessType = WindowType;
+        thisJob = currentJob;
         //For Adding new Dyeing Program
         if(WindowProcessType == 1)
         {
@@ -221,8 +222,8 @@ public class DyeingForm extends javax.swing.JFrame {
         this.ProgramNameText.setText(thisDyeingProgramName.getDyeingProgramName());
         
         thisDyeingProgram.setDyeingProgramNameID(thisDyeingProgramName.getID());
-        thisJob.setDyeingProgramID(thisDyeingProgram.getDyeingProgramNameID());
-        thisDyeingProgram = thisDyeingProgramHandler.getDefaultProgramIDForThisDyeingProgramNameID(thisJob);
+        //thisJob.setDyeingProgramID(thisDyeingProgram.getID());
+        thisDyeingProgram = thisDyeingProgramHandler.getDefaultProgramIDForThisDyeingProgramNameID(thisDyeingProgram);
         SetDyeingProgramProcessFromProgramID(thisDyeingProgram.getID());
     }
     
@@ -454,6 +455,7 @@ public class DyeingForm extends javax.swing.JFrame {
                     }
             }
         }
+        DeleteProcess();
         return SuccessfullyUpdated;
     }
     
@@ -576,7 +578,6 @@ public class DyeingForm extends javax.swing.JFrame {
                     } else {
                         //Else just update the program added for the current customer
                         CloseWindow = UpdateDyeingProgram();
-                        DeleteProcess();
                     }
 
                     thisJob.setDyeingProgramID(thisDyeingProgram.getID());

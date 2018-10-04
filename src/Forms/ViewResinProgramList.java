@@ -303,10 +303,12 @@ public class ViewResinProgramList extends javax.swing.JFrame {
             {
                 if(SelectBut1.getText().equals("Next"))
                 {
+                    
                     new AddResinForm(resinProgramName, thisJob, this.WindowType).setVisible(true);
                 }
                 else
-                    new ViewResinProgramChemicals(resinProgramName).setVisible(true);
+                    new AddResinForm(resinProgramName).setVisible(true);
+                    //new ViewResinProgramChemicals(resinProgramName).setVisible(true);
                 this.dispose();
             }
             else
@@ -321,16 +323,16 @@ public class ViewResinProgramList extends javax.swing.JFrame {
     private void BackButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButActionPerformed
         // TODO add your handling code here:
         //Resin list window from review form
-        if(WindowType == 4 || WindowType == 5)
-        {
-            new ReviewFormV2(thisJob, WindowType).setVisible(true);
-        }
-        //Resin List from Job order form
-        else if(WindowType == 3)
-        {
-            new MachineSelection(thisJob).setVisible(true);
-            //DyeingForm thisDyeingForm = new DyeingForm(thisJob);
-            //thisDyeingForm.setVisible(true);
+        if (!BackBut.getText().equals("Close")) {
+            if (WindowType == 3) {
+                new MachineSelection(thisJob).setVisible(true);
+            } //Resin List from Job order form
+            else //(WindowType == 4 || WindowType == 5 || WindowType == 6)
+            {
+                new ReviewFormV2(thisJob, WindowType).setVisible(true);
+                //DyeingForm thisDyeingForm = new DyeingForm(thisJob);
+                //thisDyeingForm.setVisible(true);
+            }
         }
         this.dispose();
         

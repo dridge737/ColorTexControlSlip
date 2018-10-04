@@ -81,10 +81,10 @@ public class DyeingProgramHandler {
     }
     
     //Requires values from DyeingProgramName ID, Customer ID, Color ID and Design ID
-    public DyeingProgram getDefaultProgramIDForThisDyeingProgramNameID(JobOrder thisJobOrder) {
+    public DyeingProgram getDefaultProgramIDForThisDyeingProgramNameID(DyeingProgram thisDyeingProgram) {
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
-        return repo.getDefaultDyeingProgramForThisDyeingProgramID(thisJobOrder);
+        return repo.getDefaultDyeingProgramForThisDyeingProgramID(thisDyeingProgram);
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

@@ -164,7 +164,7 @@ public class ProcessPanel extends javax.swing.JPanel {
         int index = NumberOfTabs -1;
         if (subProcess.getSelectedIndex() == index) { /* if click new tab */
             /* add new tab */
-            SubProcessPanel this_panel = new SubProcessPanel();
+            SubProcessPanel this_panel = new SubProcessPanel(WindowType);
             //Show Subprocess Text if there is more than one sub process
             if(NumberOfTabs < 3)
                ShowTextOnFirstTab();
@@ -183,13 +183,14 @@ public class ProcessPanel extends javax.swing.JPanel {
     {
         /* add new tab */
         SubProcessPanel this_panel;
-        if(WindowType == 3)
-        {
-            this_panel = new SubProcessPanel(SubProcess.getId(), WindowType, thisJobOrder);
-        }
-        else
-            this_panel = new SubProcessPanel(SubProcess.getId(), WindowType);
-        //this_panel.SetSubProcessFromDyeingProgram();
+        
+            if (thisJobOrder != null) {
+                this_panel = new SubProcessPanel(SubProcess.getId(), WindowType, thisJobOrder);
+            } else {
+                this_panel = new SubProcessPanel(SubProcess.getId(), WindowType);
+            }
+            //this_panel.SetSubProcessFromDyeingProgram();
+        
         addTabToSubProcessTabbedPane(this_panel, this.NumberOfTabs++); 
         
     }

@@ -17,7 +17,9 @@ import DataEntities.ResinJob;
 public class ComputeHelper {
     public float ComputeDyeingQuantity(DyeingChemical thisDyeingChemical, JobOrder thisJobOrder)
     {
+        if(thisDyeingChemical != null && thisJobOrder != null)
         return ComputeQuantityFromWeightOrVol(thisDyeingChemical.getValue(), thisDyeingChemical.getType(), thisDyeingChemical.getState(), thisJobOrder.getDyeingWeight(), thisJobOrder.getDyeingVolumeH20());
+        return 0;
     }
     
     public float ComputeResinQuantity(ResinChemical thisResinChemical, ResinJob thisResinJob)

@@ -20,6 +20,8 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -333,7 +335,7 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
         model_original.addColumn("Resin Program");
         model_original.addColumn("Dyeing Machine");
         model_original.addColumn("Resin Machine");
-        model_original.addColumn("Resin Machine 2");
+        //model_original.addColumn("Resin Machine 2");
         model_original.addColumn("ID");
         
         

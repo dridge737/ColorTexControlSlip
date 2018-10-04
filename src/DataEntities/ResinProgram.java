@@ -17,6 +17,7 @@ public class ResinProgram {
     private int designID;
     private int colorID;
     
+    
     /**
      * @return the customerID
      */

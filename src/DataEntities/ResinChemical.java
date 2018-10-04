@@ -10,12 +10,15 @@ package DataEntities;
  * @author Eldridge
  */
 public class ResinChemical {
+
+   
     private int ID;
     private int ChemicalID;
     private int ResinProgramID;
     private float GPLValue;
     private String Type;
     private String State;
+    private int Order;
 
     /**
      * @return the ID
@@ -99,6 +102,20 @@ public class ResinChemical {
      */
     public void setState(String State) {
         this.State = State;
+    }
+    
+     /**
+     * @return the Order
+     */
+    public int getOrder() {
+        return Order;
+    }
+
+    /**
+     * @param Order the Order to set
+     */
+    public void setOrder(int Order) {
+        this.Order = Order;
     }
            
     

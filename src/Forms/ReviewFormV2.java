@@ -55,6 +55,20 @@ import javax.swing.KeyStroke;
 public class ReviewFormV2 extends javax.swing.JFrame {
 
     /**
+     * @return the WindowType
+     */
+    public int getWindowType() {
+        return WindowType;
+    }
+
+    /**
+     * @param WindowType the WindowType to set
+     */
+    public void setWindowType(int WindowType) {
+        this.WindowType = WindowType;
+    }
+
+    /**
      * @return the thisJob
      */
     public JobOrderExtended getThisJob() {
@@ -75,7 +89,7 @@ public class ReviewFormV2 extends javax.swing.JFrame {
     DesignColor thisColor = new DesignColor();
     private JobOrderExtended thisJob = new JobOrderExtended();
     ProcessOrder thisProcessOrder = new ProcessOrder();
-    int WindowType = 0;
+    private int WindowType = 0;
     DyeingProgram thisDyeingProgram = new DyeingProgram();
     boolean ThisJobHasBeenAdded = false;
     ArrayList<String> LiquidRatio = new ArrayList<>();
@@ -170,7 +184,7 @@ public class ReviewFormV2 extends javax.swing.JFrame {
         //thisJob.setID(thisProcessOrder.getJobOrderID());
         //JobHandler JobOrderHandler = new JobHandler();
         //thisJob = JobOrderHandler.GetJobOrderDetailsFromJobId(thisJob.getID());
-        if (WindowType == 4) {
+        if (getWindowType() == 4) {
             //JobOrder.setText("");
             JobOrder.setBackground(Color.WHITE);
             JobOrder.setEnabled(true);
@@ -629,7 +643,7 @@ public class ReviewFormV2 extends javax.swing.JFrame {
         if (CheckIfDyeingMachineHasInputs() && CheckCustomerAndJobOrderFromTextBox()) {
             GetJobOrderDetailsFromTextBox();
             ViewDyeingProgramList thisDyeingProgramListWindow;
-            thisDyeingProgramListWindow = new ViewDyeingProgramList(this.getThisJob(), this.WindowType);
+            thisDyeingProgramListWindow = new ViewDyeingProgramList(this.getThisJob(), this.getWindowType());
             thisDyeingProgramListWindow.setVisible(true);
             this.dispose();
         }
@@ -660,8 +674,9 @@ public class ReviewFormV2 extends javax.swing.JFrame {
     private void DyeingWeightFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_DyeingWeightFocusLost
         //ComputeForDyeingVolume();
         try{
+            Float.parseFloat(this.DyeingWeight.getText());
             //Float RoundTo = (float) Math.round(Float.parseFloat(Weight.getText()) / 100) * 100;
-            DyeingWeight.setText(new LiquidRatioHandler().RoundToHundreds(Float.parseFloat(DyeingWeight.getText())).toString());
+            //DyeingWeight.setText(new LiquidRatioHandler().RoundToHundreds(Float.parseFloat(DyeingWeight.getText())).toString());
         }
         catch (NumberFormatException formatException) {
             JOptionPane.showMessageDialog(null, "Please change the value of the weight to a valid number.");
@@ -704,7 +719,7 @@ public class ReviewFormV2 extends javax.swing.JFrame {
             this.dispose();
         } else {
             if (AddTextToJobOrderObject()) {
-                if (this.WindowType != 6) {
+                if (this.getWindowType() != 6) {
                     int jobOrderID = thisJobHandler.AddNewJobOrder(getThisJob());
                     if ( jobOrderID > 0) {
                         if (getThisJob().getThisResinJob() != null) {
@@ -719,7 +734,7 @@ public class ReviewFormV2 extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "There is an error in adding the Job Order.");
                     }
 
-                } else if (WindowType == 6) {
+                } else if (getWindowType() == 6) {
                     if (thisJobHandler.UpdateJobOrder(getThisJob())) {
                         //Also Update Resin Program
                         for (ResinJob thisResinJob : getThisJob().getThisResinJob()) {
@@ -767,7 +782,7 @@ public class ReviewFormV2 extends javax.swing.JFrame {
 
         //if(!designName.equals(""))
         if (!DesignDropDownList.getSelectedItem().toString().equals("Choose Design")
-            && !(DesignDropDownList.getSelectedItem().toString().length() > 1)) {
+            && (DesignDropDownList.getSelectedItem().toString().length() > 1)) {
             String designName = DesignDropDownList.getSelectedItem().toString();
             thisDesign.setDesignName(designName);
             //designId = handler.GetDesignIDFromName(designName);
@@ -799,7 +814,7 @@ public class ReviewFormV2 extends javax.swing.JFrame {
             this.dispose();
         }
         else {
-            if (this.WindowType == 4 || this.WindowType == 6 || this.WindowType == 5) {
+            if (this.getWindowType() == 4 || this.getWindowType() == 6 || this.getWindowType() == 5) {
                 if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Do you want to cancel using this Job Order?", "Exit?", JOptionPane.YES_NO_OPTION)) {
                     new ViewCustomerOrder().setVisible(true);
                     this.dispose();
@@ -822,8 +837,9 @@ public class ReviewFormV2 extends javax.swing.JFrame {
         if (AddTextToJobOrderObject()) {
             if (ThisJobHasBeenAdded != true) {
                 //if (WindowType == 3) {
-                    if (WindowType == 6) {
+                    if (getWindowType() == 6) {
                         thisJobHandler.UpdateJobOrder(getThisJob());
+                        
                     }
                     //else if ((WindowType == 5 || WindowType == 4 || WindowType == 2 || WindowType == 1)) {
                         else {
