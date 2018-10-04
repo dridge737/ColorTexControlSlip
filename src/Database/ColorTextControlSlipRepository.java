@@ -2981,7 +2981,7 @@ public class ColorTextControlSlipRepository {
         ArrayList<ResinChemical> resinChemicals = new ArrayList<>();
         try {
             conn = dbc.getConnection();
-            ps = conn.prepareStatement("SELECT * FROM resin_chemical where ResinProgramID = ?");
+            ps = conn.prepareStatement("SELECT * FROM resin_chemical where ResinProgramID = ? ORDER BY resin_chemical.order");
             ps.setInt(1, resinProgramId);
             rs = ps.executeQuery();
 
