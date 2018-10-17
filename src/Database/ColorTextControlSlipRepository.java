@@ -1363,6 +1363,53 @@ public class ColorTextControlSlipRepository {
         this.closeConn(conn, ps, rs);
         return DyeingList;
     }
+    
+    public int CheckIfSpecificDyeingProgramExistsForThisCustomer(JobOrderExtended thisJobOrder)
+    {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int checkTest = 0;
+        try {
+            conn = dbc.getConnection();
+            /*ps = conn.prepareStatement(
+                    " SELECT EXISTS "
+                    + "(SELECT dyeing_program.ID "
+                    + " FROM dyeing_program, dyeing_program_name "
+                    + " WHERE Name = ? "
+                    + " AND ProgramNameID = dyeing_program_name.ID"
+                    + " AND dyeing_program.ID "
+                    + " IN (SELECT DyeingProgramID FROM job_order WHERE CustomerId = ?))"
+                    + " AS 'CheckTest'");
+*/
+            ps = conn.prepareStatement(
+                    " SELECT EXISTS "
+                    + "(SELECT dyeing_program.ID "
+                    + " FROM dyeing_program "
+                    + " WHERE ColorID = ?"
+                    + " AND DesignID = ?"
+                    + " AND CustomerID = "
+                    + " AND ProgramNameID = ?) "
+                    + " AS 'CheckTest'");
+            
+            int item = 1;
+            ps.setInt(item++, thisJobOrder.getColorID());
+            ps.setInt(item++, thisJobOrder.getDesignID());
+            ps.setInt(item++, thisJobOrder.getCustomerID());
+
+            rs = ps.executeQuery();
+            if (rs.first()) {
+                checkTest = rs.getInt("CheckTest");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        this.closeConn(conn, ps, rs);
+        return checkTest;
+    }
 
     public int CheckIfSpecificDyeingProgramExistsForThisCustomer(String dyeingProgramName, JobOrderExtended thisJobOrder) {
         DBConnection dbc = new DBConnection();

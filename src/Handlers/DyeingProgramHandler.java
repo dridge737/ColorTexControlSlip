@@ -61,6 +61,13 @@ public class DyeingProgramHandler {
         return repo.CheckIfSpecificDyeingProgramExistsForThisCustomer(DyeingProgramName, thisJob) == 1;
     }
     
+    public boolean CheckIfSpecificDyeingProgramExistForThisCustomer(JobOrderExtended thisJob)
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        return repo.CheckIfSpecificDyeingProgramExistsForThisCustomer(thisJob) == 1;
+    }
+    
+    
     public int GetDyeingProgramIDForCustomerDyeingProgram(String DyeingProgramName , JobOrderExtended thisJob)
     {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();

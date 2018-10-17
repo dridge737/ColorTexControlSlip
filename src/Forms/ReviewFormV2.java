@@ -18,6 +18,7 @@ import Forms.HelpForm.ResinPanel;
 import Handlers.ColorHandler;
 import Handlers.CustomerHandler;
 import Handlers.DesignHandler;
+import Handlers.DyeingProcessHandler;
 import Handlers.DyeingProgramHandler;
 import Handlers.DyeingProgramNameHandler;
 import Handlers.JobHandler;
@@ -641,7 +642,7 @@ public class ReviewFormV2 extends javax.swing.JFrame {
 
     private void EditDyeingProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditDyeingProgramActionPerformed
         if (CheckIfDyeingMachineHasInputs() && CheckCustomerAndJobOrderFromTextBox()) {
-            GetJobOrderDetailsFromTextBox();
+            SetJobOrderDetailsFromTextBox();
             ViewDyeingProgramList thisDyeingProgramListWindow;
             thisDyeingProgramListWindow = new ViewDyeingProgramList(this.getThisJob(), this.getWindowType());
             thisDyeingProgramListWindow.setVisible(true);
@@ -831,6 +832,19 @@ public class ReviewFormV2 extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_CancelButActionPerformed
 
+    private void CheckAndAddIfDyeingProgramExistsForThisDesignColorCustomer()
+    {
+        this.SetJobOrderDetailsFromTextBox();
+        //If the dyeing program does not exists then the Dyeing Program to the database
+        if(!new DyeingProgramHandler().CheckIfSpecificDyeingProgramExistForThisCustomer(thisJob)){
+            DyeingProgram thisDyeingProgram = new DyeingProgramHandler().GetDyeingProgramDetailsById(thisJob.getDyeingMachineID());
+            //Add Dyeing Program for the same program name with different customer, color and design.
+            //this
+            //new DyeingProcessHandler().get
+        }
+        //Else do nothing
+    }
+    
     private void SavePrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SavePrintActionPerformed
         // TODO add your handling code here:
         JobHandler thisJobHandler = new JobHandler();
@@ -923,7 +937,7 @@ public class ReviewFormV2 extends javax.swing.JFrame {
         return thisTextField.getText().length() >= 1;
     }
 
-    private void GetJobOrderDetailsFromTextBox()
+    private void SetJobOrderDetailsFromTextBox()
     {
         getThisJob().setCustomerID(thisCustomer.getCustomerId());
         getThisJob().setColorID(thisColor.getColorId());
@@ -960,7 +974,7 @@ public class ReviewFormV2 extends javax.swing.JFrame {
         boolean isSuccessful = false;
         //If all inputs are good
         if (CheckAllFormInformationFromTextBox()) {
-            GetJobOrderDetailsFromTextBox();
+            SetJobOrderDetailsFromTextBox();
             isSuccessful = true;
         }
         return isSuccessful;
