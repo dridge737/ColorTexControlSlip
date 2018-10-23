@@ -370,9 +370,19 @@ public class DyeingForm extends javax.swing.JFrame {
                     thisDyeingProgramNameHandler.AddDyeingProgramName(thisDyeingProgramName.getDyeingProgramName());
             thisDyeingProgram.setDyeingProgramNameID(thisDyeingProgramNameID);
                 //ADD and Set Dyeing Program ID
-            thisDyeingProgram.setCustomerID(thisJob.getCustomerID());
-            thisDyeingProgram.setColorID(thisJob.getColorID());
-            thisDyeingProgram.setDesignID(thisJob.getDesignID());
+                if (thisJob != null) {
+
+                thisDyeingProgram.setCustomerID(thisJob.getCustomerID());
+                thisDyeingProgram.setColorID(thisJob.getColorID());
+                thisDyeingProgram.setDesignID(thisJob.getDesignID());
+                }
+                else{
+                    thisDyeingProgram.setCustomerID(0);
+                    thisDyeingProgram.setColorID(0);
+                    thisDyeingProgram.setDesignID(0);
+                    
+                }
+                
                 //int DyeingProgramID = thisDyeingProgramHandler.GetDyeingProgramIDfromName(thisDyeingProgram.getDyeingProgramName());
                 //FIX THIS edit for Dyeing Program Name
                 //thisDyeingProgram.SetID(DyeingProgramID);
