@@ -13,7 +13,9 @@ import DataEntities.JobOrder;
 import DataEntities.JobOrderExtended;
 import DataEntities.Machine;
 import DataEntities.ProcessOrder;
+import DataEntities.ResinChemical;
 import DataEntities.ResinJob;
+import DataEntities.ResinProgram;
 import Forms.HelpForm.ResinPanel;
 import Handlers.ColorHandler;
 import Handlers.CustomerHandler;
@@ -26,6 +28,7 @@ import Handlers.LiquidRatioHandler;
 import Handlers.MachineHandler;
 import Handlers.PreferenceHandler;
 import Handlers.PrintHandlerFinal;
+import Handlers.ResinChemicalHandler;
 import Handlers.ResinJobHandler;
 import Handlers.ResinProgramHandler;
 import com.itextpdf.text.DocumentException;
@@ -712,6 +715,86 @@ public class ReviewFormV2 extends javax.swing.JFrame {
         thisDyeingMachine.setMachineName(machineDetails.getMachineName());
     }//GEN-LAST:event_DyeingMachineDropDownActionPerformed
 
+    private boolean CheckIfResinMatchesColorCustomerAndDesign(ResinJob currentResinJob)
+    {
+        boolean Match = true;
+        if(currentResinJob != null)
+        {
+                //thisResinProgram.setIDcurrentResinJob.getResinProgramID();
+                ResinProgram thisResinProgram = new ResinProgram();
+                thisResinProgram = new ResinProgramHandler().GetResinProgramDetailsFromResinID(currentResinJob.getResinProgramID());
+                
+                 if((getThisJob().getColorID() != thisResinProgram.getColorID() || getThisJob().getCustomerID() != thisResinProgram.getCustomerID())
+                    || getThisJob().getDesignID() != thisResinProgram.getDesignID())
+                     Match = false;                 
+                //if(new ResinProgramHandler().CheckIfResinProgramNameExists(ResinName))            
+        }
+        return Match;
+    }
+    
+    private int CheckAndAddDyeingProgramDetails()
+    {
+        int resinJobID;
+        DyeingProgram currentDyeingProgram = new DyeingProgramHandler().GetDyeingProgramDetailsById(getThisJob().getDyeingProgramID());
+                //.GetResinProgramDetailsFromResinID(thisResinJob.getResinProgramID());
+        currentDyeingProgram.setColorID(getThisJob().getColorID());
+        currentDyeingProgram.setCustomerID(getThisJob().getCustomerID());
+        currentDyeingProgram.setDesignID(getThisJob().getDesignID());
+
+        //Check a Program for Resin program of the same Color / Design / Customer exists  
+        //IF it exists then just update the ResinProgram on the Resin Job
+        if (new DyeingProgramHandler().CheckIfSpecificDyeingProgramExistForThisCustomer(currentResinProgram)) 
+        {
+            //when resin program exists get the Resin program id and add to the current resin job
+            currentResinProgram = new ResinProgramHandler().GetResinProgramDetailsForThisResinAndCustomer(currentResinProgram);
+            //thisResinJob.setResinProgramID(currentResinProgram.getID());
+            resinJobID = currentResinProgram.getID();
+            
+        } //Else add the resin program using details from the old resin program
+        else 
+        {
+        }
+        
+    }
+    
+    private int CheckAndAddResinProgramDetails(ResinJob thisResinJob) {
+        int resinJobID;
+        ResinProgram currentResinProgram = new ResinProgramHandler().GetResinProgramDetailsFromResinID(thisResinJob.getResinProgramID());
+        currentResinProgram.setColorID(getThisJob().getColorID());
+        currentResinProgram.setCustomerID(getThisJob().getCustomerID());
+        currentResinProgram.setDesignID(getThisJob().getDesignID());
+
+        //Check a Program for Resin program of the same Color / Design / Customer exists  
+        //IF it exists then just update the ResinProgram on the Resin Job
+        if (new ResinProgramHandler().CheckIfResinProgramExists(currentResinProgram)) 
+        {
+            //when resin program exists get the Resin program id and add to the current resin job
+            currentResinProgram = new ResinProgramHandler().GetResinProgramDetailsForThisResinAndCustomer(currentResinProgram);
+            //thisResinJob.setResinProgramID(currentResinProgram.getID());
+            resinJobID = currentResinProgram.getID();
+            
+        } //Else add the resin program using details from the old resin program
+        else 
+        {
+            int oldResinProgramID = thisResinJob.getResinProgramID();
+            //Add Resin program to the database
+            int newResinProgramID = new ResinProgramHandler().AddNewResinProgram(currentResinProgram);
+
+            //Get the previous resin chemicals and add to this new resin program
+            ArrayList<ResinChemical> resinChemicalList = new ResinChemicalHandler().GetResinChemicalsByResinProgramId(currentResinProgram.getID());
+            for (ResinChemical currentResinChemical : resinChemicalList) {
+                currentResinChemical.setResinProgramID(oldResinProgramID);
+                //Add the resin chemical to a new row.
+                new ResinChemicalHandler().AddNewResinChemical(currentResinChemical);
+            }
+            // update the resin program id to reflect the current resin job
+            resinJobID = newResinProgramID;
+            //thisResinJob.setResinProgramID(newResinProgramID);
+        }
+        
+        return resinJobID;
+    }
+    
     private void SaveExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveExitActionPerformed
         // TODO add your handling code here:
         JobHandler thisJobHandler = new JobHandler();
@@ -736,11 +819,19 @@ public class ReviewFormV2 extends javax.swing.JFrame {
                     }
 
                 } else if (getWindowType() == 6) {
+                    
                     if (thisJobHandler.UpdateJobOrder(getThisJob())) {
                         //Also Update Resin Program
-                        for (ResinJob thisResinJob : getThisJob().getThisResinJob()) {
-                                thisResinJob.setJobOrderID(getThisJob().getID());
-                                new ResinJobHandler().UpdateResinJob(thisResinJob);
+                        for (ResinJob thisResinJob : getThisJob().getThisResinJob()) 
+                        {
+                            if(!this.CheckIfResinMatchesColorCustomerAndDesign(thisResinJob))
+                            {
+                                thisResinJob.setResinProgramID(CheckAndAddResinProgramDetails(thisResinJob));
+                            }
+                            
+                            thisResinJob.setJobOrderID(getThisJob().getID());
+                            new ResinJobHandler().UpdateResinJob(thisResinJob);
+                             
                         }
                         JOptionPane.showMessageDialog(null, "Job order has been updated.");
                         this.dispose();

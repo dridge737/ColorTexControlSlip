@@ -691,8 +691,10 @@ public class SubProcessPanel extends javax.swing.JPanel {
                         ChemicalHandler ChemHandler = new ChemicalHandler();
                         ChemHandler.AddNewChemical(thisChemical);
                         //End of adding Chemical to the database
+                        
                         AddTextToTable();
-                    }
+                        
+                        }
                     else
                         JOptionPane.showMessageDialog(null, "Please add or change the Chemical Name to add this row.");
                 }

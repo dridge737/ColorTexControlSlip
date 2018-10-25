@@ -119,5 +119,6 @@ public class auto_complete {
         txtInput.setLayout(new BorderLayout());
         txtInput.add(cbInput, BorderLayout.SOUTH);
         
+        
     }
 }

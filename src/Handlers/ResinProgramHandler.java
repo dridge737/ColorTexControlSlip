@@ -118,10 +118,28 @@ public class ResinProgramHandler {
             return true;
     }
     
+    public boolean CheckIfResinProgramExists(ResinProgram thisResinProgram)
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        return repo.CheckIfResinProgramExists(thisResinProgram);
+    }
+    
+    public ResinProgram GetResinProgramDetailsFromResinID(int ResinProgramID)
+    {
+         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+         return repo.GetResinProgramDetailsByResinProgramID(ResinProgramID);
+    }
+    
     public ResinProgram GetResinProgramDetailsForThisResinAndCustomer(String ResinProgramName , ResinProgram resinProgram)
     {
          ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
          return repo.GetResinProgramDetailsFromResinProgramNameAndCustomerID(ResinProgramName, resinProgram);
+    }
+    
+    public ResinProgram GetResinProgramDetailsForThisResinAndCustomer(ResinProgram resinProgram)
+    {
+         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+         return repo.GetResinProgramDetailsFromResinProgramNameAndCustomerID( resinProgram);
     }
     
     public ResinProgram GetDefaultResinProgram(String ResinProgramName)
