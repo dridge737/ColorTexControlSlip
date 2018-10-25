@@ -61,12 +61,17 @@ public class DyeingProgramHandler {
         return repo.CheckIfSpecificDyeingProgramExistsForThisCustomer(DyeingProgramName, thisJob) == 1;
     }
     
-    public boolean CheckIfSpecificDyeingProgramExistForThisCustomer(JobOrderExtended thisJob)
+    public boolean CheckIfSpecificDyeingProgramExistForThisCustomer(DyeingProgram thisDyeingProgram)
     {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
-        return repo.CheckIfSpecificDyeingProgramExistsForThisCustomer(thisJob) == 1;
+        return repo.CheckIfSpecificDyeingProgramExistsForThisCustomer(thisDyeingProgram) == 1;
     }
     
+    public int GetDyeingProgramIDForCustomerDyeingProgram(DyeingProgram thisDyeingProgram)
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        return repo.GetDyeingProgramIDForThisDyeingProgramDetails(thisDyeingProgram);
+    }
     
     public int GetDyeingProgramIDForCustomerDyeingProgram(String DyeingProgramName , JobOrderExtended thisJob)
     {

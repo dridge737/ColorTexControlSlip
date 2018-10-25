@@ -1364,7 +1364,7 @@ public class ColorTextControlSlipRepository {
         return DyeingList;
     }
     
-    public int CheckIfSpecificDyeingProgramExistsForThisCustomer(JobOrderExtended thisJobOrder)
+    public int CheckIfSpecificDyeingProgramExistsForThisCustomer(DyeingProgram thisDyeingProgram)
     {
         DBConnection dbc = new DBConnection();
         Connection conn = null;
@@ -1394,10 +1394,10 @@ public class ColorTextControlSlipRepository {
                     + " AS 'CheckTest'");
             
             int item = 1;
-            ps.setInt(item++, thisJobOrder.getColorID());
-            ps.setInt(item++, thisJobOrder.getDesignID());
-            ps.setInt(item++, thisJobOrder.getCustomerID());
-            ps.setInt(item++, thisJobOrder.getDyeingProgramID());
+            ps.setInt(item++, thisDyeingProgram.getColorID());
+            ps.setInt(item++, thisDyeingProgram.getDesignID());
+            ps.setInt(item++, thisDyeingProgram.getCustomerID());
+            ps.setInt(item++, thisDyeingProgram.getDyeingProgramNameID());
 
             rs = ps.executeQuery();
             if (rs.first()) {
@@ -1458,6 +1458,38 @@ public class ColorTextControlSlipRepository {
 
         this.closeConn(conn, ps, rs);
         return checkTest;
+    }
+    
+    public int GetDyeingProgramIDForThisDyeingProgramDetails(DyeingProgram thisDyeingProgram) {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int DyeingProgramID = -1;
+        try {
+            conn = db.getConnection();
+            ps = conn.prepareStatement(
+                    " SELECT ID FROM dyeing_program "
+                    + " WHERE ProgramNameID = ?"
+                    + " AND ColorID = ?"
+                    + " AND DesignID = ?"
+                    + " AND CustomerID = ?;");
+                   // + " AND dyeing_program.ID IN (SELECT DISTINCT(DyeingProgramID) FROM job_order WHERE CustomerId = ?)");
+
+            int item = 1;
+            ps.setInt(item++, thisDyeingProgram.getDyeingProgramNameID());
+            ps.setInt(item++, thisDyeingProgram.getColorID());
+            ps.setInt(item++, thisDyeingProgram.getDesignID());
+            ps.setInt(item++, thisDyeingProgram.getCustomerID());
+            rs = ps.executeQuery();
+            if (rs.first()) {
+                DyeingProgramID = rs.getInt("ID");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.closeConn(conn, ps, rs);
+        return DyeingProgramID;
     }
 
     public int GetDyeingProgramIDForThisCustomer(String dyeingProgramName, JobOrderExtended thisJobOrder) {
@@ -2653,10 +2685,10 @@ public class ColorTextControlSlipRepository {
             ps = conn.prepareStatement("SELECT EXISTS "
                     + " (SELECT ID "
                     + " FROM resin_program WHERE "
-                    + " ProgramNameID = ?, "
-                    + " CustomerID = ?,"
-                    + " ColorID = ?,"
-                    + " DesignID = ? ) "
+                    + " ProgramNameID = ? "
+                    + " AND CustomerID = ? "
+                    + " AND ColorID = ? "
+                    + " AND DesignID = ? ) "
                     + " AS 'CheckTest'");
 
             int item = 1;
@@ -2908,7 +2940,7 @@ public class ColorTextControlSlipRepository {
                     " SELECT ID, ProgramNameID, customerID, colorID, designID "
                             + " FROM resin_program"
                             + " WHERE ProgramNameID = ?"
-                            + " CustomerID = ? "
+                            + " AND CustomerID = ? "
                             + " AND ColorID = ?"
                             + " AND DesignID = ?");
 
