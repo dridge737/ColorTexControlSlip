@@ -16,6 +16,7 @@ import Handlers.ComputeHelper;
 import Handlers.DyeingChemicalHandler;
 import Handlers.DyeingProcessHandler;
 import Handlers.JobHandler;
+import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -37,7 +38,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
-
+import java.awt.Robot;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author Eldridge
@@ -333,6 +336,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
      {
          //if(CheckIfTextIsReady())
          //{
+         
                  //SET All Dyeing Process Columns ID, NAME , ORDER
                 DyeingProcess ThisDyeingProcess = new DyeingProcess(DyeingProgramID,this.SubProcessText.getText(), Order );
                 //ThisDyeingProcess.setDyeingProgramId(DyeingProgramID);
@@ -359,6 +363,8 @@ public class SubProcessPanel extends javax.swing.JPanel {
         //IF there is more than one sub-process
         DyeingChemical ThisDyeingChemical;
         DyeingChemicalHandler DyeingChemicalHandler = new DyeingChemicalHandler();
+        if(ChemicalTable.isEditing())
+            ChemicalTable.getCellEditor().stopCellEditing();
         
         for (int i = 0; i < ChemicalTable.getRowCount(); i++) {
             ThisDyeingChemical = GetThisRowOfValues(i, DyeingProcessID);
@@ -369,6 +375,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
      public boolean UpdateSubProcess(int DyeingProcessID, String Order)
      {
          boolean isSuccessful = false;
+         
          //if(CheckIfTextIsReady())
          //   {
                 //SET All Dyeing Process Columns ID, NAME , ORDER
@@ -396,6 +403,9 @@ public class SubProcessPanel extends javax.swing.JPanel {
         //DECLARATION
         ChemicalHandler ChemicalHandler = new ChemicalHandler();
         DyeingChemicalHandler DyeingChemicalHandler = new DyeingChemicalHandler();
+        if(ChemicalTable.isEditing())
+            ChemicalTable.getCellEditor().stopCellEditing();
+        
         
         //Get All Dyeing Chemicals
         ArrayList<DyeingChemical> ChemicalList = 

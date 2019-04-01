@@ -492,7 +492,9 @@ public class AddResinForm extends javax.swing.JFrame {
         boolean isResinNewToCustomer = CheckIfResinNewToCustomer(resinProgram);
         int resinProgramId = -1;
         boolean OpenMachineSelection = false;
-
+        if(ChemicalTable.isEditing())
+            ChemicalTable.getCellEditor().stopCellEditing();
+        
         if(SaveBut.getText().equals("Update"))
         //if (this.thisJob == null && WindowType != 0) 
         {

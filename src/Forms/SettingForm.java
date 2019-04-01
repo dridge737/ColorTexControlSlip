@@ -5,10 +5,14 @@
  */
 package Forms;
 
+import Database.Backupdbtosql;
+import static Forms.MainWindow.Backupdbtosql;
 import Handlers.PreferenceHandler;
 import Handlers.MachineHandler;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -74,6 +78,8 @@ public class SettingForm extends javax.swing.JFrame {
         CancelButton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         ResinMachineInputPreference = new javax.swing.JComboBox();
+        backupButton = new javax.swing.JButton();
+        backupButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -88,7 +94,7 @@ public class SettingForm extends javax.swing.JFrame {
         jLabel2.setText("Settings");
 
         CompanyPreference.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
-        CompanyPreference.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Evergrande Greenwood Int'l Corp.", "Mayer Knitting Corp.", "Relianz Int't Corp", "Colortex Processing Inc." }));
+        CompanyPreference.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Evergrande Greenwood Int'l Corp.", "Mayer Knitting Corp.", "Relianz Int'l Corp", "Colortex Processing Inc." }));
 
         SaveButton.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         SaveButton.setText("Save");
@@ -113,6 +119,22 @@ public class SettingForm extends javax.swing.JFrame {
         ResinMachineInputPreference.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         ResinMachineInputPreference.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Dryer and Stenter", "Manual Input" }));
 
+        backupButton.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        backupButton.setText("Backup");
+        backupButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backupButtonActionPerformed(evt);
+            }
+        });
+
+        backupButton1.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        backupButton1.setText("Restore");
+        backupButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backupButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -123,20 +145,24 @@ public class SettingForm extends javax.swing.JFrame {
                         .addGap(168, 168, 168)
                         .addComponent(jLabel2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(86, 86, 86)
-                        .addComponent(SaveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(73, 73, 73)
-                        .addComponent(CancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(30, 30, 30)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(CompanyPreference, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ResinMachineInputPreference, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(16, Short.MAX_VALUE))
+                            .addComponent(backupButton, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel3)
+                                        .addComponent(jLabel1))
+                                    .addComponent(SaveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(CompanyPreference, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(ResinMachineInputPreference, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(CancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(12, 12, 12))))
+                            .addComponent(backupButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,7 +177,11 @@ public class SettingForm extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(ResinMachineInputPreference, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 272, Short.MAX_VALUE)
+                .addGap(39, 39, 39)
+                .addComponent(backupButton)
+                .addGap(38, 38, 38)
+                .addComponent(backupButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SaveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -190,6 +220,24 @@ public class SettingForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         CloseThisWindowOpenMainWindow();
     }//GEN-LAST:event_CancelButtonActionPerformed
+
+    private void backupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupButtonActionPerformed
+        // TODO add your handling code here:
+        Backupdbtosql thisbackup = new Backupdbtosql();
+        thisbackup.backup();
+        
+    }//GEN-LAST:event_backupButtonActionPerformed
+
+    private void backupButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backupButton1ActionPerformed
+       
+        try {
+            // TODO add your handling code here:
+            new Backupdbtosql().restore();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(SettingForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+    }//GEN-LAST:event_backupButton1ActionPerformed
     
     private void CloseThisWindowOpenMainWindow()
     {
@@ -237,6 +285,8 @@ public class SettingForm extends javax.swing.JFrame {
     private javax.swing.JComboBox CompanyPreference;
     private javax.swing.JComboBox ResinMachineInputPreference;
     private javax.swing.JButton SaveButton;
+    private javax.swing.JButton backupButton;
+    private javax.swing.JButton backupButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -26,7 +26,7 @@ public class PreferenceHandler {
         //String ResinMachineInput = "ResinMachineInputType";
         //String ID3 = "Test3";
 
-        prefs.get(CompanyNamePref, "Relianz Int't Corp");
+        prefs.get(CompanyNamePref, "Relianz Int'l Corp");
         //False means no need to input. Dryer and Stenter by default.
         prefs.getBoolean(ResinMachineInput, false);
         //prefs.getBoolean(InitializePref, false);

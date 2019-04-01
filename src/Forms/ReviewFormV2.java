@@ -54,6 +54,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  *
@@ -185,8 +187,6 @@ public class ReviewFormV2 extends javax.swing.JFrame {
 
     }
     
-    
-
     private void SetJobOrderDetails() {
         //thisJob.setID(thisProcessOrder.getJobOrderID());
         //JobHandler JobOrderHandler = new JobHandler();
@@ -835,7 +835,58 @@ public class ReviewFormV2 extends javax.swing.JFrame {
         
         return NewResinProgramID;
     }
+    private void SaveThisJobOrder()
+    {
+            JobHandler thisJobHandler = new JobHandler();
+        if (ThisJobHasBeenAdded == true) {
+            JOptionPane.showMessageDialog(null, "Job order has already been added.");
+            this.dispose();
+        } else {
+            if (AddTextToJobOrderObject()) {
+                if (this.getWindowType() != 6) {
+                    int jobOrderID = thisJobHandler.AddNewJobOrder(getThisJob());
+                    if ( jobOrderID > 0) {
+                        if (getThisJob().getThisResinJob() != null) {
+                            for (ResinJob thisResinJob : getThisJob().getThisResinJob()) {
+                                thisResinJob.setJobOrderID(jobOrderID);
+                                new ResinJobHandler().AddResinJob(thisResinJob);
+                            }
+                        }
+                        JOptionPane.showMessageDialog(null, "Job order has been added.");
+                         ThisJobHasBeenAdded = true;
+                    } else {
+                        JOptionPane.showMessageDialog(null, "There is an error in adding the Job Order.");
+                    }
+
+                } else if (getWindowType() == 6) {
+                    if(!CheckIfDyeingMatchesColorCustomerAndDesign())
+                    {
+                        getThisJob().setDyeingProgramID(CheckAndAddDyeingProgramDetails());
+                    }
+                    
+                    if (thisJobHandler.UpdateJobOrder(getThisJob())) {
+                        //Also Update Resin Program
+                        for (ResinJob thisResinJob : getThisJob().getThisResinJob()) 
+                        {
+                            if(!this.CheckIfResinMatchesColorCustomerAndDesign(thisResinJob))
+                            {
+                                thisResinJob.setResinProgramID(CheckAndAddResinProgramDetails(thisResinJob));
+                            }
+                            
+                            thisResinJob.setJobOrderID(getThisJob().getID());
+                            new ResinJobHandler().UpdateResinJob(thisResinJob);
+                             
+                        }
+                        JOptionPane.showMessageDialog(null, "Job order has been updated.");
+                        // ThisJobHasBeenAdded = true;
+                    } else {
+                        JOptionPane.showMessageDialog(null, "There is an error in updating the Job Order.");
+                    }
+                }
+            }
+        }
     
+    }
     private void SaveExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveExitActionPerformed
         // TODO add your handling code here:
         JobHandler thisJobHandler = new JobHandler();
@@ -876,10 +927,11 @@ public class ReviewFormV2 extends javax.swing.JFrame {
                             
                             thisResinJob.setJobOrderID(getThisJob().getID());
                             new ResinJobHandler().UpdateResinJob(thisResinJob);
+                            this.dispose();
                              
                         }
                         JOptionPane.showMessageDialog(null, "Job order has been updated.");
-                        this.dispose();
+                        
                     } else {
                         JOptionPane.showMessageDialog(null, "There is an error in updating the Job Order.");
                     }
@@ -972,6 +1024,8 @@ public class ReviewFormV2 extends javax.swing.JFrame {
     
     private void SavePrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SavePrintActionPerformed
         // TODO add your handling code here:
+        SaveThisJobOrder();
+        /*
         JobHandler thisJobHandler = new JobHandler();
         if (AddTextToJobOrderObject()) {
             if (ThisJobHasBeenAdded != true) {
@@ -987,13 +1041,13 @@ public class ReviewFormV2 extends javax.swing.JFrame {
                         ThisJobHasBeenAdded = true;
 
                     }
-
+        */
                     try {
                         PrintHandlerFinal handler = new PrintHandlerFinal();
                         handler.createPDF(thisDyeingMachine, thisDesign, thisCustomer, thisColor, getThisJob(), thisDyeingProgram, DyeingVolumeTextField.getText());
                     } catch (IOException | DocumentException e) {
                     }
-                }
+                //}
     }//GEN-LAST:event_SavePrintActionPerformed
 
     private boolean CheckCustomerAndJobOrderFromTextBox()
@@ -1130,13 +1184,15 @@ public class ReviewFormV2 extends javax.swing.JFrame {
     private void ComputerDyeingLiquidRatio()
     {
         String weight = DyeingWeight.getText();
-        
+        if(new LiquidRatioHandler().CheckIfPatternMatchesLiquidRatio(this.DyeingLiquidRatioText.getText().toString()) &&  !weight.equals(""))
+        {
         //String liquidRatio = LiquidRatioTextField.toString();
             String[] RatioSplit = DyeingLiquidRatioText.getText().split(":", 2);
             int WeightMultiplier = Integer.parseInt(RatioSplit[1]) / Integer.parseInt(RatioSplit[0]);
 
             int volume = (((int) (Float.parseFloat(weight) * WeightMultiplier))); // /10 * 10;
             DyeingVolumeTextField.setText(Double.toString(volume));
+        }
     }
     
     /**
@@ -1202,7 +1258,26 @@ public class ReviewFormV2 extends javax.swing.JFrame {
     }
 
     private void populateLiquidRatioDropDown() {
-        LiquidRatio = new LiquidRatioHandler().addLiquidRatioTextBoxAutoComplete(this.DyeingLiquidRatioText); 
+        LiquidRatio = new LiquidRatioHandler().addLiquidRatioTextBoxAutoComplete(this.DyeingLiquidRatioText);
+        
+        this.DyeingLiquidRatioText.getDocument().addDocumentListener(new DocumentListener() 
+        {
+            
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                ComputerDyeingLiquidRatio();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                ComputerDyeingLiquidRatio();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+               ComputerDyeingLiquidRatio();
+            }
+        });
         /*
         ArrayList<String> LiquidRatioList = new ArrayList<String>();
 

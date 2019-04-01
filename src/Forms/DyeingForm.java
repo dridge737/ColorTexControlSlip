@@ -563,6 +563,7 @@ public class DyeingForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         //this.jPanel2.getComp
         boolean CloseWindow = false;
+        
         if(this.CheckDyeingFormProcessAndSubProcessIfReady())
         {
             switch (WindowProcessType) {
