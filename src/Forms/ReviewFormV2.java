@@ -1278,6 +1278,8 @@ public class ReviewFormV2 extends javax.swing.JFrame {
                ComputerDyeingLiquidRatio();
             }
         });
+        
+        DyeingLiquidRatioText.setFocusTraversalKeysEnabled(false);
         /*
         ArrayList<String> LiquidRatioList = new ArrayList<String>();
 
