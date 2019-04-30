@@ -12,10 +12,13 @@ import java.util.prefs.Preferences;
  * @author Eldridge
  */
 public class PreferenceHandler {
+
+    
      private Preferences prefs;
      private String CompanyNamePref = "CompanyName";
      private String InitializePref = "Initialize";
      private String ResinMachineInput = "ResinMachineInputType";
+     private String ReviewFormEditing = "ReviewFormEditing";
      public boolean setPreference()
      {
          //prefs = Preferences.userNodeForPackage(this.getClass());
@@ -29,6 +32,7 @@ public class PreferenceHandler {
         prefs.get(CompanyNamePref, "Relianz Int'l Corp");
         //False means no need to input. Dryer and Stenter by default.
         prefs.getBoolean(ResinMachineInput, false);
+        prefs.getBoolean(ReviewFormEditing, false);
         //prefs.getBoolean(InitializePref, false);
         return prefs.getBoolean(InitializePref, false);
     // First we will get the values
@@ -74,6 +78,20 @@ public class PreferenceHandler {
         prefs.put(CompanyNamePref, CompanyName);
     }
 
+    public boolean getReviewFormBooleanConversion(String ReviewEditing)
+    {
+        
+        boolean Enabled;
+        if(ReviewEditing.equals("Enabled"))
+        {
+            Enabled = true;
+        }
+        else 
+            Enabled = false;
+        
+        return Enabled;
+        
+    }
     public boolean getResinMachineBooleanConversion(String Type)
     {
         boolean AutoOrManual;
@@ -111,5 +129,25 @@ public class PreferenceHandler {
         {
             new MachineHandler().AddDryerAndStenterMachine();
         }
+    }
+    
+    /**
+     * @return the ReviewFormEditing
+     */
+    public boolean getReviewFormEditing() {
+        prefs = getSharedPreferenceLocation();
+        //returns true if resin machine input is required else false;
+        //System.out.println(prefs.getBoolean(ReviewFormEditing, false));
+        return prefs.getBoolean(ReviewFormEditing, false);
+        
+    }
+
+    /**
+     * @param ReviewFormEditing the ReviewFormEditing to set
+     */
+    public void setReviewFormEditing(Boolean ReviewFormEditingType) {
+       prefs = getSharedPreferenceLocation();
+       //System.out.println(prefs.getBoolean(ReviewFormEditing, false));
+       prefs.putBoolean(ReviewFormEditing, ReviewFormEditingType);
     }
 }

@@ -135,18 +135,19 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
         {
             JobOrderExtended thisJob = new JobOrderExtended();
             int convertedRowNumber = JobOrderTable.convertRowIndexToModel(this.JobOrderTable.getSelectedRow());
-            String DrNumber = JobOrderTable.getModel().getValueAt(convertedRowNumber , 0).toString();
-            thisJob.setDrNumber(DrNumber);
-            thisJob.setJobDate(JobOrderTable.getModel().getValueAt(convertedRowNumber , 4).toString());
-            thisJob.setDyeingProgramID(Integer.parseInt(JobOrderTable.getModel().getValueAt(convertedRowNumber , 5).toString()));
+            //String DrNumber = JobOrderTable.getModel().getValueAt(convertedRowNumber , 0).toString();
+            thisJob.setID(Integer.parseInt(JobOrderTable.getModel().getValueAt(convertedRowNumber , 9).toString()));
+            //thisJob.setDrNumber(DrNumber);
+            //thisJob.setJobDate(JobOrderTable.getModel().getValueAt(convertedRowNumber , 4).toString());
+            //thisJob.setDyeingProgramID(Integer.parseInt(JobOrderTable.getModel().getValueAt(convertedRowNumber , 5).toString()));
             JobHandler thisJobOrderHandler = new JobHandler();
-            thisJob = (JobOrderExtended) thisJobOrderHandler.GetJobOrderDetailsFromDrNumber(DrNumber);
+            thisJob = (JobOrderExtended) thisJobOrderHandler.GetJobOrderDetailsFromJobId(thisJob.getID());
             ResinJobHandler thisResinJobHandler = new ResinJobHandler();
             ResinJob thisResinJob = new ResinJob();
             thisResinJob.setJobOrderID(thisJob.getID());
             thisResinJob = thisResinJobHandler.GetResinJobFromJobID(thisResinJob);
             thisJob.getThisResinJob().add(thisResinJob);
-            ReviewFormV2 orderReviewForm = new ReviewFormV2(thisJob, 3);
+            ReviewFormV3 orderReviewForm = new ReviewFormV3(thisJob, 3);
             orderReviewForm.setVisible(true);
             this.dispose();
         }
@@ -215,7 +216,8 @@ public class ViewPreviousJobOrders extends javax.swing.JFrame {
                                                JobOrderList.get(x).getResinProgramName(),
                                                JobOrderList.get(x).getDyeingMachineName(),
                                                JobOrderList.get(x).getResinMachineName(),
-                                               JobOrderList.get(x).getDrNumber()
+                                               JobOrderList.get(x).getDrNumber(),
+                                               JobOrderList.get(x).getID()
             });
         }
         return model_original;

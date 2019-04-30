@@ -726,7 +726,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
         CurrentTableModel model = (CurrentTableModel) ChemicalTable.getModel();
         DyeingChemical thisDyeingChemical = GetTextFromTextBox();
         
-        if(WindowType == 3 || WindowType == 4 || WindowType == 5)
+        if(WindowType == 3 || WindowType == 4 || WindowType == 5 ||  WindowType == 6 )
         {
             Float Quantity = new ComputeHelper().ComputeDyeingQuantity(thisDyeingChemical, thisJobOrder);
             //float Quantity = this.ComputeQuantityFromWeightOrVol(thisDyeingChemical);

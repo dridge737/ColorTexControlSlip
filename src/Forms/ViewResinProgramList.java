@@ -329,7 +329,7 @@ public class ViewResinProgramList extends javax.swing.JFrame {
             } //Resin List from Job order form
             else //(WindowType == 4 || WindowType == 5 || WindowType == 6)
             {
-                new ReviewFormV2(thisJob, WindowType).setVisible(true);
+                new ReviewFormV3(thisJob, WindowType).setVisible(true);
                 //DyeingForm thisDyeingForm = new DyeingForm(thisJob);
                 //thisDyeingForm.setVisible(true);
             }

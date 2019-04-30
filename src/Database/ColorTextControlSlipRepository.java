@@ -1179,7 +1179,7 @@ public class ColorTextControlSlipRepository {
         int DyeingProgramID = -1;
         try {
             conn = db.getConnection();
-            String query = "INSERT INTO dyeing_program (ProgramNameID, CustomerID, ColorID, DesignID) VALUES (?, ?, ?, ?)";
+            String query = "INSERT INTO dyeing_program (ProgramNameID, CustomerID, ColorID, DesignID, DateAdded, CurrentFlag) VALUES (?, ?, ?, ?, CURDATE(), 'Y')";
 
             //preparedStmt = conn.prepareStatement(query);
             preparedStmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -1202,6 +1202,28 @@ public class ColorTextControlSlipRepository {
 
         this.closeConn(conn, preparedStmt);
         return DyeingProgramID;
+    }
+    
+    public boolean SetCurrentFlagToNo(DyeingProgram dyeingProgram)
+    {
+           DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean isSuccessful = false;
+        try {
+            conn = db.getConnection();
+            String query = "UPDATE dyeing_program SET CurrentFlag = 'N'  WHERE ID = ?";
+
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setInt(1, dyeingProgram.getID());
+            preparedStmt.execute();
+            isSuccessful = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        this.closeConn(conn, preparedStmt);
+        return isSuccessful;
     }
 
     public boolean UpdateDyeingProgramByDyeingProgramId(DyeingProgram dyeingProgram) {
@@ -1473,7 +1495,8 @@ public class ColorTextControlSlipRepository {
                     + " WHERE ProgramNameID = ?"
                     + " AND ColorID = ?"
                     + " AND DesignID = ?"
-                    + " AND CustomerID = ?;");
+                    + " AND CustomerID = ?"
+                    + " AND CurrentFlag = 'Y';");
                    // + " AND dyeing_program.ID IN (SELECT DISTINCT(DyeingProgramID) FROM job_order WHERE CustomerId = ?)");
 
             int item = 1;
@@ -1506,6 +1529,7 @@ public class ColorTextControlSlipRepository {
                     + " AND ColorID = ?"
                     + " AND DesignID = ?"
                     + " AND CustomerID = ?"
+                    + " AND CurrentFlag = 'Y'"
                     + " AND ProgramNameID = dyeing_program_name.ID");
                    // + " AND dyeing_program.ID IN (SELECT DISTINCT(DyeingProgramID) FROM job_order WHERE CustomerId = ?)");
 

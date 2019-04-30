@@ -39,14 +39,7 @@ public class DyeingProgramNameHandler {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         return repo.GetDyeingProgramNameIDFromName(Name);
     }
-    
-    public ArrayList<String> GetAllDefaultDyeingProgramName()
-    {
-        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
-        return repo.GetAllDyeingProgramName();
-    }
-    
-    
+   
     //Updated for dyeing_program_name Table
     public ArrayList<String> GetAllDyeingProgramName()
     {

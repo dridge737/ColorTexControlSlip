@@ -43,6 +43,7 @@ public class JobOrderExtended extends JobOrder{
         this.setLocation(JobOrderDetails.getLocation());
         this.setReference(JobOrderDetails.getReference());
         this.setLocation(JobOrderDetails.getLocation());
+        this.setProgramNumber(JobOrderDetails.getProgramNumber());
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

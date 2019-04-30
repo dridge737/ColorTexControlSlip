@@ -35,14 +35,21 @@ public class SettingForm extends javax.swing.JFrame {
         this.CompanyPreference.setSelectedItem(newPreference.getCompanyPreference().toString());
         
         //Selected 0 index is for Dryer and Stenter
-        int ResinInputType = 0;
+        //int ResinInputType = 0;
         if(newPreference.getResinMachineInputPreference())
         {
             //Selected 1 index is for Manual Input
-            ResinInputType = 1;
+            //ResinInputType = 1;
+            this.ResinMachineInputPreference.setSelectedIndex(1);
         }
         
-        this.ResinMachineInputPreference.setSelectedIndex(ResinInputType);
+        //int ReviewFormEditingType = 0;
+        if(newPreference.getReviewFormEditing())
+        {
+            //ReviewFormEditingType = 1;
+            this.ReviewFormDropDown.setSelectedIndex(1);
+        }
+        
     }
     
     public void SetToCenter()
@@ -80,6 +87,8 @@ public class SettingForm extends javax.swing.JFrame {
         ResinMachineInputPreference = new javax.swing.JComboBox();
         backupButton = new javax.swing.JButton();
         backupButton1 = new javax.swing.JButton();
+        ReviewType = new javax.swing.JLabel();
+        ReviewFormDropDown = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -135,6 +144,13 @@ public class SettingForm extends javax.swing.JFrame {
             }
         });
 
+        ReviewType.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        ReviewType.setForeground(new java.awt.Color(255, 255, 255));
+        ReviewType.setText("Review Form Editing :");
+
+        ReviewFormDropDown.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
+        ReviewFormDropDown.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Disabled", "Enabled" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -148,21 +164,24 @@ public class SettingForm extends javax.swing.JFrame {
                         .addGap(30, 30, 30)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(backupButton, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(backupButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(jLabel3)
                                         .addComponent(jLabel1))
-                                    .addComponent(SaveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(SaveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(ReviewType))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(CompanyPreference, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(ResinMachineInputPreference, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(CancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(12, 12, 12))))
-                            .addComponent(backupButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 414, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(31, Short.MAX_VALUE))
+                                    .addComponent(ReviewFormDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(CompanyPreference, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(ResinMachineInputPreference, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                            .addComponent(CancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(12, 12, 12))))))))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,11 +196,15 @@ public class SettingForm extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(ResinMachineInputPreference, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
+                .addGap(36, 36, 36)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ReviewType)
+                    .addComponent(ReviewFormDropDown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addComponent(backupButton)
                 .addGap(38, 38, 38)
                 .addComponent(backupButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
+                .addGap(58, 58, 58)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SaveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -208,6 +231,8 @@ public class SettingForm extends javax.swing.JFrame {
         boolean ResinType = newPreference.getResinMachineBooleanConversion(ResinMachineInputPreference.getSelectedItem().toString());
         newPreference.setCompanyPreference(CompanyPreference.getSelectedItem().toString());
         
+        boolean ReivewFormType = newPreference.getReviewFormBooleanConversion(ReviewFormDropDown.getSelectedItem().toString());
+        newPreference.setReviewFormEditing(newPreference.getReviewFormBooleanConversion(ReviewFormDropDown.getSelectedItem().toString()));
         if(ResinType != newPreference.getResinMachineInputPreference())
         {
             newPreference.setResinMachineInputPreference(ResinType);
@@ -284,6 +309,8 @@ public class SettingForm extends javax.swing.JFrame {
     private javax.swing.JButton CancelButton;
     private javax.swing.JComboBox CompanyPreference;
     private javax.swing.JComboBox ResinMachineInputPreference;
+    private javax.swing.JComboBox ReviewFormDropDown;
+    private javax.swing.JLabel ReviewType;
     private javax.swing.JButton SaveButton;
     private javax.swing.JButton backupButton;
     private javax.swing.JButton backupButton1;

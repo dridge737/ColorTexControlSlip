@@ -253,7 +253,7 @@ public class ViewDyeingProgramList extends javax.swing.JFrame {
         };
         model_original.addColumn("Program Name");
       
-        ArrayList<String> DyeingList = new DyeingProgramNameHandler().GetAllDefaultDyeingProgramName();
+        ArrayList<String> DyeingList = new DyeingProgramNameHandler().GetAllDyeingProgramName();
         for (String DyeingList1 : DyeingList) {
             model_original.addRow(new Object[]{DyeingList1});
         }
@@ -306,7 +306,7 @@ public class ViewDyeingProgramList extends javax.swing.JFrame {
         }
         else if(WindowType > 3)
         {
-            new ReviewFormV2(thisJob, this.WindowType).setVisible(true);
+            new ReviewFormV3(thisJob, this.WindowType).setVisible(true);
         }
         this.dispose();
         

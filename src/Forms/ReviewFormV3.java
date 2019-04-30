@@ -61,7 +61,7 @@ import javax.swing.event.DocumentListener;
  *
  * @author Eldridge
  */
-public class ReviewFormV2 extends javax.swing.JFrame {
+public class ReviewFormV3 extends javax.swing.JFrame {
 
     /**
      * @return the WindowType
@@ -107,7 +107,7 @@ public class ReviewFormV2 extends javax.swing.JFrame {
     /**
      * Creates new form ReviewForm
      */
-    public ReviewFormV2() {
+    public ReviewFormV3() {
         initComponents();
         SetToCenter();
         populateCustomerDropDown();
@@ -118,7 +118,7 @@ public class ReviewFormV2 extends javax.swing.JFrame {
         SetLiquidRatio();   
     }
 
-    public ReviewFormV2(JobOrderExtended currentJob, int setWindowType) {
+    public ReviewFormV3(JobOrderExtended currentJob, int setWindowType) {
         this();
         WindowType = setWindowType;
         thisJob = currentJob;
@@ -195,14 +195,9 @@ public class ReviewFormV2 extends javax.swing.JFrame {
             //JobOrder.setText("");
             JobOrder.setBackground(Color.WHITE);
             JobOrder.setEnabled(true);
-            JobOrder.setText(getThisJob().getDrNumber());
-        }   
-        
-        else
-        {
-            JobOrder.setText(getThisJob().getDrNumber());
         }
         
+        JobOrder.setText(getThisJob().getDrNumber());
         BatchNo.setText(getThisJob().getBatchNo());
 
         RollLoad.setText(getThisJob().getRollLoad());
@@ -235,6 +230,12 @@ public class ReviewFormV2 extends javax.swing.JFrame {
         
         SetCustomerNameDropDown();
         SetColorNameDropDown();
+        if (!new PreferenceHandler().getReviewFormEditing()) {
+            if (this.getWindowType() == 6) {
+                this.SaveExit.setVisible(false);
+                this.SavePrint.setText("Print");
+            }
+        }
     }
 
     private void SetDesignNameDropDown() {
@@ -316,6 +317,7 @@ public class ReviewFormV2 extends javax.swing.JFrame {
         EditDyeingProgram = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
         DyeingLiquidRatioText = new javax.swing.JTextField();
+        EditDyeingProgram1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Control Slip");
@@ -551,16 +553,16 @@ public class ReviewFormV2 extends javax.swing.JFrame {
         DyeingProgramText.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         DyeingProgramText.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         DyeingProgramText.setEnabled(false);
-        DyeingMachinePanel.add(DyeingProgramText, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 100, 430, 30));
+        DyeingMachinePanel.add(DyeingProgramText, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 100, 310, 30));
 
         EditDyeingProgram.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        EditDyeingProgram.setText("...");
+        EditDyeingProgram.setText("Change");
         EditDyeingProgram.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EditDyeingProgramActionPerformed(evt);
             }
         });
-        DyeingMachinePanel.add(EditDyeingProgram, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 100, 40, 30));
+        DyeingMachinePanel.add(EditDyeingProgram, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 100, 100, 30));
 
         jLabel14.setBackground(new java.awt.Color(255, 255, 255));
         jLabel14.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
@@ -577,6 +579,15 @@ public class ReviewFormV2 extends javax.swing.JFrame {
         });
         DyeingMachinePanel.add(DyeingLiquidRatioText, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, 170, 30));
 
+        EditDyeingProgram1.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        EditDyeingProgram1.setText("Edit");
+        EditDyeingProgram1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EditDyeingProgram1ActionPerformed(evt);
+            }
+        });
+        DyeingMachinePanel.add(EditDyeingProgram1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 100, 60, 30));
+
         DyeingResinTab.addTab("Dyeing Details", DyeingMachinePanel);
 
         javax.swing.GroupLayout BgPanelLayout = new javax.swing.GroupLayout(BgPanel);
@@ -586,18 +597,18 @@ public class ReviewFormV2 extends javax.swing.JFrame {
             .addGroup(BgPanelLayout.createSequentialGroup()
                 .addGroup(BgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(BgPanelLayout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(SavePrint, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(SaveExit, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20)
-                        .addComponent(CancelBut, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(BgPanelLayout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addComponent(MainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(BgPanelLayout.createSequentialGroup()
                         .addGap(30, 30, 30)
-                        .addComponent(DyeingResinTab, javax.swing.GroupLayout.PREFERRED_SIZE, 670, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(BgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(BgPanelLayout.createSequentialGroup()
+                                .addComponent(SavePrint, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(38, 38, 38)
+                                .addComponent(SaveExit, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(CancelBut, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(DyeingResinTab, javax.swing.GroupLayout.PREFERRED_SIZE, 670, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(30, 30, 30))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BgPanelLayout.createSequentialGroup()
                 .addComponent(ChemicalHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 690, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -613,10 +624,10 @@ public class ReviewFormV2 extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(DyeingResinTab, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
-                .addGroup(BgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(SavePrint, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(BgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SaveExit, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CancelBut, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(CancelBut, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SavePrint, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
@@ -837,7 +848,7 @@ public class ReviewFormV2 extends javax.swing.JFrame {
     }
     private void SaveThisJobOrder()
     {
-            JobHandler thisJobHandler = new JobHandler();
+        JobHandler thisJobHandler = new JobHandler();
         if (ThisJobHasBeenAdded == true) {
             JOptionPane.showMessageDialog(null, "Job order has already been added.");
             this.dispose();
@@ -845,7 +856,9 @@ public class ReviewFormV2 extends javax.swing.JFrame {
             if (AddTextToJobOrderObject()) {
                 if (this.getWindowType() != 6) {
                     int jobOrderID = thisJobHandler.AddNewJobOrder(getThisJob());
+                    //IF Job Order has already been added
                     if ( jobOrderID > 0) {
+                        //If there is a resin Program.
                         if (getThisJob().getThisResinJob() != null) {
                             for (ResinJob thisResinJob : getThisJob().getThisResinJob()) {
                                 thisResinJob.setJobOrderID(jobOrderID);
@@ -1004,10 +1017,12 @@ public class ReviewFormV2 extends javax.swing.JFrame {
         }
         else {
             if (this.getWindowType() == 4 || this.getWindowType() == 6 || this.getWindowType() == 5) {
-                if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Do you want to cancel using this Job Order?", "Exit?", JOptionPane.YES_NO_OPTION)) {
-                    new ViewCustomerOrder().setVisible(true);
-                    this.dispose();
+                if (new PreferenceHandler().getReviewFormEditing()) {
+                    if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Do you want to cancel using this Job Order?", "Exit?", JOptionPane.YES_NO_OPTION)) {
+                        new ViewCustomerOrder().setVisible(true); 
+                    }
                 }
+                this.dispose();
             } else {
                 if (getThisJob().getThisResinJob() != null) {
                     new AddResinForm(getThisJob()).setVisible(true);
@@ -1024,7 +1039,9 @@ public class ReviewFormV2 extends javax.swing.JFrame {
     
     private void SavePrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SavePrintActionPerformed
         // TODO add your handling code here:
-        SaveThisJobOrder();
+        //IF Review form editing is disabled and window type is 6(review order button)
+        if(!this.SavePrint.getText().equals("Print"))
+            SaveThisJobOrder();
         /*
         JobHandler thisJobHandler = new JobHandler();
         if (AddTextToJobOrderObject()) {
@@ -1049,6 +1066,21 @@ public class ReviewFormV2 extends javax.swing.JFrame {
                     }
                 //}
     }//GEN-LAST:event_SavePrintActionPerformed
+
+    private void EditDyeingProgram1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditDyeingProgram1ActionPerformed
+        // TODO add your handling code here:
+         if (CheckIfDyeingMachineHasInputs() && CheckCustomerAndJobOrderFromTextBox()) {
+            SetJobOrderDetailsFromTextBox();
+            
+            //int DyeingProgramID = new DyeingProgramHandler().GetDyeingProgramIDfromName(DyeingTable.getModel().getValueAt(selectedRow, 0).toString());
+            //int convertedRowNumber = DyeingTable.convertRowIndexToModel(this.DyeingTable.getSelectedRow());
+            String DyeingName = DyeingProgramText.getText();
+            DyeingForm thisDyeingForm = new DyeingForm(DyeingName, thisJob, WindowType);
+            thisDyeingForm.setVisible(true);
+            this.dispose();
+         }
+        
+    }//GEN-LAST:event_EditDyeingProgram1ActionPerformed
 
     private boolean CheckCustomerAndJobOrderFromTextBox()
     {
@@ -1127,6 +1159,10 @@ public class ReviewFormV2 extends javax.swing.JFrame {
         getThisJob().setDyeingMachineID(thisDyeingMachine.getMachineId());
         getThisJob().setDyeingVolumeH20(Float.parseFloat(this.DyeingVolumeTextField.getText()));
         getThisJob().setDyeingWeight(Float.parseFloat(this.DyeingWeight.getText()));
+        getThisJob().setRollLoad(RollLoad.getText());
+        getThisJob().setReference(Reference.getText());
+        getThisJob().setProgramNumber(this.ProgramNumber.getText());
+        getThisJob().setLocation(this.Location.getText());
 
         Component[] this_pane = this.DyeingResinTab.getComponents();
         int ResinPanelNumber = 1;
@@ -1143,10 +1179,7 @@ public class ReviewFormV2 extends javax.swing.JFrame {
         }
         thisJob.setThisResinJob(thisResinJobList);
 
-        getThisJob().setRollLoad(RollLoad.getText());
-        getThisJob().setReference(Reference.getText());
-        getThisJob().setProgramNumber(this.ProgramNumber.getText());
-        getThisJob().setLocation(this.Location.getText());
+        
     }
     
     public boolean AddTextToJobOrderObject() {
@@ -1212,21 +1245,23 @@ public class ReviewFormV2 extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ReviewFormV2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ReviewFormV3.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ReviewFormV2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ReviewFormV3.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ReviewFormV2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ReviewFormV3.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ReviewFormV2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ReviewFormV3.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ReviewFormV2().setVisible(true);
+                new ReviewFormV3().setVisible(true);
             }
         });
     }
@@ -1365,6 +1400,7 @@ public class ReviewFormV2 extends javax.swing.JFrame {
     private javax.swing.JTextField DyeingVolumeTextField;
     private javax.swing.JTextField DyeingWeight;
     private javax.swing.JButton EditDyeingProgram;
+    private javax.swing.JButton EditDyeingProgram1;
     private javax.swing.JTextField JobOrder;
     private javax.swing.JTextField Location;
     private javax.swing.JPanel MainPanel;

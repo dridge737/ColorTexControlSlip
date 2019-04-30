@@ -25,7 +25,15 @@ public class DyeingProgramHandler {
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         return repo.AddDyeingProgram(newDyeingProgram);
     }
-    
+    public boolean SetCurrentFlagToNo(DyeingProgram dyeingProgram)
+    {
+        boolean isSuccessful = false;
+        
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        isSuccessful = repo.SetCurrentFlagToNo(dyeingProgram);
+        
+        return isSuccessful;
+    }
     public boolean UpdateDyeingProgram(DyeingProgram dyeingProgram)
     {
         boolean isSuccessful = false;

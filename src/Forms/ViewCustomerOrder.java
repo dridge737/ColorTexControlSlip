@@ -237,7 +237,7 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
             
             //JobOrderExtended thisJob = new JobOrderExtended(thisJobOrderHandler.GetJobOrderDetailsFromDrNumber(DrNumber));
             thisJob.setThisResinJob( new ResinJobHandler().GetResinJobListFromJobOrderID(thisJob.getID()));
-            ReviewFormV2 orderReviewForm = new ReviewFormV2(thisJob, 4);
+            ReviewFormV3 orderReviewForm = new ReviewFormV3(thisJob, 4);
             orderReviewForm.setVisible(true);
             this.dispose();
         }
@@ -292,7 +292,7 @@ public class ViewCustomerOrder extends javax.swing.JFrame {
             
             JobOrderExtended thisJob =  new JobOrderExtended(thisJobOrderHandler.GetJobOrderDetailsFromJobOrderID(JobId));
             thisJob.setThisResinJob(new ResinJobHandler().GetResinJobListFromJobOrderID(thisJob.getID()));
-            ReviewFormV2 orderReviewForm = new ReviewFormV2( thisJob, 6);
+            ReviewFormV3 orderReviewForm = new ReviewFormV3( thisJob, 6);
             orderReviewForm.setVisible(true);
             this.dispose();
         }

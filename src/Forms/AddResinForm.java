@@ -374,7 +374,7 @@ public class AddResinForm extends javax.swing.JFrame {
                 SaveButActionPerformed(evt);
             }
         });
-        BgPanel.add(SaveBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 485, 240, 40));
+        BgPanel.add(SaveBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 485, 240, 30));
 
         CancelBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         CancelBut.setText("Cancel");
@@ -475,7 +475,8 @@ public class AddResinForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(CancelBut.getText().equals("Back"))
         {
-            new ViewResinProgramList(thisJob,WindowType).setVisible(true);
+            new ReviewFormV3(thisJob, WindowType).setVisible(true);
+            //new ViewResinProgramList(thisJob,WindowType).setVisible(true);
             this.dispose();
         }
         else
@@ -528,7 +529,7 @@ public class AddResinForm extends javax.swing.JFrame {
                     thisMachineSelection.setVisible(true);
                 }
                 else {
-                    ReviewFormV2 thisForm = new ReviewFormV2(thisJob, this.WindowType);
+                    ReviewFormV3 thisForm = new ReviewFormV3(thisJob, this.WindowType);
                     thisForm.setVisible(true);
                 }
 
