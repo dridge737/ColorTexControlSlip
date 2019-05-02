@@ -2520,7 +2520,7 @@ public class ColorTextControlSlipRepository {
         int resinProgramId = -1;
         try {
             conn = db.getConnection();
-            String query = "INSERT INTO resin_program (ProgramNameID, CustomerID, ColorID, DesignID) VALUES (?, ?, ? , ?)";
+            String query = "INSERT INTO resin_program (ProgramNameID, CustomerID, ColorID, DesignID, LastUpdate, CurrentFlag) VALUES (?, ?, ? , ?, CURDATE(), 'Y')";
 
             preparedStmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStmt.setInt(1, newResinProgram.getProgramNameID());

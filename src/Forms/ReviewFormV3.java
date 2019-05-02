@@ -1075,7 +1075,7 @@ public class ReviewFormV3 extends javax.swing.JFrame {
             //int DyeingProgramID = new DyeingProgramHandler().GetDyeingProgramIDfromName(DyeingTable.getModel().getValueAt(selectedRow, 0).toString());
             //int convertedRowNumber = DyeingTable.convertRowIndexToModel(this.DyeingTable.getSelectedRow());
             String DyeingName = DyeingProgramText.getText();
-            DyeingForm thisDyeingForm = new DyeingForm(DyeingName, thisJob, WindowType);
+            DyeingForm thisDyeingForm = new DyeingForm(null, thisJob, WindowType);
             thisDyeingForm.setVisible(true);
             this.dispose();
          }

@@ -134,7 +134,7 @@ public class DyeingForm extends javax.swing.JFrame {
         else if(WindowProcessType > 2)
         {
             thisJob = currentJob;
-            if(thisJob.getDyeingProgramID() == 0)
+            if(DyeingProgramName != null)
             {
                 SetDyeingProgramFromProgramNameForThisCustomer(DyeingProgramName);
             }
@@ -172,18 +172,24 @@ public class DyeingForm extends javax.swing.JFrame {
     {
         DyeingProgramHandler thisDyeingProgramHandler = new DyeingProgramHandler();
         thisDyeingProgramName.setDyeingProgramName(DyeingProgramName);
-        if(thisDyeingProgramHandler.
-                CheckIfSpecificDyeingProgramExistForThisCustomer(DyeingProgramName, thisJob))
+        if(new DyeingProgramNameHandler().GetDyeingProgramNameFromID(thisJob.getDyeingProgramID()) != DyeingProgramName)
         {
-            this.ProgramNameText.setText(DyeingProgramName);
-            thisDyeingProgram.SetID(
-                    thisDyeingProgramHandler.GetDyeingProgramIDForCustomerDyeingProgram(DyeingProgramName, thisJob));
-            //thisDyeingProgram = thisDyeingProgramHandler.GetDyeingProgramDetailsById();
-            //SetDyeingProgramProcessFromProgramID(thisDyeingProgram.getID());
-            SetDyeingProgramFromProgramID(thisDyeingProgram.getID());
+              this.SetDyeingProgramFromProgramID(thisJob.getDyeingProgramID());
         }
-        else
-            SetDefaultDyeingProgramFromProgramName(DyeingProgramName);
+        else {
+            if (thisDyeingProgramHandler.
+                    CheckIfSpecificDyeingProgramExistForThisCustomer(DyeingProgramName, thisJob)) {
+                this.ProgramNameText.setText(DyeingProgramName);
+                thisDyeingProgram.SetID(
+                        thisDyeingProgramHandler.GetDyeingProgramIDForCustomerDyeingProgram(DyeingProgramName, thisJob));
+                //thisDyeingProgram = thisDyeingProgramHandler.GetDyeingProgramDetailsById();
+                //SetDyeingProgramProcessFromProgramID(thisDyeingProgram.getID());
+                SetDyeingProgramFromProgramID(thisDyeingProgram.getID());
+            } else {
+                SetDefaultDyeingProgramFromProgramName(DyeingProgramName);
+            }
+
+        }
         
     }
     

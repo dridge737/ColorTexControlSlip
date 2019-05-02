@@ -374,7 +374,7 @@ public class AddResinForm extends javax.swing.JFrame {
                 SaveButActionPerformed(evt);
             }
         });
-        BgPanel.add(SaveBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 485, 240, 30));
+        BgPanel.add(SaveBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 485, 240, 40));
 
         CancelBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         CancelBut.setText("Cancel");
