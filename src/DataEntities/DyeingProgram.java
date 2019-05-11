@@ -12,14 +12,16 @@ import java.util.ArrayList;
  * @author imbuenyson
  */
 public class DyeingProgram {
-
+    
     private int ID;
     //private String dyeingProgramName;
     private int dyeingProgramNameID;
     private int customerID;
     private int colorID;
     private int designID;
-    private ArrayList<DyeingProcess> ChemicalNamesList = new ArrayList<DyeingProcess>();
+    private ArrayList<DyeingProcess> DyeingProcessList = new ArrayList<DyeingProcess>();
+    
+    
     /**
      * @return the customerID
      */
@@ -102,6 +104,18 @@ public class DyeingProgram {
         this.dyeingProgramNameID = dyeingProgramNameID;
     }
     
-    
+    /**
+     * @return the DyeingProcessList
+     */
+    public ArrayList<DyeingProcess> getDyeingProcessList() {
+        return DyeingProcessList;
+    }
+
+    /**
+     * @param DyeingProcessList the DyeingProcessList to set
+     */
+    public void setDyeingProcessList(ArrayList<DyeingProcess> DyeingProcessList) {
+        this.DyeingProcessList = DyeingProcessList;
+    }
     
 }
