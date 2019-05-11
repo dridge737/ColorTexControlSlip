@@ -19,6 +19,7 @@ import Handlers.DyeingChemicalHandler;
 import Handlers.DyeingProcessHandler;
 import Handlers.DyeingProgramHandler;
 import Handlers.DyeingProgramNameHandler;
+import Handlers.PreferenceHandler;
 import Handlers.ProcessOrderHandler;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -116,6 +117,7 @@ public class DyeingForm extends javax.swing.JFrame {
         SetToCenter();
         WindowProcessType = WindowType;
         //For Adding new Dyeing Program
+        OkayButton.setVisible(false);
         if(WindowProcessType == 1)
         {
             GUITabbedPaneProcess.add(new ProcessPanel(), "Process 1", NumberOfProcessTabs++);
@@ -143,8 +145,14 @@ public class DyeingForm extends javax.swing.JFrame {
                 this.SetDyeingProgramFromProgramID(thisJob.getDyeingProgramID());
             }
             if (WindowProcessType == 4 || WindowProcessType == 6) {
+                if (!new PreferenceHandler().getReviewFormEditing() && WindowProcessType == 6) {
+                    this.DisableThisForm();
+                    Header.setText("View Dyeing Program");
+                }
+                
                 Header.setText("Dyeing Program");
-            } else {
+            }
+            else {
                 Header.setText("Control Slip : Page 3/6");
             }
 
@@ -159,7 +167,12 @@ public class DyeingForm extends javax.swing.JFrame {
         //setWindowForthisProcessType();
         EnterForwardTraversal();
     }
-    
+    public void DisableThisForm()
+    {
+        SaveBut.setVisible(false);
+        CancelBut.setVisible(false);
+        OkayButton.setVisible(true);
+    }
     public void SetToCenter()
     {
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -172,7 +185,9 @@ public class DyeingForm extends javax.swing.JFrame {
     {
         DyeingProgramHandler thisDyeingProgramHandler = new DyeingProgramHandler();
         thisDyeingProgramName.setDyeingProgramName(DyeingProgramName);
-        if(new DyeingProgramNameHandler().GetDyeingProgramNameFromID(thisJob.getDyeingProgramID()) != DyeingProgramName)
+        
+        if(thisJob.getDyeingProgramID() != 0 &&
+           new DyeingProgramNameHandler().GetDyeingProgramNameFromDyeingProgramID(thisJob.getDyeingProgramID()) == DyeingProgramName)
         {
               this.SetDyeingProgramFromProgramID(thisJob.getDyeingProgramID());
         }
@@ -519,6 +534,7 @@ public class DyeingForm extends javax.swing.JFrame {
         ProgramNameLabel = new javax.swing.JLabel();
         ProgramNameText = new javax.swing.JTextField();
         CancelBut = new javax.swing.JButton();
+        OkayButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Control Slip");
@@ -566,6 +582,15 @@ public class DyeingForm extends javax.swing.JFrame {
         });
         BgPanel.add(CancelBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 650, 250, 40));
 
+        OkayButton.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        OkayButton.setText("Ok");
+        OkayButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OkayButtonActionPerformed(evt);
+            }
+        });
+        BgPanel.add(OkayButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(303, 650, 270, 40));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -600,7 +625,7 @@ public class DyeingForm extends javax.swing.JFrame {
                 
                 //Case 6 for review form
                 case 6:
-                    if (thisDyeingProgram.getCustomerID() == 0) {
+                    /*if (thisDyeingProgram.getCustomerID() == 0) {
                         thisDyeingProgram.setCustomerID(thisJob.getCustomerID());
                         thisDyeingProgram.setColorID(thisJob.getColorID());
                         thisDyeingProgram.setDesignID(thisJob.getDesignID());
@@ -611,8 +636,10 @@ public class DyeingForm extends javax.swing.JFrame {
                         CloseWindow = UpdateDyeingProgram();
                     }
 
-                    thisJob.setDyeingProgramID(thisDyeingProgram.getID());
-                    break;
+                    thisJob.setDyeingProgramID(thisDyeingProgram.getID()); */
+                    if (!new PreferenceHandler().getReviewFormEditing())
+                        CloseWindow = true;
+                        break;
                 default:
                     thisDyeingProgram.setCustomerID(thisJob.getCustomerID());
                     thisDyeingProgram.setColorID(thisJob.getColorID());
@@ -696,6 +723,14 @@ public class DyeingForm extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_CancelButActionPerformed
+
+    private void OkayButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OkayButtonActionPerformed
+        // TODO add your handling code here:
+        ReviewFormV3 thisReviewForm = new ReviewFormV3(thisJob, 6);
+        //Show Review Form and Ask to print
+        thisReviewForm.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_OkayButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -864,6 +899,7 @@ public class DyeingForm extends javax.swing.JFrame {
     private javax.swing.JButton CancelBut;
     private javax.swing.JTabbedPane GUITabbedPaneProcess;
     private javax.swing.JLabel Header;
+    private javax.swing.JButton OkayButton;
     private javax.swing.JLabel ProgramNameLabel;
     private javax.swing.JTextField ProgramNameText;
     private javax.swing.JButton SaveBut;

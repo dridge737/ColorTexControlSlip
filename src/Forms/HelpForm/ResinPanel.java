@@ -13,10 +13,12 @@ import Forms.ViewResinProgramList;
 import Handlers.MachineHandler;
 import Handlers.PreferenceHandler;
 import Handlers.ResinProgramHandler;
+import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 
 /**
  *
@@ -40,6 +42,21 @@ public class ResinPanel extends javax.swing.JPanel {
         this.machineDetails = machineDetails;
     }
 
+    public void DisablePanelElements()
+    {
+        UIManager.put( "ComboBox.disabledBackground", new Color(212,212,210) );
+        UIManager.put( "ComboBox.disabledForeground", Color.BLACK );
+        
+        this.ResinMachineDropDown.setEnabled(false);
+        this.ResinFabricTypeDropDown.setEnabled(false);
+        ResinVolumeTextField.setEnabled(false);
+        ResinVolumeTextField.setDisabledTextColor(Color.BLACK);
+        ResinVolumeTextField.setBackground(new Color(212,212,210));
+        
+        ResinWeight.setEnabled(false);
+        ResinWeight.setDisabledTextColor(Color.BLACK);
+        ResinWeight.setBackground(new Color(212,212,210));
+    }
     /**
      * Creates new form ResinPanel
      */

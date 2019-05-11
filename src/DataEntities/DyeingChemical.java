@@ -16,6 +16,7 @@ public class DyeingChemical extends Chemical{
     private float Value;
     private int Order;
     private String State;
+    
 
     /**
      * @return the ID

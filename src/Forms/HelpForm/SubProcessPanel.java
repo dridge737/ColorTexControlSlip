@@ -104,9 +104,9 @@ public class SubProcessPanel extends javax.swing.JPanel {
         initComponents();
         addChemicalTextBoxAutoComplete();
         WindowType = type;
-        setTableModel(WindowType);
-        AddDeleteColumn();
         thisJobOrder = currentJobOrder;
+        
+        setTableModel(WindowType);
         SetSubProcessFromDyeingProgram(DyeingProcessID);
         //TableColumn thisColumn = new TableColumn(ChemicalTable.getColumnCount()-2,50);
         //thisColumn.setHeaderValue("Quantity");
@@ -140,6 +140,13 @@ public class SubProcessPanel extends javax.swing.JPanel {
             };
             EditableCol++;
         }
+        //View from job Order
+        else if(type ==7 )
+        {
+            TableHeader = new String [] {
+                "Chemical", "Gram/Liter", "Type", "Value" , "Quantity" , "ID"
+            };
+        }
         else
         {
             TableHeader = new String [] {
@@ -164,6 +171,10 @@ public class SubProcessPanel extends javax.swing.JPanel {
         //ChemicalTable.remove(type);
          
         ChemicalTable.removeColumn(ChemicalTable.getColumnModel().getColumn(EditableCol+1));
+        if(type != 7)
+        {
+            AddDeleteColumn();
+        }
     }
     public void DeleteAllChemicaltoBeDeletedFromDB()
     {
@@ -186,8 +197,6 @@ public class SubProcessPanel extends javax.swing.JPanel {
                 int modelRow = Integer.valueOf(e.getActionCommand());
                 if (JOptionPane.YES_OPTION
                         == JOptionPane.showConfirmDialog(null, "Do you want to delete Chemical: " + table.getModel().getValueAt(modelRow, 0) + " From this Process?", "DELETE this item?", JOptionPane.YES_NO_OPTION)) {
-                    
-                    
                     
                     //ThisDyeingChemical.setID(ChemicalList.get(LastRow).getID());
                     //int convertedRowNumber = JobOrderTable.convertRowIndexToModel(this.JobOrderTable.getSelectedRow());
@@ -266,6 +275,10 @@ public class SubProcessPanel extends javax.swing.JPanel {
                  Quantity = new ComputeHelper().ComputeDyeingQuantity(thisDyeingChemical, thisJobOrder);
                  model.addRow(new Object[] { ChemicalName, thisDyeingChemical.getState(),thisDyeingChemical.getType(), thisDyeingChemical.getValue(),Quantity, "Delete" , thisDyeingChemical.getID()});                 
              }
+             else if (WindowType == 7)
+             {
+                 Quantity = new ComputeHelper().ComputeDyeingQuantity(thisDyeingChemical, thisJobOrder);
+                 model.addRow(new Object[] { ChemicalName, thisDyeingChemical.getState(),thisDyeingChemical.getType(), thisDyeingChemical.getValue(),Quantity, thisDyeingChemical.getID()});}
              else
                  model.addRow(new Object[] { ChemicalName, thisDyeingChemical.getState(),thisDyeingChemical.getType(), thisDyeingChemical.getValue(), "Delete" , thisDyeingChemical.getID()});
              

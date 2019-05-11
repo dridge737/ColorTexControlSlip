@@ -1699,6 +1699,34 @@ public class ColorTextControlSlipRepository {
         return DyeingProgramID;
     }
 
+    public String GetDyeingProgramNameFromDyeingProgramID(int DyeingProgramID)
+    {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String DyeingProgramName = null;
+        try {
+            conn = db.getConnection();
+            ps = conn.prepareStatement("SELECT Name " 
+                    + " FROM dyeing_program_name AS DyeProgName, "
+                    + " dyeing_program AS DyeProg "
+                    + " WHERE DyeProgName.ID = DyeProg.ProgramNameID"
+                    + " AND DyeProg.ID = ? ;");
+
+            ps.setInt(1, DyeingProgramID);
+
+            rs = ps.executeQuery();
+            if (rs.first()) {
+                DyeingProgramName = rs.getString("Name");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.closeConn(conn, ps, rs);
+        return DyeingProgramName;
+    }
+    
     public String GetDyeingProgramNameFromID(int ID) {
 
         DBConnection db = new DBConnection();

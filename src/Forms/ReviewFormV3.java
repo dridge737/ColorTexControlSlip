@@ -18,6 +18,7 @@ import DataEntities.ProcessOrder;
 import DataEntities.ResinChemical;
 import DataEntities.ResinJob;
 import DataEntities.ResinProgram;
+import Forms.HelpForm.ProcessPanel;
 import Forms.HelpForm.ResinPanel;
 import Handlers.ColorHandler;
 import Handlers.CustomerHandler;
@@ -50,10 +51,12 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
+import javax.swing.ComboBoxEditor;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.UIManager;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -125,18 +128,31 @@ public class ReviewFormV3 extends javax.swing.JFrame {
         SetJobOrderDetails();
         SetDropDownDetails();
         SetDyeingProgramName();
-        //if (currentJob.getResinProgramID() > 0) {
-        if(currentJob.getThisResinJob() != null)
+        AddResinTabs();
+        if (!new PreferenceHandler().getReviewFormEditing()) {
+            if (this.getWindowType() == 6) {
+                DisableReviewFormEditing();
+            }
+        }
+
+    }
+    
+    public void AddResinTabs()
+    {
+         if(thisJob.getThisResinJob() != null)
         {
             //Add a Resin Panel
             ResinPanel thisResinPanel;
             int index = 0;
-            for(ResinJob AllResinJob: currentJob.getThisResinJob())
+            for(ResinJob AllResinJob: thisJob.getThisResinJob())
             {
                 thisResinPanel = new ResinPanel(AllResinJob);
                 index++;
                 DyeingResinTab.add(thisResinPanel, "Resin Program " +index);
             }
+            
+            //if (currentJob.getResinProgramID() > 0) {
+       
             
             //ProcessPanel this_panel;
         //if(WindowProcessType > 2 )
@@ -160,8 +176,8 @@ public class ReviewFormV3 extends javax.swing.JFrame {
                 //ResinProgramText.setEnabled(false);
                 //EditResinProgram.setEnabled(false);
             } */ 
-        }
-
+        
+}
     }
     
     public void SetLiquidRatio()
@@ -230,12 +246,70 @@ public class ReviewFormV3 extends javax.swing.JFrame {
         
         SetCustomerNameDropDown();
         SetColorNameDropDown();
-        if (!new PreferenceHandler().getReviewFormEditing()) {
-            if (this.getWindowType() == 6) {
-                this.SaveExit.setVisible(false);
-                this.SavePrint.setText("Print");
+        //If Review Form Editing is disabled then don't show save and edit
+        
+    }
+    
+    private void DisableReviewFormEditing()
+    {
+        //WindowType = 7;
+        this.SaveExit.setVisible(false);
+        this.SavePrint.setText("Print");
+        UIManager.put( "ComboBox.disabledBackground", new Color(212,212,210) );
+        UIManager.put( "ComboBox.disabledForeground", Color.BLACK );
+        this.CustomerDropDownList.setEnabled(false);
+        this.CustomerDropDownList.setEditable(false);
+        this.DesignDropDownList.setEnabled(false);
+        this.ColorDropDownList.setEnabled(false);
+        this.DyeingMachineDropDown.setEnabled(false);
+        
+        DyeingLiquidRatioText.setEnabled(false);
+        DyeingLiquidRatioText.setDisabledTextColor(Color.BLACK);
+        DyeingLiquidRatioText.setBackground(new Color(212,212,210));
+        
+        BatchNo.setEnabled(false);
+        BatchNo.setDisabledTextColor(Color.BLACK);
+        BatchNo.setBackground(new Color(212,212,210));
+        
+        this.dateSpinner.setEnabled(false);
+        JTextField tf = ((JSpinner.DefaultEditor) dateSpinner.getEditor()).getTextField();
+        tf.setDisabledTextColor(Color.black);
+        tf.setBackground(new Color(212,212,210));
+       
+        this.Reference.setEnabled(false);
+        Reference.setDisabledTextColor(Color.BLACK);
+        Reference.setBackground(new Color(212, 212, 210));
+
+        this.ProgramNumber.setEnabled(false);
+        ProgramNumber.setDisabledTextColor(Color.BLACK);
+        ProgramNumber.setBackground(new Color(212, 212, 210));
+
+        this.Location.setEnabled(false);
+        Location.setDisabledTextColor(Color.BLACK);
+        Location.setBackground(new Color(212, 212, 210));
+
+        this.RollLoad.setEnabled(false);
+        RollLoad.setDisabledTextColor(Color.BLACK);
+        RollLoad.setBackground(new Color(212, 212, 210));
+
+        DyeingWeight.setEnabled(false);
+        DyeingWeight.setDisabledTextColor(Color.BLACK);
+        DyeingWeight.setBackground(new Color(212, 212, 210));
+
+        DyeingVolumeTextField.setEnabled(false);
+        DyeingVolumeTextField.setDisabledTextColor(Color.BLACK);
+        DyeingVolumeTextField.setBackground(new Color(212, 212, 210));
+
+        Component[] this_pane = this.DyeingResinTab.getComponents();
+        int ProcessOrder = 1;
+        for (Component c : this_pane) {
+                //System.out.println("Component 1 =" +c);
+            if (c instanceof ResinPanel) {
+                ResinPanel ThisProcessPanel = ((ResinPanel) c);
+                ThisProcessPanel.DisablePanelElements();
             }
         }
+
     }
 
     private void SetDesignNameDropDown() {
@@ -318,6 +392,7 @@ public class ReviewFormV3 extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         DyeingLiquidRatioText = new javax.swing.JTextField();
         EditDyeingProgram1 = new javax.swing.JButton();
+        ViewButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Control Slip");
@@ -587,6 +662,15 @@ public class ReviewFormV3 extends javax.swing.JFrame {
             }
         });
         DyeingMachinePanel.add(EditDyeingProgram1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 100, 60, 30));
+
+        ViewButton.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        ViewButton.setText("View");
+        ViewButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ViewButtonActionPerformed(evt);
+            }
+        });
+        DyeingMachinePanel.add(ViewButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 100, 160, 30));
 
         DyeingResinTab.addTab("Dyeing Details", DyeingMachinePanel);
 
@@ -1011,28 +1095,29 @@ public class ReviewFormV3 extends javax.swing.JFrame {
 
     private void CancelButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButActionPerformed
         // TODO add your handling code here:
-        if(this.ThisJobHasBeenAdded)
+        if(!this.ThisJobHasBeenAdded)
         {
-            this.dispose();
-        }
-        else {
-            if (this.getWindowType() == 4 || this.getWindowType() == 6 || this.getWindowType() == 5) {
-                if (new PreferenceHandler().getReviewFormEditing()) {
-                    if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Do you want to cancel using this Job Order?", "Exit?", JOptionPane.YES_NO_OPTION)) {
-                        new ViewCustomerOrder().setVisible(true); 
-                    }
+            //System.out.println(this.getWindowType());
+            if (this.getWindowType() == 4 || this.getWindowType() == 5) {
+                if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Do you want to cancel using this Job Order?", "Exit?", JOptionPane.YES_NO_OPTION)) {
+                    new ViewCustomerOrder().setVisible(true);
                 }
-                this.dispose();
-            } else {
+            } 
+            else if (this.getWindowType() == 6 && new PreferenceHandler().getReviewFormEditing()) {
+                new ViewCustomerOrder().setVisible(true);
+            } 
+            else 
+            {
                 if (getThisJob().getThisResinJob() != null) {
                     new AddResinForm(getThisJob()).setVisible(true);
                 } else {
                     new DyeingForm(getThisJob()).setVisible(true);
 
                 }
-                this.dispose();
+
             }
         }
+        this.dispose();
     }//GEN-LAST:event_CancelButActionPerformed
 
     
@@ -1081,6 +1166,14 @@ public class ReviewFormV3 extends javax.swing.JFrame {
          }
         
     }//GEN-LAST:event_EditDyeingProgram1ActionPerformed
+
+    private void ViewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewButtonActionPerformed
+        // TODO add your handling code here:
+        String DyeingName = DyeingProgramText.getText();
+        DyeingForm thisDyeingForm = new DyeingForm(null, thisJob, WindowType);
+        thisDyeingForm.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ViewButtonActionPerformed
 
     private boolean CheckCustomerAndJobOrderFromTextBox()
     {
@@ -1412,6 +1505,7 @@ public class ReviewFormV3 extends javax.swing.JFrame {
     private javax.swing.JTextField RollLoad;
     private javax.swing.JButton SaveExit;
     private javax.swing.JButton SavePrint;
+    private javax.swing.JButton ViewButton;
     private javax.swing.JSpinner dateSpinner;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

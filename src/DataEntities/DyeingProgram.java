@@ -5,12 +5,21 @@
  */
 package DataEntities;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author imbuenyson
  */
 public class DyeingProgram {
 
+    private int ID;
+    //private String dyeingProgramName;
+    private int dyeingProgramNameID;
+    private int customerID;
+    private int colorID;
+    private int designID;
+    private ArrayList<DyeingProcess> ChemicalNamesList = new ArrayList<DyeingProcess>();
     /**
      * @return the customerID
      */
@@ -52,12 +61,7 @@ public class DyeingProgram {
     public void setDesignID(int designID) {
         this.designID = designID;
     }
-    private int ID;
-    //private String dyeingProgramName;
-    private int dyeingProgramNameID;
-    private int customerID;
-    private int colorID;
-    private int designID;
+    
     
     public int getID() {
         return ID;

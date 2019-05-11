@@ -12,10 +12,12 @@ import java.util.ArrayList;
  * @author imbuenyson
  */
 public class DyeingProcess {
+
     private int DyeingID;
     private int dyeingProgramId;
     private String dyeingProcessName;
     private String dyeingProcessOrder;
+    private ArrayList<DyeingChemical> ChemicalNamesList = new ArrayList<DyeingChemical>();
     
     public DyeingProcess(){}
     
@@ -56,5 +58,19 @@ public class DyeingProcess {
 
     public void setDyeingProcessOrder(String dyeingProcessOrder) {
         this.dyeingProcessOrder = dyeingProcessOrder.toUpperCase();
+    }
+    
+    /**
+     * @return the ChemicalNamesList
+     */
+    public ArrayList<DyeingChemical> getChemicalNamesList() {
+        return ChemicalNamesList;
+    }
+
+    /**
+     * @param ChemicalNamesList the ChemicalNamesList to set
+     */
+    public void setChemicalNamesList(ArrayList<DyeingChemical> ChemicalNamesList) {
+        this.ChemicalNamesList = ChemicalNamesList;
     }
 }
