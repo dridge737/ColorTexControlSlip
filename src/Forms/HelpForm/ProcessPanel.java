@@ -34,6 +34,13 @@ import javax.swing.plaf.metal.MetalIconFactory;
  */
 public class ProcessPanel extends javax.swing.JPanel {
 
+    private int NumberOfTabs = 0;
+    //private List<JTextField> subProcessName = new ArrayList<JTextField>();
+    private DyeingProcess ThisDyeingProcess = new DyeingProcess();
+    int WindowType = 0;
+    JobOrder thisJobOrder;
+    Color ColorError = new Color(232,228,42);
+    
     /**
      * @return the ThisDyeingProcess
      */
@@ -47,13 +54,6 @@ public class ProcessPanel extends javax.swing.JPanel {
     public void setThisDyeingProcess(DyeingProcess ThisDyeingProcess) {
         this.ThisDyeingProcess = ThisDyeingProcess;
     }
-    private int NumberOfTabs = 0;
-    //private List<JTextField> subProcessName = new ArrayList<JTextField>();
-    private DyeingProcess ThisDyeingProcess = new DyeingProcess();
-    int WindowType = 0;
-    JobOrder thisJobOrder;
-    Color ColorError = new Color(232,228,42);
-    
     /**
      * Creates new form ProcessPanel
      */
@@ -117,20 +117,14 @@ public class ProcessPanel extends javax.swing.JPanel {
         if(TotalNumberOfSubProcess > 0)
         {
             ArrayList<DyeingProcess> thisDyeingSubProcess;
-            //if(this.WindowType == 3)
-            //{
-            //    thisDyeingSubProcess = ProcessHandler.GetDyeingSubProcessByDyeingProgramIdAndProcessOrder(ThisDyeingProcess);
-            //}
-            //else
-                thisDyeingSubProcess = ProcessHandler.GetDyeingSubProcessByDyeingProgramIdAndProcessOrder(getThisDyeingProcess());
             
-            
-                for(DyeingProcess CurrentDyeingSubProcess : thisDyeingSubProcess)
-                {
+            thisDyeingSubProcess = ProcessHandler.GetDyeingSubProcessByDyeingProgramIdAndProcessOrder(getThisDyeingProcess());
+
+            for (DyeingProcess CurrentDyeingSubProcess : thisDyeingSubProcess) {
                 //Add SubProcess Tab
                 this.addNewTab(CurrentDyeingSubProcess);
-                }
-            
+            }
+
         }
         else
         {
@@ -248,12 +242,32 @@ public class ProcessPanel extends javax.swing.JPanel {
             }
      }
      
+     public void SetProcessDetails(int TabIndex)
+     {
+         getThisDyeingProcess().setDyeingProcessName(this.ProcessText.getText());
+         getThisDyeingProcess().setDyeingProcessOrder(Integer.toString(TabIndex));
+     }
+     
+     public DyeingProcess GetThisPanelDetails(int TabIndex)
+     {
+         SetProcessDetails(TabIndex);
+         if(NumberOfTabs > 2)
+         {
+             this.GetDyeingProcessDetailsFromSubProcessPanel(0, TabIndex);
+         }
+         else
+             this.GetChemicalsFromSubProcessPanel();
+         
+         return getThisDyeingProcess();
+     }
+     
      public void AddThisPanelInDyeingProcess(int DyeingProgramID , int TabIndex)
      {
          DyeingProcessHandler ThisDyeingProcessHandler = new DyeingProcessHandler();
          getThisDyeingProcess().setDyeingProgramId(DyeingProgramID);
-         getThisDyeingProcess().setDyeingProcessName(this.ProcessText.getText());
-         getThisDyeingProcess().setDyeingProcessOrder(Integer.toString(TabIndex));
+         SetProcessDetails(TabIndex);
+         //getThisDyeingProcess().setDyeingProcessName(this.ProcessText.getText());
+         //getThisDyeingProcess().setDyeingProcessOrder(Integer.toString(TabIndex));
          
          int ProcessID = ThisDyeingProcessHandler.AddDyeingProcess(getThisDyeingProcess());
          //int ProcessID = ThisDyeingProcessHandler.GetDyeingProcessIdByDetails(ThisDyeingProcess);
@@ -287,6 +301,45 @@ public class ProcessPanel extends javax.swing.JPanel {
              }
          }
      }
+     
+     public ArrayList<DyeingProcess> GetDyeingProcessDetailsFromSubProcessPanel(int DyeingProgramID, int TabIndex)
+     {
+         Component[] this_pane = this.subProcess.getComponents();
+         int subProcessNumber = 1;
+         ArrayList<DyeingProcess> thisDyeingProcessList = new ArrayList<DyeingProcess>();
+         
+         for (Component c : this_pane)
+         {
+             if (c instanceof SubProcessPanel)
+             {
+                  SubProcessPanel ThisProcessPanel = ((SubProcessPanel)c);
+                  String parsedOrder = Integer.toString(TabIndex) + "." + ConvertToLetters(subProcessNumber);
+                  subProcessNumber++;
+                  //i = order number, second variable = 0 because dyeing process id has not yet been added
+                  thisDyeingProcessList.add(ThisProcessPanel.GetSubProcessDetails(parsedOrder, 0));
+                  
+             }
+         }
+         return thisDyeingProcessList;
+     }
+     
+     /***
+      * Gets all the Chemical in this panel
+      * @return Dyeing chemical ArrayList<DyeingChemical> from Panel
+      */
+     public ArrayList<DyeingChemical> GetChemicalsFromSubProcessPanel()
+     {
+        ArrayList<DyeingChemical> AllChemicalsInThisPanel = new ArrayList<DyeingChemical>();
+        Component[] this_pane = this.subProcess.getComponents();
+        for (Component c : this_pane) {
+            if (c instanceof SubProcessPanel) {
+                SubProcessPanel ThisProcessPanel = ((SubProcessPanel) c);
+                //ThisProcessPanel.AddSubProcess(DyeingProgramID, TOOL_TIP_TEXT_KEY);
+                AllChemicalsInThisPanel = ThisProcessPanel.GetDyeingChemicalsFromTable(0);
+            }
+        }
+        return AllChemicalsInThisPanel;
+    }
      
      public void AddChemicalFromSubProcessPanel(int DyeingProcessID)
      {

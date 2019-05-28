@@ -61,41 +61,18 @@ public class DyeingForm extends javax.swing.JFrame {
      * Creates new form Dyeing Form
      */
     public DyeingForm() {
-        //initComponents();
-        //WindowProcessType = 1;
-        //GUITabbedPaneProcess.add(new ProcessPanel(), "Process 1", NumberOfProcessTabs++);
-        //setWindowForthisProcessType();
         this(null, null, 1);
-    }
-    
-     public void EnterForwardTraversal()
-    {
-        Set forwardkeys = new HashSet(BgPanel
-        .getFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS));
-
-        forwardkeys.add(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0));
-        BgPanel.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, forwardkeys);
-
     }
     
     //For Edit or View
     public DyeingForm(String DyeingProgramName)
     {
-        //initComponents();
-        //WindowProcessType = 2;
-        //SetDefaultDyeingProgramFromProgramName(DyeingProgramName);
-        //setWindowForthisProcessType();
         this(DyeingProgramName, null, 2);
     }
     
     //Jumps From Review Form / Back from View Resin Form
     public DyeingForm(JobOrderExtended currentJob)
     {
-        //initComponents();
-        //WindowProcessType = 3;
-        //thisJob = currentJob;
-        //this.SetDyeingProgramFromProgramID(currentJob.getDyeingProgramID());
-        //setWindowForthisProcessType();
         this(null, currentJob, 3);
     }
     
@@ -103,12 +80,6 @@ public class DyeingForm extends javax.swing.JFrame {
     public DyeingForm(String DyeingProgramName,  JobOrderExtended currentJob)
     {
         this(DyeingProgramName, currentJob, 4);
-        //initComponents();
-        //WindowProcessType = 3;
-        //thisJob = currentJob;
-        //Check if customer has this dyeingProgramName        
-        //SetDyeingProgramFromProgramNameForThisCustomer(DyeingProgramName);
-        //setWindowForthisProcessType();
     }
     
     public DyeingForm(String DyeingProgramName, JobOrderExtended currentJob, int WindowType)
@@ -118,6 +89,17 @@ public class DyeingForm extends javax.swing.JFrame {
         WindowProcessType = WindowType;
         //For Adding new Dyeing Program
         OkayButton.setVisible(false);
+        thisJob = currentJob;
+        InitializeWindowType(DyeingProgramName);
+        
+        GUITabbedPaneProcess.add(new JPanel(), "+", NumberOfProcessTabs++);
+        GUITabbedPaneProcess.addChangeListener(changeListener);
+        //setWindowForthisProcessType();
+        EnterForwardTraversal();
+    }
+    
+    public void InitializeWindowType(String DyeingProgramName)
+    {
         if(WindowProcessType == 1)
         {
             GUITabbedPaneProcess.add(new ProcessPanel(), "Process 1", NumberOfProcessTabs++);
@@ -135,13 +117,9 @@ public class DyeingForm extends javax.swing.JFrame {
         //For dyeing program to job order
         else if(WindowProcessType > 2)
         {
-            thisJob = currentJob;
-            if(DyeingProgramName != null)
-            {
+            if (DyeingProgramName != null) {
                 SetDyeingProgramFromProgramNameForThisCustomer(DyeingProgramName);
-            }
-            else
-            {
+            } else {
                 this.SetDyeingProgramFromProgramID(thisJob.getDyeingProgramID());
             }
             if (WindowProcessType == 4 || WindowProcessType == 6) {
@@ -155,18 +133,22 @@ public class DyeingForm extends javax.swing.JFrame {
             else {
                 Header.setText("Control Slip : Page 3/6");
             }
-
             SaveBut.setText("Next");
             CancelBut.setText("Back");
             ProgramNameText.setEnabled(false);
             ProgramNameText.setBackground(Color.LIGHT_GRAY);
         }
-        
-        GUITabbedPaneProcess.add(new JPanel(), "+", NumberOfProcessTabs++);
-        GUITabbedPaneProcess.addChangeListener(changeListener);
-        //setWindowForthisProcessType();
-        EnterForwardTraversal();
     }
+    
+    public void EnterForwardTraversal() {
+        Set forwardkeys = new HashSet(BgPanel
+                .getFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS));
+
+        forwardkeys.add(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0));
+        BgPanel.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, forwardkeys);
+
+    }
+    
     public void DisableThisForm()
     {
         SaveBut.setVisible(false);
@@ -257,8 +239,8 @@ public class DyeingForm extends javax.swing.JFrame {
     public void SetDyeingProgramProcessFromProgramID(int DyeingProgramID)
     {
         ArrayList<DyeingProcess> thisDyeingProcess;
-        DyeingProcessHandler ProcessHandler = new DyeingProcessHandler();
-        thisDyeingProcess = ProcessHandler.GetAllDyeingProcessByDyeingProgramId(DyeingProgramID);
+        //DyeingProcessHandler ProcessHandler = new DyeingProcessHandler();
+        thisDyeingProcess = new DyeingProcessHandler().GetAllDyeingProcessByDyeingProgramId(DyeingProgramID);
 
         //Add Dyeing Process Tab for Each Dyeing Process
         for(DyeingProcess thisProcess: thisDyeingProcess)
@@ -389,26 +371,23 @@ public class DyeingForm extends javax.swing.JFrame {
         
         if(!thisDyeingProgramNameHandler.CheckIfDyeingProgramNameHasBeenAdded(thisDyeingProgramName.getDyeingProgramName()))
         {
-            int thisDyeingProgramNameID =
-                    thisDyeingProgramNameHandler.AddDyeingProgramName(thisDyeingProgramName.getDyeingProgramName());
+            int thisDyeingProgramNameID
+                    = thisDyeingProgramNameHandler.AddDyeingProgramName(thisDyeingProgramName.getDyeingProgramName());
             thisDyeingProgram.setDyeingProgramNameID(thisDyeingProgramNameID);
-                //ADD and Set Dyeing Program ID
-                if (thisJob != null) {
-
+            //ADD and Set Dyeing Program ID
+            if (thisJob != null) {
                 thisDyeingProgram.setCustomerID(thisJob.getCustomerID());
                 thisDyeingProgram.setColorID(thisJob.getColorID());
                 thisDyeingProgram.setDesignID(thisJob.getDesignID());
-                }
-                else{
-                    thisDyeingProgram.setCustomerID(0);
-                    thisDyeingProgram.setColorID(0);
-                    thisDyeingProgram.setDesignID(0);
-                    
-                }
-                
-                //int DyeingProgramID = thisDyeingProgramHandler.GetDyeingProgramIDfromName(thisDyeingProgram.getDyeingProgramName());
-                //FIX THIS edit for Dyeing Program Name
-                //thisDyeingProgram.SetID(DyeingProgramID);
+            } else {
+                thisDyeingProgram.setCustomerID(0);
+                thisDyeingProgram.setColorID(0);
+                thisDyeingProgram.setDesignID(0);
+            }
+
+            //int DyeingProgramID = thisDyeingProgramHandler.GetDyeingProgramIDfromName(thisDyeingProgram.getDyeingProgramName());
+            //FIX THIS edit for Dyeing Program Name
+            //thisDyeingProgram.SetID(DyeingProgramID);
             isSuccessful = AddDyeingProgram();
         }
         else
@@ -419,6 +398,28 @@ public class DyeingForm extends javax.swing.JFrame {
         return isSuccessful;
     }
     
+    private void GetDyeingProgramDetails()
+    {
+        //Get Dyeing Process and Dyeing Chemical Details
+        Component[] this_pane = this.GUITabbedPaneProcess.getComponents();
+        int ProcessOrder = 1;
+        ArrayList<DyeingProcess> DyeingProcessList = new ArrayList<DyeingProcess>();
+
+        for (Component c : this_pane) {
+
+            if (c instanceof ProcessPanel) {
+                ProcessPanel ThisProcessPanel = ((ProcessPanel) c);
+                //ThisProcessPanel.AddThisPanelInDyeingProcess(thisDyeingProgram.getID(), ProcessOrder++);
+                DyeingProcessList.add(ThisProcessPanel.GetThisPanelDetails(ProcessOrder++));
+            }
+
+        }
+    }
+    
+    /**
+     * This function adds the dyeing Program and dyeing process to the database.
+     * @return 
+     */
     private boolean AddDyeingProgram()
     {
         boolean AddSuccess = false;
@@ -440,11 +441,14 @@ public class DyeingForm extends javax.swing.JFrame {
         {
             Component[] this_pane = this.GUITabbedPaneProcess.getComponents();
             int ProcessOrder = 1;
+            ArrayList<DyeingProcess> DyeingProcessList = new ArrayList<DyeingProcess>();
+            
             for (Component c : this_pane)
             {
                 if (c instanceof ProcessPanel) {
                     ProcessPanel ThisProcessPanel = ((ProcessPanel)c);
                     ThisProcessPanel.AddThisPanelInDyeingProcess(thisDyeingProgram.getID(), ProcessOrder++);
+                    
                 }
             }
             isSuccessful = true;

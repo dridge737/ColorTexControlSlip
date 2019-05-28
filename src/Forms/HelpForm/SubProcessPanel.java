@@ -339,7 +339,33 @@ public class SubProcessPanel extends javax.swing.JPanel {
         this.SubProcessLabel.setVisible(true);
         this.SubProcessText.setVisible(true);
     }
-     
+    
+    public DyeingProcess GetSubProcessDetails(String Order, int DyeingProcessID)
+    {
+        DyeingProcess ThisDyeingProcess = new DyeingProcess();
+        ThisDyeingProcess.setDyeingProcessName(this.SubProcessText.getText());
+        ThisDyeingProcess.setDyeingProcessOrder(Order);
+        ThisDyeingProcess.setChemicalNamesList(GetDyeingChemicalsFromTable(DyeingProcessID));
+        
+        return ThisDyeingProcess;
+    }
+    
+    
+     public ArrayList<DyeingChemical> GetDyeingChemicalsFromTable(int DyeingProcessID)
+     {
+         if(ChemicalTable.isEditing())
+            ChemicalTable.getCellEditor().stopCellEditing();
+        ArrayList<DyeingChemical> AllDyeingChemical = new ArrayList<DyeingChemical>();
+        DyeingChemical ThisDyeingChemical;
+        for (int i = 0; i < ChemicalTable.getRowCount(); i++) {
+            
+            ThisDyeingChemical = GetThisRowOfValues(i, DyeingProcessID);
+            AllDyeingChemical.add(ThisDyeingChemical);
+            }
+        
+        return AllDyeingChemical;
+     }
+    
      /**
       * Used to add Sub Process in case there are more process below the parent process
       * @param DyeingProgramID ID of the dyeing program that is used
@@ -349,23 +375,23 @@ public class SubProcessPanel extends javax.swing.JPanel {
      {
          //if(CheckIfTextIsReady())
          //{
-         
-                 //SET All Dyeing Process Columns ID, NAME , ORDER
-                DyeingProcess ThisDyeingProcess = new DyeingProcess(DyeingProgramID,this.SubProcessText.getText(), Order );
-                //ThisDyeingProcess.setDyeingProgramId(DyeingProgramID);
-                //ThisDyeingProcess.setDyeingProcessName(this.SubProcessText.getText());
-                //ThisDyeingProcess.setDyeingProcessOrder(Order);
-                DyeingProcessHandler ThisDyeingProcessHandler = new DyeingProcessHandler();
-               
-                //USE Handler To Add Dyeing Process
-                int DyeingProcessID = ThisDyeingProcessHandler.AddDyeingProcess(ThisDyeingProcess);
-                ThisDyeingProcess.setId(   
-                        ThisDyeingProcessHandler.GetDyeingProcessIdByDetails(
-                                ThisDyeingProcess));
-                //Add Chemicals After Adding Dyeing Process
-                AddChemicals(ThisDyeingProcess.getId());
-        //    }
+
+         //SET All Dyeing Process Columns ID, NAME , ORDER
+         DyeingProcess ThisDyeingProcess = new DyeingProcess(DyeingProgramID, this.SubProcessText.getText(), Order);
+         //ThisDyeingProcess.setDyeingProgramId(DyeingProgramID);
+         //ThisDyeingProcess.setDyeingProcessName(this.SubProcessText.getText());
+         //ThisDyeingProcess.setDyeingProcessOrder(Order);
+         DyeingProcessHandler ThisDyeingProcessHandler = new DyeingProcessHandler();
+
+         //USE Handler To Add Dyeing Process
+         int DyeingProcessID = ThisDyeingProcessHandler.AddDyeingProcess(ThisDyeingProcess);
+         //ThisDyeingProcess.setId(ThisDyeingProcessHandler.GetDyeingProcessIdByDetails(ThisDyeingProcess));
+         ThisDyeingProcess.setId(DyeingProcessID);
+         //Add Chemicals After Adding Dyeing Process
+         AddChemicals(ThisDyeingProcess.getId());
+         //    }
      }
+     
      
      /**
       * Add to Dyeing Chemicals Table using previously added Dyeing Process row

@@ -18,6 +18,7 @@ public class DyeingProcess {
     private String dyeingProcessName;
     private String dyeingProcessOrder;
     private ArrayList<DyeingChemical> ChemicalNamesList = new ArrayList<DyeingChemical>();
+    private ArrayList<DyeingProcess> DyeingProcess = new ArrayList<DyeingProcess>();
     
     public DyeingProcess(){}
     
@@ -73,4 +74,19 @@ public class DyeingProcess {
     public void setChemicalNamesList(ArrayList<DyeingChemical> ChemicalNamesList) {
         this.ChemicalNamesList = ChemicalNamesList;
     }
+    
+    /**
+     * @return the DyeingProcess
+     */
+    public ArrayList<DyeingProcess> getDyeingProcess() {
+        return DyeingProcess;
+    }
+
+    /**
+     * @param DyeingProcess the DyeingProcess to set
+     */
+    public void setDyeingProcess(ArrayList<DyeingProcess> DyeingProcess) {
+        this.DyeingProcess = DyeingProcess;
+    }
+
 }

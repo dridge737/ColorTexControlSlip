@@ -71,7 +71,6 @@ public class JobOrderForm extends javax.swing.JFrame {
     
     //ProcessOrder thisProcessOrder = new ProcessOrder();
     private Forms.HelpForm.CustomTraversalPolicy policy;
-    private final static int POINTS_PER_INCH = 72;
     private int WindowType = 0;
     private Color ErrorColor = new Color(232,228,42);
     /**
