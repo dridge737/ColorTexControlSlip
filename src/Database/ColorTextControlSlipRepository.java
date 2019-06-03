@@ -1226,7 +1226,7 @@ public class ColorTextControlSlipRepository {
         return isSuccessful;
     }
 
-    public boolean UpdateDyeingProgramByDyeingProgramId(DyeingProgram dyeingProgram) {
+    public boolean UpdateDyeingProgramNameByDyeingProgramId(DyeingProgram dyeingProgram) {
         DBConnection db = new DBConnection();
         Connection conn = null;
         PreparedStatement preparedStmt = null;

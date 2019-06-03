@@ -20,11 +20,10 @@ public class DyeingProgramHandler {
     
     public int AddDyeingProgram(DyeingProgram newDyeingProgram)
     {
-        //boolean isSuccessful = false;
-        
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
         return repo.AddDyeingProgram(newDyeingProgram);
     }
+    
     public boolean SetCurrentFlagToNo(DyeingProgram dyeingProgram)
     {
         boolean isSuccessful = false;
@@ -39,7 +38,7 @@ public class DyeingProgramHandler {
         boolean isSuccessful = false;
         
         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
-        isSuccessful = repo.UpdateDyeingProgramByDyeingProgramId(dyeingProgram);
+        isSuccessful = repo.UpdateDyeingProgramNameByDyeingProgramId(dyeingProgram);
         
         return isSuccessful;
     }

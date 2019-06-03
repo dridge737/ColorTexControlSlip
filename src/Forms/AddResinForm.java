@@ -27,6 +27,7 @@ import Forms.HelpForm.auto_complete;
 import Handlers.ComputeHelper;
 import Handlers.DesignHandler;
 import Handlers.JobHandler;
+import Handlers.PreferenceHandler;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.KeyboardFocusManager;
@@ -41,6 +42,7 @@ import javax.swing.Action;
 import javax.swing.DropMode;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
+import javax.swing.UIManager;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.TableModelEvent;
@@ -75,6 +77,7 @@ public class AddResinForm extends javax.swing.JFrame {
         setTableModel();
         AddDeleteColumn();  
         SetToCenter();
+        this.OkayBut.setVisible(false);
     }
     
     public AddResinForm(String ResinProgramName)
@@ -110,8 +113,23 @@ public class AddResinForm extends javax.swing.JFrame {
         this();
         WindowType = thisWindowType;
         InitializeWindowForControlSlip(ResinProgramName, currentJob);
-        AddDeleteColumn(); 
+        if(WindowType != 6 && !(new PreferenceHandler().getReviewFormEditing()))
+            AddDeleteColumn();
+    }
+    
+    public void DisableResinForm()
+    {
+        UIManager.put( "ComboBox.disabledBackground", new Color(212,212,210) );
+        UIManager.put( "ComboBox.disabledForeground", Color.BLACK );
         
+        this.StateComboBox.setEnabled(false);
+        this.TypeComboBox.setEnabled(false);
+        ResinProgramNameTextbox.setEnabled(false);
+        ChemicalTextfield.setEnabled(false);
+        this.AddtoTable.setEnabled(false);
+        SaveBut.setVisible(false);
+        CancelBut.setVisible(false);
+        OkayBut.setVisible(true);
     }
     
     public void EnterForwardTraversal()
@@ -211,8 +229,10 @@ public class AddResinForm extends javax.swing.JFrame {
         model_original.addColumn("Type");
         model_original.addColumn("Value GPL");
         if(this.thisJob != null)
-        model_original.addColumn("Quantity");
-        model_original.addColumn("Delete");
+            model_original.addColumn("Quantity");
+        if (!new PreferenceHandler().getReviewFormEditing() && this.WindowType != 6) {
+            model_original.addColumn("Delete");
+        }
         
         //int resinProgramId = resinProgramHandler.GetResinProgramIDFromResinProgramName(ResinProcessName.getText());
         resinChemicalList = resinChemicalHandler.GetResinChemicalsByResinProgramId(resinProgram.getID());
@@ -332,6 +352,7 @@ public class AddResinForm extends javax.swing.JFrame {
         Header = new javax.swing.JLabel();
         SaveBut = new javax.swing.JButton();
         CancelBut = new javax.swing.JButton();
+        OkayBut = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -385,6 +406,15 @@ public class AddResinForm extends javax.swing.JFrame {
         });
         BgPanel.add(CancelBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 485, 240, 40));
         CancelBut.getAccessibleContext().setAccessibleName("Add");
+
+        OkayBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        OkayBut.setText("Done");
+        OkayBut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OkayButActionPerformed(evt);
+            }
+        });
+        BgPanel.add(OkayBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 485, 510, 40));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -850,6 +880,13 @@ public class AddResinForm extends javax.swing.JFrame {
         
     }//GEN-LAST:event_AddtoTableActionPerformed
 
+    private void OkayButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OkayButActionPerformed
+        // TODO add your handling code here:
+        ReviewFormV3 thisForm = new ReviewFormV3(thisJob, this.WindowType);
+        thisForm.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_OkayButActionPerformed
+
     private void AddTextToTable()
     {
         String ChemicalName = ChemicalTextfield.getText().trim().toUpperCase();
@@ -873,7 +910,11 @@ public class AddResinForm extends javax.swing.JFrame {
                                         "Delete"});
         }
         else
-            model.addRow(new Object[] {ChemicalTextfield.getText(), StateComboBox.getSelectedItem().toString(), TypeComboBox.getSelectedItem().toString(), GPLTextfield.getText() , "Delete"});
+            model.addRow(new Object[] {ChemicalName, 
+                                       thisResinChemical.getState(), 
+                                       thisResinChemical.getType(), 
+                                       thisResinChemical.getGPLValue() , 
+                                       "Delete"});
         //ChemicalList
         //After Adding Chemical to table add it to list to check if same chemical will be added
         this.AddedChemicalList.add(ChemicalName);
@@ -964,6 +1005,7 @@ public class AddResinForm extends javax.swing.JFrame {
     private javax.swing.JTextField ChemicalTextfield;
     private javax.swing.JTextField GPLTextfield;
     private javax.swing.JLabel Header;
+    private javax.swing.JButton OkayBut;
     private javax.swing.JTextField ResinProgramNameTextbox;
     private javax.swing.JButton SaveBut;
     private javax.swing.JComboBox StateComboBox;

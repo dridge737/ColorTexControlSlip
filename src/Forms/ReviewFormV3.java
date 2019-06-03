@@ -90,8 +90,8 @@ public class ReviewFormV3 extends javax.swing.JFrame {
     /**
      * @param thisJob the thisJob to set
      */
-    public void setThisJob(JobOrderExtended thisJob) {
-        this.thisJob = thisJob;
+    public void setThisJob(JobOrderExtended updateJobVar) {
+        this.thisJob = updateJobVar;
     }
 
     Machine thisDyeingMachine = new Machine();
@@ -207,7 +207,7 @@ public class ReviewFormV3 extends javax.swing.JFrame {
         //thisJob.setID(thisProcessOrder.getJobOrderID());
         //JobHandler JobOrderHandler = new JobHandler();
         //thisJob = JobOrderHandler.GetJobOrderDetailsFromJobId(thisJob.getID());
-        if (getWindowType() == 4) {
+        if (getWindowType() != 6) {
             //JobOrder.setText("");
             JobOrder.setBackground(Color.WHITE);
             JobOrder.setEnabled(true);
@@ -300,6 +300,10 @@ public class ReviewFormV3 extends javax.swing.JFrame {
         DyeingVolumeTextField.setDisabledTextColor(Color.BLACK);
         DyeingVolumeTextField.setBackground(new Color(212, 212, 210));
 
+        EditButton.setVisible(false);
+        ChangeButton.setVisible(false);
+        
+               
         Component[] this_pane = this.DyeingResinTab.getComponents();
         int ProcessOrder = 1;
         for (Component c : this_pane) {
@@ -388,10 +392,10 @@ public class ReviewFormV3 extends javax.swing.JFrame {
         DyeingVolumeTextField = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         DyeingProgramText = new javax.swing.JTextField();
-        EditDyeingProgram = new javax.swing.JButton();
+        ChangeButton = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
         DyeingLiquidRatioText = new javax.swing.JTextField();
-        EditDyeingProgram1 = new javax.swing.JButton();
+        EditButton = new javax.swing.JButton();
         ViewButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -630,14 +634,14 @@ public class ReviewFormV3 extends javax.swing.JFrame {
         DyeingProgramText.setEnabled(false);
         DyeingMachinePanel.add(DyeingProgramText, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 100, 310, 30));
 
-        EditDyeingProgram.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        EditDyeingProgram.setText("Change");
-        EditDyeingProgram.addActionListener(new java.awt.event.ActionListener() {
+        ChangeButton.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        ChangeButton.setText("Change");
+        ChangeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EditDyeingProgramActionPerformed(evt);
+                ChangeButtonActionPerformed(evt);
             }
         });
-        DyeingMachinePanel.add(EditDyeingProgram, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 100, 100, 30));
+        DyeingMachinePanel.add(ChangeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 100, 100, 30));
 
         jLabel14.setBackground(new java.awt.Color(255, 255, 255));
         jLabel14.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
@@ -654,14 +658,14 @@ public class ReviewFormV3 extends javax.swing.JFrame {
         });
         DyeingMachinePanel.add(DyeingLiquidRatioText, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, 170, 30));
 
-        EditDyeingProgram1.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        EditDyeingProgram1.setText("Edit");
-        EditDyeingProgram1.addActionListener(new java.awt.event.ActionListener() {
+        EditButton.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        EditButton.setText("Edit");
+        EditButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EditDyeingProgram1ActionPerformed(evt);
+                EditButtonActionPerformed(evt);
             }
         });
-        DyeingMachinePanel.add(EditDyeingProgram1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 100, 60, 30));
+        DyeingMachinePanel.add(EditButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 100, 60, 30));
 
         ViewButton.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         ViewButton.setText("View");
@@ -741,7 +745,7 @@ public class ReviewFormV3 extends javax.swing.JFrame {
 
     }//GEN-LAST:event_DyeingLiquidRatioTextKeyReleased
 
-    private void EditDyeingProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditDyeingProgramActionPerformed
+    private void ChangeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChangeButtonActionPerformed
         if (CheckIfDyeingMachineHasInputs() && CheckCustomerAndJobOrderFromTextBox()) {
             SetJobOrderDetailsFromTextBox();
             ViewDyeingProgramList thisDyeingProgramListWindow;
@@ -749,7 +753,7 @@ public class ReviewFormV3 extends javax.swing.JFrame {
             thisDyeingProgramListWindow.setVisible(true);
             this.dispose();
         }
-    }//GEN-LAST:event_EditDyeingProgramActionPerformed
+    }//GEN-LAST:event_ChangeButtonActionPerformed
 
     private void DyeingVolumeTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DyeingVolumeTextFieldKeyReleased
         // TODO add your handling code here:
@@ -930,14 +934,46 @@ public class ReviewFormV3 extends javax.swing.JFrame {
         
         return NewResinProgramID;
     }
-    private void SaveThisJobOrder()
+    private boolean SaveThisJobOrder()
     {
+        boolean Success = true;
         JobHandler thisJobHandler = new JobHandler();
         if (ThisJobHasBeenAdded == true) {
             JOptionPane.showMessageDialog(null, "Job order has already been added.");
             this.dispose();
         } else {
             if (AddTextToJobOrderObject()) {
+                
+                if (!CheckIfDyeingMatchesColorCustomerAndDesign()) {
+                    //getThisJob().setDyeingProgramID(CheckAndAddDyeingProgramDetails());
+                
+                    DyeingProgram currentDyeingProgram = new DyeingProgram();
+                    currentDyeingProgram.SetID(getThisJob().getDyeingProgramID());
+                    currentDyeingProgram.setCustomerID(getThisJob().getCustomerID());
+                    currentDyeingProgram.setColorID(getThisJob().getColorID());
+                    currentDyeingProgram.setDesignID(getThisJob().getDesignID());
+                    currentDyeingProgram.setDyeingProgramNameID(new DyeingProgramNameHandler().GetDyeingProgramNameIDfromName(DyeingProgramText.getText()));
+                    int previousDyeingProgramID = currentDyeingProgram.getID();
+                    currentDyeingProgram.SetID(new DyeingProgramHandler().AddDyeingProgram(currentDyeingProgram));
+                    getThisJob().setDyeingProgramID(currentDyeingProgram.getID());
+
+                    ArrayList<DyeingProcess> thisDyeingProcess;
+                    thisDyeingProcess = new DyeingProcessHandler().GetAllDyeingProcessByDyeingProgramId(previousDyeingProgramID);
+                    for (DyeingProcess loopCurrentProcess : thisDyeingProcess) {
+                        loopCurrentProcess.setDyeingProgramId(currentDyeingProgram.getID());
+                        //Add dyeing process and set ID
+                        int previousDyeingProcessID = loopCurrentProcess.getId();
+                        loopCurrentProcess.setId(new DyeingProcessHandler().AddDyeingProcess(loopCurrentProcess));
+
+                        ArrayList<DyeingChemical> ThisDyeingChemical;
+                        ThisDyeingChemical = new DyeingChemicalHandler().GetAllDyeingChemicalFromDyeingProcessID(previousDyeingProcessID);
+                        for (DyeingChemical loopDyeingChemical : ThisDyeingChemical) {
+                            loopDyeingChemical.setDyeingProcessID(loopCurrentProcess.getId());
+                            new DyeingChemicalHandler().AddNewDyeingChemical(loopDyeingChemical);
+                        }
+                    }
+                }
+                
                 if (this.getWindowType() != 6) {
                     int jobOrderID = thisJobHandler.AddNewJobOrder(getThisJob());
                     //IF Job Order has already been added
@@ -945,6 +981,21 @@ public class ReviewFormV3 extends javax.swing.JFrame {
                         //If there is a resin Program.
                         if (getThisJob().getThisResinJob() != null) {
                             for (ResinJob thisResinJob : getThisJob().getThisResinJob()) {
+                                ResinProgram addNewResinProgramForThisJob =
+                                        new ResinProgramHandler().GetResinProgramDetailsFromResinID(thisResinJob.getResinProgramID());
+                                addNewResinProgramForThisJob.setColorID(getThisJob().getColorID());
+                                addNewResinProgramForThisJob.setCustomerID(getThisJob().getCustomerID());
+                                addNewResinProgramForThisJob.setDesignID(getThisJob().getDesignID());
+                                
+                                ArrayList<ResinChemical> ThisResinChemical = new ResinChemicalHandler().GetResinChemicalsByResinProgramId(thisResinJob.getResinProgramID());
+                                int UpdatedResinProgramID = new ResinProgramHandler().AddNewResinProgram(addNewResinProgramForThisJob);
+                                
+                                for(ResinChemical thisJobResinChemical : ThisResinChemical)
+                                {
+                                    thisJobResinChemical.setResinProgramID(UpdatedResinProgramID);
+                                    new ResinChemicalHandler().AddNewResinChemical(thisJobResinChemical);
+                                }
+                                thisResinJob.setResinProgramID(UpdatedResinProgramID);
                                 thisResinJob.setJobOrderID(jobOrderID);
                                 new ResinJobHandler().AddResinJob(thisResinJob);
                             }
@@ -953,39 +1004,38 @@ public class ReviewFormV3 extends javax.swing.JFrame {
                          ThisJobHasBeenAdded = true;
                     } else {
                         JOptionPane.showMessageDialog(null, "There is an error in adding the Job Order.");
+                        Success = false;
                     }
-
                 } else if (getWindowType() == 6) {
-                    if(!CheckIfDyeingMatchesColorCustomerAndDesign())
-                    {
-                        getThisJob().setDyeingProgramID(CheckAndAddDyeingProgramDetails());
-                    }
-                    
+
                     if (thisJobHandler.UpdateJobOrder(getThisJob())) {
                         //Also Update Resin Program
-                        for (ResinJob thisResinJob : getThisJob().getThisResinJob()) 
-                        {
-                            if(!this.CheckIfResinMatchesColorCustomerAndDesign(thisResinJob))
-                            {
+                        for (ResinJob thisResinJob : getThisJob().getThisResinJob()) {
+                            if (!this.CheckIfResinMatchesColorCustomerAndDesign(thisResinJob)) {
                                 thisResinJob.setResinProgramID(CheckAndAddResinProgramDetails(thisResinJob));
                             }
-                            
+
                             thisResinJob.setJobOrderID(getThisJob().getID());
                             new ResinJobHandler().UpdateResinJob(thisResinJob);
-                             
+
                         }
                         JOptionPane.showMessageDialog(null, "Job order has been updated.");
                         // ThisJobHasBeenAdded = true;
                     } else {
                         JOptionPane.showMessageDialog(null, "There is an error in updating the Job Order.");
+                        Success = false;
                     }
                 }
             }
         }
     
+        return Success;
     }
     private void SaveExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveExitActionPerformed
         // TODO add your handling code here:
+        if(this.SaveThisJobOrder())
+            this.dispose();
+/*
         JobHandler thisJobHandler = new JobHandler();
         if (ThisJobHasBeenAdded == true) {
             JOptionPane.showMessageDialog(null, "Job order has already been added.");
@@ -1035,6 +1085,7 @@ public class ReviewFormV3 extends javax.swing.JFrame {
                 }
             }
         }
+        */
     }//GEN-LAST:event_SaveExitActionPerformed
 
     private void BatchNoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BatchNoKeyReleased
@@ -1098,14 +1149,13 @@ public class ReviewFormV3 extends javax.swing.JFrame {
         if(!this.ThisJobHasBeenAdded)
         {
             //System.out.println(this.getWindowType());
-            if (this.getWindowType() == 4 || this.getWindowType() == 5) {
+            if (this.getWindowType() == 6 && !(new PreferenceHandler().getReviewFormEditing()) ) {
+                new ViewCustomerOrder().setVisible(true);
+            } else if (this.getWindowType() == 4 || this.getWindowType() == 5 || this.getWindowType() == 6) {
                 if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "Do you want to cancel using this Job Order?", "Exit?", JOptionPane.YES_NO_OPTION)) {
                     new ViewCustomerOrder().setVisible(true);
                 }
-            } 
-            else if (this.getWindowType() == 6 && new PreferenceHandler().getReviewFormEditing()) {
-                new ViewCustomerOrder().setVisible(true);
-            } 
+            }
             else 
             {
                 if (getThisJob().getThisResinJob() != null) {
@@ -1152,7 +1202,7 @@ public class ReviewFormV3 extends javax.swing.JFrame {
                 //}
     }//GEN-LAST:event_SavePrintActionPerformed
 
-    private void EditDyeingProgram1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditDyeingProgram1ActionPerformed
+    private void EditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditButtonActionPerformed
         // TODO add your handling code here:
          if (CheckIfDyeingMachineHasInputs() && CheckCustomerAndJobOrderFromTextBox()) {
             SetJobOrderDetailsFromTextBox();
@@ -1165,7 +1215,7 @@ public class ReviewFormV3 extends javax.swing.JFrame {
             this.dispose();
          }
         
-    }//GEN-LAST:event_EditDyeingProgram1ActionPerformed
+    }//GEN-LAST:event_EditButtonActionPerformed
 
     private void ViewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewButtonActionPerformed
         // TODO add your handling code here:
@@ -1481,6 +1531,7 @@ public class ReviewFormV3 extends javax.swing.JFrame {
     private javax.swing.JTextField BatchNo;
     private javax.swing.JPanel BgPanel;
     private javax.swing.JButton CancelBut;
+    private javax.swing.JButton ChangeButton;
     private javax.swing.JLabel ChemicalHeader;
     private javax.swing.JComboBox<String> ColorDropDownList;
     private javax.swing.JComboBox<String> CustomerDropDownList;
@@ -1492,8 +1543,7 @@ public class ReviewFormV3 extends javax.swing.JFrame {
     private javax.swing.JTabbedPane DyeingResinTab;
     private javax.swing.JTextField DyeingVolumeTextField;
     private javax.swing.JTextField DyeingWeight;
-    private javax.swing.JButton EditDyeingProgram;
-    private javax.swing.JButton EditDyeingProgram1;
+    private javax.swing.JButton EditButton;
     private javax.swing.JTextField JobOrder;
     private javax.swing.JTextField Location;
     private javax.swing.JPanel MainPanel;

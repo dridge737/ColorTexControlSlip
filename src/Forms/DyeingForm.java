@@ -125,7 +125,7 @@ public class DyeingForm extends javax.swing.JFrame {
             if (WindowProcessType == 4 || WindowProcessType == 6) {
                 if (!new PreferenceHandler().getReviewFormEditing() && WindowProcessType == 6) {
                     this.DisableThisForm();
-                    Header.setText("View Dyeing Program");
+                    //Header.setText("View Dyeing Program");
                 }
                 
                 Header.setText("Dyeing Program");
@@ -587,7 +587,7 @@ public class DyeingForm extends javax.swing.JFrame {
         BgPanel.add(CancelBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 650, 250, 40));
 
         OkayButton.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        OkayButton.setText("Ok");
+        OkayButton.setText("Done");
         OkayButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 OkayButtonActionPerformed(evt);

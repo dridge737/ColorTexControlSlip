@@ -56,6 +56,9 @@ public class ResinPanel extends javax.swing.JPanel {
         ResinWeight.setEnabled(false);
         ResinWeight.setDisabledTextColor(Color.BLACK);
         ResinWeight.setBackground(new Color(212,212,210));
+        
+        this.EditResinButton.setVisible(false);
+        this.ChangeResinButton.setVisible(false);
     }
     /**
      * Creates new form ResinPanel
@@ -89,10 +92,11 @@ public class ResinPanel extends javax.swing.JPanel {
         ResinVolumeTextField = new javax.swing.JTextField();
         ResinProgramText = new javax.swing.JTextField();
         ResinLabel = new javax.swing.JLabel();
-        EditResinProgram = new javax.swing.JButton();
+        ChangeResinButton = new javax.swing.JButton();
         ResinFabricTypeDropDown = new javax.swing.JComboBox<>();
         FabricTypeLabel = new javax.swing.JLabel();
-        EditResinProgram1 = new javax.swing.JButton();
+        EditResinButton = new javax.swing.JButton();
+        ViewButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(102, 102, 102));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -150,14 +154,14 @@ public class ResinPanel extends javax.swing.JPanel {
         ResinLabel.setToolTipText("");
         add(ResinLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 140, 30));
 
-        EditResinProgram.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        EditResinProgram.setText("Change");
-        EditResinProgram.addActionListener(new java.awt.event.ActionListener() {
+        ChangeResinButton.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        ChangeResinButton.setText("Change");
+        ChangeResinButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EditResinProgramActionPerformed(evt);
+                ChangeResinButtonActionPerformed(evt);
             }
         });
-        add(EditResinProgram, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 100, 110, 30));
+        add(ChangeResinButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 100, 110, 30));
 
         ResinFabricTypeDropDown.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         ResinFabricTypeDropDown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fabric Type", "TC 0.3 + 30 liters", "CVC 0.4 + 30 liters", "CC 0.5 + 30 liters", "Polyester and Spun 0.65 + 30 liters", "TC 0.5" }));
@@ -175,14 +179,23 @@ public class ResinPanel extends javax.swing.JPanel {
         FabricTypeLabel.setText("Fabric Type :");
         add(FabricTypeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 20, 145, 30));
 
-        EditResinProgram1.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        EditResinProgram1.setText("Edit");
-        EditResinProgram1.addActionListener(new java.awt.event.ActionListener() {
+        EditResinButton.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        EditResinButton.setText("Edit");
+        EditResinButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EditResinProgram1ActionPerformed(evt);
+                EditResinButtonActionPerformed(evt);
             }
         });
-        add(EditResinProgram1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 100, 80, 30));
+        add(EditResinButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 100, 80, 30));
+
+        ViewButton.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        ViewButton.setText("View");
+        ViewButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ViewButtonActionPerformed(evt);
+            }
+        });
+        add(ViewButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 100, 190, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void SetResinProgramName(int resinProgramID) {
@@ -303,7 +316,7 @@ public class ResinPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_ResinVolumeTextFieldKeyReleased
 
-    private void EditResinProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditResinProgramActionPerformed
+    private void ChangeResinButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChangeResinButtonActionPerformed
         // TODO add your handling code here:
         if (CheckIfResinMachineHasInputs() ) {
                 //&& CheckCustomerAndJobOrderFromTextBox()
@@ -317,7 +330,7 @@ public class ResinPanel extends javax.swing.JPanel {
             thisResinProgram.setVisible(true);
             ReviewForm.dispose();
         }
-    }//GEN-LAST:event_EditResinProgramActionPerformed
+    }//GEN-LAST:event_ChangeResinButtonActionPerformed
 
     private void ResinFabricTypeDropDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResinFabricTypeDropDownActionPerformed
         // TODO add your handling code here:
@@ -330,7 +343,7 @@ public class ResinPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_ResinFabricTypeDropDownActionPerformed
 
-    private void EditResinProgram1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditResinProgram1ActionPerformed
+    private void EditResinButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditResinButtonActionPerformed
         // TODO add your handling code here:
         ReviewFormV3 ReviewForm = (ReviewFormV3) this.getTopLevelAncestor();
         new AddResinForm(this.ResinProgramText.getText(), ReviewForm.getThisJob(), ReviewForm.getWindowType()).setVisible(true);
@@ -338,12 +351,21 @@ public class ResinPanel extends javax.swing.JPanel {
         ReviewForm.dispose();
 
 
-    }//GEN-LAST:event_EditResinProgram1ActionPerformed
+    }//GEN-LAST:event_EditResinButtonActionPerformed
+
+    private void ViewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewButtonActionPerformed
+        // TODO add your handling code here:
+        ReviewFormV3 ReviewForm = (ReviewFormV3) this.getTopLevelAncestor();
+        AddResinForm thisResinForm = new AddResinForm(this.ResinProgramText.getText(), ReviewForm.getThisJob(), ReviewForm.getWindowType());
+        thisResinForm.setVisible(true);
+        thisResinForm.DisableResinForm();
+        ReviewForm.dispose();
+    }//GEN-LAST:event_ViewButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton EditResinProgram;
-    private javax.swing.JButton EditResinProgram1;
+    private javax.swing.JButton ChangeResinButton;
+    private javax.swing.JButton EditResinButton;
     private javax.swing.JLabel FabricTypeLabel;
     private javax.swing.JComboBox<String> ResinFabricTypeDropDown;
     private javax.swing.JLabel ResinLabel;
@@ -351,6 +373,7 @@ public class ResinPanel extends javax.swing.JPanel {
     private javax.swing.JTextField ResinProgramText;
     private javax.swing.JTextField ResinVolumeTextField;
     private javax.swing.JTextField ResinWeight;
+    private javax.swing.JButton ViewButton;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     // End of variables declaration//GEN-END:variables

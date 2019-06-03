@@ -133,7 +133,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
     private void setTableModel(int type)
     {
         String[] TableHeader;
-        if(type == 3 || type == 4 || type == 5 || type == 6)
+        if(type == 3 || type == 4 || type == 5)
         {
             TableHeader = new String [] {
                 "Chemical", "Gram/Liter", "Type", "Value" , "Quantity" ,"Delete", "ID"
@@ -141,7 +141,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
             EditableCol++;
         }
         //View from job Order
-        else if(type ==7 )
+        else if( type == 6 || type ==7)
         {
             TableHeader = new String [] {
                 "Chemical", "Gram/Liter", "Type", "Value" , "Quantity" , "ID"
@@ -171,7 +171,7 @@ public class SubProcessPanel extends javax.swing.JPanel {
         //ChemicalTable.remove(type);
          
         ChemicalTable.removeColumn(ChemicalTable.getColumnModel().getColumn(EditableCol+1));
-        if(type != 7)
+        if(type != 7 && type !=6)
         {
             AddDeleteColumn();
         }
