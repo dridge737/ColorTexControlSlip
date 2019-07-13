@@ -106,6 +106,11 @@ public class DyeingProgramHandler {
         return repo.getDefaultDyeingProgramForThisDyeingProgramID(thisDyeingProgram);
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    public void HideDyeingProgramFromDyeingProgramList(int DyeingProgramNameID)
+    {
+        new ColorTextControlSlipRepository().UpdateDyeingProgramToNotShowOnDyeingList(DyeingProgramNameID);
+    }
 
     
     

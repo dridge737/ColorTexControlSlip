@@ -1752,6 +1752,32 @@ public class ColorTextControlSlipRepository {
         this.closeConn(conn, ps, rs);
         return DyeingProgramName;
     }
+    
+    public boolean UpdateDyeingProgramToNotShowOnDyeingList(int ProgramNameID)
+    {
+        DBConnection db = new DBConnection();
+        Connection conn = null;
+        PreparedStatement preparedStmt = null;
+        boolean isSuccessful = false;
+        try {
+            conn = db.getConnection();
+            String query = "UPDATE dyeing_program "
+                    + " SET CurrentFlag = 'D' "
+                    + " WHERE ProgramNameID = ? "
+                    + " AND dyeing_program.ColorID = 0 "
+                    + " AND dyeing_program.DesignID = 0 "
+                    + " AND dyeing_program.CustomerID = 0";
+
+            preparedStmt = conn.prepareStatement(query);
+            preparedStmt.setInt(1, ProgramNameID);
+            preparedStmt.execute();
+            isSuccessful = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return isSuccessful;
+    }
 
     public boolean UpdateDyeingProgramName(DyeingProgramName thisDyeProgName) {
         DBConnection db = new DBConnection();
@@ -1774,6 +1800,35 @@ public class ColorTextControlSlipRepository {
         return isSuccessful;
     }
 
+    public ArrayList<String> GetAllDyeingProgramNameNotHidden()
+    {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        ArrayList<String> DyeingList = new ArrayList<>();
+        try {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT dyeing_program_name.Name from dyeing_program , dyeing_program_name "
+                    + " WHERE dyeing_program.ProgramNameID = dyeing_program_name.ID "
+                    + " AND dyeing_program.ColorID = 0 "
+                    + " AND dyeing_program.DesignID = 0 "
+                    + " AND dyeing_program.CustomerID = 0 "
+                    + " AND dyeing_program.CurrentFlag NOT LIKE \"D\";");
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                DyeingList.add(rs.getString("dyeing_program_name.Name"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        this.closeConn(conn, ps, rs);
+        return DyeingList;
+    
+    }
+    
     public ArrayList<String> GetAllDyeingProgramName() {
         DBConnection dbc = new DBConnection();
         Connection conn = null;

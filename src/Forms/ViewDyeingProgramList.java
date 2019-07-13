@@ -53,6 +53,7 @@ public class ViewDyeingProgramList extends javax.swing.JFrame {
     
     public ViewDyeingProgramList(JobOrderExtended currentJob) {
         this(currentJob, 3);
+        this.DeleteButton.setVisible(false);
     }
     
     public ViewDyeingProgramList(JobOrderExtended currentJob, int currentType) {
@@ -72,6 +73,7 @@ public class ViewDyeingProgramList extends javax.swing.JFrame {
         {
             Header.setText("Choose Dyeing Program");
         }
+        this.DeleteButton.setVisible(false);
     }
 
     public void SetToCenter()
@@ -96,6 +98,7 @@ public class ViewDyeingProgramList extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         DyeingTable = new javax.swing.JTable();
         BackBut = new javax.swing.JButton();
+        DeleteButton = new javax.swing.JButton();
         SelectBut = new javax.swing.JButton();
         SearchTextBox = new javax.swing.JTextField();
         NewBut = new javax.swing.JButton();
@@ -153,7 +156,17 @@ public class ViewDyeingProgramList extends javax.swing.JFrame {
                 BackButActionPerformed(evt);
             }
         });
-        BgPanel.add(BackBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(278, 410, 220, 42));
+        BgPanel.add(BackBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 408, 150, 40));
+
+        DeleteButton.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
+        DeleteButton.setText("Delete");
+        DeleteButton.setToolTipText("");
+        DeleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteButtonActionPerformed(evt);
+            }
+        });
+        BgPanel.add(DeleteButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(195, 408, 150, 40));
 
         SelectBut.setFont(new java.awt.Font("Century Gothic", 0, 20)); // NOI18N
         SelectBut.setText("Select");
@@ -163,7 +176,7 @@ public class ViewDyeingProgramList extends javax.swing.JFrame {
                 SelectButActionPerformed(evt);
             }
         });
-        BgPanel.add(SelectBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 408, 220, 40));
+        BgPanel.add(SelectBut, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 408, 160, 40));
 
         SearchTextBox.setFont(new java.awt.Font("Century Gothic", 0, 16)); // NOI18N
         SearchTextBox.setForeground(new java.awt.Color(204, 204, 204));
@@ -253,7 +266,7 @@ public class ViewDyeingProgramList extends javax.swing.JFrame {
         };
         model_original.addColumn("Program Name");
       
-        ArrayList<String> DyeingList = new DyeingProgramNameHandler().GetAllDyeingProgramName();
+        ArrayList<String> DyeingList = new DyeingProgramNameHandler().GetAllDyeingProgramNameNotHidden();
         for (String DyeingList1 : DyeingList) {
             model_original.addRow(new Object[]{DyeingList1});
         }
@@ -326,6 +339,25 @@ public class ViewDyeingProgramList extends javax.swing.JFrame {
         GetUpdatedTable();
     }//GEN-LAST:event_formWindowGainedFocus
 
+    private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
+        // TODO add your handling code here:
+        if(DyeingTable.getSelectedRowCount() > 0)
+        {
+            //int DyeingProgramID = new DyeingProgramHandler().GetDyeingProgramIDfromName(DyeingTable.getModel().getValueAt(selectedRow, 0).toString());
+            int convertedRowNumber = DyeingTable.convertRowIndexToModel(this.DyeingTable.getSelectedRow());
+            String DyeingName = DyeingTable.getModel().getValueAt(convertedRowNumber , 0).toString();
+            int DyeingProgramNameID = new DyeingProgramNameHandler().GetDyeingProgramNameIDfromName(DyeingName);
+            new DyeingProgramHandler().HideDyeingProgramFromDyeingProgramList(DyeingProgramNameID);
+            JOptionPane.showMessageDialog(null, "Deleted Dyeing Program : " +DyeingName);
+            this.GetUpdatedTable();
+        }
+        
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Please select a dyeing program to be deleted.");
+        }
+    }//GEN-LAST:event_DeleteButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -379,6 +411,7 @@ public class ViewDyeingProgramList extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackBut;
     private javax.swing.JPanel BgPanel;
+    private javax.swing.JButton DeleteButton;
     private javax.swing.JTable DyeingTable;
     private javax.swing.JLabel Header;
     private javax.swing.JButton NewBut;

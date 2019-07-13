@@ -46,6 +46,11 @@ public class DyeingProgramNameHandler {
         return repo.GetDyeingProgramNameFromDyeingProgramID(DyeingProgramID);
     }
    
+    public ArrayList<String> GetAllDyeingProgramNameNotHidden()
+    {
+         ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        return repo.GetAllDyeingProgramNameNotHidden();
+    }
     //Updated for dyeing_program_name Table
     public ArrayList<String> GetAllDyeingProgramName()
     {
