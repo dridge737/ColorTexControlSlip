@@ -677,6 +677,12 @@ public class DyeingForm extends javax.swing.JFrame {
                     {//Show the Resin Form
                         //IF a user wants to add Resin program to the job order
                         //Show Machine Selection Form
+                        if (!new PreferenceHandler().getResinMachineInputPreference()) {
+                            if (new Handlers.MachineHandler().GetAllAutomaticResinMachines().size() <2) {
+                                new Handlers.MachineHandler().AddDryerAndStenterMachine();
+                               
+                            }
+                        }
                         MachineSelection thisMachineSelection = new MachineSelection(thisJob);
                         thisMachineSelection.setVisible(true);
                         //ViewResinProgramList thisResinProgram = new ViewResinProgramList(thisJob);

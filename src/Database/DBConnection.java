@@ -18,7 +18,8 @@ public class DBConnection {
     public DBConnection()
     {
         //url = "jdbc:mysql://localhost:3306/color_tex_processing";
-        url = "jdbc:mysql://localhost:3306/colortex";
+        //url = "jdbc:mysql://localhost:3306/colortex";
+        url = "jdbc:mysql://localhost:3306/colortexv2";
         driver = "com.mysql.jdbc.Driver";
         username = "root";
         //password = "";

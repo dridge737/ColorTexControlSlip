@@ -3913,6 +3913,47 @@ public class ColorTextControlSlipRepository {
         this.closeConn(conn, ps, rs);
         return TotalNumberOfProcess;
     }
+    
+    public int CountNumberOfDyeingMachine() {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int MachineNumber = 0;
+        try {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT COUNT(ID) AS 'TOTAL' FROM Machine where MachineType = 0");
+            rs = ps.executeQuery();
+
+            if (rs.first()) {
+                MachineNumber = rs.getInt("TOTAL");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.closeConn(conn, ps, rs);
+        return MachineNumber;
+    }
+    public int CountNumberOfResinMachine() {
+        DBConnection dbc = new DBConnection();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int MachineNumber = 0;
+        try {
+            conn = dbc.getConnection();
+            ps = conn.prepareStatement("SELECT COUNT(ID) AS 'TOTAL' FROM Machine where MachineType = 1");
+            rs = ps.executeQuery();
+
+            if (rs.first()) {
+                MachineNumber = rs.getInt("TOTAL");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ColorTextControlSlipRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.closeConn(conn, ps, rs);
+        return MachineNumber;
+    }
 
     public int CheckIfSameDyeingChemicalExistsOnThisProcess(DyeingChemical ThisDyeingChemical) {
         DBConnection dbc = new DBConnection();

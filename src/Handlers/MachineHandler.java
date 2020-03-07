@@ -59,6 +59,7 @@ public class MachineHandler {
         machineList = repo.GetAllMachine(null);
         
         return machineList;
+        
     }
     
     public ArrayList<Machine> GetAllDyeingMachines()
@@ -69,6 +70,18 @@ public class MachineHandler {
         machineList = repo.GetAllDyeingMachine();
         
         return machineList;
+    }
+    
+    public int CountAllDyeingMachine()
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        return repo.CountNumberOfDyeingMachine();
+    }
+    
+    public int CountResinMachine()
+    {
+        ColorTextControlSlipRepository repo = new ColorTextControlSlipRepository();
+        return repo.CountNumberOfResinMachine();
     }
     
     public ArrayList<Machine> GetAllResinMachines()

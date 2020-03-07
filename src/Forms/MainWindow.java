@@ -5,6 +5,7 @@
  */
 package Forms;
 
+import Handlers.MachineHandler;
 import Handlers.PreferenceHandler;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -239,8 +240,28 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void ControlSlipButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ControlSlipButtonActionPerformed
         // TODO add your handling code here:
-        JobOrderForm thisJobForm = new JobOrderForm();
-        thisJobForm.setVisible(true);
+        
+        boolean OpenForm = false;
+        MachineHandler HandlerThis = new MachineHandler();
+        if (HandlerThis.CountAllDyeingMachine() == 0) 
+        {
+            JOptionPane.showMessageDialog(null, "Please add a Dyeing Machine Before Proceeding.");
+            MachineForm thisMachine = new MachineForm();
+            thisMachine.setVisible(true);
+        }
+        else
+        {
+            OpenForm = true;
+        }
+        
+        if(OpenForm)
+        {
+            JobOrderForm thisJobForm = new JobOrderForm();
+            thisJobForm.setVisible(true);
+        }
+    
+            
+        
     }//GEN-LAST:event_ControlSlipButtonActionPerformed
 
     private void MachineButActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MachineButActionPerformed
